@@ -1,0 +1,9 @@
+*.sqlite3
+*.swp
+*.mo
+*~
+.ve
+__pycache__
+media
+.coverage
+htmlcov

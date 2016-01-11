@@ -1,0 +1,5 @@
+Django==1.9.1
+django-bootstrap3==6.2.2
+requests==2.9.0
+django-environ==0.4.0
+raven==5.9.2
