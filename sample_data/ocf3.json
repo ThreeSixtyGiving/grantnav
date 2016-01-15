@@ -1,0 +1,3371 @@
+{
+    "grants": [
+        {
+            "id": "360G-ocf-a061600000h4eh0",
+            "url": "http://phoenixpatrust.wix.com/phoenix",
+            "recipientOrganization": [
+                {
+                    "url": "http://phoenixpatrust.wix.com/phoenix",
+                    "id": "360G-ocf-org:803728",
+                    "charityNumber": "803728",
+                    "description": "To enable people involved in the Performing Arts to realise their full potential, by training, equipping and facilitating artistic development, within the context of a Christian worldview. We currently have under our auspices: TouchPoint Theatre, PointZero Physical Theatre and CORE theatre arts lab.",
+                    "postalCode": "OX4 3JU",
+                    "addressLocality": "Oxford",
+                    "name": "Phoenix Performing Arts Trust",
+                    "streetAddress": "1 Rymers Lane"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "30/04/2016",
+                    "startDate": "02/11/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Oxfordshire",
+                    "geoCode": "Oxford 015B"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "01/10/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 500.0,
+            "title": "Seeing Grace",
+            "description": "Funding for the film which we will screen in local schools (eg. PHSE classes)"
+        },
+        {
+            "id": "360G-ocf-a061600000h35j7",
+            "url": "http://soundresource.org.uk/",
+            "recipientOrganization": [
+                {
+                    "url": "http://soundresource.org.uk/",
+                    "id": "360G-ocf-org:1149820",
+                    "charityNumber": "1149820",
+                    "description": "Sound Resource promotes, delivers and develops inclusive, participatory and accessible ways for adults to engage in singing to enhance health and wellbeing. Participating in singing can elicit fun, confidence, combat loneliness and encourage creativity; which enable people to flourish. Our singing projects use natural voice techniques and harmony songs (taught by ear) and focus on benefits brought by the practice of singing rather than by performance. Singing together locally can also build personal and community resilience. Project volunteers (Peer Chorus) share the enjoyment and benefits of singing with local community groups and health and social care settings",
+                    "postalCode": "OX3 0ES",
+                    "addressLocality": "Oxford",
+                    "name": "Sound Resource",
+                    "streetAddress": "17 WILLIAM STREET"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "31/07/2016",
+                    "startDate": "06/10/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 4000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Barton, Oxford and surrounding area",
+                    "geoCode": "Oxford 005B"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "22/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 5000.0,
+            "title": "Barton Sings!",
+            "description": "35 weeks, weekly sessions of inclusive, participatory group singing for two hours including refreshment break. "
+        },
+        {
+            "id": "360G-ocf-a061600000h37Mv",
+            "url": "http://www.florenceparkcommunitycentre.org.uk/",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.florenceparkcommunitycentre.org.uk/",
+                    "id": "360G-ocf-org:1159506",
+                    "charityNumber": "1159506",
+                    "description": "Since 1949 when the original group was formed (we became a CIO in 2014), the aims have been to promote the benefit of the inhabitants of Florence Park (the area of benefit is now the Florence Park estate and the neighbourhood, together defined by the area bounded by the Oxford Road, Between Towns Road and Church Cowley Road (including Eleanor Close), Henley Avenue, and the Boundary Brook) and to run the Florence Park Community Centre for the benefit of those inhabitants.",
+                    "postalCode": "OX4 3NH",
+                    "addressLocality": "Oxford",
+                    "name": "The Florence Park Community Association",
+                    "streetAddress": "Cornwallis Road"
+                }
+            ],
+            "IMPACT": "Transform access to, and engagement with, the environment and public spaces",
+            "plannedDates": [
+                {
+                    "endDate": "01/12/2015",
+                    "startDate": "01/09/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Cowley, Oxford",
+                    "geoCode": "Oxford 015A"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 977.98,
+            "title": "Project Garden",
+            "description": "Garden furniture for groups to sit at and a gazebo to protect community members and hirers of the space from the sun and rain."
+        },
+        {
+            "id": "360G-ocf-a061600000h4N0e",
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:1108504",
+                    "charityNumber": "1108504",
+                    "postalCode": "OX1 1SS",
+                    "addressLocality": "Oxford",
+                    "name": "OCVA",
+                    "streetAddress": "The Old Court House"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 377.23,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA"
+                }
+            ],
+            "amountAppliedFor": 377.23,
+            "title": "Data for Good",
+            "description": "Staff costs to research a data project for the VCSE sector in Oxfordshire"
+        },
+        {
+            "id": "360G-ocf-a061600000h3BNs",
+            "url": "http://www.theabingdonbridge.org.uk/",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.theabingdonbridge.org.uk/",
+                    "id": "360G-ocf-org:1160080",
+                    "charityNumber": "1160080",
+                    "description": "We provide free and confidential support to people age 13 – 25, by offering information, advice & guidance, opportunities to adopt healthier lifestyles and support to raise aspirations, using trained, qualified staff. We cover relationships and families, abuse, drug and alcohol abuse, academic and other stress, anxiety and healthy lifestyles. We provide support one to one, in groups and through schools. It regularly makes a difference, both to young people with difficult lives needing help to make informed life choices, and those needing support to overcome immediate crises. For some we simply provide the reliable adult they lack.",
+                    "postalCode": "OX14 3HN",
+                    "addressLocality": "Abingdon",
+                    "name": "Abingdon Bridge",
+                    "streetAddress": "The Old Police Station, 19 Bridge Street,"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "01/09/2016",
+                    "startDate": "02/09/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Usually Abingdon and 5 mile radius. Sometimes Wantage/Faringdon/Didcot",
+                    "geoCode": "Vale of White Horse 006A"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 5000.0,
+            "title": "Crossing the Bridge",
+            "description": "Funding for our professional and volunteer counselors to provide counseling to between 15 and 20 young people."
+        },
+        {
+            "id": "360G-ocf-a061600000h3QQe",
+            "url": "www.balsamfamilyproject.co.uk",
+            "recipientOrganization": [
+                {
+                    "url": "www.balsamfamilyproject.co.uk",
+                    "id": "360G-ocf-org:1129896",
+                    "charityNumber": "1129896",
+                    "description": "We work to reverse community and family breakdown by nurturing families through befriending and supporting thosewho are particularly isolated or struggling. We believe in the value of every adult and child and seek to encourage a sense of worth and value that parents can then pass on to their own children. We provide Family College Courses in Parenting, Home Management for 10 weeks at Level 1 and Personal Growth and Development at Level 2 Community Family Friends for 1:1 support Weekly Family Day creating a supportive, fun environment Weekly Coffee Morning Seasonal Social Events all to build positive relationships and develop community networks.",
+                    "postalCode": "OX12 0HX",
+                    "addressLocality": "Wantage",
+                    "name": "Balsam Family Project",
+                    "streetAddress": "Yew Tree Barn The Paddocks, East Hanney"
+                }
+            ],
+            "IMPACT": "Maximise ability to strengthen community cohesion and build social capacity",
+            "plannedDates": [
+                {
+                    "endDate": "22/03/2016",
+                    "startDate": "10/01/2016"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Didcot",
+                    "geoCode": "South Oxfordshire 010D"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 4133.33,
+            "title": "Balsam Family Project",
+            "description": "1 term of Family College Course: venue, teaching resources, materials and staff costs."
+        },
+        {
+            "id": "360G-ocf-a061600000h2qkK",
+            "url": "www.home-startbanbury.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "www.home-startbanbury.org.uk",
+                    "id": "360G-ocf-org:1114860",
+                    "charityNumber": "1114860",
+                    "description": "Home-Start aims to ensure that every family gets the help they need to give their children the best possible start in life. Home-Start provides a unique service for families - recruiting and training volunteers to support parents with young children at home. These volunteers visit every week offering friendship, practical help and emotional support. Support provided is individually-designed for each family, needs-led, outcomes-focused and confidential.",
+                    "postalCode": "OX16 5DN",
+                    "addressLocality": "Banbury",
+                    "companyNumber": "5659531",
+                    "name": "Home-Start Banbury and Chipping Norton",
+                    "streetAddress": "Britannia Road CC, Grove Street"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "31/10/2016",
+                    "startDate": "01/11/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Grimsbury & Castle Ward, Banbury",
+                    "geoCode": "Cherwell 004A"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 5000.0,
+            "title": "Family Support",
+            "description": "Support 4 families in this particular area of Banbury for a year."
+        },
+        {
+            "id": "360G-ocf-a061600000h2rC4",
+            "url": "www.oasisonline.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "www.oasisonline.org.uk",
+                    "id": "360G-ocf-org:1033927",
+                    "charityNumber": "1033927",
+                    "description": "OASIS support around 180 families across Oxfordshire who have children and young people on the autistic spectrum. We are a parent led charity and run coffee and chat groups, evening meetings with professional speakers, subsidised playdays during the school holidays, courses, a book library and social events for parents/ carers. We aim to provide support, provide information and sign post services, prevent families from becoming isolated by helping them to create support networks and enabling parents/ carers to learn more about autism so they can provide better opportunities for their children.",
+                    "postalCode": "OX14 3UL",
+                    "addressLocality": "Abingdon",
+                    "name": "Oxfordshire Autistic Society for Information and Support",
+                    "streetAddress": "47 Curtis Avenue"
+                }
+            ],
+            "IMPACT": "Promote reduction of isolation and disadvantage and access to local services",
+            "plannedDates": [
+                {
+                    "endDate": "23/12/2016",
+                    "startDate": "01/02/2016"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Abingdon",
+                    "geoCode": "Vale of White Horse 005A"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 4900.0,
+            "title": "OASIS Playdays 2015",
+            "description": "An extended playdays programme during all the school holidays hosted by volunteers."
+        },
+        {
+            "id": "360G-ocf-a061600000h2uLn",
+            "IMPACT": "Transform access to, and engagement with, the environment and public spaces",
+            "plannedDates": [
+                {
+                    "endDate": "31/07/2018",
+                    "startDate": "01/08/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:0011600001pXyqi",
+                    "description": "To offer support for widows & widowers who feel lonely after losing their partner. Our members enjoy outings, speakers, activities & the companionship of others in a similar situation. In addition We meet every third Saturday in the month at the Guide Headquarters in Southern Road, Thame.",
+                    "postalCode": "OX92JR.",
+                    "addressLocality": "Nr. Oxford",
+                    "name": "The Widowed Companionship Club. Thame & District Branch.",
+                    "streetAddress": "Ellan Vannin, Old London Road, Milton Common, Thame"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Thame & Distict.",
+                    "geoCode": "South Oxfordshire 004E"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 1500.0,
+            "title": "Operation survival",
+            "description": "We can organise taxis or a mini bus to collect the members for events. We can hire our room more often to lay on events. We can arrange part funded outings to National Trust properties etc. We can pay speakers who come to talk to us, at present we only pay their expenses."
+        },
+        {
+            "id": "360G-ocf-a061600000h32HP",
+            "url": "http://homestart-southernoxfordshire.org.uk/",
+            "recipientOrganization": [
+                {
+                    "url": "http://homestart-southernoxfordshire.org.uk/",
+                    "id": "360G-ocf-org:1113941",
+                    "charityNumber": "1113941",
+                    "description": "Home-Start Southern Oxfordshire has been based in the area for twenty-six years, supporting vulnerable families who have at least one child under the age of five by offering direct personal support via our trained volunteers. The families have all been referred to us by a GP, health visitor or social worker or are self-referred, and may be experiencing postnatal depression, bereavement, separation, illness, disability, domestic violence, mental illness or a combination of problems that all lead to stress and crisis within the family unit.",
+                    "postalCode": "OX11 8RU",
+                    "addressLocality": "Didcot",
+                    "companyNumber": "5443274",
+                    "name": "Home-Start Southern Oxfordshire",
+                    "streetAddress": "197 Broadway"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "30/09/2016",
+                    "startDate": "01/10/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "South Oxfordshire",
+                    "geoCode": "South Oxfordshire 010A"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 3000.0,
+            "title": "Volunteers Expenses",
+            "description": "Support between 25 and 30 volunteers for a year."
+        },
+        {
+            "id": "360G-ocf-a061600000h2WMk",
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "01/01/2016",
+                    "startDate": "01/12/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:288705",
+                    "charityNumber": "288705",
+                    "description": "Noke Playing Field Turst was established to manage and maintain the Playing Field for the benefit of the inhabitants fo Noke. The Trust planted an area of woodland at the south end of the Playing Field and have maintained both this and the playing field ever since. It is mowed regularly during the summer months. The Playing Field also has a small pavilion and a storage shed. In the absence of a village hall the Playing Field has become the focal point for social events and regular BBQ's, campfires etc. are organised by the Playing Field Committee.",
+                    "postalCode": "OX3 9TU",
+                    "addressLocality": "Noke",
+                    "name": "Noke Playing Field Trust",
+                    "streetAddress": "Noke Place"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Noke (also Woodeaton)",
+                    "geoCode": "Cherwell 016E"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 1500.0,
+            "title": "Noke Playing Field Trust - Playground Project",
+            "description": "Construct a creative and rustic play ground that fits well with our rural environment and enhance the facility for natural creative play"
+        },
+        {
+            "id": "360G-ocf-a061600000h35hf",
+            "url": "www.sustainablewantage.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "www.sustainablewantage.org.uk",
+                    "id": "360G-ocf-org:0011600001pYXRn",
+                    "description": "The aim of Sustainable Wantage is to carry on any business for the benefit of the community by encouraging, promoting and facilitating sustainability in Wantage, Grove and the surrounding area. We run The Mix Community Space, a Market Garden project in partnership with a Day Centre and a local charity, and manage a local woodland. Additionally we run Autumn and Spring Festivals, and regular swap shops. We want to build a strong and resilient community where people choose sustainable practices because they see them as beneficial on an individual and a collective level.",
+                    "postalCode": "OX12 9HX",
+                    "addressLocality": "Wantage",
+                    "name": "Sustainable Wantage",
+                    "streetAddress": "12 Saxon Place"
+                }
+            ],
+            "IMPACT": "Maximise ability to strengthen community cohesion and build social capacity",
+            "plannedDates": [
+                {
+                    "endDate": "29/07/2016",
+                    "startDate": "02/11/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Wantage, Grove and surrounding area",
+                    "geoCode": "Vale of White Horse 014D"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 4998.0,
+            "title": "The Resource Bank",
+            "description": "We will use this grant to enlist the services of a Resource Bank co-ordinator, towards storage and workshop venue costs, and to buy a PAT test machine"
+        },
+        {
+            "id": "360G-ocf-a061600000h25HJ",
+            "url": "disabilitykarate.co.uk",
+            "recipientOrganization": [
+                {
+                    "url": "disabilitykarate.co.uk",
+                    "id": "360G-ocf-org:1156581",
+                    "charityNumber": "1156581",
+                    "description": "DKF Karate changes the person with a disability in a profound way. For some, it marks their first steps towards independence and enables them to make choices and take risks on their own. For others, the gradual acquisition of skills and accomplishments builds the self-confidence needed to take on other life challenges such as pursuing education or employment. DKF also provides opportunities for persons with disabilities to develop social skills, forge friendships outside their families, exercise responsibility, and take on leadership roles.",
+                    "postalCode": "OX3 0QB",
+                    "addressLocality": "OXFORD",
+                    "companyNumber": "8654724",
+                    "name": "Disability Karate Federation",
+                    "streetAddress": "45 Mill Lane"
+                }
+            ],
+            "IMPACT": "Promote reduction of isolation and disadvantage and access to local services",
+            "plannedDates": [
+                {
+                    "endDate": "06/10/2015",
+                    "startDate": "01/10/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Oxfordshire",
+                    "geoCode": "Oxford 004A"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "17/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "amountAppliedFor": 2512.0,
+            "title": "1st British Open for Martial Artists with a Disability",
+            "description": "We require funding to transport around 100 disabled athletes and their carers from Oxford to Stoke Mandeville Stadium and back again. "
+        },
+        {
+            "id": "360G-ocf-a061600000h3d0A",
+            "url": "www.donnington-doorstep.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "www.donnington-doorstep.org.uk",
+                    "id": "360G-ocf-org:1144821",
+                    "charityNumber": "1144821",
+                    "description": "Donnington Doorstep is a community based, family drop-in centre set up 30 years ago by local parents. Aims • Increased happiness and emotional well being for local children, young people and their families • Improved mental and physical health for local children, young people and their families • Improved life chances for socially excluded children and young people to enable them to realise their full potential • A stronger, safer and more integrated community in Donnington and the surrounding areas We support children of all ages, their families and the local community. From our purpose-built centre in East Oxford we deliver activities focusing on play, food, support and community, targeting services at those most in need. Doorstep is well-known in Oxford City with a proven track record of providing effective services for disadvantaged children, young people and families. The charity is highly valued and respected by partners and beneficiaries alike.",
+                    "postalCode": "OX4 4BB",
+                    "addressLocality": "Oxford",
+                    "companyNumber": "7720385",
+                    "name": "Donnington Doorstep Family Centre",
+                    "streetAddress": "Townsend Square"
+                }
+            ],
+            "IMPACT": "Maximise ability to strengthen community cohesion and build social capacity",
+            "fromOpenCall": "Yes",
+            "amountAwarded": 25000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "14/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA"
+                }
+            ],
+            "amountAppliedFor": 41377.0,
+            "title": "Strengthen and Sustain",
+            "description": "Re-opening six days a week."
+        },
+        {
+            "id": "360G-ocf-a061600000gBurv",
+            "IMPACT": "Maximise ability to strengthen community cohesion and build social capacity",
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:1015127",
+                    "charityNumber": "1015127",
+                    "postalCode": "OX3 9HY",
+                    "addressLocality": "Headington",
+                    "name": "Oxfordshire Youth",
+                    "streetAddress": "First Floor, Bury Knowle Coach House, North Place"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 50000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "14/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA"
+                }
+            ],
+            "amountAppliedFor": 50000.0,
+            "title": "Voluntary Youth Sector Network",
+            "description": " ‘The Community Link-Up Project’ which set up or stabilised 20 youth clubs in disadvantaged and rural areas;"
+        },
+        {
+            "id": "360G-ocf-a061600000gBpyi",
+            "url": "www.youngdementiauk.org",
+            "recipientOrganization": [
+                {
+                    "url": "www.youngdementiauk.org",
+                    "id": "360G-ocf-org:1085595",
+                    "charityNumber": "1085595",
+                    "description": "We support people under the age of 65 who have young onset dementia and their families. We enable the younger person with dementia to live life well and to be engaged with the mainstream community for as long as possible before the dementia prevents this. We also provide a range of practical and emotional support to the family of the younger person with dementia, especially the main carer who is usually the partner. Young onset dementia is usually diagnosed when people are still working often with young families to support. In addition to the responsibilities of caring for the younger person with dementia, the partner also has often to become the main breadwinner and to bring the children up on their own. Our objective is to make this difficult situation as manageable as possible for all the family members. We are an Oxfordshire based charity and the bulk of our face to face work remains in the county and we are using this experience base to provide information to others across the UK.",
+                    "postalCode": "OX28 1JE",
+                    "addressLocality": "Witney",
+                    "companyNumber": "4142850",
+                    "name": "Young Dementia UK",
+                    "streetAddress": "7 Mount Pleasant"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "fromOpenCall": "Yes",
+            "amountAwarded": 23041.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "14/09/2015",
+            "grantProgramme": [
+                {
+                    "title": "Sep-15"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA"
+                }
+            ],
+            "amountAppliedFor": 23041.0,
+            "title": "Young Dementia Community",
+            "description": "We support younger people with dementia (aged 35-65) and their families to enable them to live well. "
+        },
+        {
+            "id": "360G-ocf-a061600000h3Zf1",
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:0011600001qSZaj",
+                    "addressLocality": "Witney",
+                    "name": "Rotary Club of Witney",
+                    "streetAddress": "4 Marsh Walk",
+                    "postalCode": "OX28 1YF"
+                }
+            ],
+            "fromOpenCall": "No",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "25/08/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Witney and District"
+                }
+            ],
+            "title": "Defibrillators",
+            "description": "Defibrillators for Witney following a death in the town"
+        },
+        {
+            "id": "360G-ocf-a061600000h3IvP",
+            "url": "http://archoxfordshire.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://archoxfordshire.org.uk",
+                    "id": "360G-ocf-org:1146276",
+                    "charityNumber": "1146276",
+                    "description": "ARCh recruits, trains and supports volunteers who work one-to-one with disadvantaged primary school children who are struggling with their reading. The aim is to provide sustained mentoring over the course of a year, boosting children's confidence and to impart a love of reading which we hope will enhance their lives. Each child benefits from 2 ARCh sessions a week, sharing books, games and chat with their helper. ARCh provides every volunteer with a box of books and games which are carefully chosen in order to inspire the children to really want to read.",
+                    "postalCode": "OX26 6AA",
+                    "addressLocality": "Bicester",
+                    "companyNumber": "7962217",
+                    "name": "ARCH (Assisted Reading for Children in Oxfordshire)",
+                    "streetAddress": "Gobles Court"
+                }
+            ],
+            "plannedDates": [
+                {
+                    "endDate": "18/09/2015",
+                    "startDate": "18/09/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1437.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/08/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Oxfordshire"
+                }
+            ],
+            "amountAppliedFor": 1437.0,
+            "title": "Read with the Stars",
+            "description": "Developing reading skills and interest in our children"
+        },
+        {
+            "id": "360G-ocf-a061600000h2yDB",
+            "url": "http://www.village4a1000years.com",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.village4a1000years.com",
+                    "id": "360G-ocf-org:0011600001pY9mZ",
+                    "description": "The aims of the Group shall be to research, collect, study and share the findings with the village all aspects of the history of the parish of Harwell.",
+                    "postalCode": "OX11 0EX",
+                    "addressLocality": "Harwell",
+                    "name": "Harwell Parish History Group",
+                    "streetAddress": "High Street"
+                }
+            ],
+            "IMPACT": "Connect people with the arts, culture and heritage",
+            "plannedDates": [
+                {
+                    "endDate": "05/10/2015",
+                    "startDate": "02/10/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 750.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Harwell Parish and surrounding area",
+                    "geoCode": "Vale of White Horse 015C"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "17/08/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 750.0,
+            "title": "30/100/300 Year Exhibition",
+            "description": "To hold a free exhibition in the Village Hall "
+        },
+        {
+            "id": "360G-ocf-a061600000gCyO6",
+            "url": "http://www.sofea.uk.com",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.sofea.uk.com",
+                    "id": "360G-ocf-org:1155783",
+                    "charityNumber": "1155783",
+                    "description": "To provide training and education to those disadvantaged in the labour market (150 people per year) To provide food for those in need (to 50 charities per year) To reduce food waste (by 200 tonnes per year) We do this in our working warehouse which receives over supplied and excess food from supermarket distribution centres and the food industry. We provide this food to other local charities who work with disadvantaged people - allowing them to reduce their food costs. We provide accredited qualifications and industry standard training in warehousing, forklift operations, manual handling, food safety, etc. We also provide functional skills programmes in English and Maths. Our education and training programme is based on a sophisticated approach blending traditional approaches with explicit focus on behaviours, emotional intelligence and self awareness.",
+                    "postalCode": "OX11 7HJ",
+                    "addressLocality": "Didcot",
+                    "name": "South Oxfordshire Food and Education Alliance",
+                    "streetAddress": "1E Trident Business Park"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "fromOpenCall": "No",
+            "amountAwarded": 10000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "South Oxfordshire 009A"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "07/08/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 50000.0,
+            "title": "South Oxfordshire Food and Education Alliance",
+            "description": "Provision of fresh, in date, nutritious food to vulnerable groups."
+        },
+        {
+            "id": "360G-ocf-a061600000gBmjk",
+            "url": "http://www.creativedementia.org",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.creativedementia.org",
+                    "id": "360G-ocf-org:08146958",
+                    "postalCode": "OX2 7BD",
+                    "addressLocality": "Oxford",
+                    "companyNumber": "8146958",
+                    "name": "Creative Dementia Arts Network",
+                    "streetAddress": "53 Oakthorpe Road"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "fromOpenCall": "No",
+            "amountAwarded": 10000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "05/08/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA"
+                }
+            ],
+            "amountAppliedFor": 10000.0,
+            "title": "Project Flourish",
+            "description": "Engagement with the arts for people with dementia and their carers"
+        },
+        {
+            "id": "360G-ocf-a061600000gB4el",
+            "url": "http://www.hallshire.com",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.hallshire.com",
+                    "id": "360G-ocf-org:285444",
+                    "charityNumber": "285444",
+                    "description": "To provide a comfortable meeting establishment for people of all ages from our village and surrounding areas for the purpose of events, celebrations and meetings. Our Hall is used on a regular basis by the youth club, the local WI, the Parish Council and as a Polling Station during local elections. It is a popular venue for children's parties, bingo evenings, dog-training classes, art classes and marriage reception celebrations. Our aim is to operate a well-maintained facility with up-to-date equipment, serving buffet-style refreshments to all people using it, with a focus on health and safety at all times. We work closely with ORCC to keep up to date with standards required to run the operation. This project is part of that commitment, in that the original floor has become damaged beyond repair, it needs to be uplifted and replaced with a modern industrial strength laminate floor that will provide a safe all-purpose surface suitable for all of our many varied activities.",
+                    "postalCode": "OX7 5PP",
+                    "addressLocality": "Over Norton",
+                    "name": "Over Norton Village Hall",
+                    "streetAddress": "Choicehill Road"
+                }
+            ],
+            "IMPACT": "Maximise ability to strengthen community cohesion and build social capacity",
+            "plannedDates": [
+                {
+                    "endDate": "31/12/2015",
+                    "startDate": "01/01/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Over Norton Parish, and Chipping Norton District",
+                    "geoCode": "West Oxfordshire 002A"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "05/08/2015",
+            "grantProgramme": [
+                {
+                    "title": "Jul-15"
+                }
+            ],
+            "amountAppliedFor": 5000.0,
+            "title": "Village Hall Replacement Floor",
+            "description": "Replacement of village hall floor"
+        },
+        {
+            "id": "360G-ocf-a061600000gCjC1",
+            "url": "http://www.yellowsubmarine.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.yellowsubmarine.org.uk",
+                    "id": "360G-ocf-org:1136735",
+                    "charityNumber": "1136735",
+                    "description": "“Yellow Submarine Holidays” provides supported holidays and activities for people with learning disabilities (PWLD). It operates with three aims: 1/ to offer PWLD choice in holiday options and day-trips at affordable (/subsidised) prices; 2/ to provide respite for those who care for PWLD; 3/ to give young people training and volunteering opportunities to support this vulnerable group on our outings both for the immediate gain of assisting positively and so they are better equipped to promote community cohesion. In 2009, Yellow Submarine partnered with two day centres and a local authority and four holidays with 19 PWLD (and their carers who gained respite) benefitting. The trips that have taken place so far have been very popular and successful both with the ‘service users’, their carers and the volunteers who helped. Video feedback can be viewed on our site, with carers saying the holidays have helped increase confidence, create new friendships, and give a welcome break! Yellow Submarine believes people with learning disabilities deserve to live life to the full. We are a small award-winning charity which prides itself on giving some of the most disadvantaged people in Oxfordshire confidence, independence and a sense of self-worth. For children (aged 11-18) living in Oxfordshire we run an extensive programme in the school holidays. For adults (18+) we run residential holidays, work experience & training and a weekly social club. Case study published on website Nov 2014, original stored here: Y:\\NEW FILESTORE 2011\\7 MARKETING, COMMS & CAMPAIGNS\\CASE STUDIES\\Grant stories",
+                    "postalCode": "OX18 4BJ",
+                    "addressLocality": "BURFORD",
+                    "companyNumber": "6619694",
+                    "name": "Yellow Submarine",
+                    "streetAddress": "Westhall Barn"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "01/09/2018",
+                    "startDate": "01/09/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 23600.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Witney and District",
+                    "geoCode": "West Oxfordshire 012C"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "04/08/2015",
+            "grantProgramme": [
+                {
+                    "title": "Jun-15"
+                }
+            ],
+            "amountAppliedFor": 25000.0,
+            "title": "Phase II",
+            "description": "Capacity building of organisation"
+        },
+        {
+            "id": "360G-ocf-a061600000h2Sh4",
+            "url": "http://www.startupnow.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.startupnow.org.uk",
+                    "id": "360G-ocf-org:1115952",
+                    "charityNumber": "1115952",
+                    "postalCode": "OX9 3EW",
+                    "addressLocality": "Thame",
+                    "companyNumber": "5834536",
+                    "name": "StartUp",
+                    "streetAddress": "6a Buttermarket"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "fromOpenCall": "No",
+            "amountAwarded": 10093.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Oxfordshire",
+                    "geoCode": "South Oxfordshire 001A"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "03/08/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 29093.0,
+            "title": "Startupnow Breaking the Cycle",
+            "description": "Reducing re-offending by supporting ex-offenders into self-employment."
+        },
+        {
+            "id": "360G-ocf-a061600000gCyMA",
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "01/07/2016",
+                    "startDate": "01/09/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:1017598",
+                    "charityNumber": "1017598",
+                    "description": "PROVIDE AND ASSIST IN THE PROVISION OF FACILITIES FOR EDUCATION AT THE COLLEGE, AND ENGAGE IN ACTIVITIES WHICH SUPPORT THE COLLEGE AND ADVANCE THE EDUCATION OF THE STUDENTS ATTENDING IT. IN ADDITION THE ACTIVITIES INCLUDE SUPPORTING GROUPS LINKED WITH THE COLLEGE AS LONG AS THEIR ACTIVITIES ARE FOR THE ADVANCEMENT OF KNOWLEDGE TO STUDENTS ATTENDING THE COLLEGE.",
+                    "postalCode": "SN7 7LR",
+                    "addressLocality": "Faringdon",
+                    "name": "Faringdon Community College PTA",
+                    "streetAddress": "17 Fernham Gate"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1400.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Vale of White Horse 016F"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "21/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 8400.0,
+            "title": "Wheelchair Basketball",
+            "description": "Provide equipment to the college"
+        },
+        {
+            "id": "360G-ocf-a061600000gDTD3",
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:1152639",
+                    "charityNumber": "1152639",
+                    "postalCode": "OX26 2NG",
+                    "addressLocality": "Bicester",
+                    "name": "Icolyn Smith Foundation - Oxford Community Soup Kitchen",
+                    "streetAddress": "16 Dickens Close"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "20/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Oxford city"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Ma Smith's Soup Kitchen",
+            "description": "Support Mrs Jolyon Smith’s “soup kitchen” project in the Cowley Road."
+        },
+        {
+            "id": "360G-ocf-a061600000gDT8N",
+            "url": "http://www.guidepoststrust.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.guidepoststrust.org.uk",
+                    "id": "360G-ocf-org:272619",
+                    "charityNumber": "272619",
+                    "postalCode": "OX28 4BH",
+                    "addressLocality": "Witney",
+                    "companyNumber": "1282361",
+                    "name": "Guideposts Trust",
+                    "streetAddress": "Willow Tree House"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "fromOpenCall": "Yes",
+            "amountAwarded": 650.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Vale of White Horse 006A"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "20/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 650.0,
+            "title": "Young Carers Project",
+            "description": "A specialist Horticultural Therapy Service for adults with learning disabilities of any age."
+        },
+        {
+            "id": "360G-ocf-a061600000gDXsX",
+            "url": "http://www.cherwell.oxon.sch.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.cherwell.oxon.sch.uk",
+                    "id": "360G-ocf-org:7966500",
+                    "postalCode": "OX2 7EE",
+                    "addressLocality": "Oxford",
+                    "companyNumber": "7966500",
+                    "name": "Cherwell School Academy Trust",
+                    "streetAddress": "Marston Ferry Road"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 003B"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "13/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Chicken Project",
+            "description": "Establishing libraries in four schools in the Qunu district in the Eastern Cape of South Africa"
+        },
+        {
+            "id": "360G-ocf-a061600000gBRuG",
+            "url": "http://www.harwellvillagehall.co.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.harwellvillagehall.co.uk",
+                    "id": "360G-ocf-org:1157858",
+                    "charityNumber": "1157858",
+                    "description": "We, the trustees of the Village Hall, are raising funds to rebuild & refurbish our village hall. The Village Hall, built in 1928 as a technical Institute & subsequently used as a village hall from 1960, badly needs refurbishing, having an inefficient heating system, rotting single glazed windows, a leaking roof & many other problems. The adjacent Freeman Hall, which was previously home to Our Street Corner Youth Club & is attached to our Village Hall, has been condemned. We have plans to demolish and rebuild this hall. In 2009 we began thinking of ways to improve our hall and began by gathering ideas from residents, user groups of the halls and professionals. We have canvassed residents of the village about the future of both halls and, acting on their ideas and needs, came up with an ambitious Rebuild & Refurbishment project for our 'much loved Village Hall' and we have been actively fundraising since 2010. In addition to accommodating our existing user groups, the plans for the proposed new hall and the original refurbished hall are: new toilet facilities, a new kitchen, a foyer café, plenty of storage space, exhibition areas, a meeting room and an office for our parish clerk. We hope to provide a new exhibition space for our History group & relevant storage for all their resources, artefacts, photographs & archives. After a successful Dementia Awareness course we also plan to have a regular afternoon for dementia sufferers & their carers, in our cafe area. The architect has designed an office for our Parish clerk, just inside the new main doors into the foyer and a committee room, in which our Parish Councillors can hold their meetings. The majority of our existing user groups have asked for better heating and ventilation, dedicated storage and in many cases increased usage and we hope to meet this need by rebuilding the Freeman Hall. We also have a list of new Users such as Drama, Choir, Scouts and Exercise groups. We would like to install retractable seating in the new hall so that it is multipurpose, allowing us the capability to put on lectures, films, concerts, pantomimes and also to retain the space for the more practical users, such as Irish Dancing, karate or the under-five’s Fun club. The newly refitted kitchen and café/foyer will join the new hall to the old, with a hatch or servery on either side. In addition to the History group and Dementia Aware group this gives us an opportunity to open the café and toilets to the public during the week and weekends. (Often a problem in villages.) We already hire the hall out for birthday parties or dances and with the increased facilities and outside area could also function as a wedding venue. The bridal party could walk from St. Matthew’s Parish Church! The renovations would allow the hall to be used by small businesses for conferences. There have also been requests for a weekly post office, which we could site in the Parish Clerk's office and would be an added facility for our more elderly residents or for those who do not drive.",
+                    "postalCode": "OX11 0EX",
+                    "addressLocality": "Harwell, Didcot",
+                    "name": "Harwell Village Hall",
+                    "streetAddress": "High Street"
+                }
+            ],
+            "IMPACT": "Maximise ability to strengthen community cohesion and build social capacity",
+            "plannedDates": [
+                {
+                    "endDate": "07/10/2016",
+                    "startDate": "05/10/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Harwell Parish",
+                    "geoCode": "Vale of White Horse 015C"
+                }
+            ],
+            "amountDisbursed": 2000.0,
+            "currency": "GBP",
+            "awardDate": "08/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "Jul-15"
+                }
+            ],
+            "amountAppliedFor": 5000.0,
+            "title": "Harwell Village Hall Redevelopment Project",
+            "description": "Refurbishing the kitchen in the village hall."
+        },
+        {
+            "id": "360G-ocf-a061600000gCDaz",
+            "url": "http://cherwelltheatrecompany.co.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://cherwelltheatrecompany.co.uk",
+                    "id": "360G-ocf-org:1137145",
+                    "charityNumber": "1137145",
+                    "description": "Our Values and Aims: We believe that young people should be at the centre of everything we do and strongly advocate their training by industry professionals. We consider it our responsibility to create pathways for young actors, directors, writers, stage managers, designers and technicians into the theatre industry. We strive to serve our audience by producing high quality, affordable, accessible theatre for all ages. We believe good theatre should entertain, move and spark debate, but that it also enriches lives and brings communities together. We are 100% inclusive as a company and are committed to providing a nurturing, safe environment where young people can be creative without fear of judgement or failure. We promote the use of theatre as an educational tool and regularly tour our own original productions to secondary schools on issues we consider vital to the personal, social and health education of young people. We are also dedicated to providing career development opportunities for professionals in Oxfordshire. We are delighted to have given many local creatives their first jobs, commissioned works from previously unpublished playwrights, and encourage our artists to explore many different avenues with us. The services we provide: Weekly Youth Theatre classes. A theatre in education programme for the schools of Oxfordshire. An annual pantomime for and starring members of the local community. Other performance projects designed to include and connect with our community. A series of workshops we deliver to secondary schools and colleges on Improvisation, Brechtian Theatre, Monologue technique and Stanislavski. Tuition and coaching for young people who wish to audition for further acting training at a drama school level. Opportunities for career progression of our established professional artistes. Vital experience for Oxfordshire based creatives early in their careers in every aspect of the theatre industry. To tell you a little more about how we work with young people, CTC’s on-going policy is to work alongside them in every aspect of the development of our community productions. This application was initially co-written with three of our young members, then proof- read and tweaked by three others. Throughout the duration of initial planning from script writing, marketing strategy and all the way through to rehearsal and performances of the project, we enlist direct input from our young members, whilst at the same time mentor and continually feed back to them in order to nurture and develop their performing arts and arts admin skills as a whole. Every member of our ‘Senior Youth Group’ and the CTC Academy has been and will be involved in developing and adapting the project to suit the company’s purpose, making their contribution continual and integral to the shaping of the production. This is especially essential on this particular project as the play is designed for their target age group, so it is of vital importance that we find a way to tell the story and get the information across that we want to in their \"voice\", in a way that is not patronising to teenagers. We believe our approach is unique because we work as one company. We not only nurture our young people's creative talents but also encourage practical development of their learning by giving them professional-level responsibility and improving their general awareness of the arts, as well as the opportunity to work with professional actors and directors to shape their own professional practice.",
+                    "postalCode": "OX17 2NW",
+                    "addressLocality": "Middleton Cheney",
+                    "name": "Cherwell Theatre Company",
+                    "streetAddress": "11 Dands Close"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "01/12/2015",
+                    "startDate": "15/06/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 3000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Oxfordshire",
+                    "geoCode": "Cherwell 004A"
+                }
+            ],
+            "amountDisbursed": 3000.0,
+            "currency": "GBP",
+            "awardDate": "08/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "Jul-15"
+                }
+            ],
+            "amountAppliedFor": 8250.0,
+            "title": "The Web: Internet and Social Media Awareness Play",
+            "description": "Initial costs to stage the production."
+        },
+        {
+            "id": "360G-ocf-a061600000fz7aI",
+            "url": "http://www.irisproject.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.irisproject.org.uk",
+                    "id": "360G-ocf-org:1121868",
+                    "charityNumber": "1121868",
+                    "name": "The Iris Project",
+                    "description": "The Iris Project is an educational charity introducing the languages and culture of the ancient world to UK state schools in order to enrich the curriculum. It was founded in the belief that the opportunity to learn about Classical languages, literature, histories and art should be made available to all, regardless of background, and that learning about these fascinating subjects can be a vital tool in promoting learning across the school curriculum in UK state schools. We run a wide range of initiatives in state schools across the country, focusing especially on children in socially excluded inner city regions, and we also run projects which introduce Classics to adults in city communities. In October 2013 we opened the East Oxford Community Classics Centre, a community centre hosted at a secondary state school in East Oxford, which runs a wide range of projects, events, courses, workshops, talks and exhibitions targeted both for Cheney pupils within the school and also for the wider community."
+                }
+            ],
+            "IMPACT": "Connect people with the arts, culture and heritage",
+            "plannedDates": [
+                {
+                    "endDate": "18/12/2015",
+                    "startDate": "01/05/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "East Oxford",
+                    "geoCode": "Oxford 007A"
+                }
+            ],
+            "amountDisbursed": 2000.0,
+            "currency": "GBP",
+            "awardDate": "08/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "Jul-15"
+                }
+            ],
+            "amountAppliedFor": 5000.0,
+            "title": "Artefact story trails",
+            "description": "Artefact handling workshops for community and school groups"
+        },
+        {
+            "id": "360G-ocf-a061600000gCGhB",
+            "url": "http://WWW.GLOBALSOCCERCENTRE.CO.UK",
+            "recipientOrganization": [
+                {
+                    "url": "http://WWW.GLOBALSOCCERCENTRE.CO.UK",
+                    "id": "360G-ocf-org:001G000001b7BcJ",
+                    "description": "The aim of global smile is they go into the most deprived areas of oxford and run football, multi sport sessions for children and young people aged from 4-13 and youth sessions from 14-21. Global smile encourages everyone of all abilities and unlike a team its based on a come along as u wish basis where as with clubs etc u have to commit and pay yearly fees which for some parents this is not possible and due to family circumstances they may not be able to pay fees or be able to get to games etc . Global smile soccer centres also encourage children with behavioural and disabilities to come along and join in as unlike teams we provide an all inclusive environment currently Global has one girl with Cerebal Paulsy who benefits tremendously from interacting with the children and joining in her parents are delighted that she can take part in sport without having to attend a group specifically for disabled children we also have several children with behavioral conditions as well as a child whom is blind in one eye. For the older ones 14-21 global provides sessions and provide opportunities to the ones who show an interesting becoming a volunteer and then they can come and learn via the qualified coaches in the younger ones sessions and also assist them with helping them get onto a course for their coaching qualifications giving the older ones opportunities for a career pathway. As a parent volunteer I am trying so hard to help the project succeed but without a little funding support its going to become really hard to sustain the project. The coaches provide a kind caring environment and make the children feel so much more confident in what they do its just amazing.Global also help the children and youths get into clubs if this is what they wish to do and send children to charter standard clubs who they know have a very good standard of childrens welfare and keeping football fun they also are always happy to give parents advise on anything to. Another thing is global play music whilst doing their sessions and this promotes a lovely atmosphere where both children and adults enjoy this.",
+                    "postalCode": "OX4 3HL",
+                    "addressLocality": "Oxford",
+                    "name": "Global Smile",
+                    "streetAddress": "15 Frederick Road"
+                }
+            ],
+            "IMPACT": "Transform access to, and engagement with, the environment and public spaces",
+            "plannedDates": [
+                {
+                    "endDate": "25/06/2016",
+                    "startDate": "26/08/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "BLACKBIRD LEYS WOODFARM ROSEHILL",
+                    "geoCode": "Oxford 015C"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "08/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "Jul-15"
+                }
+            ],
+            "amountAppliedFor": 5000.0,
+            "title": "Global Smile",
+            "description": "Ongoing all inclusive sport in communities on estates"
+        },
+        {
+            "id": "360G-ocf-a061600000fzNz8",
+            "url": "http://www.talfestival.org",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.talfestival.org",
+                    "id": "360G-ocf-org:07023535",
+                    "description": "To provide an annual arts and literature festival in Thame. The Festival consists of approximately 30 events packed into the 3rd weekend in October and attracts up to 3,000 visitors, mostly from within 20 square miles though increasingly, as the reputation of the Festival has grown, from further afield. The Festival is a celebration of the written word in all its forms, from books through poetry, theatre, cinema & song and we work with both national and local organisations to bring this unique experience to life each year. Most notably, we have collaborated with the BBC for several events including Radio 4's Any Questions? The main element of the festival is author based talks and discussions - usually about their new works which includes all genres from fiction to science and history to gardening. More famous visitors have included, Charles Spencer, Jonathan Dimbleby, Mary Berry, Nick Robinson, Will Gompertz, Michael Morpurgo, Sophie Dahl and over 100 others, each of whom have brought us fascinating facts and stories.These talks are augmented with theatre productions, music of all types, cinema and an art-show based in Thame Museum. It all adds up to a heady weekend of huge fun and not a little challenge for all concerned. In addition to the main events, we host short story writing competitions, creative writing workshops and each year we host a 'new writings' event that so far has involved two musicals and a play. Our objective is to deliver a friendly, accessible (both in content and price), interesting and involved experience for our fesitval visitors and is summed up in our logo; Participate... Enjoy... Inspire...",
+                    "postalCode": "OX4 1EP",
+                    "addressLocality": "Oxford",
+                    "companyNumber": "7023535",
+                    "name": "TAL Festival Ltd",
+                    "streetAddress": "12 Aston Street"
+                }
+            ],
+            "IMPACT": "Connect people with the arts, culture and heritage",
+            "plannedDates": [
+                {
+                    "endDate": "01/09/2015",
+                    "startDate": "04/05/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Varied, Thame and surrounding villages plus neighbouring towns",
+                    "geoCode": "South Oxfordshire 003B"
+                }
+            ],
+            "amountDisbursed": 2000.0,
+            "currency": "GBP",
+            "awardDate": "07/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "Jul-15"
+                }
+            ],
+            "amountAppliedFor": 3000.0,
+            "title": "TAL Festival Communications Project",
+            "description": "Deploying an on-line booking system"
+        },
+        {
+            "id": "360G-ocf-a061600000gCs2R",
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:8303520",
+                    "postalCode": "CH63 9LN",
+                    "addressLocality": "Wirral",
+                    "companyNumber": "8303520",
+                    "name": "ITA Professional CIC",
+                    "streetAddress": "Poulton Hall Courtyard"
+                }
+            ],
+            "fromOpenCall": "No",
+            "amountAwarded": 39480.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "07/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "Jul-15"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA"
+                }
+            ],
+            "amountAppliedFor": 33980.0,
+            "title": "Scholarships & Office Manager",
+            "description": "Scholarships for students entering Year 2  and staff costs"
+        },
+        {
+            "id": "360G-ocf-a061600000gCe5j",
+            "url": "http://www.storymuseum.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.storymuseum.org.uk",
+                    "id": "360G-ocf-org:1107809",
+                    "charityNumber": "1107809",
+                    "description": "The Story Museum is a pioneering education charity established in Oxford in 2003. Our purpose is to inspire learning through story. We believe that stories are not just important for children’s learning and development; they are a fundamental part of what it means to be human. To that end we are gradually transforming our site in central Oxford (thanks to an Arts Council Small capital grant and other support from Trusts and Foundations) into a new kind of museum — the first of its kind — celebrating story in all its forms and acting as a hub for our education and engagement work. Since 2005 we have been running storytelling programmes in schools and communities across Oxfordshire that show the power of stories to inspire and transform learning. Our work has particularly targeted some of the most disadvantaged areas of the county and we work in partnership with a wide variety of communities and other like-minded organisations.",
+                    "postalCode": "OX1 1BP",
+                    "addressLocality": "Oxford",
+                    "name": "Story Museum",
+                    "streetAddress": "Rochester House"
+                }
+            ],
+            "fromOpenCall": "No",
+            "amountAwarded": 5000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Oxford",
+                    "geoCode": "Oxford 008A"
+                }
+            ],
+            "amountDisbursed": 5000.0,
+            "currency": "GBP",
+            "awardDate": "01/07/2015",
+            "grantProgramme": [
+                {
+                    "title": "Jun-15"
+                }
+            ],
+            "amountAppliedFor": 5000.0,
+            "title": "Maggie's Day",
+            "description": "Maggie's Day at the Story Museum"
+        },
+        {
+            "id": "360G-ocf-a061600000g0oy3",
+            "url": "http://www.trinityabingdon.org.uk/learning/",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.trinityabingdon.org.uk/learning/",
+                    "id": "360G-ocf-org:0011600001n4fEt",
+                    "description": "Aims: TrinityLearning has been set up to help improve the quality of life in local schools. Objectives: To model techniques that create stillness e.g. T’ai Chi for teachers & reflective story-telling To help reduce stress in staff by direct intervention such as stress INSET and pupil mentoring/enrichment To facilitate the development of spirituality in primary schools by working with staff & pupils To affirm ageing volunteers by developing their confidence as volunteers Activities: Over the last 5 years we have provided small-group workshop activities for some 3000 children from 20 local schools. Our major on-going project, Hello Abingdon, develops citizenship and literacy skills in teams of local & forces' children, but we also offer workshops on emotional literacy and R.E., as in our one large event, which attracts 300 children each year. We offer supported work experience places for SEN pupils from our three secondary schools (20 placements to date) and have delivered whole-school INSETS on stress-management to two primary schools. All our activities are provided free to state schools.",
+                    "postalCode": "OX14 1DB",
+                    "addressLocality": "Abingdon",
+                    "name": "TrinityLearning",
+                    "streetAddress": "The Conduit Centre, Conduit Road"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "23/10/2015",
+                    "startDate": "01/06/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1450.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "amountDisbursed": 1450.0,
+            "currency": "GBP",
+            "awardDate": "22/06/2015",
+            "grantProgramme": [
+                {
+                    "title": "Jul-15"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Abingdon area"
+                }
+            ],
+            "amountAppliedFor": 1450.0,
+            "title": "Hello Abingdon",
+            "description": "Upgrade of the I.T. equipment for  workshops for children from local and forces' families"
+        },
+        {
+            "id": "360G-ocf-a061600000gBjmD",
+            "url": "http://www.safeproject.org.uk/",
+            "recipientOrganization": [
+                {
+                    "url": "http://http://www.safeproject.org.uk/",
+                    "id": "360G-ocf-org:1143532",
+                    "charityNumber": "1143532",
+                    "description": "SAFE! supports 8 to 25 year olds in Oxfordshire who have been harmed by crime and bullying, and who are finding it hard to recover from their experience. Through individually-tailored sessions, usually in the young person’s home, Project Workers encourage the young person to develop strategies for regaining their confidence and sense of safety. Young victims typically feel unsafe in their key environments: their school, town and neighbourhood. Some are so traumatised from their experience of harm that they have become virtual prisoners in their homes. Research shows that without timely support, an experience of victimisation can lead to further problems including absence from school or work, post-traumatic stress or offending behaviour later on. SAFE! works to break this cycle by promoting long-term resilience and coping skills at a crucial time of young peoples' development. This diminishes their risk of social exclusion, helps to repair their lives and works to build their potential.",
+                    "postalCode": "OX4 2SU",
+                    "addressLocality": "Oxford",
+                    "companyNumber": "7630170",
+                    "name": "SAFE!",
+                    "streetAddress": "4640 Kingsgate"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2400.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "amountDisbursed": 2400.0,
+            "currency": "GBP",
+            "awardDate": "10/06/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Oxfordshire"
+                }
+            ],
+            "amountAppliedFor": 2400.0,
+            "title": "Child on Parent Violence",
+            "description": "Arts practitioners to to deliver participatory arts sessions for people with dementia. "
+        },
+        {
+            "id": "360G-ocf-a061600000gBSCy",
+            "url": "http://www.leysyouthprogramme.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.leysyouthprogramme.org.uk",
+                    "id": "360G-ocf-org:1099785",
+                    "charityNumber": "1099785",
+                    "description": "The Leys Youth Programme (LYP) is a locally-run youth initiative and mentoring programme which works with over 400 children and young people each year who live on the Blackbird Leys and Greater Leys housing estates in Oxford, the most deprived area in Oxfordshire. LYP combines football clubs, dance clubs, a home visiting programme, an art club, a craft/modelling club, youth clubs, mentoring groups and one-to-one advice. All of our activities are far more than 'social events' for the young people. Many of the young people we work with suffer from low self-esteem, low expectations, a lack of confidence and underdeveloped social skills, child poverty and, in particular, education underachievement. Through our projects we build constructive relationships with young people and are able to demonstrate that their expectations in life can be far greater than they often are. The young people are actively encouraged to participate in the running and leading of our projects.",
+                    "postalCode": "OX4 6DT",
+                    "addressLocality": "Oxford",
+                    "companyNumber": "4755142",
+                    "name": "Leys Youth Programme",
+                    "streetAddress": "79 Pegasus Road"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "fromOpenCall": "No",
+            "amountAwarded": 10000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Restricted"
+                }
+            ],
+            "amountDisbursed": 10000.0,
+            "currency": "GBP",
+            "awardDate": "03/06/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA"
+                }
+            ],
+            "amountAppliedFor": 19876.0,
+            "title": "Joining the Dots Programme",
+            "description": "Join up our school-based mentoring and our estate-based mentoring and activity clubs. "
+        },
+        {
+            "id": "360G-ocf-a06G000000dwsWo",
+            "url": "http://www.oxonplay.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.oxonplay.org.uk",
+                    "id": "360G-ocf-org:276706",
+                    "charityNumber": "276706",
+                    "description": "OPA's MISSION IS TO CHAMPION AND TO SUPPORT THE RIGHTS OF ALL CHILDREN AND YOUNG PEOPLE TO HAVE ACCESS TO HIGH QUALITY, INCLUSIVE, PLAY OPPORTUNITIES TO PROMOTE THEIR PHYSICAL, MENTAL AND SPIRITUAL WELL- BEING. OPA HAS BEEN OPERATING ACROSS OXFORDSHIRE SINE 1974. WE PROVIDE 4 MAIN AREAS OF WORK; 1) ADVICE, SUPPORT AND GUIDANCE = WE SUPPORT GROUPS AND INDIVIDUALS WHO WORK WITH CHILDREN AND YOUNG PEOPLE VIA OUR WEBSITE (www.oxonplay.org.uk), INSPIRING PLAY NEWSLETTER, PLAY CONFERENCE, OUTREACH ETC 2) ADVOCACY AND REPRESENTATION = WE ATTEND VARIOUS MEETINGS / PLANNING / STEERING GROUPS TO EVIDENCE HOW PLAY CAN HELP ACHIEVE VARIOUS STRATEGIES, PLANS TO INCLUDE HEALTHY WEIGHT, INCREASED PHYSICAL ACTIVITY ETC 3) PLAYWORK TRAINING = WE DELIVER ACCREDITED, PLAYWORK TRAINING FROM LEVEL 1 TO LEVEL 5 4) PLAY PROJECTS = WE DELIVER A SERIES OF PLAY PROJECTS ACROSS THE COUNTY TO INCLUDE PLAYDAY, COMMUNITY PLAYBACK, PLAYFUL WOODLANDS, NATURE PLAY, STREET PLAY, PLAYFUL COMMUNITIES ETC",
+                    "postalCode": "OX4 2ES",
+                    "addressLocality": "Oxford",
+                    "name": "Oxfordshire Play Association",
+                    "streetAddress": "The Healthy Living Centre"
+                }
+            ],
+            "plannedDates": [
+                {
+                    "endDate": "31/10/2015",
+                    "startDate": "01/04/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "amountDisbursed": 2000.0,
+            "currency": "GBP",
+            "awardDate": "12/05/2015",
+            "grantProgramme": [
+                {
+                    "title": "Feb-15"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "VARIOUS LOCATIONS ACROSS OXFORDSHIRE"
+                }
+            ],
+            "amountAppliedFor": 2000.0,
+            "title": "Play and Activity Days",
+            "description": "Play and activity days across Oxfordshire"
+        },
+        {
+            "id": "360G-ocf-a061600000fTNPW",
+            "url": "http://www.rosehilljyc.weebly.com",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.rosehilljyc.weebly.com",
+                    "id": "360G-ocf-org:1161836",
+                    "charityNumber": "1161836",
+                    "description": "Rose Hill Junior Youth Club offers children aged 6 -12 years, living in Rose Hill (RH) the chance to engage in safe, meaningful, creative and healthy activities. The organisation of the club is overseen and monitored by a volunteer management committee made up of local parents and residents, staff and local Councillors. The twice weekly club sessions are staffed by qualified play workers and supported by Oxfordshire Play Association. Launched in March 2011 the JYC supports up to 95 children each week at two club sessions. It is a totally inclusive club offering a wide range of activities for children aged 6 – 12 years. There is a nominal charge of 50p per child per session. This fee is waived if a parent is unable to afford the subscription. We offer specialist support to children with ADHD, Autism and Special Educational Needs (SEN) . Over 30% of children attending have some form of additional need. Many children in Rose Hill have challenging lives which impact on their behaviour. The therapeutic nature of play is crucial to their social, emotional and behavioural development. JYC offers children the opportunity to do things THEIR way, giving them autonomy, promoting self expression, allowing them to develop confidence, self worth, creativity and resilience. Often a stark contrast to life within school and home. JYC offers these children a structure of support and a choice of activities. When their needs are met (fun, societal, good food, positive reinforcement, independent choice) their behaviour improves considerably, they work through their challenges using play and spending time with trusted adults. For the majority of children attending, JYC is the only facilitated play opportunity in their lives. For the children not attending JYC, it is likely that there is none. The club also offers: ? A Young Leaders (YLs) programme for older children where: * YLs support and mentor younger ones, learn positive behaviour, social skills and self worth and support staff in chosen activities or run them independently ? A volunteering and training programme: *JYC offers support and training to local people wishing to gain experience working with children ? A healthy eating and cooking project: *children prepare, cook and serve a hot healthy tea at every session, lead by qualified nutritionist and kitchen team Our aims and objectives are: To give a child a sense of their own worth and capability To create a nurturing, safe and creative atmosphere To encourage positive language, social skills and communication To give enjoyment and respite from a child’s pressured and often traumatic life To provide an opportunity to engage in different kinds of innovative projects To work with children to raise their self esteem, self confidence and independence through creative activities To celebrate their success and encourage pride in their achievements",
+                    "postalCode": "OX4 4RE",
+                    "addressLocality": "OXFORD",
+                    "name": "Rose Hill Junior Youth Club",
+                    "streetAddress": "59 Ashhurst Way"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "02/02/2016",
+                    "startDate": "02/02/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 016F"
+                }
+            ],
+            "amountDisbursed": 1000.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Rose Hill TV",
+            "description": "To fund a project opportunity for children to develop, design and produce a 30 minute video"
+        },
+        {
+            "id": "360G-ocf-a061600000fxafR",
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "23/02/2016",
+                    "startDate": "23/02/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:1090174",
+                    "charityNumber": "1090174",
+                    "description": "We started our Explorer Scout Group a year ago to fill a gap in our community for 14 - 18 year old, boys and girls. Most had been at Scouts and we felt passionately that they should be able to continue their journey in Scouting. Word has spread and we have 22 members from across the city now, not just Marston .We meet weekly plus offer weekend activities for them. We invite visitors to the group to show their activity eg fencing, knotting or organsie Ready Steady Cook competitions, games in the park , hikes etc.We actively encourage our Explorers to put \"something back\". To this end we recently held a coffee morning fund raiser and invited the local community . We and they, enjoyed it so much we are going to offer cream teas in the summer so as to continue to forge community links, particularly with the elderly. Come if you can , the homemade cakes produced for the coffee morning were very impressive ! As a result of this initiative the Scouts decided to make a donation from their profits to a project that helps street children. Some have undergone training to become young leaders and are volunteering now in their own time at various Scout troops. Others are working in Charity shops shops and have helped at dance classes tor younger children. We exist on the termly subs that the Explorers pay , trips to the park or cooking on an open fire are cheap As we have started from scratch we have no equipment of our own.We are reliant on borrowing tents from the local Scout troop, if dates clash we cant take the whole unit camping. We aim to subsidise all of our activities to make them accessible to all.",
+                    "postalCode": "OX3 0HF",
+                    "addressLocality": "OXFORD",
+                    "name": "AMADEUS EXPLORER SCOUTS",
+                    "streetAddress": "C/O 85 EDGEWAY RD"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 250.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 004D"
+                }
+            ],
+            "amountDisbursed": 250.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 500.0,
+            "title": "Camping Amadeus",
+            "description": "To subsidise all of scouting activities to make them accessible to all."
+        },
+        {
+            "id": "360G-ocf-a061600000fxXAp",
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "01/11/2015",
+                    "startDate": "01/01/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:0011600001m3yJy",
+                    "description": "We are a wholly voluntary group supporting Vale House, Oxford (which is a registered charity that provides care for sufferers from end stage dementia and similar conditions and is located in Sandford on Thames in Oxfordshire) by providing extra equipment and various small items to enhance the quality of life of residents throughout the year. We do this by holding regular small fundraising events throughout the year. Our aim is to improve the lives those with dementia who are nearing the end of their lives and who need specialist care; this includes helping the families of those suffering from this debilitating condition. In the past, for example, we provided Vale House with a hairdressing facility, to enable all the residents to have the appropriate hair care on the premises.",
+                    "postalCode": "OX2 0HW",
+                    "addressLocality": "Oxford",
+                    "name": "Vale House League of Friends",
+                    "streetAddress": "C/O Mrs E Wilks, 226 Botley Road"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 650.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "South Oxfordshire 006E"
+                }
+            ],
+            "amountDisbursed": 650.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 650.0,
+            "title": "Garden Seating for use of Residents and their Families",
+            "description": "Two bench seats in the grounds of Vale House, for the use of residents, families and friends"
+        },
+        {
+            "id": "360G-ocf-a061600000fSvIn",
+            "url": "http://www.keenoxford.org",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.keenoxford.org",
+                    "id": "360G-ocf-org:1157084",
+                    "charityNumber": "1157084",
+                    "description": "Please note that in June 2014, KEEN became a charitable incorporated organisation with registered charity number 1157084. Prior to that, we operated under the name K.E.E.N (Kid's Enjoy Exercise Now), registered charity number 299786. Since this transition, our provision to our disabled service users has remained unchanged. KEEN provides free sporting and social activities for children and young adults with wide ranging needs and disabilities. We aim to provide one-to-one support to our service users (our \"Athletes\") from dedicated volunteers (our \"Coaches\"), who are largely students from Oxford's two universities. We run four different sessions, which take place each week of Oxford University term time. These include a multi-sports club for ages 4 - 25 (called AllSorts), two social clubs for teenagers and adults respectively (KEEN teens and GrEAT) as well as a creative session aimed at primary school age children (Zig-Zag). In additional to these, KEEN runs various one-off holiday activities, known as \"KEEN+\", which include swimming, pantomime visits, day-trips and more. KEEN gives disabled young people from Oxfordshire the opportunity to take part in a variety of activities that are similar to those enjoyed by their able bodied peers, yet may otherwise be unavailable to them. Our high level of support means that we can cater to a wide range of needs and disabilities, and tailor activities such that everyone can get involved. By linking local disabled young people with volunteers of a similar age, we provide a safe, social environment where our Athletes can develop their confidence and skills.",
+                    "postalCode": "OX1 3DH",
+                    "addressLocality": "Oxford",
+                    "name": "Keen (Kids Enjoy Exercise Now)",
+                    "streetAddress": "16 -17 Turl Street"
+                }
+            ],
+            "IMPACT": "Promote reduction of isolation and disadvantage and access to local services",
+            "plannedDates": [
+                {
+                    "endDate": "18/06/2016",
+                    "startDate": "17/10/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 018A"
+                }
+            ],
+            "amountDisbursed": 1000.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "AllSorts",
+            "description": "Venue hire and the transport provision for our volunteers."
+        },
+        {
+            "id": "360G-ocf-a061600000fSgZP",
+            "url": "http://www.ocv.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.ocv.org.uk",
+                    "id": "360G-ocf-org:1065601",
+                    "charityNumber": "1065601",
+                    "description": "Oxford Conservation Volunteers (OCV) is a local community group that has been carrying out practical work to protect and enhance green spaces in the Oxford area since 1977. The group is entirely run by volunteers and organises work parties every weekend throughout the year at nature reserves around Oxfordshire. The tasks are free and open to all, including students, professionals, unemployed and homeless volunteers. Transport to and from tasks is free and volunteers are only asked to provide sensible clothing, a packed lunch and lots of enthusiasm. Membership is optional and costs £5 per year for those who can afford it, but is not required to participate in the tasks. This ensures that our group is as inclusive as possible and that volunteers from disadvantaged backgrounds are able to participate fully in our activities. One of our key aims is to provide training in countryside management skills to our volunteers. Through this training, a number of our unemployed volunteers have been able to gain the skills that have been instrumental in finding paid employment, particularly in the gardening sector. OCV undertakes a wide variety of projects, including traditional countryside management tasks such as coppicing, dry-stone walling and hedge-laying, and other tasks such as footpath maintenance, fencing, pond management, scrub clearance and fen raking. In 2014, OCV volunteers worked an estimated 3000 volunteer hours and worked at 27 sites around Oxford and Oxfordshire. OCV’s clients include well-recognised organisations such as Oxford City Council, Natural England, the Buckinghamshire Berkshire & Oxfordshire Wildlife Trust, and local organisations such as The Friends of the Trap Grounds and the Oxford Preservation Trust.",
+                    "postalCode": "OX3 7LX",
+                    "addressLocality": "OXFORD",
+                    "name": "Oxford Conservation Volunteers",
+                    "streetAddress": "9 Stapleton Road"
+                }
+            ],
+            "IMPACT": "Transform access to, and engagement with, the environment and public spaces",
+            "plannedDates": [
+                {
+                    "endDate": "01/05/2016",
+                    "startDate": "01/05/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 600.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 014C"
+                }
+            ],
+            "amountDisbursed": 600.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 600.0,
+            "title": "Training Oxford Conservation Volunteers in Traditional Countryside Management Skills",
+            "description": "3 training days to cover coppicing, hedge-laying and dry-stone walling."
+        },
+        {
+            "id": "360G-ocf-a061600000fS9lW",
+            "url": "http://tiny.cc/3rdBicester",
+            "recipientOrganization": [
+                {
+                    "url": "http://tiny.cc/3rdBicester",
+                    "id": "360G-ocf-org:001G0000017Xscl",
+                    "description": "We provide \"everyday adventures\" and life skills to young people from age 6 to 18 in accordance with the practices of the Scout Association. Serving one of the poorer arrears of Bicester we have a high proportion of low income and special needs young people and are passionate about giving them opportunities they would not have access to in their everyday lives. These are frequently centred around residential experiences where the young people may begin to learn independent skills.",
+                    "postalCode": "OX26 3ED",
+                    "addressLocality": "Bicester",
+                    "name": "3rd Bicester (Glory Farm) Scout Group",
+                    "streetAddress": "16 Oxlip Leyes"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "24/04/2015",
+                    "startDate": "24/04/2014"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Cherwell 013D"
+                }
+            ],
+            "amountDisbursed": 500.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Group Trailer Project",
+            "description": "Purchase trailer box for scouting activities"
+        },
+        {
+            "id": "360G-ocf-a061600000fxX4X",
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "23/02/2016",
+                    "startDate": "23/02/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:001G000000hziDN",
+                    "description": "A club for the Over 60's in the Bodicote.Twyford and Adderbury areas.",
+                    "postalCode": "OX17 3SH",
+                    "addressLocality": "Banbury",
+                    "name": "Adderbury Evergreens",
+                    "streetAddress": "7 Falkners Close"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Cherwell 008A"
+                }
+            ],
+            "amountDisbursed": 500.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 500.0,
+            "title": "Evergreen Club ongoing",
+            "description": "On subsidised coaches, speakers, entertainment and odd meal out"
+        },
+        {
+            "id": "360G-ocf-a061600000fTWB9",
+            "IMPACT": "Transform access to, and engagement with, the environment and public spaces",
+            "plannedDates": [
+                {
+                    "endDate": "30/09/2016",
+                    "startDate": "01/05/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:001G000000hziRu",
+                    "description": "Kidlington Evergreen Club is a not-for-profit social organisation primarily, but not exclusively, for over-55 residents in the Kidlington local area. The club meets fortnightly on Wednesdays with the objective of providing a social forum with some form of organised entertainment as part of each meeting. To facilitate the social environment, tea and biscuits are provided. During the summer period, the club endeavours to arrange subsidised coach outings - coach hire generally being quite expensive - so that those participating do not have a significant outlay. In December, a subsidised Christmas lunch is organised, again so that those attending do not have a significant outlay.",
+                    "postalCode": "OX5 2NP",
+                    "addressLocality": "Oxford",
+                    "name": "Kidlington Evergreen Club",
+                    "streetAddress": "85 Oxford Road"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Cherwell 018A"
+                }
+            ],
+            "amountDisbursed": 500.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Summer Coach Outings",
+            "description": "Subsidise coach hire for club outings"
+        },
+        {
+            "id": "360G-ocf-a061600000fyr3q",
+            "IMPACT": "Transform access to, and engagement with, the environment and public spaces",
+            "plannedDates": [
+                {
+                    "endDate": "07/12/2015",
+                    "startDate": "06/07/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:001G000000hziGb",
+                    "description": "We are Bicester Widows Club and we are not a bereavement club but aim to bring people together that have lost their loved ones and need to make new friends and contacts and generally enjoy life without their partners.",
+                    "postalCode": "OX33 1TL",
+                    "addressLocality": "xOxford",
+                    "name": "Bicester Widows Club",
+                    "streetAddress": "via Secretary 13 Centre Rise, Horspath,"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Bicester and surrounding areas",
+                    "geoCode": "South Oxfordshire 002D"
+                }
+            ],
+            "amountDisbursed": 500.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Funding for Bicester Widows Club",
+            "description": "Subsidise all trips, lunches, Christmas events etc."
+        },
+        {
+            "id": "360G-ocf-a061600000fz9x9",
+            "IMPACT": "Maximise ability to strengthen community cohesion and build social capacity",
+            "plannedDates": [
+                {
+                    "endDate": "07/06/2015",
+                    "startDate": "07/06/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:001G000000hziEH",
+                    "description": "We are an open social group of people from Ardley, Fritwell, Souldern, and Bicester of mixed ages, who enjoy day’s out/holidays visiting gardens, speaker evenings lunches and putting on the ‘Annual Flower & Produce’ show once a year for the local community. We do not expect our memmbers to be professional gardeners or even a gardener or have any knowledge of gardening.We try to get our members to interact socially by meeting on a regular basis. Our holidays, outings and speaker evenings are open to all.",
+                    "postalCode": "OX27 7PB",
+                    "addressLocality": "Bicester",
+                    "name": "Ardley & Fewcott Gardening Club",
+                    "streetAddress": "27 Ardley Rd, Fewcott"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 300.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Ardley & Fewcott, Fritwell, Souldern and Bicester",
+                    "geoCode": "Cherwell 011B"
+                }
+            ],
+            "amountDisbursed": 300.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 300.0,
+            "title": "Coach Outing, to either the New Forest or Penhurst Place.",
+            "description": "Coach hire for a day for some of our less able members who find walking difficult."
+        },
+        {
+            "id": "360G-ocf-a061600000fzZbL",
+            "url": "http://www.breatheeasybanbury.info",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.breatheeasybanbury.info",
+                    "id": "360G-ocf-org:326730",
+                    "charityNumber": "326730",
+                    "description": "A support and activities group for people, family and interested parties involved with all aspects of living and working with the affects of lung disease. The group meets monthly for social interaction and to gain information and support. Many of our group are coping with the advanced affects of lung disease and may normally be housebound but otherwise may have very restricted mobility and the group is possibly the only way they have of getting out and about. Other members who are less affected share the active part of the volunteering. There are also other activities where Breathe Easy Banbury uses community facilities to promote awareness of what help is available relating to lung disease.",
+                    "postalCode": "OX16 2LY",
+                    "addressLocality": "Banbury",
+                    "name": "Breathe Easy Banbury",
+                    "streetAddress": "28 Nursery Drive"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "30/06/2016",
+                    "startDate": "01/07/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Banburyshire",
+                    "geoCode": "Cherwell 002B"
+                }
+            ],
+            "amountDisbursed": 1000.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 1600.0,
+            "title": "Breathe Easy Banbury",
+            "description": "General running costs of group"
+        },
+        {
+            "id": "360G-ocf-a061600000fyp2q",
+            "url": "http://www.wotg.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.wotg.org.uk",
+                    "id": "360G-ocf-org:264754",
+                    "charityNumber": "264754",
+                    "description": "Weston on the Green Memorial Village Hall is for use the inhabitants of Weston on the Green ( and surrounding area) for clubs, societies, meetings and lunches. The objective is to improve the social and mental well- being of the local population by providing a range of activities in the Hall. The demographic of the population benefiting from these activities tends to be the over 60s. The Hall provides a meeting place for keep fit, WI, local History group, film nights, lunch clubs and Big Breakfast, music nights, talks and other events organised by the Village Hall Committee (a team of 5 ranging in age from 36- 82!)",
+                    "postalCode": "OX25 3QR",
+                    "addressLocality": "Weston on the Green",
+                    "name": "Weston on the Green Memorial Village Hall",
+                    "streetAddress": "Mill Lane"
+                }
+            ],
+            "IMPACT": "Transform access to, and engagement with, the environment and public spaces",
+            "plannedDates": [
+                {
+                    "endDate": "18/12/2015",
+                    "startDate": "01/05/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 720.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Weston on the Green",
+                    "geoCode": "Cherwell 016B"
+                }
+            ],
+            "amountDisbursed": 720.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "2015"
+                }
+            ],
+            "amountAppliedFor": 720.0,
+            "title": "Industrial dishwasher for the kitchen",
+            "description": "Industrial dishwasher for our Village Hall"
+        },
+        {
+            "id": "360G-ocf-a061600000fzO0f",
+            "url": "http://www.oalproject.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.oalproject.org.uk",
+                    "id": "360G-ocf-org:1159579",
+                    "charityNumber": "1159579",
+                    "name": "Over and Above the Line",
+                    "description": "OAL runs creative writing workshops in after school clubs and other charitable organisations to improve literacy, critical thinking, team building and self-confidence. We work with young people aged 8 - 18 who might be struggling to meet the curriculum in school, who speak English as a second language, who have been identified by the school as 'needing extra support to tackle poor literacy', or who might have been identified as being disruptive in school or in the local community. OAL also works with young people who have been identified by schools and educational workers as being able to achieve higher grades given the right support outside of school hours. The workshops are run by professional writers/tutors and volunteers and are designed to encourage re-engagement with learning and with literature/story that will improve understanding and performance in education. The workshops involve each young person completing an original piece of creative writing with the help of the tutors and their peers. Critical reflection and feedback is encouraged throughout as a way of nurturing confidence and to promote team building within the group. Peer-to-peer mentoring also encourages respect for fellow cohorts and a new critical appreciation of the way language can be applied in creative and practical ways. Such understanding improves language and written skills, encourages an appreciation of learning and greatly improves future chances in education, in work and in personal life. Our aim is to help all of the young people we work with to reach their full potential and to reengage with learning and good literacy. Other benefits include a renewed appreciation of story/literature that we have seen improve behaviour and engagement in class and in personal life. All of the stories created during OAL workshops are then edited by professionals and uploaded onto our website as part of the OAL Project which aims to collect 200 stories this year alone. These stories will act as a resource and inspiration to other young people across the UK. There will also be teaching resources and information/activities for parents to help them engage their children and continue to improve literacy and an appreciation of learning. Once edited and uploaded onto our website, the stories are accompanied by a short biography and photograph of the author. This inclusion in the OAL Project Story Collection is also invaluable for improving self-confidence and creating a well-deserved sense of achievement. We also try to run a small Graduation Ceremony at the end of each course and have actors/storytellers come in and read the stories so that the young people get to experience their work in a new light and enjoy a sense of completion. Fellow students, teachers, family and friends are all invited to the graduation. The OAL Project will eventually grow to incorporate Mp3 downloads of spoken stories, artwork created by young people involved in the project in response to the stories (like we are doing now with our Telling Stories event to be held at SJE Arts in April) and recordings of songs and poems created during workshops. The overall aim of OAL is to inspire young people and to show them that words are not simply abstract but a vital means of creative and practical expression, and that good literacy can greatly improve a person’s future chances in life in all areas."
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "05/03/2016",
+                    "startDate": "05/03/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1471.5,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Blackbird Leys",
+                    "geoCode": "Oxford 018A"
+                }
+            ],
+            "amountDisbursed": 1471.5,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Apr-15"
+                }
+            ],
+            "amountAppliedFor": 1471.5,
+            "title": "The OAL Project",
+            "description": "New laptops and training new tutors"
+        },
+        {
+            "id": "360G-ocf-a061600000fzO4N",
+            "url": "http://www.theislandtrust.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.theislandtrust.org.uk",
+                    "id": "360G-ocf-org:1049722",
+                    "charityNumber": "1049722",
+                    "description": "Aims and objectives: 1. To improve motivation and self-esteem through sail training. 2. To serve disadvantaged young people aged 14 - 25, including those with special needs/disability and who are vulnerable and experiencing hardship through deprivation. 3. To enable and support young people who would not ordinarily be able to access the challenge and adventure of marine activities 4. To educate young people in maritime skills (navigation, chart work, knotting, practical sailing skills) and related careers 5. To equip beneficiaries with social skills and Royal Yachting Association accredited sailing skills to underpin CV's and improve employability and confidence. 6. To promote leadership, teamwork and communication skills. 7. To encourage independent living skills Activities and services: Working out of Plymouth, The Island Trust operates a small fleet of 3 traditional sailing vessels, staffed by highly experienced Royal Yachting Association qualified instructors and youth workers. Referrals are taken from schools, youth groups and community organisations. Whilst on board, the young people sail, cook, clean and work together to ensure safe and enjoyable passage around the waters of the South West. The Island Trust also participates in UK wide regattas and races, including the Tall Ships Race.",
+                    "postalCode": "EX2 4NP",
+                    "addressLocality": "Exeter",
+                    "companyNumber": "3107339",
+                    "name": "The Island Trust Ltd",
+                    "streetAddress": "10 Manston Terrace"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "22/05/2015",
+                    "startDate": "17/05/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 2000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Oxfordshire - cross county",
+                    "geoCode": "South Oxfordshire 002A"
+                }
+            ],
+            "amountDisbursed": 2000.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Apr-15"
+                }
+            ],
+            "amountAppliedFor": 2000.0,
+            "title": "Sail to Success",
+            "description": "Residential personal development sail training or 8 Woodeaton Manor School students."
+        },
+        {
+            "id": "360G-ocf-a061600000fSp8A",
+            "IMPACT": "Transform access to, and engagement with, the environment and public spaces",
+            "plannedDates": [
+                {
+                    "endDate": "31/07/2015",
+                    "startDate": "01/04/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:001G000000hzihE",
+                    "description": "To provide opportunities for visually impaired people aged 18-50 in Oxfordshire to meet socially and have fun and to provide a support network",
+                    "postalCode": "OX5 3AP",
+                    "addressLocality": "Kidlington",
+                    "name": "VIBNO (Visually Impaired But Not Old)",
+                    "streetAddress": "19 St John's Road"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Oxfordshire",
+                    "geoCode": "West Oxfordshire 004C"
+                }
+            ],
+            "amountDisbursed": 500.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Apr-15"
+                }
+            ],
+            "amountAppliedFor": 500.0,
+            "title": "Narrow Boat Hire",
+            "description": "Hire of horse drawn narrow boat to enjoy a day out on the river"
+        },
+        {
+            "id": "360G-ocf-a061600000fzZIO",
+            "url": "http://www.oxfordshire.enrych.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.oxfordshire.enrych.org.uk",
+                    "id": "360G-ocf-org:1119954",
+                    "charityNumber": "1119954",
+                    "description": "Enrych Oxfordshire recognise that a physical disability should not prevent anyone from having access to opportunities to enjoy leisure or benefit from learning. We work with adults with a physical disability, enabling them to access educational and social opportunities by organising activities, making introductions to other organisations or by pairing them with a volunteer who can assist them. ENRYCH Oxfordshire runs a thriving project for the benefit of people with a physical disability who live in Oxfordshire. We enable people with a disability to claim back a huge part of their lives and indulge in some of life’s simple, but essential pleasures same as people without physical disabilities do. Suitable and like-minded volunteers are recruited to support individuals in following their chosen interests on a one to one basis. This may involve visits at home or trips out within the local community. A smaller number, who may not wish for a volunteer, are facilitated to join a local college or specialist club.",
+                    "postalCode": "OX11 7PH",
+                    "addressLocality": "Didcot",
+                    "name": "Enrych Oxfordshire",
+                    "streetAddress": "Didcot Enterprise Park"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "31/05/2016",
+                    "startDate": "01/06/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1976.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Across Oxfordshire",
+                    "geoCode": "South Oxfordshire 009A"
+                }
+            ],
+            "amountDisbursed": 1976.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Apr-15"
+                }
+            ],
+            "amountAppliedFor": 1976.0,
+            "title": "Phone Pals Community Line",
+            "description": " 6 one hour weekly ‘conference calls’ between 6/8 members and a trained volunteer facilitator."
+        },
+        {
+            "id": "360G-ocf-a061600000fzZO2",
+            "url": "http://www.oxfordshiregirlguiding.org.uk/",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.oxfordshiregirlguiding.org.uk/",
+                    "id": "360G-ocf-org:306016",
+                    "charityNumber": "306016",
+                    "description": "Girlguiding gives girls and young women a space where they can be themselves, have fun, build brilliant friendships, gain valuable life skills and make a positive difference to their lives and their communities. We build girls’ confidence and raise their aspirations. We give them the chance to discover their full potential and encourage them to be a powerful force for good.",
+                    "postalCode": "OX2 7QQ",
+                    "addressLocality": "Oxford",
+                    "name": "Oxford City II Division Guides",
+                    "streetAddress": "21 Water Eaton Road"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "31/07/2015",
+                    "startDate": "25/07/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 700.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Kidlington, North Oxford, Marston, Botley",
+                    "geoCode": "Oxford 002A"
+                }
+            ],
+            "amountDisbursed": 700.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Apr-15"
+                }
+            ],
+            "amountAppliedFor": 700.0,
+            "title": "Quest camp 2015",
+            "description": "Hire of a marquee and a van to transport to and from camp. "
+        },
+        {
+            "id": "360G-ocf-a061600000fzEFF",
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "28/02/2016",
+                    "startDate": "28/02/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:1089136",
+                    "charityNumber": "1089136",
+                    "description": "We support 34 adults with learning disability who are in Supported Living in the Abingdon area through the provision of services not provided from statuary funds or outside the limits of their personal budgets to assist them to achieve as good a quality of life as is possible. There are many day to day activities which, if you are not disabled, can be taken for granted. Many of the residents we support have physical as well as mental disabilities and not only is it more difficult for them to take part in these activities but it is more expensive because of the need for staff support and special equipment.",
+                    "postalCode": "OX14 4EH",
+                    "addressLocality": "Abingdon",
+                    "name": "Friends of Stowford, Abingdon",
+                    "streetAddress": "18 School Lane, Milton"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "OCF Unrestricted"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "name": "Abingdon",
+                    "geoCode": "Vale of White Horse 015B"
+                }
+            ],
+            "amountDisbursed": 1000.0,
+            "currency": "GBP",
+            "awardDate": "27/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Apr-15"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "NEW OPPORTUNITIES TO IMPROVE LEARNING AND LIVING IN THE COMMUNITY",
+            "description": "We would like to purchase 4 laptops."
+        },
+        {
+            "id": "360G-ocf-a061600000fxX72",
+            "IMPACT": "Maximise ability to strengthen community cohesion and build social capacity",
+            "plannedDates": [
+                {
+                    "endDate": "01/04/2016",
+                    "startDate": "01/04/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:0011600001m3vh2",
+                    "description": "To benefit the less advantaged neighbourhoods and communities in Oxford, particularly the young, the elderly, the disabled and those that are socially isolated by developing community transport so that these underprivileged people can get out more. We now use our mini-bus in conjunction with a number of other charities based in Oxford, including the Oxford Hub, Yellow Submarine, Branch Up, Cutteslowe Community Centre, Wolvercote Young Peoples Club, and local schools and churches.",
+                    "postalCode": "OX2 8AT",
+                    "addressLocality": "OXFORD",
+                    "name": "C W W (Cutteslowe, Wolvercote, Wytham) Co-operative Trust",
+                    "streetAddress": "4 Cyprus Terrace, Wolvercote,"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 001C"
+                }
+            ],
+            "amountDisbursed": 500.0,
+            "currency": "GBP",
+            "awardDate": "22/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Oxford Neighbourhood Support",
+            "description": "To recruit more minibus drivers to provide transport for isolated elderly to events."
+        },
+        {
+            "id": "360G-ocf-a061600000fSvO3",
+            "IMPACT": "Promote reduction of isolation and disadvantage and access to local services",
+            "plannedDates": [
+                {
+                    "endDate": "31/03/2016",
+                    "startDate": "01/04/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:1087645",
+                    "charityNumber": "1087645",
+                    "description": "To provide a weekly lunch and other occasional social activities for elderly people in the Sibfords and surrounding villages.",
+                    "postalCode": "OX155QN",
+                    "addressLocality": "Banbury",
+                    "companyNumber": "No. 394744",
+                    "name": "Fielding Day Centre Ltd",
+                    "streetAddress": "Greenfields, Sibford Ferris"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 670.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Cherwell 009E"
+                }
+            ],
+            "amountDisbursed": 670.0,
+            "currency": "GBP",
+            "awardDate": "22/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 960.0,
+            "title": "Transport for wheelchair users",
+            "description": "Providing transport for our wheelchair members"
+        },
+        {
+            "id": "360G-ocf-a061600000fxaqt",
+            "url": "http://opaoxford.org",
+            "recipientOrganization": [
+                {
+                    "url": "http://opaoxford.org",
+                    "id": "360G-ocf-org:001G000000v2bCI",
+                    "description": "*Linking local communities in Blackbird Leys area (mainly Eastern European, but also others). *Providing various support to communities (job search, writing CV, liaison with MIND, Polish Psychologists’ Association and many others), these meetings are held 2 x month. *Organising sports activities (currently ones per month), involving all families and various guests (dance school, Polish Football Temp, Atado Tigers, Box team). *Celebrating Polish and Eastern European culture, language and customs. *Co-operation with polish School, local businesses, Students' Society, Film Festivals, various charities and volunteering organisations. *Bringing the local customs and law to our attendees (meetings with the Police, Lawyers etc) *Organisation of annual events for Children Day and other national events (Grandma's day, Women's day etc.). *We have organised a series of events last year: http://oxford101010.org/",
+                    "postalCode": "OX4 6DP",
+                    "addressLocality": "Oxford",
+                    "name": "Oxford Polish Association (OPA)",
+                    "streetAddress": "68"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "31/03/2016",
+                    "startDate": "01/04/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 540.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 018A"
+                }
+            ],
+            "amountDisbursed": 540.0,
+            "currency": "GBP",
+            "awardDate": "15/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Monday Workshops and Family Sport Fun Days",
+            "description": "To hire room for events for the Leys Community in particular the Eastern European minority group."
+        },
+        {
+            "id": "360G-ocf-a061600000fT1Y4",
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "01/04/2016",
+                    "startDate": "01/04/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:001G000000hzij1",
+                    "description": "A Youth Centre providing activities for children and young people living in the Churchill and Lye Valley wards of Oxford.. We currently run a Girls Group on a Tuesday evening; a general youth work session on a Wednesday evening and a junior group ( under 10s ) on a Friday evening. During the Easter and Summer school holidays the centre is used for a recreational programme for young people..",
+                    "postalCode": "OX3 7HU",
+                    "addressLocality": "Oxford",
+                    "name": "Wood Farm Youth Centre",
+                    "streetAddress": "41 Bulan Road"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 010B"
+                }
+            ],
+            "amountDisbursed": 500.0,
+            "currency": "GBP",
+            "awardDate": "15/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Girls Group ; Project on - going..Funding",
+            "description": "To purchase art and craft materials and to help with the volunteer expenses"
+        },
+        {
+            "id": "360G-ocf-a061600000fxamw",
+            "url": "http://www.theoxfordshirewheel.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.theoxfordshirewheel.org.uk",
+                    "id": "360G-ocf-org:07585256",
+                    "description": "The Oxfordshire Wheel is a countywide, pan disability user led organisation, which operates within the co-operative model. The organisation supports the delivery of Self Directed Support, through the provision of information, advice and training services, regarding health, social care and benefits. The aims of the Oxfordshire Wheel are to be proactive in the development of independent living and its principals. To support and train people in the development and changes across health and social care in Oxfordshire, which will improve the lives of those who use those services. The Oxfordshire Wheel has two services - the Community Independent Support Service and the Community Learning Service. The Community Support Service currently delivers, two mornings a week, a free one-to-one expert advise service to those needing help with their benefits. This service has also been providing the administrative support to Oxfordshire County Council for the Support with Confidence Scheme, which is a scheme to support the training and development of Personal Assistants across Oxfordshire. The Community Learning Service has developed a range of accredited modules to support Self Directed Support, and these are currently being delivered with funding from the European Social Fund to both service users, and people who wish to become Personal Assistants.",
+                    "postalCode": "OX16 5TH",
+                    "addressLocality": "Banbury",
+                    "companyNumber": "7585256",
+                    "name": "The Oxfordshire Wheel Ltd",
+                    "streetAddress": "Suite 5, Borough House, Marlborough Road"
+                }
+            ],
+            "IMPACT": "Promote reduction of isolation and disadvantage and access to local services",
+            "plannedDates": [
+                {
+                    "endDate": "01/04/2016",
+                    "startDate": "01/04/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Cherwell 004A"
+                }
+            ],
+            "amountDisbursed": 500.0,
+            "currency": "GBP",
+            "awardDate": "15/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Community Independent Support Service",
+            "description": "Recruit and train volunteers to expand from two mornings to three days a week"
+        },
+        {
+            "id": "360G-ocf-a061600000fTDjT",
+            "IMPACT": "Transform access to, and engagement with, the environment and public spaces",
+            "plannedDates": [
+                {
+                    "endDate": "15/08/2016",
+                    "startDate": "15/08/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:001G000000hziOH",
+                    "description": "The aim of the Club is to provide social and recreational activities plus relevant information for the benefit of older residents in the rural parishes of Fritwell, Souldern and Ardley. The villages are isolated communities with few facilities and transport links. The majority of members are in the 70s and 80s. Many have mobility constraints and live alone. Many do not have personal transport. The Club has a committee of seven volunteers who organize an activity or visit each month. The activities are based on encouraging individuals to engage in events which help to minimize isolation and promote the maintenance of independent living. This is achieved by providing mental stimulation and physical activities which encourage health and well being for the elderly and frail who are disadvantaged and isolated living alone on limited incomes. Activities reflect the needs and wants of the members and for many the trips are the only time they visit places outside of their communities.",
+                    "postalCode": "OX277NX",
+                    "addressLocality": "Fewcott, Bicester",
+                    "name": "Fritwell Forget Me Not Club",
+                    "streetAddress": "C/O Secretary, Glenayre, Water Lane ,"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 845.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Cherwell 011B"
+                }
+            ],
+            "amountDisbursed": 845.0,
+            "currency": "GBP",
+            "awardDate": "15/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 845.0,
+            "title": "Luncheon Club",
+            "description": "Three lunches for the elderly club members"
+        },
+        {
+            "id": "360G-ocf-a061600000fTLOM",
+            "url": "http://www.thamesafari.org.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.thamesafari.org.uk",
+                    "id": "360G-ocf-org:1159560",
+                    "charityNumber": "1159560",
+                    "description": "Safari is a support group for adults with special needs living in and around Thame, Oxfordshire. We provide information and recreational activities to improve quality of life, help develop friendships and build self esteem. We also offer support to parents and carers through providing a meeting place for them to share concerns and access information. We support our members so that they can fully engage with community activities, thereby encouraging social inclusion, lessening isolation and increasing independence. We aim to encourage understanding and acceptance of disability in the community. We meet three times a month for activities such as discos, sports coaching, quizzes, bowling,meals out and visits to shows. We have also run workshops in the past in which members have made items that we have sold at the local market. Our workshops offered work experience to our members and the satisfaction of selling their products and contributing to society through work. The working group, called the 'Wombles' won a £3500 grant from Thame Town Council. Our vision for the future is to provide a building to act as both a social hub and a workshop to make craft goods. We also want to run a cafe to give our members valuable work experience and the skills to enable them to enter the workplace and become independent. Fewer than one in five people with a learning disability work, yet according to Mencap, at least 65% would like to work, for the same reasons as everyone else - for a sense of purpose and identity.",
+                    "postalCode": "OX9 3DF",
+                    "addressLocality": "Thame",
+                    "name": "SAFARI",
+                    "streetAddress": "3 Fleetwood Way"
+                }
+            ],
+            "IMPACT": "Improve life skills, education, employability and enterprise",
+            "plannedDates": [
+                {
+                    "endDate": "01/07/2015",
+                    "startDate": "01/07/2014"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "South Oxfordshire 001D"
+                }
+            ],
+            "amountDisbursed": 1000.0,
+            "currency": "GBP",
+            "awardDate": "15/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "The Fabulous Fifties",
+            "description": "Develop a 1950's style cafe for use of Thame residents particularly the elderly"
+        },
+        {
+            "id": "360G-ocf-a061600000fxak2",
+            "url": "http://www.goodneighbourscheme.com",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.goodneighbourscheme.com",
+                    "id": "360G-ocf-org:001G000000hziGW",
+                    "description": "Bicester Good Neighbour scheme aims to provide a free, caring, home visiting service to local older people. We aim to alleviate loneliness by matching clients with volunteer befrienders. The scheme is based at the Bicester Health & Wellbeing Centre and employs a part-time paid coordinator to match volunteers and clients. Volunteers are interviewed, DBS checked and issued with a \"Do's and Don'ts\" guide to help get them started. Clients are initially visited at home by our coordinator to find out about their situation and likes/dislikes in order to make a suitable match with one of our volunteers. We hold regular coffee mornings for both volunteers and clients to celebrate our work. Clients are usually isolated and often housebound older people. Volunteers visit their clients at home regularly, usually weekly, to offer friendship and support. As well as befriending, they may help with small practical tasks around the home, shopping, light gardening work, accompany clients to appointments, and check that they are safe, well and warm.",
+                    "postalCode": "OX26 6DJ",
+                    "addressLocality": "Bicester",
+                    "name": "Bicester Good Neighbour Scheme",
+                    "streetAddress": "c/o Bicester Health & Wellbeing Centre"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "06/04/2016",
+                    "startDate": "06/04/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Cherwell 015D"
+                }
+            ],
+            "amountDisbursed": 1000.0,
+            "currency": "GBP",
+            "awardDate": "14/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Bicester Good Neighbour Scheme",
+            "description": "To fund scheme coordinator who finds suitable volunteers for each elderly client"
+        },
+        {
+            "id": "360G-ocf-a061600000fxWWL",
+            "url": "http://www.balsamfamilyproject.co.uk",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.balsamfamilyproject.co.uk",
+                    "id": "360G-ocf-org:1129896",
+                    "charityNumber": "1129896",
+                    "description": "We work to reverse community and family breakdown by nurturing families through befriending and supporting thosewho are particularly isolated or struggling. We believe in the value of every adult and child and seek to encourage a sense of worth and value that parents can then pass on to their own children. We provide Family College Courses in Parenting, Home Management for 10 weeks at Level 1 and Personal Growth and Development at Level 2 Community Family Friends for 1:1 support Weekly Family Day creating a supportive, fun environment Weekly Coffee Morning Seasonal Social Events all to build positive relationships and develop community networks.",
+                    "postalCode": "OX12 0HX",
+                    "addressLocality": "Wantage",
+                    "name": "Balsam Family Project",
+                    "streetAddress": "Yew Tree Barn The Paddocks, East Hanney"
+                }
+            ],
+            "IMPACT": "Maximise ability to strengthen community cohesion and build social capacity",
+            "plannedDates": [
+                {
+                    "endDate": "13/07/2015",
+                    "startDate": "13/04/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Vale of White Horse 015B"
+                }
+            ],
+            "amountDisbursed": 1000.0,
+            "currency": "GBP",
+            "awardDate": "14/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Balsam Family College",
+            "description": "Funding a term of the family college."
+        },
+        {
+            "id": "360G-ocf-a061600000fwz8k",
+            "url": "http://bookfeast.net",
+            "recipientOrganization": [
+                {
+                    "url": "http://bookfeast.net",
+                    "id": "360G-ocf-org:01109268",
+                    "charityNumber": "1109268",
+                    "description": "Bookfeast is an Oxfordshire charity dedicated to developing the habit of reading with all its attendant benefits; social, educational and emotional. We create projects and social experiences that encourage children and adults to enjoy and be able to talk about reading, and make the link between reading and writing. We are meeting our aims by running an annual literary Festival for 2000 county primary school children, based at the Ashmolean, the Pitt Rivers and the Oxford Museum of Natural History every May, and 44 book groups led by our trained volunteers. 24 of these are ‘Lunchboox Clubs’ in primary schools and 20 are ‘TeaBooks Groups’ for older people, in a variety of settings: day care centres, residential homes, libraries and sheltered accommodation.",
+                    "postalCode": "OX2 7NY",
+                    "addressLocality": "Oxford",
+                    "companyNumber": "5435063",
+                    "name": "Bookfeast",
+                    "streetAddress": "301 Woodstock Road"
+                }
+            ],
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "30/06/2016",
+                    "startDate": "01/07/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 007E"
+                }
+            ],
+            "amountDisbursed": 1000.0,
+            "currency": "GBP",
+            "awardDate": "14/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "TeaBooks Groups",
+            "description": "To run groups to offer older people enjoyment, mental stimulation and companionship."
+        },
+        {
+            "id": "360G-ocf-a061600000fSpLe",
+            "IMPACT": "Promote reduction of isolation and disadvantage and access to local services",
+            "plannedDates": [
+                {
+                    "endDate": "13/04/2016",
+                    "startDate": "13/04/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:1082301",
+                    "charityNumber": "1082301",
+                    "description": "BIVC is an Information & Guidance Centre, we provide a range of services to the residents of Berinsfield and surrounding villages. We offer a drop-in advice on practically any issue; if we can not help then we can signpost to agencies that can. We rely totally on volunteers to function on a day to day basis; the dedication and commitment given by our workers is astounding and this contributes immensely to our success in working within the community. Volunteers are given relevant training designed to assist them in improving their skills, achieve personal or professional development and to add substance to their CV. We also offer training and support to enable volunteers to re-enter the workplace and progress in their own careers. BIVC is responsible for editing, producing and delivering the local newsletter ‘Your Village Voice’, to over 1200 homes and businesses in the village. We are now the main communication hub of the village and are trying to develop community building projects. Berinsfield is an urban village set in rural surroundings that brings its own set of problems. The village has over 4,000 residents a large proportion of which are on benefits or low wages, single parents or older people. The Information centre has been running for approx 39 years. The centre provides a place where people can discuss their problems in an informal atmosphere but obtain professional and knowledgeable assistance. This is open to surrounding villages as well. We provide advice on all aspects of benefits, pensions, housing, advocacy, debt advice, crisis intervention, outreach, driving scheme, local information, community activities and volunteer training, we also create and distribute a free local magazine.",
+                    "postalCode": "OX10 7NE",
+                    "addressLocality": "Berinsfield",
+                    "name": "Berinsfield Information And Volunteer Centre",
+                    "streetAddress": "39 Thane Drive"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 500.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "South Oxfordshire 006B"
+                }
+            ],
+            "amountDisbursed": 500.0,
+            "currency": "GBP",
+            "awardDate": "14/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 950.0,
+            "title": "Berinsfield Information & Volunteer Centre - Office Refurbishment",
+            "description": "Redecorating, refurbishing advice offices and office equipment"
+        },
+        {
+            "id": "360G-ocf-a061600000fxWfc",
+            "IMPACT": "Advance people's physical and mental health, wellbeing and safety",
+            "plannedDates": [
+                {
+                    "endDate": "01/05/2016",
+                    "startDate": "01/05/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-ocf-org:273172",
+                    "charityNumber": "273172",
+                    "description": "We are an adventure Playground with halls and outside space providing recreational play for 8-13 year old children. We run an after school club that is mainly attended by children at the local junior schools and various play schemes during school holidays when children come from further afield and include those from secondary schools. Our aim is to provide these children and young people with a safe place where they can learn to interact with others and accept those who are different from themselves as they use all our facilities.The obesity rate at the end of primary schools in Blackbird Leys is 29% yet here at the playground they are able to exercise by having fun. We also aim to provide them, during the after school club with a healthy snack. They play on the structures and have endless fun as they run round often playing imaginary games. A new in-ground trampoline has added to the choice of equipment they can use. Our staff and volunteers are trained in play principles and these encourage children to choose their own activities so that the child can make a choice that fits their mood. One of our objectives is to allow the children who come to be able to find constructive ways of coping with the different feelings they might have. They use the arts and crafts facilities, many table games such as table tennis, table football and pool and will cook and garden as well as use the many outside play structures and equipment The number of people on the estate with no formal educational qualification is high and so our staff and volunteers are able to help and encourage the children to aspire and do well at school. They will sometimes bring homework for staff to look at. We have a good selection of books they can refer to and they quite often can be seen playing schools or offices. The Constitution of Blackbird Leys Adventure Playground states: \"The objects of BLAP shall be the provision of play and recreation facilities and other leisure time occupation for children resident in and around Oxford...the facilities being a) those of which children have need by reason of their youth or social and economic circumstances and b) Those which will improve the conditions of life for such children by promoting their physical, mental and spiritual well-being.\"",
+                    "postalCode": "OX4 6HW",
+                    "addressLocality": "Oxford",
+                    "name": "Blackbird Leys Adventure Playground",
+                    "streetAddress": "c/o Leys Linx Centre"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 945.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 018A"
+                }
+            ],
+            "amountDisbursed": 945.0,
+            "currency": "GBP",
+            "awardDate": "14/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 945.3,
+            "title": "BLAP's safety first project",
+            "description": "Buy safety equipment and train staff in safety procedures"
+        },
+        {
+            "id": "360G-ocf-a061600000fTVRk",
+            "url": "http://www.actinitiatives.org",
+            "recipientOrganization": [
+                {
+                    "url": "http://www.actinitiatives.org",
+                    "id": "360G-ocf-org:1143136",
+                    "charityNumber": "1143136",
+                    "description": "Aldates Community Transformation Initiatives (ACT!) aims to prevent ex-offenders from re-offending. We achieve this through a series of objectives: - Providing supported housing to ex-offenders who would otherwise be homeless; - Building a community where ex-offenders and homeless people are welcomed in and given hope; - Encouraging people through mentoring; - Helping people find work; - Helping people access local services. We work intensively with prisoners, ex-offenders and the homeless in the Oxfordshire area connecting with an estimated 300 people every month either in or outside prison. We specialise in “relational rehabilitation”, a significant factor contributing to criminal desistance, as supported by evidence from the National Offender Management Services, amongst others. Our activities in prison are as follows: we have been visiting 3 local prisons (HMPs Bullingdon, Huntercombe and Spring Hill) on a weekly basis for 5 years. In these we run courses, do ward rounds and build relationships with prisoners which are sustainable once they have been released. At Spring Hill prison alone we have over 30 inmates attending our course each week and are now running extra courses due to the high demand. Outside of prison, we provide services in the form of an established community programme. This consists of mentoring, supported housing, weekly community groups, monthly large-scale meals and biannual retreats. We are responsible for 2 two-bedroom properties where we house former offenders or those who would otherwise be homeless. These are currently full so we are providing supported housing to 4 men. We run two weekly group meetings for ex-offenders, the homeless and marginalised attended by approximately 35 people in total. We also run a community meal which feeds over 100 people every month and is a ‘way in’ to our other community work. These are the building blocks of our community. We have found, in keeping with the evidence (including the Ministry of Justice sponsored report \"Transforming Rehabilitation\"), that the transition for those we meet in prison to life on the outside is extremely difficult. We improve this process and enable people to successfully cross-over from an institutionalised life behind bars to a full life as contributing members of society.",
+                    "postalCode": "OX2 6JU",
+                    "addressLocality": "Oxford",
+                    "companyNumber": "7279350",
+                    "name": "Aldates Community Transformation Initiatives",
+                    "streetAddress": "40 Pembroke Street"
+                }
+            ],
+            "IMPACT": "Promote reduction of isolation and disadvantage and access to local services",
+            "plannedDates": [
+                {
+                    "endDate": "07/02/2016",
+                    "startDate": "07/02/2015"
+                }
+            ],
+            "fromOpenCall": "Yes",
+            "amountAwarded": 1000.0,
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-1151621",
+                    "name": "Oxfordshire Community Foundation",
+                    "department": "Red Nose Day Community Cash 2015"
+                }
+            ],
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "GB",
+                    "geoCodeType": "LSOA",
+                    "geoCode": "Oxford 008A"
+                }
+            ],
+            "amountDisbursed": 1000.0,
+            "currency": "GBP",
+            "awardDate": "14/04/2015",
+            "grantProgramme": [
+                {
+                    "title": "Spring 2015"
+                }
+            ],
+            "amountAppliedFor": 1000.0,
+            "title": "Community Meal",
+            "description": "Providing meals for the homeless"
+        }
+    ]
+}

@@ -1,0 +1,2227 @@
+{
+    "grants": [
+        {
+            "id": "360G-baringfoundation-20130071",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-326568",
+                    "charityNumber": "326568",
+                    "description": "International",
+                    "postalCode": "SE1 7TP",
+                    "addressLocality": "London",
+                    "name": "Comic Relief Limited",
+                    "streetAddress": "1st Floor\n89 Albert Embankment\nLondon SE1 7TP"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Sub-Sahara Africa"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To support the Comic Relief Africa-UK initiative.",
+            "amountDisbursed": 50000.0,
+            "currency": "GBP",
+            "awardDate": "17/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "AD-AD"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 50000.0,
+            "amountAwarded": 50000.0,
+            "title": "AD-AD"
+        },
+        {
+            "id": "360G-baringfoundation-20140004",
+            "url": "http://gmiau.org",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1123908",
+                    "charityNumber": "1123908",
+                    "description": "Advice information counselling",
+                    "postalCode": "M8 4QS",
+                    "addressLocality": "Manchester",
+                    "name": "Greater Manchester Immigration Aid Unit",
+                    "streetAddress": "1 Delaunays Road, \nCrumpsall\nManchester M8 4QS"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "North West"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To investigate, develop and implement strategic plans for development that will secure longer-term funding and the stability for the organisation.",
+            "amountDisbursed": 30000.0,
+            "currency": "GBP",
+            "awardDate": "17/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "STVS Advice Provider"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 30000.0,
+            "amountAwarded": 30000.0,
+            "title": "STVS Advice Provider"
+        },
+        {
+            "id": "360G-baringfoundation-20140002",
+            "url": "http://www.lag.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-265703",
+                    "charityNumber": "265703",
+                    "description": "Advocacy",
+                    "postalCode": "E1 7SA",
+                    "addressLocality": "London",
+                    "name": "Legal Action Group",
+                    "streetAddress": "Third Floor, Universal House,\n88-94 Wentworth Street\nLondon E1 7SA"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards advocacy for the Low Campaign.",
+            "amountDisbursed": 10000.0,
+            "currency": "GBP",
+            "awardDate": "17/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "STVS Advice Strategy"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 10000.0,
+            "amountAwarded": 10000.0,
+            "title": "STVS Advice Strategy"
+        },
+        {
+            "id": "360G-baringfoundation-20130023",
+            "url": "http://www.pfcethiopia.org",
+            "Planned Dates": {
+                "Duration months": "36"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-297391",
+                    "charityNumber": "297391",
+                    "description": "International",
+                    "postalCode": "SE1 0EH",
+                    "addressLocality": "London",
+                    "name": "Partners For Change Ethiopia",
+                    "streetAddress": "32-36 Loman Street\nSouthwark\nLondon SE1 0EH"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "Ethiopia"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards empowering the marginalised Negede Woitto community in Ethiopia through improving access to basic services and income generating opportunities and ending further displacement and exclusion.",
+            "amountDisbursed": 199556.0,
+            "currency": "GBP",
+            "awardDate": "17/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "International"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 249616.0,
+            "amountAwarded": 249616.0,
+            "title": "International"
+        },
+        {
+            "id": "360G-baringfoundation-20140006",
+            "url": "http://www.publiclawproject.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1003342",
+                    "charityNumber": "1003342",
+                    "description": "Advice information counselling",
+                    "postalCode": "N1 9RD",
+                    "addressLocality": "London",
+                    "name": "Public Law Project",
+                    "streetAddress": "150 Caledonian Road\nLondon N1 9RD"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To support advocacy around the Criminal Justice and Courts Bill, focusing specifically on protecting access to judicial review for voluntary sector organisations.",
+            "amountDisbursed": 2363.0,
+            "currency": "GBP",
+            "awardDate": "17/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "STVS Advice Strategy"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 2363.0,
+            "amountAwarded": 2363.0,
+            "title": "STVS Advice Strategy"
+        },
+        {
+            "id": "360G-baringfoundation-20130046",
+            "url": "http://www.skills-southsudan.org",
+            "Planned Dates": {
+                "Duration months": "36"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1092948",
+                    "charityNumber": "1092948",
+                    "name": "Skills for South Sudan",
+                    "streetAddress": "Juba Raha Camp\nJuba\nSouth Sudan\nSent by E-mail",
+                    "description": "International"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "South Sudan"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To develop Skills for South Sudan's organisational skills and to deliver a project on women's leadership.\n",
+            "amountDisbursed": 187699.0,
+            "currency": "GBP",
+            "awardDate": "17/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "International"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 249788.0,
+            "amountAwarded": 249788.0,
+            "title": "International"
+        },
+        {
+            "id": "360G-baringfoundation-20130059",
+            "url": "http://www.europeanclimate,org",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "NL-KVK-8190",
+                    "charityNumber": "Dutch registered8190",
+                    "name": "Stichting European Climate Foundation",
+                    "streetAddress": "Riviervismarkt 5 2513 AM \nThe Hague\nThe Netherlands",
+                    "description": "Environmental (includes animal welfare)"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Europe"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To support the engagement of non-environment organisations in the Energy Bill Revolution campaign.",
+            "amountDisbursed": 75000.0,
+            "currency": "GBP",
+            "awardDate": "17/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Climate Change"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "beneficiaryLocation": [
+                {
+                    "countryCode": "NL"
+                }
+            ],
+            "amountAppliedFor": 75000.0,
+            "amountAwarded": 75000.0,
+            "title": "Climate Change"
+        },
+        {
+            "id": "360G-baringfoundation-20140001",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-university-of-manchester",
+                    "description": "University",
+                    "postalCode": "M15 6ER",
+                    "addressLocality": "Manchester",
+                    "name": "University of Manchester",
+                    "streetAddress": "Whitworth Art Gallery\nOxford Road\nManchester M15 6ER"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To fund a publication to explore the difficulties of engaging older men in arts participation, drawing on examples of practical activity.",
+            "amountDisbursed": 6000.0,
+            "currency": "GBP",
+            "awardDate": "17/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 6000.0,
+            "amountAwarded": 6000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140003",
+            "url": "http://www.wiltonpark.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-wilton-park",
+                    "postalCode": "BN44 3DZ",
+                    "name": "Wilton Park",
+                    "streetAddress": "Wiston House\nSteyning\nWest Sussex\nBN44 3DZ",
+                    "description": "International"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Global"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the costs of a Conference on Development and LGBT rights.",
+            "amountDisbursed": 5000.0,
+            "currency": "GBP",
+            "awardDate": "17/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "International"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 5000.0,
+            "amountAwarded": 5000.0,
+            "title": "International"
+        },
+        {
+            "id": "360G-baringfoundation-20140009",
+            "url": "http://www.counterpointsarts.org.uk",
+            "Planned Dates": {
+                "Duration months": "36"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1062693",
+                    "charityNumber": "1062693",
+                    "description": "Arts organisation",
+                    "postalCode": "NI 6SH",
+                    "addressLocality": "London",
+                    "name": "Counterpoints Arts",
+                    "streetAddress": "Unit 2.3, \n128 Hoxton Street\nLondon NI 6SH"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the work of Counterpoint Arts on arts and refugees.",
+            "amountDisbursed": 20000.0,
+            "currency": "GBP",
+            "awardDate": "26/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 60000.0,
+            "amountAwarded": 60000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140010",
+            "url": "http://www.creativescotland.com",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-creative-scotland",
+                    "description": "Arts Funder",
+                    "postalCode": "EH1 3EG",
+                    "addressLocality": "Edinburgh",
+                    "name": "Creative Scotland",
+                    "streetAddress": "Waverley Gate\n2-4 Waterloo Place\nEdinburgh EH1 3EG"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Scotland"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the costs of the Luminate Festival of Arts for Older People in Scotland for one year.",
+            "amountDisbursed": 75000.0,
+            "currency": "GBP",
+            "awardDate": "26/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 75000.0,
+            "amountAwarded": 75000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation 20140008",
+            "url": "http://cubittartists.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1049653",
+                    "charityNumber": "1049653",
+                    "description": "Arts organisation",
+                    "postalCode": "N1 9HH",
+                    "addressLocality": "London",
+                    "name": "Cubitt Artists Ltd",
+                    "streetAddress": "Cubitt Gallery, Studios & Education\n8 Angel Mews\nIslington\nLondon N1 9HH"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To stage a conference and produce a report on the theme of public wisdom.",
+            "amountDisbursed": 12000.0,
+            "currency": "GBP",
+            "awardDate": "26/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 12000.0,
+            "amountAwarded": 12000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140013",
+            "url": "http://www.nationalcareforum.org.uk",
+            "Planned Dates": {
+                "Duration months": "24"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-4668278",
+                    "charityNumber": "4668278",
+                    "description": "Social services",
+                    "postalCode": "CV1 2DY",
+                    "addressLocality": "Coventry",
+                    "name": "National Care Forum",
+                    "streetAddress": "3 The Quadrant\nCoventry CV1 2DY"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "For National Care Forum to run a specific arts award as part of their new national awards ceremony.",
+            "amountDisbursed": 6000.0,
+            "currency": "GBP",
+            "awardDate": "26/03/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 12000.0,
+            "amountAwarded": 12000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140012",
+            "url": "http://www.atleu.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1151675",
+                    "charityNumber": "1151675",
+                    "description": "Advice information counselling",
+                    "postalCode": "N7 7LL",
+                    "addressLocality": "London",
+                    "name": "Anti Trafficking and Labour Exploitation Unit",
+                    "streetAddress": "232 Hornsey Road\nLondon N7 7LL"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To create a private charging arm (using a different brand) to provide advice and assistance to privately paying persons.",
+            "amountDisbursed": 20000.0,
+            "currency": "GBP",
+            "awardDate": "07/04/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "STVS Advice Provider"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 20000.0,
+            "amountAwarded": 20000.0,
+            "title": "STVS Advice Provider"
+        },
+        {
+            "id": "360G-baringfoundation-20140005",
+            "url": "http://www.cpag.org.uk",
+            "Planned Dates": {
+                "Duration months": "24"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-294841",
+                    "charityNumber": "294841",
+                    "description": "Advice information counselling",
+                    "postalCode": "N1 7TB",
+                    "addressLocality": "London",
+                    "name": "Child Poverty Action Group",
+                    "streetAddress": "30 Micawber Street\nLondon N1 7TB"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To develop an online specialist advice service in the field of welfare benefits,",
+            "amountDisbursed": 35000.0,
+            "currency": "GBP",
+            "awardDate": "07/04/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "STVS Advice Strategy"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 70000.0,
+            "amountAwarded": 70000.0,
+            "title": "STVS Advice Strategy"
+        },
+        {
+            "id": "360G-baringfoundation-20140017",
+            "url": "http://civilexchange.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-civil-exchange",
+                    "description": "Think Tank",
+                    "postalCode": "SW11 6BG",
+                    "addressLocality": "London",
+                    "name": "Civil Exchange",
+                    "streetAddress": "82 Wroughton Road,\nLondon SW11 6BG"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission a series of essays on the future of the voluntary sector.",
+            "amountDisbursed": 10000.0,
+            "currency": "GBP",
+            "awardDate": "16/06/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "STVS Advice Strategy"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 10000.0,
+            "amountAwarded": 10000.0,
+            "title": "STVS Advice Strategy"
+        },
+        {
+            "id": "360G-baringfoundation-20140007",
+            "url": "http://www.laddertothemoon.co.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1094968",
+                    "charityNumber": "1094968",
+                    "description": "Arts organisation",
+                    "postalCode": "NW3 7LS",
+                    "addressLocality": "London",
+                    "name": "Ladder to the Moon",
+                    "streetAddress": "Branch Hill House\nBranch Hill\nLondon NW3 7LS"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To part-fund the Director's attendance at a national conference on arts and older people in the USA.",
+            "amountDisbursed": 1500.0,
+            "currency": "GBP",
+            "awardDate": "16/06/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Special Initiative"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 1500.0,
+            "amountAwarded": 1500.0,
+            "title": "Special Initiative"
+        },
+        {
+            "id": "360G-baringfoundation-20140018",
+            "url": "http://www.luminatescotland.org",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-SC-SCO44652",
+                    "charityNumber": "SCO44652",
+                    "description": "Arts organisation",
+                    "postalCode": "EH9 1PR",
+                    "addressLocality": "Edinburgh",
+                    "name": "Luminate",
+                    "streetAddress": "First Floor\nCausewayside House\n160 Causewayside\nEdinburgh EH9 1PR"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Scotland"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To hold a symposium on arts in care in Perth, Scotland in October 2014.",
+            "amountDisbursed": 5000.0,
+            "currency": "GBP",
+            "awardDate": "16/06/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 5000.0,
+            "amountAwarded": 5000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140016",
+            "url": "http://www.odi.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-228248",
+                    "charityNumber": "228248",
+                    "description": "Think Tank",
+                    "postalCode": "SE1 8NJ",
+                    "addressLocality": "London",
+                    "name": "Overseas Development Institute",
+                    "streetAddress": "203 Blackfriars Road\nLondon SE1 8NJ"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Global"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To part-fund an event for key UK and international stakeholders organised by the Overseas Development Institute (ODI) and The Kaleidoscope Trust to explore whether international aid can or should play a role in defending the LGBT rights in developing countries.",
+            "amountDisbursed": 1000.0,
+            "currency": "GBP",
+            "awardDate": "16/06/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "International"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 1000.0,
+            "amountAwarded": 1000.0,
+            "title": "International"
+        },
+        {
+            "id": "360G-baringfoundation-20140021",
+            "url": "http://www.agecymru.org.uk",
+            "Planned Dates": {
+                "Duration months": "24"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1128436",
+                    "charityNumber": "1128436",
+                    "description": "Older People's organisation",
+                    "postalCode": "CF24 5PJ",
+                    "addressLocality": "Cardiff",
+                    "name": "Age Cymru",
+                    "streetAddress": "Ty John Pathy\n13/14 Neptune Court\nVanguard Way\nCardiff CF24 5PJ"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Wales"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "For Age Cymru to train artists to work in care homes.",
+            "amountDisbursed": 84456.0,
+            "currency": "GBP",
+            "awardDate": "02/07/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 171911.0,
+            "amountAwarded": 171911.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140019",
+            "url": "http://www.entelechyarts.org",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1068469",
+                    "charityNumber": "1068469",
+                    "description": "Arts organisation",
+                    "postalCode": "SE8 4AG",
+                    "addressLocality": "London",
+                    "name": "Entelechy Arts Ltd",
+                    "streetAddress": "The Albany Centre\nDouglas Way\nDeptford\nLondon SE8 4AG"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To host a national symposium at the Albany, Deptford, London.",
+            "amountDisbursed": 5000.0,
+            "currency": "GBP",
+            "awardDate": "02/07/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 5000.0,
+            "amountAwarded": 5000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140020",
+            "url": "http://www.sadlerswells.com",
+            "Planned Dates": {
+                "Duration months": "36"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-279884",
+                    "charityNumber": "279884",
+                    "description": "Arts organisation",
+                    "postalCode": "EC1R 4TN",
+                    "addressLocality": "London",
+                    "name": "Sadler's Wells Trust Ltd",
+                    "streetAddress": "Sadler's Wells\nRosebery Ave\nLondon EC1R 4TN"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the Sadler's Wells Theatre Elixir Festival in London.",
+            "amountDisbursed": 15000.0,
+            "currency": "GBP",
+            "awardDate": "02/07/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 25000.0,
+            "amountAwarded": 25000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140054",
+            "url": "http://www.citizensuk.org/",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1107264",
+                    "charityNumber": "1107264",
+                    "description": "Advocacy",
+                    "postalCode": "E1 2JA",
+                    "addressLocality": "London",
+                    "name": "Citizens UK",
+                    "streetAddress": "112 Cavell Street\nLondon E1 2JA"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the costs of a roundtable discussion on the potential for a Living Wage campaign in Africa.\n\n",
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "09/09/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "International"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 4000.0,
+            "amountAwarded": 4000.0,
+            "title": "International"
+        },
+        {
+            "id": "360G-baringfoundation-20140044",
+            "url": "http://www.artlinkcentral.org",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "02/03/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "GB-SC-SCO08158",
+                    "charityNumber": "SCO 08158",
+                    "description": "Arts organisation",
+                    "postalCode": "FK8 1JP",
+                    "addressLocality": "Stirling",
+                    "name": "Artlink Central Limited",
+                    "streetAddress": "Cowane Centre\n69 Cowane Street\nStirling FK8 1JP"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "Scotland"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission a work of public art to be sited at Forth Valley Royal Hospital, Falkirk, Scotland.",
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 15000.0,
+            "amountAwarded": 15000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140047",
+            "url": "http://www.thebluecoat.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "02/02/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-700862",
+                    "charityNumber": "700862",
+                    "description": "Arts organisation",
+                    "postalCode": "L1 3BX",
+                    "addressLocality": "Liverpool",
+                    "name": "Bluecoat",
+                    "streetAddress": "School Lane\nLiverpool L1 3BX"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "North West"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission Bisakha Sarker to make a multi-media interactive work of art to be sited in the Vide - public space at the arts centre in Liverpool, and available for further touring.",
+            "amountDisbursed": 25000.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 25000.0,
+            "amountAwarded": 25000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140057",
+            "url": "http://www.britishcouncil.org",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-209131",
+                    "charityNumber": "209131",
+                    "description": "Cultural relations",
+                    "postalCode": "SW1A 2BN",
+                    "addressLocality": "London",
+                    "name": "British Council",
+                    "streetAddress": "10 Spring Gardens\nLondon SW1A 2BN"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Global"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the costs of a study tour to Japan on Arts for an Ageing Society.",
+            "amountDisbursed": 15000.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 15000.0,
+            "amountAwarded": 15000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140056",
+            "url": "http://www.britishmuseum.org",
+            "Planned Dates": {
+                "Duration months": "24"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-british-museum",
+                    "description": "Arts organisation",
+                    "postalCode": "WC1B 3DG",
+                    "addressLocality": "London",
+                    "name": "British Museum",
+                    "streetAddress": "Great Russell Street\nLondon WC1B 3DG"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To fund an Age Friendly Museums Network.",
+            "amountDisbursed": 25742.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 60000.0,
+            "amountAwarded": 60000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140022",
+            "url": "http://www.brouhaha.uk.com",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "01/01/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1017409",
+                    "charityNumber": "1017409",
+                    "description": "Arts organisation",
+                    "postalCode": "L8 1YR",
+                    "addressLocality": "Liverpool",
+                    "name": "Brouhaha International",
+                    "streetAddress": "John Archer Hall\n68 Upper Hall Street\nLiverpool L8 1YR"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "North West"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission Professor Black to make carnival costumes on the theme of HAIR (the traditions, memories and stories of Black hair styles throughout history). These new works will then be presented in local, regional, national and international context.",
+            "amountDisbursed": 20000.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 20000.0,
+            "amountAwarded": 20000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140025",
+            "url": "http://www.crafts.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "02/02/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-296568",
+                    "charityNumber": "296568",
+                    "description": "Arts organisation",
+                    "postalCode": "TQ13 9AF",
+                    "addressLocality": "Bovey Tracey",
+                    "name": "Devon Guild of Craftsmen",
+                    "streetAddress": "Riverside Mill\nBovey Tracey, Devon TQ13 9AF"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "South West"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission Hilary Paynter to make new wood engravings for exhibition and tour.",
+            "amountDisbursed": 20000.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 20000.0,
+            "amountAwarded": 20000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation 20140034",
+            "url": "http://www.fabrica.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "01/05/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1055584",
+                    "charityNumber": "1055584",
+                    "description": "Arts organisation",
+                    "postalCode": "BN1 1AG",
+                    "addressLocality": "Brighton",
+                    "name": "Fabrica",
+                    "streetAddress": "40 Duke Street,\nBrighton BN1 1AG"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "South East"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission Ron Haselden to create new sculptures for exhibition at the gallery and in public outdoor spaces in Brighton.",
+            "amountDisbursed": 25000.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 25000.0,
+            "amountAwarded": 25000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140055",
+            "url": "http://www.keele.ac.uk/artskeele",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-keele-university",
+                    "description": "University",
+                    "postalCode": "ST5 5BG",
+                    "addressLocality": "Keele",
+                    "name": "Keele University",
+                    "streetAddress": "School of Public Policy and Professional Practice\nKeele, Staffordshire ST5 5BG"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Stoke on Trent"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the Live Age Festival in Stoke on Trent.",
+            "amountDisbursed": 3000.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 3000.0,
+            "amountAwarded": 3000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140046",
+            "url": "http://www.livemusicnow.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "01/01/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-273596",
+                    "charityNumber": "273596",
+                    "description": "Arts organisation",
+                    "postalCode": "N1 9AG",
+                    "addressLocality": "London",
+                    "name": "Live Music Now Ltd.",
+                    "streetAddress": "The Music Base\nKing's Place\n90 York Way\nLondon N1 9AG"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "Scotland"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission composer, John McLeod, to compose a new work from material gathered from older people living in West Lothian in Scotland and Merthyr Tydfil in South Wales.",
+            "amountDisbursed": 24500.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 24500.0,
+            "amountAwarded": 24500.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140032",
+            "url": "http://www.newbreweryarts.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "16/03/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-900036",
+                    "charityNumber": "900036",
+                    "description": "Arts organisation",
+                    "postalCode": "GL7 1JH",
+                    "addressLocality": "Cirencester",
+                    "name": "New Brewery Arts",
+                    "streetAddress": "Brewery Court\nCirencester, Gloucestershire GL7 1JH"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "South West"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission  Robert Race to design and make an automaton for exhibition in Orders of St John's Care homes and other public galleries and conferences. OSJCT have homes in Lincolnshire, Gloucestershire, Oxfordshire and Wiltshire.",
+            "amountDisbursed": 20000.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 22287.0,
+            "amountAwarded": 20000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140030",
+            "url": "http://www.spl.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "05/01/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "GB-SC-SCO23311",
+                    "charityNumber": "SCO23311",
+                    "description": "Arts organisation",
+                    "postalCode": "EH8 8DT",
+                    "addressLocality": "Edinburgh",
+                    "name": "Scottish Poetry Library",
+                    "streetAddress": "5 Crichton's Close\nCanongate\nEdinburgh EH8 8DT"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "Scotland"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission poets, Douglas Dunn, Vicki Feaver and Diana Hendry to write new poetry about the subject of ageing for publication by Polygon publishers, Luminate and the Saltire Society. To be widely distributed throughout Scotland.",
+            "amountDisbursed": 20000.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 20000.0,
+            "amountAwarded": 20000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140028",
+            "url": "http://www.superact.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "23/03/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-superact-cic",
+                    "description": "Arts organisation",
+                    "postalCode": "BS2 0EJ",
+                    "addressLocality": "Bristol",
+                    "name": "Superact CIC",
+                    "streetAddress": "Old Market Studios\n68 Old Market Street\nBristol BS2 0EJ"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "South West"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission Eric Geddes (environmental artist), supported by Robin Ford (poet), Colin Riches (environmental artist) and Dick Davis (photographer and graphic designer) to create a dementia-accessible digital installation at a care home on the Isle of Wight.\n",
+            "amountDisbursed": 25000.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 25000.0,
+            "amountAwarded": 25000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140052",
+            "url": "http://www.turnercontemporary.org",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "01/09/2017"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1129974",
+                    "charityNumber": "1129974",
+                    "description": "Arts organisation",
+                    "postalCode": "CT9 1HG",
+                    "addressLocality": "Margate",
+                    "name": "Turner Contemporary",
+                    "streetAddress": "Rendezvous\nMargate, Kent CT9 1HG"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "South East"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission sculptor Ursula von Rydingsvard to create a new work as a centrepiece for an exhibition at Turner Contemporary in Margate, exploring femininity, creative making, and ageing - working title - \"Tapestry Unravelled\".",
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 25000.0,
+            "amountAwarded": 20000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20140038",
+            "url": "http://www.wyp.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "plannedDates": [
+                {
+                    "startDate": "16/02/2015"
+                }
+            ],
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-255460",
+                    "charityNumber": "255460",
+                    "description": "Arts organisation",
+                    "postalCode": "LS2 7UP",
+                    "addressLocality": "Leeds",
+                    "name": "West Yorkshire Playhouse",
+                    "streetAddress": "Playhouse Square\nQuarry Hill\nLeeds LS2 7UP"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "Yorkshire"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission Royston Maldoom to create a new dance theatre production involving veteran performers Namron, Tamara McLorg and Sally Owen with up to five performers from WYP's  Heydays' drama/dance group and Alan Lyddiard as Director.",
+            "amountDisbursed": 25000.0,
+            "currency": "GBP",
+            "awardDate": "08/12/2014",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 25000.0,
+            "amountAwarded": 25000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20150058",
+            "url": "http://www.allfm.org",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-allfm",
+                    "description": "Local Authority",
+                    "postalCode": "M19 2EQ",
+                    "addressLocality": "Manchester",
+                    "name": "ALLFM",
+                    "streetAddress": "19 Albert Road\nManchester M19 2EQ"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Manchester"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "For a project to engage isolated older people in community radio and the arts.",
+            "amountDisbursed": 20000.0,
+            "currency": "GBP",
+            "awardDate": "25/02/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 20000.0,
+            "amountAwarded": 20000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20150012",
+            "url": "http://www.livemusicnow.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-arts-council-of-northern-ireland",
+                    "description": "Arts Funder",
+                    "postalCode": "BT9 6AQ",
+                    "addressLocality": "Belfast",
+                    "name": "Arts Council of Northern Ireland",
+                    "streetAddress": "MacNeice House\n77 Malone Road\nBelfast BT9 6AQ\nNorthern Ireland"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Northern Ireland"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "For a project to increase the participation of choirs in care homes for older people.",
+            "amountDisbursed": 60000.0,
+            "currency": "GBP",
+            "awardDate": "25/02/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 60000.0,
+            "amountAwarded": 60000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20150015",
+            "url": "http://www.luminatescotland.org",
+            "Planned Dates": {
+                "Duration months": "36"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-australian-centre-for-arts-and-health",
+                    "addressLocality": "NSW 2444",
+                    "name": "Australian Centre for Arts and Health",
+                    "streetAddress": "PO Box 2074\nPort Macquarie\nNSW 2444\nAustralia",
+                    "description": "Arts organisation"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Whole of UK"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the costs of the Luminate Festival.",
+            "amountDisbursed": 75000.0,
+            "currency": "GBP",
+            "awardDate": "25/02/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 75000.0,
+            "amountAwarded": 75000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20150005",
+            "url": "http://www.edf.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-cass-business-school",
+                    "description": "University",
+                    "postalCode": "EC1Y 8TZ",
+                    "addressLocality": "London",
+                    "name": "Cass Business School",
+                    "streetAddress": "City University London\n106 Bunhill Row\nLondon EC1Y 8TZ"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "National (UK)"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the Beyond2015 project.",
+            "amountDisbursed": 5000.0,
+            "currency": "GBP",
+            "awardDate": "16/03/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Special Initiative"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 5000.0,
+            "amountAwarded": 5000.0,
+            "title": "Special Initiative"
+        },
+        {
+            "id": "360G-baringfoundation-20150006",
+            "url": "http://www.odi.org.uk",
+            "Planned Dates": {
+                "Duration months": "24"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-civil-exchange",
+                    "description": "Advocacy",
+                    "postalCode": "SW11 6BG",
+                    "addressLocality": "London",
+                    "name": "Civil Exchange",
+                    "streetAddress": "82 Wroughton Road,\nLondon SW11 6BG"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Whole of UK"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the costs of a roundtable on LGBTI issues.",
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "16/03/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Special Initiative"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 500.0,
+            "amountAwarded": 500.0,
+            "title": "Special Initiative"
+        },
+        {
+            "id": "360G-baringfoundation-20150001",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1135357",
+                    "charityNumber": "1135357",
+                    "description": "Social Justice",
+                    "postalCode": "WC1H 9NA",
+                    "addressLocality": "London",
+                    "name": "Equality and Diversity Forum",
+                    "streetAddress": "Tavis House\n1 - 6 Tavistock Square\nLondon WC1H 9NA"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Whole of UK"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To cover the continuation of the partnership report on Cultural Engagement with older men.",
+            "amountDisbursed": 5000.0,
+            "currency": "GBP",
+            "awardDate": "16/03/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "STVS General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 5000.0,
+            "amountAwarded": 5000.0,
+            "title": "STVS General"
+        },
+        {
+            "id": "360G-baringfoundation-20150019",
+            "url": "http://www.artsandhealth.org",
+            "Planned Dates": {
+                "Duration months": "36"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-328392",
+                    "charityNumber": "328392",
+                    "description": "Arts organisation",
+                    "postalCode": "LE1 1RE",
+                    "addressLocality": "Leicester",
+                    "name": "Foundation for Community Dance",
+                    "streetAddress": "LCB Depot\n31 Rutland Street\nLeicester LE1 1RE"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Whole of UK"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the costs of UK speakers at the Celebrate Creative Ageing Sydney.",
+            "amountDisbursed": 5335.0,
+            "currency": "GBP",
+            "awardDate": "28/05/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 16000.0,
+            "amountAwarded": 16000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20150018",
+            "url": "http://www.communitydance.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1119318",
+                    "charityNumber": "1119318",
+                    "description": "Arts organisation",
+                    "postalCode": "N6 5AA",
+                    "addressLocality": "London",
+                    "name": "Jackson's Lane Community Association",
+                    "streetAddress": "269a Archway Road\nLondon N6 5AA"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "North London"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To build the capacity of the Dance for Parkinson's Network UK.",
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "28/05/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 84000.0,
+            "amountAwarded": 84000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20150026",
+            "url": "http://www.kaleidoscopetrust.com",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1058580",
+                    "charityNumber": "1058580",
+                    "description": "Social Justice",
+                    "postalCode": "EC4V 5AQ",
+                    "addressLocality": "London",
+                    "name": "Justice",
+                    "streetAddress": "59 Carter Lane\nLondon EC4V 5AQ"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Whole of UK"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To support LGBTI participation in CHOGM 2015.",
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "29/06/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "STVS General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 10000.0,
+            "amountAwarded": 10000.0,
+            "title": "STVS General"
+        },
+        {
+            "id": "360G-baringfoundation-20150021",
+            "url": "http://www.theotherfoundation.org",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-1146274",
+                    "charityNumber": "1146274",
+                    "description": "Advocacy LGBTI",
+                    "postalCode": "E8 3DL",
+                    "addressLocality": "London",
+                    "name": "Kaleidoscope Trust",
+                    "streetAddress": "The Print House Studio\n18 Ashwin Street\nLondon E8 3DL"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "International"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the core costs of the organisation.",
+            "amountDisbursed": 100000.0,
+            "currency": "GBP",
+            "awardDate": "29/06/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "International"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 150000.0,
+            "amountAwarded": 150000.0,
+            "title": "International"
+        },
+        {
+            "id": "360G-baringfoundation-20150020",
+            "url": "http://www.uhai-eashri.org",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-273596",
+                    "charityNumber": "273596",
+                    "description": "Arts organisation",
+                    "postalCode": "N1 9AG",
+                    "addressLocality": "London",
+                    "name": "Live Music Now Ltd.",
+                    "streetAddress": "The Music Base\nKing's Place\n90 York Way\nLondon N1 9AG"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "England"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards the core costs of the organisation.",
+            "amountDisbursed": 75000.0,
+            "currency": "GBP",
+            "awardDate": "29/06/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 150000.0,
+            "amountAwarded": 150000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20150027",
+            "url": "http://civilexchange.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-SC-SCO44652",
+                    "charityNumber": "SCO44652",
+                    "description": "Arts organisation",
+                    "postalCode": "EH9 1PR",
+                    "addressLocality": "Edinburgh",
+                    "name": "Luminate",
+                    "streetAddress": "First Floor\nCausewayside House\n160 Causewayside\nEdinburgh EH9 1PR"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Scotland"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To research and publish two annual reports on the independence of the voluntary sector in England.",
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "08/07/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 40000.0,
+            "amountAwarded": 30000.0,
+            "title": "Arts General"
+        },
+        {
+            "id": "360G-baringfoundation-20150024",
+            "url": "http://www.artscouncil-ni.org",
+            "Planned Dates": {
+                "Duration months": "24"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-other-foundation",
+                    "addressLocality": "Johannesburg",
+                    "charityNumber": "TT1087/2013",
+                    "name": "Other Foundation",
+                    "description": "Advocacy and grant maker LGBTI"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "Southern Africa"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To commission a report on arts work tackling isolation and loneliness.",
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "14/09/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "International"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 4750.0,
+            "amountAwarded": 4750.0,
+            "title": "International"
+        },
+        {
+            "id": "360G-baringfoundation-20150028",
+            "url": "http://www.cass.city.ac.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "GB-CHC-228248",
+                    "charityNumber": "228248",
+                    "description": "Think Tank",
+                    "postalCode": "SE1 8NJ",
+                    "addressLocality": "London",
+                    "name": "Overseas Development Institute",
+                    "streetAddress": "203 Blackfriars Road\nLondon SE1 8NJ"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Global"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "Towards sundry costs for Cass Business School Lecture and Discussion: \"The Good Old English Way\": England's History of Campaigning for Charitable Causes",
+            "amountDisbursed": 0.0,
+            "currency": "GBP",
+            "awardDate": "14/09/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "International"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 1489.0,
+            "amountAwarded": 1489.0,
+            "title": "International"
+        },
+        {
+            "id": "360G-baringfoundation-20150022",
+            "url": "http://www.jacksonslane.org.uk",
+            "Planned Dates": {
+                "Duration months": "24"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-uhai-eashri",
+                    "addressLocality": "Nairobi",
+                    "charityNumber": "CPR/2010/36685",
+                    "name": "UHAI EASHRI",
+                    "description": "Advocacy and grant maker LGBTI"
+                }
+            ],
+            "From an open call": "Yes",
+            "Recipient Org Beneficiary Location": {
+                "Name": "Eastern Africa"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To explore how arts centres/theatres can have more sustainable income for work with older people.",
+            "amountDisbursed": 2520.0,
+            "currency": "GBP",
+            "awardDate": "14/09/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "International"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 2520.0,
+            "amountAwarded": 2520.0,
+            "title": "International"
+        },
+        {
+            "id": "360G-baringfoundation-20150025",
+            "url": "http://www.justice.org.uk",
+            "Planned Dates": {
+                "Duration months": "12"
+            },
+            "recipientOrganization": [
+                {
+                    "id": "360G-baringfoundation:org-university-of-manchester",
+                    "description": "Arts organisation",
+                    "postalCode": "M15 6ER",
+                    "addressLocality": "Manchester",
+                    "name": "University of Manchester",
+                    "streetAddress": "Whitworth Art Gallery\nOxford Road\nManchester M15 6ER"
+                }
+            ],
+            "Recipient Org Beneficiary Location": {
+                "Name": "Manchester"
+            },
+            "fundingOrganization": [
+                {
+                    "id": "GB-CHC-258583",
+                    "name": "The Baring Foundation"
+                }
+            ],
+            "description": "To produce a guide to changes to judicial review under Part 4 of the Criminal Justice and Courts Act 2014.",
+            "amountDisbursed": 5000.0,
+            "currency": "GBP",
+            "awardDate": "14/09/2015",
+            "grantProgramme": [
+                {
+                    "url": "http://baringfoundation.org.uk",
+                    "title": "Arts General"
+                }
+            ],
+            "dateModified": "2015-05-25T00:00:00Z",
+            "amountAppliedFor": 5000.0,
+            "amountAwarded": 5000.0,
+            "title": "Arts General"
+        }
+    ]
+}
