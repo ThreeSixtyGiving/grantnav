@@ -3,3 +3,6 @@ django-bootstrap3==6.2.2
 requests==2.9.0
 django-environ==0.4.0
 raven==5.9.2
+elasticsearch==2.2.0
+urllib3==1.14
+six==1.10.0

@@ -2,27 +2,30 @@ import glob
 import json
 import requests
 import datetime
+import uuid
+from pprint import pprint
+import elasticsearch.helpers
 
 # curl http://test-360giving.pantheon.io/api/3/action/current_package_list_with_resources | grep -Eo '[^"]+\.json' | sed 's/\\\//\//g' | while read url; do wget "$url"; done
 
-# Delete the index
-r = requests.delete('http://localhost:9200/threesixtygiving/')
-print(r.text)
+es = elasticsearch.Elasticsearch()
 
-# Create it again
-r = requests.put('http://localhost:9200/threesixtygiving')
-print(r.text)
+# Delete the index
+##r = requests.delete('http://localhost:9200/threesixtygiving/')
+result = es.indices.delete(index='threesixtygiving', ignore=[404])
+pprint(result)
+
 
 # Add the extra mapping info we want
 # (the rest will be auto inferred from the data we feed in)
-r = requests.put('http://localhost:9200/threesixtygiving/_mapping/grant/', data=""" 
-{
+mappings = {
     "grant": {
         "properties": {
+            "_all": {"analyzer": "english", "type": "string"},
             "filename": {"type": "string", "index": "not_analyzed" },
             "awardDate": {
                 "type": "date",
-                "ignore_malformed": true
+                "ignore_malformed": True
             },
             "awardDatdateModifiede": {"type": "string", "index": "not_analyzed" },
             "dateModified": {"type": "string", "index": "not_analyzed" },
@@ -48,20 +51,54 @@ r = requests.put('http://localhost:9200/threesixtygiving/_mapping/grant/', data=
                 },
                 "url" : {
                   "type" : "string", "index": "not_analyzed"
+                },
+                "name" : {
+                  "type" : "string", "copy_to": "recipientOrganization.whole_name"
+                },
+                "whole_name" : {
+                  "type" : "string", "index": "not_analyzed"
+                }
+             }
+           },
+            "fundingOrganization" : {
+              "properties" : {
+                "addressLocality" : {
+                  "type" : "string", "index": "not_analyzed"
+                },
+                "charityNumber" : {
+                  "type" : "string", "index": "not_analyzed"
+                },
+                "companyNumber" : {
+                  "type" : "string", "index": "not_analyzed"
+                },
+                "id" : {
+                  "type" : "string", "index": "not_analyzed"
+                },
+                "url" : {
+                  "type" : "string", "index": "not_analyzed"
+                },
+                "name" : {
+                  "type" : "string", "copy_to": "fundingOrganization.whole_name"
+                },
+                "whole_name" : {
+                  "type" : "string", "index": "not_analyzed"
                 }
               }
-            }
+           }
         }
     }
 }
-""")
-print(r.text)
+
+# Create it again
+result = es.indices.create(index='threesixtygiving', body={"mappings": mappings})
+pprint(result)
+
 
 #import sys
 #sys.exit()
 
-#for f in glob.glob('*.json'):
-for fname in ['./Macc-grants.json', './TraffordMBC-Grants.json', './WellcomeTrust-grants.json', './DSDNI.json']: # order by size
+for fname in glob.glob('../sample_data/*.json'):
+#for fname in ['./Macc-grants.json', './TraffordMBC-Grants.json', './WellcomeTrust-grants.json', './DSDNI.json']: # order by size
     with open(fname) as fp:
         doc = json.load(fp)
         keys = list(doc.keys())
@@ -70,10 +107,17 @@ for fname in ['./Macc-grants.json', './TraffordMBC-Grants.json', './WellcomeTrus
         else:
             raise NotImplementedError
 
-        grants = doc[key]
+        grants = []
 
         for grant in doc[key]:
             grant['filename'] = fname.strip('./')
-            r = requests.post('http://localhost:9200/threesixtygiving/grant/', data=json.dumps(grant))
-            print(r.text)
+            grant['_id'] = str(uuid.uuid4())
+            grant['_index'] = 'threesixtygiving'
+            grant['_type'] = 'grant'
+            grants.append(grant)
+        result = elasticsearch.helpers.bulk(es, grants, raise_on_error=False)
+        print(fname)
+        pprint(result)
+
+
 
