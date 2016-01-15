@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load frontend %}
+
+{% block main_content %}
+
+  <div class="row">
+    <div class="col-xs-8 col-xs-offset-2">
+      <form role="search">
+        <div class="input-group">
+          <input name="text_query" class="form-control" placeholder="eg. gardens" type="text" value="{{text_query}}">
+          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-primary">Search</button>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  {% if results and results.hits.hits %}
+  <div class="row">
+    <div class="col-xs-3">
+      <h3 class="indent"> Refine By </h3>
+      <div class="panel panel-default">
+        <div class="panel-heading list-group-compact">
+          Funding Organizations
+        </div>
+        <ul class="list-group">
+          {% for bucket in results.aggregations.fundingOrg.buckets %}
+          <li class="list-group-item list-group-compact">  {{bucket.key}} <small>({{bucket.doc_count}})</small>  </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading list-group-compact">
+          Recipient Organizations
+        </div>
+        <ul class="list-group">
+          {% for bucket in results.aggregations.recipientOrg.buckets %}
+          <li class="list-group-item list-group-compact">  {{bucket.key}} <small>({{bucket.doc_count}})</small>  </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-xs-9">
+      <h3 class="indent"> Results <small> <b> Total: </b> {{results.hits.total}}  </small> </h3>
+
+      {% for result in results.hits.hits %}
+         <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-xs-6">
+                  {% for key, result in result|get:"_source"|flatten|half_sorted_items:1 %}
+                    <b> {{ key }}: </b> {{result}} </br>
+                  {% endfor %}
+                </div>
+                <div class="col-xs-6">
+                  {% for key, result in result|get:"_source"|flatten|half_sorted_items:2 %}
+                    <b> {{ key }}: </b> {{result}} </br>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+         </div>
+      {% endfor %}
+
+      {% if next_page or prev_page %}
+        <nav>
+          <ul class="pager">
+            {% if prev_page %}
+            <li class="previous"><a href="{{prev_page}}"><span aria-hidden="true">&larr;</span>Previous</a></li>
+            {% endif %}
+            {% if next_page %}
+            <li class="next"><a href="{{next_page}}">Next<span aria-hidden="true">&rarr;</span></a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% elif results %}
+ <div class="row">
+   <div class="col-xs-9 col-xs-offset-2">
+      <h3> No Results </h3>
+   </div">
+ </div>
+{% endif %}
+
+{% endblock %}
