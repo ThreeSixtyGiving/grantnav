@@ -128,3 +128,67 @@ def search(request):
         get_pagination(request, context, page)
 
     return render(request, "search.html", context=context)
+
+def flatten_mapping(mapping, current_path=''):
+    for key, value in mapping.items():
+        sub_properties = value.get('properties')
+        if sub_properties:
+            yield from flatten_mapping(sub_properties, current_path + "." + key)
+        else:
+            yield (current_path + "." + key).lstrip(".")
+
+def flatten_schema(schema, path=''):
+    for field, property in schema['properties'].items():
+        if property['type'] == 'array':
+            if property['items']['type'] == 'object':
+                yield from flatten_schema(property['items'], path + '.' + field)
+            else:
+                yield (path + '.' + field).lstrip('.')
+        if property['type'] == 'object':
+            yield from flatten_schema(property, path + '/' + field)
+        else:
+            yield (path + '.' + field).lstrip('.')
+
+def stats(request):
+    text_query = request.GET.get('text_query')
+    if not text_query:
+        text_query = '*'
+    context = {'text_query': text_query or ''}
+
+    es = get_es()
+    mapping = es.indices.get_mapping(index="threesixtygiving")
+    all_fields = list(flatten_mapping(mapping['threesixtygiving']['mappings']['grant']['properties']))
+
+    query = {"query": {"bool":
+                             {"must": {"query_string": {"query": text_query}},
+                              "filter": {}}
+             },
+             "aggs": {
+             }}
+
+    schema = jsonref.load_uri(settings.GRANT_SCHEMA)
+    schema_fields = set(flatten_schema(schema))
+
+    for field in all_fields:
+        query["aggs"][field + ":terms"] = {"terms": {"field": field, "size": 5}}
+        query["aggs"][field + ":missing"] = {"missing": {"field": field}}
+        query["aggs"][field + ":cardinality"] = {"cardinality": {"field": field}}
+
+    if context['text_query'] == '*':
+        context['text_query'] = ''
+
+    field_info = collections.defaultdict(dict)
+    results = es.search(body=query, index="threesixtygiving", size=0)
+    for field, aggregation in results['aggregations'].items():
+        field_name, agg_type = field.split(':')
+        field_info[field_name]["in_schema"] = field_name in schema_fields
+        if agg_type == 'terms':
+            field_info[field_name]["terms"] = aggregation["buckets"]
+        if agg_type == 'missing':
+            field_info[field_name]["found"] = results['hits']['total'] - aggregation["doc_count"]
+        if agg_type == 'cardinality':
+            field_info[field_name]["distinct"] = aggregation["value"]
+
+    context['field_info'] = sorted(field_info.items(), key=lambda val: -val[1]["found"]) 
+    context['results'] = results
+    return render(request, "stats.html", context=context)
