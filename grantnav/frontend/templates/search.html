@@ -21,26 +21,26 @@
   {% if results and results.hits.hits %}
   <div class="row">
     <div class="col-xs-3">
-      <h3 class="indent"> Refine By </h3>
+      <h3 class="indent"> Refine By {% if results.clear_all_facet_url %} <a href={{results.clear_all_facet_url}}> <small>(clear all)</small></a> {%endif%} </h3>
       <div class="panel panel-default">
         <div class="panel-heading list-group-compact">
-          Funding Organizations
+          Funding Organizations {% if results.aggregations.fundingOrganization.clear_url %} <a href={{results.aggregations.fundingOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}
         </div>
-        <ul class="list-group">
-          {% for bucket in results.aggregations.fundingOrg.buckets %}
-          <li class="list-group-item list-group-compact">  {{bucket.key}} <small>({{bucket.doc_count}})</small>  </li>
+        <div class="list-group">
+          {% for bucket in results.aggregations.fundingOrganization.buckets %}
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count}})</small> </a> 
           {% endfor %}
-        </ul>
+        </div>
       </div>
       <div class="panel panel-default">
         <div class="panel-heading list-group-compact">
-          Recipient Organizations
+          Recipient Organizations {% if results.aggregations.recipientOrganization.clear_url %} <a href={{results.aggregations.recipientOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}
         </div>
-        <ul class="list-group">
-          {% for bucket in results.aggregations.recipientOrg.buckets %}
-          <li class="list-group-item list-group-compact">  {{bucket.key}} <small>({{bucket.doc_count}})</small>  </li>
+        <div class="list-group">
+          {% for bucket in results.aggregations.recipientOrganization.buckets %}
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count}})</small> </a> 
           {% endfor %}
-        </ul>
+        </div>
       </div>
     </div>
     <div class="col-xs-9">
