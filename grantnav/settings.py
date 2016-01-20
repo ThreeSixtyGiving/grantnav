@@ -30,6 +30,7 @@ env = environ.Env(  # set default values and casting
     PIWIK_SITE_ID=(str, ''),
     ALLOWED_HOSTS=(list, []),
     SECRET_KEY=(str, secret_key),
+    GRANT_SCHEMA=(str, 'https://raw.githubusercontent.com/ThreeSixtyGiving/standard/master/schema/360-giving-schema.json'),
     DB_NAME=(str, os.path.join(BASE_DIR, 'db.sqlite3'))
 )
 
@@ -53,6 +54,7 @@ RAVEN_CONFIG = {
     'dsn': env('SENTRY_DSN')
 }
 
+GRANT_SCHEMA=env('GRANT_SCHEMA')
 
 # Application definition
 

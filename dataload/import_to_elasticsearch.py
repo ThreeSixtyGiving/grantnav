@@ -22,6 +22,7 @@ mappings = {
     "grant": {
         "properties": {
             "_all": {"analyzer": "english", "type": "string"},
+            "id": {"type": "string", "index": "not_analyzed" },
             "filename": {"type": "string", "index": "not_analyzed" },
             "awardDate": {
                 "type": "date",
