@@ -31,7 +31,8 @@ env = environ.Env(  # set default values and casting
     ALLOWED_HOSTS=(list, []),
     SECRET_KEY=(str, secret_key),
     GRANT_SCHEMA=(str, 'https://raw.githubusercontent.com/ThreeSixtyGiving/standard/master/schema/360-giving-schema.json'),
-    DB_NAME=(str, os.path.join(BASE_DIR, 'db.sqlite3'))
+    DB_NAME=(str, os.path.join(BASE_DIR, 'db.sqlite3')),
+    ES_INDEX=(str, 'threesixtygiving')
 )
 
 PIWIK = {
@@ -115,6 +116,7 @@ DATABASES = {
     }
 }
 
+ES_INDEX=env('ES_INDEX')
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
