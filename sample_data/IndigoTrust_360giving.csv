@@ -1,0 +1,541 @@
+Identifier,Title,Funding Org:Identifier,Funding Org:Name,Recipient Org:Charity Number,Recipient Org:Name,Internal Organisation ID,Currency,Amount Applied For,Amount Awarded,Application Date:Start Date,Award Date,Recipient Org:Street Address,Recipient Org:City,Recipient Org:County,Recipient Org:Postal Code,Recipient Org:Country,Recipient Org:Alternate Name,Recipient Org:Description,Planned Dates:Start Date,Planned Dates:Duration (months),Planned Dates:End Date,Beneficiary Location:Name,Beneficiary Location:Country Code,Beneficiary Location:Latitude/Longitude,Description,WebAddress,From an open call?,Related Activity:Identifier,Last modified,Recipient Org:Identifier
+360G-indigotrust:IND1,Space to Imagine,360G-indigotrust,Indigo Trust,1070468,Discover,6997,GBP,,10000,,26/03/2001 00:00,383-387 High Street,Stratford,,E15 4QZ,UK,,,,12 months,,UK,,,Towards the expansion of the Space to Imagine Programme.,,,,29/04/2015 12:10,GB-CHC-1070468
+360G-indigotrust:IND2,Virtual Day Centre,360G-indigotrust,Indigo Trust,,HM YOI Huntercombe,4588,GBP,,75000,,26/09/2001 00:00,"Huntercombe Place, Nuffield",Henley on Thames,Oxfordshire,RG9 5SB,UK,,,,24 months,,UK,GB,,To fund the first year's work of the Virtual Day Centre.,,,,02/12/2003 15:53,360G-indigotrust:org-4588
+360G-indigotrust:IND3,Womens Drop-in Group,360G-indigotrust,Indigo Trust,1014576,Refugee Council,6627,GBP,,15000,,26/09/2001 00:00,Gredley House,1-11 Broadway,London,E15 4BQ,UK,,,,12 months,,UK,GB,,Towards the Women's Drop-in Group and English Language Courses.,,,,02/12/2002 14:51,GB-CHC-1014576
+360G-indigotrust:IND4,feasibility study,360G-indigotrust,Indigo Trust,1018517,Community Links,1696,GBP,,8000,,26/09/2001 00:00,"Tan y Clogwyn, Pistyll",Pwllheli,Gwynedd,LL53 6LP,UK,,,,12 months,,UK,GB,,Towards The Uncounted feasibility study.,,,,02/12/2002 14:51,GB-CHC-1018517
+360G-indigotrust:IND5,merger period,360G-indigotrust,Indigo Trust,1031291,Kids VIP,7636,GBP,,20000,,25/03/2002 00:00,PO Box 756,Haywards Heath,West Sussex,RH16 9HW,UK,,,,12 months,,UK,GB,,To help VIP through a six month merger negotiation period.,,,,02/12/2002 14:51,GB-CHC-1031291
+360G-indigotrust:IND6,autobiography projec,360G-indigotrust,Indigo Trust,,Writers in Prison Network Ltd,7899,GBP,,20000,,28/08/2002 00:00,PO Box 71,Welshpool,,SY21 0WB,UK,,,,12 months,,UK,GB,,Towards the costs of piloting the autobiography project in prisons.,,,,02/12/2002 14:51,360G-indigotrust:org-7899
+360G-indigotrust:IND7,public awareness pro,360G-indigotrust,Indigo Trust,1054154,Women's Aid Federation England,3606,GBP,,43000,,28/08/2002 00:00,PO Box 391,Bristol,,BS99 7WS,UK,,,,24 months,,UK,GB,,"Towards the costs of the public awareness programme (£35,000) and the 
+children's services (£8,000).",,,,02/12/2002 14:51,GB-CHC-1054154
+360G-indigotrust:IND9,Space to Imagine,360G-indigotrust,Indigo Trust,1070468,Discover,6997,GBP,,15000,,28/08/2002 00:00,383-387 High Street,Stratford,,E15 4QZ,UK,,,,12 months,,UK,GB,,"Towards the costs of the ""Space to Imagine"" nursery schools outreach 
+programme.",,,,02/12/2002 14:51,GB-CHC-1070468
+360G-indigotrust:IND10,Write to Life Projec,360G-indigotrust,Indigo Trust,1000340,Medical Foundation for the Care of Victims of Torture,7228,GBP,,23000,,28/08/2002 00:00,111 Isledon Road,Islington,London,N7 7JW,UK,,,,24 months,,UK,GB,,Towards the costs of the Write to Life project.,,,,02/12/2002 14:51,GB-CHC-1000340
+360G-indigotrust:IND11,Training courses,360G-indigotrust,Indigo Trust,207782,St Christopher's Fellowship,5112,GBP,,40000,,28/08/2002 00:00,1 Putney High Street,London,,SW15 1SZ,UK,,,,24 months,,UK,GB,,Towards the costs of training courses at the Lime Grove Project.,,,,02/12/2002 14:51,GB-CHC-207782
+360G-indigotrust:IND12,Gizo Hospital,360G-indigotrust,Indigo Trust,,"University of Cambridge, Robinson College",7900,GBP,,30000,,28/08/2002 00:00,Grange Road,Cambridge,,CB3 9AN,UK,,,,36 months,,UK,GB,,"To establish a long term relationship between medical students at the 
+college and Gizo Hospital in the Solomon Islands.",,,,25/02/2013 09:56,360G-indigotrust:org-7900
+360G-indigotrust:IND14,leaflet,360G-indigotrust,Indigo Trust,1018517,Community Links,1696,GBP,,2500,,28/08/2002 00:00,"Tan y Clogwyn, Pistyll",Pwllheli,Gwynedd,LL53 6LP,UK,,,,12 months,,UK,GB,,"Towards the costs of producing a leaflet detailing accessible health and 
+social care services to people in Newham.",,,,02/12/2002 14:51,GB-CHC-1018517
+360G-indigotrust:IND15,UK Networking Prog,360G-indigotrust,Indigo Trust,328206,Womankind Worldwide,3454,GBP,,17000,,12/11/2002 00:00,"2nd Floor, Development House",56 - 64 Leonard Street,London,EC2A 4LT,UK,,,,12 months,,UK,GB,,Towards the costs of developing the UK Networking Programme.,,,,02/12/2002 14:51,GB-CHC-328206
+360G-indigotrust:IND16,Training/Sup Officer,360G-indigotrust,Indigo Trust,1031291,Kids VIP,7636,GBP,,50000,,12/11/2002 00:00,PO Box 756,Haywards Heath,West Sussex,RH16 9HW,UK,,,,24 months,,UK,GB,,Towards the costs of employing a Training and Support Officer.,,,,02/12/2002 14:51,GB-CHC-1031291
+360G-indigotrust:IND18,Access to work scheme for refugee teachers,360G-indigotrust,Indigo Trust,,Refugees Into Jobs,8476,GBP,,93092,,29/10/2003 00:00,"3-7 Lincoln Parade, Preston Road",Wembley,Middlesex,HA9 8UA,UK,,,,12 months,,UK,GB,,Access to work scheme for refugee teachers in West London.,,,,06/11/2003 12:47,360G-indigotrust:org-8476
+360G-indigotrust:IND19,Women & Anger' Anger management programme,360G-indigotrust,Indigo Trust,1017560,Clean Break Theatre Company,1517,GBP,,35000,,29/10/2003 00:00,2 Patshull Road,London,,NW5 2LB,UK,,,,24 months,,UK,GB,,"Women & Anger' Anger Management Programme for women prisoners, 
+ex-offenders and women detained by the Mental Health Act.",,,,03/08/2005 13:16,GB-CHC-1017560
+360G-indigotrust:IND20,Towards the 2004 Awards,360G-indigotrust,Indigo Trust,802623,"Ashden Sustainable solutions, better lives",7910,GBP,,10000,,29/10/2003 00:00,The Peak,5 Wilton Road,London,SW1V 1AP,UK,"Ashden Sustainable solutions, better lives - Ashden Awards",,,12 months,,UK,GB,,Towards costs of the Ashden Awards for Sustainable Energy 2004.,,,,11/08/2004 15:42,GB-CHC-802623
+360G-indigotrust:IND21,To develop productions,360G-indigotrust,Indigo Trust,,Ice & Fire Theatre Company,8747,GBP,,30000,,05/05/2004 00:00,Winkley Studios,7 Winkley Street,London,E2 6PY,UK,,,,24 months,,UK,GB,,To enable Ice & Fire to continue to develop productions.,,,,18/05/2005 14:39,360G-indigotrust:org-8747
+360G-indigotrust:IND22,Evaluation,360G-indigotrust,Indigo Trust,,HM YOI Huntercombe,4588,GBP,,6600,,05/05/2004 00:00,"Huntercombe Place, Nuffield",Henley on Thames,Oxfordshire,RG9 5SB,UK,,,,12 months,,UK,GB,,For a full evaluation of the project.,,,,18/05/2004 16:04,360G-indigotrust:org-4588
+360G-indigotrust:IND23,report and dissemination,360G-indigotrust,Indigo Trust,,Lemos & Crane,8749,GBP,,66500,,05/05/2004 00:00,64 Highgate Highstreet,London,,N6 5HX,UK,,,,12 months,,UK,GB,,"A qualitative study of the experiences of vulnerable people leaving the 
+armed forces and of ex-servicemen living in homeless agencies.",,,,27/04/2005 14:39,360G-indigotrust:org-8749
+360G-indigotrust:IND24,Merger,360G-indigotrust,Indigo Trust,1031291,Kids VIP,7636,GBP,,50000,,04/06/2004 00:00,PO Box 756,Haywards Heath,West Sussex,RH16 9HW,UK,,,,24 months,,UK,GB,,To run from the point of merger between Kids VIP and Clinks.,,,,01/03/2005 14:57,GB-CHC-1031291
+360G-indigotrust:IND25,new service in Southwark,360G-indigotrust,Indigo Trust,1083549,Domestic Violence Intervention Project,5852,GBP,,90000,,04/06/2004 00:00,PO Box 2838,Hammersmith,London,W6 9ZE,UK,,,,36 months,,UK,GB,,To the support the development of a new service in Southwark.,,,,02/02/2005 15:48,GB-CHC-1083549
+360G-indigotrust:IND26,Development of TVI,360G-indigotrust,Indigo Trust,,Violence Initiative,8764,GBP,,114000,,04/06/2004 00:00,First Floor,260 Langham Road,London,N15 3NP,UK,,,,36 months,,UK,GB,,Towards the development of TVI.,,,,24/08/2005 14:25,360G-indigotrust:org-8764
+360G-indigotrust:IND27,Social enterprise models,360G-indigotrust,Indigo Trust,,East London Childcare Institute,8765,GBP,,70000,,04/06/2004 00:00,22 Deanery Road,London,,E15 4LP,UK,,,,24 months,,UK,GB,,Towards the development of social enterprise models for childcare.,,,,09/08/2005 14:42,360G-indigotrust:org-8765
+360G-indigotrust:IND28,Life Skills Programme,360G-indigotrust,Indigo Trust,207782,St Christopher's Fellowship,5112,GBP,,30000,,04/06/2004 00:00,1 Putney High Street,London,,SW15 1SZ,UK,,,,24 months,,UK,GB,,Towards the costs of developing the Life Skills Programme at LRC.,,,,03/08/2005 13:16,GB-CHC-207782
+360G-indigotrust:IND29,Internship Programme,360G-indigotrust,Indigo Trust,800065,Institute for Public Policy Research,1303,GBP,,12500,,04/06/2004 00:00,30-32 Southampton Street,London,,WC2E 7RA,UK,,,,12 months,,UK,GB,,To pilot an internship programme.,,,,10/06/2004 14:35,GB-CHC-800065
+360G-indigotrust:IND31,salary and running costs,360G-indigotrust,Indigo Trust,267879,Action for Prisoners' Families,8798,GBP,,190659,,18/06/2004 00:00,"Unit 21, Carlson Court",116 Putney Bridge Road,London,SW15 2NQ,UK,,,,36 months,,UK,GB,,"Towards salary and running costs of £118,379 and pilot project costs 
+(including core line management and equipment) of £72,280.",,,,05/07/2004 15:22,GB-CHC-267879
+360G-indigotrust:IND32,We Are What We Do,360G-indigotrust,Indigo Trust,1018517,Community Links,1696,GBP,,30000,,13/09/2004 00:00,"Tan y Clogwyn, Pistyll",Pwllheli,Gwynedd,LL53 6LP,UK,,,,12 months,,UK,GB,,To enable WAWWD to employ a director of communtiy development.,,,,31/07/2008 10:00,GB-CHC-1018517
+360G-indigotrust:IND33,children in custody,360G-indigotrust,Indigo Trust,251926,Howard League for Penal Reform,1983,GBP,,20000,,19/10/2004 00:00,1 Ardleigh Road,London,,N1 4HS,UK,,,,12 months,,UK,GB,,Towards the costs of an inquiry into the treatment of children in custody.,,,,15/11/2004 16:34,GB-CHC-251926
+360G-indigotrust:IND34,2005 & 2006 Awards,360G-indigotrust,Indigo Trust,802623,"Ashden Sustainable solutions, better lives",7910,GBP,,20000,,19/10/2004 00:00,The Peak,5 Wilton Road,London,SW1V 1AP,UK,"Ashden Sustainable solutions, better lives - Ashden Awards",,,24 months,,UK,GB,,Towards the costs of the 2005 and 2006 Awards.,,,,07/04/2005 16:07,GB-CHC-802623
+360G-indigotrust:IND35,management & development,360G-indigotrust,Indigo Trust,,The Sainsbury Archive,8313,GBP,,10000,,19/10/2004 00:00,The Peak,5 Wilton Road,London,SW1V 1AP,UK,,,,12 months,,UK,GB,,Towards the management and development of the Sainsbury Archive,,,,11/08/2005 10:39,360G-indigotrust:org-8313
+360G-indigotrust:IND36,Life Stories & Cool Books,360G-indigotrust,Indigo Trust,,Writers in Prison Network Ltd,7899,GBP,,40000,,19/10/2004 00:00,PO Box 71,Welshpool,,SY21 0WB,UK,,,,24 months,,UK,GB,,Towards the development of Life Stories and Cool Books.,,,,03/12/2004 15:11,360G-indigotrust:org-7899
+360G-indigotrust:IND37,employing manager,360G-indigotrust,Indigo Trust,,HMP Liverpool,8971,GBP,,70000,,19/10/2004 00:00,68 Hornby Road,Walton,Liverpool,L3 9DF,UK,,,,24 months,,UK,GB,,Towards the costs of employing a manager for Big House Arts.,,,,19/04/2005 14:13,360G-indigotrust:org-8971
+360G-indigotrust:IND38,expand service,360G-indigotrust,Indigo Trust,1100619,Support Help & Advice for Relatives of Prisoners (SHARP),8972,GBP,,76460,,19/10/2004 00:00,83a Wyle Cop,Shrewsbury,Shropshire,SY1 1UT,UK,,,,36 months,,UK,GB,,To enable it to expand its services to a further ten prisons and YOIs.,,,,11/01/2005 11:31,GB-CHC-1100619
+360G-indigotrust:IND39,leadership course,360G-indigotrust,Indigo Trust,,Kyra,8973,GBP,,25000,,19/10/2004 00:00,"337 Station Road, Dorridge",Solihull,Birmingham,B93 8EY,UK,,,,24 months,,UK,GB,,Towards the development of a leadership course.,,,,02/02/2005 15:48,360G-indigotrust:org-8973
+360G-indigotrust:IND40,salary of Development Officer,360G-indigotrust,Indigo Trust,1065066,London Detainee Support Group,8974,GBP,,88850,,19/10/2004 00:00,"Leroy House, Unit 3R",436 Essex Road,London,N1 3QP,UK,,,,36 months,,UK,GB,,"To cover the salary of a Development Officer and the associated management 
+costs.",,,,21/10/2005 11:10,GB-CHC-1065066
+360G-indigotrust:IND41,Development Director,360G-indigotrust,Indigo Trust,295324,Pan Centre for Intercultural Arts Limited,8975,GBP,,54150,,19/10/2004 00:00,"52 Foundling Court, Brunswick Centre",Marchmont Street,London,WC1N 1AN,UK,,,,36 months,,UK,GB,,Towards the costs of a new Development Director.,,,,11/01/2005 11:31,GB-CHC-295324
+360G-indigotrust:IND42,Arts based workshops,360G-indigotrust,Indigo Trust,,HMP/YOI Bullwood Hall,8836,GBP,,37645,,23/11/2004 00:00,High Road,Hockley,Essex,SS5 4TE,UK,,,,12 months,,UK,GB,,"Towards the programme of intensive arts-based workshops for holiday and 
+vacation periods, in support of the grant from the Mark Leonard Trust to 
+enrich the regular curriculum.",,,,03/08/2005 13:16,360G-indigotrust:org-8836
+360G-indigotrust:IND43,Internship,360G-indigotrust,Indigo Trust,,King's College London,14483,GBP,,12500,,16/12/2004 00:00,26-29 Drury Lane,London,,WC2B 5RI,UK,"King's College London - Centre for Crime and Justice Studies, School of Law",,,12 months,,UK,GB,,"Towards an internship for Centre for Crime & Justice Studies in support of 
+Una Padel",,,,16/12/2004 12:22,360G-indigotrust:org-14483
+360G-indigotrust:IND44,Towards core costs in 2004/5,360G-indigotrust,Indigo Trust,,Refugee Therapy Centre (RTC),6891,GBP,,20000,,16/12/2004 00:00,40 St John's Way,,London,N19 3RR,UK,,,,12 months,,UK,GB,,Towards core costs in 2004/5,,,,14/01/2005 12:30,360G-indigotrust:org-6891
+360G-indigotrust:IND45,Tsunami relief (anonymous donation),360G-indigotrust,Indigo Trust,1062638,Disasters Emergency Committee,7880,GBP,,20000,,04/01/2005 00:00,15 Warren Mews,London,,W1T 6AZ,UK,,,,12 months,,UK,GB,,Tsunami relief (anonymous donation),,,,18/01/2005 15:25,GB-CHC-1062638
+360G-indigotrust:IND46,G8' award in 2005,360G-indigotrust,Indigo Trust,802623,"Ashden Sustainable solutions, better lives",7910,GBP,,38000,,09/02/2005 00:00,The Peak,5 Wilton Road,London,SW1V 1AP,UK,"Ashden Sustainable solutions, better lives - Ashden Awards",,,12 months,,UK,GB,,"To cover the costs of a 'G8' award in 2005. This award will go to an 
+innovative African project in an effort to draw attention to sustainable 
+energy as one of the solutions to the issues being discussed at the G8 
+summit in Scotland in July. The exact title of the award is to be confirmed.",,,,07/04/2005 16:08,GB-CHC-802623
+360G-indigotrust:IND47,Rolling emergency bed space in Shepherds Bush,360G-indigotrust,Indigo Trust,274403,Broadway,4827,GBP,,5000,,17/03/2005 00:00,"Central Office, 15 Half Moon Court",Bartholomew Close,London,EC1A 7HF,UK,,,,12 months,,UK,GB,,"Towards increasing the availability of a rolling emergency bed space to 
+meet short term housing and benefit gaps.",,,,03/08/2005 13:16,GB-CHC-274403
+360G-indigotrust:IND48,Towards programme of participatory arts events,360G-indigotrust,Indigo Trust,1004137,Emergency Exit Arts,14598,GBP,,90000,,17/03/2005 00:00,P O Box 570,London,,DE10 0EE,UK,,,,36 months,,UK,GB,,"Towards a programme of participating arts events and training in Abbey 
+Wood, Thamesmead, aimed at the integration of traveller, refugee and 
+indigenous communities.",,,,04/07/2005 12:23,GB-COH-IP1004137
+360G-indigotrust:IND49,Emergency fund for accommodation,360G-indigotrust,Indigo Trust,24377R,Thames Reach,394,GBP,,5000,,17/03/2005 00:00,Gem House,122 Backchurch Lane,London,E1 1ND,UK,,,,12 months,,UK,GB,,"Towards emergency fund for accommodation to meet short term housing and 
+benefit gaps.",,,,31/03/2005 13:04,GB-CHC-24377R
+360G-indigotrust:IND50,Core costs,360G-indigotrust,Indigo Trust,1097969,Restorative Justice Consortium,14599,GBP,,75000,,17/03/2005 00:00,"Merchant House, 89 Southwark Street",,London,SE1 0HX,UK,,,,36 months,,UK,GB,,"Towards core costs as it builds up strength of its membership and 
+consultancy revenue.",,,,04/07/2005 14:25,GB-CHC-1097969
+360G-indigotrust:IND51,renovation costs,360G-indigotrust,Indigo Trust,1105126,U-Turn Women's Project,14605,GBP,,70000,,22/03/2005 00:00,St Margaret's House,21 Old Ford Road,London,E2 9PJ,UK,,,,12 months,,UK,GB,,"To cover the costs of converting St Matthew's Church hall into the U-Turn 
+Project's women's centre.",,,,16/06/2005 14:44,GB-CHC-1105126
+360G-indigotrust:IND52,Employing new prison and charity links coordinator,360G-indigotrust,Indigo Trust,1085709,Alternatives to Violence Project,14888,GBP,,120000,,03/08/2005 00:00,"AVP London, The Grayston Centre",28 Charles Square,London,N1 6HT,UK,,,,36 months,,UK,GB,,Towards the costs of employing a new prison and charity links coordinator.,,,,05/09/2005 13:17,GB-CHC-1085709
+360G-indigotrust:IND53,Further development of the Manwaring Centre,360G-indigotrust,Indigo Trust,,HM YOI Huntercombe,4588,GBP,,93750,,03/08/2005 00:00,"Huntercombe Place, Nuffield",Henley on Thames,Oxfordshire,RG9 5SB,UK,,,,48 months,,UK,GB,,Towards further development of the Manwaring Centre.,,,,17/08/2005 11:59,360G-indigotrust:org-4588
+360G-indigotrust:IND54,Development of the PRIME programme at HMP Downview,360G-indigotrust,Indigo Trust,,Media for Development Limited (MFD),14889,GBP,,90000,,03/08/2005 00:00,"3rd Floor, Willow House",72-74 Paul Street,London,EC2A 4NA,UK,Media for Development Limited (MFD) - Inside Job Productions,,,24 months,,UK,GB,,Towards the development of the PRIME programme at HMP Downview.,,,,24/08/2005 14:25,360G-indigotrust:org-14889
+360G-indigotrust:IND55,Get Reading,360G-indigotrust,Indigo Trust,1086518,KPMG Foundation,14805,GBP,,201000,,03/08/2005 00:00,8 Salisbury Square,Blackfriars,London,EC4Y 8BB,UK,,,,36 months,,UK,GB,,To set up Reading Recovery in one LEA,,,,03/10/2005 15:24,GB-CHC-1086518
+360G-indigotrust:IND56,Core costs of Write to Life Project,360G-indigotrust,Indigo Trust,1000340,Medical Foundation for the Care of Victims of Torture,7228,GBP,,69850,,03/08/2005 00:00,111 Isledon Road,Islington,London,N7 7JW,UK,,,,36 months,,UK,GB,,Towards core costs of the Write to Life Project,,,,09/09/2005 14:56,GB-CHC-1000340
+360G-indigotrust:IND57,Core costs,360G-indigotrust,Indigo Trust,,Ice & Fire Theatre Company,8747,GBP,,90000,,03/08/2005 00:00,Winkley Studios,7 Winkley Street,London,E2 6PY,UK,,,,36 months,,UK,GB,,"Towards core costs to enable it to develop a number of new projects with 
+refugees and refugee groups.",,,,05/09/2005 13:24,360G-indigotrust:org-8747
+360G-indigotrust:IND58,Partnership Training Programme,360G-indigotrust,Indigo Trust,1081406,Management Accounting for Non-Governmental Organisations (MANGO),6402,GBP,,60000,,03/08/2005 00:00,97a St Aldates,Oxford,,OX1 1BT,UK,,,,36 months,,UK,GB,,To enable Mango to pilot a partnership training programme,,,,17/08/2005 12:17,GB-CHC-1081406
+360G-indigotrust:IND59,Further development of 'Accommodate' programme,360G-indigotrust,Indigo Trust,1096829,hact (Housing Associations Charitable Trust),716,GBP,,90000,,03/08/2005 00:00,49-51 East Road,London,,N1 6AH,UK,,,,36 months,,UK,GB,,Towards the further development of the 'Accommodate' programme,,,,09/09/2005 14:56,GB-CHC-1096829
+360G-indigotrust:IND62,Evaluation into 'prison as workplace schemes',360G-indigotrust,Indigo Trust,,"University of Central England, Birmingham",14959,GBP,,40000,,03/08/2005 00:00,Perry Barr,Birmingham,,B42 2SU,UK,,,,12 months,,UK,GB,,"Towards an independent evaluation into 'prison as workplace schemes' in the 
+UK",,,,12/10/2005 12:12,360G-indigotrust:org-14959
+360G-indigotrust:IND63,core costs,360G-indigotrust,Indigo Trust,517817,Institute of Food Brain & Behaviour,6234,GBP,,120000,,24/10/2005 00:00,Old Music Hall,106-108 Cowley Road,Oxford,OX4 1JE,UK,Institute of Food Brain & Behaviour - (formerly Natural Justice),,,36 months,,UK,GB,,Towards core costs,,,,08/11/2005 11:58,GB-CHC-517817
+360G-indigotrust:IND64,towards the Parent Education Programme,360G-indigotrust,Indigo Trust,,Campaign for Learning,9709,GBP,,239947,,24/10/2005 00:00,19 Buckingham Street,London,,WC2 6EF,UK,,,,24 months,,UK,GB,,Towards the Parent Education Programme,,,,30/05/2006 11:29,360G-indigotrust:org-9709
+360G-indigotrust:IND65,costs of establishing Volunteer Engagement Unit,360G-indigotrust,Indigo Trust,219278,Prison Advice & Care Trust (PACT),8094,GBP,,135000,,24/10/2005 00:00,"Suite C5, City Cloisters",196 Old Street,London,EC1V 9FR,UK,,,,36 months,,UK,GB,,Towards the costs of establishing a Volunteer Engagement Unit,,,,08/11/2005 12:00,GB-CHC-219278
+360G-indigotrust:IND66,costs of the Dance & Criminal Justice Programme,360G-indigotrust,Indigo Trust,1087232,Dance United,6582,GBP,,95000,,24/10/2005 00:00,"Central Office, One KX",120 Cromer Street,London,WC1H 8BS,UK,,,,36 months,,UK,GB,,Towards the costs of the Dance and Criminal Justice Programme.,,,,08/11/2005 12:10,GB-CHC-1087232
+360G-indigotrust:IND67,"social entrepreneurship scheme, HMP W'worth & DV",360G-indigotrust,Indigo Trust,,UnLtd,8970,GBP,,53000,,24/10/2005 00:00,123 Whitecross Street,Islington,London,EC1Y 8JJ,UK,,,,12 months,,UK,GB,,"Towards the costs of establishing a social entrepreneurship scheme in HMP 
+Wandsworth and HMP Downview",,,,08/11/2005 12:02,GB-COH-IP
+360G-indigotrust:IND68,Refugee Economic Inclusion Scheme (REIS),360G-indigotrust,Indigo Trust,,Paddington Development Trust (PDT),14996,GBP,,77000,,24/10/2005 00:00,26 Westbourne Studios,242 Acklam Road,London,W10 5JJ,UK,,,,24 months,,UK,GB,,Towards the Refugee Economic Inclusion Scheme.,,,,08/11/2005 12:04,360G-indigotrust:org-14996
+360G-indigotrust:IND70,piloting more appropriate services for women,360G-indigotrust,Indigo Trust,1149085,St Mungo Community Housing Association,4745,GBP,,135000,,24/10/2005 00:00,"St Mungo's Broadway, Griffin House",161 Hammersmith Road,London,W6 8BS,UK,,,,36 months,,UK,GB,,Towards the costs of piloting more appropriate services for women,,,,08/11/2005 12:11,GB-CHC-1149085
+360G-indigotrust:IND71,research into recruitment of child soldiers in UK,360G-indigotrust,Indigo Trust,,Anglia Ruskin University,14997,GBP,,35000,,24/10/2005 00:00,Ashby House,Hoffman Way,Chelmsford,CM1 1SQ,UK,Anglia Ruskin University - Institute of Health & Social Care,,,12 months,,UK,GB,,Towards research into the recruitment of child soldiers in the UK.,,,,22/03/2006 19:11,360G-indigotrust:org-14997
+360G-indigotrust:IND72,towards costs of Prostitution Debate,360G-indigotrust,Indigo Trust,,Women's Library,8465,GBP,,14000,,24/10/2005 00:00,London Metropolitan University,Old Castle Street,London,E1 7NT,UK,,,,12 months,,UK,GB,,Towards the costs of the Prostitution Debate,,,,08/11/2005 12:12,360G-indigotrust:org-8465
+360G-indigotrust:IND73,salary costs,360G-indigotrust,Indigo Trust,296383,Fawcett Society,4831,GBP,,119000,,24/10/2005 00:00,1-3 Berry Street,London,,EC1B 0AA,UK,,,,36 months,,UK,GB,,"Towards the salary and associated management costs of a policy officer to 
+lead a project on issues facing BME women in the UK.",,,,08/11/2005 12:15,GB-CHC-296383
+360G-indigotrust:IND74,towards costs of an Overseas Awards,360G-indigotrust,Indigo Trust,802623,"Ashden Sustainable solutions, better lives",7910,GBP,,82000,,24/10/2005 00:00,The Peak,5 Wilton Road,London,SW1V 1AP,UK,"Ashden Sustainable solutions, better lives - Ashden Awards",,,12 months,,UK,GB,,Towards the costs of an Overseas Award.,,,,04/04/2006 10:22,GB-CHC-802623
+360G-indigotrust:IND75,workshops on conflict resolution for young muslims,360G-indigotrust,Indigo Trust,327947,Peace Direct,8676,GBP,,7000,,07/12/2005 00:00,Development House,56-64 Leonard Street,London,EC2A 4JX,UK,,,,12 months,,UK,GB,,Towards workshops on conflict resolution for young muslims,,,,20/12/2005 11:56,GB-CHC-327947
+360G-indigotrust:IND76,secretariat costs of all-party parliamentary cttee,360G-indigotrust,Indigo Trust,1058949,Anne Peaker Centre for Arts in Criminal Justice,15553,GBP,,80000,,14/11/2006 00:00,Neville House,90-91 Northgate,Canterbury,CT1 1BA,UK,,,,24 months,,UK,GB,,"Towards the secretariat costs of an all-party parliamentary committee on 
+the role of arts in prisons.",,,,05/12/2006 09:53,GB-CHC-1058949
+360G-indigotrust:IND77,costs of the Awards,360G-indigotrust,Indigo Trust,802623,"Ashden Sustainable solutions, better lives",7910,GBP,,140000,,14/11/2006 00:00,The Peak,5 Wilton Road,London,SW1V 1AP,UK,"Ashden Sustainable solutions, better lives - Ashden Awards",,,36 months,,UK,GB,,Towards the costs of the Awards.,,,,02/02/2007 10:41,GB-CHC-802623
+360G-indigotrust:IND78,costs of organisation's reconstitution as charity,360G-indigotrust,Indigo Trust,,Refugees Into Jobs,8476,GBP,,55000,,14/11/2006 00:00,"3-7 Lincoln Parade, Preston Road",Wembley,Middlesex,HA9 8UA,UK,,,,12 months,,UK,GB,,Towards the costs of the organisation's reconstitution as a charity.,,,,05/12/2006 09:56,360G-indigotrust:org-8476
+360G-indigotrust:IND79,"£40,000 of £50,000 loan converted to a grant",360G-indigotrust,Indigo Trust,,We Are What We Do,14915,GBP,,40000,,05/04/2008 00:00,71 St John Street,London,,EC1M 4NJ,UK,,,,12 months,,UK,GB,,"£40,000 of £50,000 loan converted to a grant. To cover the period between 
+book sales and receipt of revenue.",,,,06/10/2009 12:32,360G-indigotrust:org-14915
+360G-indigotrust:IND80,Sainsbury Archive,360G-indigotrust,Indigo Trust,,The Sainsbury Archive,8313,GBP,,1593,,18/07/2008 00:00,The Peak,5 Wilton Road,London,SW1V 1AP,UK,,,,12 months,,UK,GB,,Towards the core costs of the Sainsbury Archive.,,,,23/07/2008 09:27,360G-indigotrust:org-8313
+360G-indigotrust:IND81,The Sainsbury Archive,360G-indigotrust,Indigo Trust,,The Sainsbury Archive,8313,GBP,,5000,,18/07/2008 00:00,The Peak,5 Wilton Road,London,SW1V 1AP,UK,,,,24 months,,UK,GB,,Towards additional costs of the Sainsbury Archive.,,,,19/07/2010 07:54,360G-indigotrust:org-8313
+360G-indigotrust:IND82,towards costs of creating a criminal justice fund,360G-indigotrust,Indigo Trust,1094681,Impetus Trust,8066,GBP,,402500,,28/07/2008 00:00,20 Flaxman Terrace,London,,WC1H 9PN,UK,,,,48 months,,UK,GB,,Towards the costs of creating a criminal justice fund.,,,,21/03/2013 12:59,GB-CHC-1094681
+360G-indigotrust:IND83,towards the costs of developing the campaign,360G-indigotrust,Indigo Trust,,Make Justice Work,18808,GBP,,50000,,12/06/2008 00:00,26a Ganton Street,London,,W1F 7QZ,UK,,,,12 months,,UK,GB,,Towards the costs of developing the campaign.,,,,02/09/2008 10:48,360G-indigotrust:org-18808
+360G-indigotrust:IND84,Research and dev of the social impact bond,360G-indigotrust,Indigo Trust,,Community Links,19521,GBP,,50000,,04/12/2008 00:00,105 Barking Road,Canning Town,London,E16 4HQ,UK,,,,12 months,,UK,GB,,To enable further research and development of the Social Impact Bond.,,,,06/10/2009 12:30,360G-indigotrust:org-19521
+360G-indigotrust:IND85,Research in field of Prisioners and Families,360G-indigotrust,Indigo Trust,,Lemos & Crane,8749,GBP,,45000,,19/11/2008 00:00,64 Highgate Highstreet,London,,N6 5HX,UK,,,,12 months,,UK,GB,,"Carry out research in field of Prisioners and Families - Desistance from 
+Re-Offending.",,,,17/04/2009 10:45,360G-indigotrust:org-8749
+360G-indigotrust:IND86,Employment costs of a co-ordinator,360G-indigotrust,Indigo Trust,,Open Book,19618,GBP,,132000,,19/11/2008 00:00,"Goldsmiths College, University of London, Lewisham Way",New Cross,London,SE14 6NW,UK,,,,36 months,,UK,GB,,"Towards the employment costs of a co-ordinator to assist the Project 
+Manager.",,,,16/02/2009 10:36,360G-indigotrust:org-19618
+360G-indigotrust:IND87,Towards costs of a programmer,360G-indigotrust,Indigo Trust,1076346,MySociety,20042,GBP,,120000,,05/02/2009 00:00,483 Green Lanes,London,,N13 4BS,UK,,,,36 months,,UK,GB,,Towards costs of a programmer.,,,,21/06/2011 16:06,GB-CHC-1076346
+360G-indigotrust:IND88,award to recognise excellence in the field of IT,360G-indigotrust,Indigo Trust,,Butler Trust,8543,GBP,,54000,,09/04/2009 00:00,Howard House,32-24 High Street,Croydon,CR0 1YB,UK,,,,36 months,,UK,GB,,Towards the costs of an award to recognise excellence in the field of IT.,,,,18/08/2011 16:13,360G-indigotrust:org-8543
+360G-indigotrust:IND89,towards the costs of a programme,360G-indigotrust,Indigo Trust,1091450,New Philanthropy Capital,8793,GBP,,63000,,09/04/2009 00:00,3rd Floor,185 Park Street,London,SE1 9BL,UK,,,,12 months,,UK,GB,,"Towards the costs of a programme to assist charities working with offenders 
+and their families to develop systems and tools to measure and articulate 
+their effectiveness in reducing recidivism.",,,,19/01/2010 16:11,GB-CHC-1091450
+360G-indigotrust:IND90,To provide consultancy to dev User Voice,360G-indigotrust,Indigo Trust,,User Voice,21764,GBP,,1339.73,,15/01/2010 00:00,20 Newburn Street,Kennington,London,SE11 5P,UK,,,,12 months,,UK,GB,,"To provide consultancy to assist Mark Johnson in the development of the 
+User Voice Programme.",,,,17/08/2010 16:03,360G-indigotrust:org-21764
+360G-indigotrust:IND91,Conference costs and business support,360G-indigotrust,Indigo Trust,,Africa Gathering,25103,GBP,,10000,,06/12/2010 00:00,"147 Yew Tree Drive, Bellfields",Guildford,Surrey,GU1 1N,UK,,,,12 months,,UK,GB,,"£5000 towards conference costs and £5000 towards business support, the 
+latter of which will be paid directly to the providers of support.",,,,19/12/2012 14:18,360G-indigotrust:org-25103
+360G-indigotrust:IND92,Costs of part-time project manager,360G-indigotrust,Indigo Trust,,FrontlineSMS Radio,25104,GBP,,10200,,06/12/2010 00:00,"24 Hollidays Road, Bluntisham",Huntingdon,Cambridgeshire,PE28 3LP,UK,,,,12 months,,UK,GB,,"Costs of a part-time project manager to develop a new software model to 
+promote the growth of civil society activity in Africa.",,,,09/10/2014 14:17,360G-indigotrust:org-25104
+360G-indigotrust:IND93,Core costs and project costs,360G-indigotrust,Indigo Trust,,The Sainsbury Archive,8313,GBP,,4000,,06/12/2010 00:00,The Peak,5 Wilton Road,London,SW1V 1AP,UK,,,,36 months,,UK,GB,,Towards core cost and project costs.,,,,05/10/2012 11:00,360G-indigotrust:org-8313
+360G-indigotrust:IND94,Media transparency project,360G-indigotrust,Indigo Trust,,Hive Colab,25495,GBP,,10000,,07/02/2011 00:00,"3rd Foor, Suite 304, Kankojya House, Kanjokya Road",Kamwokya,Kampala,,Uganda,,,,12 months,,Uganda,UG,,Towards a media transparency project during the upcoming Ugandan elections.,,,,09/10/2014 14:19,360G-indigotrust:org-25495
+360G-indigotrust:IND96,Costs of new equipment,360G-indigotrust,Indigo Trust,,Pamoja Development Centre,25672,GBP,,2213,,03/03/2011 00:00,58 Kibera Drive,00200-10352,Nairobi,,Kenya,,,,12 months,,Kenya,KE,,"To cover costs of four new deskktops and two laptops, back-ups and one 
+medium generator.",,,,21/06/2011 16:04,360G-indigotrust:org-25672
+360G-indigotrust:IND97,Prize money and project management costs,360G-indigotrust,Indigo Trust,,Co-Creation Hub Nigeria,25709,GBP,,5000,,04/03/2011 00:00,"6th Floor, 294 Herbert Macaulay Way, Sabo",Yaba,Lagos,,Nigeria,,,,12 months,,Nigeria,NG,,"To cover costs of prize money valued at £4,000 and to contribute £1,000 
+towards project management costs for Tech-In Governance event.",,,,09/10/2014 14:20,360G-indigotrust:org-25709
+360G-indigotrust:IND98,ICT for Development Conference,360G-indigotrust,Indigo Trust,,Institute for Philanthropy,11117,GBP,,41506.4,,06/12/2010 00:00,2 Temple Place,London,,WC2R 3BD,UK,,,,12 months,,UK,GB,,"To cover the costs of an ICT for Development Conference hosted by IFP in 
+Septmber 2011.",,,,09/10/2014 16:44,360G-indigotrust:org-11117
+360G-indigotrust:IND99,Research on social media and philanthropy,360G-indigotrust,Indigo Trust,,Institute for Philanthropy,11117,GBP,,15000,,02/02/2010 15:32,2 Temple Place,London,,WC2R 3BD,UK,,,,12 months,,UK,GB,,"For a piece of research on social media and philanthropy,.",,,,09/10/2014 16:44,360G-indigotrust:org-11117
+360G-indigotrust:IND100,The Transparency and Accountability Initiative,360G-indigotrust,Indigo Trust,,Open Society Foundation,26037,GBP,,10000,,04/04/2011 00:00,100 Cambridge Grove,London,,W6 OLE,UK,,,,12 months,,UK,GB,,To The Transparency and Accountability Initiative.,,,,09/10/2014 14:20,360G-indigotrust:org-26037
+360G-indigotrust:IND103,Call centre support for the mobile application.,360G-indigotrust,Indigo Trust,,iCow,26177,GBP,,10536,,15/04/2011 00:00,Green Dreams Ltd,P.O. Box 1403-00217,Limuru,,KENYA,,,,12 months,,KENYA,KE,,"Applications which enables farmers to receive notifications which advise 
+them on how to correctly take care of their cattle at appropriate times.",,,,19/10/2011 15:57,360G-indigotrust:org-26177
+360G-indigotrust:IND104,Empowering young people to use social media to improve their sexual health,360G-indigotrust,Indigo Trust,,Tactical Tech,26346,GBP,,16350,,17/05/2011 00:00,3 Gloucester Yard,121-3 Gloucester Road,Brighton,BN1 4AF,UK,,,,12 months,,UK,GB,,"Work with human rights activists around the developing world in order to 
+support them to make more effective use of technology in their work.",,,,19/10/2011 16:02,360G-indigotrust:org-26346
+360G-indigotrust:IND105,Research paper investigation role and uses of mobile phones,360G-indigotrust,Indigo Trust,,Mobile Active,26347,GBP,,20000,,17/05/2011 00:00,121 West 27th Street,Suite 702,New York,NY 1001,USA,,,,12 months,,USA,US,,"Towards a research paper investigating the role and uses of mobile phones 
+in human rights, democracy, and governance.",,,,09/10/2014 14:21,360G-indigotrust:org-26347
+360G-indigotrust:IND106,To enable extension of services,360G-indigotrust,Indigo Trust,,ActivSpaces,26348,GBP,,10008.96,,18/05/2011 00:00,c/o Sanaga Ventures B.V.,MS. van Riemsdijkweg 57,1033 RC Amsterdam,,THE NETHERLANDS,,,,12 months,,THE NETHERLANDS,NL,,"Extension of their services developing technology based prototypes and 
+bringing them to market.",,,,21/06/2011 16:05,360G-indigotrust:org-26348
+360G-indigotrust:IND107,Costs of two members of staff for 3 months,360G-indigotrust,Indigo Trust,,Open Mind,26349,GBP,,10000,,18/05/2011 00:00,1158 26th St. Ste. 267,Santa Monica,,CA 90403,USA,,,,12 months,,USA,US,,"To cover the costs of two members of staff (programmers) for 3 months to 
+the Question Box initiative in order to develop a system which strengthens 
+the capacity of NGOs.",,,,21/06/2011 16:05,360G-indigotrust:org-26349
+360G-indigotrust:IND108,To support winners of Tech-In Governance event and core costs of the hub,360G-indigotrust,Indigo Trust,,Co-Creation Hub Nigeria,25709,GBP,,25000,,25/05/2011 00:00,"6th Floor, 294 Herbert Macaulay Way, Sabo",Yaba,Lagos,,Nigeria,,,,12 months,,Nigeria,NG,,"£10,000 to cover core costs and three separate projects of £5,000 each: 
+Citizens against rigging elections; Residents reports and Budget4U.",,,,09/10/2014 14:21,360G-indigotrust:org-25709
+360G-indigotrust:IND109,DIY,360G-indigotrust,Indigo Trust,1076346,MySociety,20042,GBP,,40000,,14/06/2011 15:32,483 Green Lanes,London,,N13 4BS,UK,,,,12 months,,UK,GB,,"DIY books or DIY classes to help lots of people to solve their own 
+problems, meeting people and bulding relationships in the process.",,,,09/10/2014 14:21,GB-CHC-1076346
+360G-indigotrust:IND110,Top-up for research paper,360G-indigotrust,Indigo Trust,,Institute for Philanthropy,11117,GBP,,3600,,28/06/2011 00:00,2 Temple Place,London,,WC2R 3BD,UK,,,,12 months,,UK,GB,,"Top-up to original grant for a piece of research on social media and 
+philanthropy £3,600 plus VAT.",,,,09/10/2014 16:44,360G-indigotrust:org-11117
+360G-indigotrust:IND111,Facebook page for sexual health project.,360G-indigotrust,Indigo Trust,,OneWorld UK,26789,GBP,,13000,,11/07/2011 00:00,CAN Mezzanine,32-36 Loman Street,London,SE1 0EH,UK,,,,12 months,,UK,GB,,Facebook page on issues of sexual health in Nigeria and Senegal.,,,,17/11/2011 11:01,360G-indigotrust:org-26789
+360G-indigotrust:IND112,For redesign and development of website and community outreach activities,360G-indigotrust,Indigo Trust,,Map Kibera,26907,GBP,,11320.32,,27/07/2011 00:00,Nairobi,,,,KENYA,,,,12 months,,KENYA,KE,,"Towards redesign and development of their website and community outreach 
+activities for mapping project.",,,,09/10/2014 14:22,360G-indigotrust:org-26907
+360G-indigotrust:IND113,Technical support for radio stations participating in radio module pilot,360G-indigotrust,Indigo Trust,,FrontlineSMS Radio,25104,GBP,,10000,,17/08/2011 00:00,"24 Hollidays Road, Bluntisham",Huntingdon,Cambridgeshire,PE28 3LP,UK,,,,12 months,,UK,GB,,Technical support for radio stations participating in the Radio module.,,,,23/08/2011 11:20,360G-indigotrust:org-25104
+360G-indigotrust:IND114,"Prize money, venue costs and post media relations for Mobile App",360G-indigotrust,Indigo Trust,,Mobile Consortium Ghana,27033,GBP,,10000,,17/08/2011 00:00,29 Thornton Avenue,Croydon,Surrey,CR0 3BW,UK,,,,12 months,,UK,GB,,"Towards prize money, venue costs and post media relations for Mobile App 
+showcase and competition in Ghana.",,,,06/09/2011 13:14,360G-indigotrust:org-27033
+360G-indigotrust:IND115,To identify collections of relevant/affordable eBook titles.,360G-indigotrust,Indigo Trust,,International Association for Digital Publications,15052,GBP,,10000,,07/09/2011 00:00,"c/o Mazars LLP, Times House",Throwley Way,Surrey,SM1 4JQ,UK,,,,Undefined,,UK,GB,,"To support them in identifying collections of relevant and affordable eBook 
+titles for use alongside the Open Education Resources (OER) that support 
+the British Open University's TESSA and HEAT projects.",,,,19/10/2011 15:58,360G-indigotrust:org-15052
+360G-indigotrust:IND116,Integrate Ushahidi into their Land Accountablility Project and training.,360G-indigotrust,Indigo Trust,274467,ActionAid,527,GBP,,10000,,07/09/2011 00:00,33 - 39 Bowling Green Lane,London,,EC1R 0BJ,UK,,,,12 months,,UK,GB,,"To integrate Ushahidi into their Land Accountablity Project and train 
+people to use this tool to report land grabbing disputes.",,,,09/10/2014 14:22,GB-CHC-274467
+360G-indigotrust:IND117,Training young people to use social media.,360G-indigotrust,Indigo Trust,,Youth for Technology Foundation,27117,GBP,,9995,,08/09/2011 00:00,12123 Shelbyville Road,Suite 100-264,Louisville,KY 40243,USA,,,,12 months,,USA,US,,"For a project which involves training young people in Nigeria to use social 
+media to inform people and stimulate behaviour change around sexual health 
+issues and to provide mobile counselling services.",,,,10/11/2011 12:37,360G-indigotrust:org-27117
+360G-indigotrust:IND118,Making Wikimedia more easily accessible from mobile phones.,360G-indigotrust,Indigo Trust,,Wikimedia,27118,GBP,,10000,,08/09/2011 00:00,149 Montgomery Street,3rd Floor,San Francisco,CA 94105,USA,,,,12 months,,USA,US,,"To support them in making Wikipedia more easily accesible from mobile 
+phones and internationalising their platform.",,,,05/10/2011 10:31,360G-indigotrust:org-27118
+360G-indigotrust:IND119,To develop the Nigerian constitution App for use on new platforms.,360G-indigotrust,Indigo Trust,,Co-Creation Hub Nigeria,25709,GBP,,7000,,12/09/2011 00:00,"6th Floor, 294 Herbert Macaulay Way, Sabo",Yaba,Lagos,,Nigeria,,,,12 months,,Nigeria,NG,,"Towards Nigeria Constitution App: for developer time to develop his App on 
+new mobile platforms and promote its us.",,,,09/10/2014 14:23,360G-indigotrust:org-25709
+360G-indigotrust:IND120,Salary of a business consultant.,360G-indigotrust,Indigo Trust,,Co-Creation Hub Nigeria,25709,GBP,,10000,,12/10/2011 00:00,"6th Floor, 294 Herbert Macaulay Way, Sabo",Yaba,Lagos,,Nigeria,,,,12 months,,Nigeria,NG,,"Towards the salary of a business consultant who is supporting innovations 
+for social change being developed at the hub.",,,,21/10/2011 10:48,360G-indigotrust:org-25709
+360G-indigotrust:IND122,For salary costs and upgrading their internet connection.,360G-indigotrust,Indigo Trust,,ilab Liberia,27296,GBP,,20000,,05/10/2011 00:00,20th Street and Payne Avenue,"Appt #5 Star Building, Sinkor",Monrovia,,LIBERIA,,,,12 months,,LIBERIA,LR,,For salary costs and upgrading their internet connection.,,,,07/11/2011 09:45,360G-indigotrust:org-27296
+360G-indigotrust:IND124,To support the organisation of a TEDx conference in Ghana December 2011.,360G-indigotrust,Indigo Trust,,TEDx Dzorwulu,27384,GBP,,4000,,27/10/2011 00:00,TBC,,,,GHANA,,,,12 months,,GHANA,GH,,To support the organisation of TEDx Conference in Ghana in December 2011.,,,,10/11/2011 14:57,360G-indigotrust:org-27384
+360G-indigotrust:IND125,Salary costs and general support to team,360G-indigotrust,Indigo Trust,,iCow,26177,GBP,,4000,,07/11/2011 00:00,Green Dreams Ltd,P.O. Box 1403-00217,Limuru,,KENYA,,,,12 months,,KENYA,KE,,Towards salary costs and general support to the team.,,,,15/11/2011 10:21,360G-indigotrust:org-26177
+360G-indigotrust:IND126,Towrds youth projects in Kings Cross,360G-indigotrust,Indigo Trust,1091001,Copenhagen Youth Project,27458,GBP,,44672,,10/11/2011 00:00,Naish Court Community Centre,172 Copenhagen Street,London,N1 0ST,UK,,,,12 months,,UK,GB,,Towards youth projects in Kings Cross.,,,,23/01/2013 13:40,GB-CHC-1091001
+360G-indigotrust:IND127,To support development of online training programme for mentors.,360G-indigotrust,Indigo Trust,,SHM Foundation,27574,GBP,,15000,,23/11/2011 00:00,1st floor,20-22 Bedford Row,London,WC1R 4EB,UK,,,,12 months,,UK,GB,,"To support development of online training programme for mentors and a myth 
+buster application for their Kopano project, which provides SMS support 
+groups to women diagnosed with HIV during pregnancy.",,,,21/02/2012 12:08,360G-indigotrust:org-27574
+360G-indigotrust:IND128,For development of a platform to monitor and report on government projects,360G-indigotrust,Indigo Trust,,Co-Creation Hub Nigeria,25709,GBP,,5000,,07/12/2011 00:00,"6th Floor, 294 Herbert Macaulay Way, Sabo",Yaba,Lagos,,Nigeria,,,,12 months,,Nigeria,NG,,"For iWatchlive to develop a platform used to monitor and report on 
+government projects/programmes in Nigeria.",,,,09/10/2014 14:23,360G-indigotrust:org-25709
+360G-indigotrust:IND129,Salary costs for one year for Infonet Development Programmer,360G-indigotrust,Indigo Trust,,Sodnet,27748,GBP,,30750,,08/12/2011 00:00,"Methodist Ministry Center, 2nd Wing, 3rd Floor, Oloitoktok Road, Off 
+Gitanga Road",Kilimani,Nairobi 00619,,KENYA,,,,12 months,,KENYA,KE,,"Towards salary costs for one year for the Infonet Development Programme 
+Lead and a Programmer for up to £30,750 plus bank charges, which will be 
+paid in two instalments of £15,375, coming out of this year's and next 
+year's budget.",,,,09/10/2014 14:23,360G-indigotrust:org-27748
+360G-indigotrust:IND131,"For high sped internet connection, prizes for apps connection",360G-indigotrust,Indigo Trust,,VVOB Zambia,27750,GBP,,12909.97,,08/12/2011 00:00,"Curriculum Development Center Building, Haile Selassie Avenue, Longacres",Box 31204,Lusaka,,ZAMBIA,,,,12 months,,ZAMBIA,ZM,,"Towards their high speed internet connection, prizes for the governance 
+component of an Apps competition and mobile training.",,,,15/12/2011 09:38,360G-indigotrust:org-27750
+360G-indigotrust:IND132,To sponsor up to two events in Africa.,360G-indigotrust,Indigo Trust,,Africa Gathering,25103,GBP,,5000,,20/12/2011 00:00,"147 Yew Tree Drive, Bellfields",Guildford,Surrey,GU1 1N,UK,,,,12 months,,UK,GB,,"To support Africa Gathering to host up to two events in Africa (up to a 
+maximum of £3,000 per event),.",,,,12/11/2012 12:13,360G-indigotrust:org-25103
+360G-indigotrust:IND133,"Legal costs, salary costs for six month and all other costs re Safaricom.",360G-indigotrust,Indigo Trust,,iCow,26177,GBP,,15000,,29/02/2012 00:00,Green Dreams Ltd,P.O. Box 1403-00217,Limuru,,KENYA,,,,12 months,,KENYA,KE,,"Towards legal costs, salary costs for six months and any other costs that 
+may arise whilst scaling across Kenya with Safaricom.",,,,23/03/2012 10:32,360G-indigotrust:org-26177
+360G-indigotrust:IND134,To support SMS platform used to inform youth about governance issues,360G-indigotrust,Indigo Trust,,Youth Agenda,28197,GBP,,10000,,29/02/2012 00:00,"Woodlands Court,, Kirichwa Lane, Off Ngong Road",P.O. Box 10174-00100,Nairobi,,KENYA,,,,12 months,,KENYA,KE,,"To support an SMS platform used to inform youth about governance issues and 
+ascertain their viewpoints around critical issues for advocacy purposes.",,,,09/10/2014 14:23,360G-indigotrust:org-28197
+360G-indigotrust:IND135,To cover salary costs and rent for expansion of innovation space.,360G-indigotrust,Indigo Trust,,Hive Colab,25495,GBP,,18000,,29/02/2012 00:00,"3rd Foor, Suite 304, Kankojya House, Kanjokya Road",Kamwokya,Kampala,,Uganda,,,,12 months,,Uganda,UG,,To cover salary costs and rent for expansoin of their innovation space.,,,,28/08/2012 14:09,360G-indigotrust:org-25495
+360G-indigotrust:IND136,Develpment of a social incubation space and innovation technology hub,360G-indigotrust,Indigo Trust,,RLabs South Africa,28198,GBP,,22200,,01/03/2012 00:00,"66 Tarentaal Road, Bridgetown",Athlone7764,Cape Town,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"For the development of a social incubation space in South Africa and an 
+innovation and technology hub in Somaliland.",,,,25/06/2013 16:15,360G-indigotrust:org-28198
+360G-indigotrust:IND137,To be spent as Holborn Community Association sees fit.,360G-indigotrust,Indigo Trust,,Holborn Community Association,28200,GBP,,5000,,01/03/2012 00:00,Bedford House,35 Emerald Street,London,WC1N 3QW,UK,,,,12 months,,UK,GB,,A grant to be spent as the Holborn Community Association sees fit.,,,,12/11/2012 13:05,360G-indigotrust:org-28200
+360G-indigotrust:IND138,To help organise their annual event for young coders and developers,360G-indigotrust,Indigo Trust,,Young Rewired State,28215,GBP,,10000,,06/03/2012 00:00,3 Waterside Mews,Guildford,Surrey,GU1 1LA,UK,,,,12 months,,UK,GB,,"To help Young Rewired State organise their annual event (YRS2012) for young 
+coders and developers..",,,,23/03/2012 11:01,360G-indigotrust:org-28215
+360G-indigotrust:IND139,To develop an online platform to map forced evictions of slum dwellers,360G-indigotrust,Indigo Trust,,Amnesty International,17390,GBP,,16000,,14/03/2012 00:00,"United Kingdom Section, The Human Rigfhts Action Centre",17-25 New Inn Yard,London,EC2A 3EA,UK,,,,12 months,,UK,GB,,"To support Amnesty to develop an online platform to map forced evictions of 
+slum dwellers in Kenya.",,,,09/10/2014 14:26,360G-indigotrust:org-17390
+360G-indigotrust:IND140,To establish an innovation hub in Tanzania.,360G-indigotrust,Indigo Trust,,KINU Group,28344,GBP,,30000,,20/03/2012 00:00,P.O. Box 23207,Dar es Salaam,,,TANZANIA,,,,12 months,,TANZANIA,TZ,,"To enable The KINU Group to establish an innovation hub in Tanzania. The 
+money is to be spent at the grantees discretion.",,,,21/03/2012 12:23,360G-indigotrust:org-28344
+360G-indigotrust:IND141,Conference Expenses,360G-indigotrust,Indigo Trust,,Africa Gathering,25103,GBP,,15000,,23/04/2012 00:00,"147 Yew Tree Drive, Bellfields",Guildford,Surrey,GU1 1N,UK,,,,12 months,,UK,GB,,"To cover flight and accommodation expenses of a number of African 
+technology innovation hubs to attend Africa Gathering's London 2012 
+Conference.",,,,30/04/2012 10:47,360G-indigotrust:org-25103
+360G-indigotrust:IND142,IntHEC SMS Project,360G-indigotrust,Indigo Trust,222655,Liverpool School of Tropical Medicine,914,GBP,,14920,,24/04/2012 00:00,Pembroke Place,Liverpool,,L3 5QA,UK,,,,12 months,,UK,GB,,"To allow the school to design, build and test an SMS system aimed at 
+improving uptake of sexual and reproductive health services in the Mwanza 
+area of Tanzania.",,,,26/02/2013 11:59,GB-CHC-222655
+360G-indigotrust:IND143,Conference Expenses,360G-indigotrust,Indigo Trust,,Fondation Nationale Des Sciences Politiques,28578,GBP,,10000,,24/04/2012 00:00,"Centre d'etudes Europeennes de Sciences Po, 27 rue Saint-Guillaume, 75337",Paris,Cedex 07,,FRANCE,Fondation Nationale Des Sciences Politiques - Sciences Po,,,12 months,,FRANCE,FR,,"Travel and accommodation expenses for the Open Legislative Data Conference 
+in Paris in July 2012.",,,,09/10/2014 14:26,360G-indigotrust:org-28578
+360G-indigotrust:IND144,University Mapping Days,360G-indigotrust,Indigo Trust,,Fruits of Thought,28677,GBP,,5000,,09/05/2012 00:00,"Plot 7669 Tank Hill, Muyenga",PO Box 25435,Kampala,,UGANDA,,,,12 months,,UGANDA,UG,,To provide 5 mapping days at universities.,,,,09/10/2014 14:26,360G-indigotrust:org-28677
+360G-indigotrust:IND145,iParticipate - Ushahidi mappnig platform for northern Uganda,360G-indigotrust,Indigo Trust,,CIPESA,28735,GBP,,12000,,21/05/2012 00:00,"Plot 156-158 Mutesa II Road, Ntinda",PO Box 4365,Kampala,,UGANDA,"CIPESA - Collaboration on International ICT Policy for East and Southern 
+Africa",,,12 months,,UGANDA,UG,,"Development of Ushahidi mapping platform for northern Uganda and collection 
+of data on planned government reconstruction projects included under Peace 
+and Recovery Development programmes.",,,,09/10/2014 14:27,360G-indigotrust:org-28735
+360G-indigotrust:IND146,Business Support Consultancy,360G-indigotrust,Indigo Trust,,Hive Colab,25495,GBP,,10000,,20/06/2012 00:00,"3rd Foor, Suite 304, Kankojya House, Kanjokya Road",Kamwokya,Kampala,,Uganda,,,,12 months,,Uganda,UG,,To provide business consultancy to Hive Colab.,,,,05/09/2013 16:20,360G-indigotrust:org-25495
+360G-indigotrust:IND147,Plan Cameroon digital mapping by local youth,360G-indigotrust,Indigo Trust,276035,Plan International UK,4434,GBP,,15488,,18/07/2012 00:00,Finsgate,5-7 Cranwood Street,London,EC1V 9LH,UK,,,,12 months,,UK,GB,,"To enable Plan Cameroon to engage local youth in decision-making procedures 
+by using digital maps to involve duty bearers in discussions on resource 
+allocation and to hold them more accountable.",,,,09/10/2014 14:27,GB-CHC-276035
+360G-indigotrust:IND148,PeaceTXT Project,360G-indigotrust,Indigo Trust,,Sisi ni Amani,29177,GBP,,11751.44,,18/07/2012 00:00,PO Box 4210-00100,Nairobi,,,KENYA,,,,12 months,,KENYA,KE,,"Enable Sisi Ni Amani to upgrade their SMS messaging platform to provide 
+greater functionality to the PeaceTXT Project.",,,,21/08/2012 15:01,360G-indigotrust:org-29177
+360G-indigotrust:IND149,Digitising Cameroon Laws (DCL),360G-indigotrust,Indigo Trust,,iVission International,29185,GBP,,10764,,23/07/2012 00:00,"3rd Floor Immeuble Centre Medicale, Feu Rouge Bessengue",PO Box 13040,Douala,,CAMEROON,,,,12 months,,CAMEROON,CM,,To digitise Cameroon's Laws.,,,,09/10/2014 14:27,360G-indigotrust:org-29185
+360G-indigotrust:IND150,Project Lungisa,360G-indigotrust,Indigo Trust,,Cell Life,29186,GBP,,12000,,23/07/2012 00:00,"123 Hope Street, Gardens",,Cape Town,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"Enables citizens to send text based, audio and video reports outlining 
+challenges in service delivery in Cape Town.",,,,09/10/2014 14:27,360G-indigotrust:org-29186
+360G-indigotrust:IND151,Tech innovation hub research across Africa,360G-indigotrust,Indigo Trust,,iHub,29257,GBP,,10000,,30/07/2012 00:00,4th Floor Bishop Magua Centre,Ngong Road,Nairobi,,KENYA,,,,12 months,,KENYA,KE,,Research into tech innovation hubs across Africa.,,,,21/08/2012 15:04,360G-indigotrust:org-29257
+360G-indigotrust:IND152,Datazone Project,360G-indigotrust,Indigo Trust,,ActivSpaces,26348,GBP,,1119,,14/08/2012 00:00,c/o Sanaga Ventures B.V.,MS. van Riemsdijkweg 57,1033 RC Amsterdam,,THE NETHERLANDS,,,,12 months,,THE NETHERLANDS,NL,,"Multimedia download utility for universities in developing nations 
+struggling with low bandwidth.",,,,15/08/2012 15:31,360G-indigotrust:org-26348
+360G-indigotrust:IND153,"To cover electricity, rent and internet costs",360G-indigotrust,Indigo Trust,,Hive Colab,25495,GBP,,15078,,28/08/2012 00:00,"3rd Foor, Suite 304, Kankojya House, Kanjokya Road",Kamwokya,Kampala,,Uganda,,,,12 months,,Uganda,UG,,"To cover electricity, rent and internet for 6 months.",,,,08/05/2013 11:02,360G-indigotrust:org-25495
+360G-indigotrust:IND154,Core operating costs,360G-indigotrust,Indigo Trust,,iCow,26177,GBP,,14000,,03/09/2012 00:00,Green Dreams Ltd,P.O. Box 1403-00217,Limuru,,KENYA,,,,12 months,,KENYA,KE,,"To cover operating costs (salaries, rent, office costs), as they continue 
+their negotiations with Safaricom in Kenya.",,,,11/09/2012 10:01,360G-indigotrust:org-26177
+360G-indigotrust:IND156,To enable OAR to increase functionality of their data entry website,360G-indigotrust,Indigo Trust,,Open Aid Register,29381,GBP,,10000,,06/09/2012 00:00,"c/o Director, Institute for Information Law & Policy, New York Law School",185 West Broadway,New York,NY 10013,USA,,,,12 months,,USA,US,,"To improve the functionality of their IATI data input platform. The money 
+will be used for design and development of several additional functions, 
+such as the creation of an API, support for document upload and management 
+and a data export feature. A small portion will also go towards electronic 
+storage costs.",,,,09/10/2014 14:27,360G-indigotrust:org-29381
+360G-indigotrust:IND157,"Technology Innovation Spaces in Buea, Douala, Cameroon",360G-indigotrust,Indigo Trust,,ActivSpaces,26348,GBP,,20150,,23/08/2012 00:00,c/o Sanaga Ventures B.V.,MS. van Riemsdijkweg 57,1033 RC Amsterdam,,THE NETHERLANDS,,,,12 months,,THE NETHERLANDS,NL,,"To cover non technical and technical infrastructure, salary costs, a seed 
+fund, outreach and mentorship.",,,,25/09/2012 09:54,360G-indigotrust:org-26348
+360G-indigotrust:IND158,Core costs,360G-indigotrust,Indigo Trust,,AgroHub,29383,GBP,,5700,,06/09/2012 00:00,"Rear Top Floor, Amazing Pharmacy Building Molyko",PO Box 174 Buea,SW Region,,CAMEROON,,,,12 months,,CAMEROON,CM,,"Infrastructure, salaries, branding, outreach and communications.",,,,03/10/2012 10:00,360G-indigotrust:org-29383
+360G-indigotrust:IND159,"Training, research and activities encouraging engagement with Government",360G-indigotrust,Indigo Trust,,Women of Uganda Network (WOUGNET),29385,GBP,,15514.24,,12/09/2012 00:00,Plot 55 Kenneth Dale Road,PO Box 4411,Kampala,,UGANDA,,,,24 months,,UGANDA,UG,,"Build upon project funded by SPIDER which enables citizens to report and 
+monitor challenges in service delivery in Northern Uganda using Ushahidi.",,,,09/10/2014 14:28,360G-indigotrust:org-29385
+360G-indigotrust:IND160,Providing agricultural information to farmers using Frontline SMS,360G-indigotrust,Indigo Trust,,Agricultural Marketing Information Services (AMIS),29565,GBP,,4950,,04/10/2012 00:00,P O Box 125,Limbe South West Region,,,CAMEROON,,,,12 months,,CAMEROON,CM,,"The grant will cover salaries, connectivity, training and research, office 
+costs and a few other miscellaneous costs.",,,,14/11/2012 12:23,360G-indigotrust:org-29565
+360G-indigotrust:IND161,Providing local and relevant teen literature via mobile channels,360G-indigotrust,Indigo Trust,,FunDza Literacy Trust,29733,GBP,,13844.91,,12/11/2012 00:00,89 Main Road,Muizenberg,Cape Town,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"Technical upgrades to optimise mobile and web sites and create messaging 
+system.",,,,19/12/2012 15:56,360G-indigotrust:org-29733
+360G-indigotrust:IND162,to support TGNP's Jamii voices project,360G-indigotrust,Indigo Trust,,Tanzania Gender Networking Programme (TGNP),29739,GBP,,14999,,12/11/2012 00:00,PO Box 8921,Dar es Salaam,,,TANZANIA,,,,12 months,,TANZANIA,TZ,,"Will use SMS technology to share information, organise for collective 
+action and demand change. The grant will pay for training sessions, 
+technical development, infrastructure costs and purchase of SMS.",,,,09/10/2014 14:28,360G-indigotrust:org-29739
+360G-indigotrust:IND163,Odekro Project with MySociety,360G-indigotrust,Indigo Trust,,Hut Space,29763,GBP,,9400.18,,19/11/2012 00:00,"30 Farm Road, Community 19",Lashibi,Accra,,GHANA,,,,12 months,,GHANA,GH,,"Providing citizens with information on parliamentary proceedings, MP 
+activity and other information on governance. This grant will cover staff 
+costs, design, administration, Hansard scanning and hosting.",,,,09/10/2014 14:28,360G-indigotrust:org-29763
+360G-indigotrust:IND164,Health Legends Platform,360G-indigotrust,Indigo Trust,,Ghana Anti-Corruption Coalition (GACC),29764,GBP,,10000.2,,19/11/2012 00:00,PO Box GP 17921,Accra,,,GHANA,,,,12 months,,GHANA,GH,,"For technical improvements and awareness raising of a platform enabling 
+citizens to report challenges in health service delivery.",,,,09/10/2014 14:28,360G-indigotrust:org-29764
+360G-indigotrust:IND165,Pilot SMS/Voice platform with fish farmers in Ghana,360G-indigotrust,Indigo Trust,"CA-99,314",Farmerline,29766,GBP,,5200,,20/11/2012 00:00,P O Box GP 13380,Accra,,,GHANA,,,,12 months,,GHANA,GH,,"To provide fish farmers with best practice information, business advice and 
+record keeping help.",,,,19/12/2012 16:23,"GB-CHC-CA-99,314"
+360G-indigotrust:IND166,Mzalendo,360G-indigotrust,Indigo Trust,1076346,MySociety,20042,GBP,,40000,,18/12/2012 00:00,483 Green Lanes,London,,N13 4BS,UK,,,,12 months,,UK,GB,,Towards the cost of Mzalendo expansion programme in Africa.,,,,09/10/2014 14:28,GB-CHC-1076346
+360G-indigotrust:IND167,RLabs Namibia,360G-indigotrust,Indigo Trust,,RLabs South Africa,28198,GBP,,15310,,19/12/2012 00:00,"66 Tarentaal Road, Bridgetown",Athlone7764,Cape Town,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To allow Namibia Business Innovation Centre and RLabs South Africa to 
+develop RLabs Namibia, which will provide young tech entrepreneurs with 
+skills, tools and training to design and create socially-focused ICT 
+solutions in Namibia.",,,,01/02/2013 14:53,360G-indigotrust:org-28198
+360G-indigotrust:IND168,Funding to support Youth Club,360G-indigotrust,Indigo Trust,1091001,Copenhagen Youth Project,27458,GBP,,20000,,19/12/2012 00:00,Naish Court Community Centre,172 Copenhagen Street,London,N1 0ST,UK,,,,24 months,,UK,GB,,"Towards the running costs of the organisation's Youth Club in King's Cross 
+and to provide fundraising consultancy.",,,,24/01/2013 11:37,GB-CHC-1091001
+360G-indigotrust:IND169,Water Hackathon 2013,360G-indigotrust,Indigo Trust,,iHub,29257,GBP,,6205.64,,23/01/2013 00:00,4th Floor Bishop Magua Centre,Ngong Road,Nairobi,,KENYA,,,,12 months,,KENYA,KE,,"Towards prize money ($6,000) and costs of implementing, monitoring and 
+evaluating the winning solution of a water hackathon to be held in 2013.",,,,28/02/2013 11:49,360G-indigotrust:org-29257
+360G-indigotrust:IND170,Digitisation of legislation in Seychelles,360G-indigotrust,Indigo Trust,,African Legal Information Institute (African LII),30163,GBP,,23318.09,,23/01/2013 00:00,"DGRU Faculty of Law, University of Cape Town",Private Bag X3,Rondebosch,7701,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To enable African LII to work with SeyLII to digitise and make available 50 
+pieces of legislation in the Seychelles for use by the judiciary, lawyers 
+and wider public.",,,,09/10/2014 14:29,360G-indigotrust:org-30163
+360G-indigotrust:IND171,Translation of Wikipedia medical articles into Swahili,360G-indigotrust,Indigo Trust,,Translators Without Borders,30164,GBP,,9673.11,,23/01/2013 00:00,"Suite 500, 30 Main Street",Danbury,Connecticut,6810,USA,,,,12 months,,USA,US,,"Towards the costs of their 80 x 100 project to translate medical Wikipedia 
+articles into Swahili through volunteers at TWB's translation training 
+Centre in Nairobi.",,,,15/05/2013 16:10,360G-indigotrust:org-30164
+360G-indigotrust:IND172,New tech innovation space in Accra,360G-indigotrust,Indigo Trust,,ISpace Foundation,30218,GBP,,30000,,06/02/2013 00:00,G51 Guava Crescent,Regimanuel Estates,Community 19 Tema,,GHANA,ISpace Foundation - iSpace,,,24 months,,GHANA,GH,,Contribution to core costs.,,,,02/12/2013 10:44,360G-indigotrust:org-30218
+360G-indigotrust:IND173,iCow core costs,360G-indigotrust,Indigo Trust,,iCow,26177,GBP,,21692,,18/02/2013 00:00,Green Dreams Ltd,P.O. Box 1403-00217,Limuru,,KENYA,,,,12 months,,KENYA,KE,,Core Costs for next six months.,,,,28/02/2013 12:28,360G-indigotrust:org-26177
+360G-indigotrust:IND174,Zimbabwean Constitution App,360G-indigotrust,Indigo Trust,,Veritas Zimbabwe,30276,GBP,,12300,,18/02/2013 00:00,25 Canterbury Road,Avondale,Harare,,ZIMBABWE,,,,12 months,,ZIMBABWE,ZW,,"To enable Veritas to work in conjunction with Pledge51 to develop a mobile 
+app for the Zimbabwean Constitution.",,,,09/10/2014 15:49,360G-indigotrust:org-30276
+360G-indigotrust:IND175,TRAC FM promotion and acquisition programme in Africa,360G-indigotrust,Indigo Trust,,TRAC FM,30277,GBP,,11937.19,,18/02/2013 00:00,Amstelveenseweg 667,Amsterdam,,,NETHERLANDS,,,,12 months,,NETHERLANDS,NL,,"For salary costs and promotional materials to expand the reach of TRAC FM's 
+SMS and radio platorm.",,,,28/02/2013 14:14,360G-indigotrust:org-30277
+360G-indigotrust:IND176,Further IntHEC work,360G-indigotrust,Indigo Trust,222655,Liverpool School of Tropical Medicine,914,GBP,,4695,,18/02/2013 00:00,Pembroke Place,Liverpool,,L3 5QA,UK,,,,12 months,,UK,GB,,"To hold a stakeholder/review and orientation meeting together with the 
+District Medical Office in Tanzania as part of the wider IntHEC programme.",,,,04/03/2013 15:55,GB-CHC-222655
+360G-indigotrust:IND177,Tech Hub in Lagos,360G-indigotrust,Indigo Trust,,Co-Creation Hub Nigeria,25709,GBP,,75000,,18/02/2013 00:00,"6th Floor, 294 Herbert Macaulay Way, Sabo",Yaba,Lagos,,Nigeria,,,,36 months,,Nigeria,NG,,"To pay Tunji Eleso's salary with the remainder to be used as Co-Creation 
+see fit.",,,,25/03/2015 16:23,360G-indigotrust:org-25709
+360G-indigotrust:IND178,Providing access to Nigerian Budget and public data information,360G-indigotrust,Indigo Trust,,BudgIT,30278,GBP,,36800,,18/02/2013 00:00,"c/o Co-Creation Hub, 6th Floor, 294, Herbert Macaulay Way","Sabo, Yaba",Lagos,,NIGERIA,,,,12 months,,NIGERIA,NG,,"To improve data visualisation skills amount BudgIT's team, redevelop their 
+website and also to enable them to visualise Nigeria's 2013 national 
+budget, as well as state budgets from six separate states. The grant will 
+also allow BudgIT to work with the Open Knowledge Foundation to host a 
+developers' workshop on getting, wrangling and presenting government budget 
+data. Finally, part of this grant is to be used for platform promotion, 
+primarily but not exclusiely through online advertising.",,,,09/10/2014 15:50,360G-indigotrust:org-30278
+360G-indigotrust:IND179,233 Law Mobile Constitution App,360G-indigotrust,Indigo Trust,,Yougora,30279,GBP,,5000,,18/02/2013 00:00,"Delmina Place, 29 Orphan Crescent",Labone,Accra,,GHANA,,,,12 months,,GHANA,GH,,"Towards the costs of further development and promotion of 233 Law mobile 
+constitution app.",,,,09/10/2014 15:51,360G-indigotrust:org-30279
+360G-indigotrust:IND180,Detailed information on water in Kenya,360G-indigotrust,Indigo Trust,,Water and Livelihoods Reforms Network,30280,GBP,,15000,,18/02/2013 00:00,"Silver Plaza, Ongata Rongai",PO Box 10 00517,Nairobi,,KENYA,Water and Livelihoods Reforms Network - WLRN,,,12 months,,KENYA,KE,,"To establish a consumer info desk and a data desk. This will entail the 
+creation of a website containing detailed information on water in Kenya 
+that would also contain an 'issue management system' allowing citizens to 
+report problems or request information via SMS or email.",,,,09/10/2014 16:04,360G-indigotrust:org-30280
+360G-indigotrust:IND181,Students' Information & Resource Management System,360G-indigotrust,Indigo Trust,,Academia Secundaria,30353,GBP,,7746.9,,09/03/2013 00:00,c/o ActivSpaces,Buea Makepe,Douala,,CAMEROON,,,,12 months,,CAMEROON,CM,,"Contribution towards staff costs, outreach, a workshop and packaging of 
+products.",,,,15/05/2013 16:33,360G-indigotrust:org-30353
+360G-indigotrust:IND182,Creation of WordPress blogs,360G-indigotrust,Indigo Trust,,West African Human Rights Defenders Network,30354,GBP,,12292.55,,09/03/2013 00:00,14BP 152,Rue Above,Lome,,TOGO,West African Human Rights Defenders Network - WAHRDN,,,12 months,,TOGO,TG,,"To improve commuiction between member organisations via creation of 
+WordPress blogs.",,,,15/05/2013 16:49,360G-indigotrust:org-30354
+360G-indigotrust:IND183,Jozi Hub,360G-indigotrust,Indigo Trust,,Praekelt Foundation,30355,GBP,,19968,,09/03/2013 00:00,"Postnet Suite 230, Private Bag X11, Craighall",2024,Johannesburg,,SOUTH AFRICA,Praekelt Foundation - Jozi Hub,,,12 months,,SOUTH AFRICA,ZA,,"To set up governance and transparency stream at a new technology innovation 
+hub in Johannesburg.",,,,09/10/2014 15:53,360G-indigotrust:org-30355
+360G-indigotrust:IND184,Freedom of Information request site,360G-indigotrust,Indigo Trust,,Open Democracy Advice Centre,30356,GBP,,15000,,09/03/2013 00:00,"2nd Floor the Armoury, Buchanan Square",160 Sir Lowry Road,Woodstock,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"For work on the development of a Freedom of Information request site and 
+its promotion.",,,,09/10/2014 15:53,360G-indigotrust:org-30356
+360G-indigotrust:IND185,Siyakhona Media Studio,360G-indigotrust,Indigo Trust,IT/4002/09,Hillside Digital Trust,30357,GBP,,10073.88,,09/03/2013 00:00,"48 Stone Manor, 46 North Road",Morningside 2196,Sandton,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To contribute towards salary costs, travel, internet and administration for 
+a project to train citizen journalists in film making and digital skills to 
+be used to stimulate activism in their communities..",,,,15/05/2013 17:10,GB-CHC-IT/4002/09
+360G-indigotrust:IND186,Redevelopment of website,360G-indigotrust,Indigo Trust,,Institute for Philanthropy,11117,GBP,,15000,,09/03/2013 00:00,2 Temple Place,London,,WC2R 3BD,UK,,,,12 months,,UK,GB,,Redevelopment of the IfP website.,,,,09/10/2014 16:45,360G-indigotrust:org-11117
+360G-indigotrust:IND187,Constitutional Excerpts Project,360G-indigotrust,Indigo Trust,,University College London,5795,GBP,,30370,,14/03/2013 00:00,29-30 Tavistock Square,London,,WC1H 9QU,UNITED KINGDOM,University College London - Constitution Unit,,,12 months,,UNITED KINGDOM,GB,,"To hire one person to work on the Constitutional Excerpts project for one 
+year. The funding will cover the salary of an XML tagger and additional 
+computer hardware and software needs..",,,,09/10/2014 16:04,360G-indigotrust:org-5795
+360G-indigotrust:IND188,Mobile Banking and Clean Water Kenya,360G-indigotrust,Indigo Trust,1105851,Christian Aid,28733,GBP,,16715,,14/03/2013 00:00,35 Lower Marsh,London,,SE1 7RL,UK,,,,12 months,,UK,GB,,"To cover technology and related costs in relation to Mobile Banking and 
+Clean Water Project in Kenya. In collaboration with their in-country 
+partner, Northern Aid.",,,,15/05/2013 17:24,GB-CHC-1105851
+360G-indigotrust:IND190,Textbook Subscription App,360G-indigotrust,Indigo Trust,,Kytabu,30412,GBP,,5000,,18/03/2013 00:00,"4th Floor Bishop Magua Centre, Ngong Road",139-00621 Village Market,Nairobi,,KENYA,,,,12 months,,KENYA,KE,,"To build a beta version of a textbook subscription application that will 
+work with inexpensive tablet PCs. Towards costs of employing a user 
+experience/interaction expert and any associated coststs to help build the 
+platform.",,,,15/05/2013 17:28,360G-indigotrust:org-30412
+360G-indigotrust:IND191,People's Assembly Website,360G-indigotrust,Indigo Trust,,Parliamentary Monitoring Group,30413,GBP,,13861.45,,18/03/2013 00:00,2nd Floor,21 St Johns Street,Cape Town,8001,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"Towards the cost of maintaining and promoting the People's Assembly website 
+which provides information on parliamentary proceedings and elected 
+representatives and the development of an MP locator.",,,,09/10/2014 15:59,360G-indigotrust:org-30413
+360G-indigotrust:IND192,SUPPLEMENT GRANT - Creation of WordPress blogs,360G-indigotrust,Indigo Trust,,West African Human Rights Defenders Network,30354,GBP,,263.55,,24/04/2013 00:00,14BP 152,Rue Above,Lome,,TOGO,West African Human Rights Defenders Network - WAHRDN,,,12 months,,TOGO,TG,,"SUPPLEMENT GRANT -.To improve communication between member organisations 
+via creation of WordPress blogs.",,,,05/08/2014 14:12,360G-indigotrust:org-30354
+360G-indigotrust:IND194,Citizen Journalism Project,360G-indigotrust,Indigo Trust,,Impilo Foundation,30934,GBP,,4865,,17/06/2013 00:00,Office 19 Zandspruit Value Centre,Cnr. Beyers Naude and Marina Street,Zandspruit,2040,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To contribute towards the training and implementation of a citizen 
+journalism project in Zandspruit, South Africa..",,,,09/10/2014 16:05,360G-indigotrust:org-30934
+360G-indigotrust:IND195,War Office Map Archives,360G-indigotrust,Indigo Trust,,British Library,3789,GBP,,39820,,19/06/2013 00:00,96 Euston Road,London,,NW1 2DB,UK,,,,12 months,,UK,GB,,"To cover the costs of conserving, digitising and cataloguing 494 map sheets 
+and 47 pages of text relating to the East Africa Protectorate, and from 
+1920, the Colony of Kenya..",,,,18/05/2015 11:31,360G-indigotrust:org-3789
+360G-indigotrust:IND196,Core Costs and Salaries,360G-indigotrust,Indigo Trust,,iCow,26177,GBP,,22554,,03/07/2013 00:00,Green Dreams Ltd,P.O. Box 1403-00217,Limuru,,KENYA,,,,12 months,,KENYA,KE,,"To cover core costs and salaries for the technical team and customer care 
+teams for the first six months following launch with Safaricom.",,,,30/08/2013 10:45,360G-indigotrust:org-26177
+360G-indigotrust:IND197,People's Assembly Website,360G-indigotrust,Indigo Trust,,Parliamentary Monitoring Group,30413,GBP,,15000,,04/07/2013 00:00,2nd Floor,21 St Johns Street,Cape Town,8001,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"An additional £15,000 grant towards the development and marketing of a 
+website providing information of elected representatives and parliamentary 
+proceedings in partnership with mySociety.",,,,09/10/2014 16:01,360G-indigotrust:org-30413
+360G-indigotrust:IND198,Collaboration between Africa's Technology Innovation Hubs,360G-indigotrust,Indigo Trust,,AfriLabs,31021,GBP,,22035.25,,10/07/2013 00:00,s Gravenhekje 1a,1011TG,Amsterdam,,NETHERLANDS,,,,Undefined,,NETHERLANDS,NL,,To contribute to core costs.,,,,13/05/2015 15:50,360G-indigotrust:org-31021
+360G-indigotrust:IND200,To improve the effectiveness of their Community Health Workers,360G-indigotrust,Indigo Trust,,Hope Through Health,31135,GBP,,15320.02,,25/07/2013 00:00,PO Box 605,Medway,Massachusetts,2053,USA,,,,12 months,,USA,US,,"To partner with Dimagi (a tech social enterprise that have developed the 
+widely used CommCare mobile platform for CHWs to train 15 CHWs in using the 
+system to improve the quality of decision making, follow up and data 
+collection.",,,,13/05/2015 15:49,360G-indigotrust:org-31135
+360G-indigotrust:IND201,MOTECH,360G-indigotrust,Indigo Trust,,Grameen Foundation,31170,GBP,,14947,,31/07/2013 00:00,17 La Tebu Street,East Cantonments,Accra,,GHANA,,,,12 months,,GHANA,GH,,To test sustainability models for MOTECH in Ghana.,,,,13/05/2015 15:49,360G-indigotrust:org-31170
+360G-indigotrust:IND202,People's Assembly Website,360G-indigotrust,Indigo Trust,,Parliamentary Monitoring Group,30413,GBP,,1138.55,,29/07/2013 00:00,2nd Floor,21 St Johns Street,Cape Town,8001,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"Towards the cost of maintaining and promoting the People's Assembly website 
+which provides information on parliamentary proceedings and elected 
+representatives and the development of an MP locator.",,,,13/05/2015 15:49,360G-indigotrust:org-30413
+360G-indigotrust:IND203,Older People’s Activity Project,360G-indigotrust,Indigo Trust,,Holborn Community Association,28200,GBP,,5500,,11/09/2013 00:00,Bedford House,35 Emerald Street,London,WC1N 3QW,UK,,,,12 months,,UK,GB,,"Continuation funding to cover 50% of the Older People’s Activity project in 
+2013-14..",,,,13/05/2015 15:49,360G-indigotrust:org-28200
+360G-indigotrust:IND204,New technological innovation hub in Harare,360G-indigotrust,Indigo Trust,,Hypercube Technology Trust,31309,GBP,,30000,,18/09/2013 00:00,c/o 38 Cunningham Road,Greendale,Harare,,ZIMBABWE,,,,12 months,,ZIMBABWE,ZW,,To contribute towards core and programmatic costs.,,,,13/05/2015 15:49,360G-indigotrust:org-31309
+360G-indigotrust:IND205,Lungisa Citizen Reporting Project,360G-indigotrust,Indigo Trust,,Cell Life,29186,GBP,,11650,,09/10/2013 00:00,"123 Hope Street, Gardens",,Cape Town,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To support core costs as well as programmatic costs including awareness 
+raising workshops, advocacy work with government officials and project 
+evaluation.",,,,13/05/2015 15:48,360G-indigotrust:org-29186
+360G-indigotrust:IND206,Institutional and Advocacy Work,360G-indigotrust,Indigo Trust,,Connected Development (CODE),31377,GBP,,9648,,09/10/2013 00:00,"Bassan Plaza, 10th Street, 2nd Floor F Wing Behind Total House",Central Business District,Abuja,,NIGERIA,Connected Development (CODE) - Follow The Money,,,12 months,,NIGERIA,NG,,"To cover office space, tech support, some online advertising, internet and 
+travel costs.",,,,13/05/2015 15:48,360G-indigotrust:org-31377
+360G-indigotrust:IND207,Tech Hub Rwanda,360G-indigotrust,Indigo Trust,,kLab,31383,GBP,,20000,,09/10/2013 00:00,6th Floor Telecom House Kacyiru,PO Box 5121,Kigali,,RWANDA,,,,12 months,,RWANDA,RW,,"Towards a top up of the General Manager salary and seed funding for an 
+agricultural and a health application.",,,,13/05/2015 15:48,360G-indigotrust:org-31383
+360G-indigotrust:IND208,Merger with The Philanthropy Workshop West,360G-indigotrust,Indigo Trust,,Institute for Philanthropy,11117,GBP,,40000,,06/11/2013 00:00,2 Temple Place,London,,WC2R 3BD,UK,,,,12 months,,UK,GB,,"To support a merger with The Philanthropy Workshop West and for ongoing 
+core costs to work jointly on improving donor education and impact.",,,,13/05/2015 15:48,360G-indigotrust:org-11117
+360G-indigotrust:IND209,Core costs,360G-indigotrust,Indigo Trust,,ilab Liberia,27296,GBP,,30000,,11/11/2013 00:00,20th Street and Payne Avenue,"Appt #5 Star Building, Sinkor",Monrovia,,LIBERIA,,,,12 months,,LIBERIA,LR,,"Towards core cost, including, but not limited to, salaries, rent and 
+internet costs.",,,,13/05/2015 15:48,360G-indigotrust:org-27296
+360G-indigotrust:IND211,Analysis of grants data published by Big Lottery,360G-indigotrust,Indigo Trust,,ScraperWiki Limited,31546,GBP,,1000,,07/11/2013 00:00,"146 Brownlow Hill, Liverpool Science Park",Innovation Centre 2,Liverpool,L3 5RF,UK,,,,12 months,,UK,GB,,"The aim of this research is to demonstrate how analysis of grant data can 
+contribue to improving the performance of the grant making sector.",,,,24/03/2014 16:14,360G-indigotrust:org-31546
+360G-indigotrust:IND213,Development of mobile app and training,360G-indigotrust,Indigo Trust,,Integrity Action,31696,GBP,,13000,,27/11/2013 00:00,1st Floor 364 City Road,London,,EC1V 2PY,UK,,,,12 months,,UK,GB,,"To develop a mobile app and train organisations in four west and central 
+African countries to use this app and web platform to collect data on 
+development projects and monitor their implementation.",,,,13/05/2015 15:47,DUMMY01
+360G-indigotrust:IND215,Three year funding for unrestricted core costs,360G-indigotrust,Indigo Trust,1091001,Copenhagen Youth Project,27458,GBP,,45000,,27/11/2013 00:00,Naish Court Community Centre,172 Copenhagen Street,London,N1 0ST,UK,,,,36 months,,UK,GB,,"Unrestricted core funding over 3 years (£15,000 per annum).",,,,13/05/2015 15:47,DUMMY01
+360G-indigotrust:IND216,Odekro parliamentary monitoring site,360G-indigotrust,Indigo Trust,,Hut Space,29763,GBP,,5059.27,,11/12/2013 00:00,"30 Farm Road, Community 19",Lashibi,Accra,,GHANA,,,,12 months,,GHANA,GH,,"To contribute towards Hut Space’s marketing and promotion of the Odekro 
+parliamentary monitoring site.",,,,13/05/2015 15:47,DUMMY01
+360G-indigotrust:IND217,SUPPLEMENT GRANT - Build upon project,360G-indigotrust,Indigo Trust,,Women of Uganda Network (WOUGNET),29385,GBP,,323.73,,18/12/2013 00:00,Plot 55 Kenneth Dale Road,PO Box 4411,Kampala,,UGANDA,,,,12 months,,UGANDA,UG,,"SUPPLEMENT GRANT - Build upon project funded by SPIDER which enables 
+citizens to report and monitor challenges in service delivery in Northern 
+Uganda using Ushahidi.",,,,13/05/2015 15:46,DUMMY01
+360G-indigotrust:IND218,Core funding for Choirs for Homeless,360G-indigotrust,Indigo Trust,1136173,Choir with No Name,29986,GBP,,3000,,09/01/2014 00:00,33 Rushworth Street,London,,SE1 0RB,UK,,,,12 months,,UK,GB,,Unrestricted core funding.,,,,20/01/2014 13:09,DUMMY01
+360G-indigotrust:IND219,Unrestricted funding for homeless charity,360G-indigotrust,Indigo Trust,,999 Club,4446,GBP,,3000,,18/12/2013 00:00,21 Deptford Broadway,London,,SE8 4PA,UK,,,,12 months,,UK,GB,,Unrestricted core funding.,,,,20/01/2014 11:24,DUMMY01
+360G-indigotrust:IND220,Unrestricted funding for homeless charity,360G-indigotrust,Indigo Trust,1093815,Albert Kennedy Trust,31897,GBP,,3000,,27/01/2014 00:00,Unit 203 Hatton Square Business Centre,16-16a Baldwins Gardens,London,EC1N 7RJ,UK,,,,12 months,,UK,GB,,Unrestricted core funding.,,,,12/02/2014 11:05,DUMMY01
+360G-indigotrust:IND221,Unrestricted core funding for homeless charity,360G-indigotrust,Indigo Trust,,Homeless Action in Barnet (HAB),31898,GBP,,3000,,18/12/2013 00:00,36B Woodhouse Road,London,,N12 0RG,UK,,,,12 months,,UK,GB,,Unrestricted core funding.,,,,23/01/2014 11:10,DUMMY01
+360G-indigotrust:IND222,Education Platform to improve literacy,360G-indigotrust,Indigo Trust,,FunDza Literacy Trust,29733,GBP,,20000,,27/01/2014 00:00,89 Main Road,Muizenberg,Cape Town,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To cover the salary costs of a developer to make technical improvements to 
+FunDza's educational platform, to improve literacy.",,,,13/05/2015 15:46,DUMMY01
+360G-indigotrust:IND223,Education Platform,360G-indigotrust,Indigo Trust,,Efiko,31966,GBP,,18000,,27/01/2014 00:00,"c/o Co-Creation Hub, 294, Herbert Macaulay Way",Sabo Yaba,Lagos,,NIGERIA,,,,12 months,,NIGERIA,NG,,"To cover content development and technical improvements to Efiko's 
+education platform and to enable Efiko to build in data mining capabilities.",,,,13/05/2015 15:46,DUMMY01
+360G-indigotrust:IND224,Weather forecasting system for Ghana,360G-indigotrust,Indigo Trust,,Ignitia Ghana Limited,31970,GBP,,11755.84,,24/01/2014 00:00,Kotoka International Airport,PO Box KIA 160 63,Accra,,GHANA,,,,12 months,,GHANA,GH,,"To cover salaries, overheads, development and design costs, monitoring and 
+evaluation and associated costs.",,,,13/05/2015 15:45,DUMMY01
+360G-indigotrust:IND225,New Democratic Engagement Tools,360G-indigotrust,Indigo Trust,1076346,MySociety,20042,GBP,,40000,,05/02/2014 00:00,483 Green Lanes,London,,N13 4BS,UK,,,,12 months,,UK,GB,,"To enable mySociety to develop new democratic engagement tools in 
+conjunction with African organisations and to provide ongoing support to 
+existing parliamentary monitoring sites in South Africa and Ghana.",,,,13/05/2015 15:44,DUMMY01
+360G-indigotrust:IND226,Building IT capacity for university and high school students,360G-indigotrust,Indigo Trust,,Action Group for Democracy and Good Governance (AGDGG),32101,GBP,,6900,,20/02/2014 00:00,"Enap Junction, Bongo Square Samaritan Insurance Building No.2",PO Box 01,Buea,,CAMEROON,,,,12 months,,CAMEROON,CM,,"To build the capacity of university and high school students in Cameroon on 
+using information communication technologies during civil resistance and 
+non-violent protest in their schools and communities.",,,,13/05/2015 15:44,DUMMY01
+360G-indigotrust:IND227,M&E with Indigo Grantees,360G-indigotrust,Indigo Trust,,Intermedia,32161,GBP,,14513,,05/03/2014 00:00,"InterMedia Survey Institute, 1825 K Street NW",Suite 650,Washington DC,20006,USA,,,,12 months,,USA,US,,"To enable Intermedia to work jointly with Indigo Trust and several of 
+Indigo’s grantees to develop a framework for the monitoring and evaluation 
+of transparency and accountability projects.",,,,13/05/2015 15:44,DUMMY01
+360G-indigotrust:IND228,Unrestricted Funding,360G-indigotrust,Indigo Trust,1110522,Trussell Trust,16773,GBP,,3000,,10/03/2014 00:00,"Unit 9 Ashfield Trading Estate, Ashfield Road",Salisbury,Wiltshire,SP2 7HL,UK,,,,12 months,,UK,GB,,Unrestricted core costs.,,,,12/03/2014 10:56,DUMMY01
+360G-indigotrust:IND229,Integrationof Citizen Reporting Platform,360G-indigotrust,Indigo Trust,,Social Justice Coalition,32208,GBP,,16226,,13/03/2014 00:00,SHAWCO Centre G323,Mongesi Road,Khayelitsha,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"For the integration of a citizen reporting platform (based on Lungisa) into 
+their wider water and scampaign in Khayelitsha.",,,,13/05/2015 15:44,DUMMY01
+360G-indigotrust:IND230,Core Costs and Legal Fees,360G-indigotrust,Indigo Trust,1158362,Publish What You Fund,32268,GBP,,25000,,19/03/2014 00:00,Southbank House,Black Prince Road,London,SE1 7SJ,UK,,,,12 months,,UK,GB,,"To be used to cover core costs and legal fees to enable PWYF to pursue an 
+application to the Charities Commission for charitable status.",,,,13/05/2015 13:38,DUMMY01
+360G-indigotrust:IND231,Basic Education and Expenditure Mapping Project,360G-indigotrust,Indigo Trust,,Focal Integrity Team for Cameroon,32307,GBP,,12025,,25/03/2014 00:00,Fako Ship Plaza Suite 07 Entrance B,Buea,South West Region 237,,CAMEROON,,,,12 months,,CAMEROON,CM,,"To enable Focal Integrity Team for Cameroon to carry out a 'Basic Education 
+and Expenditure Mapping' project to monitor schools' expenditure via SMS.",,,,13/05/2015 13:37,DUMMY01
+360G-indigotrust:IND232,Nouabook Web Platform,360G-indigotrust,Indigo Trust,,Simsim-Participation Citoyenne,32309,GBP,,29234.03,,25/03/2014 00:00,"3, Rue Al Madina, Apt. 6",Rabat Hassan,,10020,MOROCCO,,,,12 months,,MOROCCO,MA,,"To enable Simsim-Participation Citoyenne to develop Nouabook, a web 
+platform facilitating MP-citizen engagement in Morocco.",,,,13/05/2015 13:37,DUMMY01
+360G-indigotrust:IND233,Research Assistance to grant-makers,360G-indigotrust,Indigo Trust,,Practical Participation,31091,GBP,,3050,,27/03/2014 00:00,35 Austen Avenue,The Forest,Nottingham,NG7 6PF,UNITED KINGDOM,,,,12 months,,UNITED KINGDOM,GB,,"To enable Practical Participation to make a researcher available for up to 
+10 days in total (on a draw-down basis) in order to assist grant-makers 
+with producing and publishing their data in line with the 360 Degree Giving 
+data standard.",,,,13/05/2015 13:37,DUMMY01
+360G-indigotrust:IND234,Joint Hub Fund,360G-indigotrust,Indigo Trust,,Stichting HIVOS,32357,GBP,,60000,,31/03/2014 00:00,Raamweg 16,2596 HL Den Haag,,,THE NETHERLANDS,,,,12 months,,THE NETHERLANDS,NL,,"Hivos will be managing the Joint Hub fund and distribute the funds to the 
+selected technology innovation hubs in Africa. £50,000 will be re-granted 
+to the technology innovation hubs and £10,000 will be spent on fund 
+management.",,,,05/08/2014 15:00,DUMMY01
+360G-indigotrust:IND235,Salary costs and Open Data Unconference,360G-indigotrust,Indigo Trust,,Code for South Africa,32358,GBP,,36850,,31/03/2014 00:00,"Codebridge - Code Dojo, Campground Road",Claremont,Cape Town,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"£30,000 towards salary costs of Code4SA lead developer and £6,850 to 
+contribute towards the running of an Open Data Unconference.",,,,13/05/2015 13:37,DUMMY01
+360G-indigotrust:IND236,Constitution Project Website,360G-indigotrust,Indigo Trust,,University College London,5795,GBP,,4125,,31/03/2014 00:00,29-30 Tavistock Square,London,,WC1H 9QU,UNITED KINGDOM,University College London - Constitution Unit,,,12 months,,UNITED KINGDOM,GB,,"To develop additional functionality that would allow site users to download 
+annotated PDFs of individual constitutions complete with a table of 
+contents. The work should make it easier for offline users and others to 
+access, read and navigate constitutions.",,,,13/05/2015 13:37,DUMMY01
+360G-indigotrust:IND237,Expansion of Digital Mapping Project in Eastern Uganda,360G-indigotrust,Indigo Trust,,Fruits of Thought,28677,GBP,,5000,,02/04/2014 00:00,"Plot 7669 Tank Hill, Muyenga",PO Box 25435,Kampala,,UGANDA,,,,12 months,,UGANDA,UG,,Expansion of Digital Mapping Project in Eastern Uganda.,,,,13/05/2015 13:36,DUMMY01
+360G-indigotrust:IND238,FarmNet Pilot in Rwanda 2014,360G-indigotrust,Indigo Trust,,FarmNet Systems Limited,32367,GBP,,15000,,02/04/2014 00:00,33-35 George Street,Oxford,,OX1 2AY,UK,,,,12 months,,UK,GB,,"To contribute towards software development costs for a platform in Rwanda 
+which will connect smallholder farmers to premium buyers with trusted 
+intermediaries handling the physical commodities. The platform will be 
+piloted with Sarura Commodities Ltd and the World Food Programme in August 
+2014.",,,,13/05/2015 13:36,DUMMY01
+360G-indigotrust:IND239,School of Data,360G-indigotrust,Indigo Trust,,Open Knowledge Foundation,32368,GBP,,41926,,02/04/2014 00:00,St John's Innovation Centre,Cowley Road,Cambridge,CB4 0WS,UK,,,,12 months,,UK,GB,,To expand OKFN School of Data to South Africa.,,,,13/05/2015 13:36,DUMMY01
+360G-indigotrust:IND240,Work on 360 Degree Giving data,360G-indigotrust,Indigo Trust,,Aptivate,32488,GBP,,12600,,24/04/2014 00:00,Citylife House,Sturton Street,Cambridge,CB1 2QF,UK,,,,12 months,,UK,GB,,"To enable Aptivate to conduct two ‘sprints’ to convert data obtained from 
+funders into a 360 Degree Giving compliant standard and to produce tools 
+and visualisations using this data. All materials and tools will be made 
+available free of charge under a Creative Commons licence.",,,,29/04/2014 10:37,DUMMY01
+360G-indigotrust:IND241,Second Phase of work on 360 Degree Giving,360G-indigotrust,Indigo Trust,,Aptivate,32488,GBP,,8700,,09/06/2014 00:00,Citylife House,Sturton Street,Cambridge,CB1 2QF,UK,,,,12 months,,UK,GB,,"To complete second phase of work on 360 Degree Giving which will improve 
+the grantee, funder and activities search functionality and usability for 
+use on a publicly accessible website.",,,,06/07/2014 15:47,DUMMY01
+360G-indigotrust:IND242,Piloting publication of Zambian legislation,360G-indigotrust,Indigo Trust,,African Legal Information Institute (African LII),30163,GBP,,36300,,16/06/2014 00:00,"DGRU Faculty of Law, University of Cape Town",Private Bag X3,Rondebosch,7701,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To contribute towards the development of an open source platform for 
+standard-compliant publication of legal information, piloting through 
+publishing Zambian legislation.",,,,13/05/2015 13:36,DUMMY01
+360G-indigotrust:IND243,Platform for mobile campaigning,360G-indigotrust,Indigo Trust,720327950,Amandla.Mobi,32900,GBP,,15453.07,,09/07/2014 00:00,"Suite 702, 7th Floor Heerengracht Building, 87 De Korte Street",Braamfontein,Johannesburg,2017,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To develop a new platform for mobile campaigning and pilot two community 
+led campaigns using the platform.",,,,13/05/2015 13:35,DUMMY01
+360G-indigotrust:IND244,Training for Indigo Grantees based in Cape Town,360G-indigotrust,Indigo Trust,,Open Democracy Advice Centre,30356,GBP,,10000,,28/07/2014 00:00,"2nd Floor the Armoury, Buchanan Square",160 Sir Lowry Road,Woodstock,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"Training for Indigo Grantees based in Cape Town. This organisation promotes 
+open and transparent democracies and corporate and government 
+accountability. However, this grant is being utilised by all Indigo Trust's 
+Cape Town grantees.",,,,01/06/2015 14:56,DUMMY01
+360G-indigotrust:IND245,Core costs and secondary school campaign,360G-indigotrust,Indigo Trust,2011/009890/24,Siyakhona Multi Media Co-operative Ltd,32987,GBP,,15000,,31/07/2014 00:00,139-11th Avenue,Alexandra Township,Johannesburg,2090,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To cover core costs and the running of a campaign around drugs and alcohol 
+misuse in secondary schools in Alexandra Township.",,,,13/05/2015 13:35,DUMMY01
+360G-indigotrust:IND246,Core costs and recruitment consultancy,360G-indigotrust,Indigo Trust,1158362,Publish What You Fund,32268,GBP,,45000,,04/09/2014 00:00,Southbank House,Black Prince Road,London,SE1 7SJ,UK,,,,12 months,,UK,GB,,"This organisation campaigns for greater aid transparency. £30,000 will go 
+towards PWYF's core costs, while £15,000 will go towards recruitment 
+consultancy services.",,,,01/06/2015 15:15,DUMMY01
+360G-indigotrust:IND247,Crisis/Bridging funding,360G-indigotrust,Indigo Trust,,Hive Colab,25495,GBP,,5718,,11/09/2014 00:00,"3rd Foor, Suite 304, Kankojya House, Kanjokya Road",Kamwokya,Kampala,,Uganda,,,,Undefined,,Uganda,UG,,"Crisis/bridging funding whilst waiting for receipt of funds for a tchnology 
+innovation hub in Uganda.",,,,01/06/2015 14:50,DUMMY01
+360G-indigotrust:IND248,Charitable activities of CFOI,360G-indigotrust,Indigo Trust,,Campaign for Freedom of Information,33133,GBP,,10000,,17/09/2014 00:00,Unit 109 Davina House,137-149 Goswell Road,London,EC1V 7ET,UK,,,,12 months,,UK,GB,,"Towards the charitable activities of CFOI, including education, training 
+and establishing good practice with regard to FOI legislation in the UK.",,,,13/05/2015 13:35,DUMMY01
+360G-indigotrust:IND249,Continued work relating to 360 Degree Giving,360G-indigotrust,Indigo Trust,,Aptivate,32488,GBP,,9350,,17/09/2014 00:00,Citylife House,Sturton Street,Cambridge,CB1 2QF,UK,,,,12 months,,UK,GB,,"To continue work related to 360 Degree Giving, an initiative which helps UK 
+grant makers and philanthropists to publish their grant information online 
+in an easy to use way.",,,,01/06/2015 15:05,DUMMY01
+360G-indigotrust:IND250,Funds to recruit Programme Assistant,360G-indigotrust,Indigo Trust,,Mzalendo Trust,33134,GBP,,14714.3,,17/09/2014 00:00,c/o iHub Nairobi,PO Box 58275,Nairobi 00200,,KENYA,,,,12 months,,KENYA,KE,,"To enable Mzalendo, a parliamentary monitoring site, to employ a programme 
+assistant to conduct marketing and media outreach work.",,,,01/06/2015 14:51,DUMMY01
+360G-indigotrust:IND251,Core costs,360G-indigotrust,Indigo Trust,,GroundUp,33135,GBP,,10863,,17/09/2014 00:00,"Suite 06EB East Block, 1st Floor Tannery Park, 21 Belmont Road",Rondebosch 7700,Cape Town,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"This grant covers core costs for an organisation which reports stories, 
+mainly relating to issues around social justice and service delivery from 
+South Africa's township and immigrant communities.",,,,01/06/2015 14:58,DUMMY01
+360G-indigotrust:IND252,Advice to Sex Workers,360G-indigotrust,Indigo Trust,177581,Lady Mermaid's Bureau,33192,GBP,,5000,,01/10/2014 00:00,"Kulumba Zone, Tula Road, Kawempe Division",Kampala District,c/o PO Box 24146 Kampala,,UGANDA,,,,12 months,,UGANDA,UG,,To provide sexual health and safety advice to sex workers via SIM cards.,,,,13/05/2015 13:34,DUMMY01
+360G-indigotrust:IND253,Citizen journalism training,360G-indigotrust,Indigo Trust,,Dim Sum Digital Limited,33205,GBP,,15053,,02/10/2014 00:00,22b Bridge Street,Richmond,North Yorkshire,DL10 4RW,UK,,,,12 months,,South Africa,ZA,,"To facilitate citizen journalism training to Indigo Trust grantees and 
+other activists in Cape Town.",,,,13/05/2015 13:33,DUMMY01
+360G-indigotrust:IND254,Bluetooth Radio Programming Project,360G-indigotrust,Indigo Trust,,Media Matters for Women - Sierra Leone,33206,GBP,,15000,,02/10/2014 00:00,"24 Old Railway Line, Tengbeh Town",Freetown,,,SIERRA LEONE,,,,12 months,,SIERRA LEONE,SL,,"To enable Media Matters for Women to develop a Bluetooth radio programming 
+project aimed at providing information on ebola and other matters to remote 
+communities in Sierra Leone.",,,,13/05/2015 13:33,DUMMY01
+360G-indigotrust:IND255,Youth Reporters,360G-indigotrust,Indigo Trust,,Livity Africa,33290,GBP,,8076.74,,15/10/2014 00:00,"Unit 29 & 30, 2nd Floor, Brickfield Place,, 18 Brickfield Road",Salt River,Cape Town,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To embed youth reporters into parliament in partnership with Parliamentary 
+Monitoring Group and to distribute their articles across multiple medium 
+and platforms.",,,,13/05/2015 13:33,DUMMY01
+360G-indigotrust:IND256,Mobile Parliament Platform,360G-indigotrust,Indigo Trust,95182,Magilatech Company Ltd,33308,GBP,,11663.84,,21/10/2014 00:00,COSTECH Building 3rd Floor,Box 4302 Kijitonyama,Dar es Salaam,,TANZANIA,,,,12 months,,TANZANIA,TZ,,"For hosting, tech development and promotion of a voice activated mobile 
+parliament platform.",,,,13/05/2015 13:33,DUMMY01
+360G-indigotrust:IND257,Making Local Governance Accountable,360G-indigotrust,Indigo Trust,,Daraja Development Ltd,33324,GBP,,14790,,23/10/2014 00:00,PO Box 736 Njombe,,,,TANZANIA,,,,12 months,,TANZANIA,TZ,,"To run a programme which enables citizens to submit questions to government 
+officials via SMS and publish the responses in a local paper. It aims to 
+improve the quality of local governance.",,,,13/05/2015 13:33,DUMMY01
+360G-indigotrust:IND258,Big Heart for Pregnant Mothers Project,360G-indigotrust,Indigo Trust,,Hope for Rural Women (HORUWO),33341,GBP,,6500,,03/11/2014 00:00,Kisanga B Plot 6 Lincoln 11 Rise,Kassese,PO Box 177 Kasese,,UGANDA,,,,12 months,,UGANDA,UG,,"To reduce the maternal and infant deaths among rural women through 
+provision of accurate health information about postnatal, antenatal, child 
+immunization via SMS.",,,,16/04/2015 13:20,DUMMY01
+360G-indigotrust:IND259,Citizen Monitoring of Government Services,360G-indigotrust,Indigo Trust,,Black Sash Trust,33342,GBP,,17007.74,,03/11/2014 00:00,"Elta House, 3 Caledonian Street","Mowbray, 7700",Cape Town,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To build the capacity of their Community Based Organisation partners to 
+engage in dialogue with government officials at facility and provincial 
+level following digital monitoring of services.",,,,13/05/2015 13:32,DUMMY01
+360G-indigotrust:IND260,Call Centre and Outreach,360G-indigotrust,Indigo Trust,,Medical Concierge Group Limited,33344,GBP,,15000,,03/11/2014 00:00,"Plot 1390, Nabunya Road, Kayanja Zone","Rubaga, P.O. Box 4036",Kampala,,UGANDA,,,,12 months,,UGANDA,UG,,"Towards supporting their multi-platform call centre and outreach to 
+Universities to provide low cost medical advice and services to patients.",,,,01/06/2015 14:52,DUMMY01
+360G-indigotrust:IND261,"Ebola translation, distribution and outreach work",360G-indigotrust,Indigo Trust,,Translators Without Borders,30164,GBP,,14891.52,,05/11/2014 00:00,"Suite 500, 30 Main Street",Danbury,Connecticut,6810,USA,,,,12 months,,USA,US,,"To increase their work around Ebola and the provision of local language 
+content in affected countries.",,,,01/06/2015 14:52,DUMMY01
+360G-indigotrust:IND262,Citizen Reporting platform,360G-indigotrust,Indigo Trust,,Citizens Watch - IT,33476,GBP,,16501.21,,19/11/2014 00:00,"Spear House Building, PO Box 36626",Plot 22 Jinja Road,Kampala,,UGANDA,Citizens Watch - IT - CEWIT,,,12 months,,UGANDA,UG,,"To work in partnership with mySociety to develop a site which enables 
+citizens to report problems in service delivery and to market the site.",,,,13/05/2015 13:32,DUMMY01
+360G-indigotrust:IND263,Unrestricted funding,360G-indigotrust,Indigo Trust,299525,Harrow M.S. Therapy Centre,31979,GBP,,3000,,19/11/2014 00:00,Harrow School Farm,Watford Road,Harrow,HA1 3TS,UK,,,,12 months,,UK,GB,,"Core costs for an organisation providing treatment, support, information 
+and advice for people with multiple sclerosis.",,,,01/06/2015 15:07,DUMMY01
+360G-indigotrust:IND264,Unrestricted core funding,360G-indigotrust,Indigo Trust,1016968,Young Minds,3609,GBP,,3000,,24/11/2014 00:00,Suite11 Baden Place,Crosby Row,London,SE1 1YW,UK,,,,12 months,,UK,GB,,"Core costs for an organisation committed to improving children's wellbeing 
+and mental health.",,,,01/06/2015 15:08,DUMMY01
+360G-indigotrust:IND265,Unrestricted Core Funding,360G-indigotrust,Indigo Trust,1119954,ENRYCH Oxfordshire,29854,GBP,,3000,,26/11/2014 00:00,Didcot Enterprise Centre,Southmead Industrial Park,Didcot,OX11 7PH,UK,,,,12 months,,UK,GB,,"Core costs for an organisation which enables adults with a physical 
+disability to enjoy leisure, learning and sporting opportunities.",,,,01/06/2015 15:09,DUMMY01
+360G-indigotrust:IND266,Open Data Movement in Uganda,360G-indigotrust,Indigo Trust,,Development Research and Training,33558,GBP,,10426.43,,01/12/2014 00:00,PO Box 22459,Kampala,,,UGANDA,,,,12 months,,UGANDA,UG,,Towards mapping and co-ordinating the Open Data Movement in Uganda.,,,,13/05/2015 13:31,DUMMY01
+360G-indigotrust:IND267,Increasing Local Leaders engagement,360G-indigotrust,Indigo Trust,,Women of Uganda Network (WOUGNET),29385,GBP,,19673.4,,01/12/2014 00:00,Plot 55 Kenneth Dale Road,PO Box 4411,Kampala,,UGANDA,,,,12 months,,UGANDA,UG,,"To build the capacity of local government officials and service providers 
+to use ICTs to connect with citizens.",,,,01/06/2015 14:59,DUMMY01
+360G-indigotrust:IND268,Open Data Specialist,360G-indigotrust,Indigo Trust,,Fruits of Thought,28677,GBP,,18056.38,,03/12/2014 00:00,"Plot 7669 Tank Hill, Muyenga",PO Box 25435,Kampala,,UGANDA,,,,12 months,,UGANDA,UG,,"This organisation runs a collection of projects which aim to stimulate a 
+more valuable and practical use of the internet. This grant contributes 
+towards the salary of an open data specialist to focus on their work 
+opening up data sets in Uganda.",,,,01/06/2015 15:00,DUMMY01
+360G-indigotrust:IND269,Tech Hub collaboration,360G-indigotrust,Indigo Trust,,AfriLabs,31021,GBP,,15000,,03/12/2014 00:00,s Gravenhekje 1a,1011TG,Amsterdam,,NETHERLANDS,,,,12 months,,NETHERLANDS,NL,,"To contribute towards activities which support technology innovation hub 
+collaboration and sharing of knowledge.",,,,13/05/2015 13:31,DUMMY01
+360G-indigotrust:IND270,Swahilibox Mombasa,360G-indigotrust,Indigo Trust,,M-Power,33589,GBP,,26000,,03/12/2014 00:00,P.O. Box 99621,Mombasa 80107,,,KENYA,M-Power - Swahilibox,,,12 months,,KENYA,KE,,"To contribute towards the core costs of establishing a new technology 
+innovation hub in Mombasa (Swahilibox).",,,,13/05/2015 13:28,DUMMY01
+360G-indigotrust:IND271,Groundsource data collection,360G-indigotrust,Indigo Trust,,Groundsource,33590,GBP,,10000,,03/12/2014 00:00,c/o Center for Collaborative Journalism,Mercer University,"Macon, Ga. 31201",,USA,,,,12 months,,South Africa,ZA,,"To deploy a mobile engagement and data collection tool in an operating 
+newsroom at GroundUp. This will also contribute towards technical 
+adaptations to the site.",,,,13/05/2015 13:29,DUMMY01
+360G-indigotrust:IND272,Christmas Grant - Disability,360G-indigotrust,Indigo Trust,,Pesky People,33592,GBP,,10000,,04/12/2014 00:00,"1/3, 338 Dumbarton Road",Glasgow,,G11 6TG,UK,,,,12 months,,UK,GB,,"This organisation uses digital technology to improve the lives of disabled 
+and deaf people. This grant is towards core costs and the creation of a 999 
+smartphone app.",,,,01/06/2015 15:10,DUMMY01
+360G-indigotrust:IND273,Core costs,360G-indigotrust,Indigo Trust,,The Sainsbury Archive,8313,GBP,,3160,,03/06/2014 00:00,The Peak,5 Wilton Road,London,SW1V 1AP,UK,,,,36 months,,UK,GB,,"Three year grant towards core costs of an archive which documents the 
+history of Sainsbury supermarkets.",,,,01/06/2015 15:11,DUMMY01
+360G-indigotrust:IND274,To enable technical improvements to 360 Degree Giving,360G-indigotrust,Indigo Trust,,Nesta,11838,GBP,,10000,,19/01/2015 00:00,1 Plough Place,London,,EC4A 1DE,UK,,,,12 months,,UK,,,"To enable technical improvements to 360 Degree Giving, an initiative which 
+helps UK grant makers and philanthropists to publish their grant 
+information online in an easy to use way.",,,,01/06/2015 15:05,DUMMY01
+360G-indigotrust:IND275,To test and evaluate their new digital mapping platform,360G-indigotrust,Indigo Trust,1126727,MapAction,16806,GBP,,8000,,20/01/2015 00:00,"Clare Charity Centre, Wycombe Road",Saunderton,Buckinghamshire,HP14 4BF,UNITED KINGDOM,,,,12 months,,UNITED KINGDOM,GB,,"Towards the costs of volunteer deployment, tech and monitoring and 
+evaluation for an organisation which provides vital information in mapping 
+format during humanitarian crises.",,,,01/06/2015 14:53,DUMMY01
+360G-indigotrust:IND276,Supplementary Grant to IND262,360G-indigotrust,Indigo Trust,,Citizens Watch - IT,33476,GBP,,400,,29/01/2015 00:00,"Spear House Building, PO Box 36626",Plot 22 Jinja Road,Kampala,,UGANDA,Citizens Watch - IT - CEWIT,,,12 months,,UGANDA,UG,,"A supplementary grant of £400 to IND262 was agreed by Trustees due to 
+exchange rate fluctuations. The grantee received 70,232,236 UGX of the 
+original 71,880,000 Ugandan shillings awarded. This organisation is 
+involved in innovative methods of election monitoring, social 
+accountability and governance and empowering citizens in improving their 
+livelihoods.",,,,01/06/2015 15:01,DUMMY01
+360G-indigotrust:IND277,Follow The Money/Connected Development core costs,360G-indigotrust,Indigo Trust,,Connected Development (CODE),31377,GBP,,20000,,29/01/2015 00:00,"Bassan Plaza, 10th Street, 2nd Floor F Wing Behind Total House",Central Business District,Abuja,,NIGERIA,Connected Development (CODE) - Follow The Money,,,12 months,,NIGERIA,NG,,"This organisation aims to improve access to information and empower local 
+communities to hold government to account. This grant covers core costs.",,,,01/06/2015 15:02,DUMMY01
+360G-indigotrust:IND278,Core Costs,360G-indigotrust,Indigo Trust,,Daily Maverick,33883,GBP,,14400.63,,11/02/2015 00:00,PO Box 650509,Benmore,Johannesburg,2010,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"This is an independent digital newsroom which provides a unique blend of 
+news, information, analysis and opinion. This grant covers core costs.",,,,01/06/2015 15:03,DUMMY01
+360G-indigotrust:IND279,Unrestricted Funds,360G-indigotrust,Indigo Trust,,Greater Manchester Coalition of Disabled People,33909,GBP,,3000,,16/02/2015 00:00,"Unit 4 Windrush Millennium Centre, 70 Alexandra Road",Moss Side,Manchester,M16 7WD,UK,,,,12 months,,UK,GB,,"Core costs towards an organisation working on the rights and inclusion of 
+disabled people.",,,,01/06/2015 15:10,DUMMY01
+360G-indigotrust:IND280,Emergency Medicine Guidance App,360G-indigotrust,Indigo Trust,,Open Medicine Project,34056,GBP,,14605.89,,12/03/2015 00:00,"4th floor, Bandwidth Barn Woodstock Industrial Centre, 66-68 Albert Road",Woodstock 7915,Cape Town,,SOUTH AFRICA,Open Medicine Project - TOMPSA,,,12 months,,SOUTH AFRICA,ZA,,"To integrate and adapt the TOMPSA Emergency Medicine Guidance app for use 
+in 10 South African government hospitals as part of an ongoing project.",,,,14/04/2015 15:52,DUMMY01
+360G-indigotrust:IND281,BeeHive,360G-indigotrust,Indigo Trust,1144526,The Foundation,34057,GBP,,10000,,12/03/2015 00:00,"Centro 3,19 Mandela Street",London,,NW1 0DU,UK,,,,12 months,,UK,GB,,"To cover developer time for the BeeHive product which helps connect funders 
+to suitable charities and vice versa and provides analysis of 360 Giving 
+data.",,,,14/04/2015 15:52,DUMMY01
+360G-indigotrust:IND282,360 Degree Giving,360G-indigotrust,Indigo Trust,,Nesta,11838,GBP,,50000,,18/03/2015 00:00,1 Plough Place,London,,EC4A 1DE,UK,,,,12 months,,UK,GB,,"On-going 360 Degree Giving work, an initiative which helps UK grant makers 
+and philanthropists to publish their grant information online in an easy to 
+use way.",,,,01/06/2015 15:05,DUMMY01
+360G-indigotrust:IND283,Second Grant to the Joint Hub Fund,360G-indigotrust,Indigo Trust,,Stichting HIVOS,32357,GBP,,100000,,18/03/2015 00:00,Raamweg 16,2596 HL Den Haag,,,THE NETHERLANDS,,,,12 months,,THE NETHERLANDS,NL,,"This grant is to contribute towards a joint fund which supports technology 
+innovation hubs across Africa. £10,000 of this grant will be used for 
+management by Stichling Hivos. The remaining £90,000 will go towards 
+supporting the core costs of technology innovation hubs in Africa and 
+smaller seed funding to help stimulate social tech communities in countries 
+or cities where they are still in their infancy. These funds will be 
+re-granted directly to tech hubs or organisations in Africa.",,,,01/06/2015 14:54,DUMMY01
+360G-indigotrust:IND284,Sobanukirwa,360G-indigotrust,Indigo Trust,,Tumenye Digital Ltd,34100,GBP,,20205,,19/03/2015 00:00,"No 151 KG20 Avenue, Kimironko",Gasabo,Kigali,,Rwanda,,,,12 months,,Rwanda,RW,,"Towards core costs and for development and promotion of the Sobanukirwa 
+Freedom of Information request site.",,,,14/04/2015 15:52,DUMMY01
+360G-indigotrust:IND286,To support Mxit platform,360G-indigotrust,Indigo Trust,,Corruption Watch (RF) NPC,33887,GBP,,15319.56,,16/04/2015 00:00,"8th Floor Heerengracht Building, 87 De Korte Street, Braamfontein 2001",Johannesburg,PO Box 30630 Braamfontein 2017,,SOUTH AFRICA,,,,12 months,,SOUTH AFRICA,ZA,,"To support Corruption Watch's Mxit platform which is used to report and 
+monitor corruption.",,,,29/04/2015 14:52,DUMMY01
+360G-indigotrust:IND287,Schools project,360G-indigotrust,Indigo Trust,1156416,First Give,34055,GBP,,10800,,16/04/2015 00:00,"JHub, Haskell House",152 West End Lane,London,NW6 1SD,UK,,,,36 months,,UK,GB,,"To work with schools to identify a social issue within their community and 
+a charity working to address it. The first project will be Parliament Hill 
+School.",,,,01/06/2015 15:17,DUMMY01
+360G-indigotrust:IND288,Aid transparency work in the US,360G-indigotrust,Indigo Trust,1158362,Publish What You Fund,32268,GBP,,30000,,16/04/2015 00:00,Southbank House,Black Prince Road,London,SE1 7SJ,UK,,,,12 months,,UK,GB,,"This organisation campaigns for greater aid transparency. This grant will 
+help further PWYF advocacy work in the US and to pursue registration as a 
+501(c)(3) organisation..",,,,01/06/2015 15:14,DUMMY01
+360G-indigotrust:IND289,Business Incubation Manager,360G-indigotrust,Indigo Trust,,Bongo Hive,27749,GBP,,16585.29,,20/04/2015 00:00,9169B Nanshila Road,Kalundu,Lusaka,,ZAMBIA,,,,12 months,,ZAMBIA,ZM,,"This grant covers salary costs of a business incubation manager working in 
+a technology innovation hub in Zambia and covers 12 months salary.",,,,01/06/2015 15:12,DUMMY01
+360G-indigotrust:IND292,Mobile SMS Internet Radio platform,360G-indigotrust,Indigo Trust,,Toro Development Network,34374,GBP,,21466,,13/05/2015 00:00,Plot 13 Rukidi III Street,P.O Box 161 Fort Portal,,,Uganda,Toro Development Network - ToroDev,,,12 months,,Uganda,UG,,"To enable ToroDev to implement an innovative Mobile-SMS-Internet-Radio 
+polling system to seek local citizens’ views on service delivery in seven 
+districts in the Rwenzori region of western Uganda. The results will be fed 
+back to decision makers to improve service delivery.",,,,01/06/2015 15:16,DUMMY01

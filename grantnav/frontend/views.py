@@ -139,7 +139,7 @@ def search(request):
         except ValueError:
             page = 1
 
-        results = es.search(body=json_query, size=SIZE, from_=(page - 1) * SIZE, index="threesixtygiving")
+        results = es.search(body=json_query, size=SIZE, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
         for hit in results['hits']['hits']:
             hit['source'] = hit['_source']
 
@@ -185,8 +185,8 @@ def stats(request):
     context = {'text_query': text_query or ''}
 
     es = get_es()
-    mapping = es.indices.get_mapping(index="threesixtygiving")
-    all_fields = list(flatten_mapping(mapping['threesixtygiving']['mappings']['grant']['properties']))
+    mapping = es.indices.get_mapping(index=settings.ES_INDEX)
+    all_fields = list(flatten_mapping(mapping[settings.ES_INDEX]['mappings']['grant']['properties']))
 
     query = {"query": {"bool":
                              {"must": {"query_string": {"query": text_query}},
@@ -207,7 +207,7 @@ def stats(request):
         context['text_query'] = ''
 
     field_info = collections.defaultdict(dict)
-    results = es.search(body=query, index="threesixtygiving", size=0)
+    results = es.search(body=query, index=settings.ES_INDEX, size=0)
     for field, aggregation in results['aggregations'].items():
         field_name, agg_type = field.split(':')
         field_info[field_name]["in_schema"] = field_name in schema_fields

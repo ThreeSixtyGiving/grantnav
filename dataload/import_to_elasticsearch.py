@@ -1,4 +1,3 @@
-import glob
 import json
 import argparse
 import flattentool
@@ -8,6 +7,8 @@ import tempfile
 import os
 from pprint import pprint
 import elasticsearch.helpers
+
+ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 
 def convert_spreadsheet(file_path, file_type, tmp_dir):
     #file_type = file_name.split('.')[-1]
@@ -51,9 +52,8 @@ def import_to_elasticsearch(files, clean):
     es = elasticsearch.Elasticsearch()
 
     # Delete the index
-    ##r = requests.delete('http://localhost:9200/threesixtygiving/')
     if clean: 
-        result = es.indices.delete(index='threesixtygiving', ignore=[404])
+        result = es.indices.delete(index=ES_INDEX, ignore=[404])
         pprint(result)
 
 
@@ -75,7 +75,8 @@ def import_to_elasticsearch(files, clean):
                     "plannedDates": {
                         "properties": {
                             "startDate": {"type": "string", "index": "not_analyzed" },
-                            "endDate": {"type": "string", "index": "not_analyzed" }
+                            "endDate": {"type": "string", "index": "not_analyzed" },
+                            "duration": {"type": "string"}
                         }
                     },
                     "recipientOrganization" : {
@@ -133,7 +134,7 @@ def import_to_elasticsearch(files, clean):
         }
 
         # Create it again
-        result = es.indices.create(index='threesixtygiving', body={"mappings": mappings})
+        result = es.indices.create(index=ES_INDEX, body={"mappings": mappings})
         pprint(result)
 
 
@@ -168,7 +169,7 @@ def import_to_elasticsearch(files, clean):
             for grant in doc[key]:
                 grant['filename'] = file_name.strip('./')
                 grant['_id'] = str(uuid.uuid4())
-                grant['_index'] = 'threesixtygiving'
+                grant['_index'] = ES_INDEX
                 grant['_type'] = 'grant'
                 grants.append(grant)
             result = elasticsearch.helpers.bulk(es, grants, raise_on_error=False)
