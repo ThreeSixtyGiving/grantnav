@@ -13,8 +13,8 @@ BASIC_QUERY = {"query": {"bool":
                               "filter": {}}
                },
                "aggs": {
-                   "fundingOrganization": {"terms": {"field": "fundingOrganization.whole_name"}},
-                   "recipientOrganization": {"terms": {"field": "recipientOrganization.whole_name"}}
+                   "fundingOrganization": {"terms": {"field": "fundingOrganization.whole_name", "size": 10}},
+                   "recipientOrganization": {"terms": {"field": "recipientOrganization.whole_name", "size": 10}}
                }}
 SIZE = 10
 
@@ -25,7 +25,32 @@ def get_pagination(request, context, page):
     if page != 1 and total_pages > 1:
         context['prev_page'] = request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1})
 
+def get_facet_size(request, context, json_query, page):
+    json_query = copy.deepcopy(json_query)
+    see_more_url = {}
+    try:
+        aggs = json_query["aggs"]
+    except KeyError:
+        aggs = BASIC_QUERY['aggs']
+    for agg_name, agg in aggs.items():
+        new_aggs = copy.deepcopy(aggs)
+        size = agg["terms"]["size"]
+        if size == 10:
+            new_size = 50
+            see_more_url[agg_name] = {"more": True}
+        else:
+            new_size = 10
+            see_more_url[agg_name] = {"more": False}
+        new_aggs[agg_name]["terms"]["size"] = new_size
+
+        json_query["aggs"] = new_aggs
+        see_more_url[agg_name]["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query), 'page': page}) + '#' + agg_name
+
+    context['see_more_url'] = see_more_url
+
+
 def get_facets(request, context, json_query):
+    json_query = copy.deepcopy(json_query)
     try:
         current_filter = json_query["query"]["bool"]["filter"]
     except KeyError:
@@ -128,6 +153,7 @@ def search(request):
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
         get_facets(request, context, json_query)
+        get_facet_size(request, context, json_query, page)
         get_pagination(request, context, page)
 
     return render(request, "search.html", context=context)
