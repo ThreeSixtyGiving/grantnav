@@ -18,18 +18,26 @@
   padding-left: 15px;
 }
 
+a.anchor {
+    display: block;
+    position: relative;
+    top: -70px;
+    visibility: hidden;
+}
 
+.heading-in-panel {
+    margin-top:0px;
+}
 
+.fixed-org-height {
+  height: 100px;
+  overflow: hidden;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.large-arrow {
+  font-size: 40px;
+  color: #8F8F8F;
+  display:inline-block;
+  transform:scale(1.8,1);
+}
 
