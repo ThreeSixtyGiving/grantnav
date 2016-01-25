@@ -115,6 +115,9 @@ def search(request):
             page = 1
 
         results = es.search(body=json_query, size=SIZE, from_=(page - 1) * SIZE, index="threesixtygiving")
+        for hit in results['hits']['hits']:
+            hit['source'] = hit['_source']
+
         try:
             context['text_query'] = json_query["query"]["bool"]["must"]["query_string"]["query"]
         except KeyError:
