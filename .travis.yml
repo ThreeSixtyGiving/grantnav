@@ -16,5 +16,6 @@ install:
     - "pip install -r requirements_dev.txt --use-mirrors"
 
 script:
+    - "flake8 ."
     - "py.test"
 
