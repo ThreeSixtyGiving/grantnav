@@ -8,15 +8,13 @@ import copy
 import math
 import collections
 
-BASIC_QUERY = {"query": {"bool":
-                             {"must": {"query_string": {"query": ""}},
-                              "filter": {}}
-               },
+BASIC_QUERY = {"query": {"bool": {"must":
+                  {"query_string": {"query": ""}}, "filter": {}}},
                "aggs": {
                    "fundingOrganization": {"terms": {"field": "fundingOrganization.whole_name", "size": 10}},
-                   "recipientOrganization": {"terms": {"field": "recipientOrganization.whole_name", "size": 10}}
-               }}
+                   "recipientOrganization": {"terms": {"field": "recipientOrganization.whole_name", "size": 10}}}}
 SIZE = 10
+
 
 def get_pagination(request, context, page):
     total_pages = math.ceil(context['results']['hits']['total'] / SIZE)
@@ -24,6 +22,7 @@ def get_pagination(request, context, page):
         context['next_page'] = request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1})
     if page != 1 and total_pages > 1:
         context['prev_page'] = request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1})
+
 
 def get_facet_size(request, context, json_query, page):
     json_query = copy.deepcopy(json_query)
@@ -88,7 +87,7 @@ def get_facets(request, context, json_query):
                 filter_values.append(facet_value)
             new_and = []
             for field, values in new_filter_terms.items():
-                new_and.extend({"term": { field : value }} for value in values)
+                new_and.extend({"term": {field: value}} for value in values)
             new_filter["and"] = new_and
             if not new_filter["and"]:
                 new_filter.pop("and")
@@ -103,12 +102,13 @@ def get_facets(request, context, json_query):
             if field_name in filter_terms:
                 new_and = []
                 for field, values in filter_terms.items():
-                    new_and.extend({"term": { field : value }} for value in values if field != field_name)
+                    new_and.extend({"term": {field: value}} for value in values if field != field_name)
                 new_filter["and"] = new_and
                 if not new_filter["and"]:
                     new_filter.pop("and")
                 json_query["query"]["bool"]["filter"] = new_filter
                 result['clear_url'] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+
 
 def search(request):
     context = {}
@@ -158,6 +158,7 @@ def search(request):
 
     return render(request, "search.html", context=context)
 
+
 def flatten_mapping(mapping, current_path=''):
     for key, value in mapping.items():
         sub_properties = value.get('properties')
@@ -165,6 +166,7 @@ def flatten_mapping(mapping, current_path=''):
             yield from flatten_mapping(sub_properties, current_path + "." + key)
         else:
             yield (current_path + "." + key).lstrip(".")
+
 
 def flatten_schema(schema, path=''):
     for field, property in schema['properties'].items():
@@ -178,6 +180,7 @@ def flatten_schema(schema, path=''):
         else:
             yield (path + '.' + field).lstrip('.')
 
+
 def stats(request):
     text_query = request.GET.get('text_query')
     if not text_query:
@@ -188,12 +191,9 @@ def stats(request):
     mapping = es.indices.get_mapping(index=settings.ES_INDEX)
     all_fields = list(flatten_mapping(mapping[settings.ES_INDEX]['mappings']['grant']['properties']))
 
-    query = {"query": {"bool":
-                             {"must": {"query_string": {"query": text_query}},
-                              "filter": {}}
-             },
-             "aggs": {
-             }}
+    query = {"query": {"bool": {"must":
+                {"query_string": {"query": text_query}}, "filter": {}}},
+             "aggs": {}}
 
     schema = jsonref.load_uri(settings.GRANT_SCHEMA)
     schema_fields = set(flatten_schema(schema))
@@ -218,6 +218,6 @@ def stats(request):
         if agg_type == 'cardinality':
             field_info[field_name]["distinct"] = aggregation["value"]
 
-    context['field_info'] = sorted(field_info.items(), key=lambda val: -val[1]["found"]) 
+    context['field_info'] = sorted(field_info.items(), key=lambda val: -val[1]["found"])
     context['results'] = results
     return render(request, "stats.html", context=context)

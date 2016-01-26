@@ -4,9 +4,11 @@ import dateutil.parser as date_parser
 
 register = template.Library()
 
+
 @register.filter(name='get')
 def get(d, k):
     return d.get(k, None)
+
 
 def flatten_dict(data, path=tuple()):
     for key, value in data.items():
@@ -19,18 +21,21 @@ def flatten_dict(data, path=tuple()):
         else:
             yield ": ".join(path + (key,)), value
 
+
 @register.filter(name='flatten')
 def flatten(d):
-    return {key: value for key, value in flatten_dict(d) 
+    return {key: value for key, value in flatten_dict(d)
             if key not in ["id", "title", "description"]}
+
 
 @register.filter(name='half_sorted_items')
 def half_grant(grant, half):
-    sorted_list = sorted(grant.items(), key=lambda a: a[0].lower()) 
+    sorted_list = sorted(grant.items(), key=lambda a: a[0].lower())
     if half == 1:
-        return sorted_list[:math.floor(len(grant)/2)]
+        return sorted_list[:math.floor(len(grant) / 2)]
     else:
-        return sorted_list[math.floor(len(grant)/2):]
+        return sorted_list[math.floor(len(grant) / 2):]
+
 
 @register.filter(name='get_title')
 def get_title(d):
@@ -40,13 +45,15 @@ def get_title(d):
     else:
         return d.get('id')
 
+
 @register.filter(name='get_name')
 def get_name(d):
     name = d.get('name')
-    if name: 
+    if name:
         return name
     else:
         return d.get('id')
+
 
 @register.filter(name='get_currency')
 def get_currency(d):
@@ -58,13 +65,15 @@ def get_currency(d):
     else:
         return currency + ' '
 
+
 @register.filter(name='get_amount')
 def get_amount(amount):
     try:
-       return "{:,.0f}".format(amount)
+        return "{:,.0f}".format(amount)
     except ValueError:
-       return amount
-    
+        return amount
+
+
 @register.filter(name='get_date')
 def get_date(date):
     try:

@@ -55,12 +55,11 @@ RAVEN_CONFIG = {
     'dsn': env('SENTRY_DSN')
 }
 
-GRANT_SCHEMA=env('GRANT_SCHEMA')
+GRANT_SCHEMA = env('GRANT_SCHEMA')
 
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
@@ -116,7 +115,7 @@ DATABASES = {
     }
 }
 
-ES_INDEX=env('ES_INDEX')
+ES_INDEX = env('ES_INDEX')
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators

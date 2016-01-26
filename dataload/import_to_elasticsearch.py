@@ -10,6 +10,7 @@ import elasticsearch.helpers
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 
+
 def convert_spreadsheet(file_path, file_type, tmp_dir):
     #file_type = file_name.split('.')[-1]
     encoding = 'utf-8'
@@ -41,22 +42,21 @@ def convert_spreadsheet(file_path, file_type, tmp_dir):
             convert_titles=True,
             encoding=encoding
         )
-    except Exception as err:
+    except Exception:
         print("Unflattening failed for file {}".format(file_path))
         raise
 
 # curl http://test-360giving.pantheon.io/api/3/action/current_package_list_with_resources | grep -Eo '[^"]+\.json' | sed 's/\\\//\//g' | while read url; do wget "$url"; done
+
 
 def import_to_elasticsearch(files, clean):
 
     es = elasticsearch.Elasticsearch()
 
     # Delete the index
-    if clean: 
+    if clean:
         result = es.indices.delete(index=ES_INDEX, ignore=[404])
         pprint(result)
-
-
 
         # Add the extra mapping info we want
         # (the rest will be auto inferred from the data we feed in)
@@ -64,71 +64,71 @@ def import_to_elasticsearch(files, clean):
             "grant": {
                 "properties": {
                     "_all": {"analyzer": "english", "type": "string"},
-                    "id": {"type": "string", "index": "not_analyzed" },
-                    "filename": {"type": "string", "index": "not_analyzed" },
+                    "id": {"type": "string", "index": "not_analyzed"},
+                    "filename": {"type": "string", "index": "not_analyzed"},
                     "awardDate": {
                         "type": "date",
                         "ignore_malformed": True
                     },
-                    "awardDatdateModifiede": {"type": "string", "index": "not_analyzed" },
-                    "dateModified": {"type": "string", "index": "not_analyzed" },
+                    "awardDatdateModifiede": {"type": "string", "index": "not_analyzed"},
+                    "dateModified": {"type": "string", "index": "not_analyzed"},
                     "plannedDates": {
                         "properties": {
-                            "startDate": {"type": "string", "index": "not_analyzed" },
-                            "endDate": {"type": "string", "index": "not_analyzed" },
+                            "startDate": {"type": "string", "index": "not_analyzed"},
+                            "endDate": {"type": "string", "index": "not_analyzed"},
                             "duration": {"type": "string"}
                         }
                     },
-                    "recipientOrganization" : {
-                      "properties" : {
-                        "addressLocality" : {
-                          "type" : "string", "index": "not_analyzed"
-                        },
-                        "charityNumber" : {
-                          "type" : "string", "index": "not_analyzed"
-                        },
-                        "companyNumber" : {
-                          "type" : "string", "index": "not_analyzed"
-                        },
-                        "id" : {
-                          "type" : "string", "index": "not_analyzed"
-                        },
-                        "url" : {
-                          "type" : "string", "index": "not_analyzed"
-                        },
-                        "name" : {
-                          "type" : "string", "copy_to": "recipientOrganization.whole_name"
-                        },
-                        "whole_name" : {
-                          "type" : "string", "index": "not_analyzed"
+                    "recipientOrganization": {
+                        "properties": {
+                            "addressLocality": {
+                                "type": "string", "index": "not_analyzed"
+                            },
+                            "charityNumber": {
+                                "type": "string", "index": "not_analyzed"
+                            },
+                            "companyNumber": {
+                                "type": "string", "index": "not_analyzed"
+                            },
+                            "id": {
+                                "type": "string", "index": "not_analyzed"
+                            },
+                            "url": {
+                                "type": "string", "index": "not_analyzed"
+                            },
+                            "name": {
+                                "type": "string", "copy_to": "recipientOrganization.whole_name"
+                            },
+                            "whole_name": {
+                                "type": "string", "index": "not_analyzed"
+                            }
                         }
-                     }
-                   },
-                    "fundingOrganization" : {
-                      "properties" : {
-                        "addressLocality" : {
-                          "type" : "string", "index": "not_analyzed"
-                        },
-                        "charityNumber" : {
-                          "type" : "string", "index": "not_analyzed"
-                        },
-                        "companyNumber" : {
-                          "type" : "string", "index": "not_analyzed"
-                        },
-                        "id" : {
-                          "type" : "string", "index": "not_analyzed"
-                        },
-                        "url" : {
-                          "type" : "string", "index": "not_analyzed"
-                        },
-                        "name" : {
-                          "type" : "string", "copy_to": "fundingOrganization.whole_name"
-                        },
-                        "whole_name" : {
-                          "type" : "string", "index": "not_analyzed"
+                    },
+                    "fundingOrganization": {
+                        "properties": {
+                            "addressLocality": {
+                                "type": "string", "index": "not_analyzed"
+                            },
+                            "charityNumber": {
+                                "type": "string", "index": "not_analyzed"
+                            },
+                            "companyNumber": {
+                                "type": "string", "index": "not_analyzed"
+                            },
+                            "id": {
+                                "type": "string", "index": "not_analyzed"
+                            },
+                            "url": {
+                                "type": "string", "index": "not_analyzed"
+                            },
+                            "name": {
+                                "type": "string", "copy_to": "fundingOrganization.whole_name"
+                            },
+                            "whole_name": {
+                                "type": "string", "index": "not_analyzed"
+                            }
                         }
-                      }
-                   }
+                    }
                 }
             }
         }
@@ -137,12 +137,7 @@ def import_to_elasticsearch(files, clean):
         result = es.indices.create(index=ES_INDEX, body={"mappings": mappings})
         pprint(result)
 
-
-    #import sys
-    #sys.exit()
-
     for file_name in files:
-    #for fname in ['./Macc-grants.json', './TraffordMBC-Grants.json', './WellcomeTrust-grants.json', './DSDNI.json']: # order by size
         file_type = file_name.split('.')[-1]
         tmp_dir = ''
         if file_type == 'json':
@@ -154,7 +149,6 @@ def import_to_elasticsearch(files, clean):
         else:
             print('unimportable file {} (bad) file type'.format(file_name))
             return
-
 
         with open(json_file_name) as fp:
             doc = json.load(fp)
@@ -186,4 +180,3 @@ if __name__ == '__main__':
     parser.add_argument('files', help='files to import', nargs='+')
     args = parser.parse_args()
     import_to_elasticsearch(args.files, args.clean)
-

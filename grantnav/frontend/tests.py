@@ -1,8 +1,9 @@
 import pytest
 import urllib.parse
-from dataload.import_to_elasticsearch import import_to_elasticsearch 
+from dataload.import_to_elasticsearch import import_to_elasticsearch
 import json
 import time
+
 
 @pytest.fixture(scope="module")
 def dataload():
@@ -10,11 +11,13 @@ def dataload():
     #elastic search needs some time to commit its data
     time.sleep(2)
 
+
 def test_home(dataload, client):
     response = client.get('/')
     assert "GrantNav" in str(response.content)
     assert "Search" in str(response.content)
     assert "gardens" in str(response.content)
+
 
 def test_search(dataload, client):
     initial_response = client.get('/?text_query=gardens')
@@ -42,8 +45,7 @@ def test_search(dataload, client):
     json_query['query']['bool']['filter'] = {}
     assert json.loads(urllib.parse.parse_qs(wolfson_facet['url'].split('?')[-1])['json_query'][0]) == json_query
 
+
 def test_stats(dataload, client):
     response = client.get('/stats')
     assert "379" in str(response.content)
-
-
