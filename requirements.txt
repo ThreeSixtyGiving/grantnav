@@ -8,6 +8,7 @@ urllib3==1.14
 six==1.10.0
 -e git+https://github.com/OpenDataServices/flatten-tool.git@2af8a004d24e376e948d2f473753692ad6c248b8#egg=flattentool
 python-dateutil==2.4.2
+strict-rfc3339==0.6
 
 # Dependencies of flatten-tool
 jdcal==1.2

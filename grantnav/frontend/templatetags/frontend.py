@@ -1,6 +1,8 @@
 from django import template
 import math
+import datetime
 import dateutil.parser as date_parser
+import strict_rfc3339
 
 register = template.Library()
 
@@ -83,7 +85,11 @@ def get_amount(amount):
 
 @register.filter(name='get_date')
 def get_date(date):
-    try:
-        return date_parser.parse(date, dayfirst=True).strftime("%d %b %Y")
-    except ValueError:
-        return date
+    valid = strict_rfc3339.validate_rfc3339(date)
+    if not valid:
+        try:
+            datetime.datetime.strptime(date, "%Y-%m-%d")
+        except ValueError:
+            return date
+    
+    return date_parser.parse(date, dayfirst=True).strftime("%d %b %Y")
