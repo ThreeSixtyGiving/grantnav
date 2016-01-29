@@ -41,3 +41,10 @@ def test_search(dataload, server_url, browser):
     assert 'Total: 4764' in browser.find_element_by_tag_name('body').text
     assert 'Lloyds Bank Foundation for England and Wales (4116)' in browser.find_element_by_tag_name('body').text
     assert 'Wolfson Foundation (379)' in browser.find_element_by_tag_name('body').text
+
+
+def test_bad_search(dataload, server_url, browser):
+    browser.get(server_url)
+    browser.find_element_by_name("text_query").send_keys(" £s:::::afdsfas")
+    browser.find_element_by_xpath("//button[contains(.,'Search')]").click()
+    assert 'Search input is not valid' in browser.find_element_by_tag_name('body').text
