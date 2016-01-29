@@ -127,6 +127,12 @@
       <h3> No Results </h3>
    </div">
  </div>
+{% elif search_error %}
+ <div class="row">
+   <div class="col-xs-9 col-xs-offset-2">
+      <h3> Search input is not valid </h3>
+   </div">
+ </div>
 {% endif %}
 
 {% endblock %}

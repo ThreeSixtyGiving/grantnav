@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from grantnav.search import get_es
 from django.utils.http import urlencode
 from django.conf import settings
+import elasticsearch.exceptions
 import jsonref
 import json
 import copy
@@ -139,10 +140,6 @@ def search(request):
         except ValueError:
             page = 1
 
-        results = es.search(body=json_query, size=SIZE, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
-        for hit in results['hits']['hits']:
-            hit['source'] = hit['_source']
-
         try:
             context['text_query'] = json_query["query"]["bool"]["must"]["query_string"]["query"]
         except KeyError:
@@ -150,6 +147,17 @@ def search(request):
             json_query["query"]["bool"]["must"]["query_string"]["query"] = text_query
         if context['text_query'] == '*':
             context['text_query'] = ''
+
+        try:
+            results = es.search(body=json_query, size=SIZE, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
+        except elasticsearch.exceptions.RequestError as e:
+            if e.error == 'search_phase_execution_exception':
+                context['search_error'] = True
+                return render(request, "search.html", context=context)
+            raise
+
+        for hit in results['hits']['hits']:
+            hit['source'] = hit['_source']
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
         get_facets(request, context, json_query)
