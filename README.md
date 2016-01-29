@@ -1,27 +1,23 @@
 GrantNav - Explore Grants in the 360 data standard
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==================================================
 
-.. image:: https://travis-ci.org/OpenDataServices/grantnav.svg?branch=master
-    :target: https://travis-ci.org/OpenDataServices/grantnav
-
-.. image:: https://img.shields.io/badge/license-AGPLv3-blue.svg
-    :target: https://github.com/OpenDataServices/grantnav/blob/master/AGPLv3.txt
+[![Build Status](https://travis-ci.org/OpenDataServices/grantnav.svg?branch=master)](https://travis-ci.org/OpenDataServices/grantnav)
 
 We use HuBoard to provide an "agile board" view of our issues https://huboard.com/OpenDataServices/grantnav
 
 Introduction
-============
+------------
 
 This is a search tool for data in the 360 giving data format.
 
 This application is currently in a pre-alpha state.
 
 Requirements
-============
+------------
 This application is built using Django, Elasticsearch and python 3
 
 Installation
-============
+------------
 Steps to installation:
 
 * Clone the repository
@@ -47,7 +43,7 @@ Note that if you are not on Debian based system you will need to follow https://
 Follow the instructions in your terminal to open the aplication in your browser.
 
 Upload Data
-===========
+------------
 
 In order to upload some data use the dataload/import_to_elesticsearch.py command line tool e.g:
     python dataload/import_to_elesticsearch.py --clean filename1.csv filename2.csv *.json
@@ -57,7 +53,7 @@ You can specify as many file or patterns as you like at the end of the command.
 
 
 Run tests
-=========
+------------
 
 .. code:: bash
 
