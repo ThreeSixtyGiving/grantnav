@@ -62,8 +62,10 @@ def import_to_elasticsearch(files, clean):
         # (the rest will be auto inferred from the data we feed in)
         mappings = {
             "grant": {
+                "_all": {
+                  "analyzer": "english"
+                },
                 "properties": {
-                    "_all": {"analyzer": "english", "type": "string"},
                     "id": {"type": "string", "index": "not_analyzed"},
                     "filename": {"type": "string", "index": "not_analyzed"},
                     "awardDate": {
