@@ -63,7 +63,7 @@ def import_to_elasticsearch(files, clean):
         mappings = {
             "grant": {
                 "_all": {
-                  "analyzer": "english"
+                    "analyzer": "english"
                 },
                 "properties": {
                     "id": {"type": "string", "index": "not_analyzed"},
