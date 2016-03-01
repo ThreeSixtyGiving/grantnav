@@ -84,15 +84,65 @@ def create_amount_aggregate(json_query):
             rounded_from = round_amount(from_)
         rounded_to = round_amount(to_)
         if rounded_from != rounded_to:
-            to_from_list.append({"from": rounded_from, "to": rounded_to + 0.01})
+            to_from_list.append({"from": rounded_from, "to": rounded_to})
     if not to_from_list:
         if 'NaN' not in (values['0.0'], values['0.0']):
-            to_from_list.append({"from": values['0.0'], "to": values['100.0'] + 0.01})
+            to_from_list.append({"from": values['0.0'], "to": values['100.0']})
         else:
             #just some values here so as not to break anything
             to_from_list.append({"from": 0, "to": 0})
 
     json_query["aggs"]["amountAwarded"] = {"range": {"field": "amountAwarded", "ranges": to_from_list}}
+
+    fixed_to_from_list = [
+        {"from": 0, "to": 500},
+        {"from": 500, "to": 1000},
+        {"from": 1000, "to": 5000},
+        {"from": 5000, "to": 10000},
+        {"from": 10000, "to": 50000},
+        {"from": 50000, "to": 100000},
+        {"from": 100000, "to": 500000},
+        {"from": 1000000, "to": 10000000},
+        {"from": 10000000}
+    ] 
+
+    json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": fixed_to_from_list}}
+
+
+def get_amount_facet_fixed(request, context, json_query):
+    json_query = copy.deepcopy(json_query)
+    try:
+        current_filter = json_query["query"]["bool"]["filter"]
+    except KeyError:
+        current_filter = []
+        json_query["query"]["bool"]["filter"] = current_filter
+    new_filter = copy.deepcopy(current_filter)
+    for filter in new_filter:
+        if "range" in filter and "amountAwarded" in filter["range"]:
+            range = filter["range"]["amountAwarded"]
+            context["amount_range"] = {"from": range["gte"], "to": range["lt"]}
+            filter.pop("range")
+            json_query["query"]["bool"]["filter"] = new_filter
+            context["results"]["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+
+    for bucket in context["results"]["aggregations"]["amountAwardedFixed"]['buckets']:
+        new_filter = copy.deepcopy(current_filter)
+        new_range = {"gte": bucket["from"]}
+        to_ = bucket.get("to")
+        if to_:
+            new_range["lt"] = to_
+
+        for filter in new_filter:
+            # update if there is an existing amountAwarded filter
+            if "range" in filter and "amountAwarded" in filter["range"]:
+                filter["range"]["amountAwarded"] = new_range
+                break
+        else:
+            # add one if there is not.
+            new_filter.append({"range": {"amountAwarded": new_range}})
+        json_query["query"]["bool"]["filter"] = new_filter
+        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+
 
 def get_amount_facet(request, context, json_query):
     json_query = copy.deepcopy(json_query)
@@ -107,7 +157,7 @@ def get_amount_facet(request, context, json_query):
     for filter in new_filter:
         if "range" in filter and "amountAwarded" in filter["range"]:
             range = filter["range"]["amountAwarded"]
-            context["amount_range"] = {"from": range["gte"], "to": range["lte"]}
+            context["amount_range"] = {"from": range["gte"], "to": range["lt"]}
             filter.pop("range")
             json_query["query"]["bool"]["filter"] = new_filter
             context["results"]["aggregations"]["amountAwarded"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
@@ -117,11 +167,11 @@ def get_amount_facet(request, context, json_query):
         for filter in new_filter:
             # update if there is an existing amountAwarded filter
             if "range" in filter and "amountAwarded" in filter["range"]:
-                filter["range"]["amountAwarded"] = {"gte": bucket["from"], "lte": bucket["to"]}
+                filter["range"]["amountAwarded"] = {"gte": bucket["from"], "lt": bucket["to"]}
                 break
         else:
             # add one if there is not.
-            new_filter.append({"range": {"amountAwarded": {"gte": bucket["from"], "lte": bucket["to"]}}})
+            new_filter.append({"range": {"amountAwarded": {"gte": bucket["from"], "lt": bucket["to"]}}})
         json_query["query"]["bool"]["filter"] = new_filter
         bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
 
@@ -235,6 +285,7 @@ def search(request):
         context['json_query'] = json.dumps(json_query)
         get_terms_facets(request, context, json_query)
         get_amount_facet(request, context, json_query)
+        get_amount_facet_fixed(request, context, json_query)
         get_terms_facet_size(request, context, json_query, page)
         get_pagination(request, context, page)
 
