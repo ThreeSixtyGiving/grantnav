@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="panel panel-default">
-        <a class="anchor" id="amoutAwarede"></a>
+        <a class="anchor" id="amoutAwareded"></a>
         <div class="panel-heading list-group-compact">
           Amount Awarded {% if results.aggregations.amountAwarded.clear_url %} <a href="{{results.aggregations.amountAwarded.clear_url}}"> <small>(clear)</small></a> {% endif%}
         </div>
@@ -62,6 +62,20 @@
             <a href="{{results.aggregations.amountAwarded.clear_url}}" class="list-group-item list-group-compact list-group-item-success"> {{amount_range|get_amount_range}} </a> 
           {% endif %}
           {% for bucket in results.aggregations.amountAwarded.buckets %}
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count}})</small> </a> 
+          {% endfor %}
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <a class="anchor" id="amoutAwarededFixed"></a>
+        <div class="panel-heading list-group-compact">
+          Amount Awarded Fixed {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}
+        </div>
+        <div class="list-group">
+          {% if amount_range %}
+            <a href="{{results.aggregations.amountAwardedFixed.clear_url}}" class="list-group-item list-group-compact list-group-item-success"> {{amount_range|get_amount_range}} </a> 
+          {% endif %}
+          {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count}})</small> </a> 
           {% endfor %}
         </div>

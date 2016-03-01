@@ -97,7 +97,11 @@ def get_date(date):
 @register.filter(name='get_amount_range')
 def get_amount_range(bucket):
     from_ = get_amount(int(bucket.get('from')))
-    to_ = get_amount(int(bucket.get('to')))
+    to_ = bucket.get('to')
+    if to_:
+        to_ = get_amount(int(to_))
     if to_ == from_:
         return from_
+    if not to_:
+        return '£' + from_ + ' +'
     return '£' + from_ + ' - ' + '£' + to_
