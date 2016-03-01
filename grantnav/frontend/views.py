@@ -10,10 +10,11 @@ import math
 import collections
 
 BASIC_QUERY = {"query": {"bool": {"must":
-                  {"query_string": {"query": ""}}, "filter": {}}},
+                  {"query_string": {"query": ""}}, "filter": []}},
                "aggs": {
                    "fundingOrganization": {"terms": {"field": "fundingOrganization.whole_name", "size": 10}},
-                   "recipientOrganization": {"terms": {"field": "recipientOrganization.whole_name", "size": 10}}}}
+                   "recipientOrganization": {"terms": {"field": "recipientOrganization.whole_name", "size": 10}},
+                   "awardPercentiles" : {"percentiles" : {"field" : "amountAwarded", "percents" : [0, 15, 30, 45, 60, 75, 90, 100]}}}}
 SIZE = 10
 
 
@@ -25,7 +26,7 @@ def get_pagination(request, context, page):
         context['prev_page'] = request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1})
 
 
-def get_facet_size(request, context, json_query, page):
+def get_terms_facet_size(request, context, json_query, page):
     json_query = copy.deepcopy(json_query)
     see_more_url = {}
     try:
@@ -34,6 +35,8 @@ def get_facet_size(request, context, json_query, page):
         aggs = BASIC_QUERY['aggs']
     for agg_name, agg in aggs.items():
         new_aggs = copy.deepcopy(aggs)
+        if "terms" not in agg:
+            continue
         size = agg["terms"]["size"]
         if size == 10:
             new_size = 50
@@ -49,31 +52,107 @@ def get_facet_size(request, context, json_query, page):
     context['see_more_url'] = see_more_url
 
 
-def get_facets(request, context, json_query):
+def create_amount_aggregate(json_query):
+    def round_amount(amount, round_up=True):
+        round_func = math.ceil if round_up else math.floor
+        if amount > 10000:
+            return int(round_func(amount / 1000.0)) * 1000
+        else:
+            return int(round_func(amount / 100.0)) * 100
+
+    amount_json_query = copy.deepcopy(json_query)
+
+    es = get_es()
+    results = es.search(body=amount_json_query, index=settings.ES_INDEX)
+
+    values = results["aggregations"]["awardPercentiles"]["values"]
+    range_list = [(values['0.0'], values['15.0']),
+                  (values['15.0'], values['30.0']),
+                  (values['30.0'], values['45.0']),
+                  (values['45.0'], values['60.0']),
+                  (values['60.0'], values['75.0']),
+                  (values['75.0'], values['90.0']),
+                  (values['90.0'], values['100.0'])]
+
+    to_from_list = []
+    for num, (from_, to_) in enumerate(range_list):
+        if from_ == "NaN" or to_ == "NaN":
+            break
+        if num == 0:
+            rounded_from = round_amount(from_, round_up=False)
+        else:
+            rounded_from = round_amount(from_)
+        rounded_to = round_amount(to_)
+        if rounded_from != rounded_to:
+            to_from_list.append({"from": rounded_from, "to": rounded_to + 0.01})
+    if not to_from_list:
+        if 'NaN' not in (values['0.0'], values['0.0']):
+            to_from_list.append({"from": values['0.0'], "to": values['100.0'] + 0.01})
+        else:
+            #just some values here so as not to break anything
+            to_from_list.append({"from": 0, "to": 0})
+
+    json_query["aggs"]["amountAwarded"] = {"range": {"field": "amountAwarded", "ranges": to_from_list}}
+
+def get_amount_facet(request, context, json_query):
     json_query = copy.deepcopy(json_query)
     try:
         current_filter = json_query["query"]["bool"]["filter"]
     except KeyError:
-        current_filter = {}
-        json_query["query"]["bool"] = {}
+        current_filter = []
+        json_query["query"]["bool"]["filter"] = current_filter
 
-    current_and = current_filter.get("and", [])
-    if current_and:
-        json_query["query"]["bool"]["filter"] = {}
+    ## get current amount to put in context for frontend
+    new_filter = copy.deepcopy(current_filter)
+    for filter in new_filter:
+        if "range" in filter and "amountAwarded" in filter["range"]:
+            range = filter["range"]["amountAwarded"]
+            context["amount_range"] = {"from": range["gte"], "to": range["lte"]}
+            filter.pop("range")
+            json_query["query"]["bool"]["filter"] = new_filter
+            context["results"]["aggregations"]["amountAwarded"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+
+    for bucket in context["results"]["aggregations"]["amountAwarded"]['buckets']:
+        new_filter = copy.deepcopy(current_filter)
+        for filter in new_filter:
+            # update if there is an existing amountAwarded filter
+            if "range" in filter and "amountAwarded" in filter["range"]:
+                filter["range"]["amountAwarded"] = {"gte": bucket["from"], "lte": bucket["to"]}
+                break
+        else:
+            # add one if there is not.
+            new_filter.append({"range": {"amountAwarded": {"gte": bucket["from"], "lte": bucket["to"]}}})
+        json_query["query"]["bool"]["filter"] = new_filter
+        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+
+def get_terms_facets(request, context, json_query):
+    json_query = copy.deepcopy(json_query)
+    try:
+        current_filter = json_query["query"]["bool"]["filter"]
+    except KeyError:
+        current_filter = []
+        json_query["query"]["bool"]["filter"] = current_filter
+
+    if current_filter:
+        json_query["query"]["bool"]["filter"] = []
         context["results"]["clear_all_facet_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
 
-    aggregate_to_field = {agg_name: agg["terms"]["field"] for agg_name, agg in json_query["aggs"].items()}
+    aggregate_to_field = {agg_name: agg["terms"]["field"] for agg_name, agg in json_query["aggs"].items() if "terms" in agg}
 
     for aggregation, result in context["results"]["aggregations"].items():
-        field_name = aggregate_to_field[aggregation]
+        field_name = aggregate_to_field.get(aggregation)
+        if not field_name:
+            continue
         for bucket in result['buckets']:
             facet_value = bucket['key']
-            new_filter = copy.deepcopy(current_filter)
-            new_filter.get("and", [])
             new_filter_terms = collections.defaultdict(list)
-            for filter in new_filter.get("and", []):
-                field, value = filter["term"].copy().popitem()
-                new_filter_terms[field].append(value)
+            new_filter = []
+            for filter in current_filter:
+                if "term" in filter:
+                    field, value = filter["term"].copy().popitem()
+                    new_filter_terms[field].append(value)
+                else:
+                    new_filter.append(filter)
 
             filter_values = new_filter_terms.get(field_name)
             if filter_values is None:
@@ -86,27 +165,20 @@ def get_facets(request, context, json_query):
                     new_filter_terms.pop(field_name)
             else:
                 filter_values.append(facet_value)
-            new_and = []
             for field, values in new_filter_terms.items():
-                new_and.extend({"term": {field: value}} for value in values)
-            new_filter["and"] = new_and
-            if not new_filter["and"]:
-                new_filter.pop("and")
+                new_filter.extend({"term": {field: value}} for value in values)
             json_query["query"]["bool"]["filter"] = new_filter
             bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
-        if current_and:
-            new_filter = copy.deepcopy(current_filter)
+        if current_filter:
             filter_terms = collections.defaultdict(list)
-            for filter in new_filter.get("and", []):
-                field, value = filter["term"].copy().popitem()
-                filter_terms[field].append(value)
+            for filter in current_filter:
+                if "term" in filter:
+                    field, value = filter["term"].copy().popitem()
+                    filter_terms[field].append(value)
             if field_name in filter_terms:
-                new_and = []
+                new_filter = [filter for filter in current_filter if "term" not in filter]
                 for field, values in filter_terms.items():
-                    new_and.extend({"term": {field: value}} for value in values if field != field_name)
-                new_filter["and"] = new_and
-                if not new_filter["and"]:
-                    new_filter.pop("and")
+                    new_filter.extend({"term": {field: value}} for value in values if field != field_name)
                 json_query["query"]["bool"]["filter"] = new_filter
                 result['clear_url'] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
 
@@ -149,6 +221,7 @@ def search(request):
             context['text_query'] = ''
 
         try:
+            create_amount_aggregate(json_query)
             results = es.search(body=json_query, size=SIZE, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
         except elasticsearch.exceptions.RequestError as e:
             if e.error == 'search_phase_execution_exception':
@@ -160,8 +233,9 @@ def search(request):
             hit['source'] = hit['_source']
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
-        get_facets(request, context, json_query)
-        get_facet_size(request, context, json_query, page)
+        get_terms_facets(request, context, json_query)
+        get_amount_facet(request, context, json_query)
+        get_terms_facet_size(request, context, json_query, page)
         get_pagination(request, context, page)
 
     return render(request, "search.html", context=context)
