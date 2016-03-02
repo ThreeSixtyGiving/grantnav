@@ -34,7 +34,8 @@ def test_search(dataload, client):
     assert wolfson_facet['doc_count'] == 7
     assert wolfson_facet['key'] == 'Wolfson Foundation'
     json_query = json.loads(urllib.parse.parse_qs(initial_response.url.split('?')[-1])['json_query'][0])
-    json_query['query']['bool']['filter'] = {'and': [{'term': {'fundingOrganization.whole_name': 'Wolfson Foundation'}}]}
+
+    json_query['query']['bool']['filter'][0]['bool']['should'] = [{'term': {'fundingOrganization.whole_name': 'Wolfson Foundation'}}]
     assert json.loads(urllib.parse.parse_qs(wolfson_facet['url'].split('?')[-1])['json_query'][0]) == json_query
 
     # click agian
@@ -42,7 +43,7 @@ def test_search(dataload, client):
     wolfson_facet = response.context['results']['aggregations']['fundingOrganization']['buckets'][0]
     assert wolfson_facet['doc_count'] == 7
     assert wolfson_facet['key'] == 'Wolfson Foundation'
-    json_query['query']['bool']['filter'] = {}
+    json_query['query']['bool']['filter'][0]['bool']['should'] = []
     assert json.loads(urllib.parse.parse_qs(wolfson_facet['url'].split('?')[-1])['json_query'][0]) == json_query
 
 

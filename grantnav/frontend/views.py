@@ -9,13 +9,42 @@ import copy
 import math
 import collections
 
+BASIC_FILTER = [
+    {"bool": {"should": []}},#Funding Orgs
+    {"bool": {"should": []}},#Recipient Orgs
+    {"bool": {"should": []}},#Amount Awarded Fixed
+    {"bool": {"should": []}} #Amount Awarded
+]
+
+TERM_FILTERS = {
+    "fundingOrganization": 0,
+    "recipientOrganization": 1
+}
+
+RANGE_FILTERS = {
+    "awardPercentiles": 2,
+    "awardPercentilesFixed": 2,
+}
+
+
 BASIC_QUERY = {"query": {"bool": {"must":
-                  {"query_string": {"query": ""}}, "filter": []}},
+                  {"query_string": {"query": ""}}, "filter": BASIC_FILTER}},
                "aggs": {
                    "fundingOrganization": {"terms": {"field": "fundingOrganization.whole_name", "size": 10}},
-                   "recipientOrganization": {"terms": {"field": "recipientOrganization.whole_name", "size": 10}},
-                   "awardPercentiles" : {"percentiles" : {"field" : "amountAwarded", "percents" : [0, 15, 30, 45, 60, 75, 90, 100]}}}}
+                   "recipientOrganization": {"terms": {"field": "recipientOrganization.whole_name", "size": 10}}}}
 SIZE = 10
+
+FIXED_AMOUNT_RANGES = [
+    {"from": 0, "to": 500},
+    {"from": 500, "to": 1000},
+    {"from": 1000, "to": 5000},
+    {"from": 5000, "to": 10000},
+    {"from": 10000, "to": 50000},
+    {"from": 50000, "to": 100000},
+    {"from": 100000, "to": 500000},
+    {"from": 1000000, "to": 10000000},
+    {"from": 10000000}
+] 
 
 
 def get_pagination(request, context, page):
@@ -61,6 +90,7 @@ def create_amount_aggregate(json_query):
             return int(round_func(amount / 100.0)) * 100
 
     amount_json_query = copy.deepcopy(json_query)
+    amount_json_query["aggs"]["awardPercentiles"] = {"percentiles" : {"field" : "amountAwarded", "percents" : [0, 15, 30, 45, 60, 75, 90, 100]}}
 
     es = get_es()
     results = es.search(body=amount_json_query, index=settings.ES_INDEX)
@@ -94,144 +124,122 @@ def create_amount_aggregate(json_query):
 
     json_query["aggs"]["amountAwarded"] = {"range": {"field": "amountAwarded", "ranges": to_from_list}}
 
-    fixed_to_from_list = [
-        {"from": 0, "to": 500},
-        {"from": 500, "to": 1000},
-        {"from": 1000, "to": 5000},
-        {"from": 5000, "to": 10000},
-        {"from": 10000, "to": 50000},
-        {"from": 50000, "to": 100000},
-        {"from": 100000, "to": 500000},
-        {"from": 1000000, "to": 10000000},
-        {"from": 10000000}
-    ] 
-
-    json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": fixed_to_from_list}}
+    json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": FIXED_AMOUNT_RANGES}}
 
 
 def get_amount_facet_fixed(request, context, json_query):
     json_query = copy.deepcopy(json_query)
+    json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": FIXED_AMOUNT_RANGES}}
     try:
-        current_filter = json_query["query"]["bool"]["filter"]
+        current_filter = json_query["query"]["bool"]["filter"][2]["bool"]["should"]
     except KeyError:
-        current_filter = []
-        json_query["query"]["bool"]["filter"] = current_filter
-    new_filter = copy.deepcopy(current_filter)
-    for filter in new_filter:
-        if "range" in filter and "amountAwarded" in filter["range"]:
-            range = filter["range"]["amountAwarded"]
-            context["amount_range"] = {"from": range["gte"], "to": range["lt"]}
-            filter.pop("range")
-            json_query["query"]["bool"]["filter"] = new_filter
-            context["results"]["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+        json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
+        current_filter = json_query["query"]["bool"]["filter"][2]["bool"]["should"]
 
-    for bucket in context["results"]["aggregations"]["amountAwardedFixed"]['buckets']:
+    main_results = context["results"]
+    if current_filter:
+        json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
+        es = get_es()
+        results = es.search(body=json_query, index=settings.ES_INDEX)
+    else:
+        results = context["results"]
+
+    new_filter = copy.deepcopy(current_filter)
+    if new_filter:
+        range = new_filter[0]["range"]["amountAwarded"]
+        context["amount_range_fixed"] = {"from": range["gte"], "to": range["lt"]}
+        json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
+        results["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+
+    for bucket in results["aggregations"]["amountAwardedFixed"]['buckets']:
+        new_filter = []
+        new_range = {"gte": bucket["from"]}
+        to_ = bucket.get("to")
+        if to_:
+            new_range["lt"] = to_
+        for filter in current_filter:
+            if filter["range"]["amountAwarded"] == new_range:
+                bucket["selected"] = True
+            else:
+                new_filter.append(filter)
+        if not bucket.get("selected"):
+            new_filter.append({"range": {"amountAwarded": new_range}})
+
+
+        json_query["query"]["bool"]["filter"][2]["bool"]["should"] = new_filter
+        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+    main_results["aggregations"]["amountAwardedFixed"] = results["aggregations"]["amountAwardedFixed"]
+
+def get_amount_facet(request, context, json_query):
+    json_query = copy.deepcopy(json_query)
+    try:
+        current_filter = json_query["query"]["bool"]["filter"][3]["bool"]["should"]
+    except KeyError:
+        json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
+        current_filter = json_query["query"]["bool"]["filter"][3]["bool"]["should"]
+
+    ## get current amount to put in context for frontend
+    new_filter = copy.deepcopy(current_filter)
+    if new_filter:
+        range = new_filter[0]["range"]["amountAwarded"]
+        context["amount_range"] = {"from": range["gte"], "to": range["lt"]}
+        json_query["query"]["bool"]["filter"][3]["bool"]["should"] = []
+        context["results"]["aggregations"]["amountAwarded"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+
+    for bucket in context["results"]["aggregations"]["amountAwarded"]['buckets']:
         new_filter = copy.deepcopy(current_filter)
         new_range = {"gte": bucket["from"]}
         to_ = bucket.get("to")
         if to_:
             new_range["lt"] = to_
-
-        for filter in new_filter:
-            # update if there is an existing amountAwarded filter
-            if "range" in filter and "amountAwarded" in filter["range"]:
-                filter["range"]["amountAwarded"] = new_range
-                break
-        else:
-            # add one if there is not.
-            new_filter.append({"range": {"amountAwarded": new_range}})
-        json_query["query"]["bool"]["filter"] = new_filter
+        new_filter = [{"range": {"amountAwarded": new_range}}]
+        json_query["query"]["bool"]["filter"][3]["bool"]["should"] = new_filter
         bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
 
-
-def get_amount_facet(request, context, json_query):
+def get_terms_facets(request, context, json_query, field, aggregate, bool_index):
     json_query = copy.deepcopy(json_query)
     try:
-        current_filter = json_query["query"]["bool"]["filter"]
+        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]
     except KeyError:
-        current_filter = []
-        json_query["query"]["bool"]["filter"] = current_filter
+        json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
+        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]
 
-    ## get current amount to put in context for frontend
-    new_filter = copy.deepcopy(current_filter)
-    for filter in new_filter:
-        if "range" in filter and "amountAwarded" in filter["range"]:
-            range = filter["range"]["amountAwarded"]
-            context["amount_range"] = {"from": range["gte"], "to": range["lt"]}
-            filter.pop("range")
-            json_query["query"]["bool"]["filter"] = new_filter
-            context["results"]["aggregations"]["amountAwarded"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
-
-    for bucket in context["results"]["aggregations"]["amountAwarded"]['buckets']:
-        new_filter = copy.deepcopy(current_filter)
-        for filter in new_filter:
-            # update if there is an existing amountAwarded filter
-            if "range" in filter and "amountAwarded" in filter["range"]:
-                filter["range"]["amountAwarded"] = {"gte": bucket["from"], "lt": bucket["to"]}
-                break
-        else:
-            # add one if there is not.
-            new_filter.append({"range": {"amountAwarded": {"gte": bucket["from"], "lt": bucket["to"]}}})
-        json_query["query"]["bool"]["filter"] = new_filter
-        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
-
-def get_terms_facets(request, context, json_query):
-    json_query = copy.deepcopy(json_query)
-    try:
-        current_filter = json_query["query"]["bool"]["filter"]
-    except KeyError:
-        current_filter = []
-        json_query["query"]["bool"]["filter"] = current_filter
-
+    main_results = context["results"]
     if current_filter:
-        json_query["query"]["bool"]["filter"] = []
+        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = []
+        es = get_es()
+        results = es.search(body=json_query, index=settings.ES_INDEX)
+    else:
+        results = context["results"]
+
+    for bucket in results['aggregations'][aggregate]['buckets']:
+        facet_value = bucket['key']
+        filter_values = [filter["term"][field] for filter in current_filter]
+        if facet_value in filter_values:
+            bucket["selected"] = True
+            filter_values.remove(facet_value)
+        else:
+            filter_values.append(facet_value)
+
+        new_filter = [{"term": {field: value}} for value in filter_values]
+        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = new_filter
+        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+    if current_filter:
+        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = []
+        results['aggregations'][aggregate]['clear_url'] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+    main_results['aggregations'][aggregate] = results['aggregations'][aggregate]
+
+def get_clear_all(request, context, json_query):
+    json_query = copy.deepcopy(json_query)
+    try:
+        current_filter = json_query["query"]["bool"]["filter"]
+    except KeyError:
+        json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
+        current_filter = json_query["query"]["bool"]["filter"]
+        
+    if current_filter != BASIC_FILTER:
+        json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
         context["results"]["clear_all_facet_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
-
-    aggregate_to_field = {agg_name: agg["terms"]["field"] for agg_name, agg in json_query["aggs"].items() if "terms" in agg}
-
-    for aggregation, result in context["results"]["aggregations"].items():
-        field_name = aggregate_to_field.get(aggregation)
-        if not field_name:
-            continue
-        for bucket in result['buckets']:
-            facet_value = bucket['key']
-            new_filter_terms = collections.defaultdict(list)
-            new_filter = []
-            for filter in current_filter:
-                if "term" in filter:
-                    field, value = filter["term"].copy().popitem()
-                    new_filter_terms[field].append(value)
-                else:
-                    new_filter.append(filter)
-
-            filter_values = new_filter_terms.get(field_name)
-            if filter_values is None:
-                filter_values = []
-                new_filter_terms[field_name] = filter_values
-            if facet_value in filter_values:
-                bucket["selected"] = True
-                filter_values.remove(facet_value)
-                if not filter_values:
-                    new_filter_terms.pop(field_name)
-            else:
-                filter_values.append(facet_value)
-            for field, values in new_filter_terms.items():
-                new_filter.extend({"term": {field: value}} for value in values)
-            json_query["query"]["bool"]["filter"] = new_filter
-            bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
-        if current_filter:
-            filter_terms = collections.defaultdict(list)
-            for filter in current_filter:
-                if "term" in filter:
-                    field, value = filter["term"].copy().popitem()
-                    filter_terms[field].append(value)
-            if field_name in filter_terms:
-                new_filter = [filter for filter in current_filter if "term" not in filter]
-                for field, values in filter_terms.items():
-                    new_filter.extend({"term": {field: value}} for value in values if field != field_name)
-                json_query["query"]["bool"]["filter"] = new_filter
-                result['clear_url'] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
-
 
 def search(request):
     context = {}
@@ -273,6 +281,8 @@ def search(request):
         try:
             create_amount_aggregate(json_query)
             results = es.search(body=json_query, size=SIZE, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
+            json_query["aggs"].pop("amountAwarded")
+            json_query["aggs"].pop("amountAwardedFixed")
         except elasticsearch.exceptions.RequestError as e:
             if e.error == 'search_phase_execution_exception':
                 context['search_error'] = True
@@ -283,7 +293,11 @@ def search(request):
             hit['source'] = hit['_source']
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
-        get_terms_facets(request, context, json_query)
+
+        get_clear_all(request, context, json_query)
+        for filter_name, index in TERM_FILTERS.items():
+            get_terms_facets(request, context, json_query, filter_name + ".whole_name", filter_name, index)
+
         get_amount_facet(request, context, json_query)
         get_amount_facet_fixed(request, context, json_query)
         get_terms_facet_size(request, context, json_query, page)

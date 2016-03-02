@@ -72,9 +72,6 @@
           Amount Awarded Fixed {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}
         </div>
         <div class="list-group">
-          {% if amount_range %}
-            <a href="{{results.aggregations.amountAwardedFixed.clear_url}}" class="list-group-item list-group-compact list-group-item-success"> {{amount_range|get_amount_range}} </a> 
-          {% endif %}
           {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count}})</small> </a> 
           {% endfor %}
