@@ -3,6 +3,7 @@ import math
 import datetime
 import dateutil.parser as date_parser
 import strict_rfc3339
+import json
 
 register = template.Library()
 
@@ -106,3 +107,9 @@ def get_amount_range(bucket):
     if not to_:
         return '£' + from_ + ' +'
     return '£' + from_ + ' - ' + '£' + to_
+
+
+@register.filter(name='get_facet_org_name')
+def get_facet_org_name(facet):
+    return json.loads(facet)[1]
+
