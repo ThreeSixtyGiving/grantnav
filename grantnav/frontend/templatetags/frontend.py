@@ -94,6 +94,7 @@ def get_date(date):
     
     return date_parser.parse(date, dayfirst=True).strftime("%d %b %Y")
 
+
 @register.filter(name='get_amount_range')
 def get_amount_range(bucket):
     from_ = get_amount(int(bucket.get('from')))
