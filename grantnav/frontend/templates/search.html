@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="panel panel-default">
-        <a class="anchor" id="amoutAwareded"></a>
+        <a class="anchor" id="amountAwareded"></a>
         <div class="panel-heading list-group-compact">
           Amount Awarded {% if results.aggregations.amountAwarded.clear_url %} <a href="{{results.aggregations.amountAwarded.clear_url}}"> <small>(clear)</small></a> {% endif%}
         </div>
@@ -67,13 +67,25 @@
         </div>
       </div>
       <div class="panel panel-default">
-        <a class="anchor" id="amoutAwarededFixed"></a>
+        <a class="anchor" id="amountAwarededFixed"></a>
         <div class="panel-heading list-group-compact">
           Amount Awarded Fixed {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}
         </div>
         <div class="list-group">
           {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count}})</small> </a> 
+          {% endfor %}
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <a class="anchor" id="awardYear"></a>
+        <div class="panel-heading list-group-compact">
+          Award Year {% if results.aggregations.awardYear.clear_url %} <a href="{{results.aggregations.awardYear.clear_url}}"> <small>(clear)</small></a> {% endif%}
+        </div>
+        <div class="list-group">
+          {% for bucket in results.aggregations.awardYear.buckets %}
+          <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}">
+            {% if bucket.from_as_string %} {{bucket.from_as_string}} {% else %} {{bucket.key}} {% endif %} <small>({{bucket.doc_count}})</small> </a> 
           {% endfor %}
         </div>
       </div>
