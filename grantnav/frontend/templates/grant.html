@@ -4,6 +4,16 @@
 
 {% block main_content %}
 
+{% if grants|length > 1 %}
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Warning:</span>
+  There is more than one grant with this ID. We have displayed both below.
+</div>
+{% endif %}
+
+{% for grant in grants %}
+
   <div class="row">
     <div class="col-xs-12">
       <h1 class="heading-in-panel">
@@ -50,5 +60,7 @@
       {% endfor %}
     </div>
   </div>
+
+{% endfor %}
 
 {% endblock %}
