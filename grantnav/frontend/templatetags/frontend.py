@@ -112,4 +112,3 @@ def get_amount_range(bucket):
 @register.filter(name='get_facet_org_name')
 def get_facet_org_name(facet):
     return json.loads(facet)[1]
-

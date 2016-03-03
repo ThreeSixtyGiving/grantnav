@@ -13,6 +13,8 @@ ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 
 id_name_org_mappings = {"fundingOrganization": {}, "recipientOrganization": {}}
 name_duplicates = [["file_name", "org_type", "org_id", "first_name", "duplicate_name"]]
+bad_org_ids = []
+
 
 def convert_spreadsheet(file_path, file_type, tmp_dir):
     #file_type = file_name.split('.')[-1]
@@ -156,6 +158,8 @@ def import_to_elasticsearch(files, clean):
             tmp_dir = tempfile.mkdtemp()
             json_file_name = os.path.join(tmp_dir, 'output.json')
             convert_spreadsheet(file_name, file_type, tmp_dir)
+        elif file_type in ('report'):
+            continue
         else:
             print('unimportable file {} (bad) file type'.format(file_name))
             return
@@ -185,11 +189,12 @@ def import_to_elasticsearch(files, clean):
         if tmp_dir:
             shutil.rmtree(tmp_dir)
 
+
 def get_mapping_from_index(es):
-    QUERY = {"query": {"match_all": {}}, 
+    QUERY = {"query": {"match_all": {}},
              "aggs": {
-                "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 0}},
-                "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 0}}}}
+                 "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 0}},
+                 "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 0}}}}
     results = es.search(body=QUERY, index=ES_INDEX)
     for bucket in results["aggregations"]["fundingOrganization"]["buckets"]:
         id_name = json.loads(bucket["key"])
@@ -198,7 +203,7 @@ def get_mapping_from_index(es):
     for bucket in results["aggregations"]["recipientOrganization"]["buckets"]:
         id_name = json.loads(bucket["key"])
         id_name_org_mappings["recipientOrganization"][id_name[0]] = id_name[1]
-    print(len(id_name_org_mappings["recipientOrganization"]))
+
 
 def update_doc_with_org_mappings(grant, org_key, file_name):
     mapping = id_name_org_mappings[org_key]
@@ -208,27 +213,29 @@ def update_doc_with_org_mappings(grant, org_key, file_name):
         if not org_id or not name:
             return
         if '/' in org_id:
-            print("found / in org id {} in file {}".format(org_id, file_name))
+            bad_org_ids.append([file_name, org_key, org_id])
 
         found_name = mapping.get(org_id)
         if found_name:
             if found_name != name:
                 name_duplicates.append([file_name, org_key, org_id, found_name, name])
-                #print("Found {} with same id '{}' but different names '{}', '{}'.".format(org_key, org_id, found_name, name))
         else:
             mapping[org_id] = name
             found_name = name
         org["id_and_name"] = json.dumps([org_id, found_name])
 
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Import 360 files in a directory to elasticsearch')
     parser.add_argument('--clean', help='files to import', action='store_true')
+    parser.add_argument('--reports', help='files to import', action='store_true')
     parser.add_argument('files', help='files to import', nargs='+')
     args = parser.parse_args()
     import_to_elasticsearch(args.files, args.clean)
-    with open("differing_names.csv.out", "w+") as differing_names_file:
-        csv_writer = csv.writer(differing_names_file)
-        csv_writer.writerows(name_duplicates)
-
+    if args.reports:
+        with open("differing_names.csv.report", "w+") as differing_names_file:
+            csv_writer = csv.writer(differing_names_file)
+            csv_writer.writerows(name_duplicates)
+        with open("bad_org_ids.csv.report", "w+") as bad_org_ids_file:
+            csv_writer = csv.writer(bad_org_ids_file)
+            csv_writer.writerows(bad_org_ids)
