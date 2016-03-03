@@ -435,3 +435,16 @@ def stats(request):
     context['field_info'] = sorted(field_info.items(), key=lambda val: -val[1]["found"])
     context['results'] = results
     return render(request, "stats.html", context=context)
+
+
+def grant(request, grant_id):
+    query = {"query": {"bool": {"filter":
+                [{"term": {"id": grant_id}}]
+    }}}
+    es = get_es()
+    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    assert results['hits']['total'] == 1
+    context = {}
+    context['grant'] = results['hits']['hits'][0]
+    context['grant']['source'] = context['grant']['_source']
+    return render(request, "grant.html", context=context)
