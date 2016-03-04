@@ -27,8 +27,8 @@ TERM_FILTERS = {
 BASIC_QUERY = {"query": {"bool": {"must":
                   {"query_string": {"query": ""}}, "filter": BASIC_FILTER}},
                "aggs": {
-                   "fundingOrganization": {"terms": {"field": "fundingOrganization.whole_name", "size": 10}},
-                   "recipientOrganization": {"terms": {"field": "recipientOrganization.whole_name", "size": 10}}}}
+                   "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 10}},
+                   "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 10}}}}
 SIZE = 10
 
 FIXED_AMOUNT_RANGES = [
@@ -363,7 +363,7 @@ def search(request):
 
         get_clear_all(request, context, json_query)
         for filter_name, index in TERM_FILTERS.items():
-            get_terms_facets(request, context, json_query, filter_name + ".whole_name", filter_name, index)
+            get_terms_facets(request, context, json_query, filter_name + ".id_and_name", filter_name, index)
 
         get_amount_facet(request, context, json_query)
         get_amount_facet_fixed(request, context, json_query)
