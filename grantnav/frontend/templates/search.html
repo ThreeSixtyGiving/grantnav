@@ -98,7 +98,12 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-xs-12">
-                  <h3 class="heading-in-panel"> {{ result.source|get_title }} <small>({{result.source.id}})</small> </h3>
+                  <h3 class="heading-in-panel">
+                    <a href="{% url 'grant' result.source.id %}">
+                      {{ result.source|get_title }}
+                    </a>
+                    <small>({{result.source.id}})</small>
+                  </h3>
                   <p> {{ result.source.description }} </p>
                 </div>
 

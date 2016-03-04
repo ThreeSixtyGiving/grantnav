@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from grantnav.search import get_es
 from django.utils.http import urlencode
 from django.conf import settings
+from django.http import Http404
 import elasticsearch.exceptions
 import jsonref
 import json
@@ -435,3 +436,18 @@ def stats(request):
     context['field_info'] = sorted(field_info.items(), key=lambda val: -val[1]["found"])
     context['results'] = results
     return render(request, "stats.html", context=context)
+
+
+def grant(request, grant_id):
+    query = {"query": {"bool": {"filter":
+                [{"term": {"id": grant_id}}]
+    }}}
+    es = get_es()
+    results = es.search(body=query, index=settings.ES_INDEX, size=-1)
+    if results['hits']['total'] == 0:
+        raise Http404
+    context = {}
+    for hit in results['hits']['hits']:
+        hit['source'] = hit['_source']
+    context['grants'] = results['hits']['hits']
+    return render(request, "grant.html", context=context)

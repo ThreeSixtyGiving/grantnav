@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load frontend %}
+
+{% block main_content %}
+
+{% if grants|length > 1 %}
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Warning:</span>
+  There is more than one grant with this ID. We have displayed both below.
+</div>
+{% endif %}
+
+{% for grant in grants %}
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="heading-in-panel">
+          {{ grant.source|get_title }}
+        <small>({{grant.source.id}})</small>
+      </h1>
+      <p> {{ grant.source.description }} </p>
+    </div>
+
+    {% if grant.source.fundingOrganization.0.id and grant.source.recipientOrganization.0.id %}
+    <div class="col-xs-5">
+      <div class="panel panel-default fixed-org-height">
+        <div class="panel-body">
+          <b>Funding Organization </b> 
+          <p>{{ grant.source.fundingOrganization.0 | get_name }} <small>({{ grant.source.fundingOrganization.0.id }}) </small> </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-2">
+          <p class="text-center"> 
+          {{grant.source|get_currency}}{{grant.source.amountAwarded|get_amount}} </br>  
+          <span class="glyphicon glyphicon-arrow-right large-arrow" style="font-size:40px" aria-hidden="true"></span> </br>
+          {{grant.source.awardDate|get_date}} </p>
+    </div>
+    <div class="col-xs-5">
+      <div class="panel panel-default fixed-org-height">
+        <div class="panel-body">
+          <b>Recipient Organization </b> 
+          <p>{{ grant.source.recipientOrganization.0|get_name|truncatechars:50 }} <small>({{ grant.source.recipientOrganization.0.id|truncatechars:20}}) </small> </p>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+
+    <div class="col-xs-6">
+      {% for key, grant in grant.source|flatten|half_sorted_items:1 %}
+        <b> {{ key }}: </b> {{grant}} </br>
+      {% endfor %}
+    </div>
+    <div class="col-xs-6">
+      {% for key, grant in grant.source|flatten|half_sorted_items:2 %}
+        <b> {{ key }}: </b> {{grant}} </br>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endfor %}
+
+{% endblock %}
