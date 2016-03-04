@@ -29,7 +29,7 @@
         </div>
         <div class="list-group">
           {% for bucket in results.aggregations.fundingOrganization.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count}})</small> </a> 
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count}})</small> </a> 
           {% endfor %}
 
           {% if results.aggregations.fundingOrganization.buckets|length > 9 %}
@@ -45,7 +45,7 @@
         </div>
         <div class="list-group">
           {% for bucket in results.aggregations.recipientOrganization.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count}})</small> </a> 
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count}})</small> </a> 
           {% endfor %}
           {% if results.aggregations.recipientOrganization.buckets|length > 9 %}
             <a href="{{see_more_url.recipientOrganization.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientOrganization.more%}See More{% else %}See Less{% endif %}</b> </a> 

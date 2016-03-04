@@ -5,10 +5,15 @@ import shutil
 import uuid
 import tempfile
 import os
+import csv
 from pprint import pprint
 import elasticsearch.helpers
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
+
+id_name_org_mappings = {"fundingOrganization": {}, "recipientOrganization": {}}
+name_duplicates = [["file_name", "org_type", "org_id", "first_name", "duplicate_name"]]
+bad_org_ids = []
 
 
 def convert_spreadsheet(file_path, file_type, tmp_dir):
@@ -58,86 +63,91 @@ def import_to_elasticsearch(files, clean):
         result = es.indices.delete(index=ES_INDEX, ignore=[404])
         pprint(result)
 
-        # Add the extra mapping info we want
-        # (the rest will be auto inferred from the data we feed in)
-        mappings = {
-            "grant": {
-                "_all": {
-                    "analyzer": "english"
+    # Add the extra mapping info we want
+    # (the rest will be auto inferred from the data we feed in)
+    mappings = {
+        "grant": {
+            "_all": {
+                "analyzer": "english"
+            },
+            "properties": {
+                "id": {"type": "string", "index": "not_analyzed"},
+                "filename": {"type": "string", "index": "not_analyzed"},
+                "awardDate": {
+                    "type": "date",
+                    "ignore_malformed": True
                 },
-                "properties": {
-                    "id": {"type": "string", "index": "not_analyzed"},
-                    "filename": {"type": "string", "index": "not_analyzed"},
-                    "awardDate": {
-                        "type": "date",
-                        "ignore_malformed": True
-                    },
-                    "awardDatdateModifiede": {"type": "string", "index": "not_analyzed"},
-                    "dateModified": {"type": "string", "index": "not_analyzed"},
-                    "plannedDates": {
-                        "properties": {
-                            "startDate": {"type": "string", "index": "not_analyzed"},
-                            "endDate": {"type": "string", "index": "not_analyzed"},
-                            "duration": {"type": "string"}
+                "awardDatdateModifiede": {"type": "string", "index": "not_analyzed"},
+                "dateModified": {"type": "string", "index": "not_analyzed"},
+                "plannedDates": {
+                    "properties": {
+                        "startDate": {"type": "string", "index": "not_analyzed"},
+                        "endDate": {"type": "string", "index": "not_analyzed"},
+                        "duration": {"type": "string"}
+                    }
+                },
+                "recipientOrganization": {
+                    "properties": {
+                        "addressLocality": {
+                            "type": "string", "index": "not_analyzed"
+                        },
+                        "charityNumber": {
+                            "type": "string", "index": "not_analyzed"
+                        },
+                        "companyNumber": {
+                            "type": "string", "index": "not_analyzed"
+                        },
+                        "id": {
+                            "type": "string", "index": "not_analyzed"
+                        },
+                        "url": {
+                            "type": "string", "index": "not_analyzed"
+                        },
+                        "name": {
+                            "type": "string",
+                        },
+                        "id_and_name": {
+                            "type": "string", "index": "not_analyzed"
                         }
-                    },
-                    "recipientOrganization": {
-                        "properties": {
-                            "addressLocality": {
-                                "type": "string", "index": "not_analyzed"
-                            },
-                            "charityNumber": {
-                                "type": "string", "index": "not_analyzed"
-                            },
-                            "companyNumber": {
-                                "type": "string", "index": "not_analyzed"
-                            },
-                            "id": {
-                                "type": "string", "index": "not_analyzed"
-                            },
-                            "url": {
-                                "type": "string", "index": "not_analyzed"
-                            },
-                            "name": {
-                                "type": "string", "copy_to": "recipientOrganization.whole_name"
-                            },
-                            "whole_name": {
-                                "type": "string", "index": "not_analyzed"
-                            }
-                        }
-                    },
-                    "fundingOrganization": {
-                        "properties": {
-                            "addressLocality": {
-                                "type": "string", "index": "not_analyzed"
-                            },
-                            "charityNumber": {
-                                "type": "string", "index": "not_analyzed"
-                            },
-                            "companyNumber": {
-                                "type": "string", "index": "not_analyzed"
-                            },
-                            "id": {
-                                "type": "string", "index": "not_analyzed"
-                            },
-                            "url": {
-                                "type": "string", "index": "not_analyzed"
-                            },
-                            "name": {
-                                "type": "string", "copy_to": "fundingOrganization.whole_name"
-                            },
-                            "whole_name": {
-                                "type": "string", "index": "not_analyzed"
-                            }
+                    }
+                },
+                "fundingOrganization": {
+                    "properties": {
+                        "addressLocality": {
+                            "type": "string", "index": "not_analyzed"
+                        },
+                        "charityNumber": {
+                            "type": "string", "index": "not_analyzed"
+                        },
+                        "companyNumber": {
+                            "type": "string", "index": "not_analyzed"
+                        },
+                        "id": {
+                            "type": "string", "index": "not_analyzed"
+                        },
+                        "url": {
+                            "type": "string", "index": "not_analyzed"
+                        },
+                        "name": {
+                            "type": "string",
+                        },
+                        "id_and_name": {
+                            "type": "string", "index": "not_analyzed"
                         }
                     }
                 }
             }
         }
+    }
 
-        # Create it again
-        result = es.indices.create(index=ES_INDEX, body={"mappings": mappings})
+    # Create it again
+    result = es.indices.create(index=ES_INDEX, body={"mappings": mappings}, ignore=[400])
+    if 'error' in result and result['error']['reason'] == 'already exists':
+        print('Updating existing index')
+    else:
         pprint(result)
+
+    get_mapping_from_index(es)
 
     for file_name in files:
         file_type = file_name.split('.')[-1]
@@ -148,10 +158,13 @@ def import_to_elasticsearch(files, clean):
             tmp_dir = tempfile.mkdtemp()
             json_file_name = os.path.join(tmp_dir, 'output.json')
             convert_spreadsheet(file_name, file_type, tmp_dir)
+        elif file_type in ('report'):
+            continue
         else:
             print('unimportable file {} (bad) file type'.format(file_name))
             return
 
+        print(file_name)
         with open(json_file_name) as fp:
             doc = json.load(fp)
             keys = list(doc.keys())
@@ -167,18 +180,62 @@ def import_to_elasticsearch(files, clean):
                 grant['_id'] = str(uuid.uuid4())
                 grant['_index'] = ES_INDEX
                 grant['_type'] = 'grant'
+                update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
+                update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
                 grants.append(grant)
             result = elasticsearch.helpers.bulk(es, grants, raise_on_error=False)
-            print(file_name)
             pprint(result)
 
         if tmp_dir:
             shutil.rmtree(tmp_dir)
 
 
+def get_mapping_from_index(es):
+    QUERY = {"query": {"match_all": {}},
+             "aggs": {
+                 "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 0}},
+                 "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 0}}}}
+    results = es.search(body=QUERY, index=ES_INDEX)
+    for bucket in results["aggregations"]["fundingOrganization"]["buckets"]:
+        id_name = json.loads(bucket["key"])
+        id_name_org_mappings["fundingOrganization"][id_name[0]] = id_name[1]
+
+    for bucket in results["aggregations"]["recipientOrganization"]["buckets"]:
+        id_name = json.loads(bucket["key"])
+        id_name_org_mappings["recipientOrganization"][id_name[0]] = id_name[1]
+
+
+def update_doc_with_org_mappings(grant, org_key, file_name):
+    mapping = id_name_org_mappings[org_key]
+    orgs = grant.get(org_key, [])
+    for org in orgs:
+        org_id, name = org.get('id'), org.get('name')
+        if not org_id or not name:
+            return
+        if '/' in org_id:
+            bad_org_ids.append([file_name, org_key, org_id])
+
+        found_name = mapping.get(org_id)
+        if found_name:
+            if found_name != name:
+                name_duplicates.append([file_name, org_key, org_id, found_name, name])
+        else:
+            mapping[org_id] = name
+            found_name = name
+        org["id_and_name"] = json.dumps([org_id, found_name])
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Import 360 files in a directory to elasticsearch')
     parser.add_argument('--clean', help='files to import', action='store_true')
+    parser.add_argument('--reports', help='files to import', action='store_true')
     parser.add_argument('files', help='files to import', nargs='+')
     args = parser.parse_args()
     import_to_elasticsearch(args.files, args.clean)
+    if args.reports:
+        with open("differing_names.csv.report", "w+") as differing_names_file:
+            csv_writer = csv.writer(differing_names_file)
+            csv_writer.writerows(name_duplicates)
+        with open("bad_org_ids.csv.report", "w+") as bad_org_ids_file:
+            csv_writer = csv.writer(bad_org_ids_file)
+            csv_writer.writerows(bad_org_ids)
