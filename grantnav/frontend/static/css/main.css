@@ -30,9 +30,13 @@ a.anchor {
 }
 
 .fixed-org-height {
-  height: 100px;
+  height: 150px;
   overflow: hidden;
 }
+
+.panel-less-padding {
+  padding-bottom: 5px
+} 
 
 .large-arrow {
   font-size: 40px;
