@@ -95,7 +95,7 @@
        "ajax": {
          "url": "{% url 'recipient_grants_datatables' %}",
          "data": function ( d ) {
-           d.recipient_id = "{{recipient.id}}";
+           d.recipient_id = "{{recipient.id|escapejs}}";
          }
        },
        "columns": [
@@ -105,7 +105,7 @@
          {"data": "title", 
           "orderable": false,
           "render": function (data, type, row) {
-             return '<a href="/grant/' + row.id + '">' + truncate(data, 60) + '</a>'
+             return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 60) + '</a>'
          }},
          {"data": "description"},
        ]
