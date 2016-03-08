@@ -123,7 +123,7 @@
          },
          "columns": [
            {"data": "org_name", "width": "10px", "render": function (data, type, row) {
-               return '<a href="/recipient/' + row.org_id + '">' + truncate(data, 60) + '</a>'
+               return '<a href="/recipient/' + encodeURIComponent(row.org_id) + '">' + truncate(data, 60) + '</a>'
            }},
            {"data": "count"},
            {"data": "sum"},
@@ -152,19 +152,19 @@
          "ajax": {
            "url": "{% url 'funder_grants_datatables' %}",
            "data": function ( d ) {
-             d.funder_id = "{{funder.id}}";
+             d.funder_id = "{{funder.id|escapejs}}";
            }
          },
          "columns": [
            {"data": "awardDate"},
            {"data": "amountAwarded"},
            {"data": "recipientOrganization.0.name", "render": function (data, type, row) {
-               return '<a href="/recipient/' + row.recipientOrganization[0].id + '">' + truncate(data, 60) + '</a>'
+               return '<a href="/recipient/' + encodeURIComponent(row.recipientOrganization[0].id) + '">' + truncate(data, 60) + '</a>'
            }},
            {"data": "title", 
             "orderable": false,
             "render": function (data, type, row) {
-               return '<a href="/grant/' + row.id + '">' + truncate(data, 60) + '</a>'
+               return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 60) + '</a>'
            }},
            {"data": "description"},
          ]
