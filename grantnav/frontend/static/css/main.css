@@ -46,3 +46,27 @@ a.anchor {
   margin-bottom: 10.5px;
 }
 
+.dataTables_scrollBody {
+  background: white !important
+}
+
+.funder-header {
+  margin-bottom: 40px;
+  margin-top: 9px;
+}
+
+.top-stats {
+  margin-top: 10px;
+}
+
+#recipients_datatable_filter, #grants_datatable_filter {
+  float: left;
+}
+
+#recipients_datatable_info, #grants_datatable_info {
+  text-align: right;
+}
+
+.dtr-data {
+  white-space: normal; 
+}

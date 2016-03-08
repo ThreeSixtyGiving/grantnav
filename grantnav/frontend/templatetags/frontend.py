@@ -111,4 +111,9 @@ def get_amount_range(bucket):
 
 @register.filter(name='get_facet_org_name')
 def get_facet_org_name(facet):
-    return json.loads(facet)[1]
+    return json.loads(facet)[0]
+
+
+@register.filter(name='get_currency_list')
+def get_currency_list(aggregate):
+    return ", ".join(bucket["key"].upper() for bucket in aggregate["buckets"])

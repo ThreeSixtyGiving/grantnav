@@ -104,7 +104,7 @@ def import_to_elasticsearch(files, clean):
                             "type": "string", "index": "not_analyzed"
                         },
                         "name": {
-                            "type": "string",
+                            "type": "string", "analyzer": "english",
                         },
                         "id_and_name": {
                             "type": "string", "index": "not_analyzed"
@@ -129,7 +129,7 @@ def import_to_elasticsearch(files, clean):
                             "type": "string", "index": "not_analyzed"
                         },
                         "name": {
-                            "type": "string",
+                            "type": "string", "analyzer": "english",
                         },
                         "id_and_name": {
                             "type": "string", "index": "not_analyzed"
@@ -140,8 +140,10 @@ def import_to_elasticsearch(files, clean):
         }
     }
 
+    settings = {"max_result_window": 500000}
+
     # Create it again
-    result = es.indices.create(index=ES_INDEX, body={"mappings": mappings}, ignore=[400])
+    result = es.indices.create(index=ES_INDEX, body={"mappings": mappings, "settings": settings}, ignore=[400])
     if 'error' in result and result['error']['reason'] == 'already exists':
         print('Updating existing index')
     else:
@@ -222,7 +224,7 @@ def update_doc_with_org_mappings(grant, org_key, file_name):
         else:
             mapping[org_id] = name
             found_name = name
-        org["id_and_name"] = json.dumps([org_id, found_name])
+        org["id_and_name"] = json.dumps([found_name, org_id])
 
 
 if __name__ == '__main__':
