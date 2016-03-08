@@ -501,7 +501,7 @@ def funder_recipients_datatables(request):
              "aggs": {
                  "recipient_count": {"cardinality": {"field": "recipientOrganization.id"}},
                  "recipient_stats":
-                     {"terms": {"field": "recipientOrganization.id_and_name", "size": start + length,
+                     {"terms": {"field": "recipientOrganization.id_and_name", "size": start + length, "shard_size": 0,
                                 "order": {order_field: order_dir}},
                       "aggs": {"recipient_stats": {"stats": {"field": "amountAwarded"}}}}
         }
@@ -622,6 +622,7 @@ def recipient_grants_datatables(request):
                  },
              },
              "sort": [{order_field: order_dir}]}
+
     if not search_value:
         query["query"]["bool"].pop("must")
 
