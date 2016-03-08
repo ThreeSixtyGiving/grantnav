@@ -112,7 +112,7 @@
                   <div class="panel panel-default fixed-org-height">
                     <div class="panel-body">
                       <b>Funding Organization </b> 
-                      <p>{{ result.source.fundingOrganization.0 | get_name }} <small>({{ result.source.fundingOrganization.0.id }}) </small> </p>
+                      <p><a href="{% url 'funder' result.source.fundingOrganization.0.id %}">{{ result.source.fundingOrganization.0 | get_name }}<small> ({{ result.source.fundingOrganization.0.id }}) </small></a> </p>
                     </div>
                   </div>
                 </div>
@@ -126,7 +126,7 @@
                   <div class="panel panel-default fixed-org-height">
                     <div class="panel-body">
                       <b>Recipient Organization </b> 
-                      <p>{{ result.source.recipientOrganization.0|get_name|truncatechars:50 }} <small>({{ result.source.recipientOrganization.0.id|truncatechars:20}}) </small> </p>
+                      <p><a href="{% url 'recipient' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:50 }} <small>({{ result.source.recipientOrganization.0.id|truncatechars:20}}) </small></a> </p>
                     </div>
                   </div>
                 </div>

@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from grantnav.search import get_es
 from django.utils.http import urlencode
 from django.conf import settings
-from django.http import Http404
+from django.http import Http404, JsonResponse
 import elasticsearch.exceptions
 import jsonref
 import json
 import copy
 import math
 import collections
+import dateutil.parser as date_parser
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -451,3 +452,204 @@ def grant(request, grant_id):
         hit['source'] = hit['_source']
     context['grants'] = results['hits']['hits']
     return render(request, "grant.html", context=context)
+
+
+def funder(request, funder_id):
+    query = {"query": {"bool": {"filter":
+                [{"term": {"fundingOrganization.id": funder_id}}]}},
+            "aggs": {
+                "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id"}},
+                "total_amount": {"sum": {"field": "amountAwarded"}},
+                "avg_amount": {"avg": {"field": "amountAwarded"}},
+                "min_amount": {"min": {"field": "amountAwarded"}},
+                "max_amount": {"max": {"field": "amountAwarded"}},
+                "min_date": {"min": {"field": "awardDate"}},
+                "max_date": {"max": {"field": "awardDate"}},
+                "currencies": {"terms": {"field": "currency", "size": 0}},
+                "recipients": {"terms": {"field": "recipientOrganization.id_and_name", "size": 10},
+                               "aggs": {"recipient_stats": {"stats": {"field": "amountAwarded"}}}}
+        }
+    }
+
+    es = get_es()
+    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    
+    if results['hits']['total'] == 0:
+        raise Http404
+    context = {}
+    context['results'] = results
+    context['funder'] = results['hits']['hits'][0]["_source"]["fundingOrganization"][0]
+    return render(request, "funder.html", context=context)
+
+
+def funder_recipients_datatables(request):
+    order = ["_term", "recipient_stats.count", "recipient_stats.sum", "recipient_stats.avg", "recipient_stats.max", "recipient_stats.min"]
+    order_field = order[int(request.GET['order[0][column]'])]
+    search_value = request.GET['search[value]']
+    order_dir = request.GET['order[0][dir]']
+    start = int(request.GET['start'])
+    length = int(request.GET['length'])
+    query = {"query": {
+             "bool": {
+                 "filter":
+                     {"term": {"fundingOrganization.id": request.GET['funder_id']}},
+                 "should":
+                     {"match": {"recipientOrganization.name": search_value}},
+                 "minimum_should_match": 1
+                 },
+             },
+             "aggs": {
+                 "recipient_count": {"cardinality": {"field": "recipientOrganization.id"}},
+                 "recipient_stats":
+                     {"terms": {"field": "recipientOrganization.id_and_name", "size": start + length,
+                                "order": {order_field: order_dir}},
+                      "aggs": {"recipient_stats": {"stats": {"field": "amountAwarded"}}}}
+        }
+    }
+    if not search_value:
+        query["query"]["bool"].pop("should")
+
+    es = get_es()
+    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    result_list = []
+    for result in results["aggregations"]["recipient_stats"]["buckets"][-length:]:
+        stats = result["recipient_stats"]
+        for key in list(stats):
+            if key != 'count':
+                stats[key] = "£ {:,.0f}".format(int(stats[key]))
+        org_name, org_id = json.loads(result["key"])
+        stats["org_name"] = org_name
+        stats["org_id"] = org_id
+        result_list.append(stats)
+
+    return JsonResponse(
+        {'data': result_list,
+         'draw': request.GET['draw'],
+         'recordsTotal': results["aggregations"]["recipient_count"]["value"],
+         'recordsFiltered': results["aggregations"]["recipient_count"]["value"]}
+    )
+
+
+def funder_grants_datatables(request):
+    order = ["awardDate", "amountAwarded", "recipientOrganization.id_and_name", "title", "description"]
+    order_field = order[int(request.GET['order[0][column]'])]
+    search_value = request.GET['search[value]']
+    order_dir = request.GET['order[0][dir]']
+    start = int(request.GET['start'])
+    length = int(request.GET['length'])
+    query = {"query": {
+             "bool": {
+                 "filter":
+                     {"term": {"fundingOrganization.id": request.GET['funder_id']}},
+                 "must":
+                     {"query_string": {"query": search_value}},
+                 },
+             },
+             "sort": [{order_field: order_dir}]}
+    if not search_value:
+        query["query"]["bool"].pop("must")
+
+    es = get_es()
+    try:
+        results = es.search(body=query, index=settings.ES_INDEX, size=length, from_=start)
+    except elasticsearch.exceptions.RequestError as e:
+        if e.error == 'search_phase_execution_exception':
+            results = {"hits": {"total": 0, "hits": []}}
+
+    result_list = []
+    for result in results["hits"]["hits"]:
+        grant = result["_source"]
+        try:
+            grant["awardDate"] = date_parser.parse(grant["awardDate"], dayfirst=True).strftime("%d %b %Y")
+        except ValueError:
+            pass
+        try:
+            grant["amountAwarded"] = "£" + "{:,.0f}".format(grant["amountAwarded"])
+        except ValueError:
+            pass
+        grant["description"] = grant.get("description", "")
+        grant["title"] = grant.get("title", "")
+        result_list.append(grant)
+
+    return JsonResponse(
+        {'data': result_list,
+         'draw': request.GET['draw'],
+         'recordsTotal': results["hits"]["total"],
+         'recordsFiltered': results["hits"]["total"]}
+    )
+
+
+def recipient(request, recipient_id):
+    query = {"query": {"bool": {"filter":
+                 [{"term": {"recipientOrganization.id": recipient_id}}]}},
+             "aggs": {
+                 "funder_orgs": {"cardinality": {"field": "fundingOrganization.id"}},
+                 "total_amount": {"sum": {"field": "amountAwarded"}},
+                 "avg_amount": {"avg": {"field": "amountAwarded"}},
+                 "min_amount": {"min": {"field": "amountAwarded"}},
+                 "max_amount": {"max": {"field": "amountAwarded"}},
+                 "min_date": {"min": {"field": "awardDate"}},
+                 "max_date": {"max": {"field": "awardDate"}},
+                 "currencies": {"terms": {"field": "currency", "size": 0}},
+                 "funders": {"terms": {"field": "fundingOrganization.id_and_name", "size": 10},
+                             "aggs": {"funder_stats": {"stats": {"field": "amountAwarded"}}}}
+                 }}
+
+    es = get_es()
+    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    
+    if results['hits']['total'] == 0:
+        raise Http404
+    context = {}
+    context['results'] = results
+    context['recipient'] = results['hits']['hits'][0]["_source"]["recipientOrganization"][0]
+    return render(request, "recipient.html", context=context)
+
+
+def recipient_grants_datatables(request):
+    order = ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "title", "description"]
+    order_field = order[int(request.GET['order[0][column]'])]
+    search_value = request.GET['search[value]']
+    order_dir = request.GET['order[0][dir]']
+    start = int(request.GET['start'])
+    length = int(request.GET['length'])
+    query = {"query": {
+             "bool": {
+                 "filter":
+                     {"term": {"recipientOrganization.id": request.GET['recipient_id']}},
+                 "must":
+                     {"query_string": {"query": search_value}},
+                 },
+             },
+             "sort": [{order_field: order_dir}]}
+    if not search_value:
+        query["query"]["bool"].pop("must")
+
+    es = get_es()
+    try:
+        results = es.search(body=query, index=settings.ES_INDEX, size=length, from_=start)
+    except elasticsearch.exceptions.RequestError as e:
+        if e.error == 'search_phase_execution_exception':
+            results = {"hits": {"total": 0, "hits": []}}
+
+    result_list = []
+    for result in results["hits"]["hits"]:
+        grant = result["_source"]
+        try:
+            grant["awardDate"] = date_parser.parse(grant["awardDate"], dayfirst=True).strftime("%d %b %Y")
+        except ValueError:
+            pass
+        try:
+            grant["amountAwarded"] = "£" + "{:,.0f}".format(grant["amountAwarded"])
+        except ValueError:
+            pass
+        grant["description"] = grant.get("description", "")
+        grant["title"] = grant.get("title", "")
+        result_list.append(grant)
+
+    return JsonResponse(
+        {'data': result_list,
+         'draw': request.GET['draw'],
+         'recordsTotal': results["hits"]["total"],
+         'recordsFiltered': results["hits"]["total"]}
+    )
