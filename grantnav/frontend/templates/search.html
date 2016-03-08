@@ -95,54 +95,29 @@
 
       {% for result in results.hits.hits %}
          <div class="panel panel-default">
-            <div class="panel-body">
+            <div class="panel-body panel-less-padding">
               <div class="row">
-                <div class="col-xs-12">
-                  <h3 class="heading-in-panel">
+                <div class="col-xs-7">
+                  <h5 class="heading-in-panel">
                     <a href="{% url 'grant' result.source.id %}">
                       {{ result.source|get_title }}
                     </a>
-                    <small>({{result.source.id}})</small>
-                  </h3>
+                    <small class="pull-right"> {{result.source.awardDate|get_date}} </small>
+                  </h5>
                   <p> {{ result.source.description }} </p>
                 </div>
 
                 {% if result.source.fundingOrganization.0.id and result.source.recipientOrganization.0.id %}
                 <div class="col-xs-5">
-                  <div class="panel panel-default fixed-org-height">
+                  <div class="panel panel-default">
                     <div class="panel-body">
-                      <b>Funding Organization </b> 
-                      <p><a href="{% url 'funder' result.source.fundingOrganization.0.id %}">{{ result.source.fundingOrganization.0 | get_name }}<small> ({{ result.source.fundingOrganization.0.id }}) </small></a> </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-2">
-                      <p class="text-center"> 
-                      {{result.source|get_currency}}{{result.source.amountAwarded|get_amount}} </br>  
-                      <span class="glyphicon glyphicon-arrow-right large-arrow" style="font-size:40px" aria-hidden="true"></span> </br>
-                      {{result.source.awardDate|get_date}} </p>
-                </div>
-                <div class="col-xs-5">
-                  <div class="panel panel-default fixed-org-height">
-                    <div class="panel-body">
-                      <b>Recipient Organization </b> 
-                      <p><a href="{% url 'recipient' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:50 }} <small>({{ result.source.recipientOrganization.0.id|truncatechars:20}}) </small></a> </p>
+                      <b>Amount: </b> {{result.source|get_currency}}{{result.source.amountAwarded|get_amount}} <br/>
+                      <b>Funder: </b> <a href="{% url 'funder' result.source.fundingOrganization.0.id %}">{{ result.source.fundingOrganization.0 | get_name }}</a> <br/>
+                      <b>Recipient: </b> <a href="{% url 'recipient' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:50 }} </a> <br/>
                     </div>
                   </div>
                 </div>
                 {% endif %}
-
-
-                <div class="col-xs-6">
-                  {% for key, result in result.source|flatten|half_sorted_items:1 %}
-                    <b> {{ key }}: </b> {{result}} </br>
-                  {% endfor %}
-                </div>
-                <div class="col-xs-6">
-                  {% for key, result in result.source|flatten|half_sorted_items:2 %}
-                    <b> {{ key }}: </b> {{result}} </br>
-                  {% endfor %}
-                </div>
               </div>
             </div>
          </div>
