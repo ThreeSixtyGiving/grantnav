@@ -24,7 +24,7 @@
        <dl class="dl-horizontal top-stats">
          <dt>Largest award</dt> <dd>£{{results.aggregations.max_amount.value|get_amount}}</dd>
          <dt>Smallest award</dt> <dd>£{{results.aggregations.min_amount.value|get_amount}}</dd>
-         <dt>Earleist award date</dt> <dd>{{results.aggregations.min_date.value_as_string|get_date}}</dd>
+         <dt>Earliest award date</dt> <dd>{{results.aggregations.min_date.value_as_string|get_date}}</dd>
          <dt>Latest award date</dt> <dd>{{results.aggregations.max_date.value_as_string|get_date}}</dd>
          <!--  <dt>Currencies</dt> <dd>{{results.aggregations.currencies|get_currency_list}}</dd> -->
        </dl>
