@@ -458,7 +458,7 @@ def funder(request, funder_id):
     query = {"query": {"bool": {"filter":
                 [{"term": {"fundingOrganization.id": funder_id}}]}},
             "aggs": {
-                "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id"}},
+                "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                 "total_amount": {"sum": {"field": "amountAwarded"}},
                 "avg_amount": {"avg": {"field": "amountAwarded"}},
                 "min_amount": {"min": {"field": "amountAwarded"}},
@@ -493,13 +493,12 @@ def funder_recipients_datatables(request):
              "bool": {
                  "filter":
                      {"term": {"fundingOrganization.id": request.GET['funder_id']}},
-                 "should":
-                     {"match": {"recipientOrganization.name": search_value}},
-                 "minimum_should_match": 1
+                 "must":
+                     {"match": {"recipientOrganization.name": {"query": search_value, "operator": "and"}}},
                  },
              },
              "aggs": {
-                 "recipient_count": {"cardinality": {"field": "recipientOrganization.id"}},
+                 "recipient_count": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                  "recipient_stats":
                      {"terms": {"field": "recipientOrganization.id_and_name", "size": start + length, "shard_size": 0,
                                 "order": {order_field: order_dir}},
@@ -507,11 +506,12 @@ def funder_recipients_datatables(request):
         }
     }
     if not search_value:
-        query["query"]["bool"].pop("should")
+        query["query"]["bool"].pop("must")
 
     es = get_es()
     results = es.search(body=query, index=settings.ES_INDEX, size=1)
     result_list = []
+
     for result in results["aggregations"]["recipient_stats"]["buckets"][-length:]:
         stats = result["recipient_stats"]
         for key in list(stats):
