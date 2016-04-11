@@ -193,7 +193,7 @@ def get_amount_facet(request, context, json_query):
         json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
         current_filter = json_query["query"]["bool"]["filter"][3]["bool"]["should"]
 
-    ## get current amount to put in context for frontend
+    # get current amount to put in context for frontend
     new_filter = copy.deepcopy(current_filter)
     if new_filter:
         range = new_filter[0]["range"]["amountAwarded"]
