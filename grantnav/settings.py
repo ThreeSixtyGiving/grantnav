@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 import warnings
 from django.utils.crypto import get_random_string
+import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,7 +23,6 @@ secret_key = get_random_string(50, chars)
 if 'SECRET_KEY' not in os.environ:
     warnings.warn('SECRET_KEY should be added to Enviroment Variables. Random key will be used instead.')
 
-import environ
 env = environ.Env(  # set default values and casting
     SENTRY_DSN=(str, ''),
     DEBUG=(bool, True),

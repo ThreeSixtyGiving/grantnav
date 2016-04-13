@@ -1,18 +1,19 @@
-Django==1.8.10 # rq.filter: <1.9
-django-bootstrap3==6.2.2
-requests==2.9.0
+Django==1.8.12 # rq.filter: <1.9
+django-bootstrap3==7.0.1
+requests==2.9.1
 django-environ==0.4.0
-raven==5.9.2
-elasticsearch==2.2.0
-urllib3==1.14
-six==1.10.0
--e git+https://github.com/OpenDataServices/flatten-tool.git@2af8a004d24e376e948d2f473753692ad6c248b8#egg=flattentool
-python-dateutil==2.4.2
+raven==5.12.0
+elasticsearch==2.3.0
+-e git+https://github.com/OpenDataServices/flatten-tool.git@2af8a004d24e376e948d2f473753692ad6c248b8#egg=flattentool-dev
+python-dateutil==2.5.2
 strict-rfc3339==0.6
-
-# Dependencies of flatten-tool
+## The following requirements were added by pip --freeze:
+contextlib2==0.5.1
+et-xmlfile==1.0.1
 jdcal==1.2
 jsonref==0.1
-openpyxl==2.3.2
-pytz==2015.7
+openpyxl==2.3.4
+pytz==2016.3
 schema==0.4.0
+six==1.10.0
+urllib3==1.15
