@@ -38,8 +38,8 @@ def test_home(dataload, server_url, browser):
 def test_search(dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_xpath("//button[contains(.,'Search')]").click()
-    assert 'Total: 4764' in browser.find_element_by_tag_name('body').text
-    assert 'Lloyds Bank Foundation for England and Wales (4116)' in browser.find_element_by_tag_name('body').text
+    assert 'Total: 4,764' in browser.find_element_by_tag_name('body').text
+    assert 'Lloyds Bank Foundation for England and Wales (4,116)' in browser.find_element_by_tag_name('body').text
     assert 'Wolfson Foundation (379)' in browser.find_element_by_tag_name('body').text
 
 
