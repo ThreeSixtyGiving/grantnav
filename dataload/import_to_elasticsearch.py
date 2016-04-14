@@ -6,6 +6,7 @@ import uuid
 import tempfile
 import os
 import csv
+import gzip
 from pprint import pprint
 import elasticsearch.helpers
 
@@ -14,6 +15,9 @@ ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 id_name_org_mappings = {"fundingOrganization": {}, "recipientOrganization": {}}
 name_duplicates = [["file_name", "org_type", "org_id", "first_name", "duplicate_name"]]
 bad_org_ids = []
+
+postcode_to_area = {}
+district_code_to_area = {}
 
 
 def convert_spreadsheet(file_path, file_type, tmp_dir):
@@ -73,6 +77,8 @@ def import_to_elasticsearch(files, clean):
             "properties": {
                 "id": {"type": "string", "index": "not_analyzed"},
                 "filename": {"type": "string", "index": "not_analyzed"},
+                "recipientRegionName": {"type": "string", "index": "not_analyzed"},
+                "recipientDistrictName": {"type": "string", "index": "not_analyzed"},
                 "awardDate": {
                     "type": "date",
                     "ignore_malformed": True
@@ -184,6 +190,7 @@ def import_to_elasticsearch(files, clean):
                 grant['_type'] = 'grant'
                 update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
                 update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
+                update_doc_with_region(grant)
                 grants.append(grant)
             result = elasticsearch.helpers.bulk(es, grants, raise_on_error=False)
             pprint(result)
@@ -207,6 +214,36 @@ def get_mapping_from_index(es):
         id_name_org_mappings["recipientOrganization"][id_name[0]] = id_name[1]
 
 
+def add_area_to_grant(area, grant):
+    if area['district_name']:
+        grant['recipientDistrictName'] = area['district_name']
+    if area['area_name']:
+        grant['recipientRegionName'] = area['area_name']
+
+
+def update_doc_with_region(grant):
+    try:
+        post_code = grant['recipientOrganization'][0]['postalCode']
+    except (KeyError, IndexError):
+        post_code = ''
+
+    area = postcode_to_area.get(str(post_code).replace(' ', '').upper())
+    if area:
+        add_area_to_grant(area, grant)
+
+    if not area:
+        big_local_auth_code = grant.get("BIGField_Recipient_LocalAuthority_Code")
+        if big_local_auth_code:
+            area = district_code_to_area.get(big_local_auth_code)
+            if area:
+                add_area_to_grant(area, grant)
+            else:
+                if not big_local_auth_code.startswith("N"):
+                    raise
+                grant['recipientDistrictName'] = grant["BIGField_Recipient_LocalAuthority_Name"]
+                grant['recipientRegionName'] = "Northern Ireland"
+
+
 def update_doc_with_org_mappings(grant, org_key, file_name):
     mapping = id_name_org_mappings[org_key]
     orgs = grant.get(org_key, [])
@@ -227,12 +264,45 @@ def update_doc_with_org_mappings(grant, org_key, file_name):
         org["id_and_name"] = json.dumps([found_name, org_id])
 
 
+def get_area_mappings():
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(current_dir, 'codelist.csv')) as codelist, gzip.open(os.path.join(current_dir, 'codepoint_with_heading.csv.gz'), 'rt') as codepoint:
+        codelist_csv = csv.DictReader(codelist)
+        code_to_name = {}
+        for row in codelist_csv:
+            code_to_name[row['code']] = row['name']
+        
+        codepoint_csv = csv.DictReader(codepoint)
+
+        for row in codepoint_csv:
+            district_code = row['Admin_district_code']
+            district_name = code_to_name.get(district_code, '')
+            regional_code = row['NHS_HA_code']
+            area_name = ''
+            if not regional_code or regional_code[0] != 'E':
+                country_code = row['Country_code']
+                first_letter = country_code[0]
+                if first_letter == 'S':
+                    area_name = 'Scotland'
+                if first_letter == 'W':
+                    area_name = 'Wales'
+            else:
+                area_name = code_to_name[regional_code]
+
+            postcode_to_area[row['Postcode'].replace(' ', '').upper()] = {
+                'district_name': district_name, 'area_name': area_name
+            }
+            district_code_to_area[district_code] = {
+                'district_name': district_name, 'area_name': area_name
+            }
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Import 360 files in a directory to elasticsearch')
     parser.add_argument('--clean', help='files to import', action='store_true')
     parser.add_argument('--reports', help='files to import', action='store_true')
     parser.add_argument('files', help='files to import', nargs='+')
     args = parser.parse_args()
+    get_area_mappings()
     import_to_elasticsearch(args.files, args.clean)
     if args.reports:
         with open("differing_names.csv.report", "w+") as differing_names_file:

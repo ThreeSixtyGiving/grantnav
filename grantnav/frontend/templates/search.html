@@ -53,6 +53,31 @@
         </div>
       </div>
       <div class="panel panel-default">
+        <a class="anchor" id="recipientRegionName"></a>
+        <div class="panel-heading list-group-compact">
+          Recipient Region {% if results.aggregations.recipientRegionName.clear_url %} <a href="{{results.aggregations.recipientRegionName.clear_url}}"> <small>(clear)</small></a> {% endif%}
+        </div>
+        <div class="list-group">
+          {% for bucket in results.aggregations.recipientRegionName.buckets %}
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a> 
+          {% endfor %}
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <a class="anchor" id="recipientDistrictName"></a>
+        <div class="panel-heading list-group-compact">
+          Recipient District {% if results.aggregations.recipientDistrictName.clear_url %} <a href={{results.aggregations.recipientDistrictName.clear_url}}> <small>(clear)</small></a> {% endif%}
+        </div>
+        <div class="list-group">
+          {% for bucket in results.aggregations.recipientDistrictName.buckets %}
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a> 
+          {% endfor %}
+          {% if results.aggregations.recipientDistrictName.buckets|length > 9 %}
+            <a href="{{see_more_url.recipientDistrictName.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientDistrictName.more%}See More{% else %}See Less{% endif %}</b> </a> 
+          {% endif %}
+        </div>
+      </div>
+      <div class="panel panel-default">
         <a class="anchor" id="amountAwareded"></a>
         <div class="panel-heading list-group-compact">
           Amount Awarded {% if results.aggregations.amountAwarded.clear_url %} <a href="{{results.aggregations.amountAwarded.clear_url}}"> <small>(clear)</small></a> {% endif%}
