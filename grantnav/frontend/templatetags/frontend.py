@@ -92,8 +92,7 @@ def get_date(date):
             datetime.datetime.strptime(date, "%Y-%m-%d")
         except ValueError:
             return date
-    
-    return date_parser.parse(date, dayfirst=True).strftime("%d %b %Y")
+    return date_parser.parse(date).strftime("%d %b %Y")
 
 
 @register.filter(name='get_amount_range')

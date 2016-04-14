@@ -14,8 +14,8 @@
    <div class="row">
      <div class="col-xs-6">
        <dl class="dl-horizontal top-stats">
-         <dt>Total grants</dt> <dd>{{results.hits.total}}</dd>
-         <dt>Total funders</dt> <dd>{{results.aggregations.funder_orgs.value}}</dd>
+         <dt>Total grants</dt> <dd>{{results.hits.total|get_amount}}</dd>
+         <dt>Total funders</dt> <dd>{{results.aggregations.funder_orgs.value|get_amount}}</dd>
          <dt>Total awarded</dt> <dd>£{{results.aggregations.total_amount.value|get_amount}}</dd>
          <dt>Average awarded</dt> <dd>£{{results.aggregations.avg_amount.value|get_amount}}</dd>
        </dl>
