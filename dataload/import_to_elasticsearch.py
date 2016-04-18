@@ -112,6 +112,9 @@ def import_to_elasticsearch(files, clean):
                         "name": {
                             "type": "string", "analyzer": "english",
                         },
+                        "streetAddress": {
+                            "type": "string", "analyzer": "english",
+                        },
                         "id_and_name": {
                             "type": "string", "index": "not_analyzed"
                         }
@@ -135,6 +138,9 @@ def import_to_elasticsearch(files, clean):
                             "type": "string", "index": "not_analyzed"
                         },
                         "name": {
+                            "type": "string", "analyzer": "english",
+                        },
+                        "streetAddress": {
                             "type": "string", "analyzer": "english",
                         },
                         "id_and_name": {
