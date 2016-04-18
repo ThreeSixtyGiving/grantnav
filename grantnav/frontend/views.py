@@ -165,8 +165,6 @@ def get_amount_facet_fixed(request, context, json_query):
 
     new_filter = copy.deepcopy(current_filter)
     if new_filter:
-        range = new_filter[0]["range"]["amountAwarded"]
-        context["amount_range_fixed"] = {"from": range["gte"], "to": range["lt"]}
         json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
         results["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
 
