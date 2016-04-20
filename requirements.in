@@ -5,6 +5,6 @@ requests
 django-environ
 raven
 elasticsearch
--e git+https://github.com/OpenDataServices/flatten-tool.git@2af8a004d24e376e948d2f473753692ad6c248b8#egg=flattentool
+-e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool
 python-dateutil
 strict-rfc3339
