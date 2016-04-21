@@ -30,6 +30,7 @@
        </dl>
      </div>
    </div>
+ </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
@@ -150,9 +151,9 @@
              "search": "Search"
          },
          "ajax": {
-           "url": "{% url 'funder_grants_datatables' %}",
+           "url": "{% url 'grants_datatables' %}",
            "data": function ( d ) {
-             d.funder_id = "{{funder.id|escapejs}}";
+             d.funder = "{{funder.id|escapejs}}";
            }
          },
          "columns": [
