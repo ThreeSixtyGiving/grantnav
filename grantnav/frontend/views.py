@@ -34,7 +34,7 @@ BASIC_QUERY = {"query": {"bool": {"must":
                    "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 10}},
                    "recipientRegionName": {"terms": {"field": "recipientRegionName", "size": 20}},
                    "recipientDistrictName": {"terms": {"field": "recipientDistrictName", "size": 10}}}}
-SIZE = 10
+SIZE = 20
 
 FIXED_AMOUNT_RANGES = [
     {"from": 0, "to": 500},
@@ -534,9 +534,34 @@ def funder_recipients_datatables(request):
          'recordsFiltered': results["aggregations"]["recipient_count"]["value"]}
     )
 
+grant_datatables_metadata = {
+    "funder": {
+        "term": "fundingOrganization.id",
+        "order": ["awardDate", "amountAwarded", "recipientOrganization.id_and_name", "title", "description"],
+    },
+    "recipient": {
+        "term": "recipientOrganization.id",
+        "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "title", "description"],
+    },
+    "recipientRegionName": {
+        "term": "recipientRegionName",
+        "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "title", "description"],
+    },
+    "recipientDistrictName": {
+        "term": "recipientDistrictName",
+        "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "title", "description"],
+    }
+}
 
-def funder_grants_datatables(request):
-    order = ["awardDate", "amountAwarded", "recipientOrganization.id_and_name", "title", "description"]
+
+def grants_datatables(request):
+    for field, metadata in grant_datatables_metadata.items():
+        if field in request.GET:
+            value = request.GET[field]
+            order = metadata["order"]
+            term = metadata["term"]
+            break
+
     order_field = order[int(request.GET['order[0][column]'])]
     search_value = request.GET['search[value]']
     order_dir = request.GET['order[0][dir]']
@@ -545,9 +570,9 @@ def funder_grants_datatables(request):
     query = {"query": {
              "bool": {
                  "filter":
-                     {"term": {"fundingOrganization.id": request.GET['funder_id']}},
+                     {"term": {term: value}},
                  "must":
-                     {"query_string": {"query": search_value}},
+                     {"query_string": {"query": search_value, "default_operator": "and"}},
                  },
              },
              "sort": [{order_field: order_dir}]}
@@ -565,7 +590,7 @@ def funder_grants_datatables(request):
     for result in results["hits"]["hits"]:
         grant = result["_source"]
         try:
-            grant["awardDate"] = date_parser.parse(grant["awardDate"], dayfirst=True).strftime("%d %b %Y")
+            grant["awardDate"] = date_parser.parse(grant["awardDate"]).strftime("%d %b %Y")
         except ValueError:
             pass
         try:
@@ -611,51 +636,53 @@ def recipient(request, recipient_id):
     return render(request, "recipient.html", context=context)
 
 
-def recipient_grants_datatables(request):
-    order = ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "title", "description"]
-    order_field = order[int(request.GET['order[0][column]'])]
-    search_value = request.GET['search[value]']
-    order_dir = request.GET['order[0][dir]']
-    start = int(request.GET['start'])
-    length = int(request.GET['length'])
-    query = {"query": {
-             "bool": {
-                 "filter":
-                     {"term": {"recipientOrganization.id": request.GET['recipient_id']}},
-                 "must":
-                     {"query_string": {"query": search_value}},
-                 },
-             },
-             "sort": [{order_field: order_dir}]}
-
-    if not search_value:
-        query["query"]["bool"].pop("must")
+def region(request, region):
+    query = {"query": {"bool": {"filter":
+                [{"term": {"recipientRegionName": region}}]}},
+            "aggs": {
+                "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
+                "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
+                "total_amount": {"sum": {"field": "amountAwarded"}},
+                "avg_amount": {"avg": {"field": "amountAwarded"}},
+                "min_amount": {"min": {"field": "amountAwarded"}},
+                "max_amount": {"max": {"field": "amountAwarded"}},
+                "min_date": {"min": {"field": "awardDate"}},
+                "max_date": {"max": {"field": "awardDate"}},
+        }
+    }
 
     es = get_es()
-    try:
-        results = es.search(body=query, index=settings.ES_INDEX, size=length, from_=start)
-    except elasticsearch.exceptions.RequestError as e:
-        if e.error == 'search_phase_execution_exception':
-            results = {"hits": {"total": 0, "hits": []}}
+    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    
+    if results['hits']['total'] == 0:
+        raise Http404
+    context = {}
+    context['results'] = results
+    context['region'] = region
+    return render(request, "region.html", context=context)
 
-    result_list = []
-    for result in results["hits"]["hits"]:
-        grant = result["_source"]
-        try:
-            grant["awardDate"] = date_parser.parse(grant["awardDate"], dayfirst=True).strftime("%d %b %Y")
-        except ValueError:
-            pass
-        try:
-            grant["amountAwarded"] = "£" + "{:,.0f}".format(grant["amountAwarded"])
-        except ValueError:
-            pass
-        grant["description"] = grant.get("description", "")
-        grant["title"] = grant.get("title", "")
-        result_list.append(grant)
 
-    return JsonResponse(
-        {'data': result_list,
-         'draw': request.GET['draw'],
-         'recordsTotal': results["hits"]["total"],
-         'recordsFiltered': results["hits"]["total"]}
-    )
+def district(request, district):
+    query = {"query": {"bool": {"filter":
+                [{"term": {"recipientDistrictName": district}}]}},
+            "aggs": {
+                "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
+                "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
+                "total_amount": {"sum": {"field": "amountAwarded"}},
+                "avg_amount": {"avg": {"field": "amountAwarded"}},
+                "min_amount": {"min": {"field": "amountAwarded"}},
+                "max_amount": {"max": {"field": "amountAwarded"}},
+                "min_date": {"min": {"field": "awardDate"}},
+                "max_date": {"max": {"field": "awardDate"}},
+        }
+    }
+
+    es = get_es()
+    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    
+    if results['hits']['total'] == 0:
+        raise Http404
+    context = {}
+    context['results'] = results
+    context['district'] = district
+    return render(request, "district.html", context=context)
