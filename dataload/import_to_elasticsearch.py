@@ -179,7 +179,7 @@ def import_to_elasticsearch(files, clean):
             continue
         else:
             print('unimportable file {} (bad) file type'.format(file_name))
-            return
+            continue
 
         print(file_name)
         with open(json_file_name) as fp:
