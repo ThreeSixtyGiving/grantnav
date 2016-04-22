@@ -309,6 +309,22 @@ def get_clear_all(request, context, json_query):
         context["results"]["clear_all_facet_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
 
 
+def home(request):
+    context = {}
+    query = {"query": {"match_all": {}},
+             "aggs": {
+                 "recipient_count": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
+                 "funder_count": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
+        }
+    }
+    es = get_es()
+
+    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    context['results'] = results
+
+    return render(request, "home.html", context=context)
+
+
 def search(request):
     context = {}
     json_query = request.GET.get('json_query') or ""
