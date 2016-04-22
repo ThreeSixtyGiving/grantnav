@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load frontend %}
+{% load static %}
+
+
+{% block main %}
+<div class="container-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <form role="search" action="{% url 'search' %}">
+          <div class="form-group">
+            <input name="text_query" class="form-control large-search" placeholder="What are you searching for?" type="text">
+            <input class="large-search-icon" name="submit" src="{% static 'images/search_icon.png' %}" type="image" height="55px" width="55px">
+          </div>
+        </form>
+      </div>
+      <div class="col-xs-12">
+        <p class="search-help"> Try these examples: 
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=volunteers">volenteers</a>, 
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=heritage">heritage</a>, 
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=disabilities">disabilities</a> 
+      </div>
+      <div class="col-xs-12">
+        <h1 class="home-info text-center"> Search, explore and download UK Grant data from funders publishing open data to the 360Giving standard.</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row stat-group">
+          <div class="col-sm-4 left-stat">
+            <h1 class="text-center home-number">{{results.aggregations.funder_count.value|get_amount}}</h1>
+            <h2 class="text-center home-number-text">Funders</h2>
+          </div>
+          <div class="col-sm-4">
+            <h1 class="text-center home-number">{{results.aggregations.recipient_count.value|get_amount}}</h1>
+            <h2 class="text-center home-number-text">Recipients</h2>
+          </div>
+          <div class="col-sm-4 right-stat">
+            <h1 class="text-center home-number">{{results.hits.total|get_amount}}</h1>
+            <h2 class="text-center home-number-text">Grants</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+{% endblock %}

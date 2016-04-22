@@ -16,11 +16,11 @@ def test_home(dataload, client):
     response = client.get('/')
     assert "GrantNav" in str(response.content)
     assert "Search" in str(response.content)
-    assert "gardens" in str(response.content)
+    assert "heritage" in str(response.content)
 
 
 def test_search(dataload, client):
-    initial_response = client.get('/?text_query=gardens')
+    initial_response = client.get('/search?text_query=gardens')
     assert initial_response.status_code == 302
     response = client.get(initial_response.url)
     assert "Total:" in str(response.content)
