@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load frontend %}
+{% load static %}
 
 {% block main_content %}
 
@@ -7,11 +8,11 @@
     <div class="col-xs-8 col-xs-offset-2">
       <form role="search">
         <div class="input-group">
-          <input name="text_query" class="form-control" placeholder="eg. gardens" type="text" value="{{text_query}}">
-          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+          <input name="text_query" class="form-control search-box" placeholder="What are you searching for?" type="text" value="{{text_query}}">
           <span class="input-group-btn">
-            <button type="submit" class="btn btn-primary">Search</button>
+            <input class="search-icon" name="submit" src="{% static 'images/search_icon.png' %}" type="image" height="30px" width="30px">
           </span>
+          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
         </div>
       </form>
     </div>
@@ -123,12 +124,12 @@
             <div class="panel-body panel-less-padding">
               <div class="row">
                 <div class="col-xs-6">
-                  <h5 class="heading-in-panel">
+                  <h4 class="heading-in-panel">
                     <a href="{% url 'grant' result.source.id %}">
                       {{ result.source|get_title }}
                     </a>
                     <small class="pull-right"> {{result.source.awardDate|get_date}} </small>
-                  </h5>
+                  </h4>
                   <p> {{ result.source.description }} </p>
                 </div>
 
