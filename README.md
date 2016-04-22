@@ -51,6 +51,15 @@ In order to upload some data use the dataload/import_to_elesticsearch.py command
 The clean command is optional it will delete the index and start again, so leave it off if you want to add just another file to an existing index.
 You can specify as many file or patterns as you like at the end of the command.
 
+Compile theme
+-------------
+
+In order to compile the sass theme run:
+
+```
+sassc grantnav/frontend/sass/main.scss grantnav/frontend/static/css/theme.css
+```
+
 
 Run tests
 ------------
