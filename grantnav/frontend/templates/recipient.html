@@ -93,9 +93,9 @@
            "search": "Search"
        },
        "ajax": {
-         "url": "{% url 'recipient_grants_datatables' %}",
+         "url": "{% url 'grants_datatables' %}",
          "data": function ( d ) {
-           d.recipient_id = "{{recipient.id|escapejs}}";
+           d.recipient = "{{recipient.id|escapejs}}";
          }
        },
        "columns": [
