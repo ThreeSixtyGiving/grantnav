@@ -26,6 +26,21 @@
   }
 }
 
+body {
+  background-color: #333
+}
+
+.main-block {
+  background-color: white;
+  padding-top: 21px;
+  margin-top: -21px;
+}
+
+.footer-info {
+  margin-top: 15px;
+  color: #c1c1c1;
+}
+
 .home-info {
   font-family: $font-family-sans-serif;
   font-weight: 400;

@@ -1,12 +1,13 @@
 import pytest
 import urllib.parse
-from dataload.import_to_elasticsearch import import_to_elasticsearch
+from dataload.import_to_elasticsearch import import_to_elasticsearch, get_area_mappings
 import json
 import time
 
 
 @pytest.fixture(scope="module")
 def dataload():
+    get_area_mappings()
     import_to_elasticsearch(['sample_data/wolfson.json'], clean=True)
     #elastic search needs some time to commit its data
     time.sleep(2)
