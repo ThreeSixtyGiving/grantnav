@@ -49,15 +49,20 @@
     {% endif %}
 
 
-    <div class="col-xs-6">
-      {% for key, grant in grant.source|flatten|half_sorted_items:1 %}
-        <b> {{ key }}: </b> {{grant}} </br>
-      {% endfor %}
-    </div>
-    <div class="col-xs-6">
-      {% for key, grant in grant.source|flatten|half_sorted_items:2 %}
-        <b> {{ key }}: </b> {{grant}} </br>
-      {% endfor %}
+    <div class="col-xs-12">
+      <div class="panel panel-default bottom-space">
+        <div class="panel-heading">Other data available on this grant</div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                {% for key, grant in grant.source|flatten %}
+                <tr> <td style="width: 40%"> <b>{{ key }} </b> </td> <td> {{grant}} </td>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
