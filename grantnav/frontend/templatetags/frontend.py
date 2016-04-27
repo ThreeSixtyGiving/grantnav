@@ -24,18 +24,20 @@ def flatten_dict(data, path=tuple()):
         else:
             yield ": ".join(path + (key,)), value
 
-SKIP_KEYS = ["id", "title", "description",
+SKIP_KEYS = ["id", "title", "description", "filename",
              "amountAwarded", "currency",
              "awardDate", "recipientOrganization: name",
              "recipientOrganization: id",
+             "recipientOrganization: id_and_name",
              "fundingOrganization: name",
-             "fundingOrganization: id"]
+             "fundingOrganization: id",
+             "fundingOrganization: id_and_name"]
 
 
 @register.filter(name='flatten')
 def flatten(d):
-    return {key: value for key, value in flatten_dict(d)
-            if key not in SKIP_KEYS}
+    return sorted([(key, value) for key, value in flatten_dict(d)
+                  if key not in SKIP_KEYS])
 
 
 @register.filter(name='half_sorted_items')
