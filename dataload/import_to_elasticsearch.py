@@ -241,6 +241,20 @@ def update_doc_with_region(grant):
         add_area_to_grant(area, grant)
 
     if not area:
+        try:
+            locations = grant['recipientOrganization'][0]['location']
+        except (KeyError, IndexError):
+            return
+
+        for location in locations:
+            geoCode = location.get('geoCode')
+            if geoCode and geoCode in district_code_to_area:
+                add_area_to_grant(district_code_to_area.get(geoCode), grant)
+                break
+            if geoCode.startswith("N09"):
+                grant['recipientRegionName'] = "Northern Ireland"
+                grant['recipientDistrictName'] = location["name"]
+
         big_local_auth_code = grant.get("BIGField_Recipient_LocalAuthority_Code")
         if big_local_auth_code:
             area = district_code_to_area.get(big_local_auth_code)
