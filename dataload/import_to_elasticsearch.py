@@ -9,6 +9,7 @@ import csv
 import gzip
 from pprint import pprint
 import elasticsearch.helpers
+import requests
 import time
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
@@ -167,12 +168,20 @@ def import_to_elasticsearch(files, clean):
     get_mapping_from_index(es)
 
     for file_name in files:
+        tmp_dir = tempfile.mkdtemp()
+        if file_name.startswith('http'):
+            content = requests.get(file_name).content
+            new_filename = file_name.split('/')[-1].split('?')[0]
+            downloaded_filename = os.path.join(tmp_dir, new_filename)
+            with open(downloaded_filename, 'wb+') as downloaded_file:
+                downloaded_file.write(content)
+            file_name = downloaded_filename
+
         file_type = file_name.split('.')[-1]
-        tmp_dir = ''
+
         if file_type == 'json':
             json_file_name = file_name
         elif file_type in ('csv', 'xlsx'):
-            tmp_dir = tempfile.mkdtemp()
             json_file_name = os.path.join(tmp_dir, 'output.json')
             convert_spreadsheet(file_name, file_type, tmp_dir)
         elif file_type in ('report'):
@@ -204,8 +213,7 @@ def import_to_elasticsearch(files, clean):
             result = elasticsearch.helpers.bulk(es, grants, raise_on_error=False)
             pprint(result)
 
-        if tmp_dir:
-            shutil.rmtree(tmp_dir)
+        shutil.rmtree(tmp_dir)
 
 
 def get_mapping_from_index(es):
