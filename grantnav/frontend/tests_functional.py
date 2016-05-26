@@ -4,6 +4,8 @@ import pytest
 from dataload.import_to_elasticsearch import import_to_elasticsearch
 from selenium import webdriver
 
+prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/c555725bf1aa1e2d22fb69dd99c1831feff7ecbd/'
+
 
 @pytest.fixture(scope="module")
 def browser(request):
@@ -23,9 +25,9 @@ def server_url(request, live_server):
 
 @pytest.fixture(scope="module")
 def dataload():
-    import_to_elasticsearch(['sample_data/wolfson.json',
-                             'sample_data/360_giving_LBFEW_2010_2015.xlsx',
-                             'sample_data/IndigoTrust_360giving.csv'], clean=True)
+    import_to_elasticsearch([prefix + 'wolfson.json',
+                             prefix + '360_giving_LBFEW_2010_2015.xlsx',
+                             prefix + 'IndigoTrust_360giving.csv'], clean=True)
     #elastic search needs some time to commit its data
     time.sleep(2)
 
