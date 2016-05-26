@@ -4,11 +4,13 @@ from dataload.import_to_elasticsearch import import_to_elasticsearch, get_area_m
 import json
 import time
 
+prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/c555725bf1aa1e2d22fb69dd99c1831feff7ecbd/'
+
 
 @pytest.fixture(scope="module")
 def dataload():
     get_area_mappings()
-    import_to_elasticsearch(['sample_data/wolfson.json'], clean=True)
+    import_to_elasticsearch([prefix + 'wolfson.json'], clean=True)
     #elastic search needs some time to commit its data
     time.sleep(2)
 
