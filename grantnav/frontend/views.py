@@ -379,10 +379,16 @@ def search(request):
         if context['text_query'] == '*':
             context['text_query'] = ''
 
+        if result_format == "html":
+            results_size=SIZE
+        else:
+            # Set this to a level that makes sense for the server.
+            results_size=100000
+
         try:
             create_amount_aggregate(json_query)
             create_date_aggregate(json_query)
-            results = es.search(body=json_query, size=SIZE, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
+            results = es.search(body=json_query, size=results_size, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
             json_query["aggs"].pop("awardYear")
             json_query["aggs"].pop("amountAwarded")
             json_query["aggs"].pop("amountAwardedFixed")
@@ -397,19 +403,6 @@ def search(request):
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
 
-        get_clear_all(request, context, json_query)
-        for filter_name, index in TERM_FILTERS.items():
-            get_terms_facets(request, context, json_query, filter_name + ".id_and_name", filter_name, index)
-
-        get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5)
-        get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6)
-
-        get_amount_facet(request, context, json_query)
-        get_amount_facet_fixed(request, context, json_query)
-        get_date_facets(request, context, json_query)
-        get_terms_facet_size(request, context, json_query, page)
-        get_pagination(request, context, page)
-
         if result_format == "csv":
             response = HttpResponse(content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename="grantnav.csv"'
@@ -417,6 +410,20 @@ def search(request):
             response.write(t.render(context))
             return response
         else:
+            get_clear_all(request, context, json_query)
+
+            for filter_name, index in TERM_FILTERS.items():
+                get_terms_facets(request, context, json_query, filter_name + ".id_and_name", filter_name, index)
+
+            get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5)
+            get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6)
+
+            get_amount_facet(request, context, json_query)
+            get_amount_facet_fixed(request, context, json_query)
+            get_date_facets(request, context, json_query)
+            get_terms_facet_size(request, context, json_query, page)
+            get_pagination(request, context, page)
+
             return render(request, "search.html", context=context)
 
 
