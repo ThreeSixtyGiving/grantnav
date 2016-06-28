@@ -3,36 +3,36 @@
 
 {% load static %}
 
-Data Source,
-Publisher: Name,
-Identifier,
-Title,
-Description,
-Currency,
-Amount Awarded,
-Award Date,
-URL,
-Planned Dates:Duration (months),
-Recipient Org:Identifier,
-Recipient Org:Name,
-Recipient Org:Charity Number,
-Recipient Org:Company Number,
-Recipient Org:Location:0:Geographic Code Type,
-Recipient Org:Location:0:Geographic Code,
-Recipient Org:Location:0:Name,
-Recipient Org:Location:1:Geographic Code Type,
-Recipient Org:Location:1:Geographic Code,
-Recipient Org:Location:1:Name,
-Recipient Org:Location:2:Geographic Code Type,
-Recipient Org:Location:2:Geographic Code,
-Recipient Org:Location:2:Name,
-Beneficiary Location:Name,
-Beneficiary Location:Country Code,
-Beneficiary Location:Geographic Code,
-Beneficiary Location:Geographic Code Type,
-Funding Org:Identifier,
-Funding Org:Name,
-Last modified
+{% filter csvify %}Data Source
+Publisher: Name
+Identifier
+Title
+Description
+Currency
+Amount Awarded
+Award Date
+URL
+Planned Dates:Duration (months)
+Recipient Org:Identifier
+Recipient Org:Name
+Recipient Org:Charity Number
+Recipient Org:Company Number
+Recipient Org:Location:0:Geographic Code Type
+Recipient Org:Location:0:Geographic Code
+Recipient Org:Location:0:Name
+Recipient Org:Location:1:Geographic Code Type
+Recipient Org:Location:1:Geographic Code
+Recipient Org:Location:1:Name
+Recipient Org:Location:2:Geographic Code Type
+Recipient Org:Location:2:Geographic Code
+Recipient Org:Location:2:Name
+Beneficiary Location:Name
+Beneficiary Location:Country Code
+Beneficiary Location:Geographic Code
+Beneficiary Location:Geographic Code Type
+Funding Org:Identifier
+Funding Org:Name
+Last modified{% endfilter %}
 
 {% block main_content %}
 {% if results and results.hits.hits %}
