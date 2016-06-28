@@ -12,7 +12,7 @@ import collections
 import dateutil.parser as date_parser
 import re
 from django.http import HttpResponse
-from django.template import loader, Context
+from django.template import loader
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -403,7 +403,6 @@ def search(request):
         get_terms_facet_size(request, context, json_query, page)
         get_pagination(request, context, page)
 
-
         if result_format == "csv":
             response = HttpResponse(content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename="grantnav.csv"'
@@ -412,6 +411,7 @@ def search(request):
             return response
         else:
             return render(request, "search.html", context=context)
+
 
 def flatten_mapping(mapping, current_path=''):
     for key, value in mapping.items():
