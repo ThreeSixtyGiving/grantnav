@@ -342,7 +342,7 @@ def search(request):
     if query:
         context['query_string'] = query
     else:
-        context['query_string'] = "test"
+        context['query_string'] = ""
 
     json_query = request.GET.get('json_query') or ""
     try:
