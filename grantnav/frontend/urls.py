@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'search$', views.search, name='search'),
     url(r'search\.csv$', views.search, name='search.csv'),
+    url(r'search\.json$', views.search, name='search.json'),
     url(r'^grant/(.*)$', views.grant, name='grant'),
     url(r'^grants_datatables$', views.grants_datatables, name='grants_datatables'),
     url(r'^funder/(.*)$', views.funder, name='funder'),

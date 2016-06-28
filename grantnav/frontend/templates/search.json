@@ -1,0 +1,12 @@
+{% load frontend %}
+{% load csv %}
+{% load static %}
+{% block main_content %}
+{% if results and results.hits.hits %}
+    {% for result in results.hits.hits %}
+    {{ result.source }}
+    {% endfor %}
+{% endif %}
+{% endblock %}
+
+

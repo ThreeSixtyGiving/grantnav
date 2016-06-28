@@ -382,7 +382,7 @@ def search(request):
         if result_format == "html":
             results_size=SIZE
         else:
-            # Set this to a level that makes sense for the server.
+            # Set this to a level that makes sense for the server. Elastic complains > 500k
             results_size=100000
 
         try:
@@ -408,6 +408,26 @@ def search(request):
             response['Content-Disposition'] = 'attachment; filename="grantnav.csv"'
             t = loader.get_template('search.csv')
             response.write(t.render(context))
+            return response
+        elif result_format == "json":
+            import pprint
+            # import the logging library
+            import logging
+
+            # Get an instance of a logger
+            logger = logging.getLogger(__name__)
+
+            hits = results['hits']['hits']
+            grants = {
+                'grants': []
+            }
+            for hit in hits:
+                if hit['source']:
+                    grants['grants'].append(hit['source'])
+                else:
+                    continue;
+            response = HttpResponse(json.dumps(grants), content_type='application/json')
+            response['Content-Disposition'] = 'attachment; filename="grantnav.json"'
             return response
         else:
             get_clear_all(request, context, json_query)

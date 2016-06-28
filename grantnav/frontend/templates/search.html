@@ -117,7 +117,15 @@
       </div>
     </div>
     <div class="col-xs-9">
-      <h3 class="indent"> Results <small> <b> Total: </b> {{results.hits.total|get_amount}}  </small> <a href="{% url 'search.csv' %}?{{ query_string }}"><img src="{% static 'images/csv_download_icon.png' %}" id="csv_download_button"/></a></h3>
+      <h3 class="indent"> Results <small>
+        <b> Total: </b> {{results.hits.total|get_amount}} </small>
+        <a href="{% url 'search.csv' %}?{{ query_string }}">
+          <img src="{% static 'images/csv_download_icon.png' %}" id="download_button"/>
+        </a>
+        <a href="{% url 'search.json' %}?{{ query_string }}">
+          <img src="{% static 'images/json_download_icon.png' %}" id="download_button"/>
+        </a>
+      </h3>
 
       {% for result in results.hits.hits %}
          <div class="panel panel-default">
