@@ -10,6 +10,9 @@ import copy
 import math
 import collections
 import dateutil.parser as date_parser
+import re
+from django.http import HttpResponse
+from django.template import loader, Context
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -303,7 +306,7 @@ def get_clear_all(request, context, json_query):
     except KeyError:
         json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
         current_filter = json_query["query"]["bool"]["filter"]
-        
+
     if current_filter != BASIC_FILTER:
         json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
         context["results"]["clear_all_facet_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
@@ -326,6 +329,13 @@ def home(request):
 
 
 def search(request):
+
+    match = re.search('\.(\w+)', request.path)
+    if match:
+        result_format = match.group(1)
+    else:
+        result_format = "html"
+
     context = {}
     json_query = request.GET.get('json_query') or ""
     try:
@@ -393,8 +403,15 @@ def search(request):
         get_terms_facet_size(request, context, json_query, page)
         get_pagination(request, context, page)
 
-    return render(request, "search.html", context=context)
 
+        if result_format == "csv":
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="grantnav.csv"'
+            t = loader.get_template('search.csv')
+            response.write(t.render(context))
+            return response
+        else:
+            return render(request, "search.html", context=context)
 
 def flatten_mapping(mapping, current_path=''):
     for key, value in mapping.items():
@@ -494,7 +511,7 @@ def funder(request, funder_id):
 
     es = get_es()
     results = es.search(body=query, index=settings.ES_INDEX, size=1)
-    
+
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
@@ -643,7 +660,7 @@ def recipient(request, recipient_id):
 
     es = get_es()
     results = es.search(body=query, index=settings.ES_INDEX, size=1)
-    
+
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
@@ -669,7 +686,7 @@ def region(request, region):
 
     es = get_es()
     results = es.search(body=query, index=settings.ES_INDEX, size=1)
-    
+
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
@@ -695,7 +712,7 @@ def district(request, district):
 
     es = get_es()
     results = es.search(body=query, index=settings.ES_INDEX, size=1)
-    
+
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
