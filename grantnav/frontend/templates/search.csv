@@ -1,9 +1,4 @@
-{% load frontend %}
-{% load csv %}
-
-{% load static %}
-
-{% filter csvify %}Data Source
+{% load frontend %}{% load csv %}{% load static %}{% filter csvify %}Data Source
 Publisher: Name
 Identifier
 Title
@@ -33,7 +28,6 @@ Beneficiary Location:Geographic Code Type
 Funding Org:Identifier
 Funding Org:Name
 Last modified{% endfilter %}
-
 {% block main_content %}
 {% if results and results.hits.hits %}
     {% for result in results.hits.hits %}
@@ -67,10 +61,6 @@ Last modified{% endfilter %}
 "{{ result.source.fundingOrganization.id }}"
 "{{ result.source.fundingOrganization.name }}"
 "Last modified"{% endfilter %}
-{% endfor %}
-
-{% endif %}
-
-{% endblock %}
+{% endfor %}{% endif %}{% endblock %}
 
 
