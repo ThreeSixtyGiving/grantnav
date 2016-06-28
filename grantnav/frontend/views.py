@@ -337,6 +337,13 @@ def search(request):
         result_format = "html"
 
     context = {}
+
+    query = request.GET.urlencode()
+    if query:
+        context['query_string'] = query
+    else:
+        context['query_string'] = "test"
+
     json_query = request.GET.get('json_query') or ""
     try:
         json_query = json.loads(json_query)
