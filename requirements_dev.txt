@@ -7,7 +7,9 @@ elasticsearch==2.3.0
 -e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool-dev
 python-dateutil==2.5.2
 strict-rfc3339==0.6
-
+## EU Cookies ##
+django-cookie-law==1.0.8
+django-classy-tags==0.7.2
 
 flake8==2.5.4
 # flake8 requires pyflakes <1.1
