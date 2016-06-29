@@ -7,9 +7,12 @@ from selenium import webdriver
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/c555725bf1aa1e2d22fb69dd99c1831feff7ecbd/'
 
 
+BROWSER = os.environ.get('BROWSER', 'Firefox')
+
+
 @pytest.fixture(scope="module")
 def browser(request):
-    browser = webdriver.Firefox()
+    browser = getattr(webdriver, BROWSER)()
     browser.implicitly_wait(3)
     request.addfinalizer(lambda: browser.quit())
     return browser
