@@ -28,16 +28,16 @@ Steps to installation:
 * Install Elastic search
 * Run the development server
 
-.. code:: bash
-
-    git clone https://github.com/OpenDataServices/grantnav.git
-    cd grantnav
-    virtualenv .ve --python=/usr/bin/python3
-    source .ve/bin/activate
-    pip install -r requirements_dev.txt
-    curl -O https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.1.1/elasticsearch-2.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-2.1.1.deb
-    sudo service elasticsearch start
-    python manage.py runserver
+```
+git clone https://github.com/OpenDataServices/grantnav.git
+cd grantnav
+virtualenv .ve --python=/usr/bin/python3
+source .ve/bin/activate
+pip install -r requirements_dev.txt
+curl -O https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.1.1/elasticsearch-2.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-2.1.1.deb
+sudo service elasticsearch start
+python manage.py runserver
+```
 
 Note that if you are not on Debian based system you will need to follow https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html#setup-installation to install elasticsearch.
 Follow the instructions in your terminal to open the aplication in your browser.
@@ -64,20 +64,31 @@ sassc grantnav/frontend/sass/main.scss grantnav/frontend/static/css/theme.css
 Run tests
 ------------
 
-.. code:: bash
-
-    py.test
+```
+py.test
+```
 
 Make sure elastic search is running.
 
 The tests include functional tests (actually interacting with the website in selenium). These can also be run against a deployed copy of the website:
 
-.. code:: bash
-
-    CUSTOM_SERVER_URL=http://dev.grantnav.opendataservices.coop py.test
+```
+CUSTOM_SERVER_URL=http://dev.grantnav.opendataservices.coop py.test
+```
 
 The tests delete an elastic search index and repopulate it.  The default index name is threesixtygiving
 
 
 We also use flake8 to test code quality, see https://github.com/OpenDataServices/developer-docs/blob/master/tests.md#flake8 
 
+Adding and updating requirements
+--------------------------------
+
+Add a new requirements to ``requirements.in`` or ``requirements_dev.in`` depending on whether it is just a development requirement or not.
+
+
+Then, run ``./update_requirements --new-only`` this will populate ``requirements.txt`` and/or ``requirements_dev.txt`` with pinned versions of the new requirement and it's dependencies.
+
+WARNING: The ``./update_requirements`` script will delete and recreate your current ``.ve`` directory.
+
+``./update_requirements`` without any flags will update all pinned requirements to the latest version. Generally we don't want to do this at the same time as adding a new dependency, to make testing any problems easier.

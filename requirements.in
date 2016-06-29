@@ -8,3 +8,4 @@ elasticsearch
 -e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool
 python-dateutil
 strict-rfc3339
+django-cookie-law
