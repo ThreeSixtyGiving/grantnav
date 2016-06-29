@@ -35,6 +35,10 @@ def dataload():
 def test_home(dataload, server_url, browser):
     browser.get(server_url)
     assert 'GrantNav' in browser.find_element_by_tag_name('body').text
+    assert 'Cookies disclaimer' in browser.find_element_by_id('CookielawBanner').text
+    browser.find_element_by_class_name("btn").click()
+    browser.get(server_url)
+    assert 'Cookies disclaimer' not in browser.find_element_by_tag_name('body').text
 
 
 def test_search(dataload, server_url, browser):
