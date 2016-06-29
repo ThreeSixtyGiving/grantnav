@@ -4,14 +4,13 @@ requests==2.9.1
 django-environ==0.4.0
 raven==5.12.0
 elasticsearch==2.3.0
--e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool-dev
+-e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool
 python-dateutil==2.5.2
 strict-rfc3339==0.6
-## EU Cookies ##
 django-cookie-law==1.0.8
-django-classy-tags==0.7.2
-## The following requirements were added by pip --freeze:
+## The following requirements were added by pip freeze:
 contextlib2==0.5.1
+django-classy-tags==0.7.2
 et-xmlfile==1.0.1
 jdcal==1.2
 jsonref==0.1
