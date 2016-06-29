@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from . import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
@@ -13,4 +14,5 @@ urlpatterns = [
     url(r'^region/(.*)$', views.region, name='region'),
     url(r'^district/(.*)$', views.district, name='district'),
     url(r'^stats', views.stats, name='stats'),
+    url(r'^terms', TemplateView.as_view(template_name='terms.html'), name='terms'),
 ]

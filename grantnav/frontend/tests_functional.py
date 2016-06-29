@@ -50,3 +50,8 @@ def test_bad_search(dataload, server_url, browser):
     browser.find_element_by_name("text_query").send_keys(" £s:::::afdsfas")
     browser.find_element_by_class_name("large-search-icon").click()
     assert 'Search input is not valid' in browser.find_element_by_tag_name('body').text
+
+
+def test_terms(server_url, browser):
+    browser.get(server_url + '/terms')
+    assert 'Terms & conditions' in browser.find_element_by_tag_name('h1').text
