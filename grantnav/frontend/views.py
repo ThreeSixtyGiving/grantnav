@@ -10,9 +10,16 @@ import copy
 import math
 import collections
 import dateutil.parser as date_parser
+import datetime
 import re
 from django.http import HttpResponse
 from django.template import loader
+
+# import the logging library
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -28,7 +35,6 @@ TERM_FILTERS = {
     "fundingOrganization": 0,
     "recipientOrganization": 1
 }
-
 
 BASIC_QUERY = {"query": {"bool": {"must":
                   {"query_string": {"query": ""}}, "filter": BASIC_FILTER}},
@@ -66,6 +72,26 @@ FIXED_DATE_RANGES = [
     {"from": "now-11y/y", "to": "now-10y/y"},
     {"from": "now-12y/y", "to": "now-11y/y"},
 ]
+
+
+def grants_as_csv(context):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+    t = loader.get_template('grants.csv')
+    response.write(t.render(context))
+    return response
+
+
+def grants_as_json(page, results):
+    grants = {'grants': []}
+    for hit in results['hits']['hits']:
+        if hit['_source']:
+            grants['grants'].append(hit['_source'])
+        else:
+            continue
+    response = HttpResponse(json.dumps(grants), content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+    return response
 
 
 def get_pagination(request, context, page):
@@ -333,8 +359,10 @@ def search(request):
     match = re.search('\.(\w+)', request.path)
     if match:
         result_format = match.group(1)
+        results_size = settings.FLATTENED_DOWNLOAD_LIMIT
     else:
         result_format = "html"
+        results_size = SIZE
 
     context = {}
 
@@ -379,12 +407,6 @@ def search(request):
         if context['text_query'] == '*':
             context['text_query'] = ''
 
-        if result_format == "html":
-            results_size=SIZE
-        else:
-            # Set this to a level that makes sense for the server. Elastic complains > 500k
-            results_size=100000
-
         try:
             create_amount_aggregate(json_query)
             create_date_aggregate(json_query)
@@ -404,31 +426,9 @@ def search(request):
         context['json_query'] = json.dumps(json_query)
 
         if result_format == "csv":
-            response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="grantnav.csv"'
-            t = loader.get_template('search.csv')
-            response.write(t.render(context))
-            return response
+            return grants_as_csv(context)
         elif result_format == "json":
-            import pprint
-            # import the logging library
-            import logging
-
-            # Get an instance of a logger
-            logger = logging.getLogger(__name__)
-
-            hits = results['hits']['hits']
-            grants = {
-                'grants': []
-            }
-            for hit in hits:
-                if hit['source']:
-                    grants['grants'].append(hit['source'])
-                else:
-                    continue;
-            response = HttpResponse(json.dumps(grants), content_type='application/json')
-            response['Content-Disposition'] = 'attachment; filename="grantnav.json"'
-            return response
+            return grants_as_json("search", results)
         else:
             get_clear_all(request, context, json_query)
 
@@ -527,6 +527,19 @@ def grant(request, grant_id):
 
 
 def funder(request, funder_id):
+
+    results_size = SIZE
+
+    match = re.search('\.(\w+)$', request.path)
+    if match:
+        result_format = match.group(1)
+        funder_id = re.match('(.*)\.\w*$', funder_id).group(1)
+        results_size = settings.FLATTENED_DOWNLOAD_LIMIT
+    else:
+        result_format = "html"
+
+    logger.warn(funder_id)
+
     query = {"query": {"bool": {"filter":
                 [{"term": {"fundingOrganization.id": funder_id}}]}},
             "aggs": {
@@ -544,14 +557,20 @@ def funder(request, funder_id):
     }
 
     es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
 
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
     context['results'] = results
     context['funder'] = results['hits']['hits'][0]["_source"]["fundingOrganization"][0]
-    return render(request, "funder.html", context=context)
+
+    if result_format == "csv":
+        return grants_as_csv(context)
+    elif result_format == "json":
+        return grants_as_json("funder", results)
+    else:
+        return render(request, "funder.html", context=context)
 
 
 def funder_recipients_datatables(request):
