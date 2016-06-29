@@ -80,3 +80,16 @@ a.anchor {
 .dtr-data {
   white-space: normal; 
 }
+
+.footer-menu {
+    margin-left: 5px;
+    padding: 0;
+}
+
+.footer-info {
+  margin-left: 5px;
+}
+
+.footer-menu a {
+    color: #fff;
+}
