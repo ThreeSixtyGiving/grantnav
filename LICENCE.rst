@@ -21,3 +21,13 @@ Copyright 2016 Open Data Services Co-operative Limited.
 
 
 
+Code-Point Open
+---------------
+
+GrantNav relies on Code-Point Open data <https://www.ordnancesurvey.co.uk/business-and-government/products/code-point-open.html> which is distributed under an Open Government Licence (v3) <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/>
+
+Contains OS data © Crown copyright and database right 2016
+
+Contains Royal Mail data © Royal Mail copyright and Database right 2016
+
+Contains National Statistics data © Crown copyright and database right 2016  

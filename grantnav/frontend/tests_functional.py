@@ -41,6 +41,17 @@ def test_home(dataload, server_url, browser):
     assert 'Cookies disclaimer' not in browser.find_element_by_tag_name('body').text
 
 
+@pytest.mark.parametrize(('text'), [
+    ('Contains OS data © Crown copyright and database right 2016'),
+    ('Contains Royal Mail data © Royal Mail copyright and Database right 2016'),
+    ('Contains National Statistics data © Crown copyright and database right 2016')
+    ])
+def test_code_point_credit(dataload, server_url, browser, text):
+    browser.get(server_url)
+    code_point_paragraph = browser.find_element_by_id("code-point").text
+    assert text in code_point_paragraph
+    
+
 def test_search(dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-icon").click()
@@ -54,3 +65,8 @@ def test_bad_search(dataload, server_url, browser):
     browser.find_element_by_name("text_query").send_keys(" £s:::::afdsfas")
     browser.find_element_by_class_name("large-search-icon").click()
     assert 'Search input is not valid' in browser.find_element_by_tag_name('body').text
+
+
+def test_terms(server_url, browser):
+    browser.get(server_url + '/terms')
+    assert 'Terms & conditions' in browser.find_element_by_tag_name('h1').text
