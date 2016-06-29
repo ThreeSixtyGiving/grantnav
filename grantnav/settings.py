@@ -57,6 +57,10 @@ RAVEN_CONFIG = {
 
 GRANT_SCHEMA = env('GRANT_SCHEMA')
 
+# Set these to sensible limits for your server
+JSON_DOWNLOAD_LIMIT=100000
+CSV_DOWNLOAD_LIMIT=100000
+
 # Application definition
 
 INSTALLED_APPS = (
