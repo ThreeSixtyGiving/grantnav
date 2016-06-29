@@ -35,6 +35,8 @@ def dataload():
 def test_home(dataload, server_url, browser):
     browser.get(server_url)
     assert 'GrantNav' in browser.find_element_by_tag_name('body').text
+    browser.find_element_by_link_text("Terms and Conditions")
+    browser.find_element_by_link_text("Take Down Policy")
 
 
 @pytest.mark.parametrize(('text'), [
@@ -66,3 +68,8 @@ def test_bad_search(dataload, server_url, browser):
 def test_terms(server_url, browser):
     browser.get(server_url + '/terms')
     assert 'Terms & conditions' in browser.find_element_by_tag_name('h1').text
+    
+    
+def test_take_down(server_url, browser):
+    browser.get(server_url + '/take_down_policy')
+    assert 'Take Down Policy' in browser.find_element_by_tag_name('h1').text

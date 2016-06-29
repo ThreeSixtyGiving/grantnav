@@ -86,6 +86,12 @@ a.anchor {
     padding: 0;
 }
 
+.footer-menu li {
+  display:inline;
+  list-style-type: none;
+  margin-right: 10px;
+}
+
 .footer-info {
   margin-left: 5px;
 }
@@ -93,3 +99,4 @@ a.anchor {
 .footer-menu a {
     color: #fff;
 }
+
