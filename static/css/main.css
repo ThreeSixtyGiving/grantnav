@@ -1,0 +1,82 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+.indent {
+  margin-left: 15px
+}
+
+.tab {
+  margin-right: 20px
+}
+
+.bottom-space {
+  margin-bottom: 20px
+}
+
+.list-group-compact {
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+}
+
+a.anchor {
+    display: block;
+    position: relative;
+    top: -70px;
+    visibility: hidden;
+}
+
+.heading-in-panel {
+    margin-top:0px;
+}
+
+.fixed-org-height {
+  height: 150px;
+  overflow: hidden;
+}
+
+.panel-less-padding {
+  padding-bottom: 0px
+} 
+
+.large-arrow {
+  font-size: 40px;
+  color: #8F8F8F;
+  display:inline-block;
+  transform:scale(1.8,1);
+}
+
+.show-in-results {
+  margin-top: 28px;
+  margin-bottom: 10.5px;
+}
+
+.dataTables_scrollBody {
+  background: white !important
+}
+
+.funder-header {
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-bottom: 40px;
+  margin-top: 9px;
+  font-weight: 100;
+}
+
+.top-stats {
+  margin-top: 10px;
+}
+
+#recipients_datatable_filter, #grants_datatable_filter {
+  float: left;
+}
+
+#recipients_datatable_info, #grants_datatable_info {
+  text-align: right;
+}
+
+.dtr-data {
+  white-space: normal; 
+}

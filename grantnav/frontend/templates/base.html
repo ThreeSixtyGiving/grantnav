@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load cookielaw_tags %}
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -10,7 +11,8 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        
+        <link rel="stylesheet" href="{% static 'cookielaw/css/cookielaw.css'%}">
         <link rel="stylesheet" href="{% static 'css/theme.css'%}">
         <link rel="stylesheet" href="{% static 'css/main.css'%}">
         {% block extra_style %} {% endblock %}
@@ -20,6 +22,7 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+    {% cookielaw_banner %}
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid">
         <div class="row">
@@ -77,6 +80,7 @@
         g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
       })();
     </script>
+    <script src="{% static 'cookielaw/js/cookielaw.js'%}"></script>
     <noscript><p><img src="//mon.opendataservices.coop/piwik/piwik.php?idsite=6" style="border:0;" alt="" /></p></noscript>
     <!-- End Piwik Code -->
     </body>

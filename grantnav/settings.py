@@ -69,6 +69,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'grantnav.frontend',
     'raven.contrib.django.raven_compat',
+    'cookielaw',
 )
 
 MIDDLEWARE_CLASSES = (
