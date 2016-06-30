@@ -15,12 +15,6 @@ import re
 from django.http import HttpResponse
 from django.template import loader
 
-# import the logging library
-import logging
-
-# Get an instance of a logger
-logger = logging.getLogger(__name__)
-
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
     {"bool": {"should": []}},  # Recipient Orgs
@@ -95,7 +89,7 @@ def csv_response(context, template):
     return response
 
 
-def grants_as_json(page, results):
+def grants_as_json(results):
     grants = {'grants': []}
     for hit in results['hits']['hits']:
         if hit['_source']:
@@ -435,7 +429,7 @@ def search(request):
         if result_format == "csv":
             return csv_response(context, "grants")
         elif result_format == "json":
-            return grants_as_json("search", results)
+            return grants_as_json(results)
         else:
             get_clear_all(request, context, json_query)
 
@@ -540,8 +534,6 @@ def funder(request, funder_id):
     if result_format != "html":
         funder_id = re.match('(.*)\.\w*$', funder_id).group(1)
 
-    logger.warn(funder_id)
-
     query = {"query": {"bool": {"filter":
                 [{"term": {"fundingOrganization.id": funder_id}}]}},
             "aggs": {
@@ -570,7 +562,7 @@ def funder(request, funder_id):
     if result_format == "csv":
         return csv_response(context, "grants")
     elif result_format == "json":
-        return grants_as_json("funder", results)
+        return grants_as_json(results)
     else:
         return render(request, "funder.html", context=context)
 
@@ -721,6 +713,10 @@ def grants_datatables(request):
 
 
 def recipient(request, recipient_id):
+    [result_format, results_size] = get_request_type_and_size(request)
+    if result_format != "html":
+        recipient_id = re.match('(.*)\.\w*$', recipient_id).group(1)
+
     query = {"query": {"bool": {"filter":
                  [{"term": {"recipientOrganization.id": recipient_id}}]}},
              "aggs": {
@@ -737,18 +733,27 @@ def recipient(request, recipient_id):
                  }}
 
     es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
 
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
     context['results'] = results
     context['recipient'] = results['hits']['hits'][0]["_source"]["recipientOrganization"][0]
-    return render(request, "recipient.html", context=context)
 
+    if result_format == "csv":
+        return csv_response(context, "grants")
+    elif result_format == "json":
+        return grants_as_json(results)
+    else:
+        return render(request, "recipient.html", context=context)
 
 
 def region(request, region):
+    [result_format, results_size] = get_request_type_and_size(request)
+    if result_format != "html":
+        region = re.match('(.*)\.\w*$', region).group(1)
+
     query = {"query": {"bool": {"filter":
                 [{"term": {"recipientRegionName": region}}]}},
             "aggs": {
@@ -764,18 +769,27 @@ def region(request, region):
     }
 
     es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
 
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
     context['results'] = results
     context['region'] = region
-    return render(request, "region.html", context=context)
 
+    if result_format == "csv":
+        return csv_response(context, "grants")
+    elif result_format == "json":
+        return grants_as_json(results)
+    else:
+        return render(request, "region.html", context=context)
 
 
 def district(request, district):
+    [result_format, results_size] = get_request_type_and_size(request)
+    if result_format != "html":
+        district = re.match('(.*)\.\w*$', district).group(1)
+
     query = {"query": {"bool": {"filter":
                 [{"term": {"recipientDistrictName": district}}]}},
             "aggs": {
@@ -791,11 +805,17 @@ def district(request, district):
     }
 
     es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
 
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
     context['results'] = results
     context['district'] = district
-    return render(request, "district.html", context=context)
+
+    if result_format == "csv":
+        return csv_response(context, "grants")
+    elif result_format == "json":
+        return grants_as_json(results)
+    else:
+        return render(request, "district.html", context=context)
