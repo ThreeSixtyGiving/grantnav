@@ -1,0 +1,64 @@
+{% load frontend %}{% load csv %}{% load static %}{% filter csvify %}Data Source
+Publisher: Name
+Identifier
+Title
+Description
+Currency
+Amount Awarded
+Award Date
+URL
+Planned Dates:Duration (months)
+Recipient Org:Identifier
+Recipient Org:Name
+Recipient Org:Charity Number
+Recipient Org:Company Number
+Recipient Org:Location:0:Geographic Code Type
+Recipient Org:Location:0:Geographic Code
+Recipient Org:Location:0:Name
+Recipient Org:Location:1:Geographic Code Type
+Recipient Org:Location:1:Geographic Code
+Recipient Org:Location:1:Name
+Recipient Org:Location:2:Geographic Code Type
+Recipient Org:Location:2:Geographic Code
+Recipient Org:Location:2:Name
+Beneficiary Location:Name
+Beneficiary Location:Country Code
+Beneficiary Location:Geographic Code
+Beneficiary Location:Geographic Code Type
+Funding Org:Identifier
+Funding Org:Name
+Last modified{% endfilter %}{% block main_content %}
+{% if results and results.hits.hits %}
+{% for result in results.hits.hits %}{% with r=result|get:"_source" %}{% filter csvify %}"Data Source"
+"Publisher: Name"
+"{{ r.id }}"
+"{{ r.title }}"
+"{{ r.description|addslashes }}"
+"{{ r.currency }}"
+"{{ r.amountAwarded }}"
+"{{ r.awardDate }}"
+"{{ r.recipientOrganization.0.url }}"
+"{{ r.plannedDate.duration }}"
+"{{ r.recipientOrganization.0.id }}"
+"{{ r.recipientOrganization.0.name }}"
+"{{ r.recipientOrganization.0.charityNumber }}"
+"{{ r.recipientOrganization.0.companyNumber }}"
+"{{ r.recipientOrganization.0.location.0.geoCodeType }}"
+"{{ r.recipientOrganization.0.location.0.geoCode }}"
+"{{ r.recipientOrganization.0.location.0.name }}"
+"{{ r.recipientOrganization.0.location.1.geoCodeType }}"
+"{{ r.recipientOrganization.0.location.1.geoCode }}"
+"{{ r.recipientOrganization.0.location.1.name }}"
+"{{ r.recipientOrganization.0.location.2.geoCodeType }}"
+"{{ r.recipientOrganization.0.location.2.geoCode }}"
+"{{ r.recipientOrganization.0.location.2.name }}"
+"{{ r.beneficiaryLocation.name }}"
+"{{ r.beneficiaryLocation.countryCode }}"
+"{{ r.beneficiaryLocation.geoCode }}"
+"{{ r.beneficiaryLocation.geoCodeType }}"
+"{{ r.fundingOrganization.id }}"
+"{{ r.fundingOrganization.name }}"
+"Last modified"{% endfilter %}
+{% endwith %}{% endfor %}{% endif %}{% endblock %}
+
+

@@ -87,10 +87,10 @@ def get_request_type_and_size(request):
     return [result_format, results_size]
 
 
-def grants_as_csv(context):
+def csv_response(context, template):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
-    t = loader.get_template('grants.csv')
+    t = loader.get_template('{0}.csv'.format(template))
     response.write(t.render(context))
     return response
 
@@ -433,7 +433,7 @@ def search(request):
         context['json_query'] = json.dumps(json_query)
 
         if result_format == "csv":
-            return grants_as_csv(context)
+            return csv_response(context, "grants")
         elif result_format == "json":
             return grants_as_json("search", results)
         else:
@@ -568,7 +568,7 @@ def funder(request, funder_id):
     context['funder'] = results['hits']['hits'][0]["_source"]["fundingOrganization"][0]
 
     if result_format == "csv":
-        return grants_as_csv(context)
+        return csv_response(context, "grants")
     elif result_format == "json":
         return grants_as_json("funder", results)
     else:
@@ -576,12 +576,30 @@ def funder(request, funder_id):
 
 
 def funder_recipients_datatables(request):
+
+    match = re.search('\.(\w+)$', request.path)
+    if match:
+        result_format = match.group(1)
+        results_size = settings.FLATTENED_DOWNLOAD_LIMIT
+    else:
+        result_format = "ajax"
+
     order = ["_term", "recipient_stats.count", "recipient_stats.sum", "recipient_stats.avg", "recipient_stats.max", "recipient_stats.min"]
-    order_field = order[int(request.GET['order[0][column]'])]
-    search_value = request.GET['search[value]']
-    order_dir = request.GET['order[0][dir]']
-    start = int(request.GET['start'])
-    length = int(request.GET['length'])
+
+    if result_format == "ajax":
+        start = int(request.GET['start'])
+        length = int(request.GET['length'])
+        order_field = order[int(request.GET['order[0][column]'])]
+        search_value = request.GET['search[value]']
+        order_dir = request.GET['order[0][dir]']
+    else:
+        start = 0
+        length = settings.FLATTENED_DOWNLOAD_LIMIT
+        order_field = order[0]
+        search_value = ""
+        order_dir = "desc"
+
+
     query = {"query": {
              "bool": {
                  "filter":
@@ -615,12 +633,19 @@ def funder_recipients_datatables(request):
         stats["org_id"] = org_id
         result_list.append(stats)
 
-    return JsonResponse(
-        {'data': result_list,
-         'draw': request.GET['draw'],
-         'recordsTotal': results["aggregations"]["recipient_count"]["value"],
-         'recordsFiltered': results["aggregations"]["recipient_count"]["value"]}
-    )
+    if result_format == "ajax":
+        return JsonResponse(
+            {'data': result_list,
+             'draw': request.GET['draw'],
+             'recordsTotal': results["aggregations"]["recipient_count"]["value"],
+             'recordsFiltered': results["aggregations"]["recipient_count"]["value"]}
+        )
+    elif result_format == "csv":
+        return csv_response({'data': result_list}, "recipients")
+    elif result_format == "json":
+        response = HttpResponse(json.dumps({'data': result_list}), content_type='application/json')
+        response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+        return response
 
 grant_datatables_metadata = {
     "funder": {
@@ -640,10 +665,6 @@ grant_datatables_metadata = {
         "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "title", "description"],
     }
 }
-
-
-def funder_recipients_download(request):
-    return
 
 
 def grants_datatables(request):
