@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load frontend %}
+
+{% block main_content %}
+<h1 class="funder-header text-center">
+{{ publisher.name }}
+</h1>
+
+<h2>Datasets</h2>
+
+<table class="table table-condensed table-bordered table-striped dt-responsive">
+<thead>
+    <tr>
+        <th>Dataset</th>
+        <th>Downloaded for use in GrantNav</th>
+    </tr>
+</thead>
+<tbody>
+    {% for dataset in publisher.datasets %}
+    <tr>
+        <td><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
+        <td></td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}

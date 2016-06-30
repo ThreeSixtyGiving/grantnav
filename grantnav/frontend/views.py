@@ -14,6 +14,7 @@ import datetime
 import re
 from django.http import HttpResponse
 from django.template import loader
+from grantnav import provenance
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -926,3 +927,11 @@ def district(request, district):
         return grants_as_json(results)
     else:
         return render(request, "district.html", context=context)
+
+
+def publisher(request, publisher_id):
+    if publisher_id not in provenance.by_publisher:
+        raise Http404
+    return render(request, "publisher.html", context={
+        'publisher': provenance.by_publisher[publisher_id]
+    })
