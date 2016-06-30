@@ -580,7 +580,6 @@ def funder_recipients_datatables(request):
     match = re.search('\.(\w+)$', request.path)
     if match:
         result_format = match.group(1)
-        results_size = settings.FLATTENED_DOWNLOAD_LIMIT
     else:
         result_format = "ajax"
 
@@ -598,7 +597,6 @@ def funder_recipients_datatables(request):
         order_field = order[0]
         search_value = ""
         order_dir = "desc"
-
 
     query = {"query": {
              "bool": {
@@ -749,6 +747,7 @@ def recipient(request, recipient_id):
     return render(request, "recipient.html", context=context)
 
 
+
 def region(request, region):
     query = {"query": {"bool": {"filter":
                 [{"term": {"recipientRegionName": region}}]}},
@@ -773,6 +772,7 @@ def region(request, region):
     context['results'] = results
     context['region'] = region
     return render(request, "region.html", context=context)
+
 
 
 def district(request, district):
