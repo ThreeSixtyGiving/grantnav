@@ -185,3 +185,7 @@
 {% endif %}
 
 {% endblock %}
+
+{% block extrapiwik %}
+_paq.push(["trackSiteSearch", "{{text_query}}", false, {{results.hits.total}}]);
+{% endblock %}

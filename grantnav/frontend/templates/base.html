@@ -84,6 +84,7 @@
     <!-- Piwik -->
     <script type="text/javascript">
       var _paq = _paq || [];
+      {% block extrapiwik %}{% endblock %}
       _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
       _paq.push(["setCookieDomain", "*.grantnav-dev.default.opendataservices.uk0.bigv.io"]);
       _paq.push(["setDomains", ["*.grantnav-dev.default.opendataservices.uk0.bigv.io"]]);
