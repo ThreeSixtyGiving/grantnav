@@ -74,6 +74,19 @@ FIXED_DATE_RANGES = [
 ]
 
 
+def get_request_type_and_size(request):
+    results_size = SIZE
+
+    match = re.search('\.(\w+)$', request.path)
+    if match:
+        result_format = match.group(1)
+        results_size = settings.FLATTENED_DOWNLOAD_LIMIT
+    else:
+        result_format = "html"
+
+    return [result_format, results_size]
+
+
 def grants_as_csv(context):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
@@ -356,13 +369,7 @@ def home(request):
 
 def search(request):
 
-    match = re.search('\.(\w+)', request.path)
-    if match:
-        result_format = match.group(1)
-        results_size = settings.FLATTENED_DOWNLOAD_LIMIT
-    else:
-        result_format = "html"
-        results_size = SIZE
+    [result_format, results_size] = get_request_type_and_size(request)
 
     context = {}
 
@@ -528,15 +535,10 @@ def grant(request, grant_id):
 
 def funder(request, funder_id):
 
-    results_size = SIZE
+    [result_format, results_size] = get_request_type_and_size(request)
 
-    match = re.search('\.(\w+)$', request.path)
-    if match:
-        result_format = match.group(1)
+    if result_format != "html":
         funder_id = re.match('(.*)\.\w*$', funder_id).group(1)
-        results_size = settings.FLATTENED_DOWNLOAD_LIMIT
-    else:
-        result_format = "html"
 
     logger.warn(funder_id)
 
@@ -638,6 +640,10 @@ grant_datatables_metadata = {
         "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "title", "description"],
     }
 }
+
+
+def funder_recipients_download(request):
+    return
 
 
 def grants_datatables(request):
