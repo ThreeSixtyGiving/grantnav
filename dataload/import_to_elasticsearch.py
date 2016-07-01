@@ -280,7 +280,9 @@ def update_doc_with_org_mappings(grant, org_key, file_name):
     orgs = grant.get(org_key, [])
     for org in orgs:
         org_id, name = org.get('id'), org.get('name')
-        if not org_id or not name:
+        if not name:
+            name = org_id
+        if not org_id:
             return
         if '/' in org_id:
             bad_org_ids.append([file_name, org_key, org_id])
