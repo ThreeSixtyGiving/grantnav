@@ -85,6 +85,7 @@ def test_search_json_download(server_url, browser):
     browser.find_element_by_id("json_download_button").click()
     file = max(glob.iglob(os.getcwd() + "/" + 'grantnav-*.json'), key=os.path.getctime)
     dl = open(file, 'r').read(4096)
+    assert 1 in tell(dl)
     assert "grants" in dl
 
 
