@@ -1,5 +1,4 @@
 import os
-import glob
 import time
 import pytest
 from dataload.import_to_elasticsearch import import_to_elasticsearch
