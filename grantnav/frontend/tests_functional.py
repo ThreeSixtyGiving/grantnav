@@ -2,7 +2,6 @@ import os
 import glob
 import time
 import pytest
-from subprocess import check_call
 from dataload.import_to_elasticsearch import import_to_elasticsearch
 from selenium import webdriver
 
@@ -30,6 +29,7 @@ def browser(request):
         browser.implicitly_wait(3)
         request.addfinalizer(lambda: browser.quit())
         return browser
+
 
 @pytest.fixture(scope="module")
 def server_url(request, live_server):
@@ -78,6 +78,7 @@ def test_search(dataload, server_url, browser):
     assert 'Lloyds Bank Foundation for England and Wales (4,116)' in browser.find_element_by_tag_name('body').text
     assert 'Wolfson Foundation (379)' in browser.find_element_by_tag_name('body').text
 
+
 def test_search_json_download(server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-icon").click()
@@ -102,5 +103,3 @@ def test_terms(server_url, browser):
 def test_take_down(server_url, browser):
     browser.get(server_url + '/take_down_policy')
     assert 'Take Down Policy' in browser.find_element_by_tag_name('h1').text
-
-

@@ -550,8 +550,6 @@ def funder(request, funder_id):
         }
     }
 
-
-
     es = get_es()
     results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
 
