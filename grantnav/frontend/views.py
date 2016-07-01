@@ -550,6 +550,8 @@ def funder(request, funder_id):
         }
     }
 
+
+
     es = get_es()
     results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
 
@@ -617,7 +619,10 @@ def funder_recipients_datatables(request):
         stats = result["recipient_stats"]
         for key in list(stats):
             if key != 'count':
-                stats[key] = "£ {:,.0f}".format(int(stats[key]))
+                if result_format == "ajax":
+                    stats[key] = "£ {:,.0f}".format(int(stats[key]))
+                else:
+                    stats[key] = "{:.0f}".format(int(stats[key]))
         org_name, org_id = json.loads(result["key"])
         stats["org_name"] = org_name
         stats["org_id"] = org_id
