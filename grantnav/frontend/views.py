@@ -10,6 +10,10 @@ import copy
 import math
 import collections
 import dateutil.parser as date_parser
+import datetime
+import re
+from django.http import HttpResponse
+from django.template import loader
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -25,7 +29,6 @@ TERM_FILTERS = {
     "fundingOrganization": 0,
     "recipientOrganization": 1
 }
-
 
 BASIC_QUERY = {"query": {"bool": {"must":
                   {"query_string": {"query": ""}}, "filter": BASIC_FILTER}},
@@ -63,6 +66,39 @@ FIXED_DATE_RANGES = [
     {"from": "now-11y/y", "to": "now-10y/y"},
     {"from": "now-12y/y", "to": "now-11y/y"},
 ]
+
+
+def get_request_type_and_size(request):
+    results_size = SIZE
+
+    match = re.search('\.(\w+)$', request.path)
+    if match:
+        result_format = match.group(1)
+        results_size = settings.FLATTENED_DOWNLOAD_LIMIT
+    else:
+        result_format = "html"
+
+    return [result_format, results_size]
+
+
+def csv_response(context, template):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+    t = loader.get_template('{0}.csv'.format(template))
+    response.write(t.render(context))
+    return response
+
+
+def grants_as_json(results):
+    grants = {'grants': []}
+    for hit in results['hits']['hits']:
+        if hit['_source']:
+            grants['grants'].append(hit['_source'])
+        else:
+            continue
+    response = HttpResponse(json.dumps(grants), content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+    return response
 
 
 def get_pagination(request, context, page):
@@ -303,7 +339,7 @@ def get_clear_all(request, context, json_query):
     except KeyError:
         json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
         current_filter = json_query["query"]["bool"]["filter"]
-        
+
     if current_filter != BASIC_FILTER:
         json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
         context["results"]["clear_all_facet_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
@@ -326,7 +362,17 @@ def home(request):
 
 
 def search(request):
+
+    [result_format, results_size] = get_request_type_and_size(request)
+
     context = {}
+
+    query = request.GET.urlencode()
+    if query:
+        context['query_string'] = query
+    else:
+        context['query_string'] = ""
+
     json_query = request.GET.get('json_query') or ""
     try:
         json_query = json.loads(json_query)
@@ -365,7 +411,7 @@ def search(request):
         try:
             create_amount_aggregate(json_query)
             create_date_aggregate(json_query)
-            results = es.search(body=json_query, size=SIZE, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
+            results = es.search(body=json_query, size=results_size, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
             json_query["aggs"].pop("awardYear")
             json_query["aggs"].pop("amountAwarded")
             json_query["aggs"].pop("amountAwardedFixed")
@@ -380,20 +426,26 @@ def search(request):
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
 
-        get_clear_all(request, context, json_query)
-        for filter_name, index in TERM_FILTERS.items():
-            get_terms_facets(request, context, json_query, filter_name + ".id_and_name", filter_name, index)
+        if result_format == "csv":
+            return csv_response(context, "grants")
+        elif result_format == "json":
+            return grants_as_json(results)
+        else:
+            get_clear_all(request, context, json_query)
 
-        get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5)
-        get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6)
+            for filter_name, index in TERM_FILTERS.items():
+                get_terms_facets(request, context, json_query, filter_name + ".id_and_name", filter_name, index)
 
-        get_amount_facet(request, context, json_query)
-        get_amount_facet_fixed(request, context, json_query)
-        get_date_facets(request, context, json_query)
-        get_terms_facet_size(request, context, json_query, page)
-        get_pagination(request, context, page)
+            get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5)
+            get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6)
 
-    return render(request, "search.html", context=context)
+            get_amount_facet(request, context, json_query)
+            get_amount_facet_fixed(request, context, json_query)
+            get_date_facets(request, context, json_query)
+            get_terms_facet_size(request, context, json_query, page)
+            get_pagination(request, context, page)
+
+            return render(request, "search.html", context=context)
 
 
 def flatten_mapping(mapping, current_path=''):
@@ -476,6 +528,12 @@ def grant(request, grant_id):
 
 
 def funder(request, funder_id):
+
+    [result_format, results_size] = get_request_type_and_size(request)
+
+    if result_format != "html":
+        funder_id = re.match('(.*)\.\w*$', funder_id).group(1)
+
     query = {"query": {"bool": {"filter":
                 [{"term": {"fundingOrganization.id": funder_id}}]}},
             "aggs": {
@@ -493,23 +551,45 @@ def funder(request, funder_id):
     }
 
     es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
-    
+    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
+
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
     context['results'] = results
     context['funder'] = results['hits']['hits'][0]["_source"]["fundingOrganization"][0]
-    return render(request, "funder.html", context=context)
+
+    if result_format == "csv":
+        return csv_response(context, "grants")
+    elif result_format == "json":
+        return grants_as_json(results)
+    else:
+        return render(request, "funder.html", context=context)
 
 
 def funder_recipients_datatables(request):
+
+    match = re.search('\.(\w+)$', request.path)
+    if match:
+        result_format = match.group(1)
+    else:
+        result_format = "ajax"
+
     order = ["_term", "recipient_stats.count", "recipient_stats.sum", "recipient_stats.avg", "recipient_stats.max", "recipient_stats.min"]
-    order_field = order[int(request.GET['order[0][column]'])]
-    search_value = request.GET['search[value]']
-    order_dir = request.GET['order[0][dir]']
-    start = int(request.GET['start'])
-    length = int(request.GET['length'])
+
+    if result_format == "ajax":
+        start = int(request.GET['start'])
+        length = int(request.GET['length'])
+        order_field = order[int(request.GET['order[0][column]'])]
+        search_value = request.GET['search[value]']
+        order_dir = request.GET['order[0][dir]']
+    else:
+        start = 0
+        length = settings.FLATTENED_DOWNLOAD_LIMIT
+        order_field = order[0]
+        search_value = ""
+        order_dir = "desc"
+
     query = {"query": {
              "bool": {
                  "filter":
@@ -537,18 +617,28 @@ def funder_recipients_datatables(request):
         stats = result["recipient_stats"]
         for key in list(stats):
             if key != 'count':
-                stats[key] = "£ {:,.0f}".format(int(stats[key]))
+                if result_format == "ajax":
+                    stats[key] = "£ {:,.0f}".format(int(stats[key]))
+                else:
+                    stats[key] = "{:.0f}".format(int(stats[key]))
         org_name, org_id = json.loads(result["key"])
         stats["org_name"] = org_name
         stats["org_id"] = org_id
         result_list.append(stats)
 
-    return JsonResponse(
-        {'data': result_list,
-         'draw': request.GET['draw'],
-         'recordsTotal': results["aggregations"]["recipient_count"]["value"],
-         'recordsFiltered': results["aggregations"]["recipient_count"]["value"]}
-    )
+    if result_format == "ajax":
+        return JsonResponse(
+            {'data': result_list,
+             'draw': request.GET['draw'],
+             'recordsTotal': results["aggregations"]["recipient_count"]["value"],
+             'recordsFiltered': results["aggregations"]["recipient_count"]["value"]}
+        )
+    elif result_format == "csv":
+        return csv_response({'data': result_list}, "recipients")
+    elif result_format == "json":
+        response = HttpResponse(json.dumps({'data': result_list}), content_type='application/json')
+        response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+        return response
 
 grant_datatables_metadata = {
     "funder": {
@@ -626,6 +716,10 @@ def grants_datatables(request):
 
 
 def recipient(request, recipient_id):
+    [result_format, results_size] = get_request_type_and_size(request)
+    if result_format != "html":
+        recipient_id = re.match('(.*)\.\w*$', recipient_id).group(1)
+
     query = {"query": {"bool": {"filter":
                  [{"term": {"recipientOrganization.id": recipient_id}}]}},
              "aggs": {
@@ -642,17 +736,27 @@ def recipient(request, recipient_id):
                  }}
 
     es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
-    
+    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
+
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
     context['results'] = results
     context['recipient'] = results['hits']['hits'][0]["_source"]["recipientOrganization"][0]
-    return render(request, "recipient.html", context=context)
+
+    if result_format == "csv":
+        return csv_response(context, "grants")
+    elif result_format == "json":
+        return grants_as_json(results)
+    else:
+        return render(request, "recipient.html", context=context)
 
 
 def region(request, region):
+    [result_format, results_size] = get_request_type_and_size(request)
+    if result_format != "html":
+        region = re.match('(.*)\.\w*$', region).group(1)
+
     query = {"query": {"bool": {"filter":
                 [{"term": {"recipientRegionName": region}}]}},
             "aggs": {
@@ -668,17 +772,27 @@ def region(request, region):
     }
 
     es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
-    
+    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
+
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
     context['results'] = results
     context['region'] = region
-    return render(request, "region.html", context=context)
+
+    if result_format == "csv":
+        return csv_response(context, "grants")
+    elif result_format == "json":
+        return grants_as_json(results)
+    else:
+        return render(request, "region.html", context=context)
 
 
 def district(request, district):
+    [result_format, results_size] = get_request_type_and_size(request)
+    if result_format != "html":
+        district = re.match('(.*)\.\w*$', district).group(1)
+
     query = {"query": {"bool": {"filter":
                 [{"term": {"recipientDistrictName": district}}]}},
             "aggs": {
@@ -694,11 +808,17 @@ def district(request, district):
     }
 
     es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
-    
+    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
+
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
     context['results'] = results
     context['district'] = district
-    return render(request, "district.html", context=context)
+
+    if result_format == "csv":
+        return csv_response(context, "grants")
+    elif result_format == "json":
+        return grants_as_json(results)
+    else:
+        return render(request, "district.html", context=context)

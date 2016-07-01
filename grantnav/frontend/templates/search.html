@@ -30,11 +30,11 @@
         </div>
         <div class="list-group">
           {% for bucket in results.aggregations.fundingOrganization.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </a> 
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
 
           {% if results.aggregations.fundingOrganization.buckets|length > 9 %}
-            <a href="{{see_more_url.fundingOrganization.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.fundingOrganization.more%}See More{% else %}See Less{% endif %}</b> </a> 
+            <a href="{{see_more_url.fundingOrganization.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.fundingOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
 
         </div>
@@ -46,10 +46,10 @@
         </div>
         <div class="list-group">
           {% for bucket in results.aggregations.recipientOrganization.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </a> 
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
           {% if results.aggregations.recipientOrganization.buckets|length > 9 %}
-            <a href="{{see_more_url.recipientOrganization.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientOrganization.more%}See More{% else %}See Less{% endif %}</b> </a> 
+            <a href="{{see_more_url.recipientOrganization.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
         </div>
       </div>
@@ -60,7 +60,7 @@
         </div>
         <div class="list-group">
           {% for bucket in results.aggregations.recipientRegionName.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a> 
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
         </div>
       </div>
@@ -71,10 +71,10 @@
         </div>
         <div class="list-group">
           {% for bucket in results.aggregations.recipientDistrictName.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a> 
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
           {% if results.aggregations.recipientDistrictName.buckets|length > 9 %}
-            <a href="{{see_more_url.recipientDistrictName.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientDistrictName.more%}See More{% else %}See Less{% endif %}</b> </a> 
+            <a href="{{see_more_url.recipientDistrictName.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientDistrictName.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
         </div>
       </div>
@@ -85,10 +85,10 @@
         </div>
         <div class="list-group">
           {% if amount_range %}
-            <a href="{{results.aggregations.amountAwarded.clear_url}}" class="list-group-item list-group-compact list-group-item-success"> {{amount_range|get_amount_range}} </a> 
+            <a href="{{results.aggregations.amountAwarded.clear_url}}" class="list-group-item list-group-compact list-group-item-success"> {{amount_range|get_amount_range}} </a>
           {% endif %}
           {% for bucket in results.aggregations.amountAwarded.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count|get_amount}})</small> </a> 
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
         </div>
       </div>
@@ -99,7 +99,7 @@
         </div>
         <div class="list-group">
           {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count|get_amount}})</small> </a> 
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
         </div>
       </div>
@@ -111,13 +111,21 @@
         <div class="list-group">
           {% for bucket in results.aggregations.awardYear.buckets %}
           <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}">
-            {% if bucket.from_as_string %} {{bucket.from_as_string}} {% else %} {{bucket.key}} {% endif %} <small>({{bucket.doc_count|get_amount}})</small> </a> 
+            {% if bucket.from_as_string %} {{bucket.from_as_string}} {% else %} {{bucket.key}} {% endif %} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
         </div>
       </div>
     </div>
     <div class="col-xs-9">
-      <h3 class="indent"> Results <small> <b> Total: </b> {{results.hits.total|get_amount}}  </small> </h3>
+      <h3 class="indent"> Results <small>
+        <b> Total: </b> {{results.hits.total|get_amount}} </small>
+        <a href="{% url 'search.csv' %}?{{ query_string }}">
+          <img src="{% static 'images/csv_download_icon.png' %}" class="download_button" id="csv_download_button"/>
+        </a>
+        <a href="{% url 'search.json' %}?{{ query_string }}">
+          <img src="{% static 'images/json_download_icon.png' %}" class="download_button" id="json_download_button"/>
+        </a>
+      </h3>
 
       {% for result in results.hits.hits %}
          <div class="panel panel-default">

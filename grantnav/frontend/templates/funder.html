@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load frontend %}
+{% load static %}
 
 {% block main_content %}
 
@@ -37,6 +38,12 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         Recipients
+        <a href="{% url 'funder_recipients_datatables.csv' %}?funder_id={{ funder.id }}">
+          <img src="{% static 'images/csv_download_icon.png' %}" id="download_button"/>
+        </a>
+        <a href="{% url 'funder_recipients_datatables.json' %}?funder_id={{ funder.id }}">
+          <img src="{% static 'images/json_download_icon.png' %}" id="download_button"/>
+        </a>
       </div>
       <div class="panel-body">
         <table class="table table-condensed table-bordered table-striped dt-responsive" id="recipients_datatable" width="100%">
@@ -60,6 +67,12 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         Grants
+        <a href="{% url 'funder.csv' funder.id %}">
+          <img src="{% static 'images/csv_download_icon.png' %}" id="download_button"/>
+        </a>
+        <a href="{% url 'funder.json' funder.id %}">
+          <img src="{% static 'images/json_download_icon.png' %}" id="download_button"/>
+        </a>
       </div>
       <div class="panel-body">
         <table class="table table-condensed table-bordered table-striped dt-responsive" id="grants_datatable" width="100%">
@@ -162,7 +175,7 @@
            {"data": "recipientOrganization.0.name", "render": function (data, type, row) {
                return '<a href="/recipient/' + encodeURIComponent(row.recipientOrganization[0].id) + '">' + truncate(data?data:row.recipientOrganization[0].id, 60) + '</a>'
            }},
-           {"data": "title", 
+           {"data": "title",
             "orderable": false,
             "render": function (data, type, row) {
                return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 60) + '</a>'
