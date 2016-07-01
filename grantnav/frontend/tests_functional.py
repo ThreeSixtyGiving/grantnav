@@ -79,16 +79,6 @@ def test_search(dataload, server_url, browser):
     assert 'Wolfson Foundation (379)' in browser.find_element_by_tag_name('body').text
 
 
-def test_search_json_download(server_url, browser):
-    browser.get(server_url)
-    browser.find_element_by_class_name("large-search-icon").click()
-    browser.find_element_by_id("json_download_button").click()
-    file = max(glob.iglob(os.getcwd() + "/" + 'grantnav-*.json'), key=os.path.getctime)
-    dl = open(file, 'r').read(4096)
-    assert 1 in tell(dl)
-    assert "grants" in dl
-
-
 def test_bad_search(dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_name("text_query").send_keys(" £s:::::afdsfas")
