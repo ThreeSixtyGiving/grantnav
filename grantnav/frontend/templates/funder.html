@@ -173,7 +173,7 @@
            {"data": "awardDate"},
            {"data": "amountAwarded"},
            {"data": "recipientOrganization.0.name", "render": function (data, type, row) {
-               return '<a href="/recipient/' + encodeURIComponent(row.recipientOrganization[0].id) + '">' + truncate(data, 60) + '</a>'
+               return '<a href="/recipient/' + encodeURIComponent(row.recipientOrganization[0].id) + '">' + truncate(data?data:row.recipientOrganization[0].id, 60) + '</a>'
            }},
            {"data": "title",
             "orderable": false,
