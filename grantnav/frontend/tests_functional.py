@@ -1,6 +1,8 @@
 import os
+import glob
 import time
 import pytest
+from subprocess import check_call
 from dataload.import_to_elasticsearch import import_to_elasticsearch
 from selenium import webdriver
 
@@ -12,11 +14,22 @@ BROWSER = os.environ.get('BROWSER', 'Firefox')
 
 @pytest.fixture(scope="module")
 def browser(request):
-    browser = getattr(webdriver, BROWSER)()
-    browser.implicitly_wait(3)
-    request.addfinalizer(lambda: browser.quit())
-    return browser
-
+    if BROWSER == "Firefox":
+        # Make downloads work
+        profile = webdriver.FirefoxProfile()
+        profile.set_preference("browser.download.folderList", 2)
+        profile.set_preference("browser.download.manager.showWhenStarting", False)
+        profile.set_preference("browser.download.dir", os.getcwd())
+        profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/json")
+        browser = getattr(webdriver, BROWSER)(firefox_profile=profile)
+        browser.implicitly_wait(3)
+        request.addfinalizer(lambda: browser.quit())
+        return browser
+    else:
+        browser = getattr(webdriver, BROWSER)()
+        browser.implicitly_wait(3)
+        request.addfinalizer(lambda: browser.quit())
+        return browser
 
 @pytest.fixture(scope="module")
 def server_url(request, live_server):
@@ -56,7 +69,7 @@ def test_code_point_credit(dataload, server_url, browser, text):
     browser.get(server_url)
     code_point_paragraph = browser.find_element_by_id("code-point").text
     assert text in code_point_paragraph
-    
+
 
 def test_search(dataload, server_url, browser):
     browser.get(server_url)
@@ -64,6 +77,14 @@ def test_search(dataload, server_url, browser):
     assert 'Total: 4,764' in browser.find_element_by_tag_name('body').text
     assert 'Lloyds Bank Foundation for England and Wales (4,116)' in browser.find_element_by_tag_name('body').text
     assert 'Wolfson Foundation (379)' in browser.find_element_by_tag_name('body').text
+
+def test_search_json_download(server_url, browser):
+    browser.get(server_url)
+    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_id("json_download_button").click()
+    file = max(glob.iglob(os.getcwd() + "/" + 'grantnav-*.json'), key=os.path.getctime)
+    dl = open(file, 'r').read(4096)
+    assert "grants" in dl
 
 
 def test_bad_search(dataload, server_url, browser):
@@ -76,8 +97,10 @@ def test_bad_search(dataload, server_url, browser):
 def test_terms(server_url, browser):
     browser.get(server_url + '/terms')
     assert 'Terms & conditions' in browser.find_element_by_tag_name('h1').text
-    
-    
+
+
 def test_take_down(server_url, browser):
     browser.get(server_url + '/take_down_policy')
     assert 'Take Down Policy' in browser.find_element_by_tag_name('h1').text
+
+

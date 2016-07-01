@@ -120,10 +120,10 @@
       <h3 class="indent"> Results <small>
         <b> Total: </b> {{results.hits.total|get_amount}} </small>
         <a href="{% url 'search.csv' %}?{{ query_string }}">
-          <img src="{% static 'images/csv_download_icon.png' %}" id="download_button"/>
+          <img src="{% static 'images/csv_download_icon.png' %}" class="download_button" id="csv_download_button"/>
         </a>
         <a href="{% url 'search.json' %}?{{ query_string }}">
-          <img src="{% static 'images/json_download_icon.png' %}" id="download_button"/>
+          <img src="{% static 'images/json_download_icon.png' %}" class="download_button" id="json_download_button"/>
         </a>
       </h3>
 
