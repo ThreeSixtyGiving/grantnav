@@ -42,6 +42,10 @@ a.anchor {
   padding-bottom: 0px
 }
 
+.panel-no-padding {
+  padding: 0px
+}
+
 .large-arrow {
   font-size: 40px;
   color: #8F8F8F;
@@ -67,6 +71,11 @@ a.anchor {
 
 .top-stats {
   margin-top: 10px;
+}
+
+.top-stats-search {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #recipients_datatable_filter, #grants_datatable_filter, #funders_datatable_filter {

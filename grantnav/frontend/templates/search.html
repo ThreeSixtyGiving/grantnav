@@ -126,6 +126,28 @@
           <img src="{% static 'images/json_download_icon.png' %}" class="download_button" id="json_download_button"/>
         </a>
       </h3>
+         <div class="panel panel-default">
+            <div class="panel-body panel-no-padding">
+              <div class="row">
+                <div class="col-sm-6">
+                  <dl class="dl-horizontal top-stats-search">
+                    <dt>Total funders</dt> <dd>{{results.aggregations.funding_orgs.value|get_amount}}</dd>
+                    <dt>Total recipients</dt> <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
+                    <dt>Total awarded</dt> <dd>£{{results.aggregations.total_amount.value|get_amount}}</dd>
+                    <dt>Average awarded</dt> <dd>£{{results.aggregations.avg_amount.value|get_amount}}</dd>
+                  </dl>
+                </div>
+                <div class="col-sm-6">
+                  <dl class="dl-horizontal top-stats-search">
+                     <dt>Largest award</dt> <dd>£{{results.aggregations.max_amount.value|get_amount}}</dd>
+                     <dt>Smallest award</dt> <dd>£{{results.aggregations.min_amount.value|get_amount}}</dd>
+                     <dt>Earliest award date</dt> <dd>{{results.aggregations.min_date.value_as_string|get_date}}</dd>
+                     <dt>Latest award date</dt> <dd>{{results.aggregations.max_date.value_as_string|get_date}}</dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+         </div>
 
       {% for result in results.hits.hits %}
          <div class="panel panel-default">

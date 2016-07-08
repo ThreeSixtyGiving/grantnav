@@ -67,6 +67,17 @@ FIXED_DATE_RANGES = [
     {"from": "now-12y/y", "to": "now-11y/y"},
 ]
 
+SEARCH_SUMMARY_AGGREGATES = {
+    "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
+    "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
+    "total_amount": {"sum": {"field": "amountAwarded"}},
+    "avg_amount": {"avg": {"field": "amountAwarded"}},
+    "min_amount": {"min": {"field": "amountAwarded"}},
+    "max_amount": {"max": {"field": "amountAwarded"}},
+    "min_date": {"min": {"field": "awardDate"}},
+    "max_date": {"max": {"field": "awardDate"}}
+}
+
 
 def get_request_type_and_size(request):
     results_size = SIZE
@@ -411,7 +422,11 @@ def search(request):
         try:
             create_amount_aggregate(json_query)
             create_date_aggregate(json_query)
+
+            json_query['aggs'].update(SEARCH_SUMMARY_AGGREGATES)
             results = es.search(body=json_query, size=results_size, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
+            for key in SEARCH_SUMMARY_AGGREGATES:
+                json_query["aggs"].pop(key)
             json_query["aggs"].pop("awardYear")
             json_query["aggs"].pop("amountAwarded")
             json_query["aggs"].pop("amountAwardedFixed")
