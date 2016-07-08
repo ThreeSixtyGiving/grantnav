@@ -30,16 +30,22 @@
       <div class="col-md-10 col-md-offset-1">
         <div class="row stat-group">
           <div class="col-sm-4 left-stat">
-            <h1 class="text-center home-number">{{results.aggregations.funder_count.value|get_amount}}</h1>
-            <h2 class="text-center home-number-text">Funders</h2>
+            <a href="{% url 'funders' %}"> 
+              <h1 class="text-center home-number">{{results.aggregations.funder_count.value|get_amount}}</h1>
+              <h2 class="text-center home-number-text">Funders</h2> 
+            </a>
           </div>
           <div class="col-sm-4">
-            <h1 class="text-center home-number">{{results.aggregations.recipient_count.value|get_amount}}</h1>
-            <h2 class="text-center home-number-text">Recipients</h2>
+            <a href="{% url 'recipients' %}">
+              <h1 class="text-center home-number">{{results.aggregations.recipient_count.value|get_amount}}</h1>
+              <h2 class="text-center home-number-text">Recipients</h2>
+            </a>
           </div>
           <div class="col-sm-4 right-stat">
-            <h1 class="text-center home-number">{{results.hits.total|get_amount}}</h1>
-            <h2 class="text-center home-number-text">Grants</h2>
+            <a href="{% url 'search' %}?text_query=">
+              <h1 class="text-center home-number">{{results.hits.total|get_amount}}</h1>
+              <h2 class="text-center home-number-text">Grants</h2>
+            </a>
           </div>
         </div>
       </div>

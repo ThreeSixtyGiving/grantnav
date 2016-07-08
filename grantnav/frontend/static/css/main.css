@@ -69,11 +69,11 @@ a.anchor {
   margin-top: 10px;
 }
 
-#recipients_datatable_filter, #grants_datatable_filter {
+#recipients_datatable_filter, #grants_datatable_filter, #funders_datatable_filter {
   float: left;
 }
 
-#recipients_datatable_info, #grants_datatable_info {
+#recipients_datatable_info, #grants_datatable_info, #funders_datatable_info {
   text-align: right;
 }
 
