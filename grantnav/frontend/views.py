@@ -590,10 +590,16 @@ def funder_recipients_datatables(request):
         search_value = ""
         order_dir = "desc"
 
+    funder_id = request.GET.get('funder_id')
+    if funder_id:
+        filter = {"term": {"fundingOrganization.id": funder_id}}
+    else:
+        filter = {}
+
     query = {"query": {
              "bool": {
                  "filter":
-                     {"term": {"fundingOrganization.id": request.GET['funder_id']}},
+                     filter,
                  "must":
                      {"match": {"recipientOrganization.name": {"query": search_value, "operator": "and"}}},
                  },
@@ -639,6 +645,86 @@ def funder_recipients_datatables(request):
         response = HttpResponse(json.dumps({'data': result_list}), content_type='application/json')
         response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
         return response
+
+
+def funders_datatables(request):
+    match = re.search('\.(\w+)$', request.path)
+    if match:
+        result_format = match.group(1)
+    else:
+        result_format = "ajax"
+
+    order = ["_term", "funder_stats.count", "funder_stats.sum", "funder_stats.avg", "funder_stats.max", "funder_stats.min"]
+
+    if result_format == "ajax":
+        start = int(request.GET['start'])
+        length = int(request.GET['length'])
+        order_field = order[int(request.GET['order[0][column]'])]
+        search_value = request.GET['search[value]']
+        order_dir = request.GET['order[0][dir]']
+    else:
+        start = 0
+        length = settings.FLATTENED_DOWNLOAD_LIMIT
+        order_field = order[0]
+        search_value = ""
+        order_dir = "desc"
+
+    recipient_id = request.GET.get('recipient_id')
+    if recipient_id:
+        filter = {"term": {"recipientOrganization.id": recipient_id}}
+    else:
+        filter = {}
+
+    query = {"query": {
+             "bool": {
+                 "filter":
+                     filter,
+                 "must":
+                     {"match": {"fundingOrganization.name": {"query": search_value, "operator": "and"}}},
+                 },
+             },
+             "aggs": {
+                 "funder_count": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
+                 "funder_stats":
+                     {"terms": {"field": "fundingOrganization.id_and_name", "size": start + length, "shard_size": 0,
+                                "order": {order_field: order_dir}},
+                      "aggs": {"funder_stats": {"stats": {"field": "amountAwarded"}}}}
+        }
+    }
+    if not search_value:
+        query["query"]["bool"].pop("must")
+
+    es = get_es()
+    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    result_list = []
+
+    for result in results["aggregations"]["funder_stats"]["buckets"][-length:]:
+        stats = result["funder_stats"]
+        for key in list(stats):
+            if key != 'count':
+                if result_format == "ajax":
+                    stats[key] = "£ {:,.0f}".format(int(stats[key]))
+                else:
+                    stats[key] = "{:.0f}".format(int(stats[key]))
+        org_name, org_id = json.loads(result["key"])
+        stats["org_name"] = org_name
+        stats["org_id"] = org_id
+        result_list.append(stats)
+
+    if result_format == "ajax":
+        return JsonResponse(
+            {'data': result_list,
+             'draw': request.GET['draw'],
+             'recordsTotal': results["aggregations"]["funder_count"]["value"],
+             'recordsFiltered': results["aggregations"]["funder_count"]["value"]}
+        )
+    elif result_format == "csv":
+        return csv_response({'data': result_list}, "funders")
+    elif result_format == "json":
+        response = HttpResponse(json.dumps({'data': result_list}), content_type='application/json')
+        response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+        return response
+
 
 grant_datatables_metadata = {
     "funder": {
@@ -750,6 +836,14 @@ def recipient(request, recipient_id):
         return grants_as_json(results)
     else:
         return render(request, "recipient.html", context=context)
+
+
+def recipients(request):
+    return render(request, "recipients.html")
+
+
+def funders(request):
+    return render(request, "funders.html")
 
 
 def region(request, region):
