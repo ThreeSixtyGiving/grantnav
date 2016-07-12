@@ -9,7 +9,7 @@ import json
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 
-latest_zip_file = os.path.join(current_dir, 'charity_registory.zip')
+latest_zip_file = os.path.join(current_dir, 'charity_registry.zip')
 charity_names_json = os.path.join(current_dir, 'charity_names.json')
 
 
