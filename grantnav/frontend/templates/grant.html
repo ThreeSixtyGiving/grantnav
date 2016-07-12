@@ -55,6 +55,9 @@
           <div class="table-responsive">
             <table class="table table-bordered">
               <tbody>
+              {% if grant.source.recipientOrganization.0.id_and_name|get_facet_org_name != grant.source.recipientOrganization.0|get_name %}
+                <tr> <td style="width: 40%"> <b>Alternate Name </b> </td> <td> {{ grant.source.recipientOrganization.0.id_and_name|get_facet_org_name }} </td> </tr>
+              {%endif%}
                 {% for key, grant in grant.source|flatten %}
                 <tr> <td style="width: 40%"> <b>{{ key }} </b> </td> <td> {{grant}} </td>
                 {% endfor %}

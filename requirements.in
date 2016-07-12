@@ -9,3 +9,4 @@ elasticsearch
 python-dateutil
 strict-rfc3339
 django-cookie-law
+titlecase

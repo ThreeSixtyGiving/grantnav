@@ -20,6 +20,7 @@ bad_org_ids = []
 
 postcode_to_area = {}
 district_code_to_area = {}
+current_dir = os.path.dirname(os.path.realpath(__file__))
 
 
 def convert_spreadsheet(file_path, file_type, tmp_dir):
@@ -165,6 +166,10 @@ def import_to_elasticsearch(files, clean):
 
     time.sleep(1)
 
+    with open(os.path.join(current_dir, 'charity_names.json')) as fd:
+        charity_names = json.load(fd)
+    id_name_org_mappings["recipientOrganization"].update(charity_names)
+
     get_mapping_from_index(es)
 
     for file_name in files:
@@ -298,7 +303,6 @@ def update_doc_with_org_mappings(grant, org_key, file_name):
 
 
 def get_area_mappings():
-    current_dir = os.path.dirname(os.path.realpath(__file__))
     with open(os.path.join(current_dir, 'codelist.csv')) as codelist, gzip.open(os.path.join(current_dir, 'codepoint_with_heading.csv.gz'), 'rt') as codepoint:
         codelist_csv = csv.DictReader(codelist)
         code_to_name = {}

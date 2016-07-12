@@ -1,42 +1,43 @@
-Django==1.8.12 # rq.filter: <1.9
+Django==1.8.13 # rq.filter: <1.9
 django-bootstrap3==7.0.1
-requests==2.9.1
+requests==2.10.0
 django-environ==0.4.0
-raven==5.12.0
+raven==5.21.0
 elasticsearch==2.3.0
--e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool
-python-dateutil==2.5.2
-strict-rfc3339==0.6
+-e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool-dev
+python-dateutil==2.5.3
+strict-rfc3339==0.7
 django-cookie-law==1.0.8
+titlecase==0.8.1
 
 
-flake8==2.5.4
+flake8==2.6.2
 # flake8 requires pyflakes <1.1
 pyflakes==1.0.0 # rq.filter: <1.1
 
 # pytest and plugins
-pytest==2.9.1
+pytest==2.9.2
 pytest-django==2.9.1
-pytest-cov==2.2.1
+pytest-cov==2.3.0
 pytest-localserver==0.3.5
 
 coveralls==1.1
-selenium==2.53.1
-libsass==0.11.0
-## The following requirements were added by pip freeze:
-contextlib2==0.5.1
-coverage==4.0.3
+selenium==2.53.6
+libsass==0.11.1
+## The following requirements were added by pip --freeze:
+Werkzeug==0.11.10
+contextlib2==0.5.3
+coverage==4.1
 django-classy-tags==0.7.2
 docopt==0.6.2
 et-xmlfile==1.0.1
 jdcal==1.2
 jsonref==0.1
-mccabe==0.4.0
-openpyxl==2.3.4
-pep8==1.7.0
+mccabe==0.5.0
+openpyxl==2.3.5
 py==1.4.31
-pytz==2016.3
-schema==0.4.0
+pycodestyle==2.0.0
+pytz==2016.4
+schema==0.5.0
 six==1.10.0
-urllib3==1.15
-Werkzeug==0.11.5
+urllib3==1.16
