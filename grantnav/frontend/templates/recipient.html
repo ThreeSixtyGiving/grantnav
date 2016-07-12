@@ -38,10 +38,10 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         Grants
-        <a href="{% url 'recipient.csv' recipient.id %}">
+        <a class="pull-right" href="{% url 'recipient.csv' recipient.id %}">
           <img src="{% static 'images/csv_download_icon.png' %}" id="download_button"/>
         </a>
-        <a href="{% url 'recipient.json' recipient.id %}">
+        <a class="pull-right" href="{% url 'recipient.json' recipient.id %}">
           <img src="{% static 'images/json_download_icon.png' %}" id="download_button"/>
         </a>
       </div>
