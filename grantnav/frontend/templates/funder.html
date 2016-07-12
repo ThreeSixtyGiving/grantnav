@@ -38,10 +38,10 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         Recipients
-        <a href="{% url 'funder_recipients_datatables.csv' %}?funder_id={{ funder.id }}">
+        <a class="pull-right" href="{% url 'funder_recipients_datatables.csv' %}?funder_id={{ funder.id }}">
           <img src="{% static 'images/csv_download_icon.png' %}" id="download_button"/>
         </a>
-        <a href="{% url 'funder_recipients_datatables.json' %}?funder_id={{ funder.id }}">
+        <a class="pull-right" href="{% url 'funder_recipients_datatables.json' %}?funder_id={{ funder.id }}">
           <img src="{% static 'images/json_download_icon.png' %}" id="download_button"/>
         </a>
       </div>
@@ -67,10 +67,10 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         Grants
-        <a href="{% url 'funder.csv' funder.id %}">
+        <a class="pull-right" href="{% url 'funder.csv' funder.id %}">
           <img src="{% static 'images/csv_download_icon.png' %}" id="download_button"/>
         </a>
-        <a href="{% url 'funder.json' funder.id %}">
+        <a class="pull-right" href="{% url 'funder.json' funder.id %}">
           <img src="{% static 'images/json_download_icon.png' %}" id="download_button"/>
         </a>
       </div>
