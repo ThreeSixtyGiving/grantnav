@@ -118,7 +118,6 @@
     </div>
     <div class="col-xs-9">
       <h3 class="indent"> Results <small>
-        <b> Total: </b> {{results.hits.total|get_amount}} </small>
         <a href="{% url 'search.csv' %}?{{ query_string }}">
           <img src="{% static 'images/csv_download_icon.png' %}" class="download_button" id="csv_download_button"/>
         </a>
@@ -131,10 +130,10 @@
               <div class="row">
                 <div class="col-sm-6">
                   <dl class="dl-horizontal top-stats-search">
+                    <dt> Total Grants: </dt> <dd>{{results.hits.total|get_amount}} </dd>
                     <dt>Total funders</dt> <dd>{{results.aggregations.funding_orgs.value|get_amount}}</dd>
                     <dt>Total recipients</dt> <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
                     <dt>Total awarded</dt> <dd>£{{results.aggregations.total_amount.value|get_amount}}</dd>
-                    <dt>Average awarded</dt> <dd>£{{results.aggregations.avg_amount.value|get_amount}}</dd>
                   </dl>
                 </div>
                 <div class="col-sm-6">
