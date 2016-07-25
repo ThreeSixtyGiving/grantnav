@@ -108,7 +108,7 @@
        },
        "columns": [
          {"data": "awardDate"},
-         {"data": "amountAwarded"},
+         {"data": "amountAwarded", "className": "amount"},
          {"data": "fundingOrganization.0.name", "render": function (data, type, row) {return '<a href="/funder/' + row.fundingOrganization[0].id + '">' + truncate(data, 60) + '</a>'}},
          {"data": "title",
           "orderable": false,
