@@ -20,6 +20,9 @@
           {{ grant.source|get_title }}
         <small>({{grant.source.id}})</small>
       </h1>
+      {% with dataset=grant|get_dataset %}
+      <p>Data published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a></p>
+      {% endwith %}
       <p> {{ grant.source.description }} </p>
     </div>
 

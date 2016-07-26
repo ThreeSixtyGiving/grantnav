@@ -2,6 +2,7 @@ from django.conf import settings
 import json
 
 by_publisher = {}
+by_identifier = {}
 
 if settings.PROVENANCE_JSON:
     with open(settings.PROVENANCE_JSON) as fp:
@@ -13,3 +14,4 @@ if settings.PROVENANCE_JSON:
             by_publisher[prefix] = dataset['publisher']
             by_publisher[prefix]['datasets'] = []
         by_publisher[prefix]['datasets'].append(dataset)
+        by_identifier[dataset.get('identifier')] = dataset
