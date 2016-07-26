@@ -7,6 +7,14 @@
 {{ publisher.name }}
 </h1>
 
+{% if publisher.website %}
+<p><a href="{{ publisher.website }}">Publisher website</a></p>
+{% endif %}
+
+{% if publisher.datasets.0.distribution.0.accessURL %}
+<p><a href="{{ publisher.datasets.0.distribution.0.accessURL }}">Publisher's web page about these datasets</a></p>
+{% endif %}
+
 <h2>Datasets</h2>
 
 <table class="table table-condensed table-bordered table-striped dt-responsive">
@@ -20,7 +28,8 @@
     {% for dataset in publisher.datasets %}
     <tr>
         <td><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
-        <td></td>
+        <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
+        <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
     </tr>
     {% endfor %}
 </tbody>
