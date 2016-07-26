@@ -13,6 +13,19 @@
             <input name="text_query" class="form-control large-search" placeholder="What are you searching for?" type="text">
             <input class="large-search-icon" name="submit" src="{% static 'images/search_icon.png' %}" type="image" height="55px" width="55px">
           </div>
+          <div class="form-group large-radio">
+            <div class="text-center">
+              <label class="radio-inline">
+                <input checked type="radio" name="default_field" id="inlineRadio1" value="_all"> Search All Fields
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="default_field" id="inlineRadio2" value="recipientLocation"> Only Locations
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="default_field" id="inlineRadio3" value="recipientOrganization.name"> Only Recipients
+              </label>
+            </div>
+          </div>
         </form>
       </div>
       <div class="col-xs-12">

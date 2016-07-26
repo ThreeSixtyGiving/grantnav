@@ -20,6 +20,7 @@ bad_org_ids = []
 
 postcode_to_area = {}
 district_code_to_area = {}
+ward_code_to_area = {}
 current_dir = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -82,6 +83,8 @@ def import_to_elasticsearch(files, clean):
                 "filename": {"type": "string", "index": "not_analyzed"},
                 "recipientRegionName": {"type": "string", "index": "not_analyzed"},
                 "recipientDistrictName": {"type": "string", "index": "not_analyzed"},
+                "recipientWardName": {"type": "string", "index": "not_analyzed"},
+                "recipientLocation": {"type": "string"},
                 "awardDate": {
                     "type": "date",
                     "ignore_malformed": True
@@ -237,11 +240,14 @@ def get_mapping_from_index(es):
 
 
 def add_area_to_grant(area, grant):
+    if area.get('ward_name'):
+        grant['recipientWardName'] = area['ward_name']
     if area['district_name']:
         grant['recipientDistrictName'] = area['district_name']
     if area['area_name']:
         grant['recipientRegionName'] = area['area_name']
 
+    grant['recipientLocation'] = ' '.join(area.values())
 
 def update_doc_with_region(grant):
     try:
@@ -249,9 +255,11 @@ def update_doc_with_region(grant):
     except (KeyError, IndexError):
         post_code = ''
 
+    ## test postcode first
     area = postcode_to_area.get(str(post_code).replace(' ', '').upper())
     if area:
         add_area_to_grant(area, grant)
+        return
 
     if not area:
         try:
@@ -259,25 +267,23 @@ def update_doc_with_region(grant):
         except (KeyError, IndexError):
             return
 
+        # then test ward
+        for location in locations:
+            geoCode = location.get('geoCode')
+            if geoCode and geoCode in ward_code_to_area:
+                add_area_to_grant(ward_code_to_area.get(geoCode), grant)
+                return
+
+        # finally district 
         for location in locations:
             geoCode = location.get('geoCode')
             if geoCode and geoCode in district_code_to_area:
                 add_area_to_grant(district_code_to_area.get(geoCode), grant)
-                break
+                return
+            ## No NI data but try and get name from data
             if geoCode.startswith("N09"):
                 grant['recipientRegionName'] = "Northern Ireland"
                 grant['recipientDistrictName'] = location["name"]
-
-        big_local_auth_code = grant.get("BIGField_Recipient_LocalAuthority_Code")
-        if big_local_auth_code:
-            area = district_code_to_area.get(big_local_auth_code)
-            if area:
-                add_area_to_grant(area, grant)
-            else:
-                if not big_local_auth_code.startswith("N"):
-                    raise
-                grant['recipientDistrictName'] = grant["BIGField_Recipient_LocalAuthority_Name"]
-                grant['recipientRegionName'] = "Northern Ireland"
 
 
 def update_doc_with_org_mappings(grant, org_key, file_name):
@@ -314,6 +320,9 @@ def get_area_mappings():
         for row in codepoint_csv:
             district_code = row['Admin_district_code']
             district_name = code_to_name.get(district_code, '')
+            ward_code = row['Admin_ward_code']
+            ward_name = code_to_name.get(ward_code, '')
+
             regional_code = row['NHS_HA_code']
             area_name = ''
             if not regional_code or regional_code[0] != 'E':
@@ -327,10 +336,13 @@ def get_area_mappings():
                 area_name = code_to_name[regional_code]
 
             postcode_to_area[row['Postcode'].replace(' ', '').upper()] = {
-                'district_name': district_name, 'area_name': area_name
+                'district_name': district_name, 'area_name': area_name, 'ward_name': ward_name
             }
             district_code_to_area[district_code] = {
                 'district_name': district_name, 'area_name': area_name
+            }
+            ward_code_to_area[ward_code] = {
+                'district_name': district_name, 'area_name': area_name, 'ward_name': ward_name
             }
 
 if __name__ == '__main__':

@@ -31,7 +31,7 @@ TERM_FILTERS = {
 }
 
 BASIC_QUERY = {"query": {"bool": {"must":
-                  {"query_string": {"query": ""}}, "filter": BASIC_FILTER}},
+                                  {"query_string": {"query": "", "default_field": "_all"}}, "filter": BASIC_FILTER}},
                "aggs": {
                    "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 10}},
                    "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 10}},
@@ -390,6 +390,7 @@ def search(request):
     except ValueError:
         json_query = {}
 
+    default_field = request.GET.get('default_field')
     text_query = request.GET.get('text_query')
     if text_query is not None:
         if text_query == '':
@@ -399,6 +400,9 @@ def search(request):
         except KeyError:
             json_query = copy.deepcopy(BASIC_QUERY)
             json_query["query"]["bool"]["must"]["query_string"]["query"] = text_query
+
+        if default_field:
+            json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
         return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
 
     es = get_es()
@@ -413,9 +417,15 @@ def search(request):
 
         try:
             context['text_query'] = json_query["query"]["bool"]["must"]["query_string"]["query"]
+            context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
         except KeyError:
             json_query = copy.deepcopy(BASIC_QUERY)
-            json_query["query"]["bool"]["must"]["query_string"]["query"] = text_query
+            json_query["query"]["bool"]["must"]["query_string"]["query"] = ''
+            context['text_query'] = ''
+            if default_field:
+                json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
+            context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
+
         if context['text_query'] == '*':
             context['text_query'] = ''
 

@@ -150,3 +150,13 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
     color: #fff;
 }
 
+.large-radio {
+  font-size: 17px;
+  margin-bottom: 0px;
+  margin-top: 3px;
+  color: #666
+}
+
+.search-checkbox-align {
+  margin-left: 24px
+}

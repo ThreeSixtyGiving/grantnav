@@ -14,6 +14,21 @@
           </span>
           <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
         </div>
+        <div class="input-group search-checkbox-align">
+          <div class="form-group">
+            <div class="text-center">
+              <label class="radio-inline">
+                <input {% if default_field == "_all" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio1" value="_all"> Search All Fields
+              </label>
+              <label class="radio-inline">
+                <input {% if default_field == "recipientLocation" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio2" value="recipientLocation"> Only Locations
+              </label>
+              <label class="radio-inline">
+                <input {% if default_field == "recipientOrganization.name" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio3" value="recipientOrganization.name"> Only Recipients
+              </label>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   </div>
