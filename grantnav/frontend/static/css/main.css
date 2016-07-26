@@ -160,3 +160,37 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
 .search-checkbox-align {
   margin-left: 24px
 }
+
+.filter-list-item {
+  border: 1px solid #CCC;
+  border-radius: 5px;
+  padding: 3px;
+  padding-left: 6px;
+  margin-right: 5px;
+  display: inline-block;
+  margin-bottom: 5px
+}
+
+.filter-list-remove-icon {
+    font-size: 19px;
+    position: relative;
+    top: 4px;
+    margin-left: 3px;
+}
+
+.smaller-top-margin-heading {
+    margin-top: 0px;
+}
+
+.smaller-top-margin-button {
+    margin-top: -6px;
+}
+
+.clear-search {
+    margin-right: 20px;
+    margin-top: 0px;
+}
+
+.clear-margin-bottom {
+    margin-bottom: 0px;
+}

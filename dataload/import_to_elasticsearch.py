@@ -249,13 +249,14 @@ def add_area_to_grant(area, grant):
 
     grant['recipientLocation'] = ' '.join(area.values())
 
+
 def update_doc_with_region(grant):
     try:
         post_code = grant['recipientOrganization'][0]['postalCode']
     except (KeyError, IndexError):
         post_code = ''
 
-    ## test postcode first
+    # test postcode first
     area = postcode_to_area.get(str(post_code).replace(' ', '').upper())
     if area:
         add_area_to_grant(area, grant)
@@ -274,13 +275,13 @@ def update_doc_with_region(grant):
                 add_area_to_grant(ward_code_to_area.get(geoCode), grant)
                 return
 
-        # finally district 
+        # finally district
         for location in locations:
             geoCode = location.get('geoCode')
             if geoCode and geoCode in district_code_to_area:
                 add_area_to_grant(district_code_to_area.get(geoCode), grant)
                 return
-            ## No NI data but try and get name from data
+            # No NI data but try and get name from data
             if geoCode.startswith("N09"):
                 grant['recipientRegionName'] = "Northern Ireland"
                 grant['recipientDistrictName'] = location["name"]
