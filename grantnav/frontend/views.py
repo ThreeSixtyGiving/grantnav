@@ -935,3 +935,9 @@ def publisher(request, publisher_id):
     return render(request, "publisher.html", context={
         'publisher': provenance.by_publisher[publisher_id]
     })
+
+
+def datasets(request, publisher_id):
+    return render(request, "datasets.html", context={
+        'datasets': provenance.datasets
+    })
