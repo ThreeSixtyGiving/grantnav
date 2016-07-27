@@ -1,5 +1,5 @@
 {% load frontend %}{% load csv %}{% load static %}{% filter csvify %}Data Source
-Publisher: Name
+Publisher:Name
 Identifier
 Title
 Description
@@ -27,10 +27,9 @@ Beneficiary Location:Geographic Code
 Beneficiary Location:Geographic Code Type
 Funding Org:Identifier
 Funding Org:Name
-Last modified{% endfilter %}{% block main_content %}
-{% if results and results.hits.hits %}
-{% for result in results.hits.hits %}{% with r=result|get:"_source" %}{% filter csvify %}"Data Source"
-"Publisher: Name"
+Downloaded for GrantNav{% endfilter %}{% block main_content %}
+{% if results and results.hits.hits %}{% for result in results.hits.hits %}{% with r=result|get:"_source" dataset=result|get_dataset %}{% filter csvify %}"{{ dataset.distribution.0.downloadURL }}"
+"{{ dataset.publisher.name }}"
 "{{ r.id }}"
 "{{ r.title }}"
 "{{ r.description|addslashes }}"
@@ -58,7 +57,5 @@ Last modified{% endfilter %}{% block main_content %}
 "{{ r.beneficiaryLocation.geoCodeType }}"
 "{{ r.fundingOrganization.id }}"
 "{{ r.fundingOrganization.name }}"
-"Last modified"{% endfilter %}
+"{{ dataset.datagetter_metadata.datetime_downloaded }}"{% endfilter %}
 {% endwith %}{% endfor %}{% endif %}{% endblock %}
-
-
