@@ -93,3 +93,8 @@ def test_terms(server_url, browser):
 def test_take_down(server_url, browser):
     browser.get(server_url + '/take_down_policy')
     assert 'Take Down Policy' in browser.find_element_by_tag_name('h1').text
+
+
+def test_title(server_url, browser):
+    browser.get(server_url)
+    assert '360Giving GrantNav' in browser.title
