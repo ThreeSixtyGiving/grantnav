@@ -46,6 +46,11 @@ a.anchor {
   padding: 0px
 }
 
+/*Bug 211*/
+a.list-group-item {
+  overflow:hidden;
+}
+
 .large-arrow {
   font-size: 40px;
   color: #8F8F8F;
