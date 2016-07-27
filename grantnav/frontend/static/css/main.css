@@ -67,6 +67,11 @@ a.list-group-item {
   background: white !important
 }
 
+/* Issue #194 */
+td.amount {
+  text-align: right;
+}
+
 .funder-header {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-bottom: 40px;
@@ -97,6 +102,7 @@ a.list-group-item {
 
 .download_button {
   float:right;
+  padding-left:20px;
 }
 
 .footer-menu {
