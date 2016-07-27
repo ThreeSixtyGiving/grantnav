@@ -1,7 +1,8 @@
 from django.conf import settings
+from collections import OrderedDict
 import json
 
-by_publisher = {}
+by_publisher = OrderedDict()
 by_identifier = {}
 
 datasets = []

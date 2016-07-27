@@ -933,11 +933,12 @@ def publisher(request, publisher_id):
     if publisher_id not in provenance.by_publisher:
         raise Http404
     return render(request, "publisher.html", context={
-        'publisher': provenance.by_publisher[publisher_id]
+        'publisher': provenance.by_publisher[publisher_id],
     })
 
 
-def datasets(request, publisher_id):
+def datasets(request):
     return render(request, "datasets.html", context={
-        'datasets': provenance.datasets
+        'publishers': provenance.by_publisher.values(),
+        'datasets': provenance.datasets,
     })
