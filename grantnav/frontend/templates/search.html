@@ -32,7 +32,7 @@
       </form>
     </div>
     <div class="col-xs-2">
-      <a href="{% url 'search' %}" class="pull-right btn btn-success btn-xs clear-search"> Clear Search </a>
+      <a href="{% url 'search' %}" class="pull-right btn btn-success btn-xs clear-search">New Search</a>
     </div>
   </div>
   {% if selected_facets %}
@@ -139,6 +139,36 @@
           Amount Awarded {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}
         </div>
         <div class="list-group">
+
+          <div id="min-max-form">
+            <form class="form-inline">
+              <div class="row">
+                <div class="col-lg-5 col-md-6 no-padding-hor">
+                  <div class="form-group form-group-sm">
+                    <label for="min-amount">Smallest
+                    <input id="min-amount" name="min_amount" class="form-control" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.gte}}"/>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-lg-5 col-md-6 no-padding-hor">
+                  <div class="form-group form-group-sm">
+                    <label for="max-amount">Largest
+                    <input id="max-amount" name="max_amount" class="form-control input-xs" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.lte}}"/>
+                    </label>
+                    
+                  </div>
+                </div>
+
+                <div class="col-lg-2 col-xs-12 no-padding-hor">
+                  <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+                  <div class="form-group form-group-sm">
+                    <button type="submit" class="btn btn-default btn-xs">Apply</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
           {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}

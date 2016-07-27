@@ -19,7 +19,7 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
     {"bool": {"should": []}},  # Recipient Orgs
     {"bool": {"should": []}},  # Amount Awarded Fixed
-    {"bool": {"should": []}},  # Amount Awarded
+    {"bool": {"should": {"range": {"amountAwarded": {}}}}},  # Amount Awarded
     {"bool": {"should": []}},  # Award Year
     {"bool": {"should": []}},  # recipientRegionName
     {"bool": {"should": []}}   # recipientDistrictName
@@ -33,6 +33,7 @@ BASIC_QUERY = {"query": {"bool": {"must":
                    "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 10}},
                    "recipientRegionName": {"terms": {"field": "recipientRegionName", "size": 20}},
                    "recipientDistrictName": {"terms": {"field": "recipientDistrictName", "size": 10}}}}
+
 SIZE = 20
 
 FIXED_AMOUNT_RANGES = [
@@ -146,8 +147,8 @@ def create_amount_aggregate(json_query):
     json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": FIXED_AMOUNT_RANGES}}
 
 
-def get_amount_facet_fixed(request, context, json_query):
-    json_query = copy.deepcopy(json_query)
+def get_amount_facet_fixed(request, context, original_json_query):
+    json_query = copy.deepcopy(original_json_query)
     json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": FIXED_AMOUNT_RANGES}}
     try:
         current_filter = json_query["query"]["bool"]["filter"][2]["bool"]["should"]
@@ -163,10 +164,13 @@ def get_amount_facet_fixed(request, context, json_query):
     else:
         results = context["results"]
 
+    input_range = json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"]
     new_filter = copy.deepcopy(current_filter)
-    if new_filter:
-        json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
-        results["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+    if new_filter or input_range:
+        new_json_query = copy.deepcopy(original_json_query)
+        new_json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
+        new_json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = {}
+        results["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(new_json_query)})
 
     for bucket in results["aggregations"]["amountAwardedFixed"]['buckets']:
         new_filter = []
@@ -186,10 +190,27 @@ def get_amount_facet_fixed(request, context, json_query):
         bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
 
         if bucket.get("selected"):
-            display_value = "£{:,}".format(bucket["from"])
+            display_value = "£{:,}".format(int(bucket["from"]))
             if to_:
-                display_value = str(display_value) + " - " + "£{:,}".format(to_)
-            context["selected_facets"]["Amount"].append({"url": bucket["url"], "display_value": display_value})
+                display_value = str(display_value) + " - " + "£{:,}".format(int(to_))
+            else:
+                display_value = str(display_value) + "+"
+
+            context["selected_facets"]["Amounts"].append({"url": bucket["url"], "display_value": display_value})
+
+    if input_range:
+        json_query = copy.deepcopy(original_json_query)
+        lte, gte = input_range.get('lte'), input_range.get('gte')
+        if not gte:
+            gte = 0
+        display_value = "£{:,}".format(int(gte))
+        if lte:
+            display_value = str(display_value) + " - " + "£{:,}".format(int(lte))
+        else:
+            display_value = str(display_value) + "+"
+        json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = {}
+        context["selected_facets"]["Amounts"].append({"url": request.path + '?' + urlencode({"json_query": json.dumps(json_query)}), "display_value": display_value})
+
     main_results["aggregations"]["amountAwardedFixed"] = results["aggregations"]["amountAwardedFixed"]
 
 
@@ -352,6 +373,23 @@ def search(request):
             json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
         return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
 
+    min_amount = request.GET.get('min_amount')
+    max_amount = request.GET.get('max_amount')
+    if min_amount or max_amount:
+        new_filter = {}
+        if min_amount:
+            try:
+                new_filter['gte'] = int(min_amount)
+            except ValueError:
+                pass
+        if max_amount:
+            try:
+                new_filter['lte'] = int(max_amount)
+            except ValueError:
+                pass
+        json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = new_filter
+        return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
+
     es = get_es()
     results = None
     if json_query:
@@ -396,6 +434,7 @@ def search(request):
             hit['source'] = hit['_source']
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
+        context['query'] = json_query
 
         if result_format == "csv":
             return csv_response(context, "grants")
@@ -408,8 +447,8 @@ def search(request):
             get_terms_facets(request, context, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
             get_terms_facets(request, context, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
 
-            get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5, "Region")
-            get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6, "District")
+            get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5, "Regions")
+            get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6, "Districts")
 
             get_amount_facet_fixed(request, context, json_query)
             get_date_facets(request, context, json_query)
