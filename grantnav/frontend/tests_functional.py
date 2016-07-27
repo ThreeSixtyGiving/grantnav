@@ -66,8 +66,8 @@ def test_home(dataload, server_url, browser):
     ])
 def test_code_point_credit(dataload, server_url, browser, text):
     browser.get(server_url)
-    code_point_paragraph = browser.find_element_by_id("code-point").text
-    assert text in code_point_paragraph
+    browser.find_element_by_link_text('Copyright').click()
+    assert text in browser.find_element_by_tag_name('body').text
 
 
 def test_search(dataload, server_url, browser):

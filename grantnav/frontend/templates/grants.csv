@@ -1,4 +1,4 @@
-{% load frontend %}{% load csv %}{% load static %}{% filter csvify %}Data Source
+﻿{% load frontend %}{% load csv %}{% load static %}{% filter csvify %}Data Source
 Publisher:Name
 Identifier
 Title
@@ -27,7 +27,10 @@ Beneficiary Location:Geographic Code
 Beneficiary Location:Geographic Code Type
 Funding Org:Identifier
 Funding Org:Name
-Downloaded for GrantNav{% endfilter %}{% block main_content %}
+Retrieved for use in GrantNav
+"License (see note)"
+"Note: this file also contains OS data © Crown copyright and database right 2016, Royal Mail data © Royal Mail copyright and Database right 2016, National Statistics data © Crown copyright and database right 2016, see http://grantnav.com/datasets/ for more information."
+{% endfilter %}{% block main_content %}
 {% if results and results.hits.hits %}{% for result in results.hits.hits %}{% with r=result|get:"_source" dataset=result|get_dataset %}{% filter csvify %}"{{ dataset.distribution.0.downloadURL }}"
 "{{ dataset.publisher.name }}"
 "{{ r.id }}"
@@ -57,5 +60,6 @@ Downloaded for GrantNav{% endfilter %}{% block main_content %}
 "{{ r.beneficiaryLocation.geoCodeType }}"
 "{{ r.fundingOrganization.id }}"
 "{{ r.fundingOrganization.name }}"
-"{{ dataset.datagetter_metadata.datetime_downloaded }}"{% endfilter %}
+"{{ dataset.datagetter_metadata.datetime_downloaded }}"
+"{{ dataset.license }}"{% endfilter %}
 {% endwith %}{% endfor %}{% endif %}{% endblock %}
