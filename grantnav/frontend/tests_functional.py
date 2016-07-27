@@ -82,7 +82,10 @@ def test_bad_search(dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_name("text_query").send_keys(" £s:::::afdsfas")
     browser.find_element_by_class_name("large-search-icon").click()
-    assert 'Search input is not valid' in browser.find_element_by_tag_name('body').text
+    not_valid = browser.find_element_by_id('not_valid').text
+    assert 'Search input is not valid' in not_valid
+    assert "We can't find what you tried to search for." in not_valid
+    assert "Refine By" in browser.find_element_by_tag_name('h3').text
 
 
 def test_terms(server_url, browser):
@@ -93,3 +96,43 @@ def test_terms(server_url, browser):
 def test_take_down(server_url, browser):
     browser.get(server_url + '/take_down_policy')
     assert 'Take Down Policy' in browser.find_element_by_tag_name('h1').text
+
+
+def test_title(server_url, browser):
+    browser.get(server_url)
+    assert '360Giving GrantNav' in browser.title
+
+
+def test_no_results_page(server_url, browser):
+    # thanks: http://stackoverflow.com/questions/18557275/locating-entering-a-value-in-a-text-box-using-selenium-and-python
+    browser.get(server_url)
+    inputElement = browser.find_element_by_css_selector(".large-search")
+    inputElement.send_keys('dfsergegrdtytdrthgrtyh')
+    inputElement.submit()
+    no_results = browser.find_element_by_id('no-results').text
+    assert 'No Results' in no_results
+    assert 'Your search - "dfsergegrdtytdrthgrtyh" - did not match any records.' in no_results
+    assert "Refine By" in browser.find_element_by_tag_name('h3').text
+
+
+@pytest.mark.parametrize(('path'), [
+    ('/funder/GB-CHC-327114'),  # funder: Lloyds
+    #('/region/South West'),  # region
+    ('/recipient/GB-CHC-1092728'),  # recipient: Open Doors
+    #('/district/City of Bristol')  # district
+    ])
+def test_right_align_amounts_in_grant_table(dataload, server_url, browser, path):
+    browser.get(server_url + path)
+    grants_table = browser.find_element_by_id('grants_datatable')
+    grants_table.find_element_by_css_selector('td.amount')
+
+
+@pytest.mark.parametrize(('path', 'identifier'), [
+    ('/funders', 'funders_datatable'),
+    ('/recipients', 'recipients_datatable'),
+    ('/funder/GB-CHC-327114', 'recipients_datatable'),  # funder: Lloyds
+    ])
+def test_right_align_amounts_in_other_tables(dataload, server_url, browser, path, identifier):
+    browser.get(server_url + path)
+    table = browser.find_element_by_id(identifier)
+    table.find_elements_by_css_selector('td.amount')
