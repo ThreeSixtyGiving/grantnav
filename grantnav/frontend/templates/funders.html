@@ -82,10 +82,10 @@
                return '<a href="/funder/' + encodeURIComponent(row.org_id) + '">' + truncate(data, 60) + '</a>'
            }},
            {"data": "count"},
-           {"data": "sum"},
-           {"data": "avg"},
-           {"data": "max"},
-           {"data": "min"}
+           {"data": "sum", "className": "amount"},
+           {"data": "avg", "className": "amount"},
+           {"data": "max", "className": "amount"},
+           {"data": "min", "className": "amount"}
          ]
        });
      })

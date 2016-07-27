@@ -62,6 +62,11 @@ a.anchor {
   background: white !important
 }
 
+/* Issue #194 */
+td.amount {
+  text-align: right;
+}
+
 .funder-header {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-bottom: 40px;
