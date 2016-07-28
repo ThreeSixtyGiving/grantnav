@@ -29,7 +29,7 @@ Funding Org:Identifier
 Funding Org:Name
 Retrieved for use in GrantNav
 "License (see note)"
-"Note: this file also contains OS data © Crown copyright and database right 2016, Royal Mail data © Royal Mail copyright and Database right 2016, National Statistics data © Crown copyright and database right 2016, see http://grantnav.com/datasets/ for more information."
+"Note: this file also contains OS data © Crown copyright and database right 2016, Royal Mail data © Royal Mail copyright and Database right 2016, National Statistics data © Crown copyright and database right 2016, see http://grantnav.org/datasets/ for more information."
 {% endfilter %}{% block main_content %}
 {% if results and results.hits.hits %}{% for result in results.hits.hits %}{% with r=result|get:"_source" dataset=result|get_dataset %}{% filter csvify %}"{{ dataset.distribution.0.downloadURL }}"
 "{{ dataset.publisher.name }}"
