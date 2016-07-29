@@ -107,12 +107,12 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child::before, tabl
     font-family: 'Courier New', Courier, monospace;
     text-indent: 4px;
     line-height: 16px;
-    content: '\25bc';
+    content: '\25b6';
     background-color: inherit;
 }
 
 table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::before, table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child::before {
-    content: '\25b2';
+    content: '\25bc';
     background-color: inherit;
 }
 
