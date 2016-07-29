@@ -19,7 +19,7 @@
   </div>
 
 
-  {% if results and results.hits.hits %}
+  
   <div class="row">
     <div class="col-xs-3">
       <h3 class="indent"> Refine By {% if results.clear_all_facet_url %} <a href={{results.clear_all_facet_url}}> <small>(clear all)</small></a> {%endif%} </h3>
@@ -116,13 +116,15 @@
         </div>
       </div>
     </div>
+    
+    {% if results and results.hits.hits %}
     <div class="col-xs-9">
       <h3 class="indent"> Results <small>
         <a href="{% url 'search.csv' %}?{{ query_string }}">
-          <img src="{% static 'images/csv_download_icon.png' %}" class="download_button" id="csv_download_button"/>
+          <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button" id="csv_download_button"/>
         </a>
         <a href="{% url 'search.json' %}?{{ query_string }}">
-          <img src="{% static 'images/json_download_icon.png' %}" class="download_button" id="json_download_button"/>
+          <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button" id="json_download_button"/>
         </a>
       </h3>
          <div class="panel panel-default">
@@ -197,21 +199,37 @@
         </nav>
       {% endif %}
     </div>
+
+  {% elif results %}
+
+     <div class="col-xs-9">
+        <div id="no-results">
+          <h1>No Results</h1>
+          <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
+          <ul>
+          <li>Using more general terms</li>
+          <li>Checking your spelling</li>
+          </ul>
+        </div>
+     </div>
+  
+  {% elif search_error %}
+   
+     <div class="col-xs-9">
+        <div id="not_valid">
+          <h1>Search input is not valid</h1>
+          <p>We can't find what you tried to search for.<br>Try something like:</p>
+          <ul>
+          <li>Using more general terms</li>
+          <li>Checking your spelling</li>
+        </div>
+     </div>
+   
+  {% endif %}
+    
   </div>
 </div>
-{% elif results %}
- <div class="row">
-   <div class="col-xs-9 col-xs-offset-2">
-      <h3> No Results </h3>
-   </div">
- </div>
-{% elif search_error %}
- <div class="row">
-   <div class="col-xs-9 col-xs-offset-2">
-      <h3> Search input is not valid </h3>
-   </div">
- </div>
-{% endif %}
+
 
 {% endblock %}
 

@@ -39,10 +39,10 @@
       <div class="panel-heading">
         Recipients
         <a class="pull-right" href="{% url 'funder_recipients_datatables.csv' %}?funder_id={{ funder.id }}">
-          <img src="{% static 'images/csv_download_icon.png' %}" id="download_button"/>
+          <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button"/>
         </a>
         <a class="pull-right" href="{% url 'funder_recipients_datatables.json' %}?funder_id={{ funder.id }}">
-          <img src="{% static 'images/json_download_icon.png' %}" id="download_button"/>
+          <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
         </a>
       </div>
       <div class="panel-body">
@@ -51,10 +51,10 @@
             <tr>
               <th>Recipient</th>
               <th>Grants</th>
-              <th>Total</th>
-              <th>Average</th>
-              <th>Largest</th>
-              <th>Smallest</th>
+              <th class="amount">Total</th>
+              <th class="amount">Average</th>
+              <th class="amount">Largest</th>
+              <th class="amount">Smallest</th>
             </tr>
           </thead>
         </table>
@@ -68,10 +68,10 @@
       <div class="panel-heading">
         Grants
         <a class="pull-right" href="{% url 'funder.csv' funder.id %}">
-          <img src="{% static 'images/csv_download_icon.png' %}" id="download_button"/>
+          <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button"/>
         </a>
         <a class="pull-right" href="{% url 'funder.json' funder.id %}">
-          <img src="{% static 'images/json_download_icon.png' %}" id="download_button"/>
+          <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
         </a>
       </div>
       <div class="panel-body">
@@ -79,7 +79,7 @@
           <thead>
             <tr>
               <th>Date</th>
-              <th>Amount</th>
+              <th class="amount">Amount</th>
               <th>Recipient</th>
               <th>Title</th>
               <th>Description</th>
@@ -140,10 +140,10 @@
                return '<a href="/recipient/' + encodeURIComponent(row.org_id) + '">' + truncate(data, 60) + '</a>'
            }},
            {"data": "count"},
-           {"data": "sum"},
-           {"data": "avg"},
-           {"data": "max"},
-           {"data": "min"}
+           {"data": "sum", "className": "amount"},
+           {"data": "avg", "className": "amount"},
+           {"data": "max", "className": "amount"},
+           {"data": "min", "className": "amount"}
          ]
        });
      })
@@ -171,12 +171,12 @@
          },
          "columns": [
            {"data": "awardDate"},
-           {"data": "amountAwarded"},
+           {"data": "amountAwarded", "className":"amount" },
            {"data": "recipientOrganization.0.name", "render": function (data, type, row) {
                return '<a href="/recipient/' + encodeURIComponent(row.recipientOrganization[0].id) + '">' + truncate(data?data:row.recipientOrganization[0].id, 60) + '</a>'
            }},
            {"data": "title",
-            "orderable": false,
+            "orderable": false, 
             "render": function (data, type, row) {
                return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 60) + '</a>'
            }},

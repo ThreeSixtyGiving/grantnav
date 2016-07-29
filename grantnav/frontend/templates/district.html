@@ -38,11 +38,11 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         Grants
-        <a href="{% url 'district.csv' district %}">
-          <img src="{% static 'images/csv_download_icon.png' %}" id="download_button"/>
+        <a class="pull-right" href="{% url 'district.csv' district %}">
+          <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button"/>
         </a>
-        <a href="{% url 'district.json' district %}">
-          <img src="{% static 'images/json_download_icon.png' %}" id="download_button"/>
+        <a class="pull-right" href="{% url 'district.json' district %}">
+          <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
         </a>
       </div>
       <div class="panel-body">
@@ -112,7 +112,7 @@
           "render": function (data, type, row) {
              return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>'
          }},
-         {"data": "amountAwarded"},
+         {"data": "amountAwarded", "className": "amount"},
          {"data": "fundingOrganization.0.name", "render": function (data, type, row) {return '<a href="/funder/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'}},
          {"data": "recipientOrganization.0.name", "render": function (data, type, row) {return '<a href="/recipient/' + row.recipientOrganization[0].id + '">' + truncate(data?data:row.recipientOrganization[0].id, 30) + '</a>'}},
          {"data": "awardDate"},
