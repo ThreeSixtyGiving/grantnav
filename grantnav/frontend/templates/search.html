@@ -121,7 +121,7 @@
               {% endif %}
             {% endfor %}
             {% if results.aggregations.amountAwardedFixed.buckets|length > 2 %}
-              <a href="{{see_more_url.amountAwardedFixed.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.amountAwardedFixed.more%}See More{% else %}See Less{% endif %}</b> </a>
+              <a href="{{see_more_url.amountAwardedFixed.url}}" class="see-more list-group-item list-group-compact"> <b>{% if see_more_url.amountAwardedFixed.more%}See More{% else %}See Less{% endif %}</b> </a>
             {% endif %}
           {% endif %}
         </div>
@@ -136,7 +136,7 @@
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
           {% if results.aggregations.recipientRegionName.buckets|length > 2 %}
-            <a href="{{see_more_url.recipientRegionName.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientRegionName.more%}See More{% else %}See Less{% endif %}</b> </a>
+            <a href="{{see_more_url.recipientRegionName.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.recipientRegionName.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
         </div>
       </div>
@@ -150,7 +150,7 @@
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
           {% if results.aggregations.recipientDistrictName.buckets|length > 2 %}
-            <a href="{{see_more_url.recipientDistrictName.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientDistrictName.more%}See More{% else %}See Less{% endif %}</b> </a>
+            <a href="{{see_more_url.recipientDistrictName.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.recipientDistrictName.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
         </div>
       </div>
@@ -167,7 +167,7 @@
             {% endif %}
           {% endfor %}
           {% if results.aggregations.awardYear.buckets|length > 2 %}
-            <a href="{{see_more_url.awardYear.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.awardYear.more%}See More{% else %}See Less{% endif %}</b> </a>
+            <a href="{{see_more_url.awardYear.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.awardYear.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
         </div>
       </div>
@@ -182,7 +182,7 @@
           {% endfor %}
 
           {% if results.aggregations.fundingOrganization.buckets|length > 2 %}
-            <a href="{{see_more_url.fundingOrganization.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.fundingOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
+            <a href="{{see_more_url.fundingOrganization.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.fundingOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
 
         </div>
@@ -197,7 +197,7 @@
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
           {% if results.aggregations.recipientOrganization.buckets|length > 2 %}
-            <a href="{{see_more_url.recipientOrganization.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
+            <a href="{{see_more_url.recipientOrganization.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.recipientOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
         </div>
       </div>
@@ -315,10 +315,36 @@
     
   </div>
 </div>
-
-
 {% endblock %}
 
 {% block extrapiwik %}
 _paq.push(["trackSiteSearch", "{{text_query}}", false, {{results.hits.total}}]);
+{% endblock %}
+
+{% block extra_scripts %}
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
+<script>
+$(function() {
+  var page_y = URI(window.location.href).search(true).page_y
+  if (page_y) {
+     $( 'html, body' ).scrollTop(page_y);
+  }
+  $('.see-more').click(function (e) {
+    var page_y = $( document ).scrollTop();
+    var $target = $(this);
+    var new_url = URI($target.attr('href')).addSearch("page_y", page_y).toString();
+
+    if ($target.find('b')[0].innerText === "See Less") {
+      if ($target.closest(".panel").offset().top < page_y) {
+         return true
+      }
+    }
+    window.location.href = new_url;
+    return false
+
+  })
+});
+</script>
 {% endblock %}

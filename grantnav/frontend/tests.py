@@ -26,7 +26,7 @@ def test_search(dataload, client):
     initial_response = client.get('/search?text_query=gardens')
     assert initial_response.status_code == 302
     response = client.get(initial_response.url)
-    assert "Total Grants:" in str(response.content)
+    assert "Total grants" in str(response.content)
     assert "The British Museum" in str(response.content)
 
     assert response.context['text_query'] == 'gardens'

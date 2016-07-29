@@ -428,7 +428,6 @@ def search(request):
             json_query["aggs"].pop("awardYear")
             json_query["aggs"].pop("amountAwardedFixed")
         except elasticsearch.exceptions.RequestError as e:
-            raise
             if e.error == 'search_phase_execution_exception':
                 context['search_error'] = True
                 return render(request, "search.html", context=context)
