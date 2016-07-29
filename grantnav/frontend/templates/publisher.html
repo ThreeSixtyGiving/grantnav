@@ -40,6 +40,7 @@ Website: {% if publisher.website %}
         <th>Dataset (download link)</th>
         <th>Retrieved for use in GrantNav</th>
         <th>License</th>
+        <th>Funders covered</th>
     </tr>
 </thead>
 <tbody>
@@ -48,6 +49,7 @@ Website: {% if publisher.website %}
         <td><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
         <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
         <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
+        <td>{% for funder_name, funder_id in dataset.funders %}<a href="{% url 'funder'  funder_id %}">{{ funder_name }}</a>{% endfor %}</td>
     </tr>
     {% endfor %}
 </tbody>

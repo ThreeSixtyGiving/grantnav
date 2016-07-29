@@ -32,6 +32,7 @@ If you see a problem with data about a grant on GrantNav, please report it direc
         <th>Publisher (page on GrantNav)</th>
         <th>Retrieved for use in GrantNav</th>
         <th>License</th>
+        <th>Funders covered</th>
     </tr>
 </thead>
 <tbody>
@@ -41,6 +42,7 @@ If you see a problem with data about a grant on GrantNav, please report it direc
         <td><a href="{% url 'publisher' dataset.publisher.prefix %}">{{ dataset.publisher.name }}</a></td>
         <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
         <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
+        <td>{% for funder_name, funder_id in dataset.funders %}<a href="{% url 'funder'  funder_id %}">{{ funder_name }}</a>{% endfor %}</td>
     </tr>
     {% endfor %}
 </tbody>
