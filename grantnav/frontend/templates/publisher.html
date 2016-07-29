@@ -4,15 +4,32 @@
 
 {% block main_content %}
 <h1 class="funder-header text-center">
-{{ publisher.name }}
+Publisher: {{ publisher.name }}
 </h1>
 
-{% if publisher.website %}
-<p><a href="{{ publisher.website }}">Publisher website</a></p>
+
+<h2>Contact this publisher</h2>
+
+<p>
+GrantNav is not directly responsible for any of the data on this site. If you notice a problem with the data please contact the relevant publisher directly.
+
+<p>
+{% if publisher.datasets.0.distribution.0.accessURL %}
+{{ publisher.name }} has provided the following link for information about their data: <a href="{{ publisher.datasets.0.distribution.0.accessURL }}">{{ publisher.datasets.0.distribution.0.accessURL }}</a>
+{% else %}
+Unfortunately {{ publisher.name }} has not provided a link to information about their data.
 {% endif %}
 
-{% if publisher.datasets.0.distribution.0.accessURL %}
-<p><a href="{{ publisher.datasets.0.distribution.0.accessURL }}">Publisher's web page about these datasets</a></p>
+<h2>More information about this publisher</h2>
+
+<p>
+360Giving prefix: {{ publisher.prefix }}
+
+<p>
+Website: {% if publisher.website %}
+<a href="{{ publisher.website }}">{{ publisher.website }}</a></p>
+{% else %}
+(none known)
 {% endif %}
 
 <h2>Datasets</h2>

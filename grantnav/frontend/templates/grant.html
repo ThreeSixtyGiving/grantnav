@@ -20,9 +20,6 @@
           {{ grant.source|get_title }}
         <small>({{grant.source.id}})</small>
       </h1>
-      {% with dataset=grant|get_dataset %}
-      <p>Data published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a></p>
-      {% endwith %}
       <p> {{ grant.source.description }} </p>
     </div>
 
@@ -70,6 +67,11 @@
         </div>
       </div>
     </div>
+
+    <h2>Where is this data from?</h2>
+    {% with dataset=grant|get_dataset %}
+    <p>This data was originally published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>. If you need to report a problem in the data please contact {{ dataset.publisher.name }} directly, see <a href="{% url 'publisher' dataset.publisher.prefix %}">their GrantNav publisher page</a> for more information.
+    {% endwith %}
   </div>
 
 {% endfor %}
