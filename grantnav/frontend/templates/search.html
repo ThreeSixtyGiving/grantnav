@@ -334,7 +334,7 @@ $(function() {
   $('.see-more').click(function (e) {
     var page_y = $( document ).scrollTop();
     var $target = $(this);
-    var new_url = URI($target.attr('href')).addSearch("page_y", page_y).toString();
+    var new_url = URI($target.attr('href')).addSearch("page_y", page_y).fragment("").toString();
 
     if ($target.find('b')[0].innerText === "See Less") {
       if ($target.closest(".panel").offset().top < page_y) {
