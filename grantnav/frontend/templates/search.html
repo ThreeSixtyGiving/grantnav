@@ -14,15 +14,163 @@
           </span>
           <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
         </div>
+        <div class="input-group search-checkbox-align">
+          <div class="form-group">
+            <div class="text-center">
+              <label class="radio-inline">
+                <input {% if default_field == "_all" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio1" value="_all"> Search All Fields
+              </label>
+              <label class="radio-inline">
+                <input {% if default_field == "recipientLocation" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio2" value="recipientLocation"> Only Locations
+              </label>
+              <label class="radio-inline">
+                <input {% if default_field == "recipientOrganization.name" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio3" value="recipientOrganization.name"> Only Recipients
+              </label>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
+    <div class="col-xs-2">
+      <a href="{% url 'search' %}" class="pull-right btn btn-success btn-xs clear-search">New Search</a>
+    </div>
   </div>
+  {% if selected_facets %}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default clear-margin-bottom">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-6">
+               <h4 class="smaller-top-margin-heading"> Current Filters </h4>
+            </div>
+            <div class="col-xs-6">
+              <a href="{{results.clear_all_facet_url}}" class="pull-right btn btn-success btn-xs smaller-top-margin-button"> Clear All Filters </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              {% for name, selected_list in selected_facets.items %}
+                <div class="row">
+                  <div class="col-xs-12 marg">
+                    <b>{{name}}:</b>
+                    {% for item in selected_list %}
+                      <div class="filter-list-item">
+                        {{item.display_value}}
+                        <a href="{{item.url}}">
+                          <span class="glyphicon glyphicon-remove filter-list-remove-icon" aria-hidden="true"></span>
+                        </a>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
 
 
   
   <div class="row">
     <div class="col-xs-3">
-      <h3 class="indent"> Refine By {% if results.clear_all_facet_url %} <a href={{results.clear_all_facet_url}}> <small>(clear all)</small></a> {%endif%} </h3>
+      <h3 class="indent"> Filter By </h3>
+      <div class="panel panel-default">
+        <a class="anchor" id="amountAwardedFixed"></a>
+        <div class="panel-heading list-group-compact">
+          Amount Awarded {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}
+        </div>
+        <div class="list-group">
+
+          <div id="min-max-form">
+            <form class="form-inline">
+              <div class="row">
+                <div class="col-lg-5 col-md-6 no-padding-hor">
+                  <div class="form-group form-group-sm">
+                    <label for="min-amount">Smallest
+                    <input id="min-amount" name="min_amount" class="form-control" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.gte}}"/>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-lg-5 col-md-6 no-padding-hor">
+                  <div class="form-group form-group-sm">
+                    <label for="max-amount">Largest
+                    <input id="max-amount" name="max_amount" class="form-control input-xs" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.lte}}"/>
+                    </label>
+                    
+                  </div>
+                </div>
+
+                <div class="col-lg-2 col-xs-12 no-padding-hor">
+                  <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+                  <div class="form-group form-group-sm">
+                    <button type="submit" class="btn btn-default btn-xs">Apply</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          {% if not query.query.bool.filter.3.bool.should.range.amountAwarded %}
+            {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
+              {% if forloop.counter <= query.extra_context.amountAwardedFixed_facet_size %}
+                  <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count|get_amount}})</small> </a>
+              {% endif %}
+            {% endfor %}
+            {% if results.aggregations.amountAwardedFixed.buckets|length > 2 %}
+              <a href="{{see_more_url.amountAwardedFixed.url}}" class="see-more list-group-item list-group-compact"> <b>{% if see_more_url.amountAwardedFixed.more%}See More{% else %}See Less{% endif %}</b> </a>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <a class="anchor" id="recipientRegionName"></a>
+        <div class="panel-heading list-group-compact">
+          Recipient Region {% if results.aggregations.recipientRegionName.clear_url %} <a href="{{results.aggregations.recipientRegionName.clear_url}}"> <small>(clear)</small></a> {% endif%}
+        </div>
+        <div class="list-group">
+          {% for bucket in results.aggregations.recipientRegionName.buckets %}
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
+          {% endfor %}
+          {% if results.aggregations.recipientRegionName.buckets|length > 2 %}
+            <a href="{{see_more_url.recipientRegionName.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.recipientRegionName.more%}See More{% else %}See Less{% endif %}</b> </a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <a class="anchor" id="recipientDistrictName"></a>
+        <div class="panel-heading list-group-compact">
+          Recipient District {% if results.aggregations.recipientDistrictName.clear_url %} <a href={{results.aggregations.recipientDistrictName.clear_url}}> <small>(clear)</small></a> {% endif%}
+        </div>
+        <div class="list-group">
+          {% for bucket in results.aggregations.recipientDistrictName.buckets %}
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
+          {% endfor %}
+          {% if results.aggregations.recipientDistrictName.buckets|length > 2 %}
+            <a href="{{see_more_url.recipientDistrictName.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.recipientDistrictName.more%}See More{% else %}See Less{% endif %}</b> </a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <a class="anchor" id="awardYear"></a>
+        <div class="panel-heading list-group-compact">
+          Award Year {% if results.aggregations.awardYear.clear_url %} <a href="{{results.aggregations.awardYear.clear_url}}"> <small>(clear)</small></a> {% endif%}
+        </div>
+        <div class="list-group">
+          {% for bucket in results.aggregations.awardYear.buckets %}
+            {% if forloop.counter <= query.extra_context.awardYear_facet_size %}
+              <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}">
+                {% if bucket.from_as_string %} {{bucket.from_as_string}} {% else %} {{bucket.key_as_string}} {% endif %} <small>({{bucket.doc_count|get_amount}})</small> </a>
+            {% endif %}
+          {% endfor %}
+          {% if results.aggregations.awardYear.buckets|length > 2 %}
+            <a href="{{see_more_url.awardYear.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.awardYear.more%}See More{% else %}See Less{% endif %}</b> </a>
+          {% endif %}
+        </div>
+      </div>
       <div class="panel panel-default">
         <a class="anchor" id="fundingOrganization"></a>
         <div class="panel-heading list-group-compact">
@@ -33,8 +181,8 @@
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
 
-          {% if results.aggregations.fundingOrganization.buckets|length > 9 %}
-            <a href="{{see_more_url.fundingOrganization.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.fundingOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
+          {% if results.aggregations.fundingOrganization.buckets|length > 2 %}
+            <a href="{{see_more_url.fundingOrganization.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.fundingOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
 
         </div>
@@ -48,71 +196,9 @@
           {% for bucket in results.aggregations.recipientOrganization.buckets %}
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
-          {% if results.aggregations.recipientOrganization.buckets|length > 9 %}
-            <a href="{{see_more_url.recipientOrganization.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
+          {% if results.aggregations.recipientOrganization.buckets|length > 2 %}
+            <a href="{{see_more_url.recipientOrganization.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.recipientOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <a class="anchor" id="recipientRegionName"></a>
-        <div class="panel-heading list-group-compact">
-          Recipient Region {% if results.aggregations.recipientRegionName.clear_url %} <a href="{{results.aggregations.recipientRegionName.clear_url}}"> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="list-group">
-          {% for bucket in results.aggregations.recipientRegionName.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <a class="anchor" id="recipientDistrictName"></a>
-        <div class="panel-heading list-group-compact">
-          Recipient District {% if results.aggregations.recipientDistrictName.clear_url %} <a href={{results.aggregations.recipientDistrictName.clear_url}}> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="list-group">
-          {% for bucket in results.aggregations.recipientDistrictName.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
-          {% endfor %}
-          {% if results.aggregations.recipientDistrictName.buckets|length > 9 %}
-            <a href="{{see_more_url.recipientDistrictName.url}}" class="list-group-item list-group-compact"> <b>{% if see_more_url.recipientDistrictName.more%}See More{% else %}See Less{% endif %}</b> </a>
-          {% endif %}
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <a class="anchor" id="amountAwareded"></a>
-        <div class="panel-heading list-group-compact">
-          Amount Awarded {% if results.aggregations.amountAwarded.clear_url %} <a href="{{results.aggregations.amountAwarded.clear_url}}"> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="list-group">
-          {% if amount_range %}
-            <a href="{{results.aggregations.amountAwarded.clear_url}}" class="list-group-item list-group-compact list-group-item-success"> {{amount_range|get_amount_range}} </a>
-          {% endif %}
-          {% for bucket in results.aggregations.amountAwarded.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count|get_amount}})</small> </a>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <a class="anchor" id="amountAwarededFixed"></a>
-        <div class="panel-heading list-group-compact">
-          Amount Awarded Fixed {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="list-group">
-          {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range}} <small>({{bucket.doc_count|get_amount}})</small> </a>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <a class="anchor" id="awardYear"></a>
-        <div class="panel-heading list-group-compact">
-          Award Year {% if results.aggregations.awardYear.clear_url %} <a href="{{results.aggregations.awardYear.clear_url}}"> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="list-group">
-          {% for bucket in results.aggregations.awardYear.buckets %}
-          <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}">
-            {% if bucket.from_as_string %} {{bucket.from_as_string}} {% else %} {{bucket.key}} {% endif %} <small>({{bucket.doc_count|get_amount}})</small> </a>
-          {% endfor %}
         </div>
       </div>
     </div>
@@ -132,7 +218,7 @@
               <div class="row">
                 <div class="col-sm-6">
                   <dl class="dl-horizontal top-stats-search">
-                    <dt> Total Grants: </dt> <dd>{{results.hits.total|get_amount}} </dd>
+                    <dt>Total grants</dt> <dd>{{results.hits.total|get_amount}} </dd>
                     <dt>Total funders</dt> <dd>{{results.aggregations.funding_orgs.value|get_amount}}</dd>
                     <dt>Total recipients</dt> <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
                     <dt>Total awarded</dt> <dd>£{{results.aggregations.total_amount.value|get_amount}}</dd>
@@ -229,10 +315,36 @@
     
   </div>
 </div>
-
-
 {% endblock %}
 
 {% block extrapiwik %}
 _paq.push(["trackSiteSearch", "{{text_query}}", false, {{results.hits.total}}]);
+{% endblock %}
+
+{% block extra_scripts %}
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
+<script>
+$(function() {
+  var page_y = URI(window.location.href).search(true).page_y
+  if (page_y) {
+     $( 'html, body' ).scrollTop(page_y);
+  }
+  $('.see-more').click(function (e) {
+    var page_y = $( document ).scrollTop();
+    var $target = $(this);
+    var new_url = URI($target.attr('href')).addSearch("page_y", page_y).fragment("").toString();
+
+    if ($target.find('b')[0].innerText === "See Less") {
+      if ($target.closest(".panel").offset().top < page_y) {
+         return true
+      }
+    }
+    window.location.href = new_url;
+    return false
+
+  })
+});
+</script>
 {% endblock %}

@@ -19,24 +19,22 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
     {"bool": {"should": []}},  # Recipient Orgs
     {"bool": {"should": []}},  # Amount Awarded Fixed
-    {"bool": {"should": []}},  # Amount Awarded
+    {"bool": {"should": {"range": {"amountAwarded": {}}}}},  # Amount Awarded
     {"bool": {"should": []}},  # Award Year
     {"bool": {"should": []}},  # recipientRegionName
     {"bool": {"should": []}}   # recipientDistrictName
 ]
 
-TERM_FILTERS = {
-    "fundingOrganization": 0,
-    "recipientOrganization": 1
-}
 
 BASIC_QUERY = {"query": {"bool": {"must":
-                  {"query_string": {"query": ""}}, "filter": BASIC_FILTER}},
+                                  {"query_string": {"query": "", "default_field": "_all"}}, "filter": BASIC_FILTER}},
+               "extra_context": {"awardYear_facet_size": 3, "amountAwardedFixed_facet_size": 3},
                "aggs": {
-                   "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 10}},
-                   "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 10}},
-                   "recipientRegionName": {"terms": {"field": "recipientRegionName", "size": 20}},
-                   "recipientDistrictName": {"terms": {"field": "recipientDistrictName", "size": 10}}}}
+                   "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 3}},
+                   "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 3}},
+                   "recipientRegionName": {"terms": {"field": "recipientRegionName", "size": 3}},
+                   "recipientDistrictName": {"terms": {"field": "recipientDistrictName", "size": 3}}}}
+
 SIZE = 20
 
 FIXED_AMOUNT_RANGES = [
@@ -51,21 +49,6 @@ FIXED_AMOUNT_RANGES = [
     {"from": 10000000}
 ]
 
-FIXED_DATE_RANGES = [
-    {"from": "now/y", "to": "now"},
-    {"from": "now-1y/y", "to": "now/y"},
-    {"from": "now-2y/y", "to": "now-1y/y"},
-    {"from": "now-3y/y", "to": "now-2y/y"},
-    {"from": "now-4y/y", "to": "now-3y/y"},
-    {"from": "now-5y/y", "to": "now-4y/y"},
-    {"from": "now-6y/y", "to": "now-5y/y"},
-    {"from": "now-7y/y", "to": "now-6y/y"},
-    {"from": "now-8y/y", "to": "now-7y/y"},
-    {"from": "now-9y/y", "to": "now-8y/y"},
-    {"from": "now-10y/y", "to": "now-9y/y"},
-    {"from": "now-11y/y", "to": "now-10y/y"},
-    {"from": "now-12y/y", "to": "now-11y/y"},
-]
 
 SEARCH_SUMMARY_AGGREGATES = {
     "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
@@ -77,6 +60,15 @@ SEARCH_SUMMARY_AGGREGATES = {
     "min_date": {"min": {"field": "awardDate"}},
     "max_date": {"max": {"field": "awardDate"}}
 }
+
+
+def get_results(json_query, size=10, from_=0):
+    es = get_es()
+    extra_context = json_query.pop('extra_context', None)
+    results = es.search(body=json_query, size=size, from_=from_, index=settings.ES_INDEX)
+    if extra_context is not None:
+        json_query['extra_context'] = extra_context
+    return results
 
 
 def get_request_type_and_size(request):
@@ -132,11 +124,11 @@ def get_terms_facet_size(request, context, json_query, page):
         if "terms" not in agg:
             continue
         size = agg["terms"]["size"]
-        if size == 10:
+        if size == 3:
             new_size = 50
             see_more_url[agg_name] = {"more": True}
         else:
-            new_size = 10
+            new_size = 3
             see_more_url[agg_name] = {"more": False}
         new_aggs[agg_name]["terms"]["size"] = new_size
 
@@ -146,55 +138,29 @@ def get_terms_facet_size(request, context, json_query, page):
     context['see_more_url'] = see_more_url
 
 
+def get_non_terms_facet_size(request, context, json_query, page, agg_name):
+    see_more = {}
+    new_json_query = copy.deepcopy(json_query)
+    facet_size = new_json_query['extra_context'][agg_name + '_facet_size']
+    if facet_size == 3:
+        facet_size = 50
+        see_more["more"] = True
+    else:
+        facet_size = 3
+        see_more["more"] = False
+
+    new_json_query['extra_context'][agg_name + '_facet_size'] = facet_size
+    new_url = request.path + '?' + urlencode({"json_query": json.dumps(new_json_query), 'page': page}) + '#' + agg_name
+    see_more['url'] = new_url
+    context['see_more_url'][agg_name] = see_more
+
+
 def create_amount_aggregate(json_query):
-
-    def round_amount(amount, round_up=True):
-        round_func = math.ceil if round_up else math.floor
-        if amount > 10000:
-            return int(round_func(amount / 1000.0)) * 1000
-        else:
-            return int(round_func(amount / 100.0)) * 100
-
-    amount_json_query = copy.deepcopy(json_query)
-    amount_json_query["aggs"]["awardPercentiles"] = {"percentiles": {"field": "amountAwarded", "percents": [0, 15, 30, 45, 60, 75, 90, 100]}}
-
-    es = get_es()
-    results = es.search(body=amount_json_query, index=settings.ES_INDEX)
-
-    values = results["aggregations"]["awardPercentiles"]["values"]
-    range_list = [(values['0.0'], values['15.0']),
-                  (values['15.0'], values['30.0']),
-                  (values['30.0'], values['45.0']),
-                  (values['45.0'], values['60.0']),
-                  (values['60.0'], values['75.0']),
-                  (values['75.0'], values['90.0']),
-                  (values['90.0'], values['100.0'])]
-
-    to_from_list = []
-    for num, (from_, to_) in enumerate(range_list):
-        if from_ == "NaN" or to_ == "NaN":
-            break
-        if num == 0:
-            rounded_from = round_amount(from_, round_up=False)
-        else:
-            rounded_from = round_amount(from_)
-        rounded_to = round_amount(to_)
-        if rounded_from != rounded_to:
-            to_from_list.append({"from": rounded_from, "to": rounded_to})
-    if not to_from_list:
-        if 'NaN' not in (values['0.0'], values['0.0']):
-            to_from_list.append({"from": values['0.0'], "to": values['100.0']})
-        else:
-            #just some values here so as not to break anything
-            to_from_list.append({"from": 0, "to": 0})
-
-    json_query["aggs"]["amountAwarded"] = {"range": {"field": "amountAwarded", "ranges": to_from_list}}
-
     json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": FIXED_AMOUNT_RANGES}}
 
 
-def get_amount_facet_fixed(request, context, json_query):
-    json_query = copy.deepcopy(json_query)
+def get_amount_facet_fixed(request, context, original_json_query):
+    json_query = copy.deepcopy(original_json_query)
     json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": FIXED_AMOUNT_RANGES}}
     try:
         current_filter = json_query["query"]["bool"]["filter"][2]["bool"]["should"]
@@ -205,15 +171,17 @@ def get_amount_facet_fixed(request, context, json_query):
     main_results = context["results"]
     if current_filter:
         json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
-        es = get_es()
-        results = es.search(body=json_query, index=settings.ES_INDEX)
+        results = get_results(json_query)
     else:
         results = context["results"]
 
+    input_range = json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"]
     new_filter = copy.deepcopy(current_filter)
-    if new_filter:
-        json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
-        results["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+    if new_filter or input_range:
+        new_json_query = copy.deepcopy(original_json_query)
+        new_json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
+        new_json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = {}
+        results["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(new_json_query)})
 
     for bucket in results["aggregations"]["amountAwardedFixed"]['buckets']:
         new_filter = []
@@ -231,38 +199,34 @@ def get_amount_facet_fixed(request, context, json_query):
 
         json_query["query"]["bool"]["filter"][2]["bool"]["should"] = new_filter
         bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+
+        if bucket.get("selected"):
+            display_value = "£{:,}".format(int(bucket["from"]))
+            if to_:
+                display_value = str(display_value) + " - " + "£{:,}".format(int(to_))
+            else:
+                display_value = str(display_value) + "+"
+
+            context["selected_facets"]["Amounts"].append({"url": bucket["url"], "display_value": display_value})
+
+    if input_range:
+        json_query = copy.deepcopy(original_json_query)
+        lte, gte = input_range.get('lte'), input_range.get('gte')
+        if not gte:
+            gte = 0
+        display_value = "£{:,}".format(int(gte))
+        if lte:
+            display_value = str(display_value) + " - " + "£{:,}".format(int(lte))
+        else:
+            display_value = str(display_value) + "+"
+        json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = {}
+        context["selected_facets"]["Amounts"].append({"url": request.path + '?' + urlencode({"json_query": json.dumps(json_query)}), "display_value": display_value})
+
     main_results["aggregations"]["amountAwardedFixed"] = results["aggregations"]["amountAwardedFixed"]
 
 
-def get_amount_facet(request, context, json_query):
-    json_query = copy.deepcopy(json_query)
-    try:
-        current_filter = json_query["query"]["bool"]["filter"][3]["bool"]["should"]
-    except KeyError:
-        json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
-        current_filter = json_query["query"]["bool"]["filter"][3]["bool"]["should"]
-
-    # get current amount to put in context for frontend
-    new_filter = copy.deepcopy(current_filter)
-    if new_filter:
-        range = new_filter[0]["range"]["amountAwarded"]
-        context["amount_range"] = {"from": range["gte"], "to": range["lt"]}
-        json_query["query"]["bool"]["filter"][3]["bool"]["should"] = []
-        context["results"]["aggregations"]["amountAwarded"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
-
-    for bucket in context["results"]["aggregations"]["amountAwarded"]['buckets']:
-        new_filter = copy.deepcopy(current_filter)
-        new_range = {"gte": bucket["from"]}
-        to_ = bucket.get("to")
-        if to_:
-            new_range["lt"] = to_
-        new_filter = [{"range": {"amountAwarded": new_range}}]
-        json_query["query"]["bool"]["filter"][3]["bool"]["should"] = new_filter
-        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
-
-
 def create_date_aggregate(json_query):
-    json_query["aggs"]["awardYear"] = {"date_range": {"field": "awardDate", "format": "yyyy", "ranges": FIXED_DATE_RANGES}}
+    json_query["aggs"]["awardYear"] = {"date_histogram": {"field": "awardDate", "format": "yyyy", "interval": "year", "order": {"_key": "desc"}}}
 
 
 def get_date_facets(request, context, json_query):
@@ -276,19 +240,15 @@ def get_date_facets(request, context, json_query):
     if current_filter:
         json_query["query"]["bool"]["filter"][4]["bool"]["should"] = []
         create_date_aggregate(json_query)
-        es = get_es()
-        results = es.search(body=json_query, index=settings.ES_INDEX)
+        results = get_results(json_query)
     else:
         results = context["results"]
 
     for bucket in results['aggregations']['awardYear']['buckets']:
         range = {'format': 'year'}
-        from_ = bucket.get("from_as_string")
-        if from_:
-            range["gte"] = from_
-        to_ = bucket.get("to_as_string")
-        if to_:
-            range["le"] = to_
+        value = bucket.get("key_as_string")
+        range["gte"] = value + "||/y"
+        range["lte"] = value + "||/y"
 
         filter_values = [filter["range"]['awardDate'] for filter in current_filter]
 
@@ -303,13 +263,17 @@ def get_date_facets(request, context, json_query):
         new_filter = [{"range": {"awardDate": value}} for value in filter_values]
         json_query["query"]["bool"]["filter"][4]["bool"]["should"] = new_filter
         bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+
+        if bucket.get("selected"):
+            context["selected_facets"]["Award Year"].append({"url": bucket["url"], "display_value": value})
+
     if current_filter:
         json_query["query"]["bool"]["filter"][4]["bool"]["should"] = []
         results['aggregations']["awardYear"]['clear_url'] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
     main_results['aggregations']["awardYear"] = results['aggregations']["awardYear"]
 
 
-def get_terms_facets(request, context, json_query, field, aggregate, bool_index):
+def get_terms_facets(request, context, json_query, field, aggregate, bool_index, display_name, is_json=False):
     json_query = copy.deepcopy(json_query)
     try:
         current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]
@@ -320,10 +284,20 @@ def get_terms_facets(request, context, json_query, field, aggregate, bool_index)
     main_results = context["results"]
     if current_filter:
         json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = []
-        es = get_es()
-        results = es.search(body=json_query, index=settings.ES_INDEX)
+        results = get_results(json_query)
     else:
         results = context["results"]
+
+    for filter in current_filter:
+        new_filter = [x for x in current_filter if x != filter]
+        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = new_filter
+        display_value = filter["term"][field]
+        if is_json:
+            display_value = json.loads(display_value)[0]
+        context["selected_facets"][display_name].append(
+            {"url": request.path + '?' + urlencode({"json_query": json.dumps(json_query)}),
+             "display_value": display_value}
+        )
 
     for bucket in results['aggregations'][aggregate]['buckets']:
         facet_value = bucket['key']
@@ -364,9 +338,7 @@ def home(request):
                  "funder_count": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
         }
     }
-    es = get_es()
-
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    results = get_results(query)
     context['results'] = results
 
     return render(request, "home.html", context=context)
@@ -390,18 +362,38 @@ def search(request):
     except ValueError:
         json_query = {}
 
+    default_field = request.GET.get('default_field')
     text_query = request.GET.get('text_query')
-    if text_query is not None:
-        if text_query == '':
+    if text_query is not None or not json_query:
+        if not text_query:
             text_query = '*'
         try:
             json_query["query"]["bool"]["must"]["query_string"]["query"] = text_query
         except KeyError:
             json_query = copy.deepcopy(BASIC_QUERY)
             json_query["query"]["bool"]["must"]["query_string"]["query"] = text_query
+
+        if default_field:
+            json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
         return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
 
-    es = get_es()
+    min_amount = request.GET.get('min_amount')
+    max_amount = request.GET.get('max_amount')
+    if min_amount or max_amount:
+        new_filter = {}
+        if min_amount:
+            try:
+                new_filter['gte'] = int(min_amount)
+            except ValueError:
+                pass
+        if max_amount:
+            try:
+                new_filter['lte'] = int(max_amount)
+            except ValueError:
+                pass
+        json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = new_filter
+        return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
+
     results = None
     if json_query:
         try:
@@ -413,9 +405,15 @@ def search(request):
 
         try:
             context['text_query'] = json_query["query"]["bool"]["must"]["query_string"]["query"]
+            context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
         except KeyError:
             json_query = copy.deepcopy(BASIC_QUERY)
-            json_query["query"]["bool"]["must"]["query_string"]["query"] = text_query
+            json_query["query"]["bool"]["must"]["query_string"]["query"] = ''
+            context['text_query'] = ''
+            if default_field:
+                json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
+            context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
+
         if context['text_query'] == '*':
             context['text_query'] = ''
 
@@ -424,11 +422,10 @@ def search(request):
             create_date_aggregate(json_query)
 
             json_query['aggs'].update(SEARCH_SUMMARY_AGGREGATES)
-            results = es.search(body=json_query, size=results_size, from_=(page - 1) * SIZE, index=settings.ES_INDEX)
+            results = get_results(json_query, results_size, (page - 1) * SIZE)
             for key in SEARCH_SUMMARY_AGGREGATES:
                 json_query["aggs"].pop(key)
             json_query["aggs"].pop("awardYear")
-            json_query["aggs"].pop("amountAwarded")
             json_query["aggs"].pop("amountAwardedFixed")
         except elasticsearch.exceptions.RequestError as e:
             if e.error == 'search_phase_execution_exception':
@@ -440,25 +437,31 @@ def search(request):
             hit['source'] = hit['_source']
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
+        context['query'] = json_query
 
         if result_format == "csv":
             return csv_response(context, "grants")
         elif result_format == "json":
             return grants_as_json(results)
         else:
+            context['selected_facets'] = collections.defaultdict(list)
             get_clear_all(request, context, json_query)
 
-            for filter_name, index in TERM_FILTERS.items():
-                get_terms_facets(request, context, json_query, filter_name + ".id_and_name", filter_name, index)
+            get_terms_facets(request, context, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
+            get_terms_facets(request, context, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
 
-            get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5)
-            get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6)
+            get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5, "Regions")
+            get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6, "Districts")
 
-            get_amount_facet(request, context, json_query)
             get_amount_facet_fixed(request, context, json_query)
             get_date_facets(request, context, json_query)
             get_terms_facet_size(request, context, json_query, page)
+            get_non_terms_facet_size(request, context, json_query, page, 'awardYear')
+            get_non_terms_facet_size(request, context, json_query, page, 'amountAwardedFixed')
+
             get_pagination(request, context, page)
+
+            context['selected_facets'] = dict(context['selected_facets'])
 
             return render(request, "search.html", context=context)
 
@@ -531,8 +534,7 @@ def grant(request, grant_id):
     query = {"query": {"bool": {"filter":
                 [{"term": {"id": grant_id}}]
     }}}
-    es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=-1)
+    results = get_results(query, -1)
     if results['hits']['total'] == 0:
         raise Http404
     context = {}
@@ -565,8 +567,7 @@ def funder(request, funder_id):
         }
     }
 
-    es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
+    results = get_results(query, results_size)
 
     if results['hits']['total'] == 0:
         raise Http404
@@ -630,8 +631,7 @@ def funder_recipients_datatables(request):
     if not search_value:
         query["query"]["bool"].pop("must")
 
-    es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    results = get_results(query, 1)
     result_list = []
 
     for result in results["aggregations"]["recipient_stats"]["buckets"][-length:]:
@@ -709,8 +709,7 @@ def funders_datatables(request):
     if not search_value:
         query["query"]["bool"].pop("must")
 
-    es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=1)
+    results = get_results(query, 1)
     result_list = []
 
     for result in results["aggregations"]["funder_stats"]["buckets"][-length:]:
@@ -786,9 +785,8 @@ def grants_datatables(request):
     if not search_value:
         query["query"]["bool"].pop("must")
 
-    es = get_es()
     try:
-        results = es.search(body=query, index=settings.ES_INDEX, size=length, from_=start)
+        results = get_results(query, length, start)
     except elasticsearch.exceptions.RequestError as e:
         if e.error == 'search_phase_execution_exception':
             results = {"hits": {"total": 0, "hits": []}}
@@ -836,8 +834,7 @@ def recipient(request, recipient_id):
                              "aggs": {"funder_stats": {"stats": {"field": "amountAwarded"}}}}
                  }}
 
-    es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
+    results = get_results(query, results_size)
 
     if results['hits']['total'] == 0:
         raise Http404
@@ -880,8 +877,7 @@ def region(request, region):
         }
     }
 
-    es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
+    results = get_results(query, results_size)
 
     if results['hits']['total'] == 0:
         raise Http404
@@ -916,8 +912,7 @@ def district(request, district):
         }
     }
 
-    es = get_es()
-    results = es.search(body=query, index=settings.ES_INDEX, size=results_size)
+    results = get_results(query, results_size)
 
     if results['hits']['total'] == 0:
         raise Http404

@@ -26,15 +26,15 @@ def test_search(dataload, client):
     initial_response = client.get('/search?text_query=gardens')
     assert initial_response.status_code == 302
     response = client.get(initial_response.url)
-    assert "Total Grants:" in str(response.content)
+    assert "Total grants" in str(response.content)
     assert "The British Museum" in str(response.content)
 
     assert response.context['text_query'] == 'gardens'
-    assert response.context['results']['hits']['total'] == 7
+    assert response.context['results']['hits']['total'] == 8
 
     # click facet
     wolfson_facet = response.context['results']['aggregations']['fundingOrganization']['buckets'][0]
-    assert wolfson_facet['doc_count'] == 7
+    assert wolfson_facet['doc_count'] == 8
     assert wolfson_facet['key'] == '["Wolfson Foundation", "GB-CHC-1156077"]'
     json_query = json.loads(urllib.parse.parse_qs(initial_response.url.split('?')[-1])['json_query'][0])
 
@@ -44,7 +44,7 @@ def test_search(dataload, client):
     # click agian
     response = client.get(wolfson_facet['url'])
     wolfson_facet = response.context['results']['aggregations']['fundingOrganization']['buckets'][0]
-    assert wolfson_facet['doc_count'] == 7
+    assert wolfson_facet['doc_count'] == 8
     assert wolfson_facet['key'] == '["Wolfson Foundation", "GB-CHC-1156077"]'
     json_query['query']['bool']['filter'][0]['bool']['should'] = []
     assert json.loads(urllib.parse.parse_qs(wolfson_facet['url'].split('?')[-1])['json_query'][0]) == json_query
