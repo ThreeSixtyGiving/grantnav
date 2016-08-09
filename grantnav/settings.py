@@ -32,7 +32,8 @@ env = environ.Env(  # set default values and casting
     SECRET_KEY=(str, secret_key),
     GRANT_SCHEMA=(str, 'https://raw.githubusercontent.com/ThreeSixtyGiving/standard/master/schema/360-giving-schema.json'),
     DB_NAME=(str, os.path.join(BASE_DIR, 'db.sqlite3')),
-    ES_INDEX=(str, 'threesixtygiving')
+    ES_INDEX=(str, 'threesixtygiving'),
+    PROVENANCE_JSON=(str, None)
 )
 
 PIWIK = {
@@ -59,6 +60,8 @@ GRANT_SCHEMA = env('GRANT_SCHEMA')
 
 # Set these to sensible limits for your server
 FLATTENED_DOWNLOAD_LIMIT = 10000
+
+PROVENANCE_JSON = env('PROVENANCE_JSON')
 
 # Application definition
 

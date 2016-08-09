@@ -42,6 +42,8 @@ python manage.py runserver
 Note that if you are not on Debian based system you will need to follow https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html#setup-installation to install elasticsearch.
 Follow the instructions in your terminal to open the aplication in your browser.
 
+
+
 Upload Data
 ------------
 
@@ -50,6 +52,21 @@ In order to upload some data use the dataload/import_to_elesticsearch.py command
 
 The clean command is optional it will delete the index and start again, so leave it off if you want to add just another file to an existing index.
 You can specify as many file or patterns as you like at the end of the command.
+
+### Getting data for upload
+
+There is a list of 360Giving datasets at http://www.threesixtygiving.org/data/find-data/. There's an API for this list http://data.threesixtygiving.org/data.json and some code to help download from it -  https://github.com/ThreeSixtyGiving/datagetter
+
+### Provenance JSON
+
+Most parts of GrantNav work fine without provenance information. However, in order for the publisher/datasets pages to work correctly you must point the `PROVENANCE_JSON` environment variable at a local copy of [data.json](http://data.threesixtygiving.org/data.json)  - (the datagetter code will also download this for you).
+
+e.g.
+
+```
+PROVENANCE_JSON=path/to/data.json python manage.py runserver
+```
+
 
 Compile theme
 -------------

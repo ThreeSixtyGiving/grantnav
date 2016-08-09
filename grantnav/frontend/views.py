@@ -14,6 +14,7 @@ import datetime
 import re
 from django.http import HttpResponse
 from django.template import loader
+from grantnav import provenance
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -926,3 +927,36 @@ def district(request, district):
         return grants_as_json(results)
     else:
         return render(request, "district.html", context=context)
+
+
+def get_funders_for_datasets(datasets):
+    es = get_es()
+
+    for dataset in datasets:
+        query = {"query": {"bool": {
+            "filter": [{"term": {"filename": dataset['identifier'] + '.json'}}]}},
+            "aggs": {
+                "funders": {"terms": {"field": "fundingOrganization.id_and_name", "size": 10}}
+            }
+        }
+        results = es.search(body=query, index=settings.ES_INDEX, size=0)
+        dataset['funders'] = [json.loads(bucket['key']) for bucket in results['aggregations']['funders']['buckets']]
+
+
+def publisher(request, publisher_id):
+    publisher = provenance.by_publisher[publisher_id]
+    get_funders_for_datasets(publisher['datasets'])
+
+    if publisher_id not in provenance.by_publisher:
+        raise Http404
+    return render(request, "publisher.html", context={
+        'publisher': publisher,
+    })
+
+
+def datasets(request):
+    get_funders_for_datasets(provenance.datasets)
+    return render(request, "datasets.html", context={
+        'publishers': provenance.by_publisher.values(),
+        'datasets': provenance.datasets,
+    })

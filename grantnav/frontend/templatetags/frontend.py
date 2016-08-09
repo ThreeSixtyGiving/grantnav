@@ -4,6 +4,7 @@ import datetime
 import dateutil.parser as date_parser
 import strict_rfc3339
 import json
+from grantnav import provenance
 
 register = template.Library()
 
@@ -118,3 +119,11 @@ def get_facet_org_name(facet):
 @register.filter(name='get_currency_list')
 def get_currency_list(aggregate):
     return ", ".join(bucket["key"].upper() for bucket in aggregate["buckets"])
+
+
+@register.filter(name='get_dataset')
+def get_dataset(grant):
+    try:
+        return provenance.by_identifier[grant['source']['filename'].split('.')[0]]
+    except KeyError:
+        return None
