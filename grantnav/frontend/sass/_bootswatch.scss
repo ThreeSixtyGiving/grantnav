@@ -3,16 +3,6 @@
 // -----------------------------------------------------
 // Grantnav custom
 
-@font-face {
-    font-family: 'ostrich_sans_roundedmedium';
-    src: url('../fonts/sans-rounded.woff2') format('woff2'),
-         url('../fonts/ostrich-sans-rounded.woff') format('woff'),
-         url('../fonts/ostrich-sans-rounded.ttf') format('truetype'),
-         url('../fonts/ostrich-sans-rounded.svg#ostrich_sans_roundedmedium') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
 .link-on-orange {
   color: grey;
   &:hover {
@@ -113,7 +103,7 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Lato:400,700,400italic"
   &-brand {
     //grantnav changes
     color: #FFF;
-    font-family: ostrich_sans_roundedmedium,sans-serif;
+    font-family: 'Ostrich Sans',sans-serif;
     font-size: 48px;
     letter-spacing: 2px;
     line-height: 1.9em;
