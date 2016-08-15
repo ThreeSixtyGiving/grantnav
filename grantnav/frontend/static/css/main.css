@@ -33,6 +33,10 @@ a.anchor {
     margin-top:0px;
 }
 
+.heading-in-panel small {
+    color: black;
+}
+
 .fixed-org-height {
   height: 150px;
   overflow: hidden;
@@ -193,6 +197,10 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
 
 .clear-margin-bottom {
     margin-bottom: 0px;
+}
+
+.filters .panel-default, .filters .list-group-item, .filters .panel-heading{
+    border-color: #ccc;
 }
 
 #min-amount, #max-amount {
