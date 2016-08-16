@@ -20,6 +20,7 @@ def test_home(dataload, client):
     assert "GrantNav" in str(response.content)
     assert "Search" in str(response.content)
     assert "heritage" in str(response.content)
+    assert "Bob, Director" in str(response.content)
 
 
 def test_search(dataload, client):

@@ -230,3 +230,37 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
     }
 }
 
+.quotes {
+  background: #fff;
+  margin-top:0;
+}
+
+/* Thanks: https://css-tricks.com/snippets/css/simple-and-nice-blockquote-styling/ */
+blockquote {
+  border-left: 10px solid #ff9222;
+  margin: 1.5em 10px 1.5em 0;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote:before, blockquote:after {
+  color: #ff9222;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+blockquote:before {
+  content: open-quote;
+}
+
+blockquote:after {
+  content: close-quote;
+  margin-left: 0.25em;
+  vertical-align: -0.5em;
+}
+
+blockquote p {
+  display: inline;
+}
