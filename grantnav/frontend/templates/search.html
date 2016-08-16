@@ -205,14 +205,38 @@
     
     {% if results and results.hits.hits %}
     <div class="col-xs-9">
-      <h3 class="indent"> Results <small>
-        <a href="{% url 'search.csv' %}?{{ query_string }}">
-          <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button" id="csv_download_button"/>
-        </a>
-        <a href="{% url 'search.json' %}?{{ query_string }}">
-          <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button" id="json_download_button"/>
-        </a>
-      </h3>
+      <div class="row">
+        <div class="col-md-7 col-xs-12">
+          <h3 class="pull-left"> Results </h3>
+          <form id="sort-form" class="form-inline">
+            <div class="form-group pull-left">
+              <label for="sort_options">Sort By:</label>
+              <select id="sort_options" name="sort" class="form-control" onchange="this.form.submit()">
+                {% with current_sort=query|get_current_sort %}
+                  <option value="_score desc" {% if current_sort == "_score desc"%} selected {% endif %}>Best Match</option>
+                  <option value="amountAwarded desc" {% if current_sort == "amountAwarded desc"%} selected {% endif %}>Amount - Highest First</option>
+                  <option value="amountAwarded asc" {% if current_sort == "amountAwarded asc"%} selected {% endif %}>Amount - Lowest First</option>
+                  <option value="awardDate desc" {% if current_sort == "awardDate desc"%} selected {% endif %}>Award Date - Latest First</option>
+                  <option value="awardDate asc" {% if current_sort == "awardDate asc"%} selected {% endif %}>Award Date - Earliest First</option>
+                {% endwith %}
+              </select>
+
+              <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+            </div>
+          </form>
+        </div>
+        <div class="col-md-5 col-xs-12">
+          <div>
+            <a href="{% url 'search.json' %}?{{ query_string }}">
+              <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="no-float-md download_button" id="json_download_button"/>
+            </a>
+            <a href="{% url 'search.csv' %}?{{ query_string }}">
+              <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="pull-left-md download_button" id="csv_download_button"/>
+            </a>
+          </div>
+        </div>
+      </div>
+
          <div class="panel panel-default">
             <div class="panel-body panel-no-padding">
               <div class="row">

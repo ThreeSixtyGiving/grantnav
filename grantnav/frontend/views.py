@@ -30,6 +30,7 @@ BASIC_FILTER = [
 BASIC_QUERY = {"query": {"bool": {"must":
                                   {"query_string": {"query": "", "default_field": "_all"}}, "filter": BASIC_FILTER}},
                "extra_context": {"awardYear_facet_size": 3, "amountAwardedFixed_facet_size": 3},
+               "sort": {"_score": {"order": "desc"}},
                "aggs": {
                    "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 3}},
                    "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 3}},
@@ -393,6 +394,11 @@ def search(request):
             except ValueError:
                 pass
         json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = new_filter
+        return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
+
+    sort_order = request.GET.get('sort', '').split()
+    if sort_order and len(sort_order) == 2:
+        json_query["sort"] = {sort_order[0]: {"order": sort_order[1]}}
         return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
 
     results = None

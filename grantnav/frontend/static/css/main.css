@@ -224,9 +224,39 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
     margin-top: -5px;
 }
 
+#sort-form .form-group {
+  margin-left: 26px;
+  margin-top: 21px;
+}
+
+#sort-form select {
+  height: 27px;
+  padding: 0px;
+  margin-bottom: 3px;
+  margin-left: 5px;
+}
+
+#json_download_button, #csv_download_button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 992px) {
+    .no-float-md {
+        float: none !important;
+    }
+    .pull-left-md {
+        float: left !important;
+        padding-left:0px
+    }
+    #sort_options {
+      display: inline-block;
+      width: auto;
+    }
+}
+
 @media (min-width: 1200px) {
     #min-max-form .btn-xs {
         margin-top: 21px;
     }
 }
-
