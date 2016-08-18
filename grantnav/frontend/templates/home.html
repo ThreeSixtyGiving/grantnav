@@ -32,7 +32,13 @@
         <p class="search-help"> Try these examples: 
             <a class="link-on-orange" href="{% url 'search' %}?text_query=volunteers">volunteers</a>, 
             <a class="link-on-orange" href="{% url 'search' %}?text_query=heritage">heritage</a>, 
-            <a class="link-on-orange" href="{% url 'search' %}?text_query=disabilities">disabilities</a> 
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=disabilities">disabilities</a>,
+            
+            Only Locations: 
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=Bristol&amp;default_field=recipientLocation">Bristol</a>,
+            Only Recipients: 
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=children&amp;default_field=recipientOrganization.name">children</a></p>
+        <p class="search-help">Tip: Use quotes to find an exact phrase <a class="link-on-orange" href="{% url 'search' %}?text_query=%22arts centre%22">"arts centre"</a> or identifier <a class="link-on-orange" href="{% url 'search' %}?text_query=%22360G-wolfson-19750%22">"360G-wolfson-19750"</a></p>
       </div>
       <div class="col-xs-12">
         <h1 class="home-info text-center"> Search, explore and download UK grant data from funders publishing open data to the 360Giving standard.</h1>
