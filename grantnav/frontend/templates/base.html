@@ -47,16 +47,25 @@
     <div class="footer">
       <div class="container">
         <div class="row">
-          <div class="col-md-3 col-sm-4">
+          <div class="col-md-4 col-sm-4">
             <img src="{% static 'images/360logo_invert.png'%}" height="80" width="196">
+            <p class="footer-info">360Giving provide support for grantmakers to publish their grants data openly, to understand their data, and to use the data to create online tools that make grantmaking more effective.</p>
+            <p class="footer-info">Find out more about <a href="http://www.threesixtygiving.org/">360Giving</a></p>
           </div>
-          <div class="col-sm-8">
-            <p class="footer-info">We provide support for grantmakers to publish their grants data openly, to understand their data, and to use the data to create online tools that make grantmaking more effective.</p>
+          <div class="col-md-4 col-sm-4">
+            <p class="footer-info">GrantNav uses open data published to the 360Giving standard.</p>
+            <p class="footer-info">GrantNav enables people to search, filter and download across these datasets, for free.</p>
+            <p class="footer-info">Got some feedback?  Visit here or send emails to <a href="mailto:grantnav@threesixtygiving.org">grantnav@threesixtygiving.org</a></p>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
+          <div class="col-md-4 col-sm-4">
+            <p class="footer-info">Links</p>
             <ul id="menu-footer2" class="footer-menu">
+              <li class="menu-item">
+                <a href="{% url 'funders' %}">Funders</a>
+              </li>
+              <li class="menu-item">
+                <a href="{% url 'recipients' %}">Recipients</a>
+              </li>
               <li class="menu-item">
                 <a href="{% url 'terms' %}">Terms and Conditions</a>
               </li>
@@ -78,6 +87,11 @@
         <div class="row">
           <div class="col-sm-12">
             <p class="footer-info">360Giving is a company limited by guarantee (Company Number 9668396) and a registered charity (Charity Number 1164883)</p>
+          </div>
+        </div>
+         <div class="row">
+          <div class="col-sm-12">
+            <p class="footer-info text-muted">Running version <a href="https://github.com/OpenDataServices/grantnav/tree/{{request.tag}}">{{request.tag}}</a></p>
           </div>
         </div>
       </div>

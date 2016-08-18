@@ -50,14 +50,26 @@ def dataload():
 def test_home(dataload, server_url, browser):
     browser.get(server_url)
     assert 'GrantNav' in browser.find_element_by_tag_name('body').text
-    browser.find_element_by_link_text("Terms and Conditions")
-    browser.find_element_by_link_text("Take Down Policy")
 
     assert 'Cookies disclaimer' in browser.find_element_by_id('CookielawBanner').text
     browser.find_element_by_class_name("btn").click()
     browser.get(server_url)
     assert 'Cookies disclaimer' not in browser.find_element_by_tag_name('body').text
 
+
+@pytest.mark.parametrize(('link_text'), [
+    ('Funders'),
+    ('Recipients'),
+    ('Terms and Conditions'),
+    ('Take Down Policy'),
+    ('Data used in GrantNav'),
+    ('Reusing GrantNav data'),
+    ('Copyright')
+    ])
+def test_footer_links(dataload, server_url, browser, link_text):
+    browser.get(server_url)
+    browser.find_element_by_link_text(link_text)
+    
 
 @pytest.mark.parametrize(('text'), [
     ('Contains OS data © Crown copyright and database right 2016'),
