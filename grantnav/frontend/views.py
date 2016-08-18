@@ -3,6 +3,7 @@ from grantnav.search import get_es
 from django.utils.http import urlencode
 from django.conf import settings
 from django.http import Http404, JsonResponse
+from elasticsearch.helpers import scan
 import elasticsearch.exceptions
 import jsonref
 import json
@@ -12,9 +13,10 @@ import collections
 import dateutil.parser as date_parser
 import datetime
 import re
-from django.http import HttpResponse
+from django.http import HttpResponse, StreamingHttpResponse
 from django.template import loader
-from grantnav import provenance
+from grantnav import provenance, csv_layout
+import csv
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -71,7 +73,6 @@ def get_results(json_query, size=10, from_=0):
         json_query['extra_context'] = extra_context
     return results
 
-
 def get_request_type_and_size(request):
     results_size = SIZE
 
@@ -85,23 +86,87 @@ def get_request_type_and_size(request):
     return [result_format, results_size]
 
 
-def csv_response(context, template):
-    response = HttpResponse(content_type='text/csv')
+def get_data_from_path(path, data):
+    current_pos = data
+    for part in path.split("."):
+        try:
+            part = int(part)
+        except ValueError:
+            pass
+        try:
+            current_pos = current_pos[part]
+        except (KeyError, IndexError, TypeError):
+            return ""
+    return current_pos
+
+
+def grants_csv_generator(query):
+    yield csv_layout.grant_csv_titles
+    es = get_es()
+    for result in scan(es, query, index=settings.ES_INDEX):
+        result_with_provenance = {
+            "result": result["_source"],
+            "dataset": provenance.by_identifier.get(result['_source']['filename'].split('.')[0], {})
+        }
+        line = []
+        for path in csv_layout.grant_csv_paths:
+            line.append(get_data_from_path(path, result_with_provenance))
+        yield line
+
+def grants_json_generator(query):
+    yield '''{
+    "license": "See dataset/license within each grant. This file also contains OS data © Crown copyright and database right 2016, Royal Mail data © Royal Mail copyright and Database right 2016, National Statistics data © Crown copyright and database right 2016, see http://grantnav.org/datasets/ for more information.",
+    "grants": [\n'''
+    es = get_es()
+    for num, result in enumerate(scan(es, query, index=settings.ES_INDEX)):
+        result["_source"]["dataset"] = provenance.by_identifier.get(result['_source']['filename'].split('.')[0], {})
+        if num == 0:
+            yield json.dumps(result["_source"]) + "\n"
+        else:
+            yield ", " + json.dumps(result["_source"]) + "\n"
+    yield ']}'
+
+
+class Echo(object):
+    def write(self, value):
+        return value
+
+
+def grants_csv_paged(query):
+    query.pop('extra_context', None)
+    query.pop('aggs', None)
+    pseudo_buffer = Echo()
+    writer = csv.writer(pseudo_buffer)
+    response = StreamingHttpResponse((writer.writerow(row) for row in grants_csv_generator(query)), content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
-    t = loader.get_template('{0}.csv'.format(template))
-    response.write(t.render(context))
+    return response
+
+def grants_json_paged(query):
+    query.pop('extra_context', None)
+    query.pop('aggs', None)
+    response = StreamingHttpResponse(grants_json_generator(query), content_type='text/json')
+    response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
 
 
-def grants_as_json(results):
-    grants = {'grants': []}
-    for hit in results['hits']['hits']:
-        if hit['_source']:
-            grants['grants'].append(hit['_source'])
-        else:
-            continue
-    response = HttpResponse(json.dumps(grants), content_type='application/json')
-    response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+def org_csv_generator(data, org_type):
+    if org_type == 'funder':
+        yield csv_layout.funder_csv_titles
+    elif org_type == 'recipient':
+        yield csv_layout.recipient_csv_titles
+
+    for result in data:
+        line = []
+        for path in csv_layout.org_csv_paths:
+            line.append(get_data_from_path(path, result))
+        yield line
+
+
+def orgs_csv_paged(data, org_type):
+    pseudo_buffer = Echo()
+    writer = csv.writer(pseudo_buffer)
+    response = StreamingHttpResponse((writer.writerow(row) for row in org_csv_generator(data, org_type)), content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
 
 
@@ -415,6 +480,11 @@ def search(request):
                 json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
             context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
 
+        if result_format == "csv":
+            return grants_csv_paged(json_query)
+        elif result_format == "json":
+            return grants_json_paged(json_query)
+
         if context['text_query'] == '*':
             context['text_query'] = ''
 
@@ -423,9 +493,12 @@ def search(request):
             create_date_aggregate(json_query)
 
             json_query['aggs'].update(SEARCH_SUMMARY_AGGREGATES)
+
+
             results = get_results(json_query, results_size, (page - 1) * SIZE)
             for key in SEARCH_SUMMARY_AGGREGATES:
                 json_query["aggs"].pop(key)
+
             json_query["aggs"].pop("awardYear")
             json_query["aggs"].pop("amountAwardedFixed")
         except elasticsearch.exceptions.RequestError as e:
@@ -440,31 +513,26 @@ def search(request):
         context['json_query'] = json.dumps(json_query)
         context['query'] = json_query
 
-        if result_format == "csv":
-            return csv_response(context, "grants")
-        elif result_format == "json":
-            return grants_as_json(results)
-        else:
-            context['selected_facets'] = collections.defaultdict(list)
-            get_clear_all(request, context, json_query)
+        context['selected_facets'] = collections.defaultdict(list)
+        get_clear_all(request, context, json_query)
 
-            get_terms_facets(request, context, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
-            get_terms_facets(request, context, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
+        get_terms_facets(request, context, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
+        get_terms_facets(request, context, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
 
-            get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5, "Regions")
-            get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6, "Districts")
+        get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5, "Regions")
+        get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6, "Districts")
 
-            get_amount_facet_fixed(request, context, json_query)
-            get_date_facets(request, context, json_query)
-            get_terms_facet_size(request, context, json_query, page)
-            get_non_terms_facet_size(request, context, json_query, page, 'awardYear')
-            get_non_terms_facet_size(request, context, json_query, page, 'amountAwardedFixed')
+        get_amount_facet_fixed(request, context, json_query)
+        get_date_facets(request, context, json_query)
+        get_terms_facet_size(request, context, json_query, page)
+        get_non_terms_facet_size(request, context, json_query, page, 'awardYear')
+        get_non_terms_facet_size(request, context, json_query, page, 'amountAwardedFixed')
 
-            get_pagination(request, context, page)
+        get_pagination(request, context, page)
 
-            context['selected_facets'] = dict(context['selected_facets'])
+        context['selected_facets'] = dict(context['selected_facets'])
 
-            return render(request, "search.html", context=context)
+        return render(request, "search.html", context=context)
 
 
 def flatten_mapping(mapping, current_path=''):
@@ -567,6 +635,10 @@ def funder(request, funder_id):
                                "aggs": {"recipient_stats": {"stats": {"field": "amountAwarded"}}}}
         }
     }
+    if result_format == "csv":
+        return grants_csv_paged(query)
+    elif result_format == "json":
+        return grants_json_paged(query)
 
     results = get_results(query, results_size)
 
@@ -576,12 +648,7 @@ def funder(request, funder_id):
     context['results'] = results
     context['funder'] = results['hits']['hits'][0]["_source"]["fundingOrganization"][0]
 
-    if result_format == "csv":
-        return csv_response(context, "grants")
-    elif result_format == "json":
-        return grants_as_json(results)
-    else:
-        return render(request, "funder.html", context=context)
+    return render(request, "funder.html", context=context)
 
 
 def funder_recipients_datatables(request):
@@ -602,7 +669,7 @@ def funder_recipients_datatables(request):
         order_dir = request.GET['order[0][dir]']
     else:
         start = 0
-        length = settings.FLATTENED_DOWNLOAD_LIMIT
+        length = 0
         order_field = order[0]
         search_value = ""
         order_dir = "desc"
@@ -656,7 +723,7 @@ def funder_recipients_datatables(request):
              'recordsFiltered': results["aggregations"]["recipient_count"]["value"]}
         )
     elif result_format == "csv":
-        return csv_response({'data': result_list}, "recipients")
+        return orgs_csv_paged(result_list, "recipient")
     elif result_format == "json":
         response = HttpResponse(json.dumps({'data': result_list}), content_type='application/json')
         response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
@@ -680,7 +747,7 @@ def funders_datatables(request):
         order_dir = request.GET['order[0][dir]']
     else:
         start = 0
-        length = settings.FLATTENED_DOWNLOAD_LIMIT
+        length = 0
         order_field = order[0]
         search_value = ""
         order_dir = "desc"
@@ -734,7 +801,7 @@ def funders_datatables(request):
              'recordsFiltered': results["aggregations"]["funder_count"]["value"]}
         )
     elif result_format == "csv":
-        return csv_response({'data': result_list}, "funders")
+        return orgs_csv_paged(result_list, "funder")
     elif result_format == "json":
         response = HttpResponse(json.dumps({'data': result_list}), content_type='application/json')
         response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
@@ -835,6 +902,11 @@ def recipient(request, recipient_id):
                              "aggs": {"funder_stats": {"stats": {"field": "amountAwarded"}}}}
                  }}
 
+    if result_format == "csv":
+        return grants_csv_paged(query)
+    elif result_format == "json":
+        return grants_json_paged(query)
+
     results = get_results(query, results_size)
 
     if results['hits']['total'] == 0:
@@ -843,12 +915,7 @@ def recipient(request, recipient_id):
     context['results'] = results
     context['recipient'] = results['hits']['hits'][0]["_source"]["recipientOrganization"][0]
 
-    if result_format == "csv":
-        return csv_response(context, "grants")
-    elif result_format == "json":
-        return grants_as_json(results)
-    else:
-        return render(request, "recipient.html", context=context)
+    return render(request, "recipient.html", context=context)
 
 
 def recipients(request):
@@ -878,6 +945,11 @@ def region(request, region):
         }
     }
 
+    if result_format == "csv":
+        return grants_csv_paged(query)
+    elif result_format == "json":
+        return grants_json_paged(query)
+
     results = get_results(query, results_size)
 
     if results['hits']['total'] == 0:
@@ -886,12 +958,7 @@ def region(request, region):
     context['results'] = results
     context['region'] = region
 
-    if result_format == "csv":
-        return csv_response(context, "grants")
-    elif result_format == "json":
-        return grants_as_json(results)
-    else:
-        return render(request, "region.html", context=context)
+    return render(request, "region.html", context=context)
 
 
 def district(request, district):
@@ -913,6 +980,11 @@ def district(request, district):
         }
     }
 
+    if result_format == "csv":
+        return grants_csv_paged(query)
+    elif result_format == "json":
+        return grants_json_paged(query)
+
     results = get_results(query, results_size)
 
     if results['hits']['total'] == 0:
@@ -921,12 +993,7 @@ def district(request, district):
     context['results'] = results
     context['district'] = district
 
-    if result_format == "csv":
-        return csv_response(context, "grants")
-    elif result_format == "json":
-        return grants_as_json(results)
-    else:
-        return render(request, "district.html", context=context)
+    return render(request, "district.html", context=context)
 
 
 def get_funders_for_datasets(datasets):
