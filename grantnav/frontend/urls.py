@@ -36,4 +36,6 @@ urlpatterns = [
     url(r'^take_down_policy', TemplateView.as_view(template_name='take_down_policy.html'), name='take_down_policy'),
     url(r'^terms', TemplateView.as_view(template_name='terms.html'), name='terms'),
     url(r'^help', TemplateView.as_view(template_name='help.html'), name='help'),
+    url(r'^api/grants.json', views.api_grants, name='api.grants.json'),
+    url(r'^api/grants.csv', views.api_grants, name='api.grants.csv'),
 ]
