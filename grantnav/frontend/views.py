@@ -576,7 +576,10 @@ def funder(request, funder_id):
     context = {}
     context['results'] = results
     context['funder'] = results['hits']['hits'][0]["_source"]["fundingOrganization"][0]
-    context['publisher'] = provenance.by_identifier[results['aggregations']['filenames']['buckets'][0]['key'].split('.')[0]]['publisher']
+    try:
+        context['publisher'] = provenance.by_identifier[results['aggregations']['filenames']['buckets'][0]['key'].split('.')[0]]['publisher']
+    except KeyError:
+        pass
 
     if result_format == "csv":
         return csv_response(context, "grants")
