@@ -54,3 +54,8 @@ def test_search(dataload, client):
 def test_stats(dataload, client):
     response = client.get('/stats')
     assert "379" in str(response.content)
+
+
+def test_advanced_search(dataload, client):
+    response = client.get('/help')
+    assert 'Advanced Search' in str(response.content)
