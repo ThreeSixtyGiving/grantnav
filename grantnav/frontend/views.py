@@ -14,7 +14,6 @@ import dateutil.parser as date_parser
 import datetime
 import re
 from django.http import HttpResponse, StreamingHttpResponse
-from django.template import loader
 from grantnav import provenance, csv_layout
 import csv
 
@@ -73,6 +72,7 @@ def get_results(json_query, size=10, from_=0):
         json_query['extra_context'] = extra_context
     return results
 
+
 def get_request_type_and_size(request):
     results_size = SIZE
 
@@ -113,6 +113,7 @@ def grants_csv_generator(query):
             line.append(get_data_from_path(path, result_with_provenance))
         yield line
 
+
 def grants_json_generator(query):
     yield '''{
     "license": "See dataset/license within each grant. This file also contains OS data © Crown copyright and database right 2016, Royal Mail data © Royal Mail copyright and Database right 2016, National Statistics data © Crown copyright and database right 2016, see http://grantnav.org/datasets/ for more information.",
@@ -140,6 +141,7 @@ def grants_csv_paged(query):
     response = StreamingHttpResponse((writer.writerow(row) for row in grants_csv_generator(query)), content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
+
 
 def grants_json_paged(query):
     query.pop('extra_context', None)
@@ -493,7 +495,6 @@ def search(request):
             create_date_aggregate(json_query)
 
             json_query['aggs'].update(SEARCH_SUMMARY_AGGREGATES)
-
 
             results = get_results(json_query, results_size, (page - 1) * SIZE)
             for key in SEARCH_SUMMARY_AGGREGATES:
@@ -1027,3 +1028,12 @@ def datasets(request):
         'publishers': provenance.by_publisher.values(),
         'datasets': provenance.datasets,
     })
+
+
+def api_grants(request):
+    [result_format, results_size] = get_request_type_and_size(request)
+    query = {"query": {"match_all": {}}}
+    if result_format == "csv":
+        return grants_csv_paged(query)
+    elif result_format == "json":
+        return grants_json_paged(query)
