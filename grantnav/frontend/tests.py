@@ -20,6 +20,7 @@ def test_home(dataload, client):
     assert "GrantNav" in str(response.content)
     assert "Search" in str(response.content)
     assert "heritage" in str(response.content)
+    assert "grantmaking" in str(response.content)
 
 
 def test_search(dataload, client):
@@ -53,3 +54,8 @@ def test_search(dataload, client):
 def test_stats(dataload, client):
     response = client.get('/stats')
     assert "379" in str(response.content)
+
+
+def test_advanced_search(dataload, client):
+    response = client.get('/help')
+    assert 'Advanced Search' in str(response.content)
