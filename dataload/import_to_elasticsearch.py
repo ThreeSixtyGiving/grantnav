@@ -11,6 +11,8 @@ from pprint import pprint
 import elasticsearch.helpers
 import requests
 import time
+import ijson
+
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 
@@ -198,28 +200,31 @@ def import_to_elasticsearch(files, clean):
             print('unimportable file {} (bad) file type'.format(file_name))
             continue
 
-        print(file_name)
         with open(json_file_name) as fp:
-            doc = json.load(fp)
-            keys = list(doc.keys())
-            if len(keys) == 1:
-                key = keys[0]
+            stream = ijson.parse(fp)
+            for prefix, event, value in stream:
+                if event == 'start_array':
+                    grants_key = prefix
+                    break
             else:
-                raise NotImplementedError
+                raise Exception('No Grant block found in file {}'.format(json_file_name))
 
-            grants = []
+        def grant_generator():
+            with open(json_file_name) as fp:
+                stream = ijson.items(fp, grants_key + '.item')
+                for grant in stream:
+                    grant['filename'] = file_name.strip('./')
+                    grant['_id'] = str(uuid.uuid4())
+                    grant['_index'] = ES_INDEX
+                    grant['_type'] = 'grant'
+                    update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
+                    update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
+                    update_doc_with_region(grant)
+                    yield grant
 
-            for grant in doc[key]:
-                grant['filename'] = file_name.strip('./')
-                grant['_id'] = str(uuid.uuid4())
-                grant['_index'] = ES_INDEX
-                grant['_type'] = 'grant'
-                update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
-                update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
-                update_doc_with_region(grant)
-                grants.append(grant)
-            result = elasticsearch.helpers.bulk(es, grants, raise_on_error=False)
-            pprint(result)
+        pprint(file_name)
+        result = elasticsearch.helpers.bulk(es, grant_generator(), raise_on_error=False)
+        pprint(result)
 
         shutil.rmtree(tmp_dir)
 

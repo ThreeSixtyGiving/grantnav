@@ -11,6 +11,7 @@ django-cookie-law==1.0.8
 titlecase==0.8.1
 dealer==2.0.5
 django-super-favicon==0.6.0
+ijson==2.3
 
 
 flake8==2.6.2
