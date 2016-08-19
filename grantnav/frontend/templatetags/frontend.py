@@ -5,6 +5,8 @@ import dateutil.parser as date_parser
 import strict_rfc3339
 import json
 from grantnav import provenance
+import jsonref
+from django.conf import settings
 
 register = template.Library()
 
@@ -14,7 +16,24 @@ def get(d, k):
     return d.get(k, None)
 
 
+def flatten_schema_titles(schema, path='', title_path=''):
+    for field, property in schema['properties'].items():
+        title = property.get('title') or field
+        if property['type'] == 'array':
+            if property['items']['type'] == 'object':
+                yield from flatten_schema_titles(property['items'], path + ': ' + field, title_path + ': ' + title)
+            else:
+                yield ((path + ': ' + field).lstrip(': '), (title_path + ': ' + title).lstrip(': '))
+        if property['type'] == 'object':
+            yield from flatten_schema_titles(property, path + '/' + field, title_path + ': ' + title)
+        else:
+            yield ((path + ': ' + field).lstrip(': '), (title_path + ': ' + title).lstrip(': '))
+
+
 def flatten_dict(data, path=tuple()):
+    schema = jsonref.load_uri(settings.GRANT_SCHEMA)
+    schema_titles = dict(flatten_schema_titles(schema))
+
     for key, value in data.items():
         if isinstance(value, list):
             for item in value:
@@ -23,7 +42,8 @@ def flatten_dict(data, path=tuple()):
         elif isinstance(value, dict):
             yield from flatten_dict(value, path + (key,))
         else:
-            yield ": ".join(path + (key,)), value
+            field = ": ".join(path + (key,))
+            yield schema_titles.get(field) or field, value
 
 SKIP_KEYS = ["id", "title", "description", "filename",
              "amountAwarded", "currency",
