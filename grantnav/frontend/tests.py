@@ -20,14 +20,10 @@ def dataload():
     ('Search'),
     ('grantmaking'),
     ('Try these examples'),
-    ('volunteers'),
-    ('heritage'),
-    ('disabilities'),
-    ('Only Locations:'),
+    ('Only Locations'),
     ('Bristol'),
-    ('Only Recipients:'),
+    ('Only Recipients'),
     ('children'),
-    ('Tip:'),
     ('"arts centre"'),
     ('"360G-wolfson-19750"')
     ])
