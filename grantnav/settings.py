@@ -76,6 +76,7 @@ INSTALLED_APPS = (
     'grantnav.frontend',
     'raven.contrib.django.raven_compat',
     'cookielaw',
+    'favicon',
 )
 
 MIDDLEWARE_CLASSES = (

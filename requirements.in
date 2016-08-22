@@ -11,3 +11,4 @@ strict-rfc3339
 django-cookie-law
 titlecase
 dealer
+django-super-favicon
