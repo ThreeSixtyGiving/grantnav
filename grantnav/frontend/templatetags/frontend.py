@@ -147,3 +147,9 @@ def get_dataset(grant):
         return provenance.by_identifier[grant['source']['filename'].split('.')[0]]
     except KeyError:
         return None
+
+
+@register.filter(name='get_current_sort')
+def get_current_sort(query):
+    for key, value in query['sort'].items():
+        return key + " " + value["order"]
