@@ -87,6 +87,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'dealer.contrib.django.Middleware',
 )
 
 
@@ -124,6 +125,7 @@ DATABASES = {
 
 ES_INDEX = env('ES_INDEX')
 
+DEALER_TYPE = 'git'
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
