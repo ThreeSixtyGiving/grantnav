@@ -200,18 +200,9 @@ def import_to_elasticsearch(files, clean):
             print('unimportable file {} (bad) file type'.format(file_name))
             continue
 
-        with open(json_file_name) as fp:
-            stream = ijson.parse(fp)
-            for prefix, event, value in stream:
-                if event == 'start_array':
-                    grants_key = prefix
-                    break
-            else:
-                raise Exception('No Grant block found in file {}'.format(json_file_name))
-
         def grant_generator():
             with open(json_file_name) as fp:
-                stream = ijson.items(fp, grants_key + '.item')
+                stream = ijson.items(fp, 'grants.item')
                 for grant in stream:
                     grant['filename'] = file_name.strip('./')
                     grant['_id'] = str(uuid.uuid4())
