@@ -15,12 +15,22 @@ def dataload():
     time.sleep(2)
 
 
-def test_home(dataload, client):
+@pytest.mark.parametrize(('expected_text'), [
+    ('GrantNav'),
+    ('Search'),
+    ('grantmaking'),
+    ('Try these examples'),
+    ('Only Locations'),
+    ('Bristol'),
+    ('Only Recipients'),
+    ('children'),
+    ('"arts centre"'),
+    ('"360G-wolfson-19750"')
+    ])
+def test_home(dataload, client, expected_text):
     response = client.get('/')
-    assert "GrantNav" in str(response.content)
-    assert "Search" in str(response.content)
-    assert "heritage" in str(response.content)
-    assert "grantmaking" in str(response.content)
+    assert expected_text in str(response.content)
+    assert "grant-making" not in str(response.content)
 
 
 def test_search(dataload, client):
