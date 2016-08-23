@@ -1140,7 +1140,7 @@ hr {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: ostrich_sans_roundedmedium, sans-serif;
+  font-family: "Ostrich Sans", sans-serif;
   font-weight: 600;
   line-height: 1.1;
   color: inherit; }
@@ -5818,12 +5818,6 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
-@font-face {
-  font-family: 'ostrich_sans_roundedmedium';
-  src: url("../fonts/sans-rounded.woff2") format("woff2"), url("../fonts/ostrich-sans-rounded.woff") format("woff"), url("../fonts/ostrich-sans-rounded.ttf") format("truetype"), url("../fonts/ostrich-sans-rounded.svg#ostrich_sans_roundedmedium") format("svg");
-  font-weight: normal;
-  font-style: normal; }
-
 .link-on-orange {
   color: grey; }
   .link-on-orange:hover {
@@ -5895,7 +5889,7 @@ body {
     color: #ff9222; }
   .navbar-brand {
     color: #FFF;
-    font-family: ostrich_sans_roundedmedium,sans-serif;
+    font-family: 'Ostrich Sans',sans-serif;
     font-size: 48px;
     letter-spacing: 2px;
     line-height: 1.9em;
