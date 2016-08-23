@@ -282,7 +282,7 @@ def update_doc_with_region(grant):
                 add_area_to_grant(district_code_to_area.get(geoCode), grant)
                 return
             # No NI data but try and get name from data
-            if geoCode.startswith("N09"):
+            if geoCode and geoCode.startswith("N09"):
                 grant['recipientRegionName'] = "Northern Ireland"
                 grant['recipientDistrictName'] = location["name"]
 
