@@ -11,6 +11,7 @@ django-cookie-law==1.0.8
 titlecase==0.8.1
 dealer==2.0.5
 django-super-favicon==0.6.0
+ijson==2.3
 ## The following requirements were added by pip freeze:
 contextlib2==0.5.3
 django-classy-tags==0.7.2
