@@ -155,10 +155,27 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
 }
 
 .large-radio {
+  display: none;
   font-size: 17px;
   margin-bottom: 0px;
   margin-top: 3px;
   color: #666
+}
+
+/*	Dropdown search filter	*/
+select.front_search	{
+  display: inline-block;
+  vertical-align: top;
+  width: 20%;
+  background-color: #d66f05;	/*	or #663a0d	*/
+  border-radius: 12px;
+  height: 79px;
+  border: none;
+  color: #fff;
+  font-size: 25px;
+  outline: none;
+  box-sizing: border-box;
+  padding-left: 10px;
 }
 
 .search-checkbox-align {
