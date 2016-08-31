@@ -282,10 +282,35 @@ select.front_search	{
       display: inline-block;
       width: auto;
     }
+
+/* Dropdown */
+    select.front_search {
+	    font-size: 20px;
+    }
 }
 
 @media (min-width: 1200px) {
     #min-max-form .btn-xs {
         margin-top: 21px;
+    }
+}
+
+/* Responsive for mobile */
+
+@media (max-width: 450px) {
+    .large-search, select.front_search {
+        display: block;
+        width: 100%;
+    }
+    select.front_search {
+	    font-size: 20px;
+    }
+    .large-search {
+        padding:10px 15px;
+        font-size: 20px;
+    }
+    .large-search-icon {
+	    right: 27px;
+	    top: 92px;
     }
 }
