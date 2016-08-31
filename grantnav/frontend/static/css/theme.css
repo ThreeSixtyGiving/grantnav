@@ -5824,7 +5824,8 @@ button.close {
   padding: 5px 10px;
   border-radius: 8px;
   font-style: italic;
-  margin: 3px; }
+  margin: 3px;
+  display: inline-block; }
   .link-on-orange:hover {
     color: grey; }
   .link-on-orange:active {

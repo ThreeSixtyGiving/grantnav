@@ -3,6 +3,7 @@
 // -----------------------------------------------------
 // Grantnav custom
 
+// Example search terms
 .link-on-orange {
   color: grey;
   background-color: #fff;
@@ -10,6 +11,7 @@
   border-radius: 8px;
   font-style: italic;
   margin: 3px;
+  display:inline-block;
   &:hover {
     color: grey
   }
@@ -364,6 +366,7 @@ input:-moz-placeholder {font-style:italic}
   position: relative;
 }
 
+// Main search bar on landing page
 .large-search {
   display: inline-block;
   vertical-align: top;
@@ -383,6 +386,7 @@ input:-moz-placeholder {font-style:italic}
   top: 12px;
 }
 
+// Example search terms container
 .search-help {
   font-size: 1.1em;
   color: #663a0e;

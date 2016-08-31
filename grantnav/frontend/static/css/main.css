@@ -162,12 +162,12 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
   color: #666
 }
 
-/*	Dropdown search filter	*/
+/*	Dropdown	*/
 select.front_search	{
   display: inline-block;
   vertical-align: top;
   width: 20%;
-  background-color: #d66f05;	/*	or #663a0d	*/
+  background-color: #d66f05;
   border-radius: 12px;
   height: 79px;
   border: none;
@@ -176,6 +176,10 @@ select.front_search	{
   outline: none;
   box-sizing: border-box;
   padding-left: 10px;
+  background: #d66f05 url("../images/arrow.png") no-repeat scroll 98% center / 15% auto;  /* Custom select arrow for dropdown */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+   appearance: none;
 }
 
 .search-checkbox-align {
