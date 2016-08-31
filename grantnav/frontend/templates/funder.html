@@ -67,11 +67,11 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         Grants
-        <a class="pull-right" href="{% url 'funder.csv' funder.id %}">
-          <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button"/>
-        </a>
         <a class="pull-right" href="{% url 'funder.json' funder.id %}">
           <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
+        </a>
+        <a class="pull-right" href="{% url 'funder.csv' funder.id %}">
+          <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button"/>
         </a>
       </div>
       <div class="panel-body">
