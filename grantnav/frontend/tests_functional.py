@@ -117,7 +117,7 @@ def test_advanced_search(server_url, browser):
     assert 'Advanced Search' in browser.find_element_by_tag_name('h1').text
 
 
-def test_take_down(server_url, browser):
+def test_developers(server_url, browser):
     browser.get(server_url + '/developers')
     assert 'Developers' in browser.find_element_by_tag_name('h1').text
 
