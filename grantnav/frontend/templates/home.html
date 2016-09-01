@@ -8,7 +8,21 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <form role="search" action="{% url 'search' %}">
+<!-- Dropdown -->
+		 <form role="search" action="{% url 'search' %}">
+			<div class="form-group">
+				<select name="default_field" class="front_search">
+					<option name="default_field" id="inlineRadio1" value="_all">Search All</option>
+					<option name="default_field" id="inlineRadio2" value="recipientLocation">Only Locations</option>
+					<option name="default_field" id="inlineRadio3" value="recipientOrganization.name">Only Recipients</option>
+				</select>
+				<input name="text_query" class="form-control large-search" placeholder="What are you searching for?" type="text">
+				<input class="large-search-icon" name="submit" src="{% static 'images/search_icon.png' %}" type="image" height="55px" width="55px">
+			</div>
+		</form>
+		
+ <!-- Delete when safe
+       <form role="search" action="{% url 'search' %}">
           <div class="form-group">
             <input name="text_query" class="form-control large-search" placeholder="What are you searching for?" type="text">
             <input class="large-search-icon" name="submit" src="{% static 'images/search_icon.png' %}" type="image" height="55px" width="55px">
@@ -27,12 +41,16 @@
             </div>
           </div>
         </form>
+ -->       
+        
       </div>
       <div class="col-xs-12">
-        <p class="search-help"> Try these examples: 
-            <a class="link-on-orange" href="{% url 'search' %}?text_query=volunteers">volunteers</a>, 
-            <a class="link-on-orange" href="{% url 'search' %}?text_query=heritage">heritage</a>, 
-            <a class="link-on-orange" href="{% url 'search' %}?text_query=disabilities">disabilities</a> 
+        <p class="search-help"> Try these examples:
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=%22arts centre%22">"arts centre"</a>,
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=volunteers">volunteers</a>,
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=%22360G-wolfson-19750%22">"360G-wolfson-19750"</a>,
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=Bristol&amp;default_field=recipientLocation">[Only Locations] Bristol</a>,
+            <a class="link-on-orange" href="{% url 'search' %}?text_query=children&amp;default_field=recipientOrganization.name">[Only Recipients] children</a></p>
       </div>
       <div class="col-xs-12">
         <h1 class="home-info text-center"> Search, explore and download UK grant data from funders publishing open data to the 360Giving standard.</h1>
@@ -43,9 +61,9 @@
       <div class="col-md-10 col-md-offset-1">
         <div class="row stat-group">
           <div class="col-sm-4 left-stat">
-            <a href="{% url 'funders' %}"> 
+            <a href="{% url 'funders' %}">
               <h1 class="text-center home-number">{{results.aggregations.funder_count.value|get_amount}}</h1>
-              <h2 class="text-center home-number-text">Funders</h2> 
+              <h2 class="text-center home-number-text">Funders</h2>
             </a>
           </div>
           <div class="col-sm-4">
@@ -63,6 +81,6 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </div>
 {% endblock %}

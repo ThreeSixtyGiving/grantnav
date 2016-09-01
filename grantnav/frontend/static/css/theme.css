@@ -1140,7 +1140,7 @@ hr {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: ostrich_sans_roundedmedium, sans-serif;
+  font-family: "Ostrich Sans", sans-serif;
   font-weight: 600;
   line-height: 1.1;
   color: inherit; }
@@ -5818,14 +5818,14 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
-@font-face {
-  font-family: 'ostrich_sans_roundedmedium';
-  src: url("../fonts/sans-rounded.woff2") format("woff2"), url("../fonts/ostrich-sans-rounded.woff") format("woff"), url("../fonts/ostrich-sans-rounded.ttf") format("truetype"), url("../fonts/ostrich-sans-rounded.svg#ostrich_sans_roundedmedium") format("svg");
-  font-weight: normal;
-  font-style: normal; }
-
 .link-on-orange {
-  color: grey; }
+  color: grey;
+  background-color: #fff;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-style: italic;
+  margin: 3px;
+  display: inline-block; }
   .link-on-orange:hover {
     color: grey; }
   .link-on-orange:active {
@@ -5876,6 +5876,15 @@ body {
   margin-top: 20px;
   margin-bottom: 20px; }
 
+.stat-group a {
+  display: block;
+  padding: 10px; }
+
+.stat-group a:hover {
+  background-color: #f77f03;
+  text-decoration: none;
+  border-radius: 12px; }
+
 .footer {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -5895,7 +5904,7 @@ body {
     color: #ff9222; }
   .navbar-brand {
     color: #FFF;
-    font-family: ostrich_sans_roundedmedium,sans-serif;
+    font-family: 'Ostrich Sans',sans-serif;
     font-size: 48px;
     letter-spacing: 2px;
     line-height: 1.9em;
@@ -6141,25 +6150,29 @@ input:-moz-placeholder {
   position: relative; }
 
 .large-search {
+  display: inline-block;
+  vertical-align: top;
+  width: 79%;
   margin: 0 auto;
   padding: 10px 20px;
   border-radius: 12px;
   border: 2px solid #e5831e;
   background-color: #FFF;
   font-size: 28px;
-  height: 79px;
-  float: left; }
+  height: 79px; }
 
 .large-search-icon {
   position: absolute;
   right: 38px;
-  top: 26px; }
+  top: 12px; }
 
 .search-help {
   font-size: 1.1em;
   color: #663a0e;
-  padding-top: 5px;
-  margin-left: 20px; }
+  padding-top: 10px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  text-align: center; }
 
 @media (min-width: 1400px) {
   .col-vlg-offset-1 {

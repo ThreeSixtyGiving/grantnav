@@ -9,6 +9,9 @@ python-dateutil==2.5.3
 strict-rfc3339==0.7
 django-cookie-law==1.0.8
 titlecase==0.8.1
+dealer==2.0.5
+django-super-favicon==0.6.0
+ijson==2.3
 ## The following requirements were added by pip freeze:
 contextlib2==0.5.3
 django-classy-tags==0.7.2
@@ -16,6 +19,7 @@ et-xmlfile==1.0.1
 jdcal==1.2
 jsonref==0.1
 openpyxl==2.3.5
+Pillow==3.3.1
 pytz==2016.6.1
 schema==0.6.0
 six==1.10.0
