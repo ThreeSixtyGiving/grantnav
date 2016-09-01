@@ -155,10 +155,31 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
 }
 
 .large-radio {
+  display: none;
   font-size: 17px;
   margin-bottom: 0px;
   margin-top: 3px;
   color: #666
+}
+
+/*	Dropdown	*/
+select.front_search	{
+  display: inline-block;
+  vertical-align: top;
+  width: 20%;
+  background-color: #d66f05;
+  border-radius: 12px;
+  height: 79px;
+  border: none;
+  color: #fff;
+  font-size: 25px;
+  outline: none;
+  box-sizing: border-box;
+  padding-left: 10px;
+  background: #d66f05 url("../images/arrow.png") no-repeat scroll 98% center / 15% auto;  /* Custom select arrow for dropdown */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+   appearance: none;
 }
 
 .search-checkbox-align {
@@ -261,10 +282,35 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
       display: inline-block;
       width: auto;
     }
+
+/* Dropdown */
+    select.front_search {
+	    font-size: 15px;
+    }
 }
 
 @media (min-width: 1200px) {
     #min-max-form .btn-xs {
         margin-top: 21px;
+    }
+}
+
+/* Responsive for mobile */
+
+@media (max-width: 450px) {
+    .large-search, select.front_search {
+        display: block;
+        width: 100%;
+    }
+    select.front_search {
+	    font-size: 20px;
+    }
+    .large-search {
+        padding:10px 15px;
+        font-size: 20px;
+    }
+    .large-search-icon {
+	    right: 27px;
+	    top: 92px;
     }
 }
