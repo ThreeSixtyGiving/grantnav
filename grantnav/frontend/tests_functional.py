@@ -64,7 +64,9 @@ def test_home(dataload, server_url, browser):
     ('Take Down Policy'),
     ('Data used in GrantNav'),
     ('Reusing GrantNav data'),
-    ('Copyright')
+    ('Copyright'),
+    ('Advanced Search'),
+    ('Developers')
     ])
 def test_footer_links(dataload, server_url, browser, link_text):
     browser.get(server_url)
@@ -108,6 +110,16 @@ def test_terms(server_url, browser):
 def test_take_down(server_url, browser):
     browser.get(server_url + '/take_down_policy')
     assert 'Take Down Policy' in browser.find_element_by_tag_name('h1').text
+
+
+def test_advanced_search(server_url, browser):
+    browser.get(server_url + '/advanced_search')
+    assert 'Advanced Search' in browser.find_element_by_tag_name('h1').text
+
+
+def test_take_down(server_url, browser):
+    browser.get(server_url + '/developers')
+    assert 'Developers' in browser.find_element_by_tag_name('h1').text
 
 
 def test_title(server_url, browser):
