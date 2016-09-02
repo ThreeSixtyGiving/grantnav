@@ -107,7 +107,7 @@ def grants_csv_generator(query):
     for result in scan(es, query, index=settings.ES_INDEX):
         result_with_provenance = {
             "result": result["_source"],
-            "dataset": provenance.by_identifier.get(result['_source']['filename'].split('.')[0], {})
+            "dataset": provenance.by_identifier.get(provenance.identifier_from_filename(result['_source']['filename']), {})
         }
         line = []
         for path in csv_layout.grant_csv_paths:
@@ -121,7 +121,7 @@ def grants_json_generator(query):
     "grants": [\n'''
     es = get_es()
     for num, result in enumerate(scan(es, query, index=settings.ES_INDEX)):
-        result["_source"]["dataset"] = provenance.by_identifier.get(result['_source']['filename'].split('.')[0], {})
+        result["_source"]["dataset"] = provenance.by_identifier.get(provenance.identifier_from_filename(result['_source']['filename']), {})
         if num == 0:
             yield json.dumps(result["_source"]) + "\n"
         else:
@@ -656,7 +656,7 @@ def funder(request, funder_id):
     context['results'] = results
     context['funder'] = results['hits']['hits'][0]["_source"]["fundingOrganization"][0]
     try:
-        context['publisher'] = provenance.by_identifier[results['aggregations']['filenames']['buckets'][0]['key'].split('.')[0]]['publisher']
+        context['publisher'] = provenance.by_identifier[provenance.identifier_from_filename(results['aggregations']['filenames']['buckets'][0]['key'])]['publisher']
     except KeyError:
         pass
 

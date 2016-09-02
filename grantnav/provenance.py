@@ -18,3 +18,7 @@ if settings.PROVENANCE_JSON:
             by_publisher[prefix]['datasets'] = []
         by_publisher[prefix]['datasets'].append(dataset)
         by_identifier[dataset.get('identifier')] = dataset
+
+
+def identifier_from_filename(filename):
+    return filename.split('.')[0].split('/')[-1]
