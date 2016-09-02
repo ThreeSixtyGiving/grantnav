@@ -59,12 +59,15 @@ There is a list of 360Giving datasets at http://www.threesixtygiving.org/data/fi
 
 ### Provenance JSON
 
-Most parts of GrantNav work fine without provenance information. However, in order for the publisher/datasets pages to work correctly you must point the `PROVENANCE_JSON` environment variable at a local copy of [data.json](http://data.threesixtygiving.org/data.json)  - (the datagetter code will also download this for you).
+Most parts of GrantNav work fine without provenance information. However, in order for the publisher/datasets pages to work correctly you must point the `PROVENANCE_JSON` environment variable at a local copy of [data.json](http://data.threesixtygiving.org/data.json). You must also load the data into GrantNav using filenames that correspond to the identifiers in this JSON. The [datagetter](https://github.com/ThreeSixtyGiving/datagetter) saves files with the correct name, and also makes a copy of data.json for you.
 
 e.g.
 
 ```
-PROVENANCE_JSON=path/to/data.json python manage.py runserver
+cd datagetter/data/json_acceptable_license_valid
+python path/to/grantnav/dataload/import_to_elasticsearch.py --clean *
+cd path/to/grantnav
+PROVENANCE_JSON=path/to/datagetter/data/data.json python manage.py runserver
 ```
 
 
