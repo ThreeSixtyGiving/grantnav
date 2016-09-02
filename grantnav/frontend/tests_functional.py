@@ -153,3 +153,14 @@ def test_right_align_amounts_in_other_tables(dataload, server_url, browser, path
 def test_datasets_page(server_url, browser):
     browser.get(server_url + '/datasets')
     assert 'Data used in GrantNav' in browser.find_element_by_tag_name('h1').text
+
+
+@pytest.mark.parametrize(('path', 'identifier', 'text'), [
+    ('/funder/GB-CHC-327114', 'disclaimer', 'This data is provided for information purposes only.'),
+    ('/funder/GB-CHC-327114', 'disclaimer', 'Please refer to the funder website for details of current grant programmes, application guidelines and eligibility criteria.'),
+    ('/grant/360G-LBFEW-111657', 'provenance', 'Where is this data from?'),
+    ('/grant/360G-LBFEW-111657', 'provenance', 'This data was originally published by')
+    ])
+def test_disclaimers(server_url, browser, path, identifier, text):
+    browser.get(server_url + path)
+    assert text in browser.find_element_by_id(identifier).text
