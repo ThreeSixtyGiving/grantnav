@@ -77,3 +77,11 @@ def test_stats(provenance_dataload, client):
 def test_advanced_search(provenance_dataload, client):
     response = client.get('/help')
     assert 'Advanced Search' in str(response.content)
+
+
+def test_json_download(provenance_dataload, client):
+    initial_response = client.get('/search.json?text_query=gardens')
+    assert initial_response.status_code == 302
+    response = client.get(initial_response.url)
+    json_string = b''.join(response.streaming_content).decode('utf-8')
+    json.loads(json_string)
