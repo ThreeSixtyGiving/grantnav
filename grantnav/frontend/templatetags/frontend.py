@@ -179,3 +179,15 @@ def get_dataset(grant):
 def get_current_sort(query):
     for key, value in query['sort'].items():
         return key + " " + value["order"]
+
+
+@register.filter(name='minus_month')
+def minus_month(date):
+    if not date:
+        return ''
+    month, year = [int(part) for part in date.split('/')]
+    if month == 1:
+        month, year = 12, year - 1
+    else:
+        month = month - 1
+    return '{:02d}/{}'.format(month, year)

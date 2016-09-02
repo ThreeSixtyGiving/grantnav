@@ -85,13 +85,13 @@
         </div>
         <div class="list-group">
 
-          <div id="min-max-form">
+          <div class="min-max-form">
             <form class="form-inline">
               <div class="row">
                 <div class="col-lg-5 col-md-6 no-padding-hor">
                   <div class="form-group form-group-sm">
                     <label for="min-amount">Smallest
-                    <input id="min-amount" name="min_amount" class="form-control" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.gte}}"/>
+                    <input id="min-amount" name="min_amount" class="form-control min-amount" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.gte}}"/>
                     </label>
                   </div>
                 </div>
@@ -99,7 +99,7 @@
                 <div class="col-lg-5 col-md-6 no-padding-hor">
                   <div class="form-group form-group-sm">
                     <label for="max-amount">Largest
-                    <input id="max-amount" name="max_amount" class="form-control input-xs" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.lte}}"/>
+                    <input id="max-amount"  name="max_amount" class="form-control input-xs max-amount" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.lte}}"/>
                     </label>
                     
                   </div>
@@ -157,9 +157,41 @@
       <div class="panel panel-default">
         <a class="anchor" id="awardYear"></a>
         <div class="panel-heading list-group-compact">
-          Award Year {% if results.aggregations.awardYear.clear_url %} <a href="{{results.aggregations.awardYear.clear_url}}"> <small>(clear)</small></a> {% endif%}
+          Award Date {% if results.aggregations.awardYear.clear_url %} <a href="{{results.aggregations.awardYear.clear_url}}"> <small>(clear)</small></a> {% endif%}
         </div>
+
+
         <div class="list-group">
+          <div class="min-max-form">
+            <form class="form-inline input-daterange" id="datepicker">
+              <div class="row">
+                <div class="col-lg-5 col-md-6 no-padding-hor">
+                  <div class="form-group form-group-sm">
+                    <label for="min-date">Earliest
+                    <input id="min-date" name="min_date" class="form-control min-amount" value="{{query.query.bool.filter.7.bool.should.range.awardDate.gte}}"/>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-lg-5 col-md-6 no-padding-hor">
+                  <div class="form-group form-group-sm">
+                    <label for="max-date">Latest
+                    <input id="max-date" name="max_date" class="form-control input-xs max-amount" value="{{query.query.bool.filter.7.bool.should.range.awardDate.lt|minus_month}}"/>
+                    </label>
+                    
+                  </div>
+                </div>
+
+                <div class="col-lg-2 col-xs-12 no-padding-hor">
+                  <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+                  <div class="form-group form-group-sm">
+                    <button type="submit" class="btn btn-default btn-xs">Apply</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          {% if not query.query.bool.filter.7.bool.should.range.awardDate %}
           {% for bucket in results.aggregations.awardYear.buckets %}
             {% if forloop.counter <= query.extra_context.awardYear_facet_size %}
               <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}">
@@ -168,6 +200,7 @@
           {% endfor %}
           {% if results.aggregations.awardYear.buckets|length > 2 %}
             <a href="{{see_more_url.awardYear.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.awardYear.more%}See More{% else %}See Less{% endif %}</b> </a>
+          {% endif %}
           {% endif %}
         </div>
       </div>
@@ -345,11 +378,20 @@
 _paq.push(["trackSiteSearch", "{{text_query}}", false, {{results.hits.total}}]);
 {% endblock %}
 
+
+{% block extra_style %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.standalone.min.css">
+{% endblock %}
+
 {% block extra_scripts %}
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+
+
 <script>
+
 $(function() {
   var page_y = URI(window.location.href).search(true).page_y
   if (page_y) {
@@ -367,8 +409,15 @@ $(function() {
     }
     window.location.href = new_url;
     return false
-
   })
+  $('#datepicker').datepicker({
+    startView: 2,
+    minViewMode: 1,
+    autoclose: true,
+    format: 'mm/yyyy',
+    endDate: '0d',
+    startDate: '01/2005'
+  });
 });
 </script>
 {% endblock %}
