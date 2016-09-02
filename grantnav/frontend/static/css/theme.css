@@ -5825,7 +5825,8 @@ button.close {
   border-radius: 8px;
   font-style: italic;
   margin: 3px;
-  display: inline-block; }
+  display: inline-block;
+  vertical-align: top; }
   .link-on-orange:hover {
     color: grey; }
   .link-on-orange:active {
