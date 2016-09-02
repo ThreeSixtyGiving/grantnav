@@ -58,26 +58,40 @@
       </div>
       <div class="panel panel-default bottom-space">
         <div class="panel-heading">Other data available on this grant</div>
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <tbody>
-              {% if grant.source.recipientOrganization.0.id_and_name|get_facet_org_name != grant.source.recipientOrganization.0|get_name %}
-                <tr> <td style="width: 40%"> <b>Alternate Name </b> </td> <td> {{ grant.source.recipientOrganization.0.id_and_name|get_facet_org_name }} </td> </tr>
-              {%endif%}
-                {% for key, grant in grant.source|flatten %}
-                <tr> <td style="width: 40%"> <b>{{ key }} </b> </td> <td> {{grant}} </td>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tbody>
+              {% for key, grant in grant.source|flatten %}
+              <tr> <td style="width: 40%"> <b>{{ key }} </b> </td> <td> {{grant}} </td>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="panel panel-default bottom-space">
+        <div class="panel-heading">Date not in 360 Giving Standard added by Grantnav</div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tbody>
+              {% for key, grant in grant.source|get_additional_fields %}
+              <tr> <td style="width: 40%"> <b>{{ key }} </b> </td> <td> {{grant}} </td>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
 
-    <h2>Where is this data from?</h2>
-    {% with dataset=grant|get_dataset %}
-    <p>This data was originally published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>. If you need to report a problem in the data please contact {{ dataset.publisher.name }} directly, see <a href="{% url 'publisher' dataset.publisher.prefix %}">their GrantNav publisher page</a> for more information.
-    {% endwith %}
+
+
+    <div class="col-xs-12">
+      <h2>Where is this data from?</h2>
+      {% with dataset=grant|get_dataset %}
+      <p>This data was originally published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>. If you need to report a problem in the data please contact {{ dataset.publisher.name }} directly, see <a href="{% url 'publisher' dataset.publisher.prefix %}">their GrantNav publisher page</a> for more information.
+      {% endwith %}
+    </div>
   </div>
 
 {% endfor %}
