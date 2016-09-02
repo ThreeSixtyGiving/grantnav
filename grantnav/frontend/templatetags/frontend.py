@@ -35,14 +35,19 @@ def flatten_dict(data, path=tuple()):
     schema_titles = dict(flatten_schema_titles(schema))
 
     for key, value in data.items():
+        field = ": ".join(path + (key,))
         if isinstance(value, list):
+            string_list = []
             for item in value:
                 if isinstance(item, dict):
                     yield from flatten_dict(item, path + (key,))
+                if isinstance(item, str):
+                    string_list.append(item)
+            if string_list:
+                yield schema_titles.get(field) or field, ", ".join(string_list)
         elif isinstance(value, dict):
             yield from flatten_dict(value, path + (key,))
         else:
-            field = ": ".join(path + (key,))
             yield schema_titles.get(field) or field, value
 
 ADDITIONAL_FIELDS = {"recipientDistrictName": "Recipient District",
