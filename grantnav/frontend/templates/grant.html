@@ -50,6 +50,12 @@
 
 
     <div class="col-xs-12">
+      <div id="provenance" class="alert alert-info" role="alert">
+        <p>Where is this data from?</p>
+        {% with dataset=grant|get_dataset %}
+          <p>This data was originally published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>. If you need to report a problem in the data please contact {{ dataset.publisher.name }} directly, see <a href="{% url 'publisher' dataset.publisher.prefix %}">their GrantNav publisher page</a> for more information.
+        {% endwith %}
+      </div>
       <div class="panel panel-default bottom-space">
         <div class="panel-heading">Other data available on this grant</div>
         <div class="table-responsive">
