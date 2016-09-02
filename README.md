@@ -59,12 +59,15 @@ There is a list of 360Giving datasets at http://www.threesixtygiving.org/data/fi
 
 ### Provenance JSON
 
-Most parts of GrantNav work fine without provenance information. However, in order for the publisher/datasets pages to work correctly you must point the `PROVENANCE_JSON` environment variable at a local copy of [data.json](http://data.threesixtygiving.org/data.json)  - (the datagetter code will also download this for you).
+Most parts of GrantNav work fine without provenance information. However, in order for the publisher/datasets pages to work correctly you must point the `PROVENANCE_JSON` environment variable at a local copy of [data.json](http://data.threesixtygiving.org/data.json). You must also load the data into GrantNav using filenames that correspond to the identifiers in this JSON. The [datagetter](https://github.com/ThreeSixtyGiving/datagetter) saves files with the correct name, and also makes a copy of data.json for you.
 
 e.g.
 
 ```
-PROVENANCE_JSON=path/to/data.json python manage.py runserver
+cd datagetter/data/json_acceptable_license_valid
+python path/to/grantnav/dataload/import_to_elasticsearch.py --clean *
+cd path/to/grantnav
+PROVENANCE_JSON=path/to/datagetter/data/data.json python manage.py runserver
 ```
 
 
@@ -109,3 +112,48 @@ Then, run ``./update_requirements --new-only`` this will populate ``requirements
 WARNING: The ``./update_requirements`` script will delete and recreate your current ``.ve`` directory.
 
 ``./update_requirements`` without any flags will update all pinned requirements to the latest version. Generally we don't want to do this at the same time as adding a new dependency, to make testing any problems easier.
+
+
+
+Fetching external datasets
+--------------------------------
+
+### Open code point
+
+Go to https://www.ordnancesurvey.co.uk/opendatadownload/products.html and request a download of Code-Point open. The will send you a link to a zip file and extract that zip into a directory and cd into that directory.  It should contain a Docs and a Data directory. 
+
+Get the second line of the heading file with the following command:
+
+```
+cat Doc/Code-Point_Open_Column_Headers.csv | head -2 | tail -1 > HEADING.csv
+```
+Get all the data and the heading in one file and gz the file.
+
+```
+cat HEADING.csv Data/CSV/* | gzip > codepoint_with_heading.csv.gz
+```
+
+Get csv2xlsx and convert sheets to single csv
+```
+pip install csv2xlsx
+echo 'name,code' > codelist.csv
+xlsx2csv Doc/Codelist.xlsx -a -p '' -E Metadata AREA_CODES >> codelist.csv
+```
+
+Finally you need the NHS codelist which is an xls file and for this you need libreoffice and make sure libreoffice is not open on your system.
+```
+libreoffice --headless --convert-to csv Doc/NHS_Codelist.xls
+awk -F, '{print $2,$1}' OFS=, NHS_Codelist.csv >> codelist.csv
+```
+
+Then copy codepoint_with_heading.csv.gz and codelist.csv to the dataload directory.
+
+### Charity commission data.
+
+This is a single script but takes a long time.
+
+```
+python dataload/fetch_charity_data.py
+```
+
+

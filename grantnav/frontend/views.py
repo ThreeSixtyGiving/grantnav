@@ -631,6 +631,7 @@ def funder(request, funder_id):
                 [{"term": {"fundingOrganization.id": funder_id}}]}},
             "aggs": {
                 "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
+                "filenames": {"terms": {"field": "filename", "size": 10}},
                 "total_amount": {"sum": {"field": "amountAwarded"}},
                 "avg_amount": {"avg": {"field": "amountAwarded"}},
                 "min_amount": {"min": {"field": "amountAwarded"}},
@@ -654,6 +655,10 @@ def funder(request, funder_id):
     context = {}
     context['results'] = results
     context['funder'] = results['hits']['hits'][0]["_source"]["fundingOrganization"][0]
+    try:
+        context['publisher'] = provenance.by_identifier[results['aggregations']['filenames']['buckets'][0]['key'].split('.')[0]]['publisher']
+    except KeyError:
+        pass
 
     return render(request, "funder.html", context=context)
 
