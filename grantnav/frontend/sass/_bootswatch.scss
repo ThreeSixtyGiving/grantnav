@@ -3,8 +3,15 @@
 // -----------------------------------------------------
 // Grantnav custom
 
+// Example search terms
 .link-on-orange {
   color: grey;
+  background-color: #fff;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-style: italic;
+  margin: 3px;
+  display:inline-block;
   &:hover {
     color: grey
   }
@@ -65,6 +72,18 @@ body {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+// Big numbers link and hover state
+.stat-group a {
+  display: block;
+  padding: 10px;
+}
+.stat-group a:hover {
+  background-color: #f77f03;
+  text-decoration: none;
+  border-radius: 12px;
+}
+
 .footer {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -347,7 +366,11 @@ input:-moz-placeholder {font-style:italic}
   position: relative;
 }
 
+// Main search bar on landing page
 .large-search {
+  display: inline-block;
+  vertical-align: top;
+  width: 79%;
   margin: 0 auto;
   padding: 10px 20px;
   border-radius: 12px;
@@ -355,20 +378,22 @@ input:-moz-placeholder {font-style:italic}
   background-color: #FFF;
   font-size: 28px;
   height: 79px;
-  float: left;
 }
 
 .large-search-icon {
   position: absolute;
   right: 38px;
-  top: 26px;
+  top: 12px;
 }
 
+// Example search terms container
 .search-help {
   font-size: 1.1em;
   color: #663a0e;
-  padding-top: 5px;
-  margin-left: 20px;
+  padding-top: 10px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .col-vlg-offset-1 {
