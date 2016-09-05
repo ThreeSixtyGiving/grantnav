@@ -3,14 +3,14 @@ GrantNav - Explore Grants in the 360 data standard
 
 [![Build Status](https://travis-ci.org/OpenDataServices/grantnav.svg?branch=master)](https://travis-ci.org/OpenDataServices/grantnav)
 
-We use HuBoard to provide an "agile board" view of our issues https://huboard.com/OpenDataServices/grantnav
+We use HuBoard to provide a Kanban board visualisation of our workflow and issues https://huboard.com/OpenDataServices/grantnav
 
 Introduction
 ------------
 
 This is a search tool for data in the 360 giving data format.
 
-This application is currently in a pre-alpha state.
+This application is currently undergoing final testing before a production launch.
 
 Requirements
 ------------
@@ -25,15 +25,18 @@ Steps to installation:
 * Create a virtual environment (note this application uses python3)
 * Activate the virtual environment
 * Install dependencies
+* Install Java 7+ (this is a requirement for Elasticsearch but the packages don't depend on any Java package)
 * Install Elastic search
 * Run the development server
 
+On a Debian-based Linux distribution, your commands will probably look like this:
 ```
 git clone https://github.com/OpenDataServices/grantnav.git
 cd grantnav
 virtualenv .ve --python=/usr/bin/python3
 source .ve/bin/activate
 pip install -r requirements_dev.txt
+sudo apt-get install openjdk-7-jre
 curl -O https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.1.1/elasticsearch-2.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-2.1.1.deb
 sudo service elasticsearch start
 python manage.py runserver
@@ -43,19 +46,20 @@ Note that if you are not on Debian based system you will need to follow https://
 Follow the instructions in your terminal to open the aplication in your browser.
 
 
-
 Upload Data
 ------------
 
-In order to upload some data use the dataload/import_to_elesticsearch.py command line tool e.g:
-    python dataload/import_to_elesticsearch.py --clean filename1.csv filename2.csv *.json
+In order to upload some data use the dataload/import_to_elasticsearch.py command line tool e.g:
+    python dataload/import_to_elasticsearch.py --clean filename1.csv filename2.csv *.json
 
-The clean command is optional it will delete the index and start again, so leave it off if you want to add just another file to an existing index.
+The clean command is optional; it will delete the index and start again, so leave it off if you want to add just another file to an existing index.
 You can specify as many file or patterns as you like at the end of the command.
 
 ### Getting data for upload
 
 There is a list of 360Giving datasets at http://www.threesixtygiving.org/data/find-data/. There's an API for this list http://data.threesixtygiving.org/data.json and some code to help download from it -  https://github.com/ThreeSixtyGiving/datagetter
+
+If your data is in a flat format (eg Excel spreadsheet, CSV), or needs validating, you can use [CoVE](http://cove.opendataservices.coop/360/) to convert and validate your data.
 
 ### Provenance JSON
 
@@ -98,14 +102,13 @@ CUSTOM_SERVER_URL=http://dev.grantnav.opendataservices.coop py.test
 
 The tests delete an elastic search index and repopulate it.  The default index name is threesixtygiving
 
-
 We also use flake8 to test code quality, see https://github.com/OpenDataServices/developer-docs/blob/master/tests.md#flake8 
+
 
 Adding and updating requirements
 --------------------------------
 
 Add a new requirements to ``requirements.in`` or ``requirements_dev.in`` depending on whether it is just a development requirement or not.
-
 
 Then, run ``./update_requirements --new-only`` this will populate ``requirements.txt`` and/or ``requirements_dev.txt`` with pinned versions of the new requirement and it's dependencies.
 
