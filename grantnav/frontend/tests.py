@@ -75,7 +75,7 @@ def test_stats(provenance_dataload, client):
 
 
 def test_advanced_search(provenance_dataload, client):
-    response = client.get('/help')
+    response = client.get('/advanced_search')
     assert 'Advanced Search' in str(response.content)
 
 
