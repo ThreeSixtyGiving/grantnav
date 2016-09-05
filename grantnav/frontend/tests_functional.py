@@ -3,8 +3,9 @@ import time
 import pytest
 from dataload.import_to_elasticsearch import import_to_elasticsearch
 from selenium import webdriver
+import requests
 
-prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/c555725bf1aa1e2d22fb69dd99c1831feff7ecbd/'
+prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/5259c973c4f89f054a18be8f1143202d250bc148/'
 
 
 BROWSER = os.environ.get('BROWSER', 'Firefox')
@@ -40,14 +41,21 @@ def server_url(request, live_server):
 
 @pytest.fixture(scope="module")
 def dataload():
-    import_to_elasticsearch([prefix + 'wolfson.json',
-                             prefix + '360_giving_LBFEW_2010_2015.xlsx',
-                             prefix + 'IndigoTrust_360giving.csv'], clean=True)
+    import_to_elasticsearch([prefix + 'a002400000KeYdsAAF.json',
+                             prefix + 'a002400000OiDBQAA3.xlsx',
+                             prefix + 'a002400000G4KGJAA3.csv'], clean=True)
     #elastic search needs some time to commit its data
     time.sleep(2)
 
 
-def test_home(dataload, server_url, browser):
+@pytest.fixture(scope="function")
+def provenance_dataload(dataload, settings, tmpdir):
+    local_data_json = tmpdir.join('data.json')
+    local_data_json.write(requests.get(prefix + 'data.json').content)
+    settings.PROVENANCE_JSON = local_data_json.strpath
+
+
+def test_home(provenance_dataload, server_url, browser):
     browser.get(server_url)
     assert 'GrantNav' in browser.find_element_by_tag_name('body').text
 
@@ -66,7 +74,7 @@ def test_home(dataload, server_url, browser):
     ('Reusing GrantNav data'),
     ('Copyright')
     ])
-def test_footer_links(dataload, server_url, browser, link_text):
+def test_footer_links(provenance_dataload, server_url, browser, link_text):
     browser.get(server_url)
     browser.find_element_by_link_text(link_text)
     
@@ -76,13 +84,13 @@ def test_footer_links(dataload, server_url, browser, link_text):
     ('Contains Royal Mail data © Royal Mail copyright and Database right 2016'),
     ('Contains National Statistics data © Crown copyright and database right 2016')
     ])
-def test_code_point_credit(dataload, server_url, browser, text):
+def test_code_point_credit(provenance_dataload, server_url, browser, text):
     browser.get(server_url)
     browser.find_element_by_link_text('Copyright').click()
     assert text in browser.find_element_by_tag_name('body').text
 
 
-def test_search(dataload, server_url, browser):
+def test_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-icon").click()
     assert '4,764' in browser.find_element_by_tag_name('body').text
@@ -90,7 +98,7 @@ def test_search(dataload, server_url, browser):
     assert 'Wolfson Foundation (379)' in browser.find_element_by_tag_name('body').text
 
 
-def test_bad_search(dataload, server_url, browser):
+def test_bad_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_name("text_query").send_keys(" £s:::::afdsfas")
     browser.find_element_by_class_name("large-search-icon").click()
@@ -133,7 +141,7 @@ def test_no_results_page(server_url, browser):
     ('/recipient/GB-CHC-1092728'),  # recipient: Open Doors
     #('/district/City of Bristol')  # district
     ])
-def test_right_align_amounts_in_grant_table(dataload, server_url, browser, path):
+def test_right_align_amounts_in_grant_table(provenance_dataload, server_url, browser, path):
     browser.get(server_url + path)
     grants_table = browser.find_element_by_id('grants_datatable')
     grants_table.find_element_by_css_selector('td.amount')
@@ -144,7 +152,7 @@ def test_right_align_amounts_in_grant_table(dataload, server_url, browser, path)
     ('/recipients', 'recipients_datatable'),
     ('/funder/GB-CHC-327114', 'recipients_datatable'),  # funder: Lloyds
     ])
-def test_right_align_amounts_in_other_tables(dataload, server_url, browser, path, identifier):
+def test_right_align_amounts_in_other_tables(provenance_dataload, server_url, browser, path, identifier):
     browser.get(server_url + path)
     table = browser.find_element_by_id(identifier)
     table.find_elements_by_css_selector('td.amount')
@@ -153,3 +161,14 @@ def test_right_align_amounts_in_other_tables(dataload, server_url, browser, path
 def test_datasets_page(server_url, browser):
     browser.get(server_url + '/datasets')
     assert 'Data used in GrantNav' in browser.find_element_by_tag_name('h1').text
+
+
+@pytest.mark.parametrize(('path', 'identifier', 'text'), [
+    ('/funder/GB-CHC-327114', 'disclaimer', 'This data is provided for information purposes only.'),
+    ('/funder/GB-CHC-327114', 'disclaimer', 'Please refer to the funder website for details of current grant programmes, application guidelines and eligibility criteria.'),
+    ('/grant/360G-LBFEW-111657', 'provenance', 'Where is this data from?'),
+    ('/grant/360G-LBFEW-111657', 'provenance', 'This data was originally published by')
+    ])
+def test_disclaimers(server_url, browser, path, identifier, text):
+    browser.get(server_url + path)
+    assert text in browser.find_element_by_id(identifier).text

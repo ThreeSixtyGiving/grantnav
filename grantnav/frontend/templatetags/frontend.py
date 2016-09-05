@@ -35,30 +35,56 @@ def flatten_dict(data, path=tuple()):
     schema_titles = dict(flatten_schema_titles(schema))
 
     for key, value in data.items():
+        field = ": ".join(path + (key,))
         if isinstance(value, list):
+            string_list = []
             for item in value:
                 if isinstance(item, dict):
                     yield from flatten_dict(item, path + (key,))
+                if isinstance(item, str):
+                    string_list.append(item)
+            if string_list:
+                yield schema_titles.get(field) or field, ", ".join(string_list)
         elif isinstance(value, dict):
             yield from flatten_dict(value, path + (key,))
         else:
-            field = ": ".join(path + (key,))
             yield schema_titles.get(field) or field, value
 
-SKIP_KEYS = ["id", "title", "description", "filename",
-             "amountAwarded", "currency",
-             "awardDate", "recipientOrganization: name",
-             "recipientOrganization: id",
+ADDITIONAL_FIELDS = {"recipientDistrictName": "Recipient District",
+                     "recipientRegionName": "Recipient Region",
+                     "recipientWardName": "Recipient Ward"}
+
+SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
+             "amountAwarded", "Currency",
+             "awardDate", "Recipient Org: Name",
+             "Recipient Org: Identifier",
              "recipientOrganization: id_and_name",
-             "fundingOrganization: name",
-             "fundingOrganization: id",
-             "fundingOrganization: id_and_name"]
+             "Funding Org: Name",
+             "Funding Org: Identifier",
+             "fundingOrganization: id_and_name", "recipientLocation"] + list(ADDITIONAL_FIELDS.keys())
 
 
 @register.filter(name='flatten')
 def flatten(d):
     return sorted([(key, value) for key, value in flatten_dict(d)
                   if key not in SKIP_KEYS])
+
+
+@register.filter(name='get_additional_fields')
+def get_additional_fields(data):
+    additional_fields = []
+    try:
+        facet_org_name = get_facet_org_name(data['recipientOrganization'][0]["id_and_name"])
+        if facet_org_name != data['recipientOrganization'][0]["name"]:
+            additional_fields.append(('Alternate Recipient Name', facet_org_name))
+    except (KeyError, IndexError, TypeError):
+        pass
+
+    for field_name, name in sorted(ADDITIONAL_FIELDS.items()):
+        value = data.get(field_name)
+        if value:
+            additional_fields.append((name, value))
+    return additional_fields
 
 
 @register.filter(name='half_sorted_items')
@@ -144,7 +170,7 @@ def get_currency_list(aggregate):
 @register.filter(name='get_dataset')
 def get_dataset(grant):
     try:
-        return provenance.by_identifier[grant['source']['filename'].split('.')[0]]
+        return provenance.by_identifier[provenance.identifier_from_filename(grant['source']['filename'])]
     except KeyError:
         return None
 
