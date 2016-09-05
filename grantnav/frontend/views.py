@@ -15,6 +15,7 @@ import datetime
 import re
 from django.http import HttpResponse, StreamingHttpResponse
 from grantnav import provenance, csv_layout
+from itertools import chain
 import csv
 
 BASIC_FILTER = [
@@ -139,7 +140,7 @@ def grants_csv_paged(query):
     query.pop('aggs', None)
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer)
-    response = StreamingHttpResponse((writer.writerow(row) for row in grants_csv_generator(query)), content_type='text/csv')
+    response = StreamingHttpResponse(chain(['\ufeff'], (writer.writerow(row) for row in grants_csv_generator(query))), content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
 
@@ -168,7 +169,7 @@ def org_csv_generator(data, org_type):
 def orgs_csv_paged(data, org_type):
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer)
-    response = StreamingHttpResponse((writer.writerow(row) for row in org_csv_generator(data, org_type)), content_type='text/csv')
+    response = StreamingHttpResponse(chain(['\ufeff'], (writer.writerow(row) for row in org_csv_generator(data, org_type))), content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
 
