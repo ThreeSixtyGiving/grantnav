@@ -328,3 +328,11 @@ select.front_search	{
 	    top: 92px;
     }
 }
+
+.alert-info {
+    background-color: #ecf0f1;
+    border-color: #ecf0f1;
+    color: #000;
+}
+
+
