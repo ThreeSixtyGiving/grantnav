@@ -35,6 +35,8 @@ a.anchor {
 
 .heading-in-panel small {
     color: black;
+    font-size: 80%;
+  ;margin-top: 4px
 }
 
 .fixed-org-height {
