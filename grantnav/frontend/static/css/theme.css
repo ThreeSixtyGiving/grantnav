@@ -1140,8 +1140,8 @@ hr {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "Ostrich Sans", sans-serif;
-  font-weight: 600;
+  font-family: "Assistant", sans-serif;
+  font-weight: 100;
   line-height: 1.1;
   color: inherit; }
   h1 small,
@@ -5862,7 +5862,7 @@ body {
 .home-number-text {
   font-size: 30px;
   color: #663a0e;
-  font-weight: bold;
+  font-weight: 400;
   letter-spacing: 2px;
   margin-top: 0px; }
 
