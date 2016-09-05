@@ -11,7 +11,8 @@
   border-radius: 8px;
   font-style: italic;
   margin: 3px;
-  display:inline-block;
+  display: inline-block;
+  vertical-align: top;
   &:hover {
     color: grey
   }
@@ -57,7 +58,7 @@ body {
 .home-number-text {
   font-size: 30px;
   color: #663a0e;
-  font-weight: bold;
+  font-weight: 400;
   letter-spacing: 2px;
   margin-top: 0px;
 }
