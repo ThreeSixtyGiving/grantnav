@@ -170,7 +170,7 @@ def get_currency_list(aggregate):
 @register.filter(name='get_dataset')
 def get_dataset(grant):
     try:
-        return provenance.by_identifier[grant['source']['filename'].split('.')[0]]
+        return provenance.by_identifier[provenance.identifier_from_filename(grant['source']['filename'])]
     except KeyError:
         return None
 
