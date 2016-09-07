@@ -26,7 +26,7 @@ def provenance_dataload(dataload, settings, tmpdir):
 @pytest.mark.parametrize(('expected_text'), [
     ('GrantNav'),
     ('Search'),
-    ('grantmaking'),
+    #('grantmaking'), #removed in 0440763b195952f6272e707c635426545f45020c
     ('Try these examples'),
     ('Only Locations'),
     ('Bristol'),
