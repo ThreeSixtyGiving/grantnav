@@ -112,7 +112,7 @@ def test_bad_search(provenance_dataload, server_url, browser):
 
 def test_terms(server_url, browser):
     browser.get(server_url + '/terms')
-    assert 'Terms & conditions' in browser.find_element_by_tag_name('h1').text
+    assert 'Terms and conditions' in browser.find_element_by_tag_name('h1').text
 
 
 def test_take_down(server_url, browser):
