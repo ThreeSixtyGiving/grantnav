@@ -66,6 +66,7 @@ def test_home(provenance_dataload, server_url, browser):
 
 
 @pytest.mark.parametrize(('link_text'), [
+    ('About'),
     ('Funders'),
     ('Recipients'),
     ('Terms and Conditions'),

@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^terms', TemplateView.as_view(template_name='terms.html'), name='terms'),
     url(r'^advanced_search', TemplateView.as_view(template_name='advanced_search.html'), name='advanced_search'),
     url(r'^developers', TemplateView.as_view(template_name='developers.html'), name='developers'),
+    url(r'^about', TemplateView.as_view(template_name='about.html'), name='about'),
     url(r'^api/grants.json', views.api_grants, name='api.grants.json'),
     url(r'^api/grants.csv', views.api_grants, name='api.grants.csv'),
 ]
