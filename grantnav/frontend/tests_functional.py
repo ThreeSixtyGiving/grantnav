@@ -63,6 +63,8 @@ def test_home(provenance_dataload, server_url, browser):
     browser.find_element_by_class_name("btn").click()
     browser.get(server_url)
     assert 'Cookies disclaimer' not in browser.find_element_by_tag_name('body').text
+    assert '360Giving Standard' in browser.find_element_by_tag_name('body').text
+    assert '360Giving standard' not in browser.find_element_by_tag_name('body').text
 
 
 @pytest.mark.parametrize(('link_text'), [
@@ -71,8 +73,8 @@ def test_home(provenance_dataload, server_url, browser):
     ('Recipients'),
     ('Terms and Conditions'),
     ('Take Down Policy'),
-    ('Data used in GrantNav'),
-    ('Reusing GrantNav data'),
+    ('Data Used in GrantNav'),
+    ('Reusing GrantNav Data'),
     ('Copyright'),
     ('Advanced Search'),
     ('Developers')
