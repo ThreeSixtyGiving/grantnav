@@ -87,6 +87,9 @@ def import_to_elasticsearch(files, clean):
                 "recipientDistrictName": {"type": "string", "index": "not_analyzed"},
                 "recipientWardName": {"type": "string", "index": "not_analyzed"},
                 "recipientLocation": {"type": "string"},
+                "amountAppliedFor": {"type": "double"},
+                "amountAwarded": {"type": "double"},
+                "amountDisbursed": {"type": "double"},
                 "awardDate": {
                     "type": "date",
                     "ignore_malformed": True
@@ -154,6 +157,11 @@ def import_to_elasticsearch(files, clean):
                         "id_and_name": {
                             "type": "string", "index": "not_analyzed"
                         }
+                    }
+                },
+                "beneficiaryLocation": {
+                    "properties": {
+                        "geographic code (from GIFTS)": {"type": "string"}
                     }
                 }
             }
