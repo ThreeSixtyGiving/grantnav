@@ -1,4 +1,4 @@
-Django==1.8.14 # rq.filter: <1.9
+Django==1.8.16 # rq.filter: <1.9
 django-bootstrap3==7.0.1
 requests==2.10.0
 django-environ==0.4.0
@@ -19,7 +19,7 @@ et-xmlfile==1.0.1
 jdcal==1.2
 jsonref==0.1
 openpyxl==2.3.5
-Pillow==3.3.1
+Pillow==4.0.0
 pytz==2016.6.1
 schema==0.6.0
 six==1.10.0
