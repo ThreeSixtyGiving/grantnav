@@ -1,8 +1,10 @@
 GrantNav
 ========
 
+Note: This license doesn't apply to the 360Giving theme and related assets (such as the logo).
+
 GrantNav is free software designed to help people check data 
-pubplished to the Open Contracting Data Standard.
+pubplished to the 360Giving open data Standard.
   
 GrantNav is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
