@@ -4,7 +4,7 @@ GrantNav
 Note: This license doesn't apply to the 360Giving logo https://github.com/OpenDataServices/grantnav/blob/master/grantnav/frontend/static/images/360logo.png https://github.com/OpenDataServices/grantnav/blob/master/grantnav/frontend/static/images/360logo_invert.png
 The look-and-feel is that of 360Giving, and care should be taken when running any public instance not to falsely give the impression, intentionally or otherwise, that the instance is operated by or related to 360Giving.
 
-GrantNav is free software designed to help people check data 
+GrantNav is free software designed to help people explore data 
 published to the 360Giving open data Standard.
   
 GrantNav is free software: you can redistribute it and/or modify
