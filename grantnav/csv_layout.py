@@ -92,7 +92,7 @@ grant_csv_paths = [
     "result.recipientOrganization.0.location.2.name",
     "result.fundingOrganization.0.id",
     "result.fundingOrganization.0.name",
-    "result.grantProgramme.0.code",    
+    "result.grantProgramme.0.code",
     "result.grantProgramme.0.title",
     "result.grantProgramme.0.url",
     "result.beneficiaryLocation.0.name",
