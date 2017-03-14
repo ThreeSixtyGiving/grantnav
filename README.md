@@ -71,7 +71,7 @@ e.g.
 cd datagetter/data/json_acceptable_license_valid
 python path/to/grantnav/dataload/import_to_elasticsearch.py --clean *
 cd path/to/grantnav
-PROVENANCE_JSON=path/to/datagetter/data/data.json python manage.py runserver
+PROVENANCE_JSON=path/to/datagetter/data/data_acceptable_license_valid.json python manage.py runserver
 ```
 
 
