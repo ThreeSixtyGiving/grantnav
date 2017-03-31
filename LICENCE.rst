@@ -6,7 +6,7 @@ Note: This license doesn't apply to the 360Giving logo https://github.com/OpenDa
 The look-and-feel of GrantNav is that of 360Giving, and care should be taken when running any public instance not to falsely give the impression, intentionally or otherwise, that the instance is operated by or related to 360Giving.
 
 GrantNav is free software designed to help people explore data 
-published to the 360Giving open data Standard.
+published to the 360Giving Data Standard.
   
 GrantNav is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
