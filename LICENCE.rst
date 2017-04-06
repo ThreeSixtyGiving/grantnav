@@ -1,8 +1,12 @@
 GrantNav
 ========
 
-GrantNav is free software designed to help people check data 
-pubplished to the Open Contracting Data Standard.
+Note: This license doesn't apply to the 360Giving logo https://github.com/OpenDataServices/grantnav/blob/master/grantnav/frontend/static/images/360logo.png https://github.com/OpenDataServices/grantnav/blob/master/grantnav/frontend/static/images/360logo_invert.png . The 360Giving logo is copyright `360Giving <http://threesixtygiving.org>` and may not be used without express permission. 
+
+The look-and-feel of GrantNav is that of 360Giving, and care should be taken when running any public instance not to falsely give the impression, intentionally or otherwise, that the instance is operated by or related to 360Giving.
+
+GrantNav is free software designed to help people explore data 
+published to the 360Giving Data Standard.
   
 GrantNav is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -17,7 +21,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with GrantNav.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2016 Open Data Services Co-operative Limited.
+Copyright 2016-2017 Open Data Services Co-operative Limited.
 
 
 
