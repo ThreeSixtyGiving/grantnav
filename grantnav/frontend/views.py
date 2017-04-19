@@ -25,7 +25,8 @@ BASIC_FILTER = [
     {"bool": {"should": {"range": {"amountAwarded": {}}}}},  # Amount Awarded
     {"bool": {"should": []}},  # Award Year
     {"bool": {"should": []}},  # recipientRegionName
-    {"bool": {"should": []}}   # recipientDistrictName
+    {"bool": {"should": []}},   # recipientDistrictName
+    {"bool": {"should": {"range": {"awardDate": {}}}}},  # Award Date
 ]
 
 
@@ -299,8 +300,8 @@ def create_date_aggregate(json_query):
     json_query["aggs"]["awardYear"] = {"date_histogram": {"field": "awardDate", "format": "yyyy", "interval": "year", "order": {"_key": "desc"}}}
 
 
-def get_date_facets(request, context, json_query):
-    json_query = copy.deepcopy(json_query)
+def get_date_facets(request, context, original_json_query):
+    json_query = copy.deepcopy(original_json_query)
     try:
         current_filter = json_query["query"]["bool"]["filter"][4]["bool"]["should"]
     except KeyError:
@@ -313,6 +314,14 @@ def get_date_facets(request, context, json_query):
         results = get_results(json_query)
     else:
         results = context["results"]
+
+    input_range = json_query["query"]["bool"]["filter"][7]["bool"]["should"]["range"]["awardDate"]
+    new_filter = copy.deepcopy(current_filter)
+    if new_filter or input_range:
+        new_json_query = copy.deepcopy(original_json_query)
+        new_json_query["query"]["bool"]["filter"][4]["bool"]["should"] = []
+        new_json_query["query"]["bool"]["filter"][7]["bool"]["should"]["range"]["awardDate"] = {}
+        results["aggregations"]["awardYear"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(new_json_query)})
 
     for bucket in results['aggregations']['awardYear']['buckets']:
         range = {'format': 'year'}
@@ -335,11 +344,25 @@ def get_date_facets(request, context, json_query):
         bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
 
         if bucket.get("selected"):
-            context["selected_facets"]["Award Year"].append({"url": bucket["url"], "display_value": value})
+            context["selected_facets"]["Award Date"].append({"url": bucket["url"], "display_value": value})
 
-    if current_filter:
-        json_query["query"]["bool"]["filter"][4]["bool"]["should"] = []
-        results['aggregations']["awardYear"]['clear_url'] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+    if input_range:
+        json_query = copy.deepcopy(original_json_query)
+        lt, gte = input_range.get('lt', ''), input_range.get('gte', '')
+        month_lt, year_lt = [int(part) for part in lt.split('/')]
+        if month_lt == 1:
+            month_lt, year_lt = 12, year_lt - 1
+        else:
+            month_lt = month_lt - 1
+        month_gte, year_gte = [int(part) for part in gte.split('/')]
+        if (year_gte, month_gte) == (year_lt, month_lt):
+            display_value = datetime.datetime(year_gte, month_gte, 1).strftime("%b %Y")
+        else:
+            display_value = datetime.datetime(year_gte, month_gte, 1).strftime("%b %Y") + ' to ' + datetime.datetime(year_lt, month_lt, 1).strftime("%b %Y")
+
+        json_query["query"]["bool"]["filter"][7]["bool"]["should"]["range"]["awardDate"] = {}
+        context["selected_facets"]["Award Date"].append({"url": request.path + '?' + urlencode({"json_query": json.dumps(json_query)}), "display_value": display_value})
+
     main_results['aggregations']["awardYear"] = results['aggregations']["awardYear"]
 
 
@@ -462,6 +485,30 @@ def search(request):
             except ValueError:
                 pass
         json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = new_filter
+        return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
+
+    min_date = request.GET.get('min_date')
+    max_date = request.GET.get('max_date')
+    if min_date or max_date:
+        new_filter = {"format": "MM/yyyy"}
+        if min_date:
+            try:
+                datetime.datetime.strptime(min_date, "%m/%Y")
+                new_filter['gte'] = min_date
+            except ValueError:
+                pass
+        if max_date:
+            try:
+                datetime.datetime.strptime(max_date, "%m/%Y")
+                month, year = [int(part) for part in max_date.split('/')]
+                if month == 12:
+                    month, year = 1, year + 1
+                else:
+                    month = month + 1
+                new_filter['lt'] = '{:02d}/{}'.format(month, year)
+            except ValueError:
+                pass
+        json_query["query"]["bool"]["filter"][7]["bool"]["should"]["range"]["awardDate"] = new_filter
         return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
 
     sort_order = request.GET.get('sort', '').split()
