@@ -1,4 +1,4 @@
-Django==1.8.16 # rq.filter: <1.9
+Django==1.8.18 # rq.filter: <1.9
 django-bootstrap3==7.0.1
 requests==2.10.0
 django-environ==0.4.0
