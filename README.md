@@ -10,8 +10,6 @@ Introduction
 
 This is a search tool for data in the 360 giving data format.
 
-This application is currently undergoing final testing before a production launch.
-
 Requirements
 ------------
 This application is built using Django, Elasticsearch and python 3
