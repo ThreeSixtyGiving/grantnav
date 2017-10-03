@@ -3,12 +3,14 @@ GrantNav - Explore Grants in the 360 data standard
 
 [![Build Status](https://travis-ci.org/OpenDataServices/grantnav.svg?branch=master)](https://travis-ci.org/OpenDataServices/grantnav)
 
-We use HuBoard to provide a Kanban board visualisation of our workflow and issues https://huboard.com/OpenDataServices/grantnav
+We use GitHub Projects to provide a Kanban board visualisation of our workflow and issues https://github.com/OpenDataServices/grantnav/projects
 
 Introduction
 ------------
 
 This is a search tool for data in the 360 giving data format.
+
+Live deploy at http://grantnav.threesixtygiving.org/
 
 Requirements
 ------------
