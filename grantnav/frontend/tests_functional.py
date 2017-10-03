@@ -3,17 +3,22 @@ import time
 import pytest
 from dataload.import_to_elasticsearch import import_to_elasticsearch
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import requests
 
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/5259c973c4f89f054a18be8f1143202d250bc148/'
 
 
-BROWSER = os.environ.get('BROWSER', 'Firefox')
+BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
 
 
 @pytest.fixture(scope="module")
 def browser(request):
-    if BROWSER == "Firefox":
+    if BROWSER == 'ChromeHeadless':
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        browser = webdriver.Chrome(chrome_options=chrome_options)
+    elif BROWSER == "Firefox":
         # Make downloads work
         profile = webdriver.FirefoxProfile()
         profile.set_preference("browser.download.folderList", 2)
@@ -21,14 +26,11 @@ def browser(request):
         profile.set_preference("browser.download.dir", os.getcwd())
         profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/json")
         browser = getattr(webdriver, BROWSER)(firefox_profile=profile)
-        browser.implicitly_wait(3)
-        request.addfinalizer(lambda: browser.quit())
-        return browser
     else:
         browser = getattr(webdriver, BROWSER)()
-        browser.implicitly_wait(3)
-        request.addfinalizer(lambda: browser.quit())
-        return browser
+    browser.implicitly_wait(3)
+    request.addfinalizer(lambda: browser.quit())
+    return browser
 
 
 @pytest.fixture(scope="module")
