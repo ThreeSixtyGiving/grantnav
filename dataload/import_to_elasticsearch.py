@@ -260,7 +260,7 @@ def update_doc_with_region(grant):
     except (KeyError, IndexError):
         post_code = ''
 
-    ## If there is a 'BT' postcode we can safely assume this is in NI
+    # If there is a 'BT' postcode we can safely assume this is in NI
     if post_code and post_code.startswith("BT"):
         grant['recipientRegionName'] = "Northern Ireland"
 
@@ -354,7 +354,7 @@ def get_area_mappings():
                 'district_name': district_name, 'area_name': area_name, 'ward_name': ward_name
             }
 
-    ## Northern Ireland codes and names not included in Code-Point, but uses a separate source
+    # Northern Ireland codes and names not included in Code-Point, but uses a separate source
     with open(os.path.join(current_dir, 'WD15_LGD15_NI_LU.csv')) as ni_lookup:
         ni_lookup_csv = csv.DictReader(ni_lookup)
 
