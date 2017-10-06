@@ -65,7 +65,7 @@ grant_csv_titles = [
     "Recipient Ward",
     "Retrieved for use in GrantNav",
     "License (see note)",
-    "Note: this file also contains OS data © Crown copyright and database right 2016, Royal Mail data © Royal Mail copyright and Database right 2016, National Statistics data © Crown copyright and database right 2016, see http://grantnav.threesixtygiving.org/datasets/ for more information.",
+    "Note: this file also contains OS data © Crown copyright and database right 2016, Royal Mail data © Royal Mail copyright and Database right 2016, National Statistics data © Crown copyright and database right 2015 & 2016, see http://grantnav.threesixtygiving.org/datasets/ for more information.",
 ]
 
 grant_csv_paths = [
