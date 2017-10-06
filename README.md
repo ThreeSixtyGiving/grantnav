@@ -20,22 +20,28 @@ Installation
 ------------
 Steps to installation:
 
+* Install pre-requisites: Git, Python3, and lots of things for Pillow.
 * Clone the repository
 * Change into the cloned repository
-* Create a virtual environment (note this application uses python3)
+* Create a virtual environment
 * Activate the virtual environment
 * Install dependencies
 * Install Java 7+ (this is a requirement for Elasticsearch but the packages don't depend on any Java package)
 * Install Elastic search
 * Run the development server
 
-On a Debian-based Linux distribution, your commands will probably look like this:
+These instructions assume Ubuntu Trusty 64.
+
 ```
+sudo apt-get install -y git-core
+sudo apt-get install -y libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk # Requirements for pillow
+sudo apt-get install -y python3-dev
+
 git clone https://github.com/OpenDataServices/grantnav.git
 cd grantnav
-virtualenv .ve --python=/usr/bin/python3
+python3 -m venv .ve --python=/usr/bin/python3
 source .ve/bin/activate
-pip install -r requirements_dev.txt
+pip install -r requirements.txt # Use requirements_dev.txt if you're installing for development.
 sudo apt-get install openjdk-7-jre
 curl -O https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.1.1/elasticsearch-2.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-2.1.1.deb
 sudo service elasticsearch start
@@ -50,7 +56,8 @@ Upload Data
 ------------
 
 In order to upload some data use the dataload/import_to_elasticsearch.py command line tool e.g:
-    python dataload/import_to_elasticsearch.py --clean filename1.csv filename2.csv *.json
+    
+`python dataload/import_to_elasticsearch.py --clean filename1.csv filename2.csv *.json`
 
 The clean command is optional; it will delete the index and start again, so leave it off if you want to add just another file to an existing index.
 You can specify as many file or patterns as you like at the end of the command.
@@ -58,6 +65,8 @@ You can specify as many file or patterns as you like at the end of the command.
 ### Getting data for upload
 
 There is a list of 360Giving datasets at http://www.threesixtygiving.org/data/find-data/. There's an API for this list http://data.threesixtygiving.org/data.json and some code to help download from it -  https://github.com/ThreeSixtyGiving/datagetter
+
+If you see the message "Killed", you need to increase the memory in your VM.
 
 If your data is in a flat format (eg Excel spreadsheet, CSV), or needs validating, you can use [CoVE](http://cove.opendataservices.coop/360/) to convert and validate your data.
 
