@@ -28,6 +28,7 @@ Steps to installation:
 * Install dependencies
 * Install Java 7+ (this is a requirement for Elasticsearch but the packages don't depend on any Java package)
 * Install Elastic search
+* Run database migrations
 * Run the development server
 
 These instructions assume Ubuntu Trusty 64.
@@ -45,6 +46,7 @@ pip install -r requirements.txt # Use requirements_dev.txt if you're installing 
 sudo apt-get install openjdk-7-jre
 curl -O https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.1.1/elasticsearch-2.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-2.1.1.deb
 sudo service elasticsearch start
+python manage.py migrate
 python manage.py runserver
 ```
 
