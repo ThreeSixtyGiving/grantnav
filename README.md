@@ -51,6 +51,16 @@ python manage.py runserver
 Note that if you are not on Debian based system you will need to follow https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html#setup-installation to install elasticsearch.
 Follow the instructions in your terminal to open the aplication in your browser.
 
+Accessing GrantNav
+------------------
+
+The above command gives you a local server listening on port 8000. If you're installing inside a virtual machine, you will need to do some or all of the following:
+
+1. Modify or disable the firewall to allow connections. (`sudo ufw disable`)
+2. Set the `ALLOWED_HOSTS` environment variable to include your host IP: `export ALLOWED_HOSTS='localhost','127.0.0.1','192.168.33.10'`
+3. Modify your VM settings to allow port forwarding. E.g.: `config.vm.network "private_network", ip: "192.168.33.10"` in Vagrant.
+4. Start the server with the allowed host: `python manage.py runserver 192.168.33.10:8000`
+
 
 Upload Data
 ------------
