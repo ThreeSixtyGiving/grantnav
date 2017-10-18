@@ -352,8 +352,8 @@ def get_area_mappings():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Import 360 files in a directory to elasticsearch')
-    parser.add_argument('--clean', help='files to import', action='store_true')
-    parser.add_argument('--reports', help='files to import', action='store_true')
+    parser.add_argument('--clean', help='Delete existing data before import', action='store_true')
+    parser.add_argument('--reports', help='Generate reports of differing names and bad organisation IDs.', action='store_true')
     parser.add_argument('files', help='files to import', nargs='+')
     args = parser.parse_args()
     get_area_mappings()
