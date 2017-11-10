@@ -74,9 +74,9 @@ def test_stats(provenance_dataload, client):
     assert "379" in str(response.content)
 
 
-def test_advanced_search(provenance_dataload, client):
-    response = client.get('/advanced_search')
-    assert 'Advanced Search' in str(response.content)
+def test_help_page(provenance_dataload, client):
+    response = client.get('/help')
+    assert 'Using GrantNav' in str(response.content)
 
 
 def test_json_download(provenance_dataload, client):
