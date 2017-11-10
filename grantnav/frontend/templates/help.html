@@ -10,15 +10,15 @@
     <li><a href="#filters">{% trans "How do the GrantNav filters work?" %}</a></li>
     <li><a href="#additional_data">{% trans "Additional data and GrantNav" %}</a></li>
     <ul>
-      <li><a href="#location_data">{% trans "GrantNav and Location Data" %}</a></li>
-      <li><a href="#charity_names">{% trans "GrantNav and Charity Names" %}</a></li>
+      <li><a href="#location_data">{% trans "GrantNav and location data" %}</a></li>
+      <li><a href="#charity_names">{% trans "GrantNav and charity names" %}</a></li>
     </ul>
     <li><a href="#export_files">{% trans "What is covered in the GrantNav export files?" %}</a></li>
     <ul>
       <li><a href="#export_search">{% trans "Exporting from a search" %}</a></li>
       <li><a href="#export_funders_recipients">{% trans "Exporting from the funders and recipient pages" %}</a></li>
     </ul>
-    <li><a href="#advanced_search">{% trans "Advanced Search" %}</a></li>
+    <li><a href="#advanced_search">{% trans "Advanced search" %}</a></li>
     <ul>
       <li><a href="#words_phrases">{% trans "Words and phrases" %}</a></li>
       <li><a href="#fields">{% trans "Fields" %}</a></li>
@@ -49,7 +49,7 @@
             <td>{% trans "Only Locations" %}</td>
             <td>
               <p>{% trans "Searches the ward, district and region location of the recipient organisation, of any grant record which features this geographical information." %}</p>
-              <p>{% trans "See: GrantNav & location data." %}</p>
+              <p>{% blocktrans %}See also: <a href="#location_data">GrantNav and location data</a>{% endblocktrans %}</p>
             </td>
           </tr>
           <tr>
@@ -61,7 +61,7 @@
     </div>
   </div>
 
-  <p>{% blocktrans %}See the <a href="/advanced_search/">Advanced Search</a> page for additional ways to search the data held in GrantNav.{% endblocktrans %}</p>
+  <p>{% blocktrans %}See <a href="#advanced_search">Advanced search</a> for additional ways to search the data held in GrantNav.{% endblocktrans %}</p>
 
   <h2 id="filters">{% trans "How do the GrantNav filters work?" %}</h2>
 
@@ -91,12 +91,12 @@
           <tr>
             <td>{% trans "Recipient Region" %}</td>
             <td>{% trans "This filter is derived from 360Giving data by GrantNav" %}</td>
-            <td>{% trans "See: GrantNav & location data" %}</td>
+            <td>{% blocktrans %}See also: <a href="#location_data">GrantNav and location data</a>{% endblocktrans %}</a></td>
           </tr>
           <tr>
             <td>{% trans "Recipient District" %}</td>
             <td>{% trans "This filter is derived from 360Giving data by GrantNav" %}</td>
-            <td>{% trans "See: GrantNav & location data" %}</td>
+            <td>{% blocktrans %}See also: <a href="#location_data">GrantNav and location data</a>{% endblocktrans %}</a></td>
           </tr>
           <tr>
             <td>{% trans "Funding Organisations" %}</td>
@@ -106,7 +106,7 @@
           <tr>
             <td>{% trans "Recipient Organisations" %}</td>
             <td>{% trans "Recipient Org:Name" %}</td>
-            <td>{% trans "See also: GrantNav & Charity Names" %}</td>
+            <td>{% blocktrans %}See also: <a href="#charity_names">GrantNav and charity names</a>{% endblocktrans %}</a></td>
           </tr>
         </tbody>
       </table>
@@ -117,29 +117,29 @@
   <p>{% blocktrans %}GrantNav uses <a href="/datasets/">grants data</a> that is being published to the <a href="http://standard.threesixtygiving.org/en/latest/">360Giving Standard</a>. It is updated on a monthly basis. When the data is imported, we undertake
     two processes that mean we can provide additional data.{% endblocktrans %}</p>
 
-  <h3 id="location_data">{% trans "GrantNav and Location Data" %}</h3>
+  <h3 id="location_data">{% trans "GrantNav and location data" %}</h3>
   <p>{% blocktrans %}When we import this data, we look at the Location information associated with the Recipient Organisation. This data can vary across publishers.{% endblocktrans %}</p>
 
-  <h4>{% trans "When a Recipient Org:Postcode is provided" %}</h4>
+  <h4>{% trans "When a Recipient Org:Postal Code is provided" %}</h4>
   <p>{% blocktrans %}We use the postcode to add Ward, District and Region <a href="/datasets/">codes</a> to the data. This is used in the relevant filters in GrantNav, and also Ward, District and Region names are included in the download files.{% endblocktrans %}</p>
 
-  <h4>{% trans "When a Recipient Org:Postcode is missing" %}</h4>
+  <h4>{% trans "When a Recipient Org:Postal Code is missing" %}</h4>
   <p>{% blocktrans %}If other types of administrative geography are included in the data (such as District or Ward codes) then we attempt to match it to relevant areas. Again, these are used in the filters and the names and codes are included in the download files.{% endblocktrans %}</p>
 
-  <h3 id="charity_names">{% trans "GrantNav and Charity Names" %}</h3>
-  <p>{% blocktrans %}It’s useful for people to see multiple grants associated with a single organisation together in GrantNav. To do this, we rely on publishers including the relevant company, charity or other registration number in the Recipient Org: Identifier
+  <h3 id="charity_names">{% trans "GrantNav and charity names" %}</h3>
+  <p>{% blocktrans %}It’s useful for people to see multiple grants associated with a single organisation together in GrantNav. To do this, we rely on publishers including the relevant company, charity or other registration number in the Recipient Org:Identifier
     field.{% endblocktrans %}</p>
 
   <p>{% blocktrans %}When we import data into GrantNav, we aim to match these identifiers, in order to provide pages that bring together grants from different publishers, even if they spell the recipient names differently.{% endblocktrans %}</p>
 
-  <p>{% blocktrans %}When we undertook research to do this, we found that quite often registered charities were given different names by various publishers. Even if the Recipient Org: Identifier reference were the exact same, the name given was often different,
+  <p>{% blocktrans %}When we undertook research to do this, we found that quite often registered charities were given different names by various publishers. Even if the Recipient Org:Identifier reference were the exact same, the name given was often different,
     e.g. “Salford Lads Club” vs “Salford Lads & Girls Club”.{% endblocktrans %}</p>
 
-  <p>{% blocktrans %}In order to help users, we therefore utilise the data available from the Charity Commission for England and Wales. We look for the official name on this register. With this, we populate the Recipient Org: Name field, which in turn is
+  <p>{% blocktrans %}In order to help users, we therefore utilise the data available from the Charity Commission for England and Wales. We look for the official name on this register. With this, we populate the Recipient Org:Name field, which in turn is
     used in the relevant filter on GrantNav. However, we also maintain the original name from the publisher, and use that in the grant page and freetext search.{% endblocktrans %}</p>
 
   <h2 id="export_files">{% trans "What is covered in the GrantNav export files?" %}</h2>
-  <p>{% blocktrans %}Data can be exported from GrantNav searches, and from views of funders and recipients, in either CSV or JSON formats. You can also <a href="/developers/">download the whole data set</a> using in GrantNav.{% endblocktrans %}</p>
+  <p>{% blocktrans %}Data can be exported from GrantNav searches, and from views of funders and recipients, in either CSV or JSON formats. You can also <a href="/developers/">download the whole data set</a> used in GrantNav.{% endblocktrans %}</p>
 
   <h3 id="export_search">{% trans "Exporting from a search" %}</h3>
   <p>{% blocktrans %}When you export data from a GrantNav search the data provided uses the same field names as the <a href="http://standard.threesixtygiving.org/en/latest/">360Giving Standard</a>. This is provided in a single file - in the case of the CSV
@@ -165,15 +165,15 @@
         </tr>
         <tr>
           <td>{% trans "Recipient Region" %}</td>
-          <td>{% trans "This is the name of the geographic area, added by GrantNav (see above for explanation)." %}</td>
+          <td>{% blocktrans %}This is the name of the geographic area, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).{% endblocktrans %}</td>
         </tr>
         <tr>
           <td>{% trans "Recipient District" %}</td>
-          <td>{% trans "This is the name of the geographic area, added by GrantNav (see above for explanation)." %}</td>
+          <td>{% blocktrans %}This is the name of the geographic area, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).{% endblocktrans %}</td>
         </tr>
         <tr>
           <td>{% trans "Recipient Ward" %}</td>
-          <td>{% trans "This is the name of the geographic area, added by GrantNav (see above for explanation)." %}</td>
+          <td>{% blocktrans %}This is the name of the geographic area, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).{% endblocktrans %}</td>
         </tr>
         <tr>
           <td>{% trans "Retrieved for use in GrantNav" %}</td>
@@ -230,7 +230,7 @@
     </div>
   </div>
 
-  <h2 id="advanced_search">{% trans "Advanced Search" %}</h2>
+  <h2 id="advanced_search">{% trans "Advanced search" %}</h2>
 
   <p>{% blocktrans %}In addition to the freetext search, there are many ways you can search the data on this site.{% endblocktrans %}</p>
   <p>{% blocktrans %}Search for:{% endblocktrans %}</p>
