@@ -35,13 +35,14 @@ These instructions assume Ubuntu Trusty 64.
 
 ```
 sudo apt-get install -y git-core
-sudo apt-get install -y libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk # Requirements for pillow
 sudo apt-get install -y python3-dev
 
 git clone https://github.com/OpenDataServices/grantnav.git
 cd grantnav
-python3 -m venv .ve --python=/usr/bin/python3
+python3 -m venv .ve
 source .ve/bin/activate
+# Make sure you have a recent version of pip, to install binary wheel packages.
+pip install --upgrade pip
 pip install -r requirements.txt # Use requirements_dev.txt if you're installing for development.
 sudo apt-get install openjdk-7-jre
 curl -O https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.1.1/elasticsearch-2.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-2.1.1.deb
