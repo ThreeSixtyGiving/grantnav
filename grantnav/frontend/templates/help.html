@@ -232,72 +232,72 @@
 
   <h2 id="advanced_search">{% trans "Advanced search" %}</h2>
 
-  <p>{% blocktrans %}In addition to the freetext search, there are many ways you can search the data on this site.{% endblocktrans %}</p>
-  <p>{% blocktrans %}Search for:{% endblocktrans %}</p>
+  <p>{% blocktrans %}In addition to the freetext search, there are many ways you can search the data on this site and target your search with more specific controls.{% endblocktrans %}</p>
 
   <h3 id="words_phrases">{% trans "Words and phrases" %}</h3>
   <ul>
-    <li>{% trans "A single word: e.g. people" %}</li>
-    <li>{% trans "All words: e.g. young people gardens" %}</li>
-    <li>{% trans "Require each word to be found: e.g. young AND people" %}</li>
-    <li>{% trans 'An exact phrase by enclosing it in quotes: e.g. "young people"' %}</li>
+    <li>{% trans "A single word: e.g. <code>people</code>" %}</li>
+    <li>{% trans "Multiple words: e.g. <code>young people gardens</code> (each word does not necessarily have to be present)" %}</li>
+    <li>{% trans "Require each word to be found: e.g. <code>young AND people</code>" %}</li>
+    <li>{% trans 'An exact phrase by enclosing it in quotes: e.g. <code>"young people"</code>' %}</li>
   </ul>
 
-  <p>{% blocktrans %}Using the above you can effectively filter the records to a single publisher or an exact grant.<br>Try:{% endblocktrans %}</p>
+  <p>{% blocktrans %}Using the above you can effectively filter the records to a single publisher or an exact grant. Try:{% endblocktrans %}</p>
   <ul>
-    <li>"The Dulverton Trust"</li>
-    <li>"360G-wolfson-19750"</li>
+    <li><code>"The Dulverton Trust"</code></li>
+    <li><code>"360G-wolfson-19750"</code></li>
   </ul>
 
   <h3 id="fields">{% trans "Fields" %}</h3>
   <ul>
-    <li>{% blocktrans %}A specific field: e.g. title:gardens (will search the "title" field for the word "gardens"){% endblocktrans %}</li>
-    <li>{% blocktrans %}A field with no value (or is missing): e.g. missing:description (search the field "description" for grants that have no value (or is missing)){% endblocktrans %}</li>
-    <li>{% blocktrans %}A field that has any non-null value: e.g. exists:title{% endblocktrans %}</li>
-  </ul>
-  <p>{% blocktrans %}Fields are shown on many records. Others you might like to try:{% endblocktrans %}</p>
-  <ul>
-    <li>{% trans "title" %}</li>
-    <li>{% trans "description" %}</li>
+    <li>{% blocktrans %}Search words and phrases limited to a specific field, for example:{% endblocktrans %}
+      <ul>
+        <li>{% blocktrans %}<code>title:gardens</code> will search the "title" field for the word "gardens"){% endblocktrans %}</li>
+        <li>{% blocktrans %}<code>recipientOrganization.postalCode:NW1</code> will search the for recipients within the "NW1" postcode district (where the field is populated){% endblocktrans %}</li>
+        <li>{% blocktrans %}<code>fundingOrganisation.name:"London Councils"</code> will search the "Funding Organisation:Name" field for "London Councils"{% endblocktrans %}</li>
+      </ul>
+    </li>
+    <!-- these search functions not working as expected --> <!--
+    <li>{% blocktrans %}Search for a field with no value (or is missing): e.g. <code>missing:amountAppliedFor</code> will search for grants where the "Amount Applied For" field has no value (or is missing altogether){% endblocktrans %}</li>
+    <li>{% blocktrans %}Search for a field that has any non-null value: e.g. <code>exists:grantProgramme.title</code>{% endblocktrans %} will search for grants where there is a value in the "Grant Programme:Title" field</li>
+   -->
   </ul>
 
-  <p>{% blocktrans %}and see the list of field names via the <a href="/stats">stats</a>{% endblocktrans %}.</p>
+  <p>{% blocktrans %}The field names used must match the machine-readable field names in the data. You can find a list of field names in use on the <a href="/stats">stats page</a>{% endblocktrans %}.</p>
 
   <h3 id="ranges">{% trans "Ranges" %}</h3>
   <h4>{% trans "Dates" %}</h4>
 
-  <p>{% blocktrans %}Find grants in a date range:{% endblocktrans %}</p>
+  <p>{% blocktrans %}Search for grants in a given date range:{% endblocktrans %}</p>
 
   <ul>
-    <li>{% blocktrans %}Planned start date in 2012: e.g. plannedDates.startDate:[2012-01-01 TO 2012-12-31]{% endblocktrans %}</li>
-    <li>{% blocktrans %}Planned start date in 2012 and planned end date in 2014: e.g. plannedDates.startDate:[2012-01-01 TO 2012-12-31] AND plannedDates.endDate:[2014-01-01 TO 2014-12-31]{% endblocktrans %}</li>
+    <li>{% blocktrans %}Planned start date in 2012: e.g. <code>plannedDates.startDate:[2012-01-01 TO 2012-12-31]</code>{% endblocktrans %}</li>
+    <li>{% blocktrans %}Planned start date in 2012 <strong>and</strong> planned end date in 2014: e.g. <code>plannedDates.startDate:[2012-01-01 TO 2012-12-31] AND plannedDates.endDate:[2014-01-01 TO 2014-12-31]</code>{% endblocktrans %}</li>
   </ul>
 
   <h4>{% trans "Amounts" %}</h4>
-
+  <p>{% blocktrans %}In addition to using the <a href="#filters">filters</a> on results, you can also search for grants by amount (awarded, applied for etc.) within a specific range:{% endblocktrans %}</p>
   <ul>
-    <li>{% blocktrans %}Amount awarded between £0 and £100: e.g. amountAwarded:[0 TO 100]{% endblocktrans %}</li>
-    <li>{% blocktrans %}Amount awarded between £500 and £1000: e.g. amountAwarded:[500 TO 1000]{% endblocktrans %}</li>
+    <li>{% blocktrans %}Amount Awarded between £0 and £150: e.g. <code>amountAwarded:[0 TO 150]</code>{% endblocktrans %}</li>
+    <li>{% blocktrans %}Amount Applied For between £800 and £1000: e.g. <code>amountAppliedFor:[800 TO 1000]</code>{% endblocktrans %}</li>
   </ul>
 
   <p>{% blocktrans %}You can also search ranges with one side unbounded:{% endblocktrans %}</p>
 
   <ul>
-    <li>{% blocktrans %}amountAwarded:>1000{% endblocktrans %}</li>
-    <li>{% blocktrans %}amountAwarded:>=1000{% endblocktrans %}</li>
-    <li>{% blocktrans %}amountAwarded::
-      <1000{% endblocktrans %}</li>
-        <li>{% blocktrans %}amountAwarded:
-          <=1000{% endblocktrans %}</li>
+    <li>{% blocktrans %}<code>amountAwarded:>1000</code> (more than 1000){% endblocktrans %}</li>
+    <li>{% blocktrans %}<code>amountAwarded:>=1000</code> (more than or equal to 1000){% endblocktrans %}</li>
+    <li>{% blocktrans %}<code>amountAppliedFor:<1000</code> (less than 1000){% endblocktrans %}</li>
+    <li>{% blocktrans %}<code>amountAppliedFor:<=1000</code> (less than or equal to 1000){% endblocktrans %}</li>
   </ul>
 
-  <p>{% blocktrans %}You can also use the * wildcard (see below) when asking for a range: e.g. amountAwarded:[500 TO *]{% endblocktrans %}</p>
+  <p>{% blocktrans %}You can also use the * wildcard (see below) when asking for a range: e.g. <code>amountAwarded:[500 TO *]</code>{% endblocktrans %}</p>
 
   <h3 id="wildcards">{% trans "Wildcards" %}</h3>
-  <p>{% blocktrans %}Wildcard searches can be run on individual terms, using ? to replace a single character, and * to replace zero or more characters: e.g. b?g, you*{% endblocktrans %}</p>
+  <p>{% blocktrans %}Wildcard searches can be run on individual terms, using ? to replace a single character, and * to replace zero or more characters: e.g. <code>b?g</code>, <code>you*</code>{% endblocktrans %}</p>
 
   <h3 id="fuzziness">{% trans "Fuzziness" %}</h3>
-  <p>{% blocktrans %}You can search for terms that are similar to, but not exactly like our search terms, using the “fuzzy” operator: e.g. youht~ yung~ pple~{% endblocktrans %}</p>
+  <p>{% blocktrans %}You can search for terms that are similar to, but not exactly like our search terms, using the “fuzzy” operator: e.g. <code>youht~</code>, <code>yung~</code>, <code>pple~</code>{% endblocktrans %}</p>
 
   <!--<p>{% blocktrans %}For more examples and functionality see:
   https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax{% endblocktrans %}</p>-->
