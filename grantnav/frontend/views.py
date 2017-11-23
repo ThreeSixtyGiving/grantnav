@@ -655,7 +655,12 @@ def funder(request, funder_id):
         raise Http404
     context = {}
     context['results'] = results
-    context['funder'] = results['hits']['hits'][0]["_source"]["fundingOrganization"][0]
+
+    funder = results['hits']['hits'][0]["_source"]["fundingOrganization"][0].copy()
+    # funder name for this case to come from same place as Filters.
+    funder['name'] = json.loads(funder['id_and_name'])[0]
+
+    context['funder'] = funder
     try:
         context['publisher'] = provenance.by_identifier[provenance.identifier_from_filename(results['aggregations']['filenames']['buckets'][0]['key'])]['publisher']
     except KeyError:
