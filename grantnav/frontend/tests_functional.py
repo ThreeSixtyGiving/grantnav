@@ -89,7 +89,7 @@ def test_footer_links(provenance_dataload, server_url, browser, link_text):
 @pytest.mark.parametrize(('text'), [
     ('Contains OS data © Crown copyright and database right 2016'),
     ('Contains Royal Mail data © Royal Mail copyright and Database right 2016'),
-    ('Contains National Statistics data © Crown copyright and database right 2016')
+    ('Contains National Statistics data © Crown copyright and database right 2015 & 2016')
     ])
 def test_code_point_credit(provenance_dataload, server_url, browser, text):
     browser.get(server_url)
