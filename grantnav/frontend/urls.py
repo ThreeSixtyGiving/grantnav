@@ -3,6 +3,10 @@ from django.conf.urls import url
 from . import views
 from django.views.generic import TemplateView
 
+# (?s) makes dot match all characters, including a newline, see:
+# https://docs.python.org/3/library/re.html#regular-expression-syntax ctrl-f "extension notation"
+# https://docs.python.org/3/library/re.html#re.S
+
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^search$', views.search, name='search'),
