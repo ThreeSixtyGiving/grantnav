@@ -94,7 +94,6 @@ def import_to_elasticsearch(files, clean):
                     "type": "date",
                     "ignore_malformed": True
                 },
-                "awardDatdateModifiede": {"type": "string", "index": "not_analyzed"},
                 "dateModified": {"type": "string", "index": "not_analyzed"},
                 "plannedDates": {
                     "properties": {
