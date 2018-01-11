@@ -45,7 +45,10 @@ source .ve/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt # Use requirements_dev.txt if you're installing for development.
 sudo apt-get install openjdk-7-jre
-curl -O https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.1.1/elasticsearch-2.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-2.1.1.deb
+wget -O - https://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+echo 'deb http://packages.elasticsearch.org/elasticsearch/2.x/debian stable main' | sudo tee /etc/apt/sources.list.d/elasticsearch.list
+sudo apt-get update
+sudo apt-get install elasticsearch
 sudo service elasticsearch start
 python manage.py migrate
 python manage.py runserver
