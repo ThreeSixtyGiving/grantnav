@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import requests
 
-prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/5259c973c4f89f054a18be8f1143202d250bc148/'
+prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/560a8d9f21a069a9d51468850188f34ae72a0ec3/'
 
 
 BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
@@ -103,6 +103,11 @@ def test_search(provenance_dataload, server_url, browser):
     assert '4,764' in browser.find_element_by_tag_name('body').text
     assert 'Lloyds Bank Foundation for England and Wales (4,116)' in browser.find_element_by_tag_name('body').text
     assert 'Wolfson Foundation (379)' in browser.find_element_by_tag_name('body').text
+    other_currencies_modal = browser.find_element_by_id("other-currencies-modal")
+    assert other_currencies_modal.text == '7'
+    other_currencies_modal.click()
+    time.sleep(0.5)
+    assert "$146,325" in browser.find_element_by_tag_name('body').text
 
 
 def test_bad_search(provenance_dataload, server_url, browser):
