@@ -257,9 +257,12 @@
                       <dd>
                       {% with total_other=buckets|first|get:"amount_stats"|get:"count"|reverse_minus:results.hits.total %}
                         {% if total_other %}
-                          <a id="other-currencies-modal" href="" data-toggle="modal" data-target="#summary-info-model">
+                          <a class="javascript-enabled" id="other-currencies-modal" data-toggle="modal" data-target="#summary-info-model">
                             {{total_other|get_amount}}
                           </a>
+                          <noscript>
+                            {{total_other|get_amount}}
+                          </noscript>
                         {% else %}
                           0
                         {% endif %}

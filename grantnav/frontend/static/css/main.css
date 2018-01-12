@@ -106,6 +106,10 @@ td.amount {
   white-space: normal;
 }
 
+a:hover {
+ cursor:pointer;
+}
+
 table.dataTable.dtr-inline.collapsed > tbody > tr > td:first-child::before, table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child::before {
     top: 8px;
     left: 4px;
