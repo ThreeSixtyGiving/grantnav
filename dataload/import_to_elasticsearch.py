@@ -78,7 +78,7 @@ def import_to_elasticsearch(files, clean):
     mappings = {
         "grant": {
             "_all": {
-                "analyzer": "english"
+                "analyzer": "english_with_folding"
             },
             "properties": {
                 "id": {"type": "string", "index": "not_analyzed"},
@@ -120,10 +120,10 @@ def import_to_elasticsearch(files, clean):
                             "type": "string", "index": "not_analyzed"
                         },
                         "name": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "streetAddress": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "id_and_name": {
                             "type": "string", "index": "not_analyzed"
@@ -148,10 +148,10 @@ def import_to_elasticsearch(files, clean):
                             "type": "string", "index": "not_analyzed"
                         },
                         "name": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "streetAddress": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "id_and_name": {
                             "type": "string", "index": "not_analyzed"
@@ -167,7 +167,40 @@ def import_to_elasticsearch(files, clean):
         }
     }
 
-    settings = {"max_result_window": 500000}
+    settings = {
+        "max_result_window": 500000,
+        "analysis": {
+            "analyzer": {
+                # Based on the english analyzer decribed at
+                # https://www.elastic.co/guide/en/elasticsearch/reference/2.4/analysis-lang-analyzer.html#english-analyzer
+                "english_with_folding": {
+                    "tokenizer": "standard",
+                    "filter": [
+                        "english_possessive_stemmer",
+                        "lowercase",
+                        "english_stop",
+                        "english_stemmer",
+                        # Additional filters not in the standard english analyzer:
+                        "asciifolding",
+                    ]
+                }
+            },
+            "filter": {
+                "english_stop": {
+                    "type": "stop",
+                    "stopwords": "_english_"
+                },
+                "english_stemmer": {
+                    "type": "stemmer",
+                    "language": "english"
+                },
+                "english_possessive_stemmer": {
+                    "type": "stemmer",
+                    "language": "possessive_english"
+                }
+            }
+        }
+    }
 
     # Create it again
     result = es.indices.create(index=ES_INDEX, body={"mappings": mappings, "settings": settings}, ignore=[400])
