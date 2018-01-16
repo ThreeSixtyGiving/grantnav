@@ -350,12 +350,19 @@ def update_doc_with_org_mappings(grant, org_key, file_name):
 
 
 def get_area_mappings():
-    with open(os.path.join(current_dir, 'codelist.csv')) as codelist, gzip.open(os.path.join(current_dir, 'codepoint_with_heading.csv.gz'), 'rt') as codepoint:
+    with open(os.path.join(current_dir, 'codelist.csv')) as codelist:
         codelist_csv = csv.DictReader(codelist)
         code_to_name = {}
         for row in codelist_csv:
             code_to_name[row['code']] = row['name']
-        
+
+    with open(os.path.join(current_dir, 'Local_Authority_District_LAU1_NUTS3_NUTS2_NUTS1_UK.csv')) as lad_nuts:
+        nuts_csv = csv.DictReader(lad_nuts)
+        code_to_nuts = {}
+        for row in nuts_csv:
+            code_to_nuts[row['\ufeffLAD16CD']] = row['NUTS118NM']
+
+    with gzip.open(os.path.join(current_dir, 'codepoint_with_heading.csv.gz'), 'rt') as codepoint:
         codepoint_csv = csv.DictReader(codepoint)
 
         for row in codepoint_csv:
@@ -364,17 +371,9 @@ def get_area_mappings():
             ward_code = row['Admin_ward_code']
             ward_name = code_to_name.get(ward_code, '')
 
-            regional_code = row['NHS_HA_code']
-            area_name = ''
-            if not regional_code or regional_code[0] != 'E':
-                country_code = row['Country_code']
-                first_letter = country_code[0]
-                if first_letter == 'S':
-                    area_name = 'Scotland'
-                if first_letter == 'W':
-                    area_name = 'Wales'
-            else:
-                area_name = code_to_name[regional_code]
+            area_name = code_to_nuts.get(district_code, '').replace(' (England)', '')
+            if area_name == 'London':
+                area_name = 'Greater London'
 
             postcode_to_area[row['Postcode'].replace(' ', '').upper()] = {
                 'district_name': district_name, 'area_name': area_name, 'ward_name': ward_name

@@ -19,7 +19,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
-along with GrantNav.  If not, see <http://www.gnu.org/licenses/>.
+along with GrantNav.  If not, see `<http://www.gnu.org/licenses/>`_.
 
 Copyright 2016-2017 Open Data Services Co-operative Limited.
 
@@ -43,7 +43,13 @@ GrantNav uses `Northern Ireland Ward to Council Area Lookup <https://ons.maps.ar
 
 Contains National Statistics data © Crown copyright and database right 2015
 
-Charity Commission Data
------------------------
 
-The `Charity Commission <https://www.gov.uk/government/organisations/charity-commission>`_ data in `/dataload/charity_names.json` is taken from: http://data.charitycommission.gov.uk/default.aspx which is licensed under the Open Government Licence v3.0, except where otherwise stated.
+Office for National Statistics Data
+---------------
+
+The `Office for National Statistics <https://www.ons.gov.uk/>`_ data in */dataload/Local_Authority_District_LAU1_NUTS3_NUTS2_NUTS1_UK.csv* is taken from `<https://data.gov.uk/dataset/local-authority-district-to-lau1-to-nuts3-to-nuts2-to-nuts1-january-2018-lookup-in-united-kingd>`_ (as seen on 2018-01-16 13:47) which is distributed under an `Open Government Licence (v3) <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/>`_
+
+Charity Commission Data
+---------------
+
+The `Charity Commission <https://www.gov.uk/government/organisations/charity-commission>`_ data in */dataload/charity_names.json* is taken from `<http://data.charitycommission.gov.uk/default.aspx>`_ which is licensed under the Open Government Licence v3.0, except where otherwise stated.
