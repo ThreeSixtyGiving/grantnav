@@ -86,6 +86,7 @@ def import_to_elasticsearch(files, clean):
                 "recipientRegionName": {"type": "string", "index": "not_analyzed"},
                 "recipientDistrictName": {"type": "string", "index": "not_analyzed"},
                 "recipientWardName": {"type": "string", "index": "not_analyzed"},
+                "currency": {"type": "string", "index": "not_analyzed"},
                 "recipientLocation": {"type": "string"},
                 "amountAppliedFor": {"type": "double"},
                 "amountAwarded": {"type": "double"},
@@ -218,6 +219,9 @@ def import_to_elasticsearch(files, clean):
                     update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
                     update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
                     update_doc_with_region(grant)
+                    currency = grant.get('currency')
+                    if currency:
+                        grant['currency'] = currency.upper()
                     yield grant
 
         pprint(file_name)

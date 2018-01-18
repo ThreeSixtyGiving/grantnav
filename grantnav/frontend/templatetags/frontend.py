@@ -5,6 +5,7 @@ import dateutil.parser as date_parser
 import strict_rfc3339
 import json
 from grantnav import provenance
+from grantnav import utils
 import jsonref
 from django.conf import settings
 
@@ -149,28 +150,23 @@ def get_date(date):
     return date_parser.parse(date).strftime("%d %b %Y")
 
 
-CURRENCY_SYMBOLS = {
-    'GBP': '£',
-    'USD': '$'
-}
-
-
 @register.filter(name='currency_symbol')
 def currency_symbol(currency):
-    return CURRENCY_SYMBOLS.get(currency.upper(), '')
+    return utils.CURRENCY_SYMBOLS.get(currency.upper(), '')
 
 
 @register.filter(name='get_amount_range')
-def get_amount_range(bucket):
+def get_amount_range(bucket, currency):
     from_ = get_amount(int(bucket.get('from')))
     to_ = bucket.get('to')
+    prefix = utils.currency_prefix(currency)
     if to_:
         to_ = get_amount(int(to_))
     if to_ == from_:
         return from_
     if not to_:
-        return '£' + from_ + ' +'
-    return '£' + from_ + ' - ' + '£' + to_
+        return prefix + from_ + ' +'
+    return prefix + from_ + ' - ' + prefix + to_
 
 
 @register.filter(name='get_facet_org_name')
