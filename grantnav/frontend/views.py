@@ -659,13 +659,9 @@ def funder(request, funder_id):
             "aggs": {
                 "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                 "filenames": {"terms": {"field": "filename", "size": 10}},
-                "total_amount": {"sum": {"field": "amountAwarded"}},
-                "avg_amount": {"avg": {"field": "amountAwarded"}},
-                "min_amount": {"min": {"field": "amountAwarded"}},
-                "max_amount": {"max": {"field": "amountAwarded"}},
+                "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
                 "min_date": {"min": {"field": "awardDate"}},
                 "max_date": {"max": {"field": "awardDate"}},
-                "currencies": {"terms": {"field": "currency", "size": 0}},
                 "recipients": {"terms": {"field": "recipientOrganization.id_and_name", "size": 10},
                                "aggs": {"recipient_stats": {"stats": {"field": "amountAwarded"}}}}
         }
@@ -911,7 +907,7 @@ def grants_datatables(request):
         except ValueError:
             pass
         try:
-            grant["amountAwarded"] = "£" + "{:,.0f}".format(grant["amountAwarded"])
+            grant["amountAwarded"] = utils.currency_prefix(grant.get("currency")) + "{:,.0f}".format(grant["amountAwarded"])
         except ValueError:
             pass
         grant["description"] = grant.get("description", "")
@@ -935,10 +931,7 @@ def recipient(request, recipient_id):
                  [{"term": {"recipientOrganization.id": recipient_id}}]}},
              "aggs": {
                  "funder_orgs": {"cardinality": {"field": "fundingOrganization.id"}},
-                 "total_amount": {"sum": {"field": "amountAwarded"}},
-                 "avg_amount": {"avg": {"field": "amountAwarded"}},
-                 "min_amount": {"min": {"field": "amountAwarded"}},
-                 "max_amount": {"max": {"field": "amountAwarded"}},
+                 "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
                  "min_date": {"min": {"field": "awardDate"}},
                  "max_date": {"max": {"field": "awardDate"}},
                  "currencies": {"terms": {"field": "currency", "size": 0}},
