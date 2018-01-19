@@ -723,7 +723,7 @@ def funder_recipients_datatables(request):
     query = {"query": {
              "bool": {
                  "filter":
-                     filter,
+                     [filter, {"term": {"currency": "GBP"}}],
                  "must":
                      {"match": {"recipientOrganization.name": {"query": search_value, "operator": "and"}}},
                  },
@@ -801,7 +801,7 @@ def funders_datatables(request):
     query = {"query": {
              "bool": {
                  "filter":
-                     filter,
+                     [filter, {"term": {"currency": "GBP"}}],
                  "must":
                      {"match": {"fundingOrganization.name": {"query": search_value, "operator": "and"}}},
                  },
