@@ -76,7 +76,7 @@ grant_csv_paths = [
     "result.amountAwarded",
     "result.awardDate",
     "result.recipientOrganization.0.url",
-    "result.plannedDate.duration",
+    "result.plannedDates.0.duration",
     "result.recipientOrganization.0.id",
     "result.recipientOrganization.0.name",
     "result.recipientOrganization.0.charityNumber",
