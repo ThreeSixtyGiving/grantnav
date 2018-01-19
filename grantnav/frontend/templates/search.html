@@ -84,7 +84,7 @@
           {% for bucket in results.aggregations.currency.buckets %}
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
-          {% if results.aggregations.currency.buckets|length > 3 %}
+          {% if results.aggregations.currency.buckets|length > 2 %}
             <a href="{{see_more_url.currency.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.currency.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
         </div>
