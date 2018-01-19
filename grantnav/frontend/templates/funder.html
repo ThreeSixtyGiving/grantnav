@@ -38,7 +38,7 @@
      <div id="disclaimer" class="alert alert-info" role="alert"><p>This data is provided for information purposes only.<br>Please refer to the funder website for details of current grant programmes, application guidelines and eligibility criteria.</p></div>
     <div class="panel panel-info">
       <div class="panel-heading">
-        Recipients
+        Recipients <small> ({{results.aggregations.currency_stats.buckets|first|get:"key"|upper}}) </small>
         <a class="pull-right" href="{% url 'funder_recipients_datatables.json' %}?funder_id={{ funder.id }}">
           <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
         </a>
@@ -133,7 +133,8 @@
          "ajax": {
            "url": "{% url 'funder_recipients_datatables' %}",
            "data": function ( d ) {
-             d.funder_id = "{{funder.id}}";
+             d.funder_id = "{{funder.id|escapejs}}";
+             d.currency = "{{results.aggregations.currency_stats.buckets|first|get:"key"|upper|escapejs}}";
            }
          },
          "columns": [

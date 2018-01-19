@@ -720,10 +720,14 @@ def funder_recipients_datatables(request):
     else:
         filter = {}
 
+    currency = request.GET.get('currency')
+    if not currency:
+        currency = 'GBP'
+
     query = {"query": {
              "bool": {
                  "filter":
-                     [filter, {"term": {"currency": "GBP"}}],
+                     [filter, {"term": {"currency": currency}}],
                  "must":
                      {"match": {"recipientOrganization.name": {"query": search_value, "operator": "and"}}},
                  },
@@ -747,7 +751,7 @@ def funder_recipients_datatables(request):
         for key in list(stats):
             if key != 'count':
                 if result_format == "ajax":
-                    stats[key] = "£ {:,.0f}".format(int(stats[key]))
+                    stats[key] = "{}{:,.0f}".format(utils.currency_prefix(currency), int(stats[key]))
                 else:
                     stats[key] = "{:.0f}".format(int(stats[key]))
         org_name, org_id = json.loads(result["key"])
