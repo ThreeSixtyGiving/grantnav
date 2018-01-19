@@ -13,22 +13,17 @@
   </div>
   <div class="col-md-8">
     <div class="row">
-      <div class="col-xs-6">
-        <dl class="dl-horizontal top-stats">
-          <dt>Total grants</dt> <dd>{{results.hits.total|get_amount}}</dd>
-          <dt>Total recipients</dt> <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
+      <div class="col-sm-6">
+        <dl class="dl-horizontal top-stats-search">
+          <dt>Total grants</dt> <dd>{{results.hits.total|get_amount}} </dd>
           <dt>Total funders</dt> <dd>{{results.aggregations.funding_orgs.value|get_amount}}</dd>
-          <dt>Total awarded</dt> <dd>£{{results.aggregations.total_amount.value|get_amount}}</dd>
-          <dt>Average awarded</dt> <dd>£{{results.aggregations.avg_amount.value|get_amount}}</dd>
-        </dl>
-      </div>
-      <div class="col-xs-6">
-        <dl class="dl-horizontal top-stats">
-          <dt>Largest award</dt> <dd>£{{results.aggregations.max_amount.value|get_amount}}</dd>
-          <dt>Smallest award</dt> <dd>£{{results.aggregations.min_amount.value|get_amount}}</dd>
+          <dt>Total recipients</dt> <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
           <dt>Earliest award date</dt> <dd>{{results.aggregations.min_date.value_as_string|get_date}}</dd>
           <dt>Latest award date</dt> <dd>{{results.aggregations.max_date.value_as_string|get_date}}</dd>
         </dl>
+      </div>
+      <div class="col-sm-6">
+        {% include 'currency_stats.html' %}
       </div>
     </div>
   </div>
@@ -121,4 +116,8 @@
      });
    })
    </script>
+{% endblock %}
+
+{% block models %}
+  {% include 'currency_stats_modal.html' %}
 {% endblock %}
