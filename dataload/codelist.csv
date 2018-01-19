@@ -835,7 +835,7 @@ Old Town Ward,E05003976
 Rother Levels Ward,E05003977
 Rye Ward,E05003978
 Sackville Ward,E05003979
-St. Marks Ward,E05003980
+St. MarksWard,E05003980
 St. Michaels Ward,E05003981
 St. Stephens Ward,E05003982
 Salehurst Ward,E05003983
@@ -1281,7 +1281,6 @@ St. Mary's Ward,E05004648
 Tadburn Ward,E05004649
 Valley Park Ward,E05004650
 Winton Ward,E05004651
-Cheriton and Bishops Sutton Ward,E05004654
 Adeyfield East Ward,E05004691
 Adeyfield West Ward,E05004692
 Aldbury and Wigginton Ward,E05004693
@@ -6678,7 +6677,7 @@ St. Keverne and Meneage ED,E05009259
 St. Mawgan and Colan ED,E05009260
 St. Mewan ED,E05009261
 St. Minver and St. Endellion ED,E05009262
-St. Stephen-In-Branell ED,E05009263
+St. Stephen-In-Brannel ED,E05009263
 St. Teath and St. Breward ED,E05009264
 Saltash East ED,E05009265
 Saltash North ED,E05009266
@@ -6841,8 +6840,6 @@ Argoed ED,W05000180
 Aston ED,W05000181
 Bagillt East ED,W05000182
 Bagillt West ED,W05000183
-Broughton North East ED,W05000184
-Broughton South ED,W05000185
 Brynford ED,W05000186
 Buckley Bistre East ED,W05000187
 Buckley Bistre West ED,W05000188
@@ -6865,25 +6862,19 @@ Greenfield ED,W05000204
 Gronant ED,W05000205
 Gwernaffield ED,W05000206
 Gwernymynydd ED,W05000207
-Halkyn ED,W05000208
 Hawarden ED,W05000209
-Higher Kinnerton ED,W05000210
 Holywell Central ED,W05000211
 Holywell East ED,W05000212
 Holywell West ED,W05000213
-Hope ED,W05000214
-Leeswood ED,W05000215
 Llanfynydd ED,W05000216
 Mancot ED,W05000217
 Mold Broncoed ED,W05000218
-Mold East ED,W05000219
 Mold South ED,W05000220
 Mold West ED,W05000221
 Mostyn ED,W05000222
 New Brighton ED,W05000223
 Northop ED,W05000224
 Northop Hall ED,W05000225
-Penyffordd ED,W05000226
 Queensferry ED,W05000227
 Saltney Mold Junction ED,W05000228
 Saltney Stonebridge ED,W05000229
@@ -7094,7 +7085,6 @@ Ammanford ED,W05000458
 Betws ED,W05000459
 Bigyn ED,W05000460
 Burry Port ED,W05000461
-Bynea ED,W05000462
 Carmarthen Town North ED,W05000463
 Carmarthen Town South ED,W05000464
 Carmarthen Town West ED,W05000465
@@ -7124,7 +7114,6 @@ Llanfihangel Aberbythych ED,W05000488
 Llanfihangel-ar-Arth ED,W05000489
 Llangadog ED,W05000490
 Llangeler ED,W05000491
-Llangennech ED,W05000492
 Llangunnor ED,W05000493
 Llangyndeyrn ED,W05000494
 Llannon ED,W05000495
@@ -7165,11 +7154,8 @@ West Cross ED,W05000550
 Aberavon ED,W05000551
 Aberdulais ED,W05000552
 Allt-Wen ED,W05000553
-Baglan ED,W05000554
 Blaengwrach ED,W05000555
-Briton Ferry East ED,W05000556
 Briton Ferry West ED,W05000557
-Bryn and Cwmavon ED,W05000558
 Bryn-Coch North ED,W05000559
 Bryn-Coch South ED,W05000560
 Cadoxton ED,W05000561
@@ -7187,21 +7173,14 @@ Godre'r Graig ED,W05000572
 Gwaun-Cae-Gurwen ED,W05000573
 Gwynfi ED,W05000574
 Lower Brynamman ED,W05000575
-Margam ED,W05000576
 Neath East ED,W05000577
 Neath North ED,W05000578
 Neath South ED,W05000579
-Onllwyn ED,W05000580
 Pelenna ED,W05000581
 Pontardawe ED,W05000582
-Port Talbot ED,W05000583
 Resolven ED,W05000584
 Rhos ED,W05000585
-Sandfields East ED,W05000586
-Sandfields East ED (DET),W05000586
 Sandfields West ED,W05000587
-Seven Sisters ED,W05000588
-Tai-bach ED,W05000589
 Tonna ED,W05000590
 Trebanos ED,W05000591
 Ystalyfera ED,W05000592
@@ -7260,28 +7239,20 @@ St. Bride's Major ED,W05000651
 Stanwell ED,W05000652
 Wenvoe ED,W05000654
 Aberaman North ED,W05000655
-Aberaman South ED,W05000656
 Abercynon ED,W05000657
 Aberdare East ED,W05000658
 Aberdare West/Llwydcoed ED,W05000659
-Beddau ED,W05000660
 Brynna ED,W05000661
-Church Village ED,W05000662
 Cilfynydd ED,W05000663
 Cwm Clydach ED,W05000664
-Cwmbach ED,W05000665
 Cymmer ED,W05000666
 Ferndale ED,W05000667
 Gilfach Goch ED,W05000668
 Glyncoch ED,W05000669
-Graig ED,W05000670
 Hawthorn ED,W05000671
 Hirwaun ED,W05000672
-Llantrisant Town ED,W05000675
-Llantwit Fardre ED,W05000676
 Llwyn-y-Pia ED,W05000677
 Maerdy ED,W05000678
-Mountain Ash East ED,W05000679
 Mountain Ash West ED,W05000680
 Penrhiwceiber ED,W05000681
 Pentre ED,W05000682
@@ -7303,7 +7274,6 @@ Treforest ED,W05000699
 Treherbert ED,W05000700
 Treorchy ED,W05000701
 Tylorstown ED,W05000702
-Tyn-y-Nant ED,W05000703
 Ynyshir ED,W05000704
 Ynysybwl ED,W05000705
 Ystrad ED,W05000706
@@ -7343,29 +7313,19 @@ Llanhilleth ED,W05000761
 Sirhowy ED,W05000764
 Six Bells ED,W05000765
 Tredegar Central and West ED,W05000766
-Abersychan ED,W05000767
 Blaenavon ED,W05000768
 Brynwern ED,W05000769
 Coed Eva ED,W05000770
-Croesyceiliog North ED,W05000771
 Croesyceiliog South ED,W05000772
 Cwmyniscoy ED,W05000773
 Fairwater ED,W05000774
-Greenmeadow ED,W05000775
 Llantarnam ED,W05000776
-Llanyrafon North ED,W05000777
-Llanyrafon South ED,W05000778
-New Inn ED,W05000779
 Panteg ED,W05000780
-Pontnewydd ED,W05000781
 Pontnewynydd ED,W05000782
 Pontypool ED,W05000783
 St. Cadocs and Penygarn ED,W05000784
-St. Dials ED,W05000785
-Snatchwood ED,W05000786
 Trevethin ED,W05000787
 Two Locks ED,W05000788
-Upper Cwmbran ED,W05000789
 Wainfelin ED,W05000790
 Caerwent ED,W05000791
 Caldicot Castle ED,W05000792
@@ -7436,7 +7396,6 @@ Caerau ED,W05000855
 Canton ED,W05000856
 Cathays ED,W05000857
 Creigiau/St. Fagans ED,W05000858
-Cyncoed ED,W05000859
 Ely ED,W05000860
 Fairwater ED,W05000861
 Gabalfa ED,W05000862
@@ -7445,9 +7404,6 @@ Heath ED,W05000864
 Lisvane ED,W05000865
 Llandaff ED,W05000866
 Llandaff North ED,W05000867
-Llanishen ED,W05000868
-Llanrumney ED,W05000869
-Pentwyn ED,W05000870
 Pentyrch ED,W05000871
 Penylan ED,W05000872
 Plasnewydd ED,W05000873
@@ -7459,7 +7415,6 @@ Whitchurch and Tongwynlais ED,W05000881
 Llanharan ED,W05000889
 Llanharry ED,W05000890
 Pont-y-Clun ED,W05000891
-Talbot Green ED,W05000892
 Llangynidr ED,W05000893
 Talybont-on-Usk ED,W05000894
 Vaynor ED,W05000895
@@ -7468,8 +7423,6 @@ Brackla ED,W05000896
 Coychurch Lower ED,W05000898
 Oldcastle ED,W05000899
 Pontprennau/Old St. Mellons ED,W05000900
-Rumney ED,W05000901
-Trowbridge ED,W05000902
 Brymbo ED,W05000903
 Bryn Cefn ED,W05000904
 Cartrefle ED,W05000905
@@ -7559,6 +7512,51 @@ Seiriol ED,W05000988
 Talybolion ED,W05000989
 Twrcelyn ED,W05000990
 Ynys Gybi ED,W05000991
+Abersychan ED,W05000992
+Croesyceiliog North ED,W05000993
+Greenmeadow ED,W05000994
+Llanyrafon East and Ponthir ED,W05000995
+Llanyrafon West ED,W05000996
+New Inn ED,W05000997
+Pontnewydd ED,W05000998
+Snatchwood ED,W05000999
+St. Dials ED,W05001000
+Upper Cwmbran ED,W05001001
+Bynea ED,W05001002
+Llangennech ED,W05001003
+Broughton North East ED,W05001004
+Halkyn ED,W05001005
+Higher Kinnerton ED,W05001006
+Hope ED,W05001007
+Leeswood ED,W05001008
+Mold East ED,W05001009
+Penyffordd ED,W05001010
+Cyncoed ED,W05001011
+Llanishen ED,W05001012
+Llanrumney ED,W05001013
+Pentwyn ED,W05001014
+Rumney ED,W05001015
+Trowbridge ED,W05001016
+Aberaman South ED,W05001017
+Beddau ED,W05001018
+Church Village ED,W05001019
+Cwmbach ED,W05001020
+Graig ED,W05001021
+Llantrisant Town ED,W05001022
+Llantwit Fardre ED,W05001023
+Mountain Ash East ED,W05001024
+Talbot Green ED,W05001025
+Tyn-y-Nant ED,W05001026
+Baglan ED,W05001027
+Briton Ferry East ED,W05001028
+Bryn and Cwmavon ED,W05001029
+Margam ED,W05001030
+Onllwyn ED,W05001031
+Port Talbot ED,W05001032
+Sandfields East ED,W05001033
+Seven Sisters ED,W05001034
+Tai-bach ED,W05001035
+Broughton South ED,W05001036
 Brotton Ward,E05001505
 Coatham Ward,E05001506
 Dormanstown Ward,E05001507
@@ -8724,45 +8722,11 @@ Poulton South Ward,E05011042
 Rixton & Woolston Ward,E05011043
 Stockton Heath Ward,E05011044
 Westbrook Ward,E05011045
-Dyce/Bucksburn/Danestone Ward,S13002476
-Bridge of Don Ward,S13002477
-Kingswells/Sheddocksley/Summerhill Ward,S13002478
-Northfield/Mastrick North Ward,S13002479
-Hilton/Woodside/Stockethill Ward,S13002480
-Tillydrone/Seaton/Old Aberdeen Ward,S13002481
-Midstocket/Rosemount Ward,S13002482
-George St/Harbour Ward,S13002483
-Lower Deeside Ward,S13002484
-Hazlehead/Ashley/Queens Cross Ward,S13002485
-Airyhall/Broomhill/Garthdee Ward,S13002486
-Torry/Ferryhill Ward,S13002487
-Kincorth/Nigg/Cove Ward,S13002488
-Banff and District Ward,S13002489
-Troup Ward,S13002490
-Fraserburgh and District Ward,S13002491
-Central Buchan Ward,S13002492
-Peterhead North and Rattray Ward,S13002493
-Peterhead South and Cruden Ward,S13002494
-Turriff and District Ward,S13002495
-Mid Formartine Ward,S13002496
-Ellon and District Ward,S13002497
-West Garioch Ward,S13002498
-Inverurie and District Ward,S13002499
-East Garioch Ward,S13002500
-Westhill and District Ward,S13002501
-"Huntly, Strathbogie and Howe of Alford Ward",S13002502
-"Aboyne, Upper Deeside and Donside Ward",S13002503
-Banchory and Mid Deeside Ward,S13002504
-North Kincardine Ward,S13002505
-Stonehaven and Lower Deeside Ward,S13002506
-Mearns Ward,S13002507
-Kirriemuir and Dean Ward,S13002508
-Brechin and Edzell Ward,S13002509
-Forfar and District Ward,S13002510
-Carnoustie and District Ward,S13002512
-Arbroath West and Letham Ward,S13002513
-Arbroath East and Lunan Ward,S13002514
-Montrose and District Ward,S13002515
+Bryher Ward,E05011090
+St. Agnes Ward,E05011091
+St. Martin's Ward,E05011092
+St. Mary's Ward,E05011093
+Tresco Ward,E05011094
 South Kintyre Ward,S13002516
 Kintyre and the Islands Ward,S13002517
 Mid Argyll Ward,S13002518
@@ -8774,24 +8738,6 @@ Isle of Bute Ward,S13002523
 Lomond North Ward,S13002524
 Helensburgh Central Ward,S13002525
 Helensburgh and Lomond South Ward,S13002526
-Clackmannanshire West Ward,S13002527
-Clackmannanshire North Ward,S13002528
-Clackmannanshire Central Ward,S13002529
-Clackmannanshire South Ward,S13002530
-Clackmannanshire East Ward,S13002531
-Stranraer and North Rhins Ward,S13002532
-Wigtown West Ward,S13002533
-Mid Galloway Ward,S13002534
-Dee Ward,S13002535
-Castle Douglas and Glenkens Ward,S13002536
-Abbey Ward,S13002537
-North West Dumfries Ward,S13002538
-Mid and Upper Nithsdale Ward,S13002539
-Lochar Ward,S13002540
-Nith Ward,S13002541
-Annandale South Ward,S13002542
-Annandale North Ward,S13002543
-Annandale East and Eskdale Ward,S13002544
 Strathmartine Ward,S13002545
 Lochee Ward,S13002546
 West End Ward,S13002547
@@ -8799,52 +8745,6 @@ Coldside Ward,S13002548
 Maryfield Ward,S13002549
 East End Ward,S13002551
 The Ferry Ward,S13002552
-Annick Ward,S13002553
-Kilmarnock North Ward,S13002554
-Kilmarnock West and Crosshouse Ward,S13002555
-Kilmarnock East and Hurlford Ward,S13002556
-Kilmarnock South Ward,S13002557
-Irvine Valley Ward,S13002558
-Ballochmyle Ward,S13002559
-Cumnock and New Cumnock Ward,S13002560
-Doon Valley Ward,S13002561
-Milngavie Ward,S13002562
-Bearsden North Ward,S13002563
-Bearsden South Ward,S13002564
-Campsie and Kirkintilloch North Ward,S13002565
-Bishopbriggs North and Torrance Ward,S13002566
-Lenzie and Kirkintilloch South Ward,S13002568
-Kirkintilloch East and Twechar Ward,S13002569
-Musselburgh West Ward,S13002570
-Musselburgh East and Carberry Ward,S13002571
-Preston/Seton/Gosford Ward,S13002572
-Fa'side Ward,S13002573
-North Berwick Coastal Ward,S13002574
-Haddington and Lammermuir Ward,S13002575
-Dunbar and East Linton Ward,S13002576
-"Neilston, Uplawmoor and Newton Mearns North Ward",S13002577
-Barrhead Ward,S13002578
-Giffnock and Thornliebank Ward,S13002579
-"Netherlee, Stamperland and Williamwood Ward",S13002580
-Newton Mearns South Ward,S13002581
-"Busby, Clarkston and Eaglesham Ward",S13002582
-Almond Ward,S13002583
-Pentland Hills Ward,S13002584
-Drum Brae/Gyle Ward,S13002585
-Forth Ward,S13002586
-Inverleith Ward,S13002587
-Corstorphine/Murrayfield Ward,S13002588
-Sighthill/Gorgie Ward,S13002589
-Colinton/Fairmilehead Ward,S13002590
-Fountainbridge/Craiglockhart Ward,S13002591
-Meadows/Morningside Ward,S13002592
-City Centre Ward,S13002593
-Leith Walk Ward,S13002594
-Leith Ward,S13002595
-Craigentinny/Duddingston Ward,S13002596
-Southside/Newington Ward,S13002597
-Liberton/Gilmerton Ward,S13002598
-Portobello/Craigmillar Ward,S13002599
 "Barraigh, Bhatarsaigh, Eirisgeigh agus Uibhist a Deas Ward",S13002600
 Beinn na Foghla agus Uibhist a Tuath Ward,S13002601
 Na Hearadh agus Ceann a Deas nan Loch Ward,S13002602
@@ -8854,156 +8754,12 @@ Steornabhagh a Deas Ward,S13002605
 Steornabhagh a Tuath Ward,S13002606
 Loch a Tuath Ward,S13002607
 An Taobh Siar agus Nis Ward,S13002608
-Bo'ness and Blackness Ward,S13002609
-Grangemouth Ward,S13002610
-Denny and Banknock Ward,S13002611
-"Carse, Kinnaird and Tryst Ward",S13002612
-Bonnybridge and Larbert Ward,S13002613
-Falkirk North Ward,S13002614
-Falkirk South Ward,S13002615
-Lower Braes Ward,S13002616
-Upper Braes Ward,S13002617
-West Fife and Coastal Villages Ward,S13002618
-Dunfermline North Ward,S13002619
-Dunfermline Central Ward,S13002620
-Dunfermline South Ward,S13002621
-Rosyth Ward,S13002622
-Inverkeithing and Dalgety Bay Ward,S13002623
-The Lochs Ward,S13002624
-Cowdenbeath Ward,S13002625
-Lochgelly and Cardenden Ward,S13002626
-"Burntisland, Kinghorn and Western Kirkcaldy Ward",S13002627
-Kirkcaldy North Ward,S13002628
-Kirkcaldy Central Ward,S13002629
-Kirkcaldy East Ward,S13002630
-Glenrothes West and Kinglassie Ward,S13002631
-"Glenrothes North, Leslie and Markinch Ward",S13002632
-Glenrothes Central and Thornton Ward,S13002633
-Howe of Fife and Tay Coast Ward,S13002634
-Tay Bridgehead Ward,S13002635
-St. Andrews Ward,S13002636
-East Neuk and Landward Ward,S13002637
-Cupar Ward,S13002638
-"Leven, Kennoway and Largo Ward",S13002639
-"Buckhaven, Methil and Wemyss Villages Ward",S13002640
-Linn Ward,S13002641
-Newlands/Auldburn Ward,S13002642
-Greater Pollok Ward,S13002643
-Craigton Ward,S13002644
-Govan Ward,S13002645
-Pollokshields Ward,S13002646
-Langside Ward,S13002647
-Southside Central Ward,S13002648
-Calton Ward,S13002649
-Anderston/City Ward,S13002650
-Hillhead Ward,S13002651
-Partick West Ward,S13002652
-Garscadden/Scotstounhill Ward,S13002653
-Drumchapel/Anniesland Ward,S13002654
-Maryhill/Kelvin Ward,S13002655
-Canal Ward,S13002656
-Springburn Ward,S13002657
-East Centre Ward,S13002658
-Shettleston Ward,S13002659
-Baillieston Ward,S13002660
-"North, West and Central Sutherland Ward",S13002662
-Thurso Ward,S13002663
-Wick Ward,S13002664
-Landward Caithness Ward,S13002665
-East Sutherland and Edderton Ward,S13002666
-"Wester Ross, Strathpeffer and Lochalsh Ward",S13002667
-Cromarty Firth Ward,S13002668
-Tain and Easter Ross Ward,S13002669
-Dingwall and Seaforth Ward,S13002670
-Black Isle Ward,S13002671
-Eilean a'Cheo Ward,S13002672
-Caol and Mallaig Ward,S13002673
-Aird and Loch Ness Ward,S13002674
-Inverness West Ward,S13002675
-Inverness Central Ward,S13002676
-Inverness Ness-Side Ward,S13002677
-Inverness Millburn Ward,S13002678
-Culloden and Ardersier Ward,S13002679
-Nairn Ward,S13002680
-Inverness South Ward,S13002681
-Badenoch and Strathspey Ward,S13002682
-Fort William and Ardnamurchan Ward,S13002683
-Inverclyde East Ward,S13002684
-Inverclyde East Central Ward,S13002685
-Inverclyde North Ward,S13002686
-Inverclyde South Ward,S13002687
-Inverclyde West Ward,S13002688
-Inverclyde South West Ward,S13002689
-Penicuik Ward,S13002690
-Bonnyrigg Ward,S13002691
-Dalkeith Ward,S13002692
-Midlothian West Ward,S13002693
-Midlothian East Ward,S13002694
-Midlothian South Ward,S13002695
-Speyside Glenlivet Ward,S13002696
-Keith and Cullen Ward,S13002697
-Buckie Ward,S13002698
-Fochabers Lhanbryde Ward,S13002699
-Heldon and Laich Ward,S13002700
-Elgin City North Ward,S13002701
-Elgin City South Ward,S13002702
-Forres Ward,S13002703
-Irvine West Ward,S13002704
-Irvine East Ward,S13002705
-Kilwinning Ward,S13002706
-Saltcoats and Stevenston Ward,S13002707
-Ardrossan and Arran Ward,S13002708
-Dalry and West Kilbride Ward,S13002709
-Kilbirnie and Beith Ward,S13002710
-North Coast and Cumbraes Ward,S13002711
-Kilsyth Ward,S13002712
-Cumbernauld North Ward,S13002713
-Cumbernauld South Ward,S13002714
-"Abronhill, Kildrum and the Village Ward",S13002715
-Coatbridge North and Glenboig Ward,S13002717
-Airdrie North Ward,S13002718
-Airdrie Central Ward,S13002719
-Coatbridge West Ward,S13002720
-Coatbridge South Ward,S13002721
-Airdrie South Ward,S13002722
-Fortissat Ward,S13002723
-Thorniewood Ward,S13002724
-Bellshill Ward,S13002725
-Mossend and Holytown Ward,S13002726
-Motherwell West Ward,S13002727
-Motherwell North Ward,S13002728
-Motherwell South East and Ravenscraig Ward,S13002729
-Murdostoun Ward,S13002730
-Wishaw Ward,S13002731
 Kirkwall East Ward,S13002732
 Kirkwall West and Orphir Ward,S13002733
 Stromness and South Isles Ward,S13002734
 West Mainland Ward,S13002735
 "East Mainland, South Ronaldsay and Burray Ward",S13002736
 North Isles Ward,S13002737
-Carse of Gowrie Ward,S13002738
-Strathmore Ward,S13002739
-Blairgowrie and Glens Ward,S13002740
-Highland Ward,S13002741
-Strathtay Ward,S13002742
-Strathearn Ward,S13002743
-Strathallan Ward,S13002744
-Kinross-shire Ward,S13002745
-Almond and Earn Ward,S13002746
-Perth City South Ward,S13002747
-Perth City North Ward,S13002748
-Perth City Centre Ward,S13002749
-Renfrew North Ward,S13002750
-Renfrew South & Gallowhill Ward,S13002751
-Paisley East & Ralston Ward,S13002752
-Paisley North West Ward,S13002753
-Paisley South Ward,S13002754
-Paisley South West Ward,S13002755
-"Johnstone South, Elderslie & Howwood Ward",S13002756
-"Johnstone North, Kilbarchan & Lochwinnoch Ward",S13002757
-"Houston, Crosslee & Linwood Ward",S13002758
-"Bishopton, Bridge of Weir & Langbank Ward",S13002759
-Erskine & Inchinnan Ward,S13002760
 Tweeddale West Ward,S13002761
 Tweeddale East Ward,S13002762
 Galashiels and District Ward,S13002763
@@ -9022,47 +8778,6 @@ Shetland Central Ward,S13002775
 Shetland South Ward,S13002776
 Lerwick North Ward,S13002777
 Lerwick South Ward,S13002778
-Troon Ward,S13002779
-Prestwick Ward,S13002780
-Ayr North Ward,S13002781
-Ayr East Ward,S13002782
-Ayr West Ward,S13002783
-Kyle Ward,S13002784
-"Maybole, North Carrick and Coylton Ward",S13002785
-Girvan and South Carrick Ward,S13002786
-Clydesdale West Ward,S13002787
-Clydesdale North Ward,S13002788
-Clydesdale East Ward,S13002789
-Clydesdale South Ward,S13002790
-Avondale and Stonehouse Ward,S13002791
-East Kilbride South Ward,S13002792
-East Kilbride Central South Ward,S13002793
-East Kilbride Central North Ward,S13002794
-East Kilbride West Ward,S13002795
-East Kilbride East Ward,S13002796
-Rutherglen South Ward,S13002797
-Rutherglen Central and North Ward,S13002798
-Cambuslang West Ward,S13002799
-Cambuslang East Ward,S13002800
-Blantyre Ward,S13002801
-Bothwell and Uddingston Ward,S13002802
-Hamilton North and East Ward,S13002803
-Hamilton West and Earnock Ward,S13002804
-Hamilton South Ward,S13002805
-Larkhall Ward,S13002806
-Trossachs and Teith Ward,S13002807
-Forth and Endrick Ward,S13002808
-Dunblane and Bridge of Allan Ward,S13002809
-Castle Ward,S13002810
-Stirling West Ward,S13002811
-Stirling East Ward,S13002812
-Bannockburn Ward,S13002813
-Lomond Ward,S13002814
-Leven Ward,S13002815
-Dumbarton Ward,S13002816
-Kilpatrick Ward,S13002817
-Clydebank Central Ward,S13002818
-Clydebank Waterfront Ward,S13002819
 Linlithgow Ward,S13002820
 "Broxburn, Uphall and Winchburgh Ward",S13002821
 Livingston North Ward,S13002822
@@ -9072,11 +8787,300 @@ Fauldhouse and the Breich Valley Ward,S13002825
 Whitburn and Blackburn Ward,S13002826
 Bathgate Ward,S13002827
 Armadale and Blackridge Ward,S13002828
-Monifieth and Sidlaw Ward,S13002829
 North East Ward,S13002830
-Strathkelvin Ward,S13002832
-Bishopbriggs South Ward,S13002833
-North East Ward,S13002834
+Dyce/Bucksburn/Danestone Ward,S13002835
+Bridge of Don Ward,S13002836
+Kingswells/Sheddocksley/Summerhill Ward,S13002837
+Northfield/Mastrick North Ward,S13002838
+Hilton/Woodside/Stockethill Ward,S13002839
+Tillydrone/Seaton/Old Aberdeen Ward,S13002840
+Midstocket/Rosemount Ward,S13002841
+George St/Harbour Ward,S13002842
+Lower Deeside Ward,S13002843
+Hazlehead/Queens Cross/Countesswells Ward,S13002844
+Airyhall/Broomhill/Garthdee Ward,S13002845
+Torry/Ferryhill Ward,S13002846
+Kincorth/Nigg/Cove Ward,S13002847
+Banff and District Ward,S13002848
+Troup Ward,S13002849
+Fraserburgh and District Ward,S13002850
+Central Buchan Ward,S13002851
+Peterhead North and Rattray Ward,S13002852
+Peterhead South and Cruden Ward,S13002853
+Turriff and District Ward,S13002854
+Mid Formartine Ward,S13002855
+Ellon and District Ward,S13002856
+West Garioch Ward,S13002857
+Inverurie and District Ward,S13002858
+East Garioch Ward,S13002859
+Westhill and District Ward,S13002860
+"Huntly, Strathbogie and Howe of Alford Ward",S13002861
+"Aboyne, Upper Deeside and Donside Ward",S13002862
+Banchory and Mid Deeside Ward,S13002863
+North Kincardine Ward,S13002864
+Stonehaven and Lower Deeside Ward,S13002865
+Mearns Ward,S13002866
+Kirriemuir and Dean Ward,S13002867
+Brechin and Edzell Ward,S13002868
+Forfar and District Ward,S13002869
+Monifieth and Sidlaw Ward,S13002870
+Carnoustie and District Ward,S13002871
+"Arbroath West, Letham and Friockheim Ward",S13002872
+Arbroath East and Lunan Ward,S13002873
+Montrose and District Ward,S13002874
+Clackmannanshire West Ward,S13002875
+Clackmannanshire North Ward,S13002876
+Clackmannanshire Central Ward,S13002877
+Clackmannanshire South Ward,S13002878
+Clackmannanshire East Ward,S13002879
+Stranraer and the Rhins Ward,S13002880
+Mid Galloway and Wigtown West Ward,S13002881
+Dee and Glenkens Ward,S13002882
+Castle Douglas and Crocketford Ward,S13002883
+Abbey Ward,S13002884
+North West Dumfries Ward,S13002885
+Mid and Upper Nithsdale Ward,S13002886
+Lochar Ward,S13002887
+Nith Ward,S13002888
+Annandale South Ward,S13002889
+Annandale North Ward,S13002890
+Annandale East and Eskdale Ward,S13002891
+Annick Ward,S13002892
+Kilmarnock North Ward,S13002893
+Kilmarnock West and Crosshouse Ward,S13002894
+Kilmarnock East and Hurlford Ward,S13002895
+Kilmarnock South Ward,S13002896
+Irvine Valley Ward,S13002897
+Ballochmyle Ward,S13002898
+Cumnock and New Cumnock Ward,S13002899
+Doon Valley Ward,S13002900
+Milngavie Ward,S13002901
+Bearsden North Ward,S13002902
+Bearsden South Ward,S13002903
+Bishopbriggs North and Campsie Ward,S13002904
+Bishopbriggs South Ward,S13002905
+Lenzie and Kirkintilloch South Ward,S13002906
+Kirkintilloch East and North and Twechar Ward,S13002907
+Musselburgh Ward,S13002908
+"Preston, Seton and Gosford Ward",S13002909
+"Tranent, Wallyford and Macmerry Ward",S13002910
+North Berwick Coastal Ward,S13002911
+Haddington and Lammermuir Ward,S13002912
+Dunbar and East Linton Ward,S13002913
+"Barrhead, Liboside and Uplawmoor Ward",S13002914
+Newton Mearns North and Neilston Ward,S13002915
+Giffnock and Thornliebank Ward,S13002916
+"Clarkston, Netherlee and Williamwood Ward",S13002917
+Newton Mearns South and Eaglesham Ward,S13002918
+Almond Ward,S13002919
+Pentland Hills Ward,S13002920
+Drum Brae/Gyle Ward,S13002921
+Forth Ward,S13002922
+Inverleith Ward,S13002923
+Corstorphine/Murrayfield Ward,S13002924
+Sighthill/Gorgie Ward,S13002925
+Colinton/Fairmilehead Ward,S13002926
+Fountainbridge/Craiglockhart Ward,S13002927
+Morningside Ward,S13002928
+City Centre Ward,S13002929
+Leith Walk Ward,S13002930
+Leith Ward,S13002931
+Craigentinny/Duddingston Ward,S13002932
+Southside/Newington Ward,S13002933
+Liberton/Gilmerton Ward,S13002934
+Portobello/Craigmillar Ward,S13002935
+Bo'ness and Blackness Ward,S13002936
+Grangemouth Ward,S13002937
+Denny and Banknock Ward,S13002938
+"Carse, Kinnaird and Tryst Ward",S13002939
+Bonnybridge and Larbert Ward,S13002940
+Falkirk North Ward,S13002941
+Falkirk South Ward,S13002942
+Lower Braes Ward,S13002943
+Upper Braes Ward,S13002944
+West Fife and Coastal Villages Ward,S13002945
+Dunfermline North Ward,S13002946
+Dunfermline Central Ward,S13002947
+Dunfermline South Ward,S13002948
+Rosyth Ward,S13002949
+Inverkeithing and Dalgety Bay Ward,S13002950
+Cowdenbeath Ward,S13002951
+"Lochgelly, Cardenden and Benarty Ward",S13002952
+"Burntisland, Kinghorn and Western Kirkcaldy Ward",S13002953
+Kirkcaldy North Ward,S13002954
+Kirkcaldy Central Ward,S13002955
+Kirkcaldy East Ward,S13002956
+Glenrothes West and Kinglassie Ward,S13002957
+"Glenrothes North, Leslie and Markinch Ward",S13002958
+Glenrothes Central and Thornton Ward,S13002959
+Howe of Fife and Tay Coast Ward,S13002960
+Tay Bridgehead Ward,S13002961
+St. Andrews Ward,S13002962
+East Neuk and Landward Ward,S13002963
+Cupar Ward,S13002964
+"Leven, Kennoway and Largo Ward",S13002965
+"Buckhaven, Methil and Wemyss Villages Ward",S13002966
+Linn Ward,S13002967
+Newlands/Auldburn Ward,S13002968
+Greater Pollok Ward,S13002969
+Cardonald Ward,S13002970
+Govan Ward,S13002971
+Pollokshields Ward,S13002972
+Langside Ward,S13002973
+Southside Central Ward,S13002974
+Calton Ward,S13002975
+Anderston/City/Yorkhill Ward,S13002976
+Hillhead Ward,S13002977
+Victoria Park Ward,S13002978
+Garscadden/Scotstounhill Ward,S13002979
+Drumchapel/Anniesland Ward,S13002980
+Maryhill Ward,S13002981
+Canal Ward,S13002982
+Springburn/Robroyston Ward,S13002983
+East Centre Ward,S13002984
+Shettleston Ward,S13002985
+Baillieston Ward,S13002986
+North East Ward,S13002987
+Dennistoun Ward,S13002988
+Partick East/Kelvindale Ward,S13002989
+"North, West and Central Sutherland Ward",S13002990
+Thurso and Northwest Caithness Ward,S13002991
+Wick and East Caithness Ward,S13002992
+East Sutherland and Edderton Ward,S13002993
+"Wester Ross, Strathpeffer and Lochalsh Ward",S13002994
+Cromarty Firth Ward,S13002995
+Tain and Easter Ross Ward,S13002996
+Dingwall and Seaforth Ward,S13002997
+Black Isle Ward,S13002998
+Eilean a'Cheo Ward,S13002999
+Caol and Mallaig Ward,S13003000
+Aird and Loch Ness Ward,S13003001
+Inverness West Ward,S13003002
+Inverness Central Ward,S13003003
+Inverness Ness-Side Ward,S13003004
+Inverness Millburn Ward,S13003005
+Culloden and Ardersier Ward,S13003006
+Nairn and Cawdor Ward,S13003007
+Inverness South Ward,S13003008
+Badenoch and Strathspey Ward,S13003009
+Fort William and Ardnamurchan Ward,S13003010
+Inverclyde East Ward,S13003011
+Inverclyde East Central Ward,S13003012
+Inverclyde Central Ward,S13003013
+Inverclyde North Ward,S13003014
+Inverclyde West Ward,S13003015
+Inverclyde South West Ward,S13003016
+Inverclyde South Ward,S13003017
+Penicuik Ward,S13003018
+Bonnyrigg Ward,S13003019
+Dalkeith Ward,S13003020
+Midlothian West Ward,S13003021
+Midlothian East Ward,S13003022
+Midlothian South Ward,S13003023
+Speyside Glenlivet Ward,S13003024
+Keith and Cullen Ward,S13003025
+Buckie Ward,S13003026
+Fochabers Lhanbryde Ward,S13003027
+Heldon and Laich Ward,S13003028
+Elgin City North Ward,S13003029
+Elgin City South Ward,S13003030
+Forres Ward,S13003031
+Irvine West Ward,S13003032
+Irvine East Ward,S13003033
+Kilwinning Ward,S13003034
+Stevenston Ward,S13003035
+Ardrossan and Arran Ward,S13003036
+Dalry and West Kilbride Ward,S13003037
+Kilbirnie and Beith Ward,S13003038
+North Coast and Cumbraes Ward,S13003039
+Saltcoats Ward,S13003040
+Irvine South Ward,S13003041
+Kilsyth Ward,S13003042
+Cumbernauld North Ward,S13003043
+Cumbernauld South Ward,S13003044
+Cumbernauld East Ward,S13003045
+"Stepps, Chryston and Muirhead Ward",S13003046
+"Gartcosh, Glenboig and Moodiesburn Ward",S13003047
+Coatbridge North Ward,S13003048
+Airdrie North Ward,S13003049
+Airdrie Central Ward,S13003050
+Coatbridge West Ward,S13003051
+Coatbridge South Ward,S13003052
+Airdrie South Ward,S13003053
+Fortissat Ward,S13003054
+Thorniewood Ward,S13003055
+Bellshill Ward,S13003056
+Mossend and Holytown Ward,S13003057
+Motherwell West Ward,S13003058
+Motherwell North Ward,S13003059
+Motherwell South East and Ravenscraig Ward,S13003060
+Murdostoun Ward,S13003061
+Wishaw Ward,S13003062
+Carse of Gowrie Ward,S13003063
+Strathmore Ward,S13003064
+Blairgowrie and Glens Ward,S13003065
+Highland Ward,S13003066
+Strathtay Ward,S13003067
+Strathearn Ward,S13003068
+Strathallan Ward,S13003069
+Kinross-shire Ward,S13003070
+Almond and Earn Ward,S13003071
+Perth City South Ward,S13003072
+Perth City North Ward,S13003073
+Perth City Centre Ward,S13003074
+Renfrew North and Braehead Ward,S13003075
+Renfrew South and Gallowhill Ward,S13003076
+Paisley Northeast and Ralston Ward,S13003077
+Paisley Northwest Ward,S13003078
+Paisley East and Central Ward,S13003079
+Paisley Southeast Ward,S13003080
+Paisley Southwest Ward,S13003081
+Johnstone South and Elderslie Ward,S13003082
+"Johnstone North, Kilbarchan, Howwood and Lochwinnoch Ward",S13003083
+"Houston, Crosslee and Linwood Ward",S13003084
+"Bishopton, Bridge of Weir and Langbank Ward",S13003085
+Erskine and Inchinnan Ward,S13003086
+Troon Ward,S13003087
+Prestwick Ward,S13003088
+Ayr North Ward,S13003089
+Ayr East Ward,S13003090
+Ayr West Ward,S13003091
+Kyle Ward,S13003092
+"Maybole, North Carrick and Coylton Ward",S13003093
+Girvan and South Carrick Ward,S13003094
+Clydesdale West Ward,S13003095
+Clydesdale North Ward,S13003096
+Clydesdale East Ward,S13003097
+Clydesdale South Ward,S13003098
+Avondale and Stonehouse Ward,S13003099
+East Kilbride South Ward,S13003100
+East Kilbride Central South Ward,S13003101
+East Kilbride Central North Ward,S13003102
+East Kilbride West Ward,S13003103
+East Kilbride East Ward,S13003104
+Rutherglen South Ward,S13003105
+Rutherglen Central and North Ward,S13003106
+Cambuslang West Ward,S13003107
+Cambuslang East Ward,S13003108
+Blantyre Ward,S13003109
+Bothwell and Uddingston Ward,S13003110
+Hamilton North and East Ward,S13003111
+Hamilton West and Earnock Ward,S13003112
+Hamilton South Ward,S13003113
+Larkhall Ward,S13003114
+Trossachs and Teith Ward,S13003115
+Forth and Endrick Ward,S13003116
+Dunblane and Bridge of Allan Ward,S13003117
+Stirling North Ward,S13003118
+Stirling West Ward,S13003119
+Stirling East Ward,S13003120
+Bannockburn Ward,S13003121
+Lomond Ward,S13003122
+Leven Ward,S13003123
+Dumbarton Ward,S13003124
+Kilpatrick Ward,S13003125
+Clydebank Central Ward,S13003126
+Clydebank Waterfront Ward,S13003127
 North East,E18000001
 North West,E18000002
 Yorkshire and the Humber,E18000003
@@ -9087,3 +9091,28 @@ London,E18000007
 South East Coast,E18000008
 South Central,E18000009
 South West,E18000010
+"North, Midlands and the East Programme for IT (NMEPFiT)",E19000001
+Southern Programme for IT (SPFiT),E19000002
+London Programme for IT (LPFiT),E19000003
+Betsi Cadwaladr University,W11000023
+Powys Teaching,W11000024
+Hywel Dda University,W11000025
+Abertawe Bro Morgannwg University,W11000026
+Cwm Taf University,W11000027
+Aneurin Bevan University,W11000028
+Cardiff and Vale University,W11000029
+Ayrshire & Arran,S08000001
+Borders,S08000002
+Dumfries and Galloway,S08000003
+Fife,S08000004
+Forth Valley,S08000005
+Grampian,S08000006
+Greater Glasgow & Clyde,S08000007
+Highland,S08000008
+Lanarkshire,S08000009
+Lothian,S08000010
+Orkney,S08000011
+Shetland,S08000012
+Tayside,S08000013
+Western Isles,S08000014
+Health and Social Care Board,ZB001
