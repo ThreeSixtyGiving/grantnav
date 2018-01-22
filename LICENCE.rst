@@ -34,7 +34,14 @@ Contains OS data © Crown copyright and database right 2016
 
 Contains Royal Mail data © Royal Mail copyright and Database right 2016
 
-Contains National Statistics data © Crown copyright and database right 2016  
+Contains National Statistics data © Crown copyright and database right 2016
+
+Northern Ireland Ward to Council Area Lookup
+---------------
+
+GrantNav uses `Northern Ireland Ward to Council Area Lookup <https://ons.maps.arcgis.com/home/item.html?id=cce0999ed17f4fbd9f2f5480997405c5>`_ data which is distributed under an `Open Government Licence (v3) <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/>`_
+
+Contains National Statistics data © Crown copyright and database right 2015
 
 Charity Commission Data
 -----------------------

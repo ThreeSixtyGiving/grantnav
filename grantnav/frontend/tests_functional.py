@@ -73,12 +73,12 @@ def test_home(provenance_dataload, server_url, browser):
     ('About'),
     ('Funders'),
     ('Recipients'),
+    ('Help with Using GrantNav'),
     ('Terms and Conditions'),
     ('Take Down Policy'),
     ('Data Used in GrantNav'),
     ('Reusing GrantNav Data'),
     ('Copyright'),
-    ('Advanced Search'),
     ('Developers')
     ])
 def test_footer_links(provenance_dataload, server_url, browser, link_text):
@@ -89,7 +89,7 @@ def test_footer_links(provenance_dataload, server_url, browser, link_text):
 @pytest.mark.parametrize(('text'), [
     ('Contains OS data © Crown copyright and database right 2016'),
     ('Contains Royal Mail data © Royal Mail copyright and Database right 2016'),
-    ('Contains National Statistics data © Crown copyright and database right 2016')
+    ('Contains National Statistics data © Crown copyright and database right 2015 & 2016')
     ])
 def test_code_point_credit(provenance_dataload, server_url, browser, text):
     browser.get(server_url)
@@ -125,9 +125,9 @@ def test_take_down(server_url, browser):
     assert 'Take Down Policy' in browser.find_element_by_tag_name('h1').text
 
 
-def test_advanced_search(server_url, browser):
-    browser.get(server_url + '/advanced_search')
-    assert 'Advanced Search' in browser.find_element_by_tag_name('h1').text
+def test_help_page(server_url, browser):
+    browser.get(server_url + '/help')
+    assert 'Using GrantNav' in browser.find_element_by_tag_name('h1').text
 
 
 def test_developers(server_url, browser):

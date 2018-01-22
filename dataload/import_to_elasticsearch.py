@@ -78,7 +78,7 @@ def import_to_elasticsearch(files, clean):
     mappings = {
         "grant": {
             "_all": {
-                "analyzer": "english"
+                "analyzer": "english_with_folding"
             },
             "properties": {
                 "id": {"type": "string", "index": "not_analyzed"},
@@ -94,7 +94,6 @@ def import_to_elasticsearch(files, clean):
                     "type": "date",
                     "ignore_malformed": True
                 },
-                "awardDatdateModifiede": {"type": "string", "index": "not_analyzed"},
                 "dateModified": {"type": "string", "index": "not_analyzed"},
                 "plannedDates": {
                     "properties": {
@@ -121,10 +120,10 @@ def import_to_elasticsearch(files, clean):
                             "type": "string", "index": "not_analyzed"
                         },
                         "name": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "streetAddress": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "id_and_name": {
                             "type": "string", "index": "not_analyzed"
@@ -149,10 +148,10 @@ def import_to_elasticsearch(files, clean):
                             "type": "string", "index": "not_analyzed"
                         },
                         "name": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "streetAddress": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "id_and_name": {
                             "type": "string", "index": "not_analyzed"
@@ -168,7 +167,40 @@ def import_to_elasticsearch(files, clean):
         }
     }
 
-    settings = {"max_result_window": 500000}
+    settings = {
+        "max_result_window": 500000,
+        "analysis": {
+            "analyzer": {
+                # Based on the english analyzer decribed at
+                # https://www.elastic.co/guide/en/elasticsearch/reference/2.4/analysis-lang-analyzer.html#english-analyzer
+                "english_with_folding": {
+                    "tokenizer": "standard",
+                    "filter": [
+                        "english_possessive_stemmer",
+                        "lowercase",
+                        "english_stop",
+                        "english_stemmer",
+                        # Additional filters not in the standard english analyzer:
+                        "asciifolding",
+                    ]
+                }
+            },
+            "filter": {
+                "english_stop": {
+                    "type": "stop",
+                    "stopwords": "_english_"
+                },
+                "english_stemmer": {
+                    "type": "stemmer",
+                    "language": "english"
+                },
+                "english_possessive_stemmer": {
+                    "type": "stemmer",
+                    "language": "possessive_english"
+                }
+            }
+        }
+    }
 
     # Create it again
     result = es.indices.create(index=ES_INDEX, body={"mappings": mappings, "settings": settings}, ignore=[400])
@@ -260,6 +292,10 @@ def update_doc_with_region(grant):
     except (KeyError, IndexError):
         post_code = ''
 
+    # If there is a 'BT' postcode we can safely assume this is in NI
+    if post_code and post_code.startswith("BT"):
+        grant['recipientRegionName'] = "Northern Ireland"
+
     # test postcode first
     area = postcode_to_area.get(str(post_code).replace(' ', '').upper())
     if area:
@@ -348,6 +384,23 @@ def get_area_mappings():
             }
             ward_code_to_area[ward_code] = {
                 'district_name': district_name, 'area_name': area_name, 'ward_name': ward_name
+            }
+
+    # Northern Ireland codes and names not included in Code-Point, but uses a separate source
+    with open(os.path.join(current_dir, 'WD15_LGD15_NI_LU.csv')) as ni_lookup:
+        ni_lookup_csv = csv.DictReader(ni_lookup)
+
+        for row in ni_lookup_csv:
+            district_code = row['LGD15CD']
+            district_name = row['LGD15NM']
+            ward_code = row['WD15CD']
+            ward_name = row['WD15NM']
+
+            district_code_to_area[district_code] = {
+                'district_name': district_name, 'area_name': 'Northern Ireland'
+            }
+            ward_code_to_area[ward_code] = {
+                'district_name': district_name, 'area_name': 'Northern Ireland', 'ward_name': ward_name
             }
 
 if __name__ == '__main__':
