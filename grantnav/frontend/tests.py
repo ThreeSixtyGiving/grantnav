@@ -68,6 +68,16 @@ def test_search(provenance_dataload, client):
     json_query['query']['bool']['filter'][0]['bool']['should'] = []
     assert json.loads(urllib.parse.parse_qs(wolfson_facet['url'].split('?')[-1])['json_query'][0]) == json_query
 
+    # Test the data is extended by grantnav adding geo codes
+    # Original data contains postal codes only
+    geocode_response = client.get('/search?text_query=E10000023')
+    response = client.get(geocode_response.url)
+    assert response.context['results']['hits']['total'] == 0
+
+    geocode_response = client.get('/search?text_query=E09000033')
+    response = client.get(geocode_response.url)
+    assert response.context['results']['hits']['total'] == 19
+
 
 def test_stats(provenance_dataload, client):
     response = client.get('/stats')
