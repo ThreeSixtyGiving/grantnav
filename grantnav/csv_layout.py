@@ -62,7 +62,9 @@ grant_csv_titles = [
     "Publisher:Name",
     "Recipient Region",
     "Recipient District",
+    "Recipient District Geographic Code",
     "Recipient Ward",
+    "Recipient Ward Geographic Code",
     "Retrieved for use in GrantNav",
     "License (see note)",
     "Note: this file also contains OS data © Crown copyright and database right 2016, Royal Mail data © Royal Mail copyright and Database right 2016, National Statistics data © Crown copyright and database right 2015 & 2016, see http://grantnav.threesixtygiving.org/datasets/ for more information.",
@@ -132,7 +134,9 @@ grant_csv_paths = [
     "dataset.publisher.name",
     "result.recipientRegionName",
     "result.recipientDistrictName",
+    "result.recipientDistrictGeoCode",
     "result.recipientWardName",
+    "result.recipientWardNameGeoCode",
     "dataset.datagetter_metadata.datetime_downloaded",
     "dataset.license"
 ]
