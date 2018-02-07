@@ -132,6 +132,11 @@ def get_currency(d):
         return currency + ' '
 
 
+@register.filter(name='reverse_minus')
+def reverse_minus(minus_value, value):
+    return value - minus_value
+
+
 @register.filter(name='get_amount')
 def get_amount(amount):
     try:
@@ -149,6 +154,17 @@ def get_date(date):
         except ValueError:
             return date
     return date_parser.parse(date).strftime("%d %b %Y")
+
+
+CURRENCY_SYMBOLS = {
+    'GBP': '£',
+    'USD': '$'
+}
+
+
+@register.filter(name='currency_symbol')
+def currency_symbol(currency):
+    return CURRENCY_SYMBOLS.get(currency.upper(), '')
 
 
 @register.filter(name='get_amount_range')

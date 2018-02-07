@@ -57,10 +57,7 @@ FIXED_AMOUNT_RANGES = [
 SEARCH_SUMMARY_AGGREGATES = {
     "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
     "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
-    "total_amount": {"sum": {"field": "amountAwarded"}},
-    "avg_amount": {"avg": {"field": "amountAwarded"}},
-    "min_amount": {"min": {"field": "amountAwarded"}},
-    "max_amount": {"max": {"field": "amountAwarded"}},
+    "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
     "min_date": {"min": {"field": "awardDate"}},
     "max_date": {"max": {"field": "awardDate"}}
 }

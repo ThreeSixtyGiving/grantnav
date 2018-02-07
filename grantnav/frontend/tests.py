@@ -5,7 +5,7 @@ from dataload.import_to_elasticsearch import import_to_elasticsearch, get_area_m
 import json
 import time
 
-prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/5259c973c4f89f054a18be8f1143202d250bc148/'
+prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/560a8d9f21a069a9d51468850188f34ae72a0ec3/'
 
 
 @pytest.fixture(scope="module")

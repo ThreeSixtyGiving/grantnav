@@ -22,6 +22,13 @@
 
         <link rel="stylesheet" href="{% static 'css/theme.css'%}">
         <link rel="stylesheet" href="{% static 'css/main.css'%}">
+        <noscript>
+          <style>
+            .javascript-enabled {
+              display: none !important;
+            }
+          </style>
+        </noscript>
 
 {% get_favicons prefix="favicons/" %}
 
@@ -115,6 +122,7 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {% block models %}{% endblock %}
     {% block extra_scripts %}{% endblock %}
     {% if piwik.url and piwik.site_id %}
     <!-- Piwik -->
