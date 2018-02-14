@@ -23,29 +23,7 @@
         </dl>
       </div>
       <div class="col-xs-6">
-        <dl class="dl-horizontal top-stats">
-          {% with currency=results.aggregations.currency_stats.buckets|first|get:"key"|upper buckets=results.aggregations.currency_stats.buckets%}
-            <dt>Total {{currency}} grants</dt> <dd>{{buckets|first|get:"amount_stats"|get:"count"|get_amount}}</dd>
-            <dt>Total {{currency}} awarded</dt> <dd>{{currency|currency_symbol}}{{buckets|first|get:"amount_stats"|get:"sum"|get_amount}}</dd>
-            <dt>Largest {{currency}} award</dt> <dd>{{currency|currency_symbol}}{{buckets|first|get:"amount_stats"|get:"max"|get_amount}}</dd>
-            <dt>Smallest {{currency}} award</dt> <dd>{{currency|currency_symbol}}{{buckets|first|get:"amount_stats"|get:"min"|get_amount}}</dd>
-            <dt>Total Non-{{currency}} grants</dt> 
-            <dd>
-            {% with total_other=buckets|first|get:"amount_stats"|get:"count"|reverse_minus:results.hits.total %}
-              {% if total_other %}
-                <a class="javascript-enabled" id="other-currencies-modal" data-toggle="modal" data-target="#summary-info-model">
-                  {{total_other|get_amount}}
-                </a>
-                <noscript>
-                  {{total_other|get_amount}}
-                </noscript>
-              {% else %}
-                0
-              {% endif %}
-            {% endwith %}
-            </dd>
-          {% endwith %}
-        </dl>
+        {% include 'currency_stats.html' %}
       </div>
     </div>
   </div>
@@ -60,7 +38,7 @@
      <div id="disclaimer" class="alert alert-info" role="alert"><p>This data is provided for information purposes only.<br>Please refer to the funder website for details of current grant programmes, application guidelines and eligibility criteria.</p></div>
     <div class="panel panel-info">
       <div class="panel-heading">
-        Recipients
+        Recipients <small> ({{results.aggregations.currency_stats.buckets|first|get:"key"|upper}}) </small>
         <a class="pull-right" href="{% url 'funder_recipients_datatables.json' %}?funder_id={{ funder.id }}">
           <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
         </a>
@@ -155,7 +133,8 @@
          "ajax": {
            "url": "{% url 'funder_recipients_datatables' %}",
            "data": function ( d ) {
-             d.funder_id = "{{funder.id}}";
+             d.funder_id = "{{funder.id|escapejs}}";
+             d.currency = "{{results.aggregations.currency_stats.buckets|first|get:"key"|upper|escapejs}}";
            }
          },
          "columns": [

@@ -720,10 +720,14 @@ def funder_recipients_datatables(request):
     else:
         filter = {}
 
+    currency = request.GET.get('currency')
+    if not currency:
+        currency = 'GBP'
+
     query = {"query": {
              "bool": {
                  "filter":
-                     filter,
+                     [filter, {"term": {"currency": currency}}],
                  "must":
                      {"match": {"recipientOrganization.name": {"query": search_value, "operator": "and"}}},
                  },
@@ -747,7 +751,7 @@ def funder_recipients_datatables(request):
         for key in list(stats):
             if key != 'count':
                 if result_format == "ajax":
-                    stats[key] = "£ {:,.0f}".format(int(stats[key]))
+                    stats[key] = "{}{:,.0f}".format(utils.currency_prefix(currency), int(stats[key]))
                 else:
                     stats[key] = "{:.0f}".format(int(stats[key]))
         org_name, org_id = json.loads(result["key"])
@@ -801,7 +805,7 @@ def funders_datatables(request):
     query = {"query": {
              "bool": {
                  "filter":
-                     filter,
+                     [filter, {"term": {"currency": "GBP"}}],
                  "must":
                      {"match": {"fundingOrganization.name": {"query": search_value, "operator": "and"}}},
                  },
@@ -973,10 +977,7 @@ def region(request, region):
             "aggs": {
                 "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                 "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
-                "total_amount": {"sum": {"field": "amountAwarded"}},
-                "avg_amount": {"avg": {"field": "amountAwarded"}},
-                "min_amount": {"min": {"field": "amountAwarded"}},
-                "max_amount": {"max": {"field": "amountAwarded"}},
+                "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
                 "min_date": {"min": {"field": "awardDate"}},
                 "max_date": {"max": {"field": "awardDate"}},
         }
@@ -1008,10 +1009,7 @@ def district(request, district):
             "aggs": {
                 "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                 "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
-                "total_amount": {"sum": {"field": "amountAwarded"}},
-                "avg_amount": {"avg": {"field": "amountAwarded"}},
-                "min_amount": {"min": {"field": "amountAwarded"}},
-                "max_amount": {"max": {"field": "amountAwarded"}},
+                "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
                 "min_date": {"min": {"field": "awardDate"}},
                 "max_date": {"max": {"field": "awardDate"}},
         }

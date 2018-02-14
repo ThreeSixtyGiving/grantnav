@@ -84,7 +84,7 @@
           {% for bucket in results.aggregations.currency.buckets %}
             <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
-          {% if results.aggregations.currency.buckets|length > 3 %}
+          {% if results.aggregations.currency.buckets|length > 2 %}
             <a href="{{see_more_url.currency.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.currency.more%}See More{% else %}See Less{% endif %}</b> </a>
           {% endif %}
         </div>
@@ -261,29 +261,7 @@
                   </dl>
                 </div>
                 <div class="col-sm-6">
-                  <dl class="dl-horizontal top-stats-search">
-                    {% with currency=results.aggregations.currency_stats.buckets|first|get:"key"|upper buckets=results.aggregations.currency_stats.buckets%}
-                      <dt>Total {{currency}} grants</dt> <dd>{{buckets|first|get:"amount_stats"|get:"count"|get_amount}}</dd>
-                      <dt>Total {{currency}} awarded</dt> <dd>{{currency|currency_symbol}}{{buckets|first|get:"amount_stats"|get:"sum"|get_amount}}</dd>
-                      <dt>Largest {{currency}} award</dt> <dd>{{currency|currency_symbol}}{{buckets|first|get:"amount_stats"|get:"max"|get_amount}}</dd>
-                      <dt>Smallest {{currency}} award</dt> <dd>{{currency|currency_symbol}}{{buckets|first|get:"amount_stats"|get:"min"|get_amount}}</dd>
-                      <dt>Total Non-{{currency}} grants</dt> 
-                      <dd>
-                      {% with total_other=buckets|first|get:"amount_stats"|get:"count"|reverse_minus:results.hits.total %}
-                        {% if total_other %}
-                          <a class="javascript-enabled" id="other-currencies-modal" data-toggle="modal" data-target="#summary-info-model">
-                            {{total_other|get_amount}}
-                          </a>
-                          <noscript>
-                            {{total_other|get_amount}}
-                          </noscript>
-                        {% else %}
-                          0
-                        {% endif %}
-                      {% endwith %}
-                      </dd>
-                    {% endwith %}
-                  </dl>
+                  {% include 'currency_stats.html' %}
                 </div>
               </div>
             </div>
