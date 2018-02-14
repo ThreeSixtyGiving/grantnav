@@ -19,5 +19,5 @@ install:
 
 script:
     - "flake8 ."
-    - "py.test"
+    - "ALLOWED_HOSTS=localhost py.test"
 

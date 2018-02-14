@@ -1,5 +1,5 @@
-Django==1.8.18 # rq.filter: <1.9
-django-bootstrap3==7.0.1
+Django==1.11.10 # rq.filter: <1.12
+django-bootstrap3==9.1.0
 requests==2.10.0
 django-environ==0.4.0
 raven==5.23.0
@@ -7,7 +7,7 @@ elasticsearch==2.3.0
 -e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool
 python-dateutil==2.5.3
 strict-rfc3339==0.7
-django-cookie-law==1.0.8
+django-cookie-law==1.0.13
 titlecase==0.8.1
 dealer==2.0.5
 django-super-favicon==0.6.0
@@ -20,7 +20,7 @@ pyflakes==1.0.0 # rq.filter: <1.1
 
 # pytest and plugins
 pytest==2.9.2
-pytest-django==2.9.1
+pytest-django==3.1.2
 pytest-cov==2.3.0
 pytest-localserver==0.3.5
 

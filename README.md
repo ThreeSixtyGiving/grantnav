@@ -114,7 +114,7 @@ Run tests
 ------------
 
 ```
-py.test
+ALLOWED_HOSTS=localhost py.test
 ```
 
 Make sure elastic search is running.
