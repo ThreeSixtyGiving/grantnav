@@ -18,18 +18,12 @@
         <dl class="dl-horizontal top-stats">
           <dt>Total grants</dt> <dd>{{results.hits.total|get_amount}}</dd>
           <dt>Total recipients</dt> <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
-          <dt>Total awarded</dt> <dd>£{{results.aggregations.total_amount.value|get_amount}}</dd>
-          <dt>Average awarded</dt> <dd>£{{results.aggregations.avg_amount.value|get_amount}}</dd>
+          <dt>Earliest award date</dt> <dd>{{results.aggregations.min_date.value_as_string|get_date}}</dd>
+          <dt>Latest award date</dt> <dd>{{results.aggregations.max_date.value_as_string|get_date}}</dd>
         </dl>
       </div>
       <div class="col-xs-6">
-        <dl class="dl-horizontal top-stats">
-           <dt>Largest award</dt> <dd>£{{results.aggregations.max_amount.value|get_amount}}</dd>
-           <dt>Smallest award</dt> <dd>£{{results.aggregations.min_amount.value|get_amount}}</dd>
-           <dt>Earliest award date</dt> <dd>{{results.aggregations.min_date.value_as_string|get_date}}</dd>
-           <dt>Latest award date</dt> <dd>{{results.aggregations.max_date.value_as_string|get_date}}</dd>
-         <!--  <dt>Currencies</dt> <dd>{{results.aggregations.currencies|get_currency_list}}</dd> -->
-        </dl>
+        {% include 'currency_stats.html' %}
       </div>
     </div>
   </div>
@@ -44,7 +38,7 @@
      <div id="disclaimer" class="alert alert-info" role="alert"><p>This data is provided for information purposes only.<br>Please refer to the funder website for details of current grant programmes, application guidelines and eligibility criteria.</p></div>
     <div class="panel panel-info">
       <div class="panel-heading">
-        Recipients
+        Recipients <small> ({{results.aggregations.currency_stats.buckets|first|get:"key"|upper}}) </small>
         <a class="pull-right" href="{% url 'funder_recipients_datatables.json' %}?funder_id={{ funder.id }}">
           <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
         </a>
@@ -139,7 +133,8 @@
          "ajax": {
            "url": "{% url 'funder_recipients_datatables' %}",
            "data": function ( d ) {
-             d.funder_id = "{{funder.id}}";
+             d.funder_id = "{{funder.id|escapejs}}";
+             d.currency = "{{results.aggregations.currency_stats.buckets|first|get:"key"|upper|escapejs}}";
            }
          },
          "columns": [
@@ -192,4 +187,8 @@
        });
      })
    </script>
+{% endblock %}
+
+{% block models %}
+  {% include 'currency_stats_modal.html' %}
 {% endblock %}
