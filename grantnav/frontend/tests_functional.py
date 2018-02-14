@@ -194,3 +194,10 @@ def test_datasets_page(server_url, browser):
 def test_disclaimers(server_url, browser, path, identifier, text):
     browser.get(server_url + path)
     assert text in browser.find_element_by_id(identifier).text
+
+
+def test_currency_facet(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_link_text("USD (4)").click()
+    assert 'USD 0 - USD 500' in browser.find_element_by_tag_name('body').text

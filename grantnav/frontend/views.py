@@ -14,18 +14,19 @@ import dateutil.parser as date_parser
 import datetime
 import re
 from django.http import HttpResponse, StreamingHttpResponse
-from grantnav import provenance, csv_layout
+from grantnav import provenance, csv_layout, utils
 from itertools import chain
 import csv
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
     {"bool": {"should": []}},  # Recipient Orgs
-    {"bool": {"should": []}},  # Amount Awarded Fixed
-    {"bool": {"should": {"range": {"amountAwarded": {}}}}},  # Amount Awarded
+    {"bool": {"should": [], "must": {}}},  # Amount Awarded Fixed
+    {"bool": {"should": {"range": {"amountAwarded": {}}}, "must": {}}},  # Amount Awarded
     {"bool": {"should": []}},  # Award Year
     {"bool": {"should": []}},  # recipientRegionName
-    {"bool": {"should": []}}   # recipientDistrictName
+    {"bool": {"should": []}},  # recipientDistrictName
+    {"bool": {"should": []}}   # currency
 ]
 
 
@@ -37,7 +38,8 @@ BASIC_QUERY = {"query": {"bool": {"must":
                    "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 3}},
                    "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 3}},
                    "recipientRegionName": {"terms": {"field": "recipientRegionName", "size": 3}},
-                   "recipientDistrictName": {"terms": {"field": "recipientDistrictName", "size": 3}}}}
+                   "recipientDistrictName": {"terms": {"field": "recipientDistrictName", "size": 3}},
+                   "currency": {"terms": {"field": "currency", "size": 3}}}}
 
 SIZE = 20
 
@@ -236,21 +238,27 @@ def get_amount_facet_fixed(request, context, original_json_query):
         current_filter = json_query["query"]["bool"]["filter"][2]["bool"]["should"]
 
     main_results = context["results"]
-    if current_filter:
-        json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
-        results = get_results(json_query)
-    else:
-        results = context["results"]
+
+    json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
+
+    existing_currency, current_currency = context['existing_currency'], context['current_currency']
+
+    if current_currency and not existing_currency:
+        json_query["query"]["bool"]["filter"][2]["bool"]["must"] = {"term": {"currency": current_currency}}
+    results = get_results(json_query)
 
     input_range = json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"]
     new_filter = copy.deepcopy(current_filter)
     if new_filter or input_range:
         new_json_query = copy.deepcopy(original_json_query)
         new_json_query["query"]["bool"]["filter"][2]["bool"]["should"] = []
+        new_json_query["query"]["bool"]["filter"][2]["bool"]["must"] = {}
         new_json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = {}
+        new_json_query["query"]["bool"]["filter"][3]["bool"]["must"] = {}
         results["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(new_json_query)})
 
     for bucket in results["aggregations"]["amountAwardedFixed"]['buckets']:
+        new_json_query = copy.deepcopy(original_json_query)
         new_filter = []
         new_range = {"gte": bucket["from"]}
         to_ = bucket.get("to")
@@ -264,30 +272,37 @@ def get_amount_facet_fixed(request, context, original_json_query):
         if not bucket.get("selected"):
             new_filter.append({"range": {"amountAwarded": new_range}})
 
-        json_query["query"]["bool"]["filter"][2]["bool"]["should"] = new_filter
-        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+        new_json_query["query"]["bool"]["filter"][2]["bool"]["should"] = new_filter
+        if not new_filter:
+            new_json_query["query"]["bool"]["filter"][2]["bool"]["must"] = {}
+        elif not existing_currency and current_currency:
+            new_json_query["query"]["bool"]["filter"][2]["bool"]["must"] = {"term": {"currency": current_currency}}
+
+        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(new_json_query)})
 
         if bucket.get("selected"):
-            display_value = "£{:,}".format(int(bucket["from"]))
+            display_value = "{}{:,}".format(utils.currency_prefix(current_currency), int(bucket["from"]))
             if to_:
-                display_value = str(display_value) + " - " + "£{:,}".format(int(to_))
+                display_value = str(display_value) + " - " + "{}{:,}".format(utils.currency_prefix(current_currency), int(to_))
             else:
                 display_value = str(display_value) + "+"
 
             context["selected_facets"]["Amounts"].append({"url": bucket["url"], "display_value": display_value})
 
     if input_range:
-        json_query = copy.deepcopy(original_json_query)
+        new_json_query = copy.deepcopy(original_json_query)
         lte, gte = input_range.get('lte'), input_range.get('gte')
         if not gte:
             gte = 0
-        display_value = "£{:,}".format(int(gte))
+        display_value = "{}{:,}".format(utils.currency_prefix(current_currency), int(gte))
         if lte:
-            display_value = str(display_value) + " - " + "£{:,}".format(int(lte))
+            display_value = str(display_value) + " - " + "{}{:,}".format(utils.currency_prefix(current_currency), int(lte))
         else:
             display_value = str(display_value) + "+"
-        json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = {}
-        context["selected_facets"]["Amounts"].append({"url": request.path + '?' + urlencode({"json_query": json.dumps(json_query)}), "display_value": display_value})
+        new_json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = {}
+        new_json_query["query"]["bool"]["filter"][3]["bool"]["must"] = {}
+
+        context["selected_facets"]["Amounts"].append({"url": request.path + '?' + urlencode({"json_query": json.dumps(new_json_query)}), "display_value": display_value})
 
     main_results["aggregations"]["amountAwardedFixed"] = results["aggregations"]["amountAwardedFixed"]
 
@@ -444,23 +459,6 @@ def search(request):
             json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
         return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
 
-    min_amount = request.GET.get('min_amount')
-    max_amount = request.GET.get('max_amount')
-    if min_amount or max_amount:
-        new_filter = {}
-        if min_amount:
-            try:
-                new_filter['gte'] = int(min_amount)
-            except ValueError:
-                pass
-        if max_amount:
-            try:
-                new_filter['lte'] = int(max_amount)
-            except ValueError:
-                pass
-        json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = new_filter
-        return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
-
     sort_order = request.GET.get('sort', '').split()
     if sort_order and len(sort_order) == 2:
         json_query["sort"] = {sort_order[0]: {"order": sort_order[1]}}
@@ -518,6 +516,35 @@ def search(request):
         context['json_query'] = json.dumps(json_query)
         context['query'] = json_query
 
+        current_currency = None
+        existing_currency = None
+        if json_query["query"]["bool"]["filter"][2]["bool"]["must"]:
+            existing_currency = json_query["query"]["bool"]["filter"][2]["bool"]["must"]["term"]["currency"]
+            current_currency = existing_currency
+        currency_facets = context["results"]['aggregations']['currency']['buckets']
+        if not current_currency and currency_facets:
+            current_currency = currency_facets[0]['key']
+        context['existing_currency'] = existing_currency
+        context['current_currency'] = current_currency
+
+        min_amount = request.GET.get('min_amount')
+        max_amount = request.GET.get('max_amount')
+        if min_amount or max_amount:
+            new_filter = {}
+            if min_amount:
+                try:
+                    new_filter['gte'] = int(min_amount)
+                except ValueError:
+                    pass
+            if max_amount:
+                try:
+                    new_filter['lte'] = int(max_amount)
+                except ValueError:
+                    pass
+            json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = new_filter
+            json_query["query"]["bool"]["filter"][3]["bool"]["must"] = {"term": {"currency": current_currency}}
+            return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
+
         context['selected_facets'] = collections.defaultdict(list)
         get_clear_all(request, context, json_query)
 
@@ -526,6 +553,8 @@ def search(request):
 
         get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5, "Regions")
         get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6, "Districts")
+
+        get_terms_facets(request, context, json_query, "currency", "currency", 7, "Currency")
 
         get_amount_facet_fixed(request, context, json_query)
         get_date_facets(request, context, json_query)
