@@ -1,0 +1,27 @@
+{% load frontend %}
+
+<div class="modal fade" id="summary-info-model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Award amounts in other currencies</h4>
+      </div>
+      <div class="modal-body">
+        {% for bucket in results.aggregations.currency_stats.buckets %}
+          {% if not forloop.first %}
+            {% with currency=bucket|get:"key"|upper %}
+              <dl class="dl-horizontal top-stats-search">
+                <dt>Total {{currency}} grants</dt> <dd>{{bucket|get:"amount_stats"|get:"count"|get_amount}}</dd>
+                <dt>Total {{currency}} awarded</dt> <dd>{{currency|currency_symbol}}{{bucket|get:"amount_stats"|get:"sum"|get_amount}}</dd>
+                <dt>Largest {{currency}} award</dt> <dd>{{currency|currency_symbol}}{{bucket|get:"amount_stats"|get:"max"|get_amount}}</dd>
+                <dt>Smallest {{currency}} award</dt> <dd>{{currency|currency_symbol}}{{bucket|get:"amount_stats"|get:"min"|get_amount}}</dd>
+              </dl>
+              <hr>
+            {% endwith %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
