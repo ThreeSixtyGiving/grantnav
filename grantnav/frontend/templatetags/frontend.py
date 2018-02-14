@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from django import template
 import math
 import datetime
@@ -51,9 +52,14 @@ def flatten_dict(data, path=tuple()):
         else:
             yield schema_titles.get(field) or field, value
 
-ADDITIONAL_FIELDS = {"recipientDistrictName": "Recipient District",
-                     "recipientRegionName": "Recipient Region",
-                     "recipientWardName": "Recipient Ward"}
+
+ADDITIONAL_FIELDS = OrderedDict((
+    ("recipientRegionName", "Recipient Region"),
+    ("recipientDistrictName", "Recipient District"),
+    ("recipientDistrictGeoCode", "Recipient District Geographic Code"),
+    ("recipientWardName", "Recipient Ward"),
+    ("recipientWardNameGeoCode", "Recipient Ward Geographic Code")
+))
 
 SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
              "amountAwarded", "Currency",
@@ -62,7 +68,8 @@ SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
              "recipientOrganization: id_and_name",
              "Funding Org: Name",
              "Funding Org: Identifier",
-             "fundingOrganization: id_and_name", "recipientLocation"] + list(ADDITIONAL_FIELDS.keys())
+             "fundingOrganization: id_and_name", "recipientLocation",
+             "recipientDistrictGeoCode"] + list(ADDITIONAL_FIELDS.keys())
 
 
 @register.filter(name='flatten')
@@ -81,7 +88,7 @@ def get_additional_fields(data):
     except (KeyError, IndexError, TypeError):
         pass
 
-    for field_name, name in sorted(ADDITIONAL_FIELDS.items()):
+    for field_name, name in ADDITIONAL_FIELDS.items():
         value = data.get(field_name)
         if value:
             additional_fields.append((name, value))

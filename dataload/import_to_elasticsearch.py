@@ -23,6 +23,9 @@ bad_org_ids = []
 postcode_to_area = {}
 district_code_to_area = {}
 ward_code_to_area = {}
+district_name_to_code = {}
+ward_name_to_code = {}
+
 current_dir = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -78,7 +81,7 @@ def import_to_elasticsearch(files, clean):
     mappings = {
         "grant": {
             "_all": {
-                "analyzer": "english"
+                "analyzer": "english_with_folding"
             },
             "properties": {
                 "id": {"type": "string", "index": "not_analyzed"},
@@ -121,10 +124,10 @@ def import_to_elasticsearch(files, clean):
                             "type": "string", "index": "not_analyzed"
                         },
                         "name": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "streetAddress": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "id_and_name": {
                             "type": "string", "index": "not_analyzed"
@@ -149,10 +152,10 @@ def import_to_elasticsearch(files, clean):
                             "type": "string", "index": "not_analyzed"
                         },
                         "name": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "streetAddress": {
-                            "type": "string", "analyzer": "english",
+                            "type": "string", "analyzer": "english_with_folding",
                         },
                         "id_and_name": {
                             "type": "string", "index": "not_analyzed"
@@ -168,7 +171,40 @@ def import_to_elasticsearch(files, clean):
         }
     }
 
-    settings = {"max_result_window": 500000}
+    settings = {
+        "max_result_window": 500000,
+        "analysis": {
+            "analyzer": {
+                # Based on the english analyzer decribed at
+                # https://www.elastic.co/guide/en/elasticsearch/reference/2.4/analysis-lang-analyzer.html#english-analyzer
+                "english_with_folding": {
+                    "tokenizer": "standard",
+                    "filter": [
+                        "english_possessive_stemmer",
+                        "lowercase",
+                        "english_stop",
+                        "english_stemmer",
+                        # Additional filters not in the standard english analyzer:
+                        "asciifolding",
+                    ]
+                }
+            },
+            "filter": {
+                "english_stop": {
+                    "type": "stop",
+                    "stopwords": "_english_"
+                },
+                "english_stemmer": {
+                    "type": "stemmer",
+                    "language": "english"
+                },
+                "english_possessive_stemmer": {
+                    "type": "stemmer",
+                    "language": "possessive_english"
+                }
+            }
+        }
+    }
 
     # Create it again
     result = es.indices.create(index=ES_INDEX, body={"mappings": mappings, "settings": settings}, ignore=[400])
@@ -249,8 +285,10 @@ def get_mapping_from_index(es):
 def add_area_to_grant(area, grant):
     if area.get('ward_name'):
         grant['recipientWardName'] = area['ward_name']
+        grant['recipientWardNameGeoCode'] = ward_name_to_code.get(area['ward_name'])
     if area['district_name']:
         grant['recipientDistrictName'] = area['district_name']
+        grant['recipientDistrictGeoCode'] = district_name_to_code.get(area['district_name'])
     if area['area_name']:
         grant['recipientRegionName'] = area['area_name']
 
@@ -331,7 +369,7 @@ def get_area_mappings():
 
         for row in codepoint_csv:
             district_code = row['Admin_district_code']
-            district_name = code_to_name.get(district_code, '')
+            district_name = code_to_name.get(district_code, '').replace(' (B)', '')
             ward_code = row['Admin_ward_code']
             ward_name = code_to_name.get(ward_code, '')
 
@@ -357,13 +395,16 @@ def get_area_mappings():
                 'district_name': district_name, 'area_name': area_name, 'ward_name': ward_name
             }
 
+            district_name_to_code[district_name] = district_code
+            ward_name_to_code[ward_name] = ward_code
+
     # Northern Ireland codes and names not included in Code-Point, but uses a separate source
     with open(os.path.join(current_dir, 'WD15_LGD15_NI_LU.csv')) as ni_lookup:
         ni_lookup_csv = csv.DictReader(ni_lookup)
 
         for row in ni_lookup_csv:
             district_code = row['LGD15CD']
-            district_name = row['LGD15NM']
+            district_name = row['LGD15NM'].replace(' (B)', '')
             ward_code = row['WD15CD']
             ward_name = row['WD15NM']
 
@@ -373,6 +414,10 @@ def get_area_mappings():
             ward_code_to_area[ward_code] = {
                 'district_name': district_name, 'area_name': 'Northern Ireland', 'ward_name': ward_name
             }
+
+            district_name_to_code[district_name] = district_code
+            ward_name_to_code[ward_name] = ward_code
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Import 360 files in a directory to elasticsearch')
