@@ -56,7 +56,7 @@ Once we have reviewed and signed a copy of the agreement we will be able accept 
 ## How we use branches in this repository
 
 * `master` represents our main development branch
-* `iterationX.Y` (where X and Y are numbers) are releases of grantnav, that get deployed to the live site http://http://grantnav.threesixtygiving.org/
+* `iterationX.Y` (where X and Y are numbers) are releases of GrantNav, that get deployed to the live site http://http://grantnav.threesixtygiving.org/
 * Other branches represent development work or bug fixes.
 
 ## Submitting changes
