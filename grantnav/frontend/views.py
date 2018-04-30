@@ -147,7 +147,7 @@ def grants_csv_paged(query):
 def grants_json_paged(query):
     query.pop('extra_context', None)
     query.pop('aggs', None)
-    response = StreamingHttpResponse(grants_json_generator(query), content_type='text/json')
+    response = StreamingHttpResponse(grants_json_generator(query), content_type='application/json')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
 
