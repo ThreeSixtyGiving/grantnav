@@ -73,7 +73,7 @@ def test_home(provenance_dataload, server_url, browser):
     ('About'),
     ('Funders'),
     ('Recipients'),
-    ('Help with Using GrantNav'),
+    #('Help with Using GrantNav'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
     ('Terms and Conditions'),
     ('Take Down Policy'),
     ('Data Used in GrantNav'),

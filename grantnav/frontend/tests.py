@@ -27,13 +27,15 @@ def provenance_dataload(dataload, settings, tmpdir):
     ('GrantNav'),
     ('Search'),
     #('grantmaking'), #removed in 0440763b195952f6272e707c635426545f45020c
-    ('Try these examples'),
-    ('Only Locations'),
-    ('Bristol'),
-    ('Only Recipients'),
-    ('children'),
-    ('"arts centre"'),
-    ('"360G-wolfson-19750"')
+    #('Try these examples'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
+    #('Only Locations'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
+    #('Bristol'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
+    #('Only Recipients'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
+    #('children'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
+    #('"arts centre"'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
+    #('"360G-wolfson-19750"') #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
+    ('Help'),
+    ('Advanced Search')
     ])
 def test_home(provenance_dataload, client, expected_text):
     response = client.get('/')
