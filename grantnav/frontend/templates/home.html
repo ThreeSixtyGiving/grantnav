@@ -8,6 +8,9 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
+        <p class="search-help"><a href="/help">Help</a> | <a href="/help#advanced_search">Advanced Search</a></p>
+      </div>
+      <div class="col-xs-12">
 <!-- Dropdown -->
 		 <form role="search" action="{% url 'search' %}">
 			<div class="form-group">
@@ -43,14 +46,6 @@
         </form>
  -->       
         
-      </div>
-      <div class="col-xs-12">
-        <p class="search-help"> Try these examples:
-            <a class="link-on-orange" href="{% url 'search' %}?text_query=%22arts centre%22">"arts centre"</a>,
-            <a class="link-on-orange" href="{% url 'search' %}?text_query=volunteers">volunteers</a>,
-            <a class="link-on-orange" href="{% url 'search' %}?text_query=%22360G-wolfson-19750%22">"360G-wolfson-19750"</a>,
-            <a class="link-on-orange" href="{% url 'search' %}?text_query=Bristol&amp;default_field=recipientLocation">[Only Locations] Bristol</a>,
-            <a class="link-on-orange" href="{% url 'search' %}?text_query=children&amp;default_field=recipientOrganization.name">[Only Recipients] children</a></p>
       </div>
       <div class="col-xs-12">
         <h1 class="home-info text-center"> Search, explore and download UK grant data from funders publishing open data to the 360Giving Standard.</h1>
