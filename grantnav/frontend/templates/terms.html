@@ -67,45 +67,81 @@
 
   <p>{% blocktrans %}If you choose not to accept these cookies then this website may not work for you.{% endblocktrans %}</p>
 
-  <h2>{% trans "Piwik Traffic Analytics" %}</h2>
-
-  <p>{% blocktrans %}Open Data Services Co-operative Limited use their own hosted version of <a href="http://piwik.org">Piwik</a> to analyse traffic to this website. They do this to get an idea of how much traffic we are getting, where from and when.{% endblocktrans %}</p>
-
-  <p>{% blocktrans %}If you have set your web browser to "I do not want to be tracked" (DoNotTrack is enabled) then Piwik will not track your visit.{% endblocktrans %}</p>
-
-  <p>{% blocktrans %}Piwik also has its own opt out mechanism:{% endblocktrans %}</p>
-  <!-- opt out iframe - clicking this will mean people can opt out of tracking -->
-  <iframe style="border: 1; height: 150px; width: 600px;" src="http://mon.opendataservices.coop/piwik/index.php?module=CoreAdminHome&amp;action=optOut&amp;language=en"></iframe>
-
-  <h2>{% trans "Server Logs" %}</h2>
-  <p>{% blocktrans %}Open Data Services Co-operative Limited keeps server logs of traffic to, and activity on, all of its servers. This is to help keep the servers healthy and working by knowing how much activity is taking place on them.{% endblocktrans %}</p>
-
-  <p>{% blocktrans %}The ELK stack (Elasticsearch, Logstash, Kibana) is used to analyse server logs. {% endblocktrans %}</p> 
-  <p>{% blocktrans %}The server logs record information such as your IP address, the browser you are using and your operating system. Generally, this is considered not to constitute personal information, but we recognise that when aggregated and analysed there is a chance that this data could potentially enable identification of individuals. This is not something we do. {% endblocktrans %}</p>
-
   <h2>{% trans "Privacy Policy" %}</h2>
-  <p>360Giving is a charity that supports organisations to publish their grants data in an open, standardised way and helps people to understand and use the data, in order to support decision-making and learning across the charitable giving sector.  We are responsible for this website.</p>
-  
-  <p>This Privacy Policy explains how 360Giving uses, discloses and manages the personal information we collect from you by mail, in person, through our website and through third party websites that contain 360Giving forms.</p>
-  
-  <p>You may choose to provide 360Giving with personal information, such as your name, email address, telephone number or postal address. If you do so, we may choose to add you to our mailing list for updates on our work. You can unsubscribe from this mailing list at any point by clicking ‘unsubscribe’ or contacting us (see below).</p>
-  
-  <p>If you provide any of the above-mentioned information to us it will be:</p>
-  
-  <ul>
-    <li>Used to send you communications associated with 360Giving.</li>
-    <li>Deleted when you tell us that you would like this information removed.</li>
-  </ul>
-  
-  <p>We may use the personal information you provide us for internal purposes, such as for website administration, data analytics and compliance purposes.</p>
-  
-  <p>360Giving may share your personal information with service providers, who will be authorised to act only under our instructions or to comply with legal obligations. In addition, we may disclose information about you to comply with our legal obligations.</p>
-  
-  <p>You have the right to access, update and correct inaccuracies in your personal information, subject to certain exceptions prescribed by law, by using the contact email shown below. You can also opt out of receiving communications from us in the same way. Please allow at least 28 days for communications to cease and for your details to be removed from our mailing lists.</p>
-  
-  <p>If you have any questions or comments about this Privacy Policy, or to update your information please email: <a href="mailto:support@threesixtygiving.org">support@threesixtygiving.org</a></p>
-  
-  <p>360Giving reserves the right to update or amend this policy at any time and without prior notice.</p>
+
+  <p>
+    360Giving is committed to ensuring that your privacy is protected. This privacy policy sets out how we collect and process any personal data when you use this website.</p>
+
+  <p>We may change this policy from time to time by updating this page. This policy is effective from TODO.</p>
+
+  <p>Data controller:<br/>
+    360Giving, 17 Oval Way, London, SE11 5RR.
+    <br/>Contact us if would like a copy of the information held on you or if you believe that any information we are holding on you is incorrect or incomplete.
+    You can contact us by email at: <a href="mailto:info@threesixtygiving.org">info@threesixtygiving.org</a>
+  </p>
+
+  <p>You have the following rights concerning this data: <ul>
+     <li>Right to be informed, which is the purpose of this privacy notice</li>
+     <li>Right to Access, Rectification, Erasure, and to Restrict Processing. Note that the right to Erasure and Restrict Processing are balanced against our legitimate interests. Where relevant, you need to provide information to re-identify yourself from our pseudonymised data, see <a href="https://gdpr-info.eu/art-11-gdpr/">GDPR Article 11</a></li>
+    <li>Right to object to our processing.</li>
+  </ul></p>
+
+  <p>Our supervisory authority is the <a href="https://ico.org.uk/">ICO in the UK</a>. You have the right to lodge a complaint with them.</p>
+
+  <p>We process personal data for the following purposes: <ul>
+    <li>Understanding website visitor and traffic patterns</li>
+    <li>Understanding server behaviour</li>
+    <li>Identifying and being alerted to software errors</li>
+  </ul></p>
+
+  We rely on <a href="https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/lawful-basis-for-processing/legitimate-interests/">legitimate interests</a> (<a href="https://gdpr-info.eu/art-6-gdpr/">GDPR Article 6(1)(f)</a>) as the lawful basis for this processing. Details about the type of data, the purpose of the processing and legitimate interests, and the storage and retention of the data are set out below.
+
+
+  <h3>Understanding website visitor and traffic patterns</h3>
+  We collect data about your visits to the website, for the purpose of analysing how the website is used, so that we can improve it. A self hosted copy of Piwik is used for this.
+
+  <p>Personal data we collect:<ul>
+    <li>Your IP address - this is pseudonymised by redacting the second half of the address</li>
+    <li>Referrer (what page you arrived at one of our web pages from)</li>
+    <li>Information about your device, OS and browser</li>
+  </ul>We do not use this data to personally identify individuals, but it is possible that it could be used to do so, particularly if combined with other datasets.</p>
+
+  <p>You can opt out of this processing:
+  If you have set your web browser to "I do not want to be tracked" (DoNotTrack is enabled) then Piwik will not track your visit.</p>
+
+  <p>{% blocktrans %}Piwik also it’s own opt out mechanism:{% endblocktrans %}</p>
+  <!-- opt out iframe - clicking this will mean people can opt out of tracking -->
+  <iframe style="border: 1; height: 150px; width: 600px;" src="https://mon.opendataservices.coop/piwik/index.php?module=CoreAdminHome&amp;action=optOut&amp;language=en"></iframe>
+
+  <p>Data processors: Open Data Services Co-operative Limited, Bytemark.</p>
+  <p>No data is transferred to third countries or international organisations.</p>
+  <p>The data is kept indefinitely, in pseudonymised form.</p>
+
+  <h3>Understanding server behaviour</h3>
+  We collect data about your visits to the website in server logs. This is for the purpose of debugging network issues, monitoring server usage, and identifying malicious usage.
+
+  <p>Personal data we collect:<ul>
+    <li>Your IP address</li>
+    <li>User agent (information about the OS and browser that you use)</li>
+    <li>Referrer (what page you arrived at one of our web pages from)</li>
+  </ul>We do not use this data to personally identify individuals, but it is possible that it could be used to do so, particularly if combined with other datasets.</p>
+
+  <p>Data processors: Open Data Services Co-operative Limited, Bytemark.</p>
+  <p>No data is transferred to third countries or international organisations.</p>
+  <p>The data is kept indefinitely.</p>
+
+  <h3>Identifying and being alerted to software errors</h3>
+  When an error occurs on our site, we record details about the visit that caused it. We use <a href="https://sentry.io/welcome/">Sentry</a> for this.
+
+  <p>Data we collect:<ul>
+    <li>Your IP address</li>
+    <li>User agent (information about the OS and browser that you use)</li>
+    <li>Referrer (what page you arrived at one of our web pages from)</li>
+  </ul>We do not use this data to personally identify individuals, but it is possible that it could be used to do so, particularly if combined with other datasets.</p>
+
+  <p>Data processors: Open Data Services Co-operative Limited, Sentry (Functional Software, Inc.)</p>
+  <p>Data is transferred to Functional Software, Inc. who are based in the USA.</p>
+  <p>The data is kept for 90 days.</p>
 
   <h2>{% trans "Links to other websites" %}</h2>
   <p>{% blocktrans %}This website contains links to other websites. If you use these links to leave this site, you should note that we do not have any control over that other website. Therefore, we cannot be responsible for the protection and privacy of any information which you provide whilst visiting such sites and such sites are not governed by this privacy statement. You should exercise caution and look at the privacy statement applicable to the website in question.{% endblocktrans %}</p>
