@@ -48,7 +48,6 @@ def convert_spreadsheet(file_path, file_type, tmp_dir):
         input_name = tmp_dir
     else:
         input_name = file_path
-    print("encoding: {}".format(encoding))
     try:
         flattentool.unflatten(
             input_name,
@@ -258,7 +257,6 @@ def import_to_elasticsearch(files, clean):
                     currency = grant.get('currency')
                     if currency:
                         grant['currency'] = currency.upper()
-                    print(grant)
                     yield grant
 
         pprint(file_name)
