@@ -385,21 +385,21 @@ def get_area_mappings():
                 area_name = code_to_name[regional_code]
 
             postcode_to_area[row['Postcode'].replace(' ', '').upper()] = {
-                'district_code': district_code, 
-                'district_name': district_name, 
-                'area_name': area_name, 
+                'district_code': district_code,
+                'district_name': district_name,
+                'area_name': area_name,
                 'ward_name': ward_name,
                 'ward_code': ward_code
             }
             district_code_to_area[district_code] = {
-                'district_code': district_code, 
-                'district_name': district_name, 
+                'district_code': district_code,
+                'district_name': district_name,
                 'area_name': area_name
             }
             ward_code_to_area[ward_code] = {
-                'district_code': district_code, 
-                'district_name': district_name, 
-                'area_name': area_name, 
+                'district_code': district_code,
+                'district_name': district_name,
+                'area_name': area_name,
                 'ward_name': ward_name,
                 'ward_code': ward_code
             }
@@ -418,14 +418,14 @@ def get_area_mappings():
             area_name = 'Northern Ireland'
 
             district_code_to_area[district_code] = {
-                'district_code': district_code, 
-                'district_name': district_name, 
+                'district_code': district_code,
+                'district_name': district_name,
                 'area_name': area_name
             }
             ward_code_to_area[ward_code] = {
-                'district_code': district_code, 
-                'district_name': district_name, 
-                'area_name': area_name, 
+                'district_code': district_code,
+                'district_name': district_name,
+                'area_name': area_name,
                 'ward_name': ward_name,
                 'ward_code': ward_code
             }
