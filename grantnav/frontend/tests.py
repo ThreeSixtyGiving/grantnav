@@ -26,14 +26,6 @@ def provenance_dataload(dataload, settings, tmpdir):
 @pytest.mark.parametrize(('expected_text'), [
     ('GrantNav'),
     ('Search'),
-    #('grantmaking'), #removed in 0440763b195952f6272e707c635426545f45020c
-    #('Try these examples'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
-    #('Only Locations'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
-    #('Bristol'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
-    #('Only Recipients'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
-    #('children'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
-    #('"arts centre"'), #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
-    #('"360G-wolfson-19750"') #removed in 1383e409c77e1fd7e05c1c71db9534a80bbabcca
     ('Help'),
     ('Advanced Search')
     ])
