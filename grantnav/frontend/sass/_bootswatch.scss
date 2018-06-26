@@ -387,14 +387,17 @@ input:-moz-placeholder {font-style:italic}
   top: 12px;
 }
 
-// Example search terms container
+// Search help links
 .search-help {
   font-size: 1.1em;
   color: #663a0e;
   padding-top: 10px;
-  margin: 0 auto;
-  margin-bottom: 20px;
-  text-align: center;
+  margin: 5px 10px 5px 5px;
+  text-align: right;
+}
+
+.search-help a {
+  color: #414141
 }
 
 .col-vlg-offset-1 {
