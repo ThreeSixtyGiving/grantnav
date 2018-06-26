@@ -1,9 +1,11 @@
-import pytest
-import requests
-import urllib.parse
-from dataload.import_to_elasticsearch import import_to_elasticsearch, get_area_mappings
 import json
 import time
+import urllib.parse
+
+import pytest
+import requests
+
+from dataload.import_to_elasticsearch import import_to_elasticsearch, get_area_mappings
 
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/560a8d9f21a069a9d51468850188f34ae72a0ec3/'
 

@@ -1,10 +1,12 @@
 import os
 import time
+
 import pytest
-from dataload.import_to_elasticsearch import import_to_elasticsearch
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import requests
+
+from dataload.import_to_elasticsearch import import_to_elasticsearch
 
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/560a8d9f21a069a9d51468850188f34ae72a0ec3/'
 
