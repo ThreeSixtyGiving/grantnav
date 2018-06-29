@@ -1,9 +1,11 @@
-import pytest
-import requests
-import urllib.parse
-from dataload.import_to_elasticsearch import import_to_elasticsearch, get_area_mappings
 import json
 import time
+import urllib.parse
+
+import pytest
+import requests
+
+from dataload.import_to_elasticsearch import import_to_elasticsearch, get_area_mappings
 
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/560a8d9f21a069a9d51468850188f34ae72a0ec3/'
 
@@ -26,14 +28,8 @@ def provenance_dataload(dataload, settings, tmpdir):
 @pytest.mark.parametrize(('expected_text'), [
     ('GrantNav'),
     ('Search'),
-    #('grantmaking'), #removed in 0440763b195952f6272e707c635426545f45020c
-    ('Try these examples'),
-    ('Only Locations'),
-    ('Bristol'),
-    ('Only Recipients'),
-    ('children'),
-    ('"arts centre"'),
-    ('"360G-wolfson-19750"')
+    ('Help'),
+    ('Advanced Search')
     ])
 def test_home(provenance_dataload, client, expected_text):
     response = client.get('/')
