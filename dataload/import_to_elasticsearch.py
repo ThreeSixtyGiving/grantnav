@@ -24,7 +24,6 @@ postcode_to_area = {}
 district_code_to_area = {}
 ward_code_to_area = {}
 district_name_to_code = {}
-ward_name_to_code = {}
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -283,9 +282,9 @@ def get_mapping_from_index(es):
 
 
 def add_area_to_grant(area, grant):
-    if area.get('ward_name'):
-        grant['recipientWardName'] = area['ward_name']
-        grant['recipientWardNameGeoCode'] = ward_name_to_code.get(area['ward_name'])
+    if area.get('ward_code'):
+        grant['recipientWardNameGeoCode'] = area['ward_code']
+        grant['recipientWardName'] = ward_code_to_area.get(area['ward_code'], {}).get('ward_name')
     if area['district_name']:
         grant['recipientDistrictName'] = area['district_name']
         grant['recipientDistrictGeoCode'] = district_name_to_code.get(area['district_name'])
@@ -386,17 +385,26 @@ def get_area_mappings():
                 area_name = code_to_name[regional_code]
 
             postcode_to_area[row['Postcode'].replace(' ', '').upper()] = {
-                'district_name': district_name, 'area_name': area_name, 'ward_name': ward_name
+                'district_code': district_code,
+                'district_name': district_name,
+                'area_name': area_name,
+                'ward_name': ward_name,
+                'ward_code': ward_code
             }
             district_code_to_area[district_code] = {
-                'district_name': district_name, 'area_name': area_name
+                'district_code': district_code,
+                'district_name': district_name,
+                'area_name': area_name
             }
             ward_code_to_area[ward_code] = {
-                'district_name': district_name, 'area_name': area_name, 'ward_name': ward_name
+                'district_code': district_code,
+                'district_name': district_name,
+                'area_name': area_name,
+                'ward_name': ward_name,
+                'ward_code': ward_code
             }
 
             district_name_to_code[district_name] = district_code
-            ward_name_to_code[ward_name] = ward_code
 
     # Northern Ireland codes and names not included in Code-Point, but uses a separate source
     with open(os.path.join(current_dir, 'WD15_LGD15_NI_LU.csv')) as ni_lookup:
@@ -407,16 +415,22 @@ def get_area_mappings():
             district_name = row['LGD15NM'].replace(' (B)', '')
             ward_code = row['WD15CD']
             ward_name = row['WD15NM']
+            area_name = 'Northern Ireland'
 
             district_code_to_area[district_code] = {
-                'district_name': district_name, 'area_name': 'Northern Ireland'
+                'district_code': district_code,
+                'district_name': district_name,
+                'area_name': area_name
             }
             ward_code_to_area[ward_code] = {
-                'district_name': district_name, 'area_name': 'Northern Ireland', 'ward_name': ward_name
+                'district_code': district_code,
+                'district_name': district_name,
+                'area_name': area_name,
+                'ward_name': ward_name,
+                'ward_code': ward_code
             }
 
             district_name_to_code[district_name] = district_code
-            ward_name_to_code[ward_name] = ward_code
 
 
 if __name__ == '__main__':
