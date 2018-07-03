@@ -32,6 +32,13 @@
       </form>
     </div>
   </div>
+
+  {% if search_help %}
+  <div>
+    <p>{{ search_help }}</p>
+  </div>
+  {% endif %}
+
   {% if selected_facets %}
   <div class="row">
     <div class="col-xs-12">

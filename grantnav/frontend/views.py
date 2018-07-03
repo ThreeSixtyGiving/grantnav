@@ -427,12 +427,12 @@ def home(request):
 
 
 def search(request):
-
     [result_format, results_size] = get_request_type_and_size(request)
 
     context = {}
 
     query = request.GET.urlencode()
+
     if query:
         context['query_string'] = query
     else:
@@ -565,6 +565,9 @@ def search(request):
         get_pagination(request, context, page)
 
         context['selected_facets'] = dict(context['selected_facets'])
+
+        if context.get('text_query') is not None and ' ' in context.get('text_query'):
+            context["search_help"] = 'If you use quotes around your search, the result will be more accurate.'
 
         return render(request, "search.html", context=context)
 

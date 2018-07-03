@@ -56,7 +56,7 @@ def test_search(provenance_dataload, client):
     json_query['query']['bool']['filter'][0]['bool']['should'] = [{'term': {'fundingOrganization.id_and_name': '["Wolfson Foundation", "GB-CHC-1156077"]'}}]
     assert json.loads(urllib.parse.parse_qs(wolfson_facet['url'].split('?')[-1])['json_query'][0]) == json_query
 
-    # click agian
+    # click again
     response = client.get(wolfson_facet['url'])
     wolfson_facet = response.context['results']['aggregations']['fundingOrganization']['buckets'][0]
     assert wolfson_facet['doc_count'] == 8
