@@ -428,6 +428,24 @@ def home(request):
     return render(request, "home.html", context=context)
 
 
+def add_advance_search_information_in_context(context):
+    """
+    When a user search query is 2+ words without quotes, with 'and' or 'or'.
+    We give the user advance search information.
+    """
+    text_query = context.get('text_query').lower()
+    if text_query is not None and len(text_query) > 1:
+        if re.search(r'\b and \b', text_query):
+            context["advance_search_info"] = '"And" requires each word to be found'
+        elif re.search(r'\b or \b', text_query):
+            context["advance_search_info"] = '"Or" requires one of the two words to be found'
+        elif ' ' in context.get('text_query') \
+                and not (text_query.startswith("'") and text_query.endswith("'")) \
+                and not (text_query.startswith('"') and text_query.endswith('"')):
+            context["advance_search_info"] = 'If you use quotes around your search, the result will be more accurate.'
+    return context
+
+
 def search(request):
     [result_format, results_size] = get_request_type_and_size(request)
 
@@ -568,16 +586,7 @@ def search(request):
 
         context['selected_facets'] = dict(context['selected_facets'])
 
-        text_query = context.get('text_query').lower()
-        if text_query is not None and len(text_query) > 1:
-            if re.search(r'\b and \b', text_query):
-                context["search_help"] = '"And" requires each word to be found'
-            elif re.search(r'\b or \b', text_query):
-                context["search_help"] = '"Or" requires one of the two words to be found'
-            elif ' ' in context.get('text_query') \
-                    and not (text_query.startswith("'") and text_query.endswith("'")) \
-                    and not (text_query.startswith('"') and text_query.endswith('"')):
-                context["search_help"] = 'If you use quotes around your search, the result will be more accurate.'
+        add_advance_search_information_in_context(context)
 
         return render(request, "search.html", context=context)
 
