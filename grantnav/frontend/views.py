@@ -566,8 +566,12 @@ def search(request):
 
         context['selected_facets'] = dict(context['selected_facets'])
 
-        if context.get('text_query') is not None and ' ' in context.get('text_query'):
-            context["search_help"] = 'If you use quotes around your search, the result will be more accurate.'
+        text_query = context.get('text_query')
+        if text_query is not None and len(text_query) > 1:
+            if ' ' in context.get('text_query') \
+                    and not (text_query.startswith("'") and text_query.endswith("'")) \
+                    and not (text_query.startswith('"') and text_query.endswith('"')):
+                context["search_help"] = 'If you use quotes around your search, the result will be more accurate.'
 
         return render(request, "search.html", context=context)
 

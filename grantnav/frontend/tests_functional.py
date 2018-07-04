@@ -111,9 +111,9 @@ def test_search(provenance_dataload, server_url, browser):
     assert "$146,325" in browser.find_element_by_tag_name('body').text
 
 
-def test_search_two_words(provenance_dataload, server_url, browser):
+def test_search_two_words_without_quotes(provenance_dataload, server_url, browser):
     """
-    A user search query is 2+ words (eg. social change) without quotes.
+    when a user search query is 2+ words (eg. social change) without quotes,
     we want to inform the user that with quotes will have a better search result.
     """
     browser.get(server_url)
@@ -124,6 +124,28 @@ def test_search_two_words(provenance_dataload, server_url, browser):
     current_url_split_by_json_query = browser.current_url.split('?')
     assert current_url_split_by_json_query[0][-6:] == 'search'
     assert 'If you use quotes around your search, the result will be more accurate.' in browser.find_element_by_tag_name('body').text
+
+
+def test_search_two_words_with_single_quotes(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys("'social change'")
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    current_url_split_by_json_query = browser.current_url.split('?')
+    assert current_url_split_by_json_query[0][-6:] == 'search'
+    assert 'If you use quotes around your search, the result will be more accurate.' not in browser.find_element_by_tag_name('body').text
+
+
+def test_search_two_words_with_double_quotes(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('"social change"')
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    current_url_split_by_json_query = browser.current_url.split('?')
+    assert current_url_split_by_json_query[0][-6:] == 'search'
+    assert 'If you use quotes around your search, the result will be more accurate.' not in browser.find_element_by_tag_name('body').text
 
 
 def test_bad_search(provenance_dataload, server_url, browser):
