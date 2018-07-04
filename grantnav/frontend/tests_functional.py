@@ -148,6 +148,50 @@ def test_search_two_words_with_double_quotes(provenance_dataload, server_url, br
     assert 'If you use quotes around your search, the result will be more accurate.' not in browser.find_element_by_tag_name('body').text
 
 
+def test_search_includes_and(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('mental and health')
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    current_url_split_by_json_query = browser.current_url.split('?')
+    assert current_url_split_by_json_query[0][-6:] == 'search'
+    assert '"And" requires each word to be found' in browser.find_element_by_tag_name('body').text
+
+
+def test_search_does_not_include_and(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('secondhand clothes')
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    current_url_split_by_json_query = browser.current_url.split('?')
+    assert current_url_split_by_json_query[0][-6:] == 'search'
+    assert '"And" requires each word to be found' not in browser.find_element_by_tag_name('body').text
+
+
+def test_search_includes_or(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('mental or health')
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    current_url_split_by_json_query = browser.current_url.split('?')
+    assert current_url_split_by_json_query[0][-6:] == 'search'
+    assert '"Or" requires one of the two words to be found' in browser.find_element_by_tag_name('body').text
+
+
+def test_search_does_not_include_or(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('meteor clothes')
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    current_url_split_by_json_query = browser.current_url.split('?')
+    assert current_url_split_by_json_query[0][-6:] == 'search'
+    assert '"Or" requires one of the two words to be found' not in browser.find_element_by_tag_name('body').text
+
+
 def test_bad_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_name("text_query").send_keys(" £s:::::afdsfas")

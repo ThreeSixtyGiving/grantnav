@@ -1,22 +1,24 @@
-from django.shortcuts import render, redirect
-from grantnav.search import get_es
-from django.utils.http import urlencode
-from django.conf import settings
-from django.http import Http404, JsonResponse
-from elasticsearch.helpers import scan
+import collections
+import copy
+import csv
+import datetime
+import json
+import math
+import re
+from itertools import chain
+
+import dateutil.parser as date_parser
 import elasticsearch.exceptions
 import jsonref
-import json
-import copy
-import math
-import collections
-import dateutil.parser as date_parser
-import datetime
-import re
+from django.conf import settings
+from django.http import Http404, JsonResponse
 from django.http import HttpResponse, StreamingHttpResponse
+from django.shortcuts import render, redirect
+from django.utils.http import urlencode
+from elasticsearch.helpers import scan
+
 from grantnav import provenance, csv_layout, utils
-from itertools import chain
-import csv
+from grantnav.search import get_es
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -566,9 +568,13 @@ def search(request):
 
         context['selected_facets'] = dict(context['selected_facets'])
 
-        text_query = context.get('text_query')
+        text_query = context.get('text_query').lower()
         if text_query is not None and len(text_query) > 1:
-            if ' ' in context.get('text_query') \
+            if re.search(r'\b and \b', text_query):
+                context["search_help"] = '"And" requires each word to be found'
+            elif re.search(r'\b or \b', text_query):
+                context["search_help"] = '"Or" requires one of the two words to be found'
+            elif ' ' in context.get('text_query') \
                     and not (text_query.startswith("'") and text_query.endswith("'")) \
                     and not (text_query.startswith('"') and text_query.endswith('"')):
                 context["search_help"] = 'If you use quotes around your search, the result will be more accurate.'
