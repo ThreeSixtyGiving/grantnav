@@ -30,19 +30,19 @@
           </div>
         </div>
       </form>
+
+      {% if advance_search_info %}
+      <div class="col-xs-10">
+        <p>
+          {{ advance_search_info }}
+          <a href="http://grantnav.threesixtygiving.org/help#advanced_search" class="advance_search">Advance Search</a>
+        </p>
+      </div>
+      {% endif %}
+
     </div>
   </div>
 
-  {% if advance_search_info %}
-  <div class="container">
-    <div class="row">
-      <p>
-        {{ advance_search_info }}
-        <a href="http://grantnav.threesixtygiving.org/help#advanced_search">Advance Search</a>
-      </p>
-    </div>
-  </div>
-  {% endif %}
 
   {% if selected_facets %}
   <div class="row">
