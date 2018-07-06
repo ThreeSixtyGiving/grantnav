@@ -430,8 +430,8 @@ def home(request):
 
 def add_advance_search_information_in_context(context):
     """
-    When a user search query is 2+ words without quotes, with 'and' or 'or'.
-    We give the user advance search information.
+    When a user's search query is 2+ words without quotes, with 'and' or 'or'.
+    Advanced search information is displayed.
     """
     text_query = context.get('text_query').lower()
     if text_query is not None and len(text_query) > 1:
@@ -452,7 +452,6 @@ def search(request):
     context = {}
 
     query = request.GET.urlencode()
-
     if query:
         context['query_string'] = query
     else:

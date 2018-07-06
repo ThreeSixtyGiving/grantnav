@@ -121,7 +121,7 @@ def test_search_current_url(provenance_dataload, server_url, browser):
 
 def test_search_two_words_without_quotes(provenance_dataload, server_url, browser):
     """
-    when a user search query is 2+ words (eg. social change) without quotes,
+    When a user's search query is 2+ words without quotes,
     we want to inform the user that with quotes will have a better search result.
     """
     browser.get(server_url)
@@ -151,6 +151,9 @@ def test_search_two_words_with_double_quotes(provenance_dataload, server_url, br
 
 
 def test_search_includes_and(provenance_dataload, server_url, browser):
+    """
+    When a user's search query includes 'and', we want to inform the user of what it means.
+    """
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('mental and health')
@@ -169,6 +172,9 @@ def test_search_does_not_include_and(provenance_dataload, server_url, browser):
 
 
 def test_search_includes_or(provenance_dataload, server_url, browser):
+    """
+    When a user's search query includes 'or', we want to inform the user of what it means.
+    """
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('mental or health')
@@ -187,6 +193,10 @@ def test_search_does_not_include_or(provenance_dataload, server_url, browser):
 
 
 def test_search_display_advance_search_link(provenance_dataload, server_url, browser):
+    """
+    When an advance search message is displayed in the search results,
+    a link to the 'advance search' information page is also included.
+    """
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('social change')
