@@ -236,25 +236,26 @@
 
   <h3 id="words_phrases">{% trans "Words and phrases" %}</h3>
   <ul>
-    <li>{% trans "A single word: e.g. <code>people</code>" %}</li>
-    <li>{% trans "Multiple words: e.g. <code>young people gardens</code> (each word does not necessarily have to be present)" %}</li>
-    <li>{% trans "Require each word to be found: e.g. <code>young AND people</code>" %}</li>
-    <li>{% trans 'An exact phrase by enclosing it in quotes: e.g. <code>"young people"</code>' %}</li>
+    <li>{% blocktrans %} A single word: e.g. <a href="/search?text_query=people"><code>people</code></a> {% endblocktrans %}
+    </li>
+    <li>{% blocktrans %} Multiple words: e.g. <a href="/search?text_query=young+people+gardens"><code>young people gardens</code></a> (each word does not necessarily have to be present) {% endblocktrans %}</li>
+    <li>{% blocktrans %} Require each word to be found: e.g. <a href="/search?text_query=young+AND+people"><code>young AND people</code></a> {% endblocktrans %}</li>
+    <li>{% blocktrans %} An exact phrase by enclosing it in quotes: e.g. <a href="/search?text_query=%22young+people%22"><code>"young people"</code></a> {% endblocktrans %}</li>
   </ul>
 
   <p>{% blocktrans %}Using the above you can effectively filter the records to a single publisher or an exact grant. Try:{% endblocktrans %}</p>
   <ul>
-    <li><code>"The Dulverton Trust"</code></li>
-    <li><code>"360G-wolfson-19750"</code></li>
+    <li><a href="/search?text_query=The+Dulverton+Trust"><code>"The Dulverton Trust"</code></a></li>
+    <li><a href="/search?text_query=%22360G-wolfson-19750%22"><code>"360G-wolfson-19750"</code></a></li>
   </ul>
 
   <h3 id="fields">{% trans "Fields" %}</h3>
   <ul>
     <li>{% blocktrans %}Search words and phrases limited to a specific field, for example:{% endblocktrans %}
       <ul>
-        <li>{% blocktrans %}<code>title:gardens</code> will search the "title" field for the word "gardens"{% endblocktrans %}</li>
-        <li>{% blocktrans %}<code>recipientOrganization.postalCode:NW1</code> will search the for recipients within the "NW1" postcode district (where the field is populated){% endblocktrans %}</li>
-        <li>{% blocktrans %}<code>fundingOrganization.name:"London Councils"</code> will search the "Funding Organisation:Name" field for "London Councils"{% endblocktrans %}</li>
+        <li>{% blocktrans %}<a href="/search?text_query=title:gardens"><code>title:gardens</code></a> will search the "title" field for the word "gardens"{% endblocktrans %}</li>
+        <li>{% blocktrans %}<a href="/search?text_query=recipientOrganization.postalCode:NW1"><code>recipientOrganization.postalCode:NW1</code></a> will search the for recipients within the "NW1" postcode district (where the field is populated){% endblocktrans %}</li>
+        <li>{% blocktrans %}<a href="/search?text_query=fundingOrganization.name:%22London Councils%22"><code>fundingOrganization.name:"London Councils"</code></a> will search the "Funding Organisation:Name" field for "London Councils"{% endblocktrans %}</li>
       </ul>
     </li>
     <!-- these search functions not working as expected --> <!--
@@ -285,13 +286,13 @@
   <p>{% blocktrans %}You can also search ranges with one side unbounded:{% endblocktrans %}</p>
 
   <ul>
-    <li>{% blocktrans %}<code>amountAwarded:>1000</code> (more than 1000){% endblocktrans %}</li>
-    <li>{% blocktrans %}<code>amountAwarded:>=1000</code> (more than or equal to 1000){% endblocktrans %}</li>
-    <li>{% blocktrans %}<code>amountAppliedFor:<1000</code> (less than 1000){% endblocktrans %}</li>
-    <li>{% blocktrans %}<code>amountAppliedFor:<=1000</code> (less than or equal to 1000){% endblocktrans %}</li>
+    <li>{% blocktrans %}<a href="/search?text_query=amountAwarded:>1000"><code>amountAwarded:>1000</code></a> (more than 1000){% endblocktrans %}</li>
+    <li>{% blocktrans %}<a href="/search?text_query=amountAwarded:>=1000"><code>amountAwarded:>=1000</code></a> (more than or equal to 1000){% endblocktrans %}</li>
+    <li>{% blocktrans %}<a href="/search?text_query=amountAppliedFor:<1000"><code>amountAppliedFor:<1000</code></a> (less than 1000){% endblocktrans %}</li>
+    <li>{% blocktrans %}<a href="/search?text_query=amountAppliedFor:<=1000"><code>amountAppliedFor:<=1000</code></a> (less than or equal to 1000){% endblocktrans %}</li>
   </ul>
 
-  <p>{% blocktrans %}You can also use the * wildcard (see below) when asking for a range: e.g. <code>amountAwarded:[500 TO *]</code>{% endblocktrans %}</p>
+  <p>{% blocktrans %}You can also use the * wildcard (see below) when asking for a range: e.g. <a href="/search?text_query=amountAwarded:[500 TO *]"><code>amountAwarded:[500 TO *]</code></a>{% endblocktrans %}</p>
 
   <h3 id="wildcards">{% trans "Wildcards" %}</h3>
   <p>{% blocktrans %}Wildcard searches can be run on individual terms, using ? to replace a single character, and * to replace zero or more characters: e.g. <code>b?g</code>, <code>you*</code>{% endblocktrans %}</p>
