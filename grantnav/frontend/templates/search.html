@@ -30,16 +30,6 @@
           </div>
         </div>
       </form>
-
-      {% if advanced_search_info %}
-      <div class="col-xs-10">
-        <p>
-          Tip: {{ advanced_search_info }}
-          <a href="http://grantnav.threesixtygiving.org/help#advanced_search" class="advanced_search">Advanced Search</a>
-        </p>
-      </div>
-      {% endif %}
-
     </div>
   </div>
 
@@ -259,6 +249,17 @@
           </div>
         </div>
       </div>
+
+      {% if advanced_search_info %}
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="advanced-search-info">
+            <strong>Tip:</strong> {{ advanced_search_info }}
+            <br><a href="http://grantnav.threesixtygiving.org/help#advanced_search" class="advanced_search">Advanced Search</a>
+          </p>
+        </div>
+      </div>
+      {% endif %}
 
          <div class="panel panel-default">
             <div class="panel-body panel-no-padding">
