@@ -129,7 +129,8 @@ def test_search_two_words_without_quotes(provenance_dataload, server_url, browse
     search_box.send_keys('social change')
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert 'If you use quotes around your search, the result will be more accurate.' in browser.find_element_by_tag_name('body').text
+    assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
+           in browser.find_element_by_tag_name('body').text
 
 
 def test_search_two_words_with_single_quotes(provenance_dataload, server_url, browser):
@@ -138,7 +139,8 @@ def test_search_two_words_with_single_quotes(provenance_dataload, server_url, br
     search_box.send_keys("'social change'")
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert 'If you use quotes around your search, the result will be more accurate.' not in browser.find_element_by_tag_name('body').text
+    assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
+           not in browser.find_element_by_tag_name('body').text
 
 
 def test_search_two_words_with_double_quotes(provenance_dataload, server_url, browser):
@@ -147,7 +149,8 @@ def test_search_two_words_with_double_quotes(provenance_dataload, server_url, br
     search_box.send_keys('"social change"')
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert 'If you use quotes around your search, the result will be more accurate.' not in browser.find_element_by_tag_name('body').text
+    assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
+           not in browser.find_element_by_tag_name('body').text
 
 
 def test_search_includes_and(provenance_dataload, server_url, browser):
@@ -159,7 +162,9 @@ def test_search_includes_and(provenance_dataload, server_url, browser):
     search_box.send_keys('mental and health')
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert '"And" requires each word to be found' in browser.find_element_by_tag_name('body').text
+    assert 'The AND keyword (not case-sensitive) means that results must have both words present. ' \
+           'If you\'re looking for a phrase that has the word "and" in it, put quotes around the phrase ' \
+           '(e.g. "fees and costs").' in browser.find_element_by_tag_name('body').text
 
 
 def test_search_does_not_include_and(provenance_dataload, server_url, browser):
@@ -168,7 +173,9 @@ def test_search_does_not_include_and(provenance_dataload, server_url, browser):
     search_box.send_keys('secondhand clothes')
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert '"And" requires each word to be found' not in browser.find_element_by_tag_name('body').text
+    assert 'The AND keyword (not case-sensitive) means that results must have both words present. ' \
+           'If you\'re looking for a phrase that has the word "and" in it, put quotes around the phrase ' \
+           '(e.g. "fees and costs").' not in browser.find_element_by_tag_name('body').text
 
 
 def test_search_includes_or(provenance_dataload, server_url, browser):
@@ -180,7 +187,9 @@ def test_search_includes_or(provenance_dataload, server_url, browser):
     search_box.send_keys('mental or health')
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert '"Or" requires one of the two words to be found' in browser.find_element_by_tag_name('body').text
+    assert 'The OR keyword (not case-sensitive) means that results must have one of the words present. ' \
+           'This is the default. If you\'re looking for a phrase that has the word "or" in (e.g. "NYC or bust"), ' \
+           'put quotes around it.' in browser.find_element_by_tag_name('body').text
 
 
 def test_search_does_not_include_or(provenance_dataload, server_url, browser):
@@ -189,7 +198,31 @@ def test_search_does_not_include_or(provenance_dataload, server_url, browser):
     search_box.send_keys('meteor clothes')
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert '"Or" requires one of the two words to be found' not in browser.find_element_by_tag_name('body').text
+    assert 'The OR keyword (not case-sensitive) means that results must have one of the words present. ' \
+           'This is the default. If you\'re looking for a phrase that has the word "or" in (e.g. "NYC or bust"), ' \
+           'put quotes around it.' not in browser.find_element_by_tag_name('body').text
+
+
+def test_search_display_tip(provenance_dataload, server_url, browser):
+    """
+    When an advance search message is displayed in the search results,
+    'Tip: ' will appear in front of the message.
+    """
+    browser.get(server_url)
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('social change')
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    assert 'Tip: ' in browser.find_element_by_tag_name('body').text
+
+
+def test_search_do_not_display_tip(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('grant')
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    assert 'Tip: ' not in browser.find_element_by_tag_name('body').text
 
 
 def test_search_display_advanced_search_link(provenance_dataload, server_url, browser):

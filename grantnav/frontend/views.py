@@ -436,13 +436,18 @@ def add_advanced_search_information_in_context(context):
     text_query = context.get('text_query').lower()
     if text_query is not None and len(text_query) > 1:
         if re.search(r'\b and \b', text_query):
-            context["advanced_search_info"] = '"And" requires each word to be found'
+            context["advanced_search_info"] = 'The AND keyword (not case-sensitive) means that results must have ' \
+                'both words present. If you\'re looking for a phrase that has the word "and" in it, put quotes ' \
+                'around the phrase (e.g. "fees and costs").'
         elif re.search(r'\b or \b', text_query):
-            context["advanced_search_info"] = '"Or" requires one of the two words to be found'
+            context["advanced_search_info"] = 'The OR keyword (not case-sensitive) means that results must have one ' \
+                'of the words present. This is the default. If you\'re looking for a phrase that has the word "or" ' \
+                'in (e.g. "NYC or bust"), put quotes around it.'
         elif ' ' in context.get('text_query') \
                 and not (text_query.startswith("'") and text_query.endswith("'")) \
                 and not (text_query.startswith('"') and text_query.endswith('"')):
-            context["advanced_search_info"] = 'If you use quotes around your search, the result will be more accurate.'
+            context["advanced_search_info"] = 'If you\'re looking for a specific phrase, put quotes around it to ' \
+                'refine your search. e.g. "youth clubs".'
     return context
 
 
