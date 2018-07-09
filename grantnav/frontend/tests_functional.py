@@ -192,7 +192,7 @@ def test_search_does_not_include_or(provenance_dataload, server_url, browser):
     assert '"Or" requires one of the two words to be found' not in browser.find_element_by_tag_name('body').text
 
 
-def test_search_display_advance_search_link(provenance_dataload, server_url, browser):
+def test_search_display_advanced_search_link(provenance_dataload, server_url, browser):
     """
     When an advance search message is displayed in the search results,
     a link to the 'advance search' information page is also included.
@@ -202,15 +202,15 @@ def test_search_display_advance_search_link(provenance_dataload, server_url, bro
     search_box.send_keys('social change')
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert 'Advance Search' in browser.find_element_by_tag_name('body').text
+    assert 'Advanced Search' in browser.find_element_by_tag_name('body').text
 
 
-def test_search_advance_search_correct_link(provenance_dataload, server_url, browser):
+def test_search_advanced_search_correct_link(provenance_dataload, server_url, browser):
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('social change')
     browser.find_element_by_class_name("large-search-icon").click()
-    browser.find_element_by_class_name("advance_search").click()
+    browser.find_element_by_class_name("advanced_search").click()
 
     assert browser.current_url == 'http://grantnav.threesixtygiving.org/help#advanced_search'
 
