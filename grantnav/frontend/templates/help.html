@@ -240,7 +240,7 @@
     <li>{% trans "Multiple words: e.g. <code>young people gardens</code> (each word does not necessarily have to be present)" %}</li>
     <li>{% trans "Require each word to be found: e.g. <code>young AND people</code>" %}</li>
     <li>{% trans 'An exact phrase by enclosing it in quotes: e.g. <code>"young people"</code>' %}</li>
-    <li>{% trans 'Exclude an organisation: e.g. <code>NOT fundingOrganization.name:"London Councils"</code>' %}</li>
+    <li>{% trans 'Exclude results that contain a word: e.g. <code>youth NOT clubs</code>' %}</li>
   </ul>
 
   <p>{% blocktrans %}Using the above you can effectively filter the records to a single publisher or an exact grant. Try:{% endblocktrans %}</p>
