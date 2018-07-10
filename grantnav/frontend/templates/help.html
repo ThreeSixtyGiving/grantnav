@@ -245,7 +245,7 @@
 
   <p>{% blocktrans %}Using the above you can effectively filter the records to a single publisher or an exact grant. Try:{% endblocktrans %}</p>
   <ul>
-    <li><a href="/search?text_query=The+Dulverton+Trust"><code>"The Dulverton Trust"</code></a></li>
+    <li><a href="/search?text_query=%22The+Dulverton+Trust%22"><code>"The Dulverton Trust"</code></a></li>
     <li><a href="/search?text_query=%22360G-wolfson-19750%22"><code>"360G-wolfson-19750"</code></a></li>
   </ul>
 
@@ -272,15 +272,20 @@
   <p>{% blocktrans %}Search for grants in a given date range:{% endblocktrans %}</p>
 
   <ul>
-    <li>{% blocktrans %}Planned start date in 2012: e.g. <code>plannedDates.startDate:[2012-01-01 TO 2012-12-31]</code>{% endblocktrans %}</li>
-    <li>{% blocktrans %}Planned start date in 2012 <strong>and</strong> planned end date in 2014: e.g. <code>plannedDates.startDate:[2012-01-01 TO 2012-12-31] AND plannedDates.endDate:[2014-01-01 TO 2014-12-31]</code>{% endblocktrans %}</li>
+    <li>{% blocktrans %}Planned start date in 2012: e.g. <a href="/search?text_query=plannedDates.startDate:[2012-01-01 TO 2012-12-31]"><code>plannedDates.startDate:[2012-01-01 TO 2012-12-31]</code></a>{% endblocktrans %}</li>
+    <li>
+      {% blocktrans %} Planned start date in 2012 <strong>and</strong> planned end date in 2014: e.g.
+      <a href="/search?text_query=plannedDates.startDate:[2012-01-01 TO 2012-12-31] AND plannedDates.endDate:[2014-01-01 TO 2014-12-31]">
+        <code>plannedDates.startDate:[2012-01-01 TO 2012-12-31] AND plannedDates.endDate:[2014-01-01 TO 2014-12-31]</code>
+      </a>{% endblocktrans %}
+    </li>
   </ul>
 
   <h4>{% trans "Amounts" %}</h4>
   <p>{% blocktrans %}In addition to using the <a href="#filters">filters</a> on results, you can also search for grants by amount (awarded, applied for etc.) within a specific range:{% endblocktrans %}</p>
   <ul>
-    <li>{% blocktrans %}Amount Awarded between £0 and £150: e.g. <code>amountAwarded:[0 TO 150]</code>{% endblocktrans %}</li>
-    <li>{% blocktrans %}Amount Applied For between £800 and £1000: e.g. <code>amountAppliedFor:[800 TO 1000]</code>{% endblocktrans %}</li>
+    <li>{% blocktrans %}Amount Awarded between £0 and £150: e.g. <a href="/search?text_query=amountAwarded:[0 TO 150]"><code>amountAwarded:[0 TO 150]</code></a>{% endblocktrans %}</li>
+    <li>{% blocktrans %}Amount Applied For between £800 and £1000: e.g. <a href="/search?text_query=amountAppliedFor:[800 TO 1000]"><code>amountAppliedFor:[800 TO 1000]</code></a>{% endblocktrans %}</li>
   </ul>
 
   <p>{% blocktrans %}You can also search ranges with one side unbounded:{% endblocktrans %}</p>
@@ -295,10 +300,14 @@
   <p>{% blocktrans %}You can also use the * wildcard (see below) when asking for a range: e.g. <a href="/search?text_query=amountAwarded:[500 TO *]"><code>amountAwarded:[500 TO *]</code></a>{% endblocktrans %}</p>
 
   <h3 id="wildcards">{% trans "Wildcards" %}</h3>
-  <p>{% blocktrans %}Wildcard searches can be run on individual terms, using ? to replace a single character, and * to replace zero or more characters: e.g. <code>b?g</code>, <code>you*</code>{% endblocktrans %}</p>
+  <p>{% blocktrans %}Wildcard searches can be run on individual terms, using ? to replace a single character, and * to replace zero or more characters: e.g.
+    <a href="/search?text_query=b?g"><code>b?g</code></a>, <a href="/search?text_query=you*"><code>you*</code></a>{% endblocktrans %}
+  </p>
 
   <h3 id="fuzziness">{% trans "Fuzziness" %}</h3>
-  <p>{% blocktrans %}You can search for terms that are similar to, but not exactly like our search terms, using the “fuzzy” operator: e.g. <code>youht~</code>, <code>yung~</code>, <code>pple~</code>{% endblocktrans %}</p>
+  <p>{% blocktrans %}You can search for terms that are similar to, but not exactly like our search terms, using the “fuzzy” operator: e.g.
+    <a href="/search?text_query=youht~"><code>youht~</code></a>, <a href="/search?text_query=yung~"><code>yung~</code></a>, <a href="/search?text_query=pple~"><code>pple~</code></a>{% endblocktrans %}
+  </p>
 
   <!--<p>{% blocktrans %}For more examples and functionality see:
   https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax{% endblocktrans %}</p>-->
