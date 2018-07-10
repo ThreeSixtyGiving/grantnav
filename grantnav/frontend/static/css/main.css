@@ -86,6 +86,7 @@ body .advanced-search-info {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-family: Courier;
+  word-break: normal;
 }
 
 /* Issue #194 */
