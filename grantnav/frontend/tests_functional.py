@@ -235,7 +235,7 @@ def test_search_display_advanced_search_link(provenance_dataload, server_url, br
     search_box.send_keys('social change')
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert 'Advanced Search' in browser.find_element_by_tag_name('body').text
+    assert 'For more tips, see Advanced Search' in browser.find_element_by_tag_name('body').text
 
 
 def test_search_advanced_search_correct_link(provenance_dataload, server_url, browser):
@@ -254,7 +254,7 @@ def test_search_do_not_display_advance_search_link(provenance_dataload, server_u
     search_box.send_keys('grant')
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert 'Advance Search' not in browser.find_element_by_tag_name('body').text
+    assert 'For more tips, see Advanced Search' not in browser.find_element_by_tag_name('body').text
 
 
 def test_bad_search(provenance_dataload, server_url, browser):
