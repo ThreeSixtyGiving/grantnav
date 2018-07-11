@@ -32,6 +32,8 @@
       </form>
     </div>
   </div>
+
+
   {% if selected_facets %}
   <div class="row">
     <div class="col-xs-12">
@@ -73,6 +75,15 @@
 
   
   <div class="row">
+    {% if advanced_search_info %}
+      <div class="col-xs-12">
+        <p class="advanced-search-info">
+          <strong>Tip:</strong> {{ advanced_search_info }}
+          For more tips, see <a href="http://grantnav.threesixtygiving.org/help#advanced_search" class="advanced_search">Advanced Search</a>
+        </p>
+      </div>
+    {% endif %}
+
     <div class="col-xs-3 filters">
       <h3 class="indent"> Filter By </h3>
       <div class="panel panel-default">
