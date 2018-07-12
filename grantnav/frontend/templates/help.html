@@ -240,7 +240,7 @@
     <li>{% blocktrans %} Multiple words: e.g. <a href="/search?text_query=young+people+gardens"><code>young people gardens</code></a> (each word does not necessarily have to be present) {% endblocktrans %}</li>
     <li>{% blocktrans %} Require each word to be found: e.g. <a href="/search?text_query=young+AND+people"><code>young AND people</code></a> {% endblocktrans %}</li>
     <li>{% blocktrans %} An exact phrase by enclosing it in quotes: e.g. <a href="/search?text_query=%22young+people%22"><code>"young people"</code></a> {% endblocktrans %}</li>
-    <li>{% trans 'Exclude results that contain a word: e.g. <code>youth NOT clubs</code>' %}</li>
+    <li>{% blocktrans %} Exclude results that contain a word: e.g. <a href="/search?text_query=youth+NOT+clubs"><code>youth NOT clubs</code></a> {% endblocktrans %}</li>
   </ul>
 
   <p>{% blocktrans %}Using the above you can effectively filter the records to a single publisher or an exact grant. Try:{% endblocktrans %}</p>
