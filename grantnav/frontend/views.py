@@ -1,22 +1,24 @@
-from django.shortcuts import render, redirect
-from grantnav.search import get_es
-from django.utils.http import urlencode
-from django.conf import settings
-from django.http import Http404, JsonResponse
-from elasticsearch.helpers import scan
+import collections
+import copy
+import csv
+import datetime
+import json
+import math
+import re
+from itertools import chain
+
+import dateutil.parser as date_parser
 import elasticsearch.exceptions
 import jsonref
-import json
-import copy
-import math
-import collections
-import dateutil.parser as date_parser
-import datetime
-import re
+from django.conf import settings
+from django.http import Http404, JsonResponse
 from django.http import HttpResponse, StreamingHttpResponse
+from django.shortcuts import render, redirect
+from django.utils.http import urlencode
+from elasticsearch.helpers import scan
+
 from grantnav import provenance, csv_layout, utils
-from itertools import chain
-import csv
+from grantnav.search import get_es
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -426,8 +428,30 @@ def home(request):
     return render(request, "home.html", context=context)
 
 
-def search(request):
+def add_advanced_search_information_in_context(context):
+    """
+    When a user's search query is 2+ words without quotes, with 'and' or 'or'.
+    Advanced search information is displayed.
+    """
+    text_query = context.get('text_query').lower()
+    if text_query is not None and len(text_query) > 1:
+        if re.search(r'\b and \b', text_query):
+            context["advanced_search_info"] = 'The AND keyword (not case-sensitive) means that results must have ' \
+                'both words present. If you\'re looking for a phrase that has the word "and" in it, put quotes ' \
+                'around the phrase (e.g. "fees and costs").'
+        elif re.search(r'\b or \b', text_query):
+            context["advanced_search_info"] = 'The OR keyword (not case-sensitive) means that results must have one ' \
+                'of the words present. This is the default. If you\'re looking for a phrase that has the word "or" ' \
+                'in (e.g. "NYC or bust"), put quotes around it.'
+        elif ' ' in context.get('text_query') \
+                and not (text_query.startswith("'") and text_query.endswith("'")) \
+                and not (text_query.startswith('"') and text_query.endswith('"')):
+            context["advanced_search_info"] = 'If you\'re looking for a specific phrase, put quotes around it to ' \
+                'refine your search. e.g. "youth clubs".'
+    return context
 
+
+def search(request):
     [result_format, results_size] = get_request_type_and_size(request)
 
     context = {}
@@ -565,6 +589,8 @@ def search(request):
         get_pagination(request, context, page)
 
         context['selected_facets'] = dict(context['selected_facets'])
+
+        add_advanced_search_information_in_context(context)
 
         return render(request, "search.html", context=context)
 
