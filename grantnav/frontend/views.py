@@ -442,7 +442,7 @@ def add_advanced_search_information_in_context(context):
         elif re.search(r'\b or \b', text_query):
             context["advanced_search_info"] = 'The OR keyword (not case-sensitive) means that results must have one ' \
                 'of the words present. This is the default. If you\'re looking for a phrase that has the word "or" ' \
-                'in (e.g. "NYC or bust"), put quotes around it.'
+                'in (e.g. "children or adults"), put quotes around it.'
         elif ' ' in context.get('text_query') \
                 and not (text_query.startswith("'") and text_query.endswith("'")) \
                 and not (text_query.startswith('"') and text_query.endswith('"')):
