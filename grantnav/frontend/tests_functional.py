@@ -188,8 +188,8 @@ def test_search_includes_or(provenance_dataload, server_url, browser):
     browser.find_element_by_class_name("large-search-icon").click()
 
     assert 'The OR keyword (not case-sensitive) means that results must have one of the words present. ' \
-           'This is the default. If you\'re looking for a phrase that has the word "or" in (e.g. "NYC or bust"), ' \
-           'put quotes around it.' in browser.find_element_by_tag_name('body').text
+           'This is the default. If you\'re looking for a phrase that has the word "or" in ' \
+           '(e.g. "children or adults"), put quotes around it.' in browser.find_element_by_tag_name('body').text
 
 
 def test_search_does_not_include_or(provenance_dataload, server_url, browser):
@@ -199,8 +199,8 @@ def test_search_does_not_include_or(provenance_dataload, server_url, browser):
     browser.find_element_by_class_name("large-search-icon").click()
 
     assert 'The OR keyword (not case-sensitive) means that results must have one of the words present. ' \
-           'This is the default. If you\'re looking for a phrase that has the word "or" in (e.g. "NYC or bust"), ' \
-           'put quotes around it.' not in browser.find_element_by_tag_name('body').text
+           'This is the default. If you\'re looking for a phrase that has the word "or" in ' \
+           '(e.g. "children or adults"), put quotes around it.' not in browser.find_element_by_tag_name('body').text
 
 
 def test_search_display_tip(provenance_dataload, server_url, browser):
