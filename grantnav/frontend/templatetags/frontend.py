@@ -1,14 +1,16 @@
-from collections import OrderedDict
-from django import template
-import math
 import datetime
-import dateutil.parser as date_parser
-import strict_rfc3339
 import json
+import math
+from collections import OrderedDict
+
+import dateutil.parser as date_parser
+import jsonref
+import strict_rfc3339
+from django import template
+from django.conf import settings
+
 from grantnav import provenance
 from grantnav import utils
-import jsonref
-from django.conf import settings
 
 register = template.Library()
 
