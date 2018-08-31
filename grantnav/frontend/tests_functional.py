@@ -5,6 +5,7 @@ import pytest
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import Select
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
 
@@ -109,6 +110,33 @@ def test_search(provenance_dataload, server_url, browser):
     other_currencies_modal.click()
     time.sleep(0.5)
     assert "$146,325" in browser.find_element_by_tag_name('body').text
+
+
+def test_search_by_only_titles_and_descriptions_radio_button_in_home(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+
+    assert "Only Titles & Descriptions" in browser.find_element_by_tag_name('body').text
+
+
+def test_search_by_only_titles_and_descriptions_radio_button_in_search(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    assert "Only Titles & Descriptions" in browser.find_element_by_tag_name('body').text
+
+
+def test_search_by_only_titles_and_descriptions(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    # select title_and_description from dropdown menu
+    search_dropdown = Select(browser.find_element_by_class_name("front_search"))
+    search_dropdown.select_by_value("title_and_description")
+    # search "laboratory"
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('laboratory')
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    assert "New science laboratory" in browser.find_element_by_tag_name('body').text
+    assert "laboratories" not in browser.find_element_by_tag_name('body').text
 
 
 def test_search_current_url(provenance_dataload, server_url, browser):
