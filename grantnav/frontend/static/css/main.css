@@ -187,7 +187,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
 select.front_search	{
   display: inline-block;
   vertical-align: top;
-  width: 20%;
+  width: 24%;
   background-color: #d66f05;
   border-radius: 12px;
   height: 79px;
