@@ -112,20 +112,20 @@ def test_search(provenance_dataload, server_url, browser):
     assert "$146,325" in browser.find_element_by_tag_name('body').text
 
 
-def test_search_by_only_titles_and_descriptions_radio_button_in_home(provenance_dataload, server_url, browser):
+def test_search_by_titles_and_descriptions_radio_button_in_home(provenance_dataload, server_url, browser):
     browser.get(server_url)
 
-    assert "Only Titles & Descriptions" in browser.find_element_by_tag_name('body').text
+    assert "Titles & Descriptions" in browser.find_element_by_tag_name('body').text
 
 
-def test_search_by_only_titles_and_descriptions_radio_button_in_search(provenance_dataload, server_url, browser):
+def test_search_by_titles_and_descriptions_radio_button_in_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-icon").click()
 
-    assert "Only Titles & Descriptions" in browser.find_element_by_tag_name('body').text
+    assert "Titles & Descriptions" in browser.find_element_by_tag_name('body').text
 
 
-def test_search_by_only_titles_and_descriptions(provenance_dataload, server_url, browser):
+def test_search_by_titles_and_descriptions(provenance_dataload, server_url, browser):
     browser.get(server_url)
     # select title_and_description from dropdown menu
     search_dropdown = Select(browser.find_element_by_class_name("front_search"))
