@@ -89,7 +89,7 @@ def import_to_elasticsearch(files, clean):
                 "recipientDistrictName": {"type": "string", "index": "not_analyzed"},
                 "recipientWardName": {"type": "string", "index": "not_analyzed"},
                 "currency": {"type": "string", "index": "not_analyzed"},
-                "title_and_description": {"type": "string"},
+                "title_and_description": {"type": "string", "analyzer": "english_with_folding"},
                 "recipientLocation": {"type": "string"},
                 "amountAppliedFor": {"type": "double"},
                 "amountAwarded": {"type": "double"},
