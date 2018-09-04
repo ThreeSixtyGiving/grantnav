@@ -136,7 +136,22 @@ def test_search_by_titles_and_descriptions(provenance_dataload, server_url, brow
     browser.find_element_by_class_name("large-search-icon").click()
 
     assert "New science laboratory" in browser.find_element_by_tag_name('body').text
-    assert "laboratories" not in browser.find_element_by_tag_name('body').text
+    assert "laboratories" in browser.find_element_by_tag_name('body').text
+    assert "£4,846,774" in browser.find_element_by_tag_name('body').text
+    # result in "Search All" query
+    assert "£4,991,774" not in browser.find_element_by_tag_name('body').text
+
+    browser.get(server_url)
+    # search "laboratory" in "Search All"
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('laboratory')
+    browser.find_element_by_class_name("large-search-icon").click()
+
+    assert "New science laboratory" in browser.find_element_by_tag_name('body').text
+    assert "laboratories" in browser.find_element_by_tag_name('body').text
+    assert "£4,991,774" in browser.find_element_by_tag_name('body').text
+    # result in "Titles and Descriptions" query.
+    assert "£4,846,774" not in browser.find_element_by_tag_name('body').text
 
 
 def test_search_current_url(provenance_dataload, server_url, browser):
