@@ -341,7 +341,9 @@ def update_doc_with_title_and_description(grant):
     """
     Update ElasticSearch with the new key 'title_and_description'.
     """
-    grant['title_and_description'] = json.dumps([grant.get('title'), grant.get('description')])
+    description = grant.get('description') if grant.get('description') else ''
+    title = grant.get('title') if grant.get('title') else ''
+    grant['title_and_description'] = title + ' ' + description
 
 
 def update_doc_with_org_mappings(grant, org_key, file_name):
