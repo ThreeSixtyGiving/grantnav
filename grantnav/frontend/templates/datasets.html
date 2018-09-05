@@ -17,7 +17,7 @@
 <p>Data published to the 360Giving Standard is taken from an <a href="http://www.threesixtygiving.org/data/find-data/">up to date list on the 360Giving website</a>.  The <a href="/datasets/#datasets-used">360Giving Datasets Used table</a> below lists the specific datasets used in GrantNav, how they are licensed, and when they were retrieved.
 </p>
 
-<p>We use the <a href="https://www.ordnancesurvey.co.uk/business-and-government/products/code-point-open.html">Code-Point Open</a> data to augment some of the location data.  We use the <a href="http://data.charitycommission.gov.uk/default.aspx">Charity Commission data</a> to look up charity names.  Both these datasets are licensed under an <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government License</a>, see <a href="#copyright">Copyright and Attribution</a> below for full details.<p>
+<p>We use the <a href="https://www.ordnancesurvey.co.uk/business-and-government/products/code-point-open.html">Code-Point Open</a> data to augment some of the location data.  We use the <a href="http://data.charitycommission.gov.uk/default.aspx">Charity Commission data</a> to look up charity names.  Both these datasets are licensed under an <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government License</a>.<p>
 
 <h2>Updates to data in GrantNav</h2>
 
@@ -84,7 +84,7 @@ If you see a problem any data on this site, please report it directly to the rel
 <p><strong>To reuse data from GrantNav, you must:</strong></p>
 <ul>
 <li><a href="#attributing-grantnav">Attribute GrantNav</a>, and</li>
-<li>Provide copyright and attribution information about the original data. See <a href="#copyright">Copyright and Attribution</a> for a full list.</li>
+<li>Provide copyright and attribution information about the original data.</li>
 </ul>
 
 <h4 id="attributing-grantnav">Attributing GrantNav</h4>
@@ -92,32 +92,5 @@ If you see a problem any data on this site, please report it directly to the rel
 <blockquote>
 <p>Contains data from <a href="">GrantNav</a> a <a href="http://www.threesixtygiving.org/">360Giving</a> application released under the terms of the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution Sharealike license (CC-BY-SA)</a></p>
 </blockquote>
-
-<h2 id="copyright">Copyright and attribution</h2>
-
-    <p>The data on this website can be used under the terms of the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution Sharealike license (CC-BY-SA)</a>, see <a href="#reuse">Reusing GrantNav data</a> above for an attribution statement. The original datasets also have their own copyright and attribution statements:</p>
-
-<ul>
-<li>
-<a href="https://www.ordnancesurvey.co.uk/business-and-government/products/code-point-open.html">Code-Point Open</a> data originally released under an <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence</a>.
-</li>
-<ul>
-<li>
-Contains OS data &copy; Crown copyright and database right 2016
-</li>
-<li>
-Contains Royal Mail data &copy; Royal Mail copyright and Database right 2016
-</li>
-<li>
-Contains National Statistics data &copy; Crown copyright and database right 2015 &amp; 2016
-</li>
-</ul>
-<li>
-<a href="http://data.charitycommission.gov.uk/default.aspx">Charity Commission data</a> originally released under an <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence</a>.
-</li>
-{% for publisher in publishers %}
-<li><a href="{{publisher.datasets.0.distribution.0.accessURL|default:publisher.website}}">{{publisher.name}}</a> data originally released under <a href="{{publisher.datasets.0.license}}">{{publisher.datasets.0.license}}</a></li>
-{% endfor %}
-</ul>
 
 {% endblock %}
