@@ -179,12 +179,12 @@ def import_to_elasticsearch(files, clean):
                 "english_with_folding": {
                     "tokenizer": "standard",
                     "filter": [
+                        # asciifolding not in the standard english analyzer.
+                        "asciifolding",
                         "english_possessive_stemmer",
                         "lowercase",
                         "english_stop",
                         "english_stemmer",
-                        # Additional filters not in the standard english analyzer:
-                        "asciifolding",
                     ]
                 }
             },
