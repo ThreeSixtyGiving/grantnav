@@ -89,6 +89,7 @@ def import_to_elasticsearch(files, clean):
                 "recipientDistrictName": {"type": "string", "index": "not_analyzed"},
                 "recipientWardName": {"type": "string", "index": "not_analyzed"},
                 "currency": {"type": "string", "index": "not_analyzed"},
+                "title_and_description": {"type": "string", "analyzer": "english_with_folding"},
                 "recipientLocation": {"type": "string"},
                 "amountAppliedFor": {"type": "double"},
                 "amountAwarded": {"type": "double"},
@@ -254,6 +255,7 @@ def import_to_elasticsearch(files, clean):
                     update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
                     update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
                     update_doc_with_region(grant)
+                    update_doc_with_title_and_description(grant)
                     currency = grant.get('currency')
                     if currency:
                         grant['currency'] = currency.upper()
@@ -333,6 +335,15 @@ def update_doc_with_region(grant):
             if geoCode and geoCode.startswith("N09"):
                 grant['recipientRegionName'] = "Northern Ireland"
                 grant['recipientDistrictName'] = location["name"]
+
+
+def update_doc_with_title_and_description(grant):
+    """
+    Update ElasticSearch with the new key 'title_and_description'.
+    """
+    description = grant.get('description') if grant.get('description') else ''
+    title = grant.get('title') if grant.get('title') else ''
+    grant['title_and_description'] = title + ' ' + description
 
 
 def update_doc_with_org_mappings(grant, org_key, file_name):
