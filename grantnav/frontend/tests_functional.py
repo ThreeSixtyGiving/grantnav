@@ -72,6 +72,15 @@ def test_home(provenance_dataload, server_url, browser):
     assert '360Giving standard' not in browser.find_element_by_tag_name('body').text
 
 
+@pytest.mark.parametrize(('link_text'), [
+    ('Forum'),
+    ('Help'),
+    ])
+def test_navbar_links(provenance_dataload, server_url, browser, link_text):
+    browser.get(server_url)
+    browser.find_element_by_link_text(link_text)
+
+
 def test_nav_menu_forum_link(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("forum_link").click()
