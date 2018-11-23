@@ -88,7 +88,7 @@
     {% endif %}
 
     <div class="col-xs-3 filters">
-      <h3 class="indent"> Filter By <a class="filter_by_help_link" href="http://grantnav.threesixtygiving.org/help#filters"><sup><img src="{% static 'images/icon-help-50.png'%}" width="15" height="15"></sup></a></h3>
+      <h3 class="indent"> Filter By <a class="filter_by_help_link" href="/help#filters"><sup><img src="{% static 'images/icon-help-50.png'%}" width="15" height="15"></sup></a></h3>
       <div class="panel panel-default">
         <a class="anchor" id="currency"></a>
         <div class="panel-heading list-group-compact">
@@ -252,7 +252,7 @@
         </div>
         <div class="col-md-5 col-xs-12">
           <div>
-            <a href="http://grantnav.threesixtygiving.org/help#export_files">
+            <a href="/help#export_files">
               <sup><img src="{% static 'images/icon-help-50.png'%}" class="pull-right" id="files_help_link" width="15" height="15"/></sup>
             </a>
             <a href="{% url 'search.json' %}?{{ query_string }}">
