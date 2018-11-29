@@ -98,7 +98,7 @@ def test_export_icons_help_link(provenance_dataload, server_url, browser):
 def test_filter_by_help_link(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-icon").click()
-    browser.find_element_by_class_name("filter_by_help_link").click()
+    browser.find_element_by_id("filter_by_help_link").click()
 
     assert browser.current_url == server_url + '/help#filters'
 
