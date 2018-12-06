@@ -88,7 +88,7 @@
     {% endif %}
 
     <div class="col-xs-3 filters">
-      <h3 class="indent"> Filter By </h3>
+      <h3 class="indent"> Filter By <a id="filter_by_help_link" href="/help#filters"><sup><img src="{% static 'images/icon-help-50.png'%}" width="15" height="15"></sup></a></h3>
       <div class="panel panel-default">
         <a class="anchor" id="currency"></a>
         <div class="panel-heading list-group-compact">
@@ -252,11 +252,14 @@
         </div>
         <div class="col-md-5 col-xs-12">
           <div>
+            <a href="/help#export_files">
+              <sup><img src="{% static 'images/icon-help-50.png'%}" class="pull-right" id="files_help_link" width="15" height="15"/></sup>
+            </a>
             <a href="{% url 'search.json' %}?{{ query_string }}">
-              <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="no-float-md download_button" id="json_download_button"/>
+              <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button" id="json_download_button"/>
             </a>
             <a href="{% url 'search.csv' %}?{{ query_string }}">
-              <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="pull-left-md download_button" id="csv_download_button"/>
+              <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button" id="csv_download_button"/>
             </a>
           </div>
         </div>
