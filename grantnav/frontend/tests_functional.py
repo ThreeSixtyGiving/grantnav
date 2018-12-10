@@ -326,7 +326,7 @@ def test_take_down(server_url, browser):
 
 def test_help_page(server_url, browser):
     browser.get(server_url + '/help')
-    assert 'Using GrantNav' in browser.find_element_by_tag_name('h1').text
+    assert 'Help with using GrantNav' in browser.find_element_by_tag_name('h1').text
 
 
 def test_developers(server_url, browser):
