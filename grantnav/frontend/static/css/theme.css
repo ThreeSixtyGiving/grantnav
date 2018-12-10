@@ -6174,7 +6174,7 @@ input:-moz-placeholder {
   margin: 5px 10px 5px 5px;
   text-align: right; }
 
-.search-help a {
+.search-help a, #forum_link, #help_link {
   color: #414141; }
 
 @media (min-width: 1400px) {

@@ -83,16 +83,16 @@ def test_navbar_links(provenance_dataload, server_url, browser, link_text):
 
 def test_nav_menu_forum_link(provenance_dataload, server_url, browser):
     browser.get(server_url)
-    browser.find_element_by_class_name("forum_link").click()
+    browser.find_element_by_id("forum_link").click()
 
     assert browser.current_url == 'https://forum.threesixtygiving.org/c/grantnav'
 
 
 def test_nav_menu_help_link(provenance_dataload, server_url, browser):
     browser.get(server_url)
-    browser.find_element_by_class_name("help_link").click()
+    browser.find_element_by_id("help_link").click()
 
-    assert browser.current_url == 'http://grantnav.threesixtygiving.org/help'
+    assert browser.current_url == server_url + '/help'
 
 
 @pytest.mark.parametrize(('link_text'), [
