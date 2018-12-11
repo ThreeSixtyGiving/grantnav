@@ -118,10 +118,6 @@
         <li class="red_underline">{% blocktrans %}<a href="/search?text_query=fundingOrganization.name:%22London Councils%22"><code>fundingOrganization.name:"London Councils"</code></a> will search the "Funding Organisation:Name" field for "London Councils"{% endblocktrans %}</li>
       </ul>
     </li>
-    <!-- these search functions not working as expected --> <!--
-    <li>{% blocktrans %}Search for a field with no value (or is missing): e.g. <code>missing:amountAppliedFor</code> will search for grants where the "Amount Applied For" field has no value (or is missing altogether){% endblocktrans %}</li>
-    <li>{% blocktrans %}Search for a field that has any non-null value: e.g. <code>exists:grantProgramme.title</code>{% endblocktrans %} will search for grants where there is a value in the "Grant Programme:Title" field</li>
-   -->
   </ul>
 
   <p>{% blocktrans %}The field names used must match the machine-readable field names in the data. You can find a list of field names in use on the <a href="/stats">stats page</a>{% endblocktrans %}.</p>
