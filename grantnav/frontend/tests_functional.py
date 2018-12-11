@@ -87,6 +87,22 @@ def test_footer_links(provenance_dataload, server_url, browser, link_text):
     browser.find_element_by_link_text(link_text)
 
 
+def test_export_icons_help_link(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_id("files_help_link").click()
+
+    assert browser.current_url == server_url + '/help#export_files'
+
+
+def test_filter_by_help_link(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_id("filter_by_help_link").click()
+
+    assert browser.current_url == server_url + '/help#filters'
+
+
 def test_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-icon").click()
@@ -310,7 +326,7 @@ def test_take_down(server_url, browser):
 
 def test_help_page(server_url, browser):
     browser.get(server_url + '/help')
-    assert 'Using GrantNav' in browser.find_element_by_tag_name('h1').text
+    assert 'Help with using GrantNav' in browser.find_element_by_tag_name('h1').text
 
 
 def test_developers(server_url, browser):
