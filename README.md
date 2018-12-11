@@ -183,5 +183,3 @@ This is a single script but takes a long time.
 ```
 python dataload/fetch_charity_data.py
 ```
-
-
