@@ -6174,8 +6174,13 @@ input:-moz-placeholder {
   margin: 5px 10px 5px 5px;
   text-align: right; }
 
-.search-help a {
+.search-help a, #forum_link, #help_link {
   color: #414141; }
+
+.navbar-nav > li > a {
+    padding-top: 12px;
+    padding-bottom: 0px;
+}
 
 @media (min-width: 1400px) {
   .col-vlg-offset-1 {
