@@ -418,3 +418,16 @@ def test_currency_facet(provenance_dataload, server_url, browser):
     browser.find_element_by_class_name("large-search-icon").click()
     browser.find_element_by_link_text("USD (4)").click()
     assert 'USD 0 - USD 500' in browser.find_element_by_tag_name('body').text
+
+
+@pytest.mark.parametrize(('path'), ['/grant/360G-wolfson-19916'])
+def test_zero_grant_info_link_present(provenance_dataload, server_url, browser, path):
+    browser.get(server_url + path)
+    browser.find_element_by_id("zero_value_grant_help_link").click()
+    assert browser.current_url == server_url + '/help#zero_value_grants'
+
+
+@pytest.mark.parametrize(('path'), ['/grant/360G-LBFEW-99233'])
+def test_zero_grant_info_link_absent(provenance_dataload, server_url, browser, path):
+    browser.get(server_url + path)
+    assert len(browser.find_elements_by_id('zero_value_grant_help_link')) == 0
