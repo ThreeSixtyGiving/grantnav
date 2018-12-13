@@ -62,7 +62,15 @@
           <table class="table table-bordered">
             <tbody>
               {% for key, grant in grant.source|flatten %}
-              <tr> <td style="width: 40%"> <b>{{ key }} </b> </td> <td> {{grant}} </td>
+              <tr> 
+                <td style="width: 40%"> <b>{{ key }}</b> 
+                </td> 
+                <td> 
+                  {{grant}}
+                  {% if key == "Amount Awarded" and grant == 0 %}
+                    <a href="/help#zero_value_grants"><img src="/static/images/icon-help-50.png" width="15" height="15"></a>
+                  {% endif %} 
+                </td>
               {% endfor %}
             </tbody>
           </table>
