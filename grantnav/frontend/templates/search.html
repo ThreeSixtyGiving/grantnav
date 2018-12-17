@@ -302,7 +302,11 @@
                 <div class="col-xs-6">
                   <div class="panel panel-default">
                     <div class="panel-body">
-                      <b>Amount: </b> {{result.source|get_currency}}{{result.source.amountAwarded|get_amount}} <br/>
+                      <b>Amount: </b> {{result.source|get_currency}}{{result.source.amountAwarded|get_amount}}
+                      {% if result.source.amountAwarded|get_amount == '0' %}
+                        <a href="/help#zero_value_grants"><img src="/static/images/icon-help-50.png" width="15" height="15"></a>
+                      {% endif %}
+                      <br/>
                       <b>Funder: </b> <a href="{% url 'funder' result.source.fundingOrganization.0.id %}">{{ result.source.fundingOrganization.0 | get_name }}</a> <br/>
                       <b>Recipient: </b> <a href="{% url 'recipient' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:40 }} </a> <br/>
                       {% if result.source.recipientRegionName %}
