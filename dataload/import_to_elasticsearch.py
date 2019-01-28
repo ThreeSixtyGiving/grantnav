@@ -12,6 +12,7 @@ import elasticsearch.helpers
 import requests
 import time
 import ijson
+import dateutil.parser as date_parser
 
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
@@ -263,6 +264,7 @@ def import_to_elasticsearch(files, clean):
                     update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
                     update_doc_with_region(grant)
                     update_doc_with_title_and_description(grant)
+                    update_doc_with_dateonly_fields(grant)
                     currency = grant.get('currency')
                     if currency:
                         grant['currency'] = currency.upper()
@@ -373,6 +375,21 @@ def update_doc_with_org_mappings(grant, org_key, file_name):
             mapping[org_id] = name
             found_name = name
         org["id_and_name"] = json.dumps([found_name, org_id])
+
+
+def update_doc_with_dateonly_fields(grant):
+    def add_dateonly(parent, key):
+        try:
+            datetime = date_parser.parse(parent.get(key, ''))
+            parent[key + 'DateOnly'] = datetime.date().isoformat()
+        except ValueError:
+            pass
+
+    add_dateonly(grant, 'awardDate')
+
+    for dates in grant.get('plannedDates', []) + grant.get('actualDates', []):
+        add_dateonly(dates, 'startDate')
+        add_dateonly(dates, 'endDate')
 
 
 def get_area_mappings():
