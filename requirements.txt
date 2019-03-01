@@ -1,6 +1,6 @@
-Django==1.11.15 # rq.filter: <1.12
+Django==1.11.20 # rq.filter: <1.12
 django-bootstrap3==9.1.0
-requests==2.10.0
+requests==2.21.0
 django-environ==0.4.0
 raven==5.23.0
 elasticsearch==2.3.0
@@ -13,14 +13,18 @@ dealer==2.0.5
 django-super-favicon==0.6.0
 ijson==2.3
 ## The following requirements were added by pip freeze:
+certifi==2018.11.29
+chardet==3.0.4
 contextlib2==0.5.3
 django-classy-tags==0.7.2
 et-xmlfile==1.0.1
+idna==2.8
 jdcal==1.2
 jsonref==0.1
+olefile==0.46
 openpyxl==2.3.5
 Pillow==4.0.0
 pytz==2016.6.1
 schema==0.6.0
 six==1.10.0
-urllib3==1.22
+urllib3==1.24.1
