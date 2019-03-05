@@ -77,12 +77,15 @@ def import_to_elasticsearch(files, clean):
 
     # Add the extra mapping info we want
     # (the rest will be auto inferred from the data we feed in)
+    #
+    # See issue #503 for why we do this for a non-standard field (Reference)
     mappings = {
         "grant": {
             "_all": {
                 "analyzer": "english_with_folding"
             },
             "properties": {
+                "Reference": {"type": "string", "index": "not_analyzed"},
                 "id": {"type": "string", "index": "not_analyzed"},
                 "filename": {"type": "string", "index": "not_analyzed"},
                 "recipientRegionName": {"type": "string", "index": "not_analyzed"},
