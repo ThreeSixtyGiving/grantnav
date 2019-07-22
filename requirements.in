@@ -5,11 +5,11 @@ requests
 django-environ
 raven
 elasticsearch
--e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool
+flattentool
 python-dateutil
 strict-rfc3339
 django-cookie-law
 titlecase
-dealer
+dealer==2.0.5
 django-super-favicon
 ijson

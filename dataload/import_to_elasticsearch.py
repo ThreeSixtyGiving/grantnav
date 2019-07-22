@@ -54,6 +54,7 @@ def convert_spreadsheet(file_path, file_type, tmp_dir):
             output_name=converted_path,
             input_format=file_type,
             main_sheet_name='grants',
+            root_list_path='grants',
             root_id='',
             schema='https://raw.githubusercontent.com/ThreeSixtyGiving/standard/master/schema/360-giving-schema.json',
             convert_titles=True,
@@ -80,95 +81,96 @@ def import_to_elasticsearch(files, clean):
     #
     # See issue #503 for why we do this for a non-standard field (Reference)
     mappings = {
-        "grant": {
-            "_all": {
-                "analyzer": "english_with_folding"
+        "properties": {
+            "id": {"type": "keyword"},
+            "filename": {"type": "keyword"},
+            "title": {
+                "type": "text", "analyzer": "english_with_folding"
             },
-            "properties": {
-                "Reference": {"type": "string", "index": "not_analyzed"},
-                "id": {"type": "string", "index": "not_analyzed"},
-                "filename": {"type": "string", "index": "not_analyzed"},
-                "recipientRegionName": {"type": "string", "index": "not_analyzed"},
-                "recipientDistrictName": {"type": "string", "index": "not_analyzed"},
-                "recipientWardName": {"type": "string", "index": "not_analyzed"},
-                "currency": {"type": "string", "index": "not_analyzed"},
-                "title_and_description": {"type": "string", "analyzer": "english_with_folding"},
-                "recipientLocation": {"type": "string"},
-                "amountAppliedFor": {"type": "double"},
-                "amountAwarded": {"type": "double"},
-                "amountDisbursed": {"type": "double"},
-                "awardDate": {
-                    "type": "date",
-                    "ignore_malformed": True
-                },
-                "dateModified": {"type": "string", "index": "not_analyzed"},
-                "plannedDates": {
-                    "properties": {
-                        "startDate": {"type": "string", "index": "not_analyzed"},
-                        "endDate": {"type": "string", "index": "not_analyzed"},
-                        "duration": {"type": "string"}
+            "description": {
+                "type": "text", "analyzer": "english_with_folding"
+            },
+            "recipientRegionName": {"type": "keyword"},
+            "recipientDistrictName": {"type": "keyword"},
+            "recipientWardName": {"type": "keyword"},
+            "currency": {"type": "keyword"},
+            "recipientLocation": {"type": "text"},
+            "Reference": {"type": "keyword"},
+            "title_and_description": {"type": "text", "analyzer": "english_with_folding"},
+            "amountAppliedFor": {"type": "double"},
+            "amountAwarded": {"type": "double"},
+            "amountDisbursed": {"type": "double"},
+            "awardDate": {
+                "type": "date",
+                "ignore_malformed": True
+            },
+            "dateModified": {"type": "keyword"},
+            "plannedDates": {
+                "properties": {
+                    "startDate": {"type": "keyword"},
+                    "endDate": {"type": "keyword"},
+                    "duration": {"type": "text"}
+                }
+            },
+            "recipientOrganization": {
+                "properties": {
+                    "addressLocality": {
+                        "type": "keyword"
+                    },
+                    "charityNumber": {
+                        "type": "keyword"
+                    },
+                    "companyNumber": {
+                        "type": "keyword"
+                    },
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "url": {
+                        "type": "keyword"
+                    },
+                    "name": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "streetAddress": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "id_and_name": {
+                        "type": "keyword"
                     }
-                },
-                "recipientOrganization": {
-                    "properties": {
-                        "addressLocality": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "charityNumber": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "companyNumber": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "id": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "url": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "name": {
-                            "type": "string", "analyzer": "english_with_folding",
-                        },
-                        "streetAddress": {
-                            "type": "string", "analyzer": "english_with_folding",
-                        },
-                        "id_and_name": {
-                            "type": "string", "index": "not_analyzed"
-                        }
+                }
+            },
+            "fundingOrganization": {
+                "properties": {
+                    "addressLocality": {
+                        "type": "keyword"
+                    },
+                    "charityNumber": {
+                        "type": "keyword"
+                    },
+                    "companyNumber": {
+                        "type": "keyword"
+                    },
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "url": {
+                        "type": "keyword"
+                    },
+                    "name": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "streetAddress": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "id_and_name": {
+                        "type": "keyword"
                     }
-                },
-                "fundingOrganization": {
-                    "properties": {
-                        "addressLocality": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "charityNumber": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "companyNumber": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "id": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "url": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "name": {
-                            "type": "string", "analyzer": "english_with_folding",
-                        },
-                        "streetAddress": {
-                            "type": "string", "analyzer": "english_with_folding",
-                        },
-                        "id_and_name": {
-                            "type": "string", "index": "not_analyzed"
-                        }
-                    }
-                },
-                "beneficiaryLocation": {
-                    "properties": {
-                        "geographic code (from GIFTS)": {"type": "string"}
-                    }
+                }
+            },
+            "beneficiaryLocation": {
+                "properties": {
+                    "geographic code (from GIFTS)": {"type": "text"}
                 }
             }
         }
@@ -254,7 +256,6 @@ def import_to_elasticsearch(files, clean):
                     grant['filename'] = file_name.strip('./')
                     grant['_id'] = str(uuid.uuid4())
                     grant['_index'] = ES_INDEX
-                    grant['_type'] = 'grant'
                     update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
                     update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
                     update_doc_with_region(grant)
@@ -272,10 +273,11 @@ def import_to_elasticsearch(files, clean):
 
 
 def get_mapping_from_index(es):
+    MAX_INT = 2147483647
     QUERY = {"query": {"match_all": {}},
              "aggs": {
-                 "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 0}},
-                 "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 0}}}}
+                 "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": MAX_INT}},
+                 "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": MAX_INT}}}}
     results = es.search(body=QUERY, index=ES_INDEX)
     for bucket in results["aggregations"]["fundingOrganization"]["buckets"]:
         id_name = json.loads(bucket["key"])
