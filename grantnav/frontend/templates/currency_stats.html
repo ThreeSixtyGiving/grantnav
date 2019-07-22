@@ -8,7 +8,7 @@
     <dt>Smallest {{currency}} award</dt> <dd>{{currency|currency_symbol}}{{buckets|first|get:"amount_stats"|get:"min"|get_amount}}</dd>
     <dt>Total Non-{{currency}} grants</dt> 
     <dd>
-    {% with total_other=buckets|first|get:"amount_stats"|get:"count"|reverse_minus:results.hits.total %}
+    {% with total_other=buckets|first|get:"amount_stats"|get:"count"|reverse_minus:results.hits.total.value %}
       {% if total_other %}
         <a class="javascript-enabled" id="other-currencies-modal" data-toggle="modal" data-target="#summary-info-model">
           {{total_other|get_amount}}

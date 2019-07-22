@@ -9,7 +9,6 @@ from itertools import chain
 
 import dateutil.parser as date_parser
 import elasticsearch.exceptions
-import jsonref
 from django.conf import settings
 from django.http import Http404, JsonResponse
 from django.http import HttpResponse, StreamingHttpResponse
@@ -33,7 +32,7 @@ BASIC_FILTER = [
 
 
 BASIC_QUERY = {"query": {"bool": {"must":
-                                  {"query_string": {"query": "", "default_field": "_all"}}, "filter": BASIC_FILTER}},
+                                  {"query_string": {"query": "", "default_field": "*"}}, "filter": BASIC_FILTER}},
                "extra_context": {"awardYear_facet_size": 3, "amountAwardedFixed_facet_size": 3},
                "sort": {"_score": {"order": "desc"}},
                "aggs": {
@@ -67,10 +66,41 @@ SEARCH_SUMMARY_AGGREGATES = {
 }
 
 
+def clean_object(obj):
+    for key, value in list(obj.items()):
+        if isinstance(value, dict):
+            clean_object(value)
+        elif isinstance(value, list):
+            clean_array(value)
+        if isinstance(value, (dict, list)) and not value:
+            obj.pop(key, None)
+
+
+def clean_array(array):
+    new_array = []
+    for item in array:
+        if isinstance(item, dict):
+            clean_object(item)
+        elif isinstance(item, list):
+            clean_array(item)
+        if isinstance(item, (dict, list)) and item:
+            new_array.append(item)
+    array[:] = new_array
+    return array
+
+
+def clean_for_es(json_query):
+    clean_object(json_query)
+    return json_query
+
+
 def get_results(json_query, size=10, from_=0):
     es = get_es()
     extra_context = json_query.pop('extra_context', None)
-    results = es.search(body=json_query, size=size, from_=from_, index=settings.ES_INDEX)
+
+    new_json_query = clean_for_es(copy.deepcopy(json_query))
+
+    results = es.search(body=new_json_query, size=size, from_=from_, index=settings.ES_INDEX)
     if extra_context is not None:
         json_query['extra_context'] = extra_context
     return results
@@ -79,7 +109,7 @@ def get_results(json_query, size=10, from_=0):
 def get_request_type_and_size(request):
     results_size = SIZE
 
-    match = re.search('\.(\w+)$', request.path)
+    match = re.search(r'\.(\w+)$', request.path)
     if match:
         result_format = match.group(1)
         results_size = settings.FLATTENED_DOWNLOAD_LIMIT
@@ -141,7 +171,7 @@ def grants_csv_paged(query):
     query.pop('aggs', None)
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer)
-    response = StreamingHttpResponse(chain(['\ufeff'], (writer.writerow(row) for row in grants_csv_generator(query))), content_type='text/csv')
+    response = StreamingHttpResponse(chain(['\ufeff'], (writer.writerow(row) for row in grants_csv_generator(clean_for_es(query)))), content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
 
@@ -149,7 +179,7 @@ def grants_csv_paged(query):
 def grants_json_paged(query):
     query.pop('extra_context', None)
     query.pop('aggs', None)
-    response = StreamingHttpResponse(grants_json_generator(query), content_type='application/json')
+    response = StreamingHttpResponse(grants_json_generator(clean_for_es(query)), content_type='application/json')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
 
@@ -176,7 +206,7 @@ def orgs_csv_paged(data, org_type):
 
 
 def get_pagination(request, context, page):
-    total_pages = math.ceil(context['results']['hits']['total'] / SIZE)
+    total_pages = math.ceil(context['results']['hits']['total']['value'] / SIZE)
     if page < total_pages:
         context['next_page'] = request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1})
     if page != 1 and total_pages > 1:
@@ -617,48 +647,6 @@ def flatten_schema(schema, path=''):
             yield (path + '.' + field).lstrip('.')
 
 
-def stats(request):
-    text_query = request.GET.get('text_query')
-    if not text_query:
-        text_query = '*'
-    context = {'text_query': text_query or ''}
-
-    es = get_es()
-    mapping = es.indices.get_mapping(index=settings.ES_INDEX)
-    all_fields = list(flatten_mapping(mapping[settings.ES_INDEX]['mappings']['grant']['properties']))
-
-    query = {"query": {"bool": {"must":
-                {"query_string": {"query": text_query}}, "filter": {}}},
-             "aggs": {}}
-
-    schema = jsonref.load_uri(settings.GRANT_SCHEMA)
-    schema_fields = set(flatten_schema(schema))
-
-    for field in all_fields:
-        query["aggs"][field + ":terms"] = {"terms": {"field": field, "size": 5}}
-        query["aggs"][field + ":missing"] = {"missing": {"field": field}}
-        query["aggs"][field + ":cardinality"] = {"cardinality": {"field": field}}
-
-    if context['text_query'] == '*':
-        context['text_query'] = ''
-
-    field_info = collections.defaultdict(dict)
-    results = es.search(body=query, index=settings.ES_INDEX, size=0)
-    for field, aggregation in results['aggregations'].items():
-        field_name, agg_type = field.split(':')
-        field_info[field_name]["in_schema"] = field_name in schema_fields
-        if agg_type == 'terms':
-            field_info[field_name]["terms"] = aggregation["buckets"]
-        if agg_type == 'missing':
-            field_info[field_name]["found"] = results['hits']['total'] - aggregation["doc_count"]
-        if agg_type == 'cardinality':
-            field_info[field_name]["distinct"] = aggregation["value"]
-
-    context['field_info'] = sorted(field_info.items(), key=lambda val: -val[1]["found"])
-    context['results'] = results
-    return render(request, "stats.html", context=context)
-
-
 def grant(request, grant_id):
     query = {"query": {"bool": {"filter":
                 [{"term": {"id": grant_id}}]
@@ -678,7 +666,7 @@ def funder(request, funder_id):
     [result_format, results_size] = get_request_type_and_size(request)
 
     if result_format != "html":
-        funder_id = re.match('(.*)\.\w*$', funder_id).group(1)
+        funder_id = re.match(r'(.*)\.\w*$', funder_id).group(1)
 
     query = {"query": {"bool": {"filter":
                 [{"term": {"fundingOrganization.id": funder_id}}]}},
@@ -719,7 +707,7 @@ def funder(request, funder_id):
 
 def funder_recipients_datatables(request):
 
-    match = re.search('\.(\w+)$', request.path)
+    match = re.search(r'\.(\w+)$', request.path)
     if match:
         result_format = match.group(1)
     else:
@@ -761,7 +749,7 @@ def funder_recipients_datatables(request):
              "aggs": {
                  "recipient_count": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                  "recipient_stats":
-                     {"terms": {"field": "recipientOrganization.id_and_name", "size": start + length, "shard_size": 0,
+                     {"terms": {"field": "recipientOrganization.id_and_name", "size": start + length, "shard_size": (start + length) * 10,
                                 "order": {order_field: order_dir}},
                       "aggs": {"recipient_stats": {"stats": {"field": "amountAwarded"}}}}
         }
@@ -801,7 +789,7 @@ def funder_recipients_datatables(request):
 
 
 def funders_datatables(request):
-    match = re.search('\.(\w+)$', request.path)
+    match = re.search(r'\.(\w+)$', request.path)
     if match:
         result_format = match.group(1)
     else:
@@ -839,7 +827,7 @@ def funders_datatables(request):
              "aggs": {
                  "funder_count": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
                  "funder_stats":
-                     {"terms": {"field": "fundingOrganization.id_and_name", "size": start + length, "shard_size": 0,
+                     {"terms": {"field": "fundingOrganization.id_and_name", "size": start + length, "shard_size": (start + length) * 10,
                                 "order": {order_field: order_dir}},
                       "aggs": {"funder_stats": {"stats": {"field": "amountAwarded"}}}}
         }
@@ -955,7 +943,7 @@ def grants_datatables(request):
 def recipient(request, recipient_id):
     [result_format, results_size] = get_request_type_and_size(request)
     if result_format != "html":
-        recipient_id = re.match('(.*)\.\w*$', recipient_id).group(1)
+        recipient_id = re.match(r'(.*)\.\w*$', recipient_id).group(1)
 
     query = {"query": {"bool": {"filter":
                  [{"term": {"recipientOrganization.id": recipient_id}}]}},
@@ -964,7 +952,7 @@ def recipient(request, recipient_id):
                  "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
                  "min_date": {"min": {"field": "awardDate"}},
                  "max_date": {"max": {"field": "awardDate"}},
-                 "currencies": {"terms": {"field": "currency", "size": 0}},
+                 "currencies": {"terms": {"field": "currency", "size": 1000}},  # less that 1000 currencies with code.
                  "funders": {"terms": {"field": "fundingOrganization.id_and_name", "size": 10},
                              "aggs": {"funder_stats": {"stats": {"field": "amountAwarded"}}}}
                  }}
@@ -996,7 +984,7 @@ def funders(request):
 def region(request, region):
     [result_format, results_size] = get_request_type_and_size(request)
     if result_format != "html":
-        region = re.match('(.*)\.\w*$', region).group(1)
+        region = re.match(r'(.*)\.\w*$', region).group(1)
 
     query = {"query": {"bool": {"filter":
                 [{"term": {"recipientRegionName": region}}]}},
@@ -1028,7 +1016,7 @@ def region(request, region):
 def district(request, district):
     [result_format, results_size] = get_request_type_and_size(request)
     if result_format != "html":
-        district = re.match('(.*)\.\w*$', district).group(1)
+        district = re.match(r'(.*)\.\w*$', district).group(1)
 
     query = {"query": {"bool": {"filter":
                 [{"term": {"recipientDistrictName": district}}]}},

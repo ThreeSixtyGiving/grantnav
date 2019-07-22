@@ -142,6 +142,8 @@ def reverse_minus(minus_value, value):
 
 @register.filter(name='get_amount')
 def get_amount(amount):
+    if isinstance(amount, dict):
+        amount = amount['value']
     try:
         return "{:,.0f}".format(amount)
     except ValueError:

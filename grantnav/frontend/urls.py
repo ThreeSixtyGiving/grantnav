@@ -36,7 +36,6 @@ urlpatterns = [
     url(r'^district/(.*)\.json$', views.district, name='district.json'),
     url(r'^(?s)publisher/(.*)$', views.publisher, name='publisher'),
     url(r'^datasets/$', views.datasets, name='datasets'),
-    url(r'^stats', views.stats, name='stats'),
     url(r'^take_down_policy', TemplateView.as_view(template_name='take_down_policy.html'), name='take_down_policy'),
     url(r'^terms', TemplateView.as_view(template_name='terms.html'), name='terms'),
     url(r'^help', TemplateView.as_view(template_name='help.html'), name="help"),
