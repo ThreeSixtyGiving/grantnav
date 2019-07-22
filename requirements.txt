@@ -1,30 +1,32 @@
-Django==1.11.20 # rq.filter: <1.12
-django-bootstrap3==9.1.0
-requests==2.21.0
-django-environ==0.4.0
-raven==5.23.0
-elasticsearch==2.3.0
--e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool
-python-dateutil==2.5.3
+Django==1.11.22 # rq.filter: <1.12
+django-bootstrap3==11.1.0
+requests==2.22.0
+django-environ==0.4.5
+raven==6.10.0
+elasticsearch==7.0.2
+flattentool==0.5.0
+python-dateutil==2.8.0
 strict-rfc3339==0.7
-django-cookie-law==1.0.13
-titlecase==0.8.1
+django-cookie-law==2.0.1
+titlecase==0.12.0
 dealer==2.0.5
-django-super-favicon==0.6.0
-ijson==2.3
+django-super-favicon==0.6.1
+ijson==2.4
 ## The following requirements were added by pip freeze:
-certifi==2018.11.29
+certifi==2019.6.16
 chardet==3.0.4
-contextlib2==0.5.3
-django-classy-tags==0.7.2
+contextlib2==0.5.5
+django-classy-tags==0.9.0
 et-xmlfile==1.0.1
 idna==2.8
-jdcal==1.2
-jsonref==0.1
-olefile==0.46
-openpyxl==2.3.5
-Pillow==4.0.0
-pytz==2016.6.1
-schema==0.6.0
-six==1.10.0
-urllib3==1.24.1
+jdcal==1.4.1
+jsonref==0.2
+lxml==4.3.4
+openpyxl==2.6.2
+Pillow==6.1.0
+pytest-runner==5.1
+pytz==2019.1
+schema==0.7.0
+six==1.12.0
+urllib3==1.25.3
+xmltodict==0.12.0
