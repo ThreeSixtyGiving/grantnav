@@ -63,11 +63,12 @@ def get_json():
         try:
             if line[1] == '0':
                 name_mapping['GB-CHC-' + line[0]] = titlecase.titlecase(line[2].strip(), title_exceptions)
-        except:
+        except Exception:
             print(line, ' not converted')
 
     with open(charity_names_json, 'w+') as json_file:
         json.dump(name_mapping, json_file)
+
 
 if __name__ == '__main__':
     download_latest_file()
