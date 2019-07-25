@@ -100,7 +100,7 @@ def get_results(json_query, size=10, from_=0):
 
     new_json_query = clean_for_es(copy.deepcopy(json_query))
 
-    results = es.search(body=new_json_query, size=size, from_=from_, index=settings.ES_INDEX)
+    results = es.search(body=new_json_query, size=size, from_=from_, index=settings.ES_INDEX, track_total_hits=True)
     if extra_context is not None:
         json_query['extra_context'] = extra_context
     return results
