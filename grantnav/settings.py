@@ -32,7 +32,6 @@ env = environ.Env(  # set default values and casting
     SECRET_KEY=(str, secret_key),
     GRANT_SCHEMA=(str, 'https://raw.githubusercontent.com/ThreeSixtyGiving/standard/master/schema/360-giving-schema.json'),
     DB_NAME=(str, os.path.join(BASE_DIR, 'db.sqlite3')),
-    ES_INDEX=(str, 'threesixtygiving'),
     PROVENANCE_JSON=(str, None)
 )
 
@@ -123,8 +122,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-ES_INDEX = env('ES_INDEX')
 
 DEALER_TYPE = 'git'
 # Password validation
