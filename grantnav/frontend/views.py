@@ -18,6 +18,7 @@ from elasticsearch.helpers import scan
 
 from grantnav import provenance, csv_layout, utils
 from grantnav.search import get_es
+from grantnav.index import get_index
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -100,7 +101,8 @@ def get_results(json_query, size=10, from_=0):
 
     new_json_query = clean_for_es(copy.deepcopy(json_query))
 
-    results = es.search(body=new_json_query, size=size, from_=from_, index=settings.ES_INDEX)
+    results = es.search(body=new_json_query, size=size, from_=from_,
+                        index=get_index(), track_total_hits=True)
     if extra_context is not None:
         json_query['extra_context'] = extra_context
     return results
@@ -136,7 +138,7 @@ def get_data_from_path(path, data):
 def grants_csv_generator(query):
     yield csv_layout.grant_csv_titles
     es = get_es()
-    for result in scan(es, query, index=settings.ES_INDEX):
+    for result in scan(es, query, index=get_index()):
         result_with_provenance = {
             "result": result["_source"],
             "dataset": provenance.by_identifier.get(provenance.identifier_from_filename(result['_source']['filename']), {})
@@ -152,7 +154,7 @@ def grants_json_generator(query):
     "license": "See dataset/license within each grant. This file also contains OS data © Crown copyright and database right 2016, Royal Mail data © Royal Mail copyright and Database right 2016, National Statistics data © Crown copyright and database right 2016, see http://grantnav.org/datasets/ for more information.",
     "grants": [\n'''
     es = get_es()
-    for num, result in enumerate(scan(es, query, index=settings.ES_INDEX)):
+    for num, result in enumerate(scan(es, query, index=get_index())):
         result["_source"]["dataset"] = provenance.by_identifier.get(provenance.identifier_from_filename(result['_source']['filename']), {})
         if num == 0:
             yield json.dumps(result["_source"]) + "\n"
@@ -1055,7 +1057,7 @@ def get_funders_for_datasets(datasets):
                 "funders": {"terms": {"field": "fundingOrganization.id_and_name", "size": 10}}
             }
         }
-        results = es.search(body=query, index=settings.ES_INDEX, size=0)
+        results = es.search(body=query, index=get_index(), size=0)
         dataset['funders'] = [json.loads(bucket['key']) for bucket in results['aggregations']['funders']['buckets']]
 
 
