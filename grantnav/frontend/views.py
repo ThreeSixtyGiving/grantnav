@@ -708,6 +708,8 @@ def funder(request, funder_id):
 
 
 def funder_recipients_datatables(request):
+    # Make 100k the default max length. Overrideable by setting ?length= parameter
+    MAX_DEFAULT_FUNDER_RECIPIENTS_LENGTH = 100000
 
     match = re.search(r'\.(\w+)$', request.path)
     if match:
@@ -717,15 +719,15 @@ def funder_recipients_datatables(request):
 
     order = ["_term", "recipient_stats.count", "recipient_stats.sum", "recipient_stats.avg", "recipient_stats.max", "recipient_stats.min"]
 
+    length = int(request.GET.get('length', MAX_DEFAULT_FUNDER_RECIPIENTS_LENGTH))
+
     if result_format == "ajax":
         start = int(request.GET['start'])
-        length = int(request.GET['length'])
         order_field = order[int(request.GET['order[0][column]'])]
         search_value = request.GET['search[value]']
         order_dir = request.GET['order[0][dir]']
     else:
         start = 0
-        length = 0
         order_field = order[0]
         search_value = ""
         order_dir = "desc"
@@ -792,6 +794,9 @@ def funder_recipients_datatables(request):
 
 def funders_datatables(request):
     match = re.search(r'\.(\w+)$', request.path)
+    # Make 100k the default max length. Overrideable by setting ?length= parameter
+    MAX_DEFAULT_FUNDERS_LENGTH = 100000
+
     if match:
         result_format = match.group(1)
     else:
@@ -799,15 +804,15 @@ def funders_datatables(request):
 
     order = ["_term", "funder_stats.count", "funder_stats.sum", "funder_stats.avg", "funder_stats.max", "funder_stats.min"]
 
+    length = int(request.GET.get('length', MAX_DEFAULT_FUNDERS_LENGTH))
+
     if result_format == "ajax":
         start = int(request.GET['start'])
-        length = int(request.GET['length'])
         order_field = order[int(request.GET['order[0][column]'])]
         search_value = request.GET['search[value]']
         order_dir = request.GET['order[0][dir]']
     else:
         start = 0
-        length = 0
         order_field = order[0]
         search_value = ""
         order_dir = "desc"
