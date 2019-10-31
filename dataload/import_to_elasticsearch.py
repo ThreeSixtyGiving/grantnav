@@ -222,6 +222,10 @@ def import_to_elasticsearch(files, clean):
         charity_names = json.load(fd)
     id_name_org_mappings["recipientOrganization"].update(charity_names)
 
+    with open(os.path.join(current_dir, 'primary_funding_org_name.json')) as fd:
+        funding_org_name = json.load(fd)
+    id_name_org_mappings["fundingOrganization"].update(funding_org_name)
+
     get_mapping_from_index(es)
 
     for file_name in files:
