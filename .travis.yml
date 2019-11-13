@@ -19,6 +19,7 @@ before_install:
     - "wget https://chromedriver.storage.googleapis.com/78.0.3904.70/chromedriver_linux64.zip; unzip chromedriver_linux64.zip -d chromedriver; export PATH=$PATH:`pwd`/chromedriver"
 
 install: 
+    - "pip install -r requirements.txt"
     - "pip install -r requirements_dev.txt"
 
 script:
