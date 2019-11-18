@@ -656,7 +656,7 @@ def grant(request, grant_id):
                 [{"term": {"id": grant_id}}]
     }}}
     results = get_results(query, -1)
-    if results['hits']['total'] == 0:
+    if results['hits']['total']['value'] == 0:
         raise Http404
     context = {}
     for hit in results['hits']['hits']:
@@ -691,7 +691,7 @@ def funder(request, funder_id):
 
     results = get_results(query, results_size)
 
-    if results['hits']['total'] == 0:
+    if results['hits']['total']['value'] == 0:
         raise Http404
     context = {}
     context['results'] = results
@@ -924,7 +924,7 @@ def grants_datatables(request):
         results = get_results(query, length, start)
     except elasticsearch.exceptions.RequestError as e:
         if e.error == 'search_phase_execution_exception':
-            results = {"hits": {"total": 0, "hits": []}}
+            results = {"hits": {"total": {"value": 0}, "hits": []}}
 
     result_list = []
     for result in results["hits"]["hits"]:
@@ -944,8 +944,8 @@ def grants_datatables(request):
     return JsonResponse(
         {'data': result_list,
          'draw': request.GET['draw'],
-         'recordsTotal': results["hits"]["total"],
-         'recordsFiltered': results["hits"]["total"]}
+         'recordsTotal': results["hits"]["total"]['value'],
+         'recordsFiltered': results["hits"]["total"]['value']}
     )
 
 
@@ -973,7 +973,7 @@ def recipient(request, recipient_id):
 
     results = get_results(query, results_size)
 
-    if results['hits']['total'] == 0:
+    if results['hits']['total']['value'] == 0:
         raise Http404
     context = {}
     context['results'] = results
@@ -1013,7 +1013,7 @@ def region(request, region):
 
     results = get_results(query, results_size)
 
-    if results['hits']['total'] == 0:
+    if results['hits']['total']['value'] == 0:
         raise Http404
     context = {}
     context['results'] = results
@@ -1045,7 +1045,7 @@ def district(request, district):
 
     results = get_results(query, results_size)
 
-    if results['hits']['total'] == 0:
+    if results['hits']['total']['value'] == 0:
         raise Http404
     context = {}
     context['results'] = results

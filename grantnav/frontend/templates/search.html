@@ -374,7 +374,7 @@
 {% endblock %}
 
 {% block extrapiwik %}
-_paq.push(["trackSiteSearch", "{{text_query}}", false, {{results.hits.total}}]);
+_paq.push(["trackSiteSearch", "{{text_query}}", false, {{results.hits.total.value}}]);
 {% endblock %}
 
 {% block extra_scripts %}
