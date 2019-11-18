@@ -23,8 +23,8 @@ from grantnav.index import get_index
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
     {"bool": {"should": []}},  # Recipient Orgs
-    {"bool": {"should": [], "must": {}}},  # Amount Awarded Fixed
-    {"bool": {"should": {"range": {"amountAwarded": {}}}, "must": {}}},  # Amount Awarded
+    {"bool": {"should": [], "must": {}, "minimum_should_match": 1}},  # Amount Awarded Fixed
+    {"bool": {"should": {"range": {"amountAwarded": {}}}, "must": {}, "minimum_should_match": 1}},  # Amount Awarded
     {"bool": {"should": []}},  # Award Year
     {"bool": {"should": []}},  # recipientRegionName
     {"bool": {"should": []}},  # recipientDistrictName
@@ -279,6 +279,8 @@ def get_amount_facet_fixed(request, context, original_json_query):
 
     if current_currency and not existing_currency:
         json_query["query"]["bool"]["filter"][2]["bool"]["must"] = {"term": {"currency": current_currency}}
+
+    json_query["query"]["bool"]["filter"][2]["bool"]["minimum_should_match"] = 0
     results = get_results(json_query)
 
     input_range = json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"]
