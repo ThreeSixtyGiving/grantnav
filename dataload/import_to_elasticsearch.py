@@ -378,12 +378,16 @@ def update_doc_with_org_mappings(grant, org_key, file_name):
 
 
 def update_doc_with_dateonly_fields(grant):
+    """
+    If possible parse the date to only show the date part
+    rather than the full ISO date
+    """
     def add_dateonly(parent, key):
         try:
-            datetime = date_parser.parse(parent.get(key, ''))
+            datetime = date_parser.parse(parent.get(key))
             parent[key + 'DateOnly'] = datetime.date().isoformat()
-        except ValueError:
-            pass
+        except (ValueError, TypeError):
+            parent[key + 'DateOnly'] = parent.get(key)
 
     add_dateonly(grant, 'awardDate')
 
