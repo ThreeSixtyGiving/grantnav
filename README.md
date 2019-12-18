@@ -44,7 +44,7 @@ source .ve/bin/activate
 # Make sure you have a recent version of pip, to install binary wheel packages.
 pip install --upgrade pip
 pip install -r requirements.txt # Use requirements_dev.txt if you're installing for development.
-sudo apt-get install openjdk-7-jre
+sudo apt-get install openjdk-8-jre
 wget -O - https://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
 echo 'deb http://packages.elasticsearch.org/elasticsearch/2.x/debian stable main' | sudo tee /etc/apt/sources.list.d/elasticsearch.list
 sudo apt-get update
