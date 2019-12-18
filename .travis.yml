@@ -1,10 +1,10 @@
-dist: trusty
+dist: xenial
 addons:
   chrome: stable
 language: python
 sudo: required
 python:
-    - "3.4"
+    - "3.5"
 
 before_script:
     - sleep 10
@@ -12,7 +12,8 @@ before_script:
 before_install:
     - "curl -O https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.1.1/elasticsearch-2.1.1.deb && sudo dpkg -i --force-confnew elasticsearch-2.1.1.deb"
     - "sudo service elasticsearch start"
-    - "wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip; unzip chromedriver_linux64.zip -d chromedriver; export PATH=$PATH:`pwd`/chromedriver"
+    - "export LATEST_CHROMEDRIVER=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE)"
+    - "wget http://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip; unzip chromedriver_linux64.zip -d chromedriver; export PATH=$PATH:`pwd`/chromedriver"
 
 install: 
     - "pip install -r requirements_dev.txt"
