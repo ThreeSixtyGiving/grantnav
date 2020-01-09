@@ -67,15 +67,10 @@ def convert_spreadsheet(file_path, file_type, tmp_dir):
 
 # curl http://test-360giving.pantheon.io/api/3/action/current_package_list_with_resources | grep -Eo '[^"]+\.json' | sed 's/\\\//\//g' | while read url; do wget "$url"; done
 
-
-def import_to_elasticsearch(files, clean):
-
+def maybe_create_index(index_name=ES_INDEX):
+    """ Creates a new ES index based on value of ES_INDEX
+    unless it already exists """
     es = elasticsearch.Elasticsearch()
-
-    # Delete the index
-    if clean:
-        result = es.indices.delete(index=ES_INDEX, ignore=[404])
-        pprint(result)
 
     # Add the extra mapping info we want
     # (the rest will be auto inferred from the data we feed in)
@@ -212,12 +207,24 @@ def import_to_elasticsearch(files, clean):
         }
     }
 
-    # Create it again
-    result = es.indices.create(index=ES_INDEX, body={"mappings": mappings, "settings": settings}, ignore=[400])
+    # Create it
+    result = es.indices.create(index=index_name, body={"mappings": mappings, "settings": settings}, ignore=[400])
     if 'error' in result and result['error']['reason'] == 'already exists':
         print('Updating existing index')
     else:
         pprint(result)
+
+
+def import_to_elasticsearch(files, clean):
+
+    es = elasticsearch.Elasticsearch()
+
+    # Delete the index
+    if clean:
+        result = es.indices.delete(index=ES_INDEX, ignore=[404])
+        pprint(result)
+
+    maybe_create_index()
 
     time.sleep(1)
 
