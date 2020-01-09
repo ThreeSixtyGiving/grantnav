@@ -67,6 +67,7 @@ def convert_spreadsheet(file_path, file_type, tmp_dir):
 
 # curl http://test-360giving.pantheon.io/api/3/action/current_package_list_with_resources | grep -Eo '[^"]+\.json' | sed 's/\\\//\//g' | while read url; do wget "$url"; done
 
+
 def maybe_create_index(index_name=ES_INDEX):
     """ Creates a new ES index based on value of ES_INDEX
     unless it already exists """

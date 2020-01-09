@@ -8,6 +8,6 @@ def get_index():
     es_index = os.environ.get("ES_INDEX", 'threesixtygiving')
     if os.sep in es_index:
         with open(es_index, 'r') as es_indexfp:
-            return str(es_indexfp.read())
+            return str(es_indexfp.read()).strip()
     else:
         return str(es_index)
