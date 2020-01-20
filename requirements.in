@@ -4,12 +4,12 @@ django-bootstrap3
 requests
 django-environ
 raven
-elasticsearch
-flattentool
+elasticsearch==7.0.5
+flattentool==0.9.0
 python-dateutil
 strict-rfc3339
 django-cookie-law
 titlecase
-dealer==2.0.5
+dealer==2.1.0
 django-super-favicon
-ijson
+ijson==2.5.1
