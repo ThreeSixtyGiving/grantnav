@@ -315,7 +315,7 @@ def test_search_advanced_search_correct_link(provenance_dataload, server_url, br
     browser.find_element_by_class_name("large-search-icon").click()
     browser.find_element_by_class_name("advanced_search").click()
 
-    assert browser.current_url == 'https://grantnav.threesixtygiving.org/help#advanced_search'
+    assert browser.current_url == 'http://grantnav.threesixtygiving.org/help#advanced_search'
 
 
 def test_search_do_not_display_advance_search_link(provenance_dataload, server_url, browser):

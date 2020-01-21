@@ -4,8 +4,7 @@ django-bootstrap3
 requests
 django-environ
 raven
-elasticsearch==2.3.0
-openpyxl==2.3.5 # Force this lower for flatten-tool compatibility
+elasticsearch
 -e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool
 python-dateutil
 strict-rfc3339
@@ -13,4 +12,4 @@ django-cookie-law
 titlecase
 dealer
 django-super-favicon
-ijson==2.3
+ijson
