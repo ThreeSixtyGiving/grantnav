@@ -71,6 +71,8 @@ SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
              "Funding Org: Name",
              "Funding Org: Identifier",
              "fundingOrganization: id_and_name", "recipientLocation",
+             "awardDateDateOnly", "plannedDates: endDateDateOnly",
+             "plannedDates: startDateDateOnly",
              "recipientDistrictGeoCode", "title_and_description"] + list(ADDITIONAL_FIELDS.keys())
 
 
@@ -142,6 +144,8 @@ def reverse_minus(minus_value, value):
 
 @register.filter(name='get_amount')
 def get_amount(amount):
+    if isinstance(amount, dict):
+        amount = amount['value']
     try:
         return "{:,.0f}".format(amount)
     except ValueError:

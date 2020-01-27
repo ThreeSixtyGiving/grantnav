@@ -129,6 +129,7 @@ def test_filter_by_help_link(provenance_dataload, server_url, browser):
 def test_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-icon").click()
+    # Total number of expected grants 4,764
     assert '4,764' in browser.find_element_by_tag_name('body').text
     assert 'Lloyds Bank Foundation for England and Wales (4,116)' in browser.find_element_by_tag_name('body').text
     assert 'Wolfson Foundation (379)' in browser.find_element_by_tag_name('body').text
@@ -418,6 +419,14 @@ def test_currency_facet(provenance_dataload, server_url, browser):
     browser.find_element_by_class_name("large-search-icon").click()
     browser.find_element_by_link_text("USD (4)").click()
     assert 'USD 0 - USD 500' in browser.find_element_by_tag_name('body').text
+
+
+def test_amount_awarded_facet(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_link_text("£1,000 - £5,000 (42)").click()
+    total_grants = browser.find_elements_by_css_selector(".top-stats-search dd")[0].text
+    assert "42" in total_grants, "Expected number of grants not found"
 
 
 @pytest.mark.parametrize(('path'), ['/grant/360G-wolfson-19916'])

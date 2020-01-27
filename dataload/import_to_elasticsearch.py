@@ -12,6 +12,7 @@ import elasticsearch.helpers
 import requests
 import time
 import ijson
+import dateutil.parser as date_parser
 
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
@@ -54,6 +55,7 @@ def convert_spreadsheet(file_path, file_type, tmp_dir):
             output_name=converted_path,
             input_format=file_type,
             main_sheet_name='grants',
+            root_list_path='grants',
             root_id='',
             schema='https://raw.githubusercontent.com/ThreeSixtyGiving/standard/master/schema/360-giving-schema.json',
             convert_titles=True,
@@ -66,109 +68,106 @@ def convert_spreadsheet(file_path, file_type, tmp_dir):
 # curl http://test-360giving.pantheon.io/api/3/action/current_package_list_with_resources | grep -Eo '[^"]+\.json' | sed 's/\\\//\//g' | while read url; do wget "$url"; done
 
 
-def import_to_elasticsearch(files, clean):
-
+def maybe_create_index(index_name=ES_INDEX):
+    """ Creates a new ES index based on value of ES_INDEX
+    unless it already exists """
     es = elasticsearch.Elasticsearch()
-
-    # Delete the index
-    if clean:
-        result = es.indices.delete(index=ES_INDEX, ignore=[404])
-        pprint(result)
 
     # Add the extra mapping info we want
     # (the rest will be auto inferred from the data we feed in)
     #
     # See issue #503 for why we do this for a non-standard field (Reference)
     mappings = {
-        "grant": {
-            "_all": {
-                "analyzer": "english_with_folding"
+        "properties": {
+            "id": {"type": "keyword"},
+            "filename": {"type": "keyword"},
+            "title": {
+                "type": "text", "analyzer": "english_with_folding"
             },
-            "properties": {
-                "Reference": {"type": "string", "index": "not_analyzed"},
-                "id": {"type": "string", "index": "not_analyzed"},
-                "filename": {"type": "string", "index": "not_analyzed"},
-                "recipientRegionName": {"type": "string", "index": "not_analyzed"},
-                "recipientDistrictName": {"type": "string", "index": "not_analyzed"},
-                "recipientWardName": {"type": "string", "index": "not_analyzed"},
-                "currency": {"type": "string", "index": "not_analyzed"},
-                "title_and_description": {"type": "string", "analyzer": "english_with_folding"},
-                "recipientLocation": {"type": "string"},
-                "amountAppliedFor": {"type": "double"},
-                "amountAwarded": {"type": "double"},
-                "amountDisbursed": {"type": "double"},
-                "awardDate": {
-                    "type": "date",
-                    "ignore_malformed": True
-                },
-                "dateModified": {"type": "string", "index": "not_analyzed"},
-                "plannedDates": {
-                    "properties": {
-                        "startDate": {"type": "string", "index": "not_analyzed"},
-                        "endDate": {"type": "string", "index": "not_analyzed"},
-                        "duration": {"type": "string"}
+            "description": {
+                "type": "text", "analyzer": "english_with_folding"
+            },
+            "recipientRegionName": {"type": "keyword"},
+            "recipientDistrictName": {"type": "keyword"},
+            "recipientWardName": {"type": "keyword"},
+            "currency": {"type": "keyword"},
+            "recipientLocation": {"type": "text"},
+            "Reference": {"type": "keyword"},
+            "title_and_description": {"type": "text", "analyzer": "english_with_folding"},
+            "amountAppliedFor": {"type": "double"},
+            "amountAwarded": {"type": "double"},
+            "amountDisbursed": {"type": "double"},
+            "awardDate": {
+                "type": "date",
+                "ignore_malformed": True
+            },
+            "dateModified": {"type": "keyword"},
+            "plannedDates": {
+                "properties": {
+                    "startDate": {"type": "keyword"},
+                    "endDate": {"type": "keyword"},
+                    "duration": {"type": "text"}
+                }
+            },
+            "recipientOrganization": {
+                "properties": {
+                    "addressLocality": {
+                        "type": "keyword"
+                    },
+                    "charityNumber": {
+                        "type": "keyword"
+                    },
+                    "companyNumber": {
+                        "type": "keyword"
+                    },
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "url": {
+                        "type": "keyword"
+                    },
+                    "name": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "streetAddress": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "id_and_name": {
+                        "type": "keyword"
                     }
-                },
-                "recipientOrganization": {
-                    "properties": {
-                        "addressLocality": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "charityNumber": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "companyNumber": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "id": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "url": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "name": {
-                            "type": "string", "analyzer": "english_with_folding",
-                        },
-                        "streetAddress": {
-                            "type": "string", "analyzer": "english_with_folding",
-                        },
-                        "id_and_name": {
-                            "type": "string", "index": "not_analyzed"
-                        }
+                }
+            },
+            "fundingOrganization": {
+                "properties": {
+                    "addressLocality": {
+                        "type": "keyword"
+                    },
+                    "charityNumber": {
+                        "type": "keyword"
+                    },
+                    "companyNumber": {
+                        "type": "keyword"
+                    },
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "url": {
+                        "type": "keyword"
+                    },
+                    "name": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "streetAddress": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "id_and_name": {
+                        "type": "keyword"
                     }
-                },
-                "fundingOrganization": {
-                    "properties": {
-                        "addressLocality": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "charityNumber": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "companyNumber": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "id": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "url": {
-                            "type": "string", "index": "not_analyzed"
-                        },
-                        "name": {
-                            "type": "string", "analyzer": "english_with_folding",
-                        },
-                        "streetAddress": {
-                            "type": "string", "analyzer": "english_with_folding",
-                        },
-                        "id_and_name": {
-                            "type": "string", "index": "not_analyzed"
-                        }
-                    }
-                },
-                "beneficiaryLocation": {
-                    "properties": {
-                        "geographic code (from GIFTS)": {"type": "string"}
-                    }
+                }
+            },
+            "beneficiaryLocation": {
+                "properties": {
+                    "geographic code (from GIFTS)": {"type": "text"}
                 }
             }
         }
@@ -209,12 +208,24 @@ def import_to_elasticsearch(files, clean):
         }
     }
 
-    # Create it again
-    result = es.indices.create(index=ES_INDEX, body={"mappings": mappings, "settings": settings}, ignore=[400])
+    # Create it
+    result = es.indices.create(index=index_name, body={"mappings": mappings, "settings": settings}, ignore=[400])
     if 'error' in result and result['error']['reason'] == 'already exists':
         print('Updating existing index')
     else:
         pprint(result)
+
+
+def import_to_elasticsearch(files, clean):
+
+    es = elasticsearch.Elasticsearch()
+
+    # Delete the index
+    if clean:
+        result = es.indices.delete(index=ES_INDEX, ignore=[404])
+        pprint(result)
+
+    maybe_create_index()
 
     time.sleep(1)
 
@@ -258,11 +269,11 @@ def import_to_elasticsearch(files, clean):
                     grant['filename'] = file_name.strip('./')
                     grant['_id'] = str(uuid.uuid4())
                     grant['_index'] = ES_INDEX
-                    grant['_type'] = 'grant'
                     update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
                     update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
                     update_doc_with_region(grant)
                     update_doc_with_title_and_description(grant)
+                    update_doc_with_dateonly_fields(grant)
                     currency = grant.get('currency')
                     if currency:
                         grant['currency'] = currency.upper()
@@ -276,10 +287,11 @@ def import_to_elasticsearch(files, clean):
 
 
 def get_mapping_from_index(es):
+    MAX_INT = 2147483647
     QUERY = {"query": {"match_all": {}},
              "aggs": {
-                 "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 0}},
-                 "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 0}}}}
+                 "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": MAX_INT}},
+                 "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": MAX_INT}}}}
     results = es.search(body=QUERY, index=ES_INDEX)
     for bucket in results["aggregations"]["fundingOrganization"]["buckets"]:
         id_name = json.loads(bucket["key"])
@@ -373,6 +385,25 @@ def update_doc_with_org_mappings(grant, org_key, file_name):
             mapping[org_id] = name
             found_name = name
         org["id_and_name"] = json.dumps([found_name, org_id])
+
+
+def update_doc_with_dateonly_fields(grant):
+    """
+    If possible parse the date to only show the date part
+    rather than the full ISO date
+    """
+    def add_dateonly(parent, key):
+        try:
+            datetime = date_parser.parse(parent.get(key))
+            parent[key + 'DateOnly'] = datetime.date().isoformat()
+        except (ValueError, TypeError):
+            parent[key + 'DateOnly'] = parent.get(key)
+
+    add_dateonly(grant, 'awardDate')
+
+    for dates in grant.get('plannedDates', []) + grant.get('actualDates', []):
+        add_dateonly(dates, 'startDate')
+        add_dateonly(dates, 'endDate')
 
 
 def get_area_mappings():

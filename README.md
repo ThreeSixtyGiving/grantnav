@@ -26,12 +26,11 @@ Steps to installation:
 * Create a virtual environment
 * Activate the virtual environment
 * Install dependencies
-* Install Java 7+ (this is a requirement for Elasticsearch but the packages don't depend on any Java package)
 * Install Elastic search
 * Run database migrations
 * Run the development server
 
-These instructions assume Ubuntu Trusty 64.
+These instructions assume Ubuntu Xenial.
 
 ```
 sudo apt-get install -y git-core
@@ -44,9 +43,10 @@ source .ve/bin/activate
 # Make sure you have a recent version of pip, to install binary wheel packages.
 pip install --upgrade pip
 pip install -r requirements.txt # Use requirements_dev.txt if you're installing for development.
-sudo apt-get install openjdk-8-jre
+# Elasticsearch 7 https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
 wget -O - https://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
-echo 'deb http://packages.elasticsearch.org/elasticsearch/2.x/debian stable main' | sudo tee /etc/apt/sources.list.d/elasticsearch.list
+echo 'deb http://packages.elasticsearch.org/elasticsearch/7.x/debian stable main' | sudo tee /etc/apt/sources.list.d/elasticsearch7.list
+sudo apt-get install apt-transport-https
 sudo apt-get update
 sudo apt-get install elasticsearch
 sudo service elasticsearch start

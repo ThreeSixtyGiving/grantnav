@@ -1,18 +1,17 @@
 Django==1.11.27 # rq.filter: <1.12
-django-bootstrap3==12.0.1
+django-bootstrap3==12.0.3
 requests==2.22.0
 django-environ==0.4.5
 raven==6.10.0
-elasticsearch==2.3.0
-openpyxl==2.3.5
--e git+https://github.com/OpenDataServices/flatten-tool.git@dceac82323271c4cc5956275481d762d81976eaf#egg=flattentool
+elasticsearch==7.0.5
+flattentool==0.9.0
 python-dateutil==2.8.1
 strict-rfc3339==0.7
 django-cookie-law==2.0.2
 titlecase==0.12.0
 dealer==2.1.0
 django-super-favicon==0.6.1
-ijson==2.3
+ijson==2.5.1
 ## The following requirements were added by pip freeze:
 certifi==2019.11.28
 chardet==3.0.4
@@ -22,9 +21,12 @@ et-xmlfile==1.0.1
 idna==2.8
 jdcal==1.4.1
 jsonref==0.2
-Pillow==6.2.1
+lxml==4.4.2
+openpyxl==3.0.3
+Pillow==7.0.0
 pytest-runner==5.2
 pytz==2019.3
 schema==0.7.1
-six==1.13.0
+six==1.14.0
 urllib3==1.25.7
+xmltodict==0.12.0

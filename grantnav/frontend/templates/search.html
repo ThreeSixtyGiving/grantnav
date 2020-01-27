@@ -18,7 +18,7 @@
           <div class="form-group">
             <div class="text-center">
               <label class="radio-inline">
-                <input {% if default_field == "_all" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio1" value="_all"> Search All Fields
+                <input {% if default_field == "*" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio1" value="*"> Search All Fields
               </label>
               <label class="radio-inline">
                 <input {% if default_field == "recipientLocation" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio2" value="recipientLocation"> Locations
@@ -374,7 +374,7 @@
 {% endblock %}
 
 {% block extrapiwik %}
-_paq.push(["trackSiteSearch", "{{text_query}}", false, {{results.hits.total}}]);
+_paq.push(["trackSiteSearch", "{{text_query}}", false, {{results.hits.total.value}}]);
 {% endblock %}
 
 {% block extra_scripts %}
