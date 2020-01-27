@@ -1,9 +1,9 @@
 GrantNav - Explore Grants in the 360 data standard
 ==================================================
 
-[![Build Status](https://travis-ci.org/OpenDataServices/grantnav.svg?branch=master)](https://travis-ci.org/OpenDataServices/grantnav)
+[![Build Status](https://travis-ci.com/ThreeSixtyGiving/grantnav.svg?branch=master)](https://travis-ci.com/ThreeSixtyGiving/grantnav)
 
-We use GitHub Projects to provide a Kanban board visualisation of our workflow and issues https://github.com/OpenDataServices/grantnav/projects
+We use GitHub Projects to provide a Kanban board visualisation of our workflow and issues https://github.com/ThreeSixtyGiving/grantnav/projects
 
 Introduction
 ------------
@@ -36,7 +36,7 @@ These instructions assume Ubuntu Xenial.
 sudo apt-get install -y git-core
 sudo apt-get install -y python3-dev
 
-git clone https://github.com/OpenDataServices/grantnav.git
+git clone https://github.com/ThreeSixtyGiving/grantnav.git
 cd grantnav
 python3 -m venv .ve
 source .ve/bin/activate
