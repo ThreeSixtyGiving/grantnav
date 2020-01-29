@@ -269,9 +269,16 @@ def import_to_elasticsearch(files, clean):
                     grant['filename'] = file_name.strip('./')
                     grant['_id'] = str(uuid.uuid4())
                     grant['_index'] = ES_INDEX
+
                     update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
                     update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
-                    update_doc_with_region(grant)
+
+                    # Save some time if GrantNav is receiving data from the
+                    # datastore these fields will already be present so no need
+                    # to add again.
+                    if "additional_data_added" not in grant:
+                        update_doc_with_region(grant)
+
                     update_doc_with_title_and_description(grant)
                     update_doc_with_dateonly_fields(grant)
                     currency = grant.get('currency')
