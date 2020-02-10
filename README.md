@@ -80,7 +80,7 @@ You can specify as many file or patterns as you like at the end of the command.
 
 ### Getting data for upload
 
-There is a list of 360Giving datasets at http://www.threesixtygiving.org/data/find-data/. There's an API for this list http://data.threesixtygiving.org/data.json and some code to help download from it -  https://github.com/ThreeSixtyGiving/datagetter
+There is a list of 360Giving datasets at http://data.threesixtygiving.org/. There's an API for this list http://data.threesixtygiving.org/data.json and some code to help download from it -  https://github.com/ThreeSixtyGiving/datagetter
 
 If you see the message "Killed", you need to increase the memory in your VM.
 
