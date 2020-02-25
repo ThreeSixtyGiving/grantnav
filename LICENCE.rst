@@ -21,8 +21,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with GrantNav.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2016-2017 Open Data Services Co-operative Limited.
-
+Copyright 2016-2020 `360Giving <http://threesixtygiving.org>`, a company limited by guarantee 09668396 and a registered charity 1164883.
 
 
 Code-Point Open
