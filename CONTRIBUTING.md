@@ -1,6 +1,6 @@
 # Contributing
 
-Open Data Services welcomes contributions to all of its software projects.
+GrantNav was built and is maintained by Open Data Services. We welcome contributions to all of our software projects.
 
 * We're interested in user experience and feedback from using the application.
 * We'd like people to fix bugs and contribute to features.
