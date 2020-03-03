@@ -73,6 +73,8 @@ SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
              "fundingOrganization: id_and_name", "recipientLocation",
              "awardDateDateOnly", "plannedDates: endDateDateOnly",
              "plannedDates: startDateDateOnly",
+             "id_and_name",
+             "additional_data_added",
              "recipientDistrictGeoCode", "title_and_description"] + list(ADDITIONAL_FIELDS.keys())
 
 
