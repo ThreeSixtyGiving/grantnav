@@ -503,6 +503,18 @@ def search(request):
         json_query = {}
 
     default_field = request.GET.get('default_field')
+
+    # URL query backwards compatibility
+    # https://github.com/ThreeSixtyGiving/grantnav/issues/541
+    # Subsitute _all for * in default_field
+    try:
+        if "_all" in json_query["query"]["bool"]["must"]["query_string"]["default_field"]:
+            json_query["query"]["bool"]["must"]["query_string"]["default_field"] = "*"
+            return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
+    except KeyError:
+        pass
+    # End URL query backwards compatibility
+
     text_query = request.GET.get('text_query')
     if text_query is not None or not json_query:
         if not text_query:
