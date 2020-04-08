@@ -1,7 +1,9 @@
 GrantNav
 ========
 
-Note: This license doesn't apply to the 360Giving logo https://github.com/OpenDataServices/grantnav/blob/master/grantnav/frontend/static/images/360logo.png https://github.com/OpenDataServices/grantnav/blob/master/grantnav/frontend/static/images/360logo_invert.png . The 360Giving logo is copyright `360Giving <https://threesixtygiving.org>` and may not be used without express permission. 
+Note: This license doesn't apply to the 360Giving logo /grantnav/frontend/static/images/360-giving-logo-white.svg
+
+The 360Giving logo is copyright `360Giving <https://threesixtygiving.org>` and may not be used without express permission. 
 
 The look-and-feel of GrantNav is that of 360Giving, and care should be taken when running any public instance not to falsely give the impression, intentionally or otherwise, that the instance is operated by or related to 360Giving.
 
