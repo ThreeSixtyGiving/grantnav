@@ -448,15 +448,21 @@ def get_clear_all(request, context, json_query):
         context["results"]["clear_all_facet_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
 
 
-def home(request):
-    context = {}
+def totals_query():
     query = {"query": {"match_all": {}},
              "aggs": {
                  "recipient_count": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                  "funder_count": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
         }
     }
-    results = get_results(query)
+
+    return get_results(query)
+
+
+def home(request):
+    results = totals_query()
+
+    context = {}
     context['results'] = results
 
     return render(request, "home.html", context=context)
