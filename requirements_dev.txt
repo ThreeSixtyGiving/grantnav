@@ -1,4 +1,4 @@
-Django==1.11.28 # rq.filter: <1.12
+Django==1.11.29 # rq.filter: <1.12
 django-bootstrap3==12.0.3
 requests==2.23.0
 django-environ==0.4.5
@@ -12,48 +12,49 @@ titlecase==0.12.0
 dealer==2.1.0
 django-super-favicon==0.6.1
 ijson==2.5.1
+prometheus-client==0.7.0
 
 
 flake8==3.7.9
 # pytest and plugins
-pytest==5.3.5
-pytest-django==3.8.0
+pytest==5.4.1
+pytest-django==3.9.0
 pytest-cov==2.8.1
 pytest-localserver==0.5.0
-coveralls==1.11.1
+coveralls==2.0.0
 selenium==3.141.0
 libsass==0.19.4
 ## The following requirements were added by pip freeze:
 attrs==19.3.0
-certifi==2019.11.28
+certifi==2020.4.5.1
 chardet==3.0.4
-contextlib2==0.5.5
-coverage==5.0.3
+contextlib2==0.6.0.post1
+coverage==5.1
 django-classy-tags==1.0.0
 docopt==0.6.2
 entrypoints==0.3
 et-xmlfile==1.0.1
 idna==2.9
-importlib-metadata==1.5.0
+importlib-metadata==1.6.0
 jdcal==1.4.1
 jsonref==0.2
 lxml==4.5.0
 mccabe==0.6.1
 more-itertools==8.2.0
 openpyxl==3.0.3
-packaging==20.1
-Pillow==7.0.0
+packaging==20.3
+Pillow==7.1.1
 pluggy==0.13.1
 py==1.8.1
 pycodestyle==2.5.0
 pyflakes==2.1.1
-pyparsing==2.4.6
+pyparsing==2.4.7
 pytest-runner==5.2
 pytz==2019.3
-schema==0.7.1
+schema==0.7.2
 six==1.14.0
 urllib3==1.25.8
-wcwidth==0.1.8
-Werkzeug==1.0.0
+wcwidth==0.1.9
+Werkzeug==1.0.1
 xmltodict==0.12.0
 zipp==3.1.0
