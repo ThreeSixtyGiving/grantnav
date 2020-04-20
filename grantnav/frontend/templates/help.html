@@ -5,7 +5,7 @@
 <div>
   <h1>{% trans "Help with using GrantNav" %}</h1>
 
-  <p>{% blocktrans %}GrantNav is a search engine for open grants data being published in the 360Giving Standard. You can use the search results to see summary statistics or browse through the different grants, and click through to explore the data in more detail. GrantNav is not a visualisation tool nor a map, but does help you obtain the data you need for further analysis. This page will help you to get the most out of GrantNav.{% endblocktrans %}</p>
+  <p>{% blocktrans %}GrantNav is a search-engine for grants data that is published by funders in the 360Giving Data Standard. You can use the search results to see summary statistics or browse through the different grants, and click through to explore the data in more detail. GrantNav is not a visualisation tool nor a map, but does help you obtain the data you need for further analysis. This page will help you to get the most out of GrantNav.{% endblocktrans %}</p>
 
   <h2>{% trans "Search" %}</h2>
 
@@ -68,7 +68,7 @@
         <tbody>
           <tr>
             <td>{% trans "Search All" %}</td>
-            <td>{% trans "Searches across all fields of the data, including all text and numbers. To learn more about what fields are present in 360Giving data, see the " %} <a href="http://standard.threesixtygiving.org">360Giving Standard</a>. {% trans "Data in fields that are provided by publishers but that aren't part of the standard will be included in this search." %}</td>
+            <td>{% trans "Searches across all fields of the data, including all text and numbers. To learn more about what fields are present in 360Giving data, see the " %} <a href="http://standard.threesixtygiving.org">360Giving Data Standard</a>. {% trans "Data in fields that are provided by publishers but that aren't part of the standard will be included in this search." %}</td>
           </tr>
           <tr>
             <td>{% trans "Locations" %}</td>
@@ -177,7 +177,7 @@
 
   <h2 id="filters">{% trans "How do the GrantNav filters work?" %}</h2>
 
-  <p>{% blocktrans %}GrantNav has filters which appear on the left hand side of the search results. These work in relation to certain fields in the 360Giving Standard in the following ways:{% endblocktrans %}</p>
+  <p>{% blocktrans %}GrantNav has filters which appear on the left hand side of the search results. These work in relation to certain fields in the 360Giving Data Standard in the following ways:{% endblocktrans %}</p>
 
   <div class="row bottom-space">
     <div class="col-xs-12">
@@ -185,7 +185,7 @@
         <thead>
           <tr>
             <th>{% trans "GrantNav filter" %}</th>
-            <th>{% trans "360Giving Standard field" %}</th>
+            <th>{% trans "360Giving Data Standard field" %}</th>
             <th>{% trans "Notes" %}</th>
           </tr>
         </thead>
@@ -226,7 +226,7 @@
   </div>
 
   <h2 id="cant_find_results">{% trans "Why can't I find results that I know should match the search criteria?" %}</h2>
-  <p>{% blocktrans %} grantnav's filters show the grants which contain the selected value in the relevant field. if the publisher of the data hasn't included that data, then grantnav's filters will exclude the grant, even if it appears that it should be included. for example, if a grant is to the “lancaster rowing club” but the grant doesn’t contain any recipient location data, then using the recipient region filter to select ‘north west’ will exclude the grant from the results. this is because grantnav needs specific types of recipient location data to know where the grant recipient is located - see <a href="#location_data">grantnav and location data</a> for further details. if you know that a grant is in grantnav but doesn’t appear where you’d expect, you might want to contact the publisher of the data to let them know. Visit the <a href="http://data.threesixtygiving.org">360Giving Registry</a> for a full list of organisations and their contact details.{% endblocktrans %}</p>
+  <p>{% blocktrans %} GrantNav's filters show the grants which contain the selected value in the relevant field. If the publisher of the data hasn't included that data, then GrantNav's filters will exclude the grant, even if it appears that it should be included. For example, if a grant is to the “Lancaster Rowing Club” but the grant doesn’t contain any recipient location data, then using the recipient region filter to select ‘North West’ will exclude the grant from the results. This is because GrantNav needs specific types of recipient location data to know where the grant recipient is located - see <a href="#location_data">GrantNav and location data</a> for further details. If you know that a grant is in GrantNav but doesn’t appear where you’d expect, you might want to contact the publisher of the data to let them know. Visit the <a href="http://data.threesixtygiving.org">360Giving Registry</a> for a full list of organisations and their contact details.{% endblocktrans %}</p>
 
   <h2 id="feedback_on_data">{% trans "How can I give feedback on data in GrantNav?" %}</h2>
   <p>{% blocktrans %}All of the data in GrantNav is downloaded directly from the organisations listed and is presented without change. Any queries or feedback that you have about the data itself should be directed to the individual organisation. To find out who published a particular grant, and to see more information about how to contact them, see the “Where is this data from?” section of the relevant grant’s page. {% endblocktrans %}</p>
@@ -242,10 +242,10 @@
 
 
   <h2 id="data_in_grantnav">{% trans "What data is in GrantNav?" %}</h2>
-  <p>{% blocktrans %}GrantNav contains a curated selection of the data listed in the <a href="http://data.threesixtygiving.org">360Giving Registry</a>. Data loaded into GrantNav has, at a minimum, a license allowing re-use for any purpose (eg OGL, CC-BY 4.0) and validates against the <a href="http://standard.threesixtygiving.org"</a>360Giving Standard</a> at time of download. 360Giving aims to include as much data as possible, but omits datasets that we consider to skew results or that aren't relevant to GrantNav's users. The data is re-loaded once per month, so organisations that have recently published 360Giving data may not appear immediately. The grants data is then enhanced with data from various open datasets to help power the search tools. For details, please see the <a href="datasets">Data Used in GrantNav</a> page.{% endblocktrans %}</p>
+  <p>{% blocktrans %}GrantNav contains a curated selection of the data listed in the <a href="http://data.threesixtygiving.org">360Giving Registry</a>. Data loaded into GrantNav has, at a minimum, a license allowing re-use for any purpose (eg OGL, CC-BY 4.0) and validates against the <a href="http://standard.threesixtygiving.org"</a>360Giving Data Standard</a> at time of download. 360Giving aims to include as much data as possible, but omits datasets that we consider to skew results or that aren't relevant to GrantNav's users. GrantNav is updated on a daily basis. The grants data is then enhanced with data from various open datasets to help power the search tools. For details, please see the <a href="datasets">Data Used in GrantNav</a> page.{% endblocktrans %}</p>
 
   <h2 id="beneficiary_data">{% trans "Why do GrantNav filters show recipient rather than beneficiary location?" %}</h2>
-  <p>{% blocktrans %}While the 360Giving Standard allows publishers to include beneficiary location data (the place where funded activity is taking place), it can sometimes be hard to determine and record this information in a meaningful way, and so not all data includes this type of information. When there is beneficiary location information available about a grant you will find this data on the grant page and included in the data download.{% endblocktrans %}</p>
+  <p>{% blocktrans %}While the 360Giving Data Standard allows publishers to include beneficiary location data (the place where funded activity is taking place), it can sometimes be hard to determine and record this information in a meaningful way, and so not all data includes this type of information. When there is beneficiary location information available about a grant you will find this data on the grant page and included in the data download.{% endblocktrans %}</p>
 
   <h2 id="additional_data">{% trans "Additional data and GrantNav" %}</h2>
   <p>{% blocktrans %}When data is imported into GrantNav, we undertake two processes to provide additional data.{% endblocktrans %}</p>
@@ -275,13 +275,13 @@
   <p>{% blocktrans %}You can export data from GrantNav searches, and from views of funders and recipients, in either CSV or JSON formats. You can also <a href="/developers/">download the whole data set</a> used in GrantNav.{% endblocktrans %}</p>
 
   <h3 id="export_search">{% trans "Exporting from a search" %}</h3>
-  <p>{% blocktrans %}When you export data from a GrantNav search the download uses the same field names as the <a href="http://standard.threesixtygiving.org/en/latest/">360Giving Standard</a>. This is provided in a single file - in the case of the CSV
-    file there will be multiple columns for fields that may have more than one value for some grants, such as geographic terms. Please note that not all fields in the 360Giving Standard are included in the GrantNav export CSV.{% endblocktrans %}
+  <p>{% blocktrans %}When you export data from a GrantNav search the download uses the same field names as the <a href="http://standard.threesixtygiving.org/en/latest/">360Giving Data Standard</a>. This is provided in a single file - in the case of the CSV
+    file there will be multiple columns for fields that may have more than one value for some grants, such as geographic terms. Please note that not all fields in the 360Giving Data Standard are included in the GrantNav export CSV.{% endblocktrans %}
   </p>
   <p>{% blocktrans %}The CSV file contains more fields than are used by core GrantNav functionality, including fields such as beneficiary location data, if this has been provided by the publisher(s). Columns may be entirely blank if no grant in your download uses a particular field. Sometimes, publishers add more fields to the standards for their own use. Such fields are not included in the CSV export, but are included in the JSON export. {% endblocktrans %} 
   </p>
 
-  <p>{% blocktrans %}The following fields are not in the 360Giving Standard and are added to the export data by GrantNav:{% endblocktrans %}</p>
+  <p>{% blocktrans %}The following fields are not in the 360Giving Data Standard and are added to the export data by GrantNav:{% endblocktrans %}</p>
 
   <div class="row bottom-space">
     <div class="col-xs-12">
