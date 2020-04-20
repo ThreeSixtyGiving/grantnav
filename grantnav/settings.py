@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'bootstrap3',
     'grantnav.frontend',
+    'grantnav.prometheus',
     'raven.contrib.django.raven_compat',
     'cookielaw',
     'favicon',
@@ -207,3 +208,5 @@ LOGGING = {
         },
     },
 }
+
+GRANTNAV_LOG_DIR = os.path.expanduser("~/logs/")
