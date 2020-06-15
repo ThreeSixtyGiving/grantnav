@@ -77,7 +77,12 @@ def maybe_create_index(index_name=ES_INDEX):
     # (the rest will be auto inferred from the data we feed in)
     #
     # See issue #503 for why we do this for a non-standard field (Reference)
+    # Fields must appear here to be indexed
     mappings = {
+        "date_detection": False,
+        "numeric_detection": False,
+        "dynamic": False,
+
         "properties": {
             "id": {"type": "keyword"},
             "filename": {"type": "keyword"},
@@ -205,7 +210,7 @@ def maybe_create_index(index_name=ES_INDEX):
                     "language": "possessive_english"
                 }
             }
-        }
+        },
     }
 
     # Create it
