@@ -137,6 +137,9 @@ def maybe_create_index(index_name=ES_INDEX):
                     "streetAddress": {
                         "type": "text", "analyzer": "english_with_folding"
                     },
+                    "description": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
                     "id_and_name": {
                         "type": "keyword"
                     }
@@ -165,6 +168,9 @@ def maybe_create_index(index_name=ES_INDEX):
                     "streetAddress": {
                         "type": "text", "analyzer": "english_with_folding"
                     },
+                    "department": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
                     "id_and_name": {
                         "type": "keyword"
                     }
@@ -174,7 +180,14 @@ def maybe_create_index(index_name=ES_INDEX):
                 "properties": {
                     "geographic code (from GIFTS)": {"type": "text"}
                 }
-            }
+            },
+            "grantProgramme": {
+                "properties": {
+                    "title": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    }
+                }
+            },
         }
     }
 
