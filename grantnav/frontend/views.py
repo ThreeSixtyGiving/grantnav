@@ -868,11 +868,15 @@ def funders_datatables(request):
     for result in results["aggregations"]["funder_stats"]["buckets"][-length:]:
         stats = result["funder_stats"]
         for key in list(stats):
-            if key != 'count':
-                if result_format == "ajax":
-                    stats[key] = "£ {:,.0f}".format(int(stats[key]))
+            if result_format == "ajax":
+                if "count" in key:
+                    stats[key] = "{:,}".format(stats[key])
                 else:
+                    stats[key] = "£ {:,.0f}".format(int(stats[key]))
+            else:
+                if "count" not in key:
                     stats[key] = "{:.0f}".format(int(stats[key]))
+
         org_name, org_id = json.loads(result["key"])
         stats["org_name"] = org_name
         stats["org_id"] = org_id
