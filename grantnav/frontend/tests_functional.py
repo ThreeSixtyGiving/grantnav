@@ -85,7 +85,7 @@ def test_nav_menu_forum_link(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_id("forum_link").click()
 
-    assert browser.current_url == 'https://forum.threesixtygiving.org/c/grantnav'
+    assert browser.current_url == 'https://forum.threesixtygiving.org/c/grantnav/8'
 
 
 def test_nav_menu_help_link(provenance_dataload, server_url, browser):
