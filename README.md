@@ -44,13 +44,15 @@ source .ve/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt # Use requirements_dev.txt if you're installing for development.
 # Elasticsearch 7 https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
-wget -O - https://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
-echo 'deb http://packages.elasticsearch.org/elasticsearch/7.x/debian stable main' | sudo tee /etc/apt/sources.list.d/elasticsearch7.list
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
 sudo apt-get install apt-transport-https
 sudo apt-get update
 sudo apt-get install elasticsearch
 sudo service elasticsearch start
 python manage.py migrate
+# Running the tests gets some data into the elastic index
+py.test
 python manage.py runserver
 ```
 
