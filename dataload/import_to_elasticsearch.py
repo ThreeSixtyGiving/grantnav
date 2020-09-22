@@ -228,8 +228,12 @@ def maybe_create_index(index_name=ES_INDEX):
 
     # Create it
     result = es.indices.create(index=index_name, body={"mappings": mappings, "settings": settings}, ignore=[400])
-    if 'error' in result and result['error']['reason'] == 'already exists':
-        print('Updating existing index')
+    if 'error' in result:
+        if 'already exists' in result['error']['reason']:
+            print('Updating existing index')
+        else:
+            pprint(result)
+            raise Exception("Creating index failed")
     else:
         pprint(result)
 
