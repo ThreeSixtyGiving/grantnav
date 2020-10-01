@@ -7,13 +7,19 @@ import requests
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch, get_area_mappings
 
-prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/c536a0ee750893fb53e7b458248fd8fd5913e9b5/'
+prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/b6135e6fb8960323031e9013bf55b5391fd243a9/'
 
 
 @pytest.fixture(scope="module")
 def dataload():
     get_area_mappings()
-    import_to_elasticsearch([prefix + 'a002400000KeYdsAAF.json', prefix + 'grantnav-20180903134856.json'], clean=True)
+    import_to_elasticsearch(
+        [
+            prefix + 'a002400000KeYdsAAF.json',
+            prefix + 'grantnav-20180903134856.json',
+            prefix + 'a002400000nO46WAAS.json'
+        ], clean=True
+    )
     #elastic search needs some time to commit its data
     time.sleep(2)
 
@@ -110,3 +116,12 @@ def test_json_download(provenance_dataload, client):
     response = client.get(initial_response.url)
     json_string = b''.join(response.streaming_content).decode('utf-8')
     json.loads(json_string)
+
+
+def test_orgid_with_dots(provenance_dataload, client):
+    # Delf Universy request has a ".c" at the end.
+    # Check that it is not seen as a format type.
+
+    recipient = client.get('/recipient/XI-GRID-grid.5292.c')
+
+    assert recipient.status_code == 200
