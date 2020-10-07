@@ -112,7 +112,7 @@ def get_request_type_and_size(request):
     results_size = SIZE
 
     match = re.search(r'\.(\w+)$', request.path)
-    if match:
+    if match and match.group(1) in ["csv", "json", "ajax"]:
         result_format = match.group(1)
         results_size = settings.FLATTENED_DOWNLOAD_LIMIT
     else:
