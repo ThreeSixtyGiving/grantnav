@@ -64,7 +64,7 @@
         <td><a href="{% url 'publisher' dataset.publisher.prefix %}">{{ dataset.publisher.name }}</a></td>
         <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
         <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
-        <td>{% for funder_name, funder_id in dataset.funders %}<a href="{% url 'funder'  funder_id %}">{{ funder_name }}</a>{% endfor %}</td>
+        <td>{% for funder_name, funder_id in dataset.funders %}<a href="{% url 'funder'  funder_id %}">{{ funder_name }}</a> {% endfor %}</td>
     </tr>
     {% endfor %}
 </tbody>
