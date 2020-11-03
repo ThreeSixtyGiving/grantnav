@@ -1,6 +1,5 @@
 import json
 import time
-import urllib.parse
 
 import pytest
 import requests
@@ -57,18 +56,12 @@ def test_search(provenance_dataload, client):
     wolfson_facet = response.context['results']['aggregations']['fundingOrganization']['buckets'][0]
     assert wolfson_facet['doc_count'] == 7
     assert wolfson_facet['key'] == '["Wolfson Foundation", "GB-CHC-1156077"]'
-    json_query = json.loads(urllib.parse.parse_qs(initial_response.url.split('?')[-1])['json_query'][0])
-
-    json_query['query']['bool']['filter'][0]['bool']['should'] = [{'term': {'fundingOrganization.id_and_name': '["Wolfson Foundation", "GB-CHC-1156077"]'}}]
-    assert json.loads(urllib.parse.parse_qs(wolfson_facet['url'].split('?')[-1])['json_query'][0]) == json_query
 
     # click again
     response = client.get(wolfson_facet['url'])
     wolfson_facet = response.context['results']['aggregations']['fundingOrganization']['buckets'][0]
     assert wolfson_facet['doc_count'] == 7
     assert wolfson_facet['key'] == '["Wolfson Foundation", "GB-CHC-1156077"]'
-    json_query['query']['bool']['filter'][0]['bool']['should'] = []
-    assert json.loads(urllib.parse.parse_qs(wolfson_facet['url'].split('?')[-1])['json_query'][0]) == json_query
 
     # Test the data is extended by grantnav adding geo codes
     # Original data contains postal codes only

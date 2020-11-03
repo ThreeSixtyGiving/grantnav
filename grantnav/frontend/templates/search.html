@@ -115,7 +115,7 @@
                 <div class="col-lg-5 col-md-6 no-padding-hor">
                   <div class="form-group form-group-sm">
                     <label for="min-amount">Smallest
-                    <input id="min-amount" name="min_amount" class="form-control" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.gte}}"/>
+                    <input id="min-amount" name="new_min_amount" class="form-control" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.gte}}"/>
                     </label>
                   </div>
                 </div>
@@ -123,7 +123,7 @@
                 <div class="col-lg-5 col-md-6 no-padding-hor">
                   <div class="form-group form-group-sm">
                     <label for="max-amount">Largest
-                    <input id="max-amount" name="max_amount" class="form-control input-xs" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.lte}}"/>
+                    <input id="max-amount" name="new_max_amount" class="form-control input-xs" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.lte}}"/>
                     </label>
                     
                   </div>
