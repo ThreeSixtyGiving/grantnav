@@ -26,8 +26,8 @@ BASIC_FILTER = [
     {"bool": {"should": [], "must": {}, "minimum_should_match": 1}},  # Amount Awarded Fixed
     {"bool": {"should": {"range": {"amountAwarded": {}}}, "must": {}, "minimum_should_match": 1}},  # Amount Awarded
     {"bool": {"should": []}},  # Award Year
-    {"bool": {"should": []}},  # recipientRegionName
-    {"bool": {"should": []}},  # recipientDistrictName
+    {"bool": {"should": []}},  # additional_data.recipientRegionName
+    {"bool": {"should": []}},  # additional_data.recipientDistrictName
     {"bool": {"should": []}}   # currency
 ]
 
@@ -39,8 +39,8 @@ BASIC_QUERY = {"query": {"bool": {"must":
                "aggs": {
                    "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 3}},
                    "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 3}},
-                   "recipientRegionName": {"terms": {"field": "recipientRegionName", "size": 3}},
-                   "recipientDistrictName": {"terms": {"field": "recipientDistrictName", "size": 3}},
+                   "recipientRegionName": {"terms": {"field": "additional_data.recipientRegionName", "size": 3}},
+                   "recipientDistrictName": {"terms": {"field": "additional_data.recipientDistrictName", "size": 3}},
                    "currency": {"terms": {"field": "currency", "size": 3}}}}
 
 SIZE = 20
@@ -598,8 +598,8 @@ def create_json_query_from_parameters(request):
 
     term_facet_from_parameters(request, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
     term_facet_from_parameters(request, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
-    term_facet_from_parameters(request, json_query, "recipientRegionName", "recipientRegionName", 5, "Regions")
-    term_facet_from_parameters(request, json_query, "recipientDistrictName", "recipientDistrictName", 6, "Districts")
+    term_facet_from_parameters(request, json_query, "additional_data.recipientRegionName", "recipientRegionName", 5, "Regions")
+    term_facet_from_parameters(request, json_query, "additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts")
     term_facet_from_parameters(request, json_query, "currency", "currency", 7, "Currency")
 
     amount_facet_from_parameters(request, json_query)
@@ -676,8 +676,8 @@ def create_parameters_from_json_query(json_query, **extra_parameters):
 
     term_parameters_from_json_query(parameters, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
     term_parameters_from_json_query(parameters, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
-    term_parameters_from_json_query(parameters, json_query, "recipientRegionName", "recipientRegionName", 5, "Regions")
-    term_parameters_from_json_query(parameters, json_query, "recipientDistrictName", "recipientDistrictName", 6, "Districts")
+    term_parameters_from_json_query(parameters, json_query, "additional_data.recipientRegionName", "recipientRegionName", 5, "Regions")
+    term_parameters_from_json_query(parameters, json_query, "additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts")
     term_parameters_from_json_query(parameters, json_query, "currency", "currency", 7, "Currency")
 
     amount_parameters_from_json_query(parameters, json_query)
@@ -840,8 +840,8 @@ def search(request):
         get_terms_facets(request, context, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
         get_terms_facets(request, context, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
 
-        get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5, "Regions")
-        get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6, "Districts")
+        get_terms_facets(request, context, json_query, "additional_data.recipientRegionName", "recipientRegionName", 5, "Regions")
+        get_terms_facets(request, context, json_query, "additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts")
 
         get_terms_facets(request, context, json_query, "currency", "currency", 7, "Currency")
 
@@ -1120,11 +1120,11 @@ grant_datatables_metadata = {
         "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "title", "description"],
     },
     "recipientRegionName": {
-        "term": "recipientRegionName",
+        "term": "additional_data.recipientRegionName",
         "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "title", "description"],
     },
     "recipientDistrictName": {
-        "term": "recipientDistrictName",
+        "term": "additional_data.recipientDistrictName",
         "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "title", "description"],
     }
 }
@@ -1263,7 +1263,7 @@ def district(request, district):
         district = re.match(r'(.*)\.\w*$', district).group(1)
 
     query = {"query": {"bool": {"filter":
-                [{"term": {"recipientDistrictName": district}}]}},
+                [{"term": {"additional_data.recipientDistrictName": district}}]}},
             "aggs": {
                 "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                 "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
