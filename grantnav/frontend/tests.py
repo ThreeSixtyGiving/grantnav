@@ -4,14 +4,13 @@ import time
 import pytest
 import requests
 
-from dataload.import_to_elasticsearch import import_to_elasticsearch, get_area_mappings
+from dataload.import_to_elasticsearch import import_to_elasticsearch
 
-prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/b6135e6fb8960323031e9013bf55b5391fd243a9/'
+prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/44ea7fdad8f32e9fab1d870e2f25fc31c5cdf2fd/'
 
 
 @pytest.fixture(scope="module")
 def dataload():
-    get_area_mappings()
     import_to_elasticsearch(
         [
             prefix + 'a002400000KeYdsAAF.json',
