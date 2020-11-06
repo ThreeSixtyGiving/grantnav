@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import json
 import argparse
 import flattentool
@@ -6,7 +7,6 @@ import uuid
 import tempfile
 import os
 import csv
-import gzip
 from pprint import pprint
 import elasticsearch.helpers
 import requests
@@ -92,11 +92,7 @@ def maybe_create_index(index_name=ES_INDEX):
             "description": {
                 "type": "text", "analyzer": "english_with_folding"
             },
-            "recipientRegionName": {"type": "keyword"},
-            "recipientDistrictName": {"type": "keyword"},
-            "recipientWardName": {"type": "keyword"},
             "currency": {"type": "keyword"},
-            "recipientLocation": {"type": "text"},
             "Reference": {"type": "keyword"},
             "title_and_description": {"type": "text", "analyzer": "english_with_folding"},
             "amountAppliedFor": {"type": "double"},
@@ -188,6 +184,26 @@ def maybe_create_index(index_name=ES_INDEX):
                     }
                 }
             },
+            "additional_data": {
+                "properties": {
+                    "recipientDistrictName": {
+                        "type": "keyword"
+                    },
+                    "recipientRegionName": {
+                        "type": "keyword"
+                    },
+                    "recipientWardName": {
+                        "type": "keyword"
+                    },
+                    "TSGFundingOrgType": {
+                        "type": "keyword"
+                    },
+                    "recipientLocation": {
+                        "type": "text"
+                    },
+                }
+            }
+
         }
     }
 
@@ -294,18 +310,10 @@ def import_to_elasticsearch(files, clean):
 
                     update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
                     update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
-
-                    # Save some time if GrantNav is receiving data from the
-                    # datastore these fields will already be present so no need
-                    # to add again.
-                    if "additional_data_added" not in grant:
-                        update_doc_with_region(grant)
-
                     update_doc_with_title_and_description(grant)
                     update_doc_with_dateonly_fields(grant)
-                    currency = grant.get('currency')
-                    if currency:
-                        grant['currency'] = currency.upper()
+                    update_doc_with_currency_upper_case(grant)
+
                     yield grant
 
         pprint(file_name)
@@ -313,6 +321,12 @@ def import_to_elasticsearch(files, clean):
         pprint(result)
 
         shutil.rmtree(tmp_dir)
+
+
+def update_doc_with_currency_upper_case(grant):
+    currency = grant.get('currency')
+    if currency:
+        grant['currency'] = currency.upper()
 
 
 def get_mapping_from_index(es):
@@ -329,60 +343,6 @@ def get_mapping_from_index(es):
     for bucket in results["aggregations"]["recipientOrganization"]["buckets"]:
         id_name = json.loads(bucket["key"])
         id_name_org_mappings["recipientOrganization"][id_name[0]] = id_name[1]
-
-
-def add_area_to_grant(area, grant):
-    if area.get('ward_code'):
-        grant['recipientWardNameGeoCode'] = area['ward_code']
-        grant['recipientWardName'] = ward_code_to_area.get(area['ward_code'], {}).get('ward_name')
-    if area['district_name']:
-        grant['recipientDistrictName'] = area['district_name']
-        grant['recipientDistrictGeoCode'] = district_name_to_code.get(area['district_name'])
-    if area['area_name']:
-        grant['recipientRegionName'] = area['area_name']
-
-    grant['recipientLocation'] = ' '.join(area.values())
-
-
-def update_doc_with_region(grant):
-    try:
-        post_code = grant['recipientOrganization'][0]['postalCode']
-    except (KeyError, IndexError):
-        post_code = ''
-
-    # If there is a 'BT' postcode we can safely assume this is in NI
-    if post_code and post_code.startswith("BT"):
-        grant['recipientRegionName'] = "Northern Ireland"
-
-    # test postcode first
-    area = postcode_to_area.get(str(post_code).replace(' ', '').upper())
-    if area:
-        add_area_to_grant(area, grant)
-        return
-
-    if not area:
-        try:
-            locations = grant['recipientOrganization'][0]['location']
-        except (KeyError, IndexError):
-            return
-
-        # then test ward
-        for location in locations:
-            geoCode = location.get('geoCode')
-            if geoCode and geoCode in ward_code_to_area:
-                add_area_to_grant(ward_code_to_area.get(geoCode), grant)
-                return
-
-        # finally district
-        for location in locations:
-            geoCode = location.get('geoCode')
-            if geoCode and geoCode in district_code_to_area:
-                add_area_to_grant(district_code_to_area.get(geoCode), grant)
-                return
-            # No NI data but try and get name from data
-            if geoCode and geoCode.startswith("N09"):
-                grant['recipientRegionName'] = "Northern Ireland"
-                grant['recipientDistrictName'] = location["name"]
 
 
 def update_doc_with_title_and_description(grant):
@@ -435,90 +395,15 @@ def update_doc_with_dateonly_fields(grant):
         add_dateonly(dates, 'endDate')
 
 
-def get_area_mappings():
-    with open(os.path.join(current_dir, 'codelist.csv')) as codelist, gzip.open(os.path.join(current_dir, 'codepoint_with_heading.csv.gz'), 'rt') as codepoint:
-        codelist_csv = csv.DictReader(codelist)
-        code_to_name = {}
-        for row in codelist_csv:
-            code_to_name[row['code']] = row['name']
-        
-        codepoint_csv = csv.DictReader(codepoint)
-
-        for row in codepoint_csv:
-            district_code = row['Admin_district_code']
-            district_name = code_to_name.get(district_code, '').replace(' (B)', '')
-            ward_code = row['Admin_ward_code']
-            ward_name = code_to_name.get(ward_code, '')
-
-            regional_code = row['NHS_HA_code']
-            area_name = ''
-            if not regional_code or regional_code[0] != 'E':
-                country_code = row['Country_code']
-                first_letter = country_code[0]
-                if first_letter == 'S':
-                    area_name = 'Scotland'
-                if first_letter == 'W':
-                    area_name = 'Wales'
-            else:
-                area_name = code_to_name[regional_code]
-
-            postcode_to_area[row['Postcode'].replace(' ', '').upper()] = {
-                'district_code': district_code,
-                'district_name': district_name,
-                'area_name': area_name,
-                'ward_name': ward_name,
-                'ward_code': ward_code
-            }
-            district_code_to_area[district_code] = {
-                'district_code': district_code,
-                'district_name': district_name,
-                'area_name': area_name
-            }
-            ward_code_to_area[ward_code] = {
-                'district_code': district_code,
-                'district_name': district_name,
-                'area_name': area_name,
-                'ward_name': ward_name,
-                'ward_code': ward_code
-            }
-
-            district_name_to_code[district_name] = district_code
-
-    # Northern Ireland codes and names not included in Code-Point, but uses a separate source
-    with open(os.path.join(current_dir, 'WD15_LGD15_NI_LU.csv')) as ni_lookup:
-        ni_lookup_csv = csv.DictReader(ni_lookup)
-
-        for row in ni_lookup_csv:
-            district_code = row['LGD15CD']
-            district_name = row['LGD15NM'].replace(' (B)', '')
-            ward_code = row['WD15CD']
-            ward_name = row['WD15NM']
-            area_name = 'Northern Ireland'
-
-            district_code_to_area[district_code] = {
-                'district_code': district_code,
-                'district_name': district_name,
-                'area_name': area_name
-            }
-            ward_code_to_area[ward_code] = {
-                'district_code': district_code,
-                'district_name': district_name,
-                'area_name': area_name,
-                'ward_name': ward_name,
-                'ward_code': ward_code
-            }
-
-            district_name_to_code[district_name] = district_code
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Import 360 files in a directory to elasticsearch')
     parser.add_argument('--clean', help='Delete existing data before import', action='store_true')
     parser.add_argument('--reports', help='Generate reports of differing names and bad organisation IDs.', action='store_true')
     parser.add_argument('files', help='files to import', nargs='+')
     args = parser.parse_args()
-    get_area_mappings()
+
     import_to_elasticsearch(args.files, args.clean)
+
     if args.reports:
         with open("differing_names.csv.report", "w+") as differing_names_file:
             csv_writer = csv.writer(differing_names_file)

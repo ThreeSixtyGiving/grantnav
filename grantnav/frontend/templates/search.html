@@ -21,7 +21,7 @@
                 <input {% if default_field == "*" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio1" value="*"> Search All Fields
               </label>
               <label class="radio-inline">
-                <input {% if default_field == "recipientLocation" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio2" value="recipientLocation"> Locations
+                <input {% if default_field == "additional_data.recipientLocation" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio2" value="additional_data.recipientLocation"> Locations
               </label>
               <label class="radio-inline">
                 <input {% if default_field == "recipientOrganization.name" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio3" value="recipientOrganization.name"> Recipients
