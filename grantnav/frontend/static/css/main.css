@@ -308,6 +308,27 @@ select.front_search	{
     margin-top: -5px;
 }
 
+.select2-container--default .select2-selection--multiple .select2-selection__choice, 
+.select2-container--default .select2-selection--multiple .select2-selection__choice .select2-selection__choice__remove{
+    background-color: #ff9222;
+    color: white;
+    border: 1px solid #ff9222;
+}
+
+.select2-container--default .select2-results__option--selected {
+    background-color: #ff9222;
+    color: white;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: #ff9222;
+    color: white;
+}
+
+.select2-container--default .select2-results > .select2-results__options {
+    max-height: 300px;
+}
+
 #sort-form .form-group {
   margin-left: 26px;
   margin-top: 21px;
@@ -323,6 +344,10 @@ select.front_search	{
 #json_download_button, #csv_download_button, #files_help_link {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.dropdown-button-container {
+  padding: 5px;
 }
 
 @media (max-width: 992px) {

@@ -189,6 +189,11 @@ def get_facet_org_name(facet):
     return json.loads(facet)[0]
 
 
+@register.filter(name='get_facet_org_id')
+def get_facet_org_name(facet):
+    return json.loads(facet)[1]
+
+
 @register.filter(name='get_currency_list')
 def get_currency_list(aggregate):
     return ", ".join(bucket["key"].upper() for bucket in aggregate["buckets"])
