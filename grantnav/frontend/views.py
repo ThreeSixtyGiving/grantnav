@@ -31,19 +31,22 @@ BASIC_FILTER = [
     {"bool": {"should": []}}   # currency
 ]
 
+DROPDOWN_SIZE = 10000
+LESS_SIZE = 3
+MORE_SIZE = 50
+SIZE = 20
 
 BASIC_QUERY = {"query": {"bool": {"must":
                                   {"query_string": {"query": "", "default_field": "*"}}, "filter": BASIC_FILTER}},
                "extra_context": {"awardYear_facet_size": 3, "amountAwardedFixed_facet_size": 3},
                "sort": {"_score": {"order": "desc"}},
                "aggs": {
-                   "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 3}},
-                   "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 3}},
-                   "recipientRegionName": {"terms": {"field": "additional_data.recipientRegionName", "size": 3}},
-                   "recipientDistrictName": {"terms": {"field": "additional_data.recipientDistrictName", "size": 3}},
-                   "currency": {"terms": {"field": "currency", "size": 3}}}}
+                   "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": DROPDOWN_SIZE}},
+                   "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": DROPDOWN_SIZE}},
+                   "recipientRegionName": {"terms": {"field": "additional_data.recipientRegionName", "size": LESS_SIZE}},
+                   "recipientDistrictName": {"terms": {"field": "additional_data.recipientDistrictName", "size": LESS_SIZE}},
+                   "currency": {"terms": {"field": "currency", "size": LESS_SIZE}}}}
 
-SIZE = 20
 
 FIXED_AMOUNT_RANGES = [
     {"from": 0, "to": 500},
@@ -227,11 +230,13 @@ def get_terms_facet_size(request, context, json_query, page):
         if "terms" not in agg:
             continue
         size = agg["terms"]["size"]
-        if size == 3:
-            new_size = 50
+        if size == DROPDOWN_SIZE:
+            continue
+        if size == LESS_SIZE:
+            new_size = MORE_SIZE
             see_more_url[agg_name] = {"more": True}
         else:
-            new_size = 3
+            new_size = LESS_SIZE
             see_more_url[agg_name] = {"more": False}
         new_aggs[agg_name]["terms"]["size"] = new_size
 
@@ -245,11 +250,11 @@ def get_non_terms_facet_size(request, context, json_query, page, agg_name):
     see_more = {}
     new_json_query = copy.deepcopy(json_query)
     facet_size = new_json_query['extra_context'][agg_name + '_facet_size']
-    if facet_size == 3:
-        facet_size = 50
+    if facet_size == LESS_SIZE:
+        facet_size = MORE_SIZE
         see_more["more"] = True
     else:
-        facet_size = 3
+        facet_size = LESS_SIZE
         see_more["more"] = False
 
     new_json_query['extra_context'][agg_name + '_facet_size'] = facet_size
@@ -557,22 +562,23 @@ def term_facet_size_from_parameters(request, json_query):
         aggs = BASIC_QUERY['aggs']
 
     for agg_name, agg in aggs.items():
-        if "terms" not in agg:
+        if "terms" not in agg or agg["terms"]["size"] == DROPDOWN_SIZE:
             continue
+
         more = request.GET.get(agg_name + 'More')
         if more:
-            agg["terms"]["size"] = 50
+            agg["terms"]["size"] = MORE_SIZE
         else:
-            agg["terms"]["size"] = 3
+            agg["terms"]["size"] = LESS_SIZE
 
 
 def non_term_facet_size_from_parameters(request, json_query, agg_name):
 
     more = request.GET.get(agg_name + 'More')
     if more:
-        json_query['extra_context'][agg_name + '_facet_size'] = 50
+        json_query['extra_context'][agg_name + '_facet_size'] = MORE_SIZE
     else:
-        json_query['extra_context'][agg_name + '_facet_size'] = 3
+        json_query['extra_context'][agg_name + '_facet_size'] = LESS_SIZE
 
 
 def create_json_query_from_parameters(request):
@@ -646,13 +652,13 @@ def term_facet_size_from_json_query(parameters, json_query):
     for agg_name, agg in aggs.items():
         if "terms" not in agg:
             continue
-        if agg["terms"]["size"] == 50:
+        if agg["terms"]["size"] == MORE_SIZE:
             parameters[agg_name + 'More'] = ['true']
 
 
 def non_term_facet_size_from_json_query(parameters, json_query, agg_name):
 
-    if json_query['extra_context'][agg_name + '_facet_size'] == 50:
+    if json_query['extra_context'][agg_name + '_facet_size'] == MORE_SIZE:
         parameters[agg_name + 'More'] = ['true']
 
 

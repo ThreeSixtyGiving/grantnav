@@ -171,7 +171,7 @@
         </div>
         <div class="list-group">
           {% for bucket in results.aggregations.recipientDistrictName.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}">{{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
           {% endfor %}
           {% if results.aggregations.recipientDistrictName.buckets|length > 2 %}
             <a href="{{see_more_url.recipientDistrictName.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.recipientDistrictName.more%}See More{% else %}See Less{% endif %}</b> </a>
@@ -200,30 +200,22 @@
         <div class="panel-heading list-group-compact">
           Funding Organizations {% if results.aggregations.fundingOrganization.clear_url %} <a href={{results.aggregations.fundingOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}
         </div>
-        <div class="list-group">
-          {% for bucket in results.aggregations.fundingOrganization.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </a>
-          {% endfor %}
-
-          {% if results.aggregations.fundingOrganization.buckets|length > 2 %}
-            <a href="{{see_more_url.fundingOrganization.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.fundingOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
-          {% endif %}
-
-        </div>
+          <select class="facet-dropdown" multiple="multiple" data-param="fundingOrganization" data-placeholder="Select Funding Organization">
+            {% for bucket in results.aggregations.fundingOrganization.buckets %}
+              <option {% if bucket.selected %}selected{%endif%} value="{{bucket.key|get_facet_org_id}}" label="{{bucket.key|get_facet_org_name}}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </option>
+            {% endfor %}
+          </select>
       </div>
       <div class="panel panel-default">
         <a class="anchor" id="recipientOrganization"></a>
         <div class="panel-heading list-group-compact">
           Recipient Organizations {% if results.aggregations.recipientOrganization.clear_url %} <a href={{results.aggregations.recipientOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}
         </div>
-        <div class="list-group">
-          {% for bucket in results.aggregations.recipientOrganization.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </a>
-          {% endfor %}
-          {% if results.aggregations.recipientOrganization.buckets|length > 2 %}
-            <a href="{{see_more_url.recipientOrganization.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.recipientOrganization.more%}See More{% else %}See Less{% endif %}</b> </a>
-          {% endif %}
-        </div>
+          <select class="facet-dropdown" multiple="multiple" data-param="recipientOrganization" data-placeholder="Select Recipient Organization">
+            {% for bucket in results.aggregations.recipientOrganization.buckets %}
+              <option {% if bucket.selected %}selected{%endif%} value="{{bucket.key|get_facet_org_id}}" label="{{bucket.key|get_facet_org_name}}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </option>
+            {% endfor %}
+          </select>
       </div>
     </div>
     
@@ -376,10 +368,15 @@
 _paq.push(["trackSiteSearch", "{{text_query}}", false, {{results.hits.total.value}}]);
 {% endblock %}
 
+{% block extra_style %}
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+{% endblock %}
+
 {% block extra_scripts %}
 
-
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
 <script>
 $(function() {
   var page_y = URI(window.location.href).search(true).page_y
@@ -400,6 +397,81 @@ $(function() {
     return false
 
   })
+
+  $.fn.select2.amd.require([
+    'select2/utils',
+    'select2/dropdown',
+    'select2/dropdown/attachBody',
+  ], function (Utils, Dropdown, AttachBody) {
+    function Submit() { }
+
+    Submit.prototype.render = function (decorated) {
+      var $rendered = decorated.call(this);
+      var self = this;
+
+      var $submit = $(
+        '<div class="dropdown-button-container"><button type="button" class="btn btn-default btn-xs">Apply</button></div>'
+      );
+
+      $rendered.find('.select2-dropdown').append($submit);
+
+      $submit.on('click', function (e) {
+        self.$element.data('stop-close', false);
+        self.trigger('close');
+      });
+
+      return $rendered;
+    };
+
+    function formatState (state) {
+      return state.element.label;
+    };
+
+    
+
+    $facet_selects = $(".facet-dropdown");
+
+    $facet_selects.each(function (index, element) {
+      $(element).select2({
+        placeholder: $(element).data('placeholder'),
+        closeOnSelect: false,
+        width: '100%',
+        templateSelection: formatState,
+        dropdownAdapter: Utils.Decorate(
+          Utils.Decorate(
+            Dropdown,
+            AttachBody
+          ),
+          Submit
+        ),
+      });
+    })
+
+    $facet_selects.on('select2:closing', function (e) {
+      if ($(this).data('stop-close')) {
+        e.preventDefault();
+        $(this).data('stop-close', false);
+        return
+      }
+
+      var uri = URI(window.location.href);
+      var param = $(this).data('param')
+
+      uri.removeSearch(param);
+
+      $(this).find(':selected').each(function (index, element) {
+        uri.addSearch(param, element.value);
+      })
+      if (window.location.href !== uri.toString()) {
+        window.location.href = uri.toString()
+      }
+    });
+
+    $facet_selects.on('select2:unselect', function (e) {
+      $(this).data('stop-close', true);
+    });
+
+  });
 });
 </script>
 {% endblock %}
