@@ -397,23 +397,29 @@ def get_date_facets(request, context, json_query):
 
 
 def get_terms_facets(request, context, json_query, field, aggregate, bool_index, display_name, is_json=False):
+
     json_query = copy.deepcopy(json_query)
     try:
-        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]
+        if "must_not" in json_query["query"]["bool"]["filter"][bool_index]["bool"]:
+            bool_condition = "must_not"
+        else:
+            bool_condition = "should"
+
+        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"].get(bool_condition, [])
     except KeyError:
         json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
-        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]
+        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"].get(bool_condition, [])
 
     main_results = context["results"]
     if current_filter:
-        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = []
+        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = []
         results = get_results(json_query)
     else:
         results = context["results"]
 
     for filter in current_filter:
         new_filter = [x for x in current_filter if x != filter]
-        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = new_filter
+        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = new_filter
         display_value = filter["term"][field]
         if is_json:
             display_value = json.loads(display_value)[0]
@@ -432,11 +438,13 @@ def get_terms_facets(request, context, json_query, field, aggregate, bool_index,
             filter_values.append(facet_value)
 
         new_filter = [{"term": {field: value}} for value in filter_values]
-        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = new_filter
+        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = new_filter
         bucket["url"] = request.path + '?' + create_parameters_from_json_query(json_query)
     if current_filter:
-        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = []
+        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = []
         results['aggregations'][aggregate]['clear_url'] = request.path + '?' + create_parameters_from_json_query(json_query)
+        results['aggregations'][aggregate]["exclude"] = True if bool_condition == "must_not" else False
+
     main_results['aggregations'][aggregate] = results['aggregations'][aggregate]
 
 
@@ -523,7 +531,11 @@ def term_facet_from_parameters(request, json_query, field_name, param_name, bool
         for value in request.GET.getlist(param_name):
             new_filter.append({"term": {field_name: value}})
 
-    json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = new_filter
+    if request.GET.get("exclude_" + param_name):
+        json_query["query"]["bool"]["filter"][bool_index]["bool"].pop("should", None)
+        json_query["query"]["bool"]["filter"][bool_index]["bool"]["must_not"] = new_filter
+    else:
+        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = new_filter
 
 
 def amount_facet_from_parameters(request, json_query):
@@ -620,12 +632,21 @@ def create_json_query_from_parameters(request):
 
 def term_parameters_from_json_query(parameters, json_query, field_name, param_name, bool_index, field, is_json=False):
     values = []
-    for filter in json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]:
+    if "must_not" in json_query["query"]["bool"]["filter"][bool_index]["bool"]:
+        filters = json_query["query"]["bool"]["filter"][bool_index]["bool"]["must_not"]
+        must_not = True
+    else:
+        filters = json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]
+        must_not = False
+
+    for filter in filters:
         if is_json:
             values.append(json.loads(filter['term'][field_name])[1])
         else:
             values.append(filter['term'][field_name])
     parameters[param_name] = values
+    if must_not:
+        parameters["exclude_" + param_name] = "true"
 
 
 def amount_parameters_from_json_query(parameters, json_query):
