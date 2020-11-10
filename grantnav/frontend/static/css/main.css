@@ -329,6 +329,14 @@ select.front_search	{
     max-height: 300px;
 }
 
+.facet-multiselect .alert {
+    margin-bottom: 5px;
+}
+
+.facet-multiselect .radio {
+    margin-left: 5px;
+}
+
 #sort-form .form-group {
   margin-left: 26px;
   margin-top: 21px;
