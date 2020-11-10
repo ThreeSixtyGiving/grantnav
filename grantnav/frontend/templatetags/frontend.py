@@ -190,7 +190,7 @@ def get_facet_org_name(facet):
 
 
 @register.filter(name='get_facet_org_id')
-def get_facet_org_name(facet):
+def get_facet_org_id(facet):
     return json.loads(facet)[1]
 
 

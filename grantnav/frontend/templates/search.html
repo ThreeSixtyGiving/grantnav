@@ -125,7 +125,7 @@
                     <label for="max-amount">Largest
                     <input id="max-amount" name="new_max_amount" class="form-control input-xs" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.lte}}"/>
                     </label>
-                    
+
                   </div>
                 </div>
 
@@ -195,30 +195,56 @@
           {% endif %}
         </div>
       </div>
-      <div class="panel panel-default">
+      <div class="panel panel-default facet-multiselect">
         <a class="anchor" id="fundingOrganization"></a>
         <div class="panel-heading list-group-compact">
           Funding Organizations {% if results.aggregations.fundingOrganization.clear_url %} <a href={{results.aggregations.fundingOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}
         </div>
-          <select class="facet-dropdown" multiple="multiple" data-param="fundingOrganization" data-placeholder="Select Funding Organization">
-            {% for bucket in results.aggregations.fundingOrganization.buckets %}
-              <option {% if bucket.selected %}selected{%endif%} value="{{bucket.key|get_facet_org_id}}" label="{{bucket.key|get_facet_org_name}}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </option>
-            {% endfor %}
-          </select>
+        <div class="radio">
+          <label>
+            <input type="radio" name="fundingOrganization-exclude" data-target="#fundingOrganization-select" {% if not results.aggregations.fundingOrganization.exclude %}checked{%endif%}>
+            Include or
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" id="fundingOrganization-exclude" name="fundingOrganization-exclude" data-target="#fundingOrganization-select" {% if results.aggregations.fundingOrganization.exclude %}checked{%endif%}>
+            Exclude selection
+          </label>
+        </div>
+
+        <select id="fundingOrganization-select" class="facet-dropdown" multiple="multiple" data-param="fundingOrganization" data-placeholder="Select Funding Organization">
+          {% for bucket in results.aggregations.fundingOrganization.buckets %}
+            <option {% if bucket.selected %}selected{%endif%} value="{{bucket.key|get_facet_org_id}}" label="{{bucket.key|get_facet_org_name}}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </option>
+          {% endfor %}
+        </select>
       </div>
-      <div class="panel panel-default">
+      <div class="panel panel-default facet-multiselect">
         <a class="anchor" id="recipientOrganization"></a>
         <div class="panel-heading list-group-compact">
           Recipient Organizations {% if results.aggregations.recipientOrganization.clear_url %} <a href={{results.aggregations.recipientOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}
         </div>
-          <select class="facet-dropdown" multiple="multiple" data-param="recipientOrganization" data-placeholder="Select Recipient Organization">
-            {% for bucket in results.aggregations.recipientOrganization.buckets %}
-              <option {% if bucket.selected %}selected{%endif%} value="{{bucket.key|get_facet_org_id}}" label="{{bucket.key|get_facet_org_name}}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </option>
-            {% endfor %}
-          </select>
+        <div class="radio">
+          <label>
+            <input type="radio" name="recipientOrganization-exclude" data-target="#recipientOrganization-select" {% if not results.aggregations.recipientOrganization.exclude %}checked{%endif%}>
+            Include or
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" id="recipientOrganization-exclude" name="recipientOrganization-exclude" data-target="#recipientOrganization-select" {% if results.aggregations.recipientOrganization.exclude %}checked{%endif%}>
+            Exclude selection
+          </label>
+        </div>
+
+        <select id="recipientOrganization-select" class="facet-dropdown" multiple="multiple" data-param="recipientOrganization" data-placeholder="Select Recipient Organization">
+          {% for bucket in results.aggregations.recipientOrganization.buckets %}
+            <option {% if bucket.selected %}selected{%endif%} value="{{bucket.key|get_facet_org_id}}" label="{{bucket.key|get_facet_org_name}}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </option>
+          {% endfor %}
+        </select>
       </div>
     </div>
-    
+
     {% if results and results.hits.hits %}
     <div class="col-xs-9">
       <div class="row">
@@ -341,9 +367,9 @@
           </ul>
         </div>
      </div>
-  
+
   {% elif search_error %}
-   
+
      <div class="col-xs-9">
         <div id="not_valid">
           <h1>Search input is not valid</h1>
@@ -353,9 +379,9 @@
           <li>Checking your spelling</li>
         </div>
      </div>
-   
+
   {% endif %}
-    
+
   </div>
 </div>
 {% endblock %}
@@ -410,13 +436,13 @@ $(function() {
       var self = this;
 
       var $submit = $(
-        '<div class="dropdown-button-container"><button type="button" class="btn btn-default btn-xs">Apply</button></div>'
+        '<div class="dropdown-button-container"><button style="display: none" id=' + self.$element.data('param') + '-button type="button" class="btn btn-default btn-xs">Apply</button></div>'
       );
 
       $rendered.find('.select2-dropdown').append($submit);
 
       $submit.on('click', function (e) {
-        self.$element.data('stop-close', false);
+        self.$element.data('allow-close', true);
         self.trigger('close');
       });
 
@@ -427,7 +453,7 @@ $(function() {
       return state.element.label;
     };
 
-    
+
 
     $facet_selects = $(".facet-dropdown");
 
@@ -447,29 +473,68 @@ $(function() {
       });
     })
 
+    function calculate_new_url(param, $select) {
+      var uri = URI(window.location.href);
+      uri.removeSearch(param);
+      $select.find(':selected').each(function (index, element) {
+        uri.addSearch(param, element.value);
+      })
+
+      uri.removeSearch('exclude_' + param);
+
+      if ($('#' + param + '-exclude').prop("checked")) {
+        uri.addSearch('exclude_' + param, 'true');
+      }
+
+      return uri.toString()
+    };
+
     $facet_selects.on('select2:closing', function (e) {
-      if ($(this).data('stop-close')) {
+
+      var param = $(this).data('param');
+
+      var new_url = calculate_new_url(param, $(this));
+
+      var changed = window.location.href !== new_url;
+
+      // if dropdown has changed only allow close when apply is pressed
+      if (!($(this).data('allow-close')) && changed) {
         e.preventDefault();
-        $(this).data('stop-close', false);
         return
       }
 
-      var uri = URI(window.location.href);
-      var param = $(this).data('param')
-
-      uri.removeSearch(param);
-
-      $(this).find(':selected').each(function (index, element) {
-        uri.addSearch(param, element.value);
-      })
-      if (window.location.href !== uri.toString()) {
-        window.location.href = uri.toString()
+      if (changed) {
+        window.location.href = new_url
       }
     });
 
-    $facet_selects.on('select2:unselect', function (e) {
-      $(this).data('stop-close', true);
-    });
+    $facet_selects.on('change', function (e) {
+      var param = $(this).data('param');
+      var new_url = calculate_new_url(param, $(this));
+      var changed = window.location.href !== new_url;
+      if (changed) {
+        $('#' + param + '-button').show()
+      } else {
+        $('#' + param + '-button').hide()
+      }
+
+    })
+
+    $include_or_exclude_radios = $(".facet-multiselect .radio input");
+
+    $include_or_exclude_radios.on("click", function (e) {
+      $select = $($(this).data('target'))
+      $select.select2("open")
+      var param = $select.data('param');
+      var new_url = calculate_new_url(param, $select);
+      var changed = window.location.href !== new_url;
+      if (changed) {
+        $('#' + param + '-button').show()
+      } else {
+        $('#' + param + '-button').hide()
+      }
+
+    })
 
   });
 });
