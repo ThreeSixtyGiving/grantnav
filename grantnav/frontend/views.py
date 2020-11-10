@@ -31,7 +31,7 @@ BASIC_FILTER = [
     {"bool": {"should": []}}   # currency
 ]
 
-DROPDOWN_SIZE = 10000
+DROPDOWN_SIZE = 5000
 LESS_SIZE = 3
 MORE_SIZE = 50
 SIZE = 20
@@ -416,6 +416,9 @@ def get_terms_facets(request, context, json_query, field, aggregate, bool_index,
         results = get_results(json_query)
     else:
         results = context["results"]
+
+    if bool_condition == 'must_not':
+        display_name = 'Excluded ' + display_name
 
     for filter in current_filter:
         new_filter = [x for x in current_filter if x != filter]

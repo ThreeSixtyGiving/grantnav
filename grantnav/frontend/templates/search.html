@@ -164,19 +164,30 @@
           {% endif %}
         </div>
       </div>
-      <div class="panel panel-default">
+      <div class="panel panel-default facet-multiselect">
         <a class="anchor" id="recipientDistrictName"></a>
         <div class="panel-heading list-group-compact">
-          Recipient District {% if results.aggregations.recipientDistrictName.clear_url %} <a href={{results.aggregations.recipientDistrictName.clear_url}}> <small>(clear)</small></a> {% endif%}
+          Recipient Districts {% if results.aggregations.recipientDistrictName.clear_url %} <a href={{results.aggregations.recipientDistrictName.clear_url}}> <small>(clear)</small></a> {% endif%}
         </div>
-        <div class="list-group">
+        <div class="radio">
+          <label>
+            <input type="radio" name="recipientDistrictName-exclude" data-target="#recipientDistrictName-select" {% if not results.aggregations.recipientDistrictName.exclude %}checked{%endif%}>
+            Include or
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" id="recipientDistrictName-exclude" name="recipientDistrictName-exclude" data-target="#recipientDistrictName-select" {% if results.aggregations.recipientDistrictName.exclude %}checked{%endif%}>
+            Exclude selection
+          </label>
+        </div>
+        {% if results.aggregations.recipientDistrictName.buckets|length >= 5000 %} <div class="alert alert-danger"><b>Warning:</b> More than 5000 Recipient Districts found. Can only select first 5000.</div> {% endif %}
+
+        <select id="recipientDistrictName-select" class="facet-dropdown" multiple="multiple" data-param="recipientDistrictName" data-placeholder="Select Recipient District">
           {% for bucket in results.aggregations.recipientDistrictName.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}">{{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
+            <option {% if bucket.selected %}selected{%endif%} value="{{bucket.key}}" label="{{bucket.key}}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </option>
           {% endfor %}
-          {% if results.aggregations.recipientDistrictName.buckets|length > 2 %}
-            <a href="{{see_more_url.recipientDistrictName.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.recipientDistrictName.more%}See More{% else %}See Less{% endif %}</b> </a>
-          {% endif %}
-        </div>
+        </select>
       </div>
       <div class="panel panel-default">
         <a class="anchor" id="awardYear"></a>
@@ -212,6 +223,7 @@
             Exclude selection
           </label>
         </div>
+        {% if results.aggregations.fundingOrganization.buckets|length >= 5000 %} <div class="alert alert-danger"><b>Warning:</b> More than 5000 Funding Organizations found. Can only select first 5000.</div> {% endif %}
 
         <select id="fundingOrganization-select" class="facet-dropdown" multiple="multiple" data-param="fundingOrganization" data-placeholder="Select Funding Organization">
           {% for bucket in results.aggregations.fundingOrganization.buckets %}
@@ -236,6 +248,7 @@
             Exclude selection
           </label>
         </div>
+        {% if results.aggregations.recipientOrganization.buckets|length >= 5000 %} <div class="alert alert-danger"><b>Warning:</b> More than 5000 Recipient Organizations found. Can only select first 5000.</div> {% endif %}
 
         <select id="recipientOrganization-select" class="facet-dropdown" multiple="multiple" data-param="recipientOrganization" data-placeholder="Select Recipient Organization">
           {% for bucket in results.aggregations.recipientOrganization.buckets %}
