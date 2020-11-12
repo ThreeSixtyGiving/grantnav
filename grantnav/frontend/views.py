@@ -31,6 +31,16 @@ BASIC_FILTER = [
     {"bool": {"should": []}}   # currency
 ]
 
+TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json is_dropdown')
+
+TERM_FACETS = [
+    TermFacet("fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True, True),
+    TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True, True),
+    TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False, False),
+    TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False, True),
+    TermFacet("currency", "currency", 7, "Currency", False, True)
+]
+
 DROPDOWN_SIZE = 5000
 LESS_SIZE = 3
 MORE_SIZE = 50
@@ -40,13 +50,11 @@ BASIC_QUERY = {"query": {"bool": {"must":
                                   {"query_string": {"query": "", "default_field": "*"}}, "filter": BASIC_FILTER}},
                "extra_context": {"awardYear_facet_size": 3, "amountAwardedFixed_facet_size": 3},
                "sort": {"_score": {"order": "desc"}},
-               "aggs": {
-                   "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": DROPDOWN_SIZE}},
-                   "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": DROPDOWN_SIZE}},
-                   "recipientRegionName": {"terms": {"field": "additional_data.recipientRegionName", "size": LESS_SIZE}},
-                   "recipientDistrictName": {"terms": {"field": "additional_data.recipientDistrictName", "size": LESS_SIZE}},
-                   "currency": {"terms": {"field": "currency", "size": LESS_SIZE}}}}
+               "aggs": {}}
 
+for term_facet in TERM_FACETS:
+    BASIC_QUERY['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
+                                                            "size": DROPDOWN_SIZE if term_facet.is_dropdown else LESS_SIZE}}
 
 FIXED_AMOUNT_RANGES = [
     {"from": 0, "to": 500},
@@ -617,11 +625,9 @@ def create_json_query_from_parameters(request):
         amount_filter['lte'] = max_amount
     json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = amount_filter
 
-    term_facet_from_parameters(request, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
-    term_facet_from_parameters(request, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
-    term_facet_from_parameters(request, json_query, "additional_data.recipientRegionName", "recipientRegionName", 5, "Regions")
-    term_facet_from_parameters(request, json_query, "additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts")
-    term_facet_from_parameters(request, json_query, "currency", "currency", 7, "Currency")
+    for term_facet in TERM_FACETS:
+        term_facet_from_parameters(request, json_query, term_facet.field_name, term_facet.param_name,
+                                   term_facet.filter_index, term_facet.display_name, term_facet.is_json)
 
     amount_facet_from_parameters(request, json_query)
     date_facet_from_parameters(request, json_query)
@@ -704,11 +710,9 @@ def create_parameters_from_json_query(json_query, **extra_parameters):
     if max_amount:
         parameters['max_amount'] = [str(max_amount)]
 
-    term_parameters_from_json_query(parameters, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
-    term_parameters_from_json_query(parameters, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
-    term_parameters_from_json_query(parameters, json_query, "additional_data.recipientRegionName", "recipientRegionName", 5, "Regions")
-    term_parameters_from_json_query(parameters, json_query, "additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts")
-    term_parameters_from_json_query(parameters, json_query, "currency", "currency", 7, "Currency")
+    for term_facet in TERM_FACETS:
+        term_parameters_from_json_query(parameters, json_query, term_facet.field_name, term_facet.param_name,
+                                        term_facet.filter_index, term_facet.display_name, term_facet.is_json)
 
     amount_parameters_from_json_query(parameters, json_query)
     date_parameters_from_json_query(parameters, json_query)
@@ -867,13 +871,9 @@ def search(request):
         context['selected_facets'] = collections.defaultdict(list)
         get_clear_all(request, context, json_query)
 
-        get_terms_facets(request, context, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
-        get_terms_facets(request, context, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
-
-        get_terms_facets(request, context, json_query, "additional_data.recipientRegionName", "recipientRegionName", 5, "Regions")
-        get_terms_facets(request, context, json_query, "additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts")
-
-        get_terms_facets(request, context, json_query, "currency", "currency", 7, "Currency")
+        for term_facet in TERM_FACETS:
+            get_terms_facets(request, context, json_query, term_facet.field_name, term_facet.param_name,
+                             term_facet.filter_index, term_facet.display_name, term_facet.is_json)
 
         get_amount_facet_fixed(request, context, json_query)
         get_date_facets(request, context, json_query)
