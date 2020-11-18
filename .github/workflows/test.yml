@@ -1,0 +1,35 @@
+name: Test
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6
+        architecture: x64
+    # This is from https://github.com/elastic/elastic-github-actions/tree/master/elasticsearch
+    - name: Configure sysctl limits
+      run: |
+        sudo swapoff -a
+        sudo sysctl -w vm.swappiness=1
+        sudo sysctl -w fs.file-max=262144
+        sudo sysctl -w vm.max_map_count=262144
+
+    - run: "curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.2.0-amd64.deb"
+    - run: "sudo dpkg -i --force-confnew elasticsearch-7.2.0-amd64.deb"
+    - run: echo -e '-XX:+DisableExplicitGC\n-Djdk.io.permissionsUseCanonicalPath=true\n-Dlog4j.skipJansi=true\n-server\n' | sudo tee -a /etc/elasticsearch/jvm.options
+    - run: sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
+    - run: "sudo service elasticsearch start"
+
+    - uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements_dev.txt') }}
+    - run: pip install -r requirements.txt
+    - run: pip install -r requirements_dev.txt
+
+    - run: ALLOWED_HOSTS=localhost py.test
