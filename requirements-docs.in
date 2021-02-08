@@ -1,0 +1,7 @@
+Sphinx==1.5.3
+sphinx-intl
+sphinx_rtd_theme
+recommonmark
+
+-e git+https://github.com/OpenDataServices/sphinxcontrib-jsonschema.git@e39a92f4238bf022db11e4e88ba92fdaff2b31c9#egg=sphinxcontrib-jsonschema
+-e git+https://github.com/OpenDataServices/sphinxcontrib-opendataservices.git@fab0ff0167d32ec243d42f272e0e50766299c078#egg=sphinxcontrib-opendataservices

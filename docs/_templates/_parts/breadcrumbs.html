@@ -1,0 +1,5 @@
+<a href="{{ pathto(master_doc) }}" class="">Docs</a> &raquo;
+{% for doc in parents %}
+    <a href="{{ doc.link|e }}">{{ doc.title }}</a> &raquo;
+{% endfor %}
+{{ title }}

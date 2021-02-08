@@ -1,0 +1,127 @@
+{
+  "menus": {
+    "menu_1": {
+      "title": "For grantmakers",
+      "items": [
+        {
+          "url": "https://www.threesixtygiving.org/support/why-publish-grants-data/",
+          "title": "Why publish?",
+          "description": ""
+        },
+        {
+          "url": "https://www.threesixtygiving.org/support/standard/",
+          "title": "The Data Standard",
+          "description": ""
+        },
+        {
+          "url": "https://www.threesixtygiving.org/about/datachampions/",
+          "title": "Data Champions",
+          "description": ""
+        },
+        {
+          "url": "https://www.threesixtygiving.org/support/",
+          "title": "Support",
+          "description": ""
+        }
+      ]
+    },
+    "menu_2": {
+      "title": "Explore grants data",
+      "items": [
+        {
+          "url": "https://grantnav.threesixtygiving.org/",
+          "title": "GrantNav",
+          "description": ""
+        },
+        {
+          "url": "https://data.threesixtygiving.org/",
+          "title": "Data Registry",
+          "description": ""
+        },
+        {
+          "url": "https://insights.threesixtygiving.org/",
+          "title": "360Insights",
+          "description": ""
+        },
+        {
+          "url": "https://www.threesixtygiving.org/contact/",
+          "title": "Contact",
+          "description": ""
+        }
+      ]
+    },
+    "menu_terms": {
+      "title": "Footer Ts &amp; Cs",
+      "items": [
+        {
+          "url": "https://www.threesixtygiving.org/privacy/",
+          "title": "Privacy Notice",
+          "description": ""
+        },
+        {
+          "url": "https://www.threesixtygiving.org/terms-conditions/",
+          "title": "Terms &#038; Conditions",
+          "description": ""
+        },
+        {
+          "url": "https://www.threesixtygiving.org/cookie-policy/",
+          "title": "Cookie Policy",
+          "description": ""
+        },
+        {
+          "url": "https://www.threesixtygiving.org/take-down-policy/",
+          "title": "Take Down Policy",
+          "description": ""
+        },
+        {
+          "url": "https://www.threesixtygiving.org/about/360giving-code-conduct/",
+          "title": "Code of Conduct",
+          "description": ""
+        }
+      ]
+    },
+    "menu_off_canvas": {
+      "title": "Off canvas menu",
+      "items": [
+        {
+          "url": "https://www.threesixtygiving.org/",
+          "title": "360Giving",
+          "description": "We help organisations publish open, standardised grants data, and empower people to use it to improve charitable giving."
+        },
+        {
+          "url": "https://grantnav.threesixtygiving.org/",
+          "title": "GrantNav",
+          "description": "A search-engine for grants data. Explore and download in detail on where and how much funding goes across billions of pounds of grants."
+        },
+        {
+          "url": "https://insights.threesixtygiving.org.uk/",
+          "title": "360Insights",
+          "description": "A tool to combine and visualise 360Giving and charity data to understand funders better. You can explore funding across different areas – from grant dates to types of recipients."
+        },
+        {
+          "url": "https://standard.threesixtygiving.org/",
+          "title": "360Giving Data Standard",
+          "description": "A uniform and consistent way to describe grants data. Publishing data in this standard format means it’s easier to find, understand and compare funding across the UK."
+        },
+        {
+          "url": "https://data.threesixtygiving.org/",
+          "title": "Registry",
+          "description": "A list of all the organisations that currently publish their grants data in the 360Giving Data Standard, with direct links to their data sources."
+        }
+      ]
+    }
+  },
+  "widgets": [
+    {
+      "title": "360Giving",
+      "contents": "<p>We help organisations openly publish grants data, and help people use it to improve charitable giving.</p>"
+    }
+  ],
+  "newsletter": {
+    "form_url": "https://threesixtygiving.us10.list-manage.com/subscribe",
+    "u": "216b8b926250184f90c7198e8",
+    "id": "91870dde44",
+    "email_field": "EMAIL"
+  },
+  "footer_tagline": "Open data for more effective grantmaking"
+}
