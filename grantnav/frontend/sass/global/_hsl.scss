@@ -1,0 +1,28 @@
+/*
+ * HSL(A) NOT TRANSFORMED TO RGB(A)
+ *
+ * Is now an accepted proposal: https://github.com/sass/sass/blob/master/accepted/color-4-rgb-hsl.md
+ * But without implementation, yet.
+ *
+ * Use:
+ * `color: hsl(15deg, 100%, 50%);`
+ * `--flashy-pink: hsl(15deg, 100%, 50%);`
+ * `$flashy-pink: hsl(15deg 100% 50%);`
+ * `--transparent-flashy-pink: hsl(15deg, 100%, 50%, .7);`
+ * `$transparent-flashy-pink: hsla(15deg, 100%, 50%, .7);`
+ * `$transparent-flashy-pink: hsla(15deg 100% 50% / .7);`
+ *
+ * Parameters:
+ *  parameter 1 (angle | 0): the hue of the color
+ *  parameter 2 (0-100% | 0): the saturation of the color
+ *  parameter 3 (0-100% | 0): the luminosity of the color
+ *  parameter 4 (optional, 1 by default): the alpha channel of the color
+ */
+
+@function hsl($args...) {
+  @return #{'hsl(#{$args})'};
+}
+
+@function hsla($args...) {
+  @return hsl($args...);
+}

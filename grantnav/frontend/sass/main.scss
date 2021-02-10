@@ -1,3 +1,14 @@
-@import "variables";
-@import "bootstrap";
-@import "bootswatch";
+// @import "sass_old/main.scss";
+@import "global/global.scss";
+@import "colours.scss";
+@import "typography.scss";
+@import "grid.scss";
+@import "grant-nav.scss";
+@import "homepage-card.scss";
+@import "layout.scss";
+@import "main-logo--animated.scss";
+@import "nav-bar.scss";
+@import "search-block.scss";
+@import "footer.scss";
+@import "subscribe.scss";
+@import "buttons.scss";

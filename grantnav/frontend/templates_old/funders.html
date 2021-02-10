@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% load frontend %}
+{% load static %}
+
+{% block main_content %}
+
+<div class="row">
+  <div class="col-xs-6">
+    <h1> Funders </h1>
+  </div>
+  <div class="col-xs-6">
+    <h1 class="pull-right">
+      <a href="{% url 'funders_datatables.json' %}">
+        <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
+      </a>
+      <a href="{% url 'funders_datatables.csv' %}">
+        <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button"/>
+      </a>
+    </h1>
+  </div>
+</div>
+<div class="row bottom-space">
+  <div class="col-xs-12">
+    <table class="table table-condensed table-bordered table-striped dt-responsive" id="funders_datatable" width="100%">
+      <thead>
+        <tr>
+          <th>Funder</th>
+          <th>Grants</th>
+          <th>Total</th>
+          <th>Average</th>
+          <th>Largest</th>
+          <th>Smallest</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_style %}
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css">
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css">
+{% endblock %}
+
+{% block extra_scripts %}
+   <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
+
+   <script>
+      function truncate(string, len){
+         if (string.length > len)
+            return string.substring(0,len)+'...';
+         else
+            return string;
+      };
+
+     jQuery(function($) {
+       $('#funders_datatable').dataTable({
+         "serverSide": true,
+         "responsive": true,
+         "searching": true,
+         "autoWidth": false,
+         "scrollY": 500,
+         "scroller": true,
+         "dom": "fit",
+         "scroller": {"displayBuffer": 15,
+                      "loadingIndicator": true},
+         "order": [[2, "desc"]],
+         "language": {
+             "info": "_START_ to _END_ of _TOTAL_",
+             "search": "Search"
+         },
+         "ajax": {
+           "url": "{% url 'funders_datatables' %}"
+         },
+         "columns": [
+           {"data": "org_name", "width": "10px", "render": function (data, type, row) {
+               return '<a href="/funder/' + encodeURIComponent(row.org_id) + '">' + truncate(data, 60) + '</a>'
+           }},
+           {"data": "count"},
+           {"data": "sum", "className": "amount"},
+           {"data": "avg", "className": "amount"},
+           {"data": "max", "className": "amount"},
+           {"data": "min", "className": "amount"}
+         ]
+       });
+     })
+   </script>
+{% endblock %}

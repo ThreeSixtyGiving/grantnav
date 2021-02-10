@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load frontend %}
+
+{% block main_content %}
+<h1 class="funder-header text-center">
+Publisher: {{ publisher.name }}
+</h1>
+
+
+<h2>Contact this publisher</h2>
+
+<p>
+GrantNav is not directly responsible for any of the data on this site. If you notice a problem with the data please contact the relevant publisher directly.
+
+<p>
+{% if publisher.datasets.0.distribution.0.accessURL %}
+{{ publisher.name }} has provided the following link for information about their data: <a href="{{ publisher.datasets.0.distribution.0.accessURL }}">{{ publisher.datasets.0.distribution.0.accessURL }}</a>
+{% else %}
+Unfortunately {{ publisher.name }} has not provided a link to information about their data.
+{% endif %}
+
+<h2>More information about this publisher</h2>
+
+<p>
+360Giving prefix: {{ publisher.prefix }}
+
+<p>
+Website: {% if publisher.website %}
+<a href="{{ publisher.website }}">{{ publisher.website }}</a></p>
+{% else %}
+(none known)
+{% endif %}
+
+<h2>Datasets</h2>
+
+<table class="table table-condensed table-bordered table-striped dt-responsive">
+<thead>
+    <tr>
+        <th>Dataset (download link)</th>
+        <th>Retrieved for use in GrantNav</th>
+        <th>License</th>
+        <th>Funders covered</th>
+    </tr>
+</thead>
+<tbody>
+    {% for dataset in publisher.datasets %}
+    <tr>
+        <td><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
+        <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
+        <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
+        <td>{% for funder_name, funder_id in dataset.funders %}<a href="{% url 'funder'  funder_id %}">{{ funder_name }}</a> {% endfor %}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}

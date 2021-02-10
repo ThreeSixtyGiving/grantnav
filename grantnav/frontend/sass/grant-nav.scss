@@ -1,0 +1,101 @@
+.grantnav-page {
+  &__wrapper {
+    border-top: 10px solid $orange-tint-light;
+  }
+
+  &__content {
+    .section {
+      margin-bottom: 32px;
+    }
+  }
+}
+
+.grantnav-search {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5rem;
+
+    @include breakpoint($regular) {
+      flex-direction: row;
+    }
+  }
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @include breakpoint($regular) {
+      min-width: 280px;
+      max-width: 280px;
+      margin-right: 32px;
+    }
+
+    &--heading {
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    &--filters {
+      width: 100%;
+      margin-top: 20px;
+      margin-bottom: 24px;
+    }
+  }
+
+  &__content {
+    padding-top: 0px;
+
+    @include breakpoint($regular) {
+      padding-top: 24px;
+    }
+
+    &--filters {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      margin-bottom: 28px;
+
+      .export-wrapper {
+        display: flex;
+        align-items: center;
+
+        .export-label {
+          position: absolute;
+          width: 1px;
+          clip: rect(0 0 0 0);
+          overflow: hidden;
+          white-space: nowrap;
+          font-size: 17px;
+          font-weight: 700;
+
+          @include breakpoint($medium) {
+            position: static;
+            width: unset;
+            clip: unset;
+            overflow: unset;
+            white-space: unset;
+            margin-right: 6px;
+          }
+        }
+
+        .export-button {
+          margin-right: 6px;
+        }
+      }
+    }
+
+    &--results {
+      margin-bottom: 64px;
+    }
+
+    &--footer {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<div class="search-block search-block--simple">
+  <div class="wrapper">
+    <div class="search-block__description">Search, explore, and download UK grants data published by funders in the 360Giving Data Standard.</div>
+    <div>
+      <form role="search" action="{% url 'search' %}">
+        <label class="search-block__form-item-label" for="search_query">Enter a search term</label>
+        <div class="search-block__form-group">
+          <input name="search_query" class="form-control large-search" placeholder="Search grants, funders, recipients, locations" type="text">
+          <input class="" name="submit" type="submit" value="Search">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
