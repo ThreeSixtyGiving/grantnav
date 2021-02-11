@@ -1,0 +1,1863 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Preview layout</title>
+    <link rel="stylesheet" href="assets/css/global.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+      <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/styles/default.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="layout layout--single-column">
+  <div class="nav-bar">
+  <a class="nav-bar__home-button" href="/">
+    
+    <svg class="main-logo main-logo--animated" width="189" height="84" viewBox="0 0 189 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g id="grantnav-logo">
+    <g id="main-360-circle">
+      <path id="circle-background" d="M61.1246 52.4174C58.816 52.4174 57.0295 51.6534 55.7652 50.1253C54.5009 48.5972 53.8696 46.4417 53.8713 43.659V39.8849C53.8713 37.0853 54.5009 34.9257 55.7602 33.406C57.0194 31.8863 58.7983 31.1264 61.0969 31.1264C63.1117 31.1264 64.7286 31.7135 65.9476 32.8877C64.1632 28.5118 61.1178 24.7643 57.1978 22.1206C53.2778 19.4769 48.66 18.0562 43.9305 18.039C39.2009 18.0217 34.5729 19.4086 30.6336 22.0237C26.6944 24.6387 23.6217 28.3639 21.8054 32.7266C22.2596 32.3661 22.7582 32.065 23.2888 31.8309C24.4102 31.3432 25.6221 31.098 26.845 31.1113C29.1536 31.1113 30.9687 31.6388 32.29 32.6939C33.6114 33.749 34.2721 35.1966 34.2721 37.0367C34.2651 37.9399 33.9783 38.8189 33.4511 39.5527C32.8425 40.398 32.018 41.0644 31.0635 41.4826C32.0858 41.8249 32.9868 42.4559 33.6576 43.2992C34.3054 44.1697 34.6375 45.2344 34.5995 46.3185C34.6258 47.1761 34.4452 48.0275 34.0731 48.8008C33.701 49.5741 33.1482 50.2467 32.4613 50.7618C31.0358 51.8723 29.1637 52.4275 26.845 52.4275C25.5449 52.438 24.2573 52.173 23.0672 51.65C22.6068 51.4469 22.1701 51.1938 21.7651 50.8952C23.5719 55.3027 26.6585 59.0687 30.6271 61.7078C34.5957 64.3469 39.2645 65.7383 44.0318 65.7026C48.7991 65.6668 53.4464 64.2056 57.3749 61.5073C61.3035 58.809 64.3331 54.9972 66.0735 50.5631C64.8428 51.7976 63.1932 52.4157 61.1246 52.4174ZM50.912 48.8949C50.3028 49.9842 49.3985 50.8798 48.3028 51.4789C47.1672 52.1061 45.888 52.4277 44.5905 52.4124C43.2079 52.4348 41.8444 52.0873 40.6415 51.406C39.4795 50.7326 38.5388 49.736 37.934 48.5376C37.2632 47.203 36.918 45.7286 36.9266 44.2352V42.3129C36.8949 40.3083 37.3677 38.328 38.3018 36.5536C39.1998 34.8698 40.5625 33.4787 42.2281 32.5455C43.9531 31.5705 45.9055 31.0688 47.8872 31.0912H48.6151V34.8653H48.401C46.6062 34.8653 45.1311 35.2955 43.976 36.156C43.4021 36.583 42.9184 37.1192 42.5528 37.7337C42.1871 38.3481 41.9467 39.0288 41.8453 39.7364C42.3867 39.2092 43.0293 38.7968 43.7343 38.5239C44.4394 38.2511 45.1923 38.1235 45.948 38.1488C47.7462 38.1488 49.1734 38.8038 50.2295 40.1138C51.2856 41.4239 51.8178 43.1423 51.8262 45.2693C51.8441 46.5385 51.5289 47.7903 50.912 48.9V48.8949Z" fill="#153634"/>
+      <path id="fill-in-3" d="M26.7746 39.759C28.5694 39.759 29.4669 38.8809 29.4669 37.1246C29.4779 36.8163 29.4265 36.509 29.3157 36.221C29.2049 35.9331 29.037 35.6705 28.8221 35.4489C28.5798 35.2244 28.2943 35.0513 27.9831 34.9401C27.6718 34.829 27.3412 34.7821 27.0113 34.8023C26.4104 34.7904 25.8238 34.9869 25.3516 35.3584C25.132 35.5156 24.9531 35.723 24.83 35.9633C24.7069 36.2036 24.6431 36.4698 24.6439 36.7397H20.5387C20.1695 38.4223 19.9837 40.1399 19.9846 41.8624C19.9852 43.3737 20.1277 44.8815 20.4103 46.3662H24.3517C24.3517 46.6806 24.4205 46.9912 24.5532 47.2763C24.6859 47.5614 24.8793 47.8141 25.1199 48.0167C25.6389 48.4839 26.318 48.7335 27.0163 48.7137C27.754 48.7489 28.4765 48.4963 29.0312 48.0092C29.2789 47.7805 29.4746 47.5013 29.6049 47.1905C29.7353 46.8797 29.7973 46.5445 29.7867 46.2077C29.7867 45.1627 29.5248 44.4221 29.0009 43.986C28.4771 43.5499 27.7551 43.3318 26.835 43.3318H24.4978V39.759H26.7746Z" fill="#153634"/>
+      <path id="fill-in-6" d="M44.2908 41.8221C43.7256 41.8022 43.168 41.9569 42.694 42.265C42.2871 42.5366 41.9582 42.9095 41.7395 43.3469V44.7836C41.7395 47.4053 42.647 48.7153 44.462 48.7137C44.8247 48.7127 45.1816 48.6227 45.5013 48.4516C45.821 48.2805 46.0937 48.0335 46.2955 47.7324C46.8038 47.0139 47.0613 46.1483 47.0284 45.2692C47.0655 44.379 46.7991 43.5026 46.2728 42.7833C46.0434 42.4764 45.7437 42.229 45.3989 42.0618C45.054 41.8946 44.674 41.8124 44.2908 41.8221Z" fill="#153634"/>
+      <path id="fill-in-0" d="M61.0968 34.8174C60.7293 34.796 60.3635 34.8813 60.0435 35.063C59.7235 35.2447 59.463 35.5151 59.2935 35.8415C58.9174 36.5259 58.7151 37.5608 58.6865 38.9463V44.2427C58.6865 45.7892 58.8821 46.9214 59.2733 47.6394C59.4438 47.9789 59.7098 48.2614 60.0386 48.4523C60.3674 48.6431 60.7447 48.734 61.1245 48.7137C61.495 48.7314 61.8629 48.6421 62.184 48.4565C62.5051 48.2709 62.7659 47.9968 62.9353 47.667C63.3248 46.9692 63.5246 45.8789 63.5347 44.3961V39.2583C63.5347 37.7688 63.3399 36.6559 62.9504 35.9195C62.7838 35.5743 62.5191 35.2858 62.1895 35.0898C61.8599 34.8939 61.4799 34.7991 61.0968 34.8174Z" fill="#153634"/>
+    </g>
+
+    <path id="circle-1" d="M67.6979 69.9821C70.0166 69.9821 71.8963 68.1042 71.8963 65.7878C71.8963 63.4714 70.0166 61.5935 67.6979 61.5935C65.3792 61.5935 63.4995 63.4714 63.4995 65.7878C63.4995 68.1042 65.3792 69.9821 67.6979 69.9821Z" fill="#BC2C26"/>
+    <path id="circle-2" d="M43.8172 83.7324C47.5658 83.7324 50.6046 80.6965 50.6046 76.9516C50.6046 73.2066 47.5658 70.1708 43.8172 70.1708C40.0686 70.1708 37.0298 73.2066 37.0298 76.9516C37.0298 80.6965 40.0686 83.7324 43.8172 83.7324Z" fill="#DE6E26"/>
+    <path id="circle-3" d="M15.547 79.4274C20.7491 79.4274 24.9662 75.2144 24.9662 70.0173C24.9662 64.8202 20.7491 60.6072 15.547 60.6072C10.3448 60.6072 6.12769 64.8202 6.12769 70.0173C6.12769 75.2144 10.3448 79.4274 15.547 79.4274Z" fill="#EFC329"/>
+    <path id="circle-4" d="M6.78742 48.6483C10.536 48.6483 13.5748 45.6124 13.5748 41.8675C13.5748 38.1225 10.536 35.0867 6.78742 35.0867C3.03883 35.0867 0 38.1225 0 41.8675C0 45.6124 3.03883 48.6483 6.78742 48.6483Z" fill="#4DACB6"/>
+    <path id="circle-5" d="M15.9295 23.0347C21.1317 23.0347 25.3488 18.8217 25.3488 13.6246C25.3488 8.42753 21.1317 4.21448 15.9295 4.21448C10.7274 4.21448 6.51025 8.42753 6.51025 13.6246C6.51025 18.8217 10.7274 23.0347 15.9295 23.0347Z" fill="#DE6E26"/>
+    <path id="circle-6" d="M43.8172 13.5616C47.5658 13.5616 50.6046 10.5258 50.6046 6.78082C50.6046 3.03588 47.5658 0 43.8172 0C40.0686 0 37.0298 3.03588 37.0298 6.78082C37.0298 10.5258 40.0686 13.5616 43.8172 13.5616Z" fill="#EFC329"/>
+
+    <g id="grantnav-word">
+      <path id="letter-G" d="M91.0523 49.4082C90.3196 50.4402 89.2941 51.229 88.1081 51.6726C86.7031 52.1991 85.2111 52.4552 83.7108 52.4275C82.1284 52.4572 80.5691 52.046 79.2076 51.2399C77.8841 50.4292 76.828 49.2481 76.1703 47.8432C75.424 46.2528 75.0469 44.5145 75.0672 42.7582V40.9592C75.0672 37.8376 75.7959 35.4171 77.2533 33.6978C78.7106 31.9785 80.7616 31.1197 83.406 31.1213C85.572 31.1213 87.3156 31.674 88.637 32.7794C89.9584 33.8848 90.766 35.4532 91.0598 37.4845H88.3146C87.8008 34.7319 86.1663 33.3556 83.4111 33.3556C81.5776 33.3556 80.1882 33.9997 79.2429 35.288C78.2976 36.5762 77.8199 38.4406 77.8099 40.8812V42.577C77.8099 44.9052 78.3421 46.7554 79.4066 48.1275C80.4711 49.4996 81.9109 50.1831 83.7259 50.1781C84.6351 50.1938 85.5419 50.0786 86.4182 49.8359C87.1481 49.6333 87.809 49.2358 88.3297 48.6861V44.0414H83.5244V41.8046H91.0523V49.4082Z" fill="#153634"/>
+      <path id="letter-r" d="M101.925 39.0847C101.496 39.0161 101.062 38.9825 100.628 38.9841C98.8965 38.9841 97.7211 39.7204 97.1016 41.1932V52.128H94.4697V36.7196H97.0361L97.0789 38.501C97.9419 37.1238 99.1676 36.4353 100.756 36.4353C101.156 36.4144 101.555 36.4832 101.925 36.6366V39.0847Z" fill="#153634"/>
+      <path id="letter-a-first" d="M112.568 52.128C112.364 51.6085 112.239 51.0615 112.198 50.5052C111.641 51.1132 110.962 51.5972 110.206 51.9258C109.45 52.2544 108.632 52.4202 107.808 52.4123C106.287 52.4123 105.039 51.9829 104.065 51.1241C103.594 50.7215 103.218 50.219 102.966 49.6532C102.713 49.0875 102.59 48.4726 102.604 47.8532C102.604 46.2496 103.216 45.0042 104.438 44.1168C105.66 43.2295 107.378 42.785 109.591 42.7833H112.155V41.5731C112.175 41.1696 112.112 40.7663 111.97 40.388C111.828 40.0098 111.61 39.6647 111.329 39.374C110.778 38.8272 109.965 38.5546 108.891 38.5563C108.045 38.5267 107.214 38.777 106.526 39.2684C106.238 39.4551 106 39.7098 105.834 40.0099C105.667 40.31 105.577 40.6463 105.571 40.9894H102.919C102.935 40.1765 103.223 39.3925 103.738 38.7626C104.323 38.0159 105.088 37.4298 105.962 37.0593C106.934 36.6333 107.985 36.4189 109.047 36.4302C110.825 36.4302 112.218 36.8739 113.225 37.7612C114.233 38.6486 114.755 39.8714 114.792 41.4297V48.52C114.792 49.9357 114.972 51.0612 115.333 51.8965V52.123L112.568 52.128ZM108.193 50.1152C109.02 50.1147 109.833 49.8932 110.545 49.4736C111.24 49.0959 111.802 48.5146 112.155 47.8079V44.6528H110.09C106.859 44.6528 105.243 45.5971 105.241 47.4859C105.223 47.8505 105.288 48.2145 105.432 48.5502C105.575 48.8859 105.793 49.1845 106.07 49.4232C106.669 49.9057 107.424 50.1535 108.193 50.1202V50.1152Z" fill="#153634"/>
+      <path id="letter-n" d="M120.69 36.7195L120.775 38.6569C121.314 37.9465 122.013 37.3741 122.816 36.9869C123.619 36.5998 124.503 36.4089 125.394 36.4302C128.653 36.4302 130.297 38.2678 130.326 41.9429V52.1229H127.689V41.9328C127.679 40.8207 127.427 39.9997 126.933 39.4696C126.44 38.9396 125.663 38.6737 124.604 38.672C123.8 38.6556 123.012 38.8944 122.352 39.3539C121.702 39.8133 121.182 40.4319 120.841 41.1503V52.128H118.197V36.7195H120.69Z" fill="#153634"/>
+      <path id="letter-t" d="M137.151 32.9907V36.7195H140.03V38.7576H137.151V48.3186C137.114 48.813 137.251 49.3049 137.537 49.71C137.789 50.017 138.229 50.173 138.846 50.173C139.271 50.1577 139.692 50.1004 140.106 50.0019V52.1255C139.449 52.3083 138.772 52.4031 138.091 52.4073C136.915 52.4073 136.026 52.0517 135.424 51.3405C134.821 50.6292 134.522 49.6178 134.527 48.3061V38.745H131.706V36.707H134.514V32.9907H137.151Z" fill="#153634"/>
+      <path id="letter-N" d="M158.743 52.128H155.992L145.543 36.1509V52.128H142.793V31.3981H145.543L156.02 47.4456V31.3981H158.743V52.128Z" fill="#153634"/>
+      <path id="letter-a-second" d="M171.982 52.128C171.776 51.6093 171.651 51.0619 171.612 50.5052C171.055 51.113 170.376 51.5969 169.619 51.9255C168.862 52.254 168.045 52.4199 167.22 52.4124C165.709 52.4124 164.462 51.9829 163.48 51.1241C163.008 50.7218 162.632 50.2195 162.379 49.6536C162.127 49.0877 162.004 48.4727 162.019 47.8532C162.019 46.2497 162.629 45.0042 163.85 44.1169C165.071 43.2295 166.788 42.785 169.003 42.7833H171.569V41.5731C171.589 41.1694 171.526 40.766 171.383 40.3878C171.241 40.0096 171.022 39.6646 170.741 39.3741C170.188 38.8272 169.377 38.5547 168.305 38.5563C167.459 38.5267 166.627 38.777 165.938 39.2684C165.65 39.4551 165.412 39.7098 165.246 40.0099C165.079 40.31 164.989 40.6463 164.983 40.9894H162.331C162.348 40.1763 162.637 39.3923 163.152 38.7627C163.737 38.0154 164.502 37.4292 165.376 37.0593C166.348 36.6331 167.4 36.4187 168.462 36.4303C170.233 36.4303 171.622 36.8756 172.63 37.7663C173.637 38.657 174.16 39.8798 174.199 41.4347V48.525C174.199 49.9407 174.379 51.0663 174.74 51.9016V52.128H171.982ZM167.605 50.1152C168.433 50.1151 169.245 49.8935 169.958 49.4736C170.652 49.0953 171.214 48.5142 171.569 47.8079V44.6528H169.502C166.27 44.6528 164.654 45.5972 164.656 47.4859C164.637 47.8503 164.702 48.2142 164.845 48.5499C164.988 48.8856 165.206 49.1843 165.482 49.4233C166.082 49.9049 166.836 50.1525 167.605 50.1202V50.1152Z" fill="#153634"/>
+      <path id="letter-v" d="M182.485 48.5552L186.303 36.7296H189L183.459 52.138H181.444L175.858 36.7296H178.551L182.485 48.5552Z" fill="#153634"/>
+    </g>
+  </g>
+</svg>
+
+
+    <span class="screen-reader-only">Home</span>
+  </a>
+
+  <nav class="nav-bar__nav-menu">
+    <ul>
+      
+        <li class="nav-menu__item">
+          
+          <a class="nav-menu__button"
+            href="#"
+            
+            >
+            About the data
+            
+            
+          </a>
+        </li>
+      
+        <li class="nav-menu__item">
+          
+          <a class="nav-menu__button"
+            href="#"
+            
+            >
+            Get help
+            
+            
+          </a>
+        </li>
+      
+        <li class="nav-menu__item">
+          
+          <a class="nav-menu__button"
+            href="#"
+            
+            >
+            About 360Giving
+            
+            
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+</div>
+
+
+  <header class="layout__header">
+    
+  <div class="search-block search-block--advanced">
+  <div class="wrapper">
+    <div class="search-block__description">Search UK grants data</div>
+
+    <div class="search-block__label">
+      
+        <div class="alert-tag">
+  <span class="alert-tag__icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M7 5.83333C6.70833 5.83333 6.41667 6.06667 6.41667 6.41667V9.91667C6.41667 10.2667 6.65 10.5 7 10.5C7.29167 10.5 7.58333 10.2667 7.58333 9.91667V6.41667C7.58333 6.125 7.29167 5.83333 7 5.83333ZM7 3.5C6.70833 3.5 6.41667 3.73333 6.41667 4.08333C6.41667 4.375 6.65 4.66667 7 4.66667C7.29167 4.66667 7.58333 4.43333 7.58333 4.08333C7.58333 3.79167 7.29167 3.5 7 3.5ZM7 0C3.15 0 0 3.15 0 7C0 10.85 3.15 14 7 14C10.85 14 14 10.85 14 7C14 3.15 10.85 0 7 0ZM7 12.8333C3.79167 12.8333 1.16667 10.2083 1.16667 7C1.16667 3.79167 3.79167 1.16667 7 1.16667C10.2083 1.16667 12.8333 3.79167 12.8333 7C12.8333 10.2083 10.2083 12.8333 7 12.8333Z" fill="#1D1536"/>
+</svg>
+</span>
+  <span class="alert-tag__content">Target your search better with our guide to <a href='#'>Advanced Searching</a></span>
+</div>
+
+      
+      <label class="search-block__form-item-label" for="search-view">Enter a search term</label>
+    </div>
+
+    <form role="search" action="#">
+      <div class="search-block__form-group">
+        <input name="search-view" class="form-control large-search" placeholder="Search grants, funders, recipients, locations" type="text">
+      </div>
+      <div class="search-block__form-radio-group">
+        <div class="search-block__form-group-label">
+          Search:
+        </div>
+        <div class="radio-buttons">
+  
+    <div class="radio-buttons__group">
+      <input class="screen-reader-only" type="radio" id="all" name="radioGroupName" value="all" checked>
+      <label class="radio-buttons__button" for="all">All the data</label>
+    </div>
+  
+    <div class="radio-buttons__group">
+      <input class="screen-reader-only" type="radio" id="locations" name="radioGroupName" value="locations">
+      <label class="radio-buttons__button" for="locations">Locations</label>
+    </div>
+  
+    <div class="radio-buttons__group">
+      <input class="screen-reader-only" type="radio" id="recipients" name="radioGroupName" value="recipients">
+      <label class="radio-buttons__button" for="recipients">Recipients</label>
+    </div>
+  
+    <div class="radio-buttons__group">
+      <input class="screen-reader-only" type="radio" id="titledesc" name="radioGroupName" value="titledesc">
+      <label class="radio-buttons__button" for="titledesc">Titles &amp; Descriptions</label>
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="search-block__form-action-group">
+        <input class="" name="submit" type="submit" value="Search">
+      </div>
+    </form>
+  </div>
+</div>
+
+
+  </header>
+
+  <main>
+    
+  <div class="grantnav-search__wrapper">
+    <div class="grantnav-search__sidebar">
+      <h2 class="grantnav-search__sidebar--heading">Refine your search</h2>
+
+      <div class="inline-block">
+        <a class="alert-tag alert-tag--anchor" href="#">
+  <span class="alert-tag__icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M7 5.83333C6.70833 5.83333 6.41667 6.06667 6.41667 6.41667V9.91667C6.41667 10.2667 6.65 10.5 7 10.5C7.29167 10.5 7.58333 10.2667 7.58333 9.91667V6.41667C7.58333 6.125 7.29167 5.83333 7 5.83333ZM7 3.5C6.70833 3.5 6.41667 3.73333 6.41667 4.08333C6.41667 4.375 6.65 4.66667 7 4.66667C7.29167 4.66667 7.58333 4.43333 7.58333 4.08333C7.58333 3.79167 7.29167 3.5 7 3.5ZM7 0C3.15 0 0 3.15 0 7C0 10.85 3.15 14 7 14C10.85 14 14 10.85 14 7C14 3.15 10.85 0 7 0ZM7 12.8333C3.79167 12.8333 1.16667 10.2083 1.16667 7C1.16667 3.79167 3.79167 1.16667 7 1.16667C10.2083 1.16667 12.8333 3.79167 12.8333 7C12.8333 10.2083 10.2083 12.8333 7 12.8333Z" fill="#1D1536"/>
+</svg>
+</span>
+  <span class="alert-tag__content">Learn more about the filters</span>
+</a>
+
+      </div>
+
+      <div class="grantnav-search__sidebar--filters">
+        <details class="filter-wrapper">
+  <summary class="filter-wrapper__summary">
+    <span class="filter-wrapper__summary--heading">Filters</span>
+
+    <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+  </summary>
+
+  <div class="filter-wrapper__filters" aria-hidden="false">
+    
+    
+      <div class="filter-group">
+  <details class="filter-group__accordion" >
+    <summary class="filter-group__label">
+      <div>Recipient</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-group_contents-wrapper">
+      <div class="filter-list filter-list--with-checkboxes">
+  <details class="filter-list__accordion"  open>
+    <summary class="filter-list__label">
+      <div>Recipient Organisation</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      <form class="filter-list__form" action="#">
+        
+          <div class="filter-list__form--radios">
+            
+              <div class="filter-list__form--radio-item">
+                <input class="screen-reader-only" type="radio" id="include" name="radioGroupName" value="include" checked>
+                <label for="include">Include selected</label>
+              </div>
+            
+              <div class="filter-list__form--radio-item">
+                <input class="screen-reader-only" type="radio" id="exclude" name="radioGroupName" value="exclude">
+                <label for="exclude">Exclude selected</label>
+              </div>
+            
+          </div>
+        
+
+        <ul class="filter-list__form--checkbox-listing">
+          
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="oxford" type="checkbox" checked>
+                <label for="oxford">Oxford (321)</label>
+              </div>
+            </li>
+          
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="reading" type="checkbox">
+                <label for="reading">Reading (1422)</label>
+              </div>
+            </li>
+          
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="manchester" type="checkbox" checked>
+                <label for="manchester">Manchester (3141)</label>
+              </div>
+            </li>
+          
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="birmingham" type="checkbox">
+                <label for="birmingham">Birmingham (2132)</label>
+              </div>
+            </li>
+          
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="london" type="checkbox">
+                <label for="london">London (32113)</label>
+              </div>
+            </li>
+          
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="paris" type="checkbox">
+                <label for="paris">Paris (4123)</label>
+              </div>
+            </li>
+          
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="marseille" type="checkbox">
+                <label for="marseille">Marseille (7321)</label>
+              </div>
+            </li>
+          
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="brussels" type="checkbox">
+                <label for="brussels">Brussels (9321)</label>
+              </div>
+            </li>
+          
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="geneva" type="checkbox">
+                <label for="geneva">Geneva (8743)</label>
+              </div>
+            </li>
+          
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="barcelona" type="checkbox">
+                <label for="barcelona">Barcelona (8241)</label>
+              </div>
+            </li>
+          
+        </ul>
+
+        <div class="filter-list__form--summary">
+          <div class="filter-list__form--summary-label">Selected:</div>
+          <ul class="filter-list__form--summary-contents">
+            
+              <li data-option-id="oxford" class="filter-list__form--summary-item  active">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">Oxford (321)</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+                </button>
+              </li>
+            
+              <li data-option-id="reading" class="filter-list__form--summary-item ">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">Reading (1422)</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+                </button>
+              </li>
+            
+              <li data-option-id="manchester" class="filter-list__form--summary-item  active">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">Manchester (3141)</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+                </button>
+              </li>
+            
+              <li data-option-id="birmingham" class="filter-list__form--summary-item ">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">Birmingham (2132)</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+                </button>
+              </li>
+            
+              <li data-option-id="london" class="filter-list__form--summary-item ">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">London (32113)</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+                </button>
+              </li>
+            
+              <li data-option-id="paris" class="filter-list__form--summary-item ">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">Paris (4123)</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+                </button>
+              </li>
+            
+              <li data-option-id="marseille" class="filter-list__form--summary-item ">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">Marseille (7321)</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+                </button>
+              </li>
+            
+              <li data-option-id="brussels" class="filter-list__form--summary-item ">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">Brussels (9321)</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+                </button>
+              </li>
+            
+              <li data-option-id="geneva" class="filter-list__form--summary-item ">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">Geneva (8743)</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+                </button>
+              </li>
+            
+              <li data-option-id="barcelona" class="filter-list__form--summary-item ">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">Barcelona (8241)</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+                </button>
+              </li>
+            
+          </ul>
+        </div>
+
+        <div class="filter-list__form--actions">
+          <input class="filter-list__contents--form-submit" type="submit" value="Apply">
+          <input class="filter-list__contents--form-clear" type="submit" value="Clear all">
+        </div>
+
+      </form>
+    </div>
+  </details>
+</div>
+
+    </div>
+  </details>
+</div>
+
+
+      <div class="filter-group">
+  <details class="filter-group__accordion" >
+    <summary class="filter-group__label">
+      <div>Location</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-group_contents-wrapper">
+      <div class="filter-list">
+  <details class="filter-list__accordion" >
+    <summary class="filter-list__label">
+      <div>Recipient region</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      
+      
+      <ul class="filter-list__listing">
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Oxford (321)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Reading (1422)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Manchester (3141)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Birmingham (2132)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              London (32113)
+
+              
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </details>
+</div>
+
+      <div class="filter-list">
+  <details class="filter-list__accordion"  open>
+    <summary class="filter-list__label">
+      <div>Recipient city</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      
+        <form class="filter-list__contents--form">
+          <div class="filter-list__contents--form-item">
+            <label for="smallest-number">Smallest (£)</label>
+            <input id="smallest-number" min="0" type="number">
+          </div>
+          <div class="filter-list__contents--form-item">
+            <label for="smallest-number">Largest (£)</label>
+            <input id="smallest-number" min="0" type="number">
+          </div>
+          <input class="filter-list__contents--form-submit" type="submit" value="Apply">
+        </form>
+      
+      <ul class="filter-list__listing">
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Oxford (321)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Reading (1422)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Manchester (3141)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Birmingham (2132)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              London (32113)
+
+              
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </details>
+</div>
+
+    </div>
+  </details>
+</div>
+
+
+      <div class="filter-group">
+  <details class="filter-group__accordion" >
+    <summary class="filter-group__label">
+      <div>Location</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-group_contents-wrapper">
+      <div class="filter-list">
+  <details class="filter-list__accordion" >
+    <summary class="filter-list__label">
+      <div>Recipient region</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      
+      
+      <ul class="filter-list__listing">
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Oxford (321)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Reading (1422)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Manchester (3141)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Birmingham (2132)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              London (32113)
+
+              
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </details>
+</div>
+
+      <div class="filter-list">
+  <details class="filter-list__accordion"  open>
+    <summary class="filter-list__label">
+      <div>Recipient city</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      
+        <form class="filter-list__contents--form">
+          <div class="filter-list__contents--form-item">
+            <label for="smallest-number">Smallest (£)</label>
+            <input id="smallest-number" min="0" type="number">
+          </div>
+          <div class="filter-list__contents--form-item">
+            <label for="smallest-number">Largest (£)</label>
+            <input id="smallest-number" min="0" type="number">
+          </div>
+          <input class="filter-list__contents--form-submit" type="submit" value="Apply">
+        </form>
+      
+      <ul class="filter-list__listing">
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Oxford (321)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Reading (1422)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Manchester (3141)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Birmingham (2132)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              London (32113)
+
+              
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </details>
+</div>
+
+    </div>
+  </details>
+</div>
+
+
+      <div class="filter-group">
+  <details class="filter-group__accordion" >
+    <summary class="filter-group__label">
+      <div>Location</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-group_contents-wrapper">
+      <div class="filter-list">
+  <details class="filter-list__accordion" >
+    <summary class="filter-list__label">
+      <div>Recipient region</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      
+      
+      <ul class="filter-list__listing">
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Oxford (321)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Reading (1422)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Manchester (3141)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Birmingham (2132)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              London (32113)
+
+              
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </details>
+</div>
+
+      <div class="filter-list">
+  <details class="filter-list__accordion"  open>
+    <summary class="filter-list__label">
+      <div>Recipient city</div>
+      <svg class="accordion-toggle-icon" width="18" stroke="#153634" stroke="#153634" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line class="accordion-toggle-icon__horizontal-line" x1="16.4131" y1="8.65356" x2="1.09657" y2="8.65356"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line class="accordion-toggle-icon__vertical-line" x1="8.7561" y1="0.995239" x2="8.7561" y2="16.3118"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      
+        <form class="filter-list__contents--form">
+          <div class="filter-list__contents--form-item">
+            <label for="smallest-number">Smallest (£)</label>
+            <input id="smallest-number" min="0" type="number">
+          </div>
+          <div class="filter-list__contents--form-item">
+            <label for="smallest-number">Largest (£)</label>
+            <input id="smallest-number" min="0" type="number">
+          </div>
+          <input class="filter-list__contents--form-submit" type="submit" value="Apply">
+        </form>
+      
+      <ul class="filter-list__listing">
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Oxford (321)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Reading (1422)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item  active" href="#">
+              Manchester (3141)
+
+              
+                <span class="screen-reader-only">(active filter)</span>
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              Birmingham (2132)
+
+              
+            </a>
+          </li>
+        
+          <li>
+            <a class="filter-list__filter-item " href="#">
+              London (32113)
+
+              
+            </a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </details>
+</div>
+
+    </div>
+  </details>
+</div>
+
+    
+  </div>
+</details>
+
+      </div>
+    </div>
+    <div class="grantnav-search__content">
+      <div class="search-summary">
+  Your search ‘Museums’ returned 365 results in ‘Locations’
+</div>
+
+
+      <h2 class="results-title">
+  <span>Search results</span>
+  <span class="results-title__subtitle">(Displaying 365 grants)</span>
+</h2>
+
+
+      <div class="filter-summary">
+  <div class="filter-summary__label">
+    Filters applied:
+  </div>
+
+  <ul class="filter-summary__filters">
+    
+      <li class="filter-summary__filters-item">
+        <a href="#">
+          <span class="filter-summary__filters-item--label">The Royal British Legion</span>
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+        </a>
+      </li>
+    
+      <li class="filter-summary__filters-item">
+        <a href="#">
+          <span class="filter-summary__filters-item--label">Oxfordshire</span>
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+        </a>
+      </li>
+    
+      <li class="filter-summary__filters-item">
+        <a href="#">
+          <span class="filter-summary__filters-item--label">2019</span>
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+        </a>
+      </li>
+    
+      <li class="filter-summary__filters-item">
+        <a href="#">
+          <span class="filter-summary__filters-item--label">University of Oxford</span>
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"/>
+</svg>
+
+        </a>
+      </li>
+    
+    <li class="filter-summary__filters-clear">
+      <a href="#">Clear all</a>
+    </li>
+  </ul>
+</div>
+
+      <section class="grantnav-search__content--results">
+        <h2> Search Summary </h2>
+        <div id="awardamount" style="width:350px;height:250px;"></div>
+        <div id="awardyear" style="width:350px;height:250px;"></div>
+
+        <script>
+
+// Plotly.newPlot(graphDiv, data, layout, config)
+
+var graphDiv = document.getElementById('awardamount')
+
+var data = [{
+  x: [1000, 2000, 2001, 2563, 2342, 123123, 123124, 123125, 123124, 1231231, 1231232, 1231233, 123123123, 123123123],
+  y: [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+  type: 'scatter'
+}];
+
+var layout = {
+  showlegend: false,
+  mode: 'lines',
+  title: 'Award Amount',
+  xaxis: {
+    showgrid: false,
+    zeroline: false, 
+    fixedrange: true
+    
+  },
+  yaxis: {
+    title: 'Percent',
+    showline: false,
+    visible: false
+  }
+};
+
+Plotly.newPlot(graphDiv, data, layout, {displayModeBar: false});
+
+var graphDiv = document.getElementById('awardyear')
+
+var data = [{
+  x: [1999, 2000, 2001, 2002, 2018, 2019, 2020],
+  y: [5, 5, 1, 4, 5, 2000,4000,5000],
+  type: 'scatter'
+}];
+
+var layout = {
+  showlegend: false,
+  mode: 'lines',
+  title: 'Award Date',
+  xaxis: {
+    showgrid: false,
+    zeroline: false, 
+    fixedrange: true
+    
+  },
+  yaxis: {
+    title: 'Percent',
+    showline: false,
+    visible: false
+  }
+};
+
+Plotly.newPlot(graphDiv, data, layout, {displayModeBar: false});
+
+</script>
+
+
+
+      </section class="grantnav-search__content--results">
+
+
+      <section class="grantnav-search__content--filters">
+        <div class="dropdown-filter">
+  <label class="dropdown-filter__label" for="sort-view">Sort by:</label>
+
+  <select class="dropdown-filter__select" name="sort-by" id="sort-view">
+    
+      <option value="best">Best results</option>
+    
+      <option value="date-asc">Date ascending</option>
+    
+      <option value="date-desc">Date descending</option>
+    
+      <option value="title">Title</option>
+    
+  </select>
+</div>
+
+
+        <div class="export-wrapper">
+          <div class="export-label">Export search data:</div>
+
+          <div class="export-button">
+            <a class="export-data-button" href="#" aria-label="Export results data as CSV">
+  <span><svg class="export-csv-icon" width="35" height="39" viewBox="0 0 35 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path class="export-csv-icon__background-fill1" d="M30.2272 7.3595V37.2727H4.31812V1H23.7499" stroke="#2e666b" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="export-csv-icon__background-fill2" d="M30.2273 7.3595L23.75 1V7.3595H30.2273Z" stroke="#2e666b" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <mask id="path-3-inside-1" fill="white">
+    <rect y="15.6818" width="34.5455" height="14.6818" rx="1"/>
+  </mask>
+
+  <rect y="15.6818" width="34.5455" height="14.6818" rx="1" fill="white" stroke="#2e666b" stroke-width="3" mask="url(#path-3-inside-1)"/>
+  <path d="M13.639 24.395C13.5781 25.2365 13.2666 25.8989 12.7044 26.3823C12.1458 26.8657 11.4082 27.1074 10.4915 27.1074C9.48894 27.1074 8.69939 26.7708 8.12289 26.0977C7.54998 25.4209 7.26352 24.4935 7.26352 23.3154V22.8374C7.26352 22.0854 7.39601 21.423 7.66098 20.8501C7.92595 20.2772 8.30372 19.8385 8.79428 19.5342C9.28842 19.2262 9.86134 19.0723 10.513 19.0723C11.4154 19.0723 12.1423 19.314 12.6937 19.7974C13.2451 20.2808 13.5638 20.9593 13.6497 21.833H12.0384C11.999 21.3281 11.8576 20.9629 11.6141 20.7373C11.3742 20.5081 11.0072 20.3936 10.513 20.3936C9.97592 20.3936 9.57309 20.5869 9.30453 20.9736C9.03956 21.3568 8.90349 21.953 8.89633 22.7622V23.353C8.89633 24.1981 9.02345 24.8158 9.27768 25.2061C9.53549 25.5964 9.94011 25.7915 10.4915 25.7915C10.9893 25.7915 11.3599 25.6787 11.6034 25.4531C11.8504 25.224 11.9919 24.8713 12.0277 24.395H13.639ZM18.6423 24.9482C18.6423 24.6439 18.5349 24.4111 18.32 24.25C18.1052 24.0853 17.7185 23.9134 17.1599 23.7344C16.6013 23.5518 16.1591 23.3727 15.8332 23.1973C14.9452 22.7174 14.5012 22.0711 14.5012 21.2583C14.5012 20.8358 14.6193 20.4598 14.8557 20.1304C15.0956 19.7974 15.4375 19.5378 15.8815 19.3516C16.3291 19.1654 16.8304 19.0723 17.3855 19.0723C17.944 19.0723 18.4418 19.1743 18.8786 19.3784C19.3155 19.5789 19.6538 19.8636 19.8938 20.2324C20.1372 20.6012 20.259 21.0202 20.259 21.4893H18.6477C18.6477 21.1312 18.5349 20.8537 18.3093 20.6567C18.0837 20.4562 17.7668 20.356 17.3586 20.356C16.9647 20.356 16.6586 20.4401 16.4401 20.6084C16.2217 20.7731 16.1125 20.9915 16.1125 21.2637C16.1125 21.5179 16.2396 21.731 16.4939 21.9028C16.7517 22.0747 17.1294 22.2358 17.6272 22.3862C18.5438 22.6619 19.2116 23.0039 19.6306 23.4121C20.0495 23.8203 20.259 24.3288 20.259 24.9375C20.259 25.6143 20.003 26.146 19.4909 26.5327C18.9789 26.9159 18.2896 27.1074 17.423 27.1074C16.8215 27.1074 16.2736 26.9982 15.7795 26.7798C15.2854 26.5578 14.9076 26.2552 14.6462 25.8721C14.3884 25.4889 14.2595 25.0449 14.2595 24.54H15.8762C15.8762 25.403 16.3918 25.8345 17.423 25.8345C17.8062 25.8345 18.1052 25.7575 18.32 25.6035C18.5349 25.446 18.6423 25.2275 18.6423 24.9482ZM24.1343 25.061L25.9068 19.1797H27.7007L24.9776 27H23.2964L20.584 19.1797H22.3726L24.1343 25.061Z" fill="#2e666b"/>
+</svg>
+</span>
+</a>
+
+          </div>
+
+          <div class="export-button">
+            <a class="export-data-button export-data-button--json" href="#" aria-label="Export results data as JSON">
+  <span><svg class="export-json-icon" width="35" height="39" viewBox="0 0 35 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path class="export-csv-icon__background-fill1" d="M30.6823 7.3595V37.2727H4.77319V1H24.205" stroke="#2e666b" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="export-csv-icon__background-fill2" d="M30.6824 7.3595L24.2051 1V7.3595H30.6824Z" stroke="#2e666b" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <mask id="path-3-inside-1" fill="white">
+    <rect x="0.455078" y="15.6818" width="34.5455" height="14.6818" rx="1"/>
+  </mask>
+
+  <rect x="0.455078" y="15.6818" width="34.5455" height="14.6818" rx="1" fill="white" stroke="#2e666b" stroke-width="3" mask="url(#path-3-inside-1)"/>
+  <path d="M7.60716 19.1797H9.21849V24.5938C9.21849 25.0915 9.10749 25.5319 8.88548 25.915C8.66706 26.2946 8.35732 26.5882 7.95628 26.7959C7.55524 27.0036 7.10228 27.1074 6.5974 27.1074C5.77025 27.1074 5.12572 26.8979 4.6638 26.479C4.20189 26.0565 3.97093 25.4603 3.97093 24.6904H5.593C5.593 25.0736 5.67357 25.3564 5.8347 25.5391C5.99583 25.7217 6.25007 25.813 6.5974 25.813C6.90534 25.813 7.15062 25.7074 7.33324 25.4961C7.51585 25.2848 7.60716 24.984 7.60716 24.5938V19.1797ZM14.544 24.9482C14.544 24.6439 14.4366 24.4111 14.2218 24.25C14.0069 24.0853 13.6202 23.9134 13.0616 23.7344C12.503 23.5518 12.0608 23.3727 11.735 23.1973C10.8469 22.7174 10.4029 22.0711 10.4029 21.2583C10.4029 20.8358 10.5211 20.4598 10.7574 20.1304C10.9973 19.7974 11.3393 19.5378 11.7833 19.3516C12.2309 19.1654 12.7322 19.0723 13.2872 19.0723C13.8458 19.0723 14.3435 19.1743 14.7804 19.3784C15.2172 19.5789 15.5556 19.8636 15.7955 20.2324C16.039 20.6012 16.1607 21.0202 16.1607 21.4893H14.5494C14.5494 21.1312 14.4366 20.8537 14.211 20.6567C13.9854 20.4562 13.6685 20.356 13.2603 20.356C12.8665 20.356 12.5603 20.4401 12.3419 20.6084C12.1235 20.7731 12.0143 20.9915 12.0143 21.2637C12.0143 21.5179 12.1414 21.731 12.3956 21.9028C12.6534 22.0747 13.0312 22.2358 13.5289 22.3862C14.4456 22.6619 15.1134 23.0039 15.5323 23.4121C15.9513 23.8203 16.1607 24.3288 16.1607 24.9375C16.1607 25.6143 15.9047 26.146 15.3927 26.5327C14.8806 26.9159 14.1913 27.1074 13.3248 27.1074C12.7232 27.1074 12.1754 26.9982 11.6812 26.7798C11.1871 26.5578 10.8093 26.2552 10.5479 25.8721C10.2901 25.4889 10.1612 25.0449 10.1612 24.54H11.7779C11.7779 25.403 12.2935 25.8345 13.3248 25.8345C13.7079 25.8345 14.0069 25.7575 14.2218 25.6035C14.4366 25.446 14.544 25.2275 14.544 24.9482ZM23.5703 23.2671C23.5703 24.0369 23.4342 24.7119 23.1621 25.292C22.8899 25.8721 22.4996 26.3197 21.9912 26.6348C21.4863 26.9499 20.9062 27.1074 20.2509 27.1074C19.6028 27.1074 19.0245 26.9517 18.5161 26.6401C18.0076 26.3286 17.6137 25.8846 17.3344 25.3081C17.0551 24.728 16.9137 24.062 16.9101 23.3101V22.9233C16.9101 22.1535 17.048 21.4767 17.3237 20.8931C17.603 20.3058 17.9951 19.8564 18.5 19.5449C19.0084 19.2298 19.5885 19.0723 20.2402 19.0723C20.8919 19.0723 21.4702 19.2298 21.9751 19.5449C22.4835 19.8564 22.8756 20.3058 23.1513 20.8931C23.4306 21.4767 23.5703 22.1517 23.5703 22.918V23.2671ZM21.9375 22.9126C21.9375 22.0926 21.7906 21.4696 21.497 21.0435C21.2034 20.6174 20.7845 20.4043 20.2402 20.4043C19.6995 20.4043 19.2823 20.6156 18.9887 21.0381C18.6951 21.457 18.5465 22.0729 18.5429 22.8857V23.2671C18.5429 24.0656 18.6897 24.6851 18.9834 25.1255C19.277 25.5659 19.6995 25.7861 20.2509 25.7861C20.7916 25.7861 21.207 25.5749 21.497 25.1523C21.7871 24.7262 21.9339 24.1068 21.9375 23.2939V22.9126ZM30.9905 27H29.3792L26.2425 21.8545V27H24.6312V19.1797H26.2425L29.3846 24.3359V19.1797H30.9905V27Z" fill="#2e666b"/>
+</svg>
+</span>
+</a>
+
+          </div>
+        </div>
+      </section>
+
+
+
+
+      <section class="grantnav-search__content--results">
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+
+        <div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="#">
+      Grant to Help Musicians
+    </a>
+
+    <div class="grant-search-result__description">
+      Toward the design of new educational and accessible materials, relating to the history of the Stoke Park Hospitals, which will increase the enjoyment and learning for a variety of audiences, but in particular those people with learning disabilities.
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      
+      <time datetime="2017-08-22">22 Aug 2017</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>£78,480</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="#">Youth Music</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="#">Jack Drum Arts</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="#">East Midlands</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Distric:</span>
+      <span><a href="#">Northampton District</a></span>
+    </div>
+  </div>
+</div>
+
+      </section>
+
+      <section class="grantnav-search__content--footer">
+        <div class="pager">
+  <div class="screen-reader-only">Change page to</div>
+  <ul>
+    
+      
+        <li class="pager__item--first">
+          <a href="#">
+            First
+          </a>
+        </li>
+      
+    
+      
+        <li class="pager__item--prev">
+          <a href="#">
+            <svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="#2B666A" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.60577 6.6709L7.19434 12.5037" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"/>
+  <path d="M1.60594 6.67081L7.18164 0.932251" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"/>
+</svg>
+
+
+            <span class="screen-reader-only">
+              Previous
+            </span>
+          </a>
+        </li>
+      
+    
+      
+        <li class="pager__item--ellipsis">...</li>
+      
+    
+      
+        <li class="pager__item--page">
+          
+            <a  href="#">
+              3
+            </a>
+          
+        </li>
+      
+    
+      
+        <li class="pager__item--page">
+          
+            <a  href="#">
+              4
+            </a>
+          
+        </li>
+      
+    
+      
+        <li class="pager__item--page">
+          
+            <a class="active" href="#">
+              5
+            </a>
+          
+        </li>
+      
+    
+      
+        <li class="pager__item--page">
+          
+            <a  href="#">
+              6
+            </a>
+          
+        </li>
+      
+    
+      
+        <li class="pager__item--page">
+          
+            <a  href="#">
+              7
+            </a>
+          
+        </li>
+      
+    
+      
+        <li class="pager__item--ellipsis">...</li>
+      
+    
+      
+        <li class="pager__item--next">
+          <a href="#">
+            <span class="screen-reader-only">
+              Next
+            </span>
+
+            <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#2B666A" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6.54437 6.76514L0.95581 0.93229"  stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"/>
+  <path d="M6.54421 6.76522L0.968506 12.5038" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"/>
+</svg>
+
+          </a>
+        </li>
+      
+    
+      
+        <li class="pager__item--last">
+          <a href="#">
+            Last
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      </section>
+    </div>
+  </div>
+
+  </main>
+
+  <footer class="layout__footer">
+    
+      <div class="subscribe-section">
+  <div class="subscribe-section__wrapper">
+    <form action="#" class="subscribe-section__form">
+      <label for="subscribe" class="screen-reader-only">Subscribe</label>
+      <input type="email" id="subscribe" placeholder="Subscribe to our newsletter">
+      <input type="submit" value="Send">
+    </form>
+  </div>
+</div>
+<footer class="footer">
+  <div class="footer__row wrapper">
+    <div class="footer__column-2 footer__branding">
+      <div class="footer__logo"><img src="/images/360-giving-logo-white.svg" alt="360Giving"></div>
+      <p class="footer__tagline">Open data for more effective grantmaking</p>
+    </div>
+    <div class="footer__column-1 footer__social">
+      <a href="#" class="github-icon"><img src="/images/github-logo.svg" alt="Check our Github"></a>
+      <a href="#" class="twitter-icon"><img src="/images/twitter-logo.svg" alt="Follow us on Twitter"></a>
+    </div>
+  </div>
+  
+  <div class="footer__row wrapper">
+    <div class="footer__column-2 footer__section medium-up">
+      <h3 class="footer__heading">Products</h3>
+      <ul>
+        <li><a href="#">GrantNav</a></li>
+        <li><a href="#">Insights</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">Cove</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__column-2 footer__section medium-up">
+      <h3 class="footer__heading">Other Products</h3>
+      <ul>
+        <li><a href="#">Data Registry</a></li>
+        <li><a href="#">Data Standard</a></li>
+        <li><a href="#">Data Challenge</a></li>
+        <li><a href="#">Data Champions</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__column-3 footer__section">
+      <h3 class="footer__heading">360 Resources</h3>
+      <p>Data in JSON format is ideal for direct use by developers building visualisations and web apps. The JSON should conform to the 360Giving JSON Schemas. Anyone automating the publication of their data from their internal databases or via</p>
+    </div>
+
+    <div class="footer__column-3 footer__section">
+      <h3 class="footer__heading">360 Resources</h3>
+      <p>Data in JSON format is ideal for direct use by developers building visualisations and web apps. The JSON should conform to the 360Giving JSON Schemas. Anyone automating the publication of their data from their internal databases or via</p>
+
+    </div>
+  </div>
+
+  <div class="wrapper footer__small-print">
+      <p>
+        <strong>360 Giving</strong> (Trading as <strong>360Giving</strong>) is a registered charity <a href="https://register-of-charities.charitycommission.gov.uk/charity-details/?regId=1164883&subId=0">1164883</a> and a registered company <a href="https://beta.companieshouse.gov.uk/company/09668396">09668396</a>.
+         <br>Registered address: 360Giving, c/o Esmée Fairbairn Foundation, Kings Place, 90 York Way, London N1 9AG.
+      </p>
+  </div>
+
+  <div class="footer__row wrapper footer__small-print">
+    
+    <div class="footer__column-2">
+    <p>© Copyright 2021 360Giving.<br>Licensed under a <a href="#" target="_blank">Creative Commons Attribution 4.0 International License</a>.</p>
+    </div>
+    <div class="footer__column-2 footer__policy-links">
+      <p><a href="#">Privacy Notice</a> | <a href="#">Terms & Conditions</a> | <a href="#">Cookie Policy</a> | <a href="#">Take Down Policy</a> | <a href="#">License</a></p>
+    </div>
+  </div>
+</footer>
+    
+  </footer>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="./assets/js/components.js.html"></script>
+</body>
+</html>
+

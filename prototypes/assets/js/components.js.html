@@ -1,0 +1,195 @@
+window.onload = (event) => {
+    const links = document.body.querySelectorAll('a[target="_blank"]')
+
+    links.forEach( aTag => {          
+        let spanTag = document.createElement('span');
+        spanTag.className = 'screen-reader-only';
+        spanTag.innerHTML = '(opens in a new tab)';
+
+        if (aTag.querySelectorAll('span.screen-reader-only').length === 0) {
+            aTag.appendChild(spanTag)
+        }
+    })
+};
+// General JavaScript file
+// 
+// Example of usage: define global variables
+// 
+
+const helloWorldButtons = document.querySelectorAll('.js-hello-world')
+
+// for each helloWorldButton
+helloWorldButtons.forEach((button) => {
+  // add an event listener for clicks
+  button.addEventListener('click', () => {
+    // when a HelloWorldButton is clicked, alerts "Hello, world!"
+    alert('Hello, world!')
+  })
+})
+document.querySelectorAll('.accordion__trigger').forEach(function(el) {
+
+  el.onclick = function(){
+    const wrapper_element = el.closest('.accordion');
+    const target_element = wrapper_element.querySelector('.accordion__extra');
+    wrapper_element.classList.toggle('accordion--expanded');
+    if (target_element.hasAttribute('aria-hidden')) {
+      target_element.removeAttribute('aria-hidden')
+    } else {
+      target_element.setAttribute('aria-hidden', '')
+    }
+  };
+});
+const filterListWithCheckboxes = document.querySelectorAll('.filter-list--with-checkboxes');
+
+filterListWithCheckboxes.forEach(filterList => {
+  const checkboxes = filterList.querySelectorAll('.filter-list__form--checkbox-item input');
+
+  const buttonsItem = filterList.querySelectorAll('.filter-list__form--summary-item');
+
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', e => {
+      const checkboxId = checkbox.getAttribute('id');
+
+      if (checkbox.checked) {
+        buttonsItem.forEach(buttonItem => {
+          let id = buttonItem.getAttribute('data-option-id');
+
+          if (id == checkboxId) {
+            buttonItem.classList.add('active');
+          }
+        })
+      } else {
+        buttonsItem.forEach(buttonItem => {
+          let id = buttonItem.getAttribute('data-option-id');
+
+          if (id == checkboxId) {
+            buttonItem.classList.remove('active');
+          }
+        })
+      }
+    })
+  })
+
+  buttonsItem.forEach(buttonItem => {
+    const id = buttonItem.getAttribute('data-option-id');
+    const button = buttonItem.querySelector('button');
+
+    button.addEventListener('click', e => {
+      e.preventDefault();
+
+      checkboxes.forEach(checkbox => {
+        const checkboxId = checkbox.getAttribute('id');
+
+        if (id == checkboxId) {
+          checkbox.checked = false;
+          buttonItem.classList.remove('active');
+        }
+      })
+    })
+  })
+})
+
+document.querySelectorAll('.modal__trigger').forEach(function(el) {
+  el.onclick = function(){
+    const target = el.getAttribute('data-id');
+    const modal = document.getElementById(target);
+    const body = document.getElementsByTagName('body');
+
+
+    if (modal.hasAttribute('aria-hidden')) {
+      
+      modal.removeAttribute('aria-hidden')
+      modal.classList.add('modal--shown');
+      body[0].classList.add('modal--shown');
+
+    } else {
+      modal.setAttribute('aria-hidden', '')
+      modal.classList.remove('modal--shown');
+      body[0].classList.remove('modal--shown');
+    }
+  };
+});
+
+
+// Maybe we should move the class toggling to the <body> element,
+// and deal with the displays at the CSS level. 
+// This will minimize JS intervention in the DOM, and possibilitate the 
+// Overflow: hidden; for the <body> without new JS lines
+// Feel free to check the slick slider docs to customize
+// your carousel. https://kenwheeler.github.io/slick/
+$('.carousel').slick({
+    dots: true,
+    arrows: false,
+    autoplay: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    customPaging: function customDots(slider, i){
+        return '<a class="dot" role="button"</a>';
+    }
+});
+
+
+document.querySelectorAll('.sidebar-list__trigger').forEach(function(el) {
+  el.onclick = function(){
+    
+    var target = this.parentNode;
+    target.classList.toggle('sidebar-list--expanded');
+    if (target.hasAttribute('aria-hidden')) {
+      target.removeAttribute('aria-hidden')
+    } else {
+      target.setAttribute('aria-hidden', '')
+    }
+  };
+});
+document.querySelectorAll('.top-bar__menu-trigger, .off-canvas-menu__trigger').forEach(function(el) {
+  el.onclick = function(){
+    const offCanvasMenu = document.querySelector('.off-canvas-menu');
+    offCanvasMenu.classList.toggle('off-canvas-menu--expanded');
+    if (offCanvasMenu.hasAttribute('aria-hidden')) {
+      offCanvasMenu.removeAttribute('aria-hidden')
+    } else {
+      offCanvasMenu.setAttribute('aria-hidden', '')
+    }
+  };
+});
+const filterWrappers = document.querySelectorAll('.filter-wrapper');
+
+// Change this breakpoint to fit your theme's breakpoint
+const breakpoint = 958;
+
+function togglePreventDefault(e) {
+  e.stopPropagation();
+  e.preventDefault();
+}
+
+function preventDefaultOnWrapper(wrapper, button) {
+  if (window.innerWidth >= breakpoint) {
+    button.addEventListener('click', togglePreventDefault);
+    TurnDetailsOn(wrapper);
+  } else {
+    button.removeEventListener('click', togglePreventDefault);
+    TurnDetailsOff(wrapper);
+  }
+}
+
+function TurnDetailsOn(wrapper) {
+  if (!wrapper.hasAttribute('open')) {
+    wrapper.setAttribute('open', '');
+  }
+}
+
+function TurnDetailsOff(wrapper) {
+  if (wrapper.hasAttribute('open')) {
+    wrapper.removeAttribute('open');
+  }
+}
+
+filterWrappers.forEach((filterWrapper) => {
+  let filterButton = filterWrapper.querySelector('.filter-wrapper__summary')
+  preventDefaultOnWrapper(filterWrapper, filterButton);
+
+  window.addEventListener('resize', e => {
+    preventDefaultOnWrapper(filterWrapper, filterButton);
+  })
+})
