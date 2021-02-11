@@ -1,0 +1,54 @@
+<div class="filter-list filter-list--with-checkboxes">
+  <details class="filter-list__accordion" {% if opened %} open{% endif %}>
+    <summary class="filter-list__label">
+      <div>{{ filterTypeLabel }}</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      <form class="filter-list__form" action="{{ formAction }}">
+        {% block filterRadios %}
+          <div class="filter-list__form--radios">
+            {% for radioItem in radioItems %}
+              <div class="filter-list__form--radio-item">
+                <input class="screen-reader-only" type="radio" id="{{ radioItem.value }}" name="radioGroupName" value="{{ radioItem.value }}"{% if radioItem.checked %} checked{% endif %}>
+                <label for="{{ radioItem.value }}">{{ radioItem.label }}</label>
+              </div>
+            {% endfor %}
+          </div>
+        {% endblock filterRadios %}
+
+        <ul class="filter-list__form--checkbox-listing">
+          {% for filterItem in filterItems %}
+            <li>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" id="{{ filterItem.value }}" type="checkbox"{% if filterItem.checked %} checked{% endif %}>
+                <label for="{{ filterItem.value }}">{{ filterItem.label }}</label>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <div class="filter-list__form--summary">
+          <div class="filter-list__form--summary-label">Selected:</div>
+          <ul class="filter-list__form--summary-contents">
+            {% for filterItem in filterItems %}
+              <li data-option-id="{{ filterItem.value }}" class="filter-list__form--summary-item {% if filterItem.checked %} active{% endif %}">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">{{ filterItem.label }}</span>
+                  {% include 'tokens/checkmark-icon.html' %}
+                </button>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="filter-list__form--actions">
+          <input class="filter-list__contents--form-submit" type="submit" value="Apply">
+          <input class="filter-list__contents--form-clear" type="submit" value="Clear all">
+        </div>
+
+      </form>
+    </div>
+  </details>
+</div>

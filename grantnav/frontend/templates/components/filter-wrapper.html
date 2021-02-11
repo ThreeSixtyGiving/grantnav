@@ -1,0 +1,20 @@
+<details class="filter-wrapper">
+  <summary class="filter-wrapper__summary">
+    <span class="filter-wrapper__summary--heading">{{ heading }}</span>
+
+    {% include 'tokens/accordion-toggle-icon.html' %}
+  </summary>
+
+  <div class="filter-wrapper__filters" aria-hidden="false">
+    {# Filters go here #}
+    {% block filters %}
+      {% include 'components/filter-group--recipient-example.html' %}
+
+      {% include 'components/filter-group.html' %}
+
+      {% include 'components/filter-group.html' %}
+
+      {% include 'components/filter-group.html' %}
+    {% endblock filters %}
+  </div>
+</details>

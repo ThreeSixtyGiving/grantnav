@@ -1,0 +1,11 @@
+.export-data-button {
+  &:hover, &:focus {
+    [class*=background-fill1] {
+      fill: $teal-dark;
+    }
+
+    [class*=background-fill2] {
+      fill: $white;
+    }
+  }
+}

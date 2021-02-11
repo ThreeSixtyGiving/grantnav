@@ -1,0 +1,5 @@
+{% load get_amount from frontend %}
+<h2 class="results-title">
+  <span>Search results</span>
+  <span class="results-title__subtitle">(Displaying {{ results.hits.total|get_amount }} grants)</span>
+</h2>

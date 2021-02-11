@@ -2,6 +2,68 @@
 {% load frontend %}
 {% load static %}
 
+{% block header %}
+  {% include 'components/search-block--advanced.html' %}
+{% endblock %}
+
+{% block main_content %}
+  <div class="grantnav-search__wrapper">
+    <div class="grantnav-search__sidebar">
+      <h2 class="grantnav-search__sidebar--heading">Refine your search</h2>
+
+      <div class="inline-block">
+        {% include 'components/alert-tag--anchor.html' %}
+      </div>
+
+      <div class="grantnav-search__sidebar--filters">
+        {% include 'components/filter-wrapper.html' %}
+      </div>
+    </div>
+    <div class="grantnav-search__content">
+      {% include 'components/search-summary.html' %}
+
+      {% include 'components/results-title.html' %}
+
+      {% if selected_facets %}
+        {% include 'components/filter-summary.html' %}
+      {% endif %}
+
+      <section class="grantnav-search__content--filters">
+        {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
+
+        <div class="export-wrapper">
+          <div class="export-label">Export search data:</div>
+
+          <div class="export-button">
+            {% include 'components/export-data-button.html' %}
+          </div>
+
+          <div class="export-button">
+            {% include 'components/export-data-button--json.html' %}
+          </div>
+        </div>
+      </section>
+
+      <section class="grantnav-search__content--results">
+      {% for result in results.hits.hits %}
+        {% include 'components/grant-search-result.html' with result=result %}
+      {% endfor %}
+      </section>
+
+      <section class="grantnav-search__content--footer">
+        {% include 'components/pager.html' %}
+      </section>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+
+
+
+
+{% comment %}
 {% block main_content %}
 
   <div class="row">
@@ -573,3 +635,4 @@ $(function() {
 });
 </script>
 {% endblock %}
+{% endcomment %}

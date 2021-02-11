@@ -1,0 +1,28 @@
+<div class="search-block search-block--advanced">
+  <div class="wrapper">
+    <div class="search-block__description">{{ description }}</div>
+
+    <div class="search-block__label">
+      {% block alert %}
+        {% include 'components/alert-tag.html' %}
+      {% endblock alert %}
+      <label class="search-block__form-item-label" for="search-view">Enter a search term</label>
+    </div>
+
+    <form role="search" action="{{ form_action }}">
+      <div class="search-block__form-group">
+        <input name="search-view" class="form-control large-search" placeholder="Search grants, funders, recipients, locations" type="text">
+      </div>
+      <div class="search-block__form-radio-group">
+        <div class="search-block__form-group-label">
+          Search:
+        </div>
+        {% include 'components/radio-buttons.html'  %}
+      </div>
+
+      <div class="search-block__form-action-group">
+        <input class="" name="submit" type="submit" value="Search">
+      </div>
+    </form>
+  </div>
+</div>

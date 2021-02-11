@@ -1,0 +1,21 @@
+<div class="filter-summary">
+  <div class="filter-summary__label">
+    Filters applied:
+  </div>
+
+  <ul class="filter-summary__filters">
+    {% for name, selected_list in selected_facets.items %}
+      {% for item in selected_list %}
+        <li class="filter-summary__filters-item">
+          <a href="{{item.url}}">
+            <span class="filter-summary__filters-item--label">{{item.display_value}}</span>
+            {% include 'tokens/checkmark-icon.html' %}
+          </a>
+        </li>
+      {% endfor %}
+    {% endfor %}
+    <li class="filter-summary__filters-clear">
+      <a href="{{ clearUrl }}">Clear all</a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,389 @@
+.filter-list {
+  border: 1px solid $blue-tint;
+  border-radius: 2px;
+
+  &__accordion[open] {
+    .filter-list__label .accordion-toggle-icon {
+      .accordion-toggle-icon__vertical-line {
+        transform-origin: center;
+        transform: rotateZ(90deg);
+        transition: 0.1s;
+      }
+    }
+  }
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: $blue-tint-light;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 4px 10px;
+
+    .accordion-toggle-icon {
+      transition: 0.2s;
+
+      .accordion-toggle-icon__vertical-line {
+        transform-origin: center;
+        transform: rotateZ(0deg);
+        transition: 0.1s;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      .accordion-toggle-icon {
+        transform: scale(1.1, 1.1);
+        transition: 0.2s;
+      }
+    }
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  &__listing {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      &:last-of-type {
+        .filter-list__filter-item {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+
+  &__filter-item {
+    display: block;
+    position: relative;
+    border-radius: 0;
+    padding: 4px 0;
+    padding-left: 34px;
+    border-bottom: 1px solid $blue-tint;
+    color: $black;
+
+    &::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      border: 1px solid $black;
+      border-radius: 2px;
+      position: absolute;
+      left: 8px;
+      top: 9px;
+      box-sizing: border-box;
+    }
+
+    &::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: url('/images/checkmark-icon.svg') no-repeat;
+      background-size: cover;
+      border-radius: 2px;
+      position: absolute;
+      left: 10px;
+      top: 11px;
+      display: none;
+      box-sizing: border-box;
+    }
+
+    &:hover {
+      color: $black;
+      text-decoration: underline;
+    }
+
+    &:active {
+      color: $black;
+      background: $orange-tint-light;
+    }
+
+    &:focus {
+      color: $black;
+      background: $orange-tint-light;
+    }
+
+    &.active {
+      background: $orange-tint-light;
+
+      &::after {
+        display: block;
+      }
+    }
+  }
+
+  &__expand-button {
+    display: block;
+    padding: 4px 12px;
+    text-align: center;
+    color: $black;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  &__contents--form {
+    display: flex;
+    align-items: baseline;
+    padding: 6px 8px;
+    background: $blue-tint-fade;
+    border-bottom: 1px solid $blue-tint;
+    max-width: 100%;
+    flex-wrap: wrap;
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      margin-right: 6px;
+      flex-shrink: 2;
+      max-width: 35%;
+      margin-bottom: 4px;
+
+      label {
+        margin-bottom: 0;
+        font-weight: 400;
+        font-size: 15px;
+      }
+
+      input {
+        background: $white;
+        border: 1px solid $blue-tint;
+        border-radius: 2px;
+        font-size: 15px;
+        width: auto;
+        max-width: 100%;
+      }
+    }
+
+    &-submit {
+      appearance: none;
+      border: none;
+      align-self: flex-end;
+      font-weight: 400;
+      font-size: 15px;
+      background: $teal-dark;
+      padding: 2px 6px;
+      color: $white;
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-bottom: 4px;
+      border: 1px solid $teal-dark;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &-clear {
+      appearance: none;
+      border: none;
+      align-self: flex-end;
+      font-weight: 400;
+      font-size: 15px;
+      background: $white;
+      padding: 2px 6px;
+      color: $teal-dark;
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-bottom: 4px;
+      border: 1px solid $teal-dark;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+
+.filter-list--with-checkboxes {
+  .filter-list__form {
+    &--radios {
+      padding: 12px 8px;
+      border-bottom: 1px solid $blue-tint;
+    }
+
+    &--radio-item {
+      label {
+        margin: 0;
+        padding-left: 24px;
+        position: relative;
+        font-size: 15px;
+        font-weight: 400;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0px;
+          top: 4px;
+          width: 14px;
+          height: 14px;
+          border: 1px solid $teal-dark;
+          border-radius: 100%;
+          box-sizing: border-box;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          background: $teal-dark;
+          left: 2px;
+          top: 6px;
+          width: 10px;
+          height: 10px;
+          border-radius: 100%;
+          display: none;
+          box-sizing: border-box;
+        }
+      }
+
+      input:checked ~ label {
+        &::after {
+          display: block;
+        }
+      }
+
+      input:focus ~ label {
+        outline: 2px solid $orange;
+      }
+    }
+
+    &--checkbox-listing {
+      max-height: 200px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-bottom: 1px solid $blue-tint;
+      display: flex;
+      flex-direction: column;
+
+      li {
+        label {
+          border-bottom: 1px solid $blue-tint;
+        }
+
+        &:last-of-type {
+          label {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+
+    &--checkbox-item {
+      label {
+        margin: 0;
+        padding-top: 4px;
+        padding-bottom: 5px;
+        padding-left: 34px;
+        padding-right: 34px;
+        position: relative;
+        width: 100%;
+        font-size: 15px;
+        font-weight: 400;
+
+        &:hover {
+          text-decoration: dashed underline;
+          text-underline-offset: 2px;
+          cursor: pointer;
+        }
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 8px;
+          top: 8px;
+          width: 14px;
+          height: 14px;
+          border: 1px solid $teal-dark;
+          border-radius: 3px;
+          box-sizing: border-box;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          background: url('/images/checkmark-icon.svg') no-repeat;
+          background-size: cover;
+          left: 10px;
+          top: 10px;
+          width: 10px;
+          height: 10px;
+          display: none;
+          box-sizing: border-box;
+        }
+      }
+
+      input:checked ~ label {
+        background: $orange-tint-light;
+        &::after {
+          display: block;
+        }
+      }
+
+      input:focus ~ label {
+        outline: 2px solid $orange;
+        outline-offset: -3px;
+      }
+    }
+
+    &--summary {
+      padding: 12px 8px;
+      list-style: none;
+      margin: 0;
+
+      &-contents {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      &-label {
+        font-weight: 400;
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+
+      &-item {
+        display: none;
+        margin-right: 6px;
+        margin-bottom: 6px;
+
+        &.active {
+          display: block;
+        }
+      }
+
+      &-button {
+        appearance: none;
+        border: 1px solid $teal-dark;
+        background: $white;
+        color: $teal-dark;
+        border-radius: 3px;
+        font-size: 15px;
+        font-weight: 400;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &__label {
+          margin-right: 6px;
+        }
+      }
+    }
+
+    &--actions {
+      padding: 0px 8px 12px;
+    }
+  }
+}

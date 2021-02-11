@@ -1,0 +1,45 @@
+{% load get_currency get_amount get_title get_name from frontend %}
+
+<div class="grant-search-result">
+  <div class="grant-search-result__left-side">
+    <a class="grant-search-result__title" href="{% url 'grant' result.source.id %}">
+      {{ result.source|get_title }}
+    </a>
+
+    <div class="grant-search-result__description">
+      {{ result.source.description }}
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__date">
+      {# Using datetime, make sure your timestamp is valid https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time#valid_datetime_values #}
+      <time datetime="{{ date_timestamp }}">{{ date }}</time>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Amount:</span>
+      <span>{{result.source|get_currency}}{{result.source.amountAwarded|get_amount}}</span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Funder:</span>
+      <span><a href="{% url 'funder' result.source.fundingOrganization.0.id %}">{{ result.source.fundingOrganization.0 | get_name }}</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Recipient:</span>
+      <span><a href="{% url 'recipient' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:40 }}</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Region:</span>
+      <span><a href="{% url 'region' result.source.recipientRegionName %}">{{ result.source.recipientRegionName }}</a></span>
+    </div>
+
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">District:</span>
+      <span><a href="{% url 'district' result.source.recipientDistrictName %}">{{ result.source.recipientDistrictName }}</a></span>
+    </div>
+  </div>
+</div>

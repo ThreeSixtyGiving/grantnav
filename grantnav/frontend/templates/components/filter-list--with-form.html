@@ -1,0 +1,43 @@
+<div class="filter-list">
+  <details class="filter-list__accordion" {% if opened %} open{% endif %}>
+    <summary class="filter-list__label">
+      <div>{{ filterTypeLabel }}</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      {% block filterForm %}
+        <form class="filter-list__contents--form">
+          <div class="filter-list__contents--form-item">
+            <label for="smallest-number">Smallest (£)</label>
+            <input id="smallest-number" min="0" type="number">
+          </div>
+          <div class="filter-list__contents--form-item">
+            <label for="smallest-number">Largest (£)</label>
+            <input id="smallest-number" min="0" type="number">
+          </div>
+          <input class="filter-list__contents--form-submit" type="submit" value="Apply">
+        </form>
+      {% endblock filterForm %}
+      <ul class="filter-list__listing">
+        {% for filterItem in filterItems %}
+          <li>
+            <a class="filter-list__filter-item {% if filterItem.active %} active{% endif %}" href="{{ filterItem.url }}">
+              {{ filterItem.label }}
+
+              {% if filterItem.active %}
+                <span class="screen-reader-only">(active filter)</span>
+              {% endif%}
+            </a>
+          </li>
+        {% endfor %}
+        {% if expand %}
+          <li>
+            <a class="filter-list__expand-button" href="{{ expand.url }}">
+              <span class="see-more">{{ expand.text }}</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </details>
+</div>

@@ -222,10 +222,11 @@ def orgs_csv_paged(data, org_type):
 
 def get_pagination(request, context, page):
     total_pages = math.ceil(context['results']['hits']['total']['value'] / SIZE)
-    if page < total_pages:
-        context['next_page'] = request.path + '?' + create_parameters_from_json_query(context['query'], page=page + 1)
+    context['pages'] = []
     if page != 1 and total_pages > 1:
-        context['prev_page'] = request.path + '?' + create_parameters_from_json_query(context['query'], page=page - 1)
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "prev", "label": "Previous"})
+    if page < total_pages:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "next", "label": "Next"})
 
 
 def get_terms_facet_size(request, context, json_query, page):
@@ -800,14 +801,14 @@ def search(request):
 
         try:
             context['text_query'] = json_query["query"]["bool"]["must"]["query_string"]["query"]
-            context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
+            default_field = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
         except KeyError:
             json_query = copy.deepcopy(BASIC_QUERY)
             json_query["query"]["bool"]["must"]["query_string"]["query"] = ''
             context['text_query'] = ''
             if default_field:
                 json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
-            context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
+            default_field = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
 
         if result_format == "csv":
             return grants_csv_paged(json_query)
@@ -886,6 +887,18 @@ def search(request):
         get_pagination(request, context, page)
 
         context['selected_facets'] = dict(context['selected_facets'])
+        context['radioItems'] = []
+        context['radioItems'].append({"value": "*", "name": "Search All Fields", "default": True if default_field == "*" else False})
+        context['radioItems'].append({"value": "recipientLocation", "name": "Locations", "default": True if default_field == "recipientLocation" else False})
+        context['radioItems'].append({"value": "recipientOrganization.name", "name": "Recipients", "default": True if default_field == "recipientOrganization.name" else False})
+        context['radioItems'].append({"value": "title_and_description", "name": "Titles & Descriptions", "default": True if default_field == "title_and_description" else False})
+        
+        context['dropdownFilterOptions'] = []
+        context['dropdownFilterOptions'].append({"value": "_score desc" ,"label": "Best Match"})
+        context['dropdownFilterOptions'].append({"value": "amountAwarded desc" ,"label": "Amount - Highest First"})
+        context['dropdownFilterOptions'].append({"value": "amountAwarded asc" ,"label": "Amount - Lowest First"})
+        context['dropdownFilterOptions'].append({"value": "awardDate desc" ,"label": "Award Date - Latest First"})
+        context['dropdownFilterOptions'].append({"value": "awardDate asc" ,"label": "Award Date - Earliest First"})
 
         add_advanced_search_information_in_context(context)
 
