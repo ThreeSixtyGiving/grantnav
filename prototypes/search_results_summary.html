@@ -981,8 +981,10 @@
 
       <section class="grantnav-search__content--results">
         <h2> Search Summary </h2>
-        <div id="awardamount" style="width:350px;height:250px;"></div>
-        <div id="awardyear" style="width:350px;height:250px;"></div>
+        <div id="summarygraphs" style="display:flex;">
+          <div id="awardamount" style="width:350px;height:250px;"></div>
+          <div id="awardyear" style="width:350px;height:250px;"></div>
+        </div>
 
         <script>
 
@@ -991,25 +993,24 @@
 var graphDiv = document.getElementById('awardamount')
 
 var data = [{
-  x: [1000, 2000, 2001, 2563, 2342, 123123, 123124, 123125, 123124, 1231231, 1231232, 1231233, 123123123, 123123123],
-  y: [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
-  type: 'scatter'
+  y: [1000, 2000, 2001, 2563, 2342, 123123, 123124, 123125, 123124, 1231231, 1231232, 1231233, 123123123, 123123123],
+  x: [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+  type: 'histogram',
 }];
 
 var layout = {
   showlegend: false,
-  mode: 'lines',
   title: 'Award Amount',
+  autobiny: true,
   xaxis: {
     showgrid: false,
     zeroline: false, 
-    fixedrange: true
+    fixedrange: true,
+    visible: false
     
   },
   yaxis: {
-    title: 'Percent',
     showline: false,
-    visible: false
   }
 };
 
