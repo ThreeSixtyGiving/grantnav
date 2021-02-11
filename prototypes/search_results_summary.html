@@ -979,13 +979,18 @@
   </ul>
 </div>
 
-      <section class="grantnav-search__content--results">
+      <section class="grantnav-search__content--results" style="background: #FBF0C9">
         <h2> Search Summary </h2>
         <div id="summarygraphs" style="display:flex;">
-          <div id="awardamount" style="width:350px;height:250px;"></div>
-          <div id="awardyear" style="width:350px;height:250px;"></div>
+          <div id="awardamount" style="width:250px;height:100px;margin:10px;"></div>
+          <div id="awardyear" style="width:250px;height:100px;margin:10px;"></div>          
+          <div id="summarytext" style="width:250px;height:100px;margin:10px;"><ul><li> Total Grants: 100,000 </li> <li> Total value: £1.5 million</li><li>Total funders: 2,592</li><li> Total recipients: 194,203</li></ul></div>
+          <div style="width:250px;height:100px;margin:10px;margin-top: -96px;"><img src="summaryillustration.png" /></div>
         </div>
 
+      <section class="grantnav-search__content--results" style="background: #FBF0C9;">
+        <p style=" background: #FBF0C9">To explore this data in more detail, open these results in <a href="#">360Giving Insights</a>
+</section>
         <script>
 
 // Plotly.newPlot(graphDiv, data, layout, config)
@@ -993,8 +998,8 @@
 var graphDiv = document.getElementById('awardamount')
 
 var data = [{
-  y: [1000, 2000, 2001, 2563, 2342, 123123, 123124, 123125, 123124, 1231231, 1231232, 1231233, 123123123, 123123123],
-  x: [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+  x: [1000, 2000, 2001, 2563, 2342, 123123, 123124, 123125, 123124, 1231231, 1231232, 1231233, 123123123, 123123123, 50000000,75000000,30000000, 1000, 2000, 2001, 2563, 2342, 123123, 123124, 123125, 123124, 1231231, 1231232, 1231233, 123123123, 123123123],
+  y: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
   type: 'histogram',
 }];
 
@@ -1006,12 +1011,20 @@ var layout = {
     showgrid: false,
     zeroline: false, 
     fixedrange: true,
-    visible: false
+    visible: true
     
   },
   yaxis: {
     showline: false,
-  }
+  },
+  margin: {
+    l: 25,
+    r: 25,
+    t: 25,
+    b: 15,
+  },
+  paper_bgcolor: "#FBF0C9",
+  plot_bgcolor: "#FBF0C9"
 };
 
 Plotly.newPlot(graphDiv, data, layout, {displayModeBar: false});
@@ -1021,12 +1034,12 @@ var graphDiv = document.getElementById('awardyear')
 var data = [{
   x: [1999, 2000, 2001, 2002, 2018, 2019, 2020],
   y: [5, 5, 1, 4, 5, 2000,4000,5000],
-  type: 'scatter'
+  type: 'scatter',
+  mode: 'markers'
 }];
 
 var layout = {
   showlegend: false,
-  mode: 'lines',
   title: 'Award Date',
   xaxis: {
     showgrid: false,
@@ -1035,10 +1048,17 @@ var layout = {
     
   },
   yaxis: {
-    title: 'Percent',
     showline: false,
     visible: false
-  }
+  },
+  margin: {
+    l: 0,
+    r: 0,
+    t: 25,
+    b: 15,
+  },
+  paper_bgcolor: "#FBF0C9",
+  plot_bgcolor: "#FBF0C9"
 };
 
 Plotly.newPlot(graphDiv, data, layout, {displayModeBar: false});
@@ -1047,7 +1067,7 @@ Plotly.newPlot(graphDiv, data, layout, {displayModeBar: false});
 
 
 
-      </section class="grantnav-search__content--results">
+      </section>
 
 
       <section class="grantnav-search__content--filters">
