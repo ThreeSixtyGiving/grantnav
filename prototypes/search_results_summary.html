@@ -920,10 +920,7 @@
 </div>
 
 
-      <h2 class="results-title">
-  <span>Search results</span>
-  <span class="results-title__subtitle">(Displaying 365 grants)</span>
-</h2>
+
 
 
       <div class="filter-summary">
@@ -982,13 +979,65 @@
       <section class="grantnav-search__content--results" style="background: #FBF0C9">
         <h2> Search Summary </h2>
         <div id="summarygraphs" style="display:flex;">
-          <div id="awardamount" style="width:250px;height:100px;margin:10px;"></div>
-          <div id="awardyear" style="width:250px;height:100px;margin:10px;"></div>          
-          <div id="summarytext" style="width:250px;height:100px;margin:10px;"><ul><li> Total Grants: 100,000 </li> <li> Total value: £1.5 million</li><li>Total funders: 2,592</li><li> Total recipients: 194,203</li></ul></div>
+          <div id="amountcolumn" style="width:250px;">
+
+            <div id="awardamount" style="width:250px;height:100px;margin:10px;"></div>
+
+
+          </div>
+         <div id="datecolumn" style="width:250px;">
+
+          <div id="awardyear" style="width:250px;height:100px;margin:10px;"></div>
+
+        </div>         
+
+         
+        <div id="summarytext" style="width:250px;height:100px;margin:10px;"><ul><li> Total Grants: 100,000 </li> <li> Total value: £1.5 million</li><li>Total funders: 2,592</li><li> Total recipients: 194,203</li></ul></div>
+
           <div style="width:250px;height:100px;margin:10px;margin-top: -96px;"><img src="summaryillustration.png" /></div>
         </div>
 
+      
       <section class="grantnav-search__content--results" style="background: #FBF0C9;">
+
+<script type="text/javascript">
+function toggleHighlightedGrants() {
+  var hg = document.getElementById("highlightedgrants");
+  if (hg.style.display === "none") {
+    hg.style.display = "flex";
+  } else {
+    hg.style.display = "none";
+  }
+}
+
+</script>
+
+<div id="showhighlightedgrants" style="display:flex;" onclick="toggleHighlightedGrants()">
+          Show highlighted grants (click here)
+        </div>
+        <div id="highlightedgrants" style="display:none;">
+        <div id="summarygraphs" style="display:flex;">
+          <div id="amountcolumn" style="width:250px;">
+
+            <p>Largest grant: <strong>£100m</strong> to Youth Music from Jack Drum Arts</p>
+            <p>Smallest grant: <strong>£10</strong> to Childrens Music from Jack's Parents</p>
+
+          </div>
+         <div id="datecolumn" style="width:250px;">
+
+             <p>Most recent grant: £100m to Youth Music from Jack Drum Arts in <strong>April 2020</strong></p>
+            <p>Oldest Grant: £5m to Youth Football from Department For Sport in <strong>January 1990</strong></p>
+        </div>
+        <div id="xcolumn" style="width:250px;">
+
+             <p>Most recent grant: £100m to Youth Music from Jack Drum Arts in <strong>April 2020</strong></p>
+            <p>Oldest Grant: £5m to Youth Football from Department For Sport in <strong>January 1990</strong></p>
+        </div>          
+         
+        
+        </div>        </div>
+</section>
+<section class="grantnav-search__content--results" style="background: #FBF0C9;">
         <p style=" background: #FBF0C9">To explore this data in more detail, open these results in <a href="#">360Giving Insights</a>
 </section>
         <script>
@@ -1068,7 +1117,10 @@ Plotly.newPlot(graphDiv, data, layout, {displayModeBar: false});
 
 
       </section>
-
+      <h2 class="results-title">
+  <span>Search results</span>
+  <span class="results-title__subtitle">(Displaying 365 grants)</span>
+</h2>
 
       <section class="grantnav-search__content--filters">
         <div class="dropdown-filter">
