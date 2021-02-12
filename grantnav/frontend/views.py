@@ -223,10 +223,35 @@ def orgs_csv_paged(data, org_type):
 def get_pagination(request, context, page):
     total_pages = math.ceil(context['results']['hits']['total']['value'] / SIZE)
     context['pages'] = []
+    if page != 1 and total_pages > 5:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': 1}), "type": "first", "label": "First"})
+
     if page != 1 and total_pages > 1:
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "prev", "label": "Previous"})
+    
+    if total_pages > 1 and page > 3:
+        context['pages'].append({"type": "ellipsis"})
+
+    if total_pages > 1 and page > 2:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 2}), "type": "number", "label": str(page - 2)})
+    if total_pages > 1 and page > 1:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "number", "label": str(page - 1)})
+    
+    context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page}), "type": "number", "label": str(page), "active": True})
+    
+    if page < total_pages - 1:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "number", "label": str(page + 1)})
+    if page < total_pages - 2:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 2}), "type": "number", "label": str(page + 2)})
+    
+    if page < total_pages - 3:
+        context['pages'].append({"type": "ellipsis"})
+
     if page < total_pages:
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "next", "label": "Next"})
+    
+    if page < total_pages and total_pages > 5:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': total_pages}), "type": "last", "label": "Last"})
 
 
 def get_terms_facet_size(request, context, json_query, page):
