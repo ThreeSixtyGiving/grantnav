@@ -88,6 +88,23 @@
 
     <div class="col-xs-3 filters">
       <h3 class="indent"> Filter By <a id="filter_by_help_link" href="/help#filters"><sup><img src="{% static 'images/icon-help-50.png'%}" width="15" height="15"></sup></a></h3>
+
+      <div class="panel panel-default">
+        <a class="anchor" id="TSGOrganizationType"></a>
+        <div class="panel-heading list-group-compact">
+          Funding Organization Type {% if results.aggregations.fundingOrganizationTSGType.clear_url %} <a href="{{results.aggregations.currency.clear_url}}"> <small>(clear)</small></a> {% endif%}
+        </div>
+        <div class="list-group">
+          {% for bucket in results.aggregations.fundingOrganizationTSGType.buckets %}
+            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
+          {% endfor %}
+          {% if results.aggregations.fundingOrganizationTSGType.buckets|length > 2 %}
+            <a href="{{see_more_url.fundingOrganizationTSGType.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.fundingOrganizationTSGType.more%}See More{% else %}See Less{% endif %}</b> </a>
+          {% endif %}
+        </div>
+      </div>
+
+
       <div class="panel panel-default">
         <a class="anchor" id="currency"></a>
         <div class="panel-heading list-group-compact">
