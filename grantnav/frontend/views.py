@@ -912,23 +912,30 @@ def search(request):
         get_pagination(request, context, page)
 
         context['selected_facets'] = dict(context['selected_facets'])
-        context['radioItems'] = []
-        context['radioItems'].append({"value": "*", "name": "Search All Fields", "default": True if default_field == "*" else False})
-        context['radioItems'].append({"value": "recipientLocation", "name": "Locations", "default": True if default_field == "recipientLocation" else False})
-        context['radioItems'].append({"value": "recipientOrganization.name", "name": "Recipients", "default": True if default_field == "recipientOrganization.name" else False})
-        context['radioItems'].append({"value": "title_and_description", "name": "Titles & Descriptions", "default": True if default_field == "title_and_description" else False})
-        
-        context['dropdownFilterOptions'] = []
-        context['dropdownFilterOptions'].append({"value": "_score desc" ,"label": "Best Match"})
-        context['dropdownFilterOptions'].append({"value": "amountAwarded desc" ,"label": "Amount - Highest First"})
-        context['dropdownFilterOptions'].append({"value": "amountAwarded asc" ,"label": "Amount - Lowest First"})
-        context['dropdownFilterOptions'].append({"value": "awardDate desc" ,"label": "Award Date - Latest First"})
-        context['dropdownFilterOptions'].append({"value": "awardDate asc" ,"label": "Award Date - Earliest First"})
+
+        get_radio_items(context, default_field)
+        get_dropdown_filters(context)
 
         add_advanced_search_information_in_context(context)
 
         return render(request, "search.html", context=context)
 
+
+def get_radio_items(context, default_field):
+    context['radioItems'] = []
+    context['radioItems'].append({"value": "*", "name": "Search All Fields", "default": True if default_field == "*" else False})
+    context['radioItems'].append({"value": "recipientLocation", "name": "Locations", "default": True if default_field == "recipientLocation" else False})
+    context['radioItems'].append({"value": "recipientOrganization.name", "name": "Recipients", "default": True if default_field == "recipientOrganization.name" else False})
+    context['radioItems'].append({"value": "title_and_description", "name": "Titles & Descriptions", "default": True if default_field == "title_and_description" else False})
+
+
+def get_dropdown_filters(context):
+    context['dropdownFilterOptions'] = []
+    context['dropdownFilterOptions'].append({"value": "_score desc" ,"label": "Best Match"})
+    context['dropdownFilterOptions'].append({"value": "amountAwarded desc" ,"label": "Amount - Highest First"})
+    context['dropdownFilterOptions'].append({"value": "amountAwarded asc" ,"label": "Amount - Lowest First"})
+    context['dropdownFilterOptions'].append({"value": "awardDate desc" ,"label": "Award Date - Latest First"})
+    context['dropdownFilterOptions'].append({"value": "awardDate asc" ,"label": "Award Date - Earliest First"})
 
 def flatten_mapping(mapping, current_path=''):
     for key, value in mapping.items():

@@ -9,9 +9,10 @@
       <label class="search-block__form-item-label" for="search-view">Enter a search term</label>
     </div>
 
-    <form role="search" action="{{ form_action }}">
+    <form role="search" action="{% url 'search' %}">
       <div class="search-block__form-group">
-        <input name="search-view" class="form-control large-search" placeholder="Search grants, funders, recipients, locations" type="text">
+          <input name="text_query" class="form-control large-search" placeholder="Search grants, funders, recipients, locations" type="text" value="{{text_query}}">
+          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
       </div>
       <div class="search-block__form-radio-group">
         <div class="search-block__form-group-label">

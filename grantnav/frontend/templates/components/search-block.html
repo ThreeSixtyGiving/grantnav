@@ -5,8 +5,9 @@
       <form role="search" action="{% url 'search' %}">
         <label class="search-block__form-item-label" for="search_query">Enter a search term</label>
         <div class="search-block__form-group">
-          <input name="search_query" class="form-control large-search" placeholder="Search grants, funders, recipients, locations" type="text">
+          <input name="text_query" class="form-control large-search" placeholder="Search grants, funders, recipients, locations" type="text" value="{{text_query}}">
           <input class="" name="submit" type="submit" value="Search">
+          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
         </div>
       </form>
     </div>
