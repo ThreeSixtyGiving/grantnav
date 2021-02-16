@@ -1,0 +1,16 @@
+{% if (theme_prev_next_buttons_location == 'bottom' or theme_prev_next_buttons_location == 'both') and (next or prev) %}
+<div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+    {% if prev %}
+    <a href="{{ prev.link|e }}" class="button button--teal" title="{{ prev.title|striptags|e }}" accesskey="p" rel="prev">
+        {# <i class="material-icons">navigate_before</i> #}
+        {{ _('Previous') }}
+    </a>
+    {% endif %}
+    {% if next %}
+    <a href="{{ next.link|e }}" class="button button--teal" title="{{ next.title|striptags|e }}" accesskey="n" rel="next">
+        {{ _('Next') }} 
+        {# <i class="material-icons">navigate_next</i> #}
+    </a>
+    {% endif %}
+</div>
+{% endif %}

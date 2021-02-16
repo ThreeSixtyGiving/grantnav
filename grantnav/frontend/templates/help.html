@@ -3,369 +3,77 @@
 {% block main_content %}
 
 <div>
-  <h1>{% trans "Help with using GrantNav" %}</h1>
+  <h1>Help with using GrantNav</h1>
 
-  <p>{% blocktrans %}GrantNav is a search-engine for grants data that is published by funders in the 360Giving Data Standard. You can use the search results to see summary statistics or browse through the different grants, and click through to explore the data in more detail. GrantNav is not a visualisation tool nor a map, but does help you obtain the data you need for further analysis. This page will help you to get the most out of GrantNav.{% endblocktrans %}</p>
+  <p>GrantNav is a search-engine for grants data that is published by funders in the 360Giving Data Standard. You can use the search results to see summary statistics or browse through the different grants, and click through to explore the data in more detail. GrantNav is not a visualisation tool nor a map, but does help you obtain the data you need for further analysis. This page will help you to get the most out of GrantNav.</p>
 
-  <h2>{% trans "Search" %}</h2>
+  <h2>Search</h2>
 
   <ul>
-    <li><a href="#search_box">{% trans "How does the GrantNav search box work?" %}</a></li>
-    <li><a href="#advanced_search">{% trans "Advanced search" %}</a></li>
+    <li><a href="#search_box">How does the GrantNav search box work?</a></li>
+    <li><a href="#advanced_search">Advanced search</a></li>
     <ul>
-      <li><a href="#words_phrases">{% trans "Words and phrases" %}</a></li>
-      <li><a href="#fields">{% trans "Fields" %}</a></li>
-      <li><a href="#ranges">{% trans "Ranges" %}</a></li>
-      <li><a href="#wildcards">{% trans "Wildcards" %}</a></li>
-      <li><a href="#fuzziness">{% trans "Fuzziness" %}</a></li>
+      <li><a href="#words_phrases">Words and phrases</a></li>
+      <li><a href="#fields">Fields</a></li>
+      <li><a href="#ranges">Ranges</a></li>
+      <li><a href="#wildcards">Wildcards</a></li>
+      <li><a href="#fuzziness">Fuzziness</a></li>
     </ul>
   </ul>    
 
-  <h2>{% trans "Results" %}</h2>
+  <h2>Results</h2>
 
   <ul>
-    <li><a href="#filters">{% trans "How do the GrantNav filters work?" %}</a></li>
-    <li><a href="#cant_find_results">{% trans "Why can't I find results that I know should match the search criteria?" %}</a></li>
-    <li><a href="#feedback_on_data">{% trans "How can I give feedback on data in GrantNav?" %}</a></li>
-    <li><a href="#zero_value_grants">{% trans "Why do some grants show an award of £0?" %}</a></li>
+    <li><a href="#filters">How do the GrantNav filters work?</a></li>
+    <li><a href="#cant_find_results">Why can't I find results that I know should match the search criteria?</a></li>
+    <li><a href="#feedback_on_data">How can I give feedback on data in GrantNav?</a></li>
+    <li><a href="#zero_value_grants">Why do some grants show an award of £0?</a></li>
   </ul>
 
-  <h2>{% trans "Data In GrantNav" %}</h2>
+  <h2>Data In GrantNav</h2>
   <ul>
-    <li><a href="#beneficiary_data">{% trans "Why do GrantNav filters show recipient rather than beneficiary location?" %}</a></li>
-    <li><a href="#data_in_grantnav">{% trans "What data is in GrantNav?" %}</a></li>
-    <li><a href="#additional_data">{% trans "Additional data and GrantNav" %}</a></li>
+    <li><a href="#beneficiary_data">Why do GrantNav filters show recipient rather than beneficiary location?</a></li>
+    <li><a href="#data_in_grantnav">What data is in GrantNav?</a></li>
+    <li><a href="#additional_data">Additional data and GrantNav</a></li>
     <ul>
-      <li><a href="#location_data">{% trans "GrantNav and location data" %}</a></li>
-      <li><a href="#charity_names">{% trans "GrantNav and charity names" %}</a></li>
+      <li><a href="#location_data">GrantNav and location data</a></li>
+      <li><a href="#charity_names">GrantNav and charity names</a></li>
     </ul>
-    <li><a href="#export_files">{% trans "What is included in the GrantNav export files?" %}</a></li>
+    <li><a href="#export_files">What is included in the GrantNav export files?</a></li>
     <ul>
-      <li><a href="#export_search">{% trans "Exporting from a search" %}</a></li>
-      <li><a href="#export_funders_recipients">{% trans "Exporting from the funders and recipient pages" %}</a></li>
+      <li><a href="#export_search">Exporting from a search</a></li>
+      <li><a href="#export_funders_recipients">Exporting from the funders and recipient pages</a></li>
     </ul>
   </ul>
 
   <br />
   <br />
   <br />
-  <h1>{% trans "Search" %}</h1>
+  <h1>Search</h1>
   <br />
 
 
-  <h2 id="search_box">{% trans "How does the GrantNav search box work?" %}</h2>
-  <p>{% blocktrans %}GrantNav provides a search box which allows you to explore the data. There are four search patterns to choose from:{% endblocktrans %}</p>
-
-  <div class="row bottom-space">
-    <div class="col-xs-12">
-      <table class="table table-condensed table-bordered table-striped dt-responsive" width="100%">
-        <thead>
-          <tr>
-            <th>{% trans "Search" %}</th>
-            <th>{% trans "Coverage" %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{% trans "Search All" %}</td>
-            <td>{% trans "Searches across all fields of the data, including all text and numbers. To learn more about what fields are present in 360Giving data, see the " %} <a href="http://standard.threesixtygiving.org">360Giving Data Standard</a>. {% trans "Data in fields that are provided by publishers but that aren't part of the standard will be included in this search." %}</td>
-          </tr>
-          <tr>
-            <td>{% trans "Locations" %}</td>
-            <td>
-              <p>{% trans "Searches the ward, district and region location of the recipient organisation, of any grant record which features this geographical information." %}</p>
-              <p>{% blocktrans %}See also: <a href="#location_data">GrantNav and location data</a>{% endblocktrans %}</p>
-            </td>
-          </tr>
-          <tr>
-            <td>{% trans "Recipients" %}</td>
-            <td>{% trans "Searches the name of the recipient organisation only." %}</td>
-          </tr>
-          <tr>
-            <td>{% trans "Titles and Descriptions" %}</td>
-            <td>{% trans "Searches the title and description of the grants only." %}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-<h2 id="advanced_search">{% trans "Advanced search" %}</h2>
-
-  <p>{% blocktrans %}In addition to the freetext search, there are many ways you can search the data on this site and target your search with more specific controls. You can click on the examples to see how they work{% endblocktrans %}</p>
-
-  <h3 id="words_phrases">{% trans "Words and phrases" %}</h3>
-  <ul>
-    <li class="red_underline">{% blocktrans %} A single word: e.g. <a href="/search?text_query=people"><code>people</code></a> {% endblocktrans %}</li>
-    <li class="red_underline">{% blocktrans %} Multiple words: e.g. <a href="/search?text_query=young+people+gardens"><code>young people gardens</code></a> (each word does not necessarily have to be present) {% endblocktrans %}</li>
-    <li class="red_underline">{% blocktrans %} Require each word to be found: e.g. <a href="/search?text_query=young+AND+people"><code>young AND people</code></a> {% endblocktrans %}</li>
-    <li class="red_underline">{% blocktrans %} An exact phrase by enclosing it in quotes: e.g. <a href="/search?text_query=%22young+people%22"><code>"young people"</code></a> {% endblocktrans %}</li>
-    <li class="red_underline">{% blocktrans %} Exclude results that contain a word: e.g. <a href="/search?text_query=youth+NOT+clubs"><code>youth NOT clubs</code></a> {% endblocktrans %}</li>
-  </ul>
-
-  <p>{% blocktrans %}Using the above you can effectively filter the records to a single organisation or an exact grant. Try:{% endblocktrans %}</p>
-  <ul>
-    <li class="red_underline"><a href="/search?text_query=%22The+Dulverton+Trust%22"><code>"The Dulverton Trust"</code></a></li>
-    <li class="red_underline"><a href="/search?text_query=%22360G-wolfson-19750%22"><code>"360G-wolfson-19750"</code></a></li>
-  </ul>
-
-  <h3 id="fields">{% trans "Fields" %}</h3>
-  <ul>
-    <li>{% blocktrans %}Search words and phrases limited to a specific field, for example:{% endblocktrans %}
-      <ul>
-        <li class="red_underline">{% blocktrans %}<a href="/search?text_query=title:gardens"><code>title:gardens</code></a> will search the "title" field for the word "gardens"{% endblocktrans %}</li>
-        <li class="red_underline">{% blocktrans %}<a href="/search?text_query=recipientOrganization.postalCode:NW1"><code>recipientOrganization.postalCode:NW1</code></a> will search the for recipients within the "NW1" postcode district (where the field is populated){% endblocktrans %}</li>
-        <li class="red_underline">{% blocktrans %}<a href="/search?text_query=fundingOrganization.name:%22London Councils%22"><code>fundingOrganization.name:"London Councils"</code></a> will search the "Funding Organisation:Name" field for "London Councils"{% endblocktrans %}</li>
-      </ul>
-    </li>
-  </ul>
-
-  <p>{% blocktrans %}The field names used must match the machine-readable field names in the data{% endblocktrans %}.</p>
-
-  <h3 id="ranges">{% trans "Ranges" %}</h3>
-  <h4>{% trans "Dates" %}</h4>
-
-  <p>{% blocktrans %}To search for grants in a given date range:{% endblocktrans %}</p>
-
-  <ul>
-    <li class="red_underline"> Award date in FY17/18: e.g. <a href="/search?text_query=awardDate:[2017-04-01 TO 2018-03-31]"><code>awardDate:[2017-04-01 TO 2018-03-31]</code> </a></li>
-    <li class="red_underline">{% blocktrans %}Planned start date in 2016: e.g. <a href="/search?text_query=plannedDates.startDate:[2016-01-01 TO 2016-12-31]"><code>plannedDates.startDate:[2016-01-01 TO 2016-12-31]</code></a>{% endblocktrans %}</li>
-    <li class="red_underline">
-      {% blocktrans %} Planned start date in 2015 <strong>and</strong> planned end date in 2017: e.g.
-      <a href="/search?text_query=plannedDates.startDate:[2015-01-01 TO 2015-12-31] AND plannedDates.endDate:[2017-01-01 TO 2017-12-31]">
-        <code>plannedDates.startDate:[2015-01-01 TO 2015-12-31] AND plannedDates.endDate:[2017-01-01 TO 2017-12-31]</code>
-      </a>{% endblocktrans %}
-    </li>
-  </ul>
-
-  <p>{% blocktrans %}Searching for a range of dates works alongside the Award Date <a href="#filters">filter</a>. Therefore, you can search for a wide date range and then refine, compare or see an overview of the distribution using the filter.{% endblocktrans %}
-
-  <h4>{% trans "Amounts" %}</h4>
-  <p>{% blocktrans %}Search for grants by amount (awarded, applied for etc.) within a specific range:{% endblocktrans %}</p>
-  <ul>
-    <li class="red_underline">{% blocktrans %}Amount Awarded between £0 and £150: e.g. <a href="/search?text_query=amountAwarded:[0 TO 150]"><code>amountAwarded:[0 TO 150]</code></a>{% endblocktrans %}</li>
-    <li class="red_underline">{% blocktrans %}Amount Applied For between £800 and £1000: e.g. <a href="/search?text_query=amountAppliedFor:[800 TO 1000]"><code>amountAppliedFor:[800 TO 1000]</code></a>{% endblocktrans %}</li>
-  </ul>
-
-  <p>{% blocktrans %}You can also search ranges with one side unbounded:{% endblocktrans %}</p>
-
-  <ul>
-    <li class="red_underline">{% blocktrans %}<a href="/search?text_query=amountAwarded:>1000"><code>amountAwarded:>1000</code></a> (more than 1000){% endblocktrans %}</li>
-    <li class="red_underline">{% blocktrans %}<a href="/search?text_query=amountAwarded:>=1000"><code>amountAwarded:>=1000</code></a> (more than or equal to 1000){% endblocktrans %}</li>
-    <li class="red_underline">{% blocktrans %}<a href="/search?text_query=amountAppliedFor:<1000"><code>amountAppliedFor:<1000</code></a> (less than 1000){% endblocktrans %}</li>
-    <li class="red_underline">{% blocktrans %}<a href="/search?text_query=amountAppliedFor:<=1000"><code>amountAppliedFor:<=1000</code></a> (less than or equal to 1000){% endblocktrans %}</li>
-  </ul>
-
-  <p class="red_underline">{% blocktrans %}You can also use the * wildcard (see below) when asking for a range: e.g. <a href="/search?text_query=amountAwarded:[500 TO *]"><code>amountAwarded:[500 TO *]</code></a>{% endblocktrans %}</p>
-  <p>{% blocktrans %}Searching for a range of values works alongside the Amount Awarded <a href="#filters">filter</a>. Therefore, you can search for a wide range of values and then refine, compare or see an overview of the distribution using the filter.{% endblocktrans %}
   
-  <h3 id="wildcards">{% trans "Wildcards" %}</h3>
-  <p class="red_underline">{% blocktrans %}Wildcard searches can be run on individual terms, using ? to replace a single character, and * to replace zero or more characters: e.g.
-    <a href="/search?text_query=b?g"><code>b?g</code></a>, <a href="/search?text_query=you*"><code>you*</code></a>. If you’re searching within a specific field, be aware that wildcard searching is only available on names, descriptive text fields, dates and amounts. {% endblocktrans %}
-  </p>
 
-  <h3 id="fuzziness">{% trans "Fuzziness" %}</h3>
-  <p class="red_underline">{% blocktrans %}You can search for terms that are similar to, but not exactly like our search terms, using the “fuzzy” operator: ~ . To use it, put the ~ operator at the end of the term you’re looking for e.g.
-    <a href="/search?text_query=youht~"><code>youht~</code></a>, <a href="/search?text_query=yung~"><code>yung~</code></a>, <a href="/search?text_query=pple~"><code>pple~</code></a>. Or, if you want to specify the ways in which the result can vary from the search term, then the wildcard operators are more appropriate. If you’re searching within a specific field, be aware that fuzzy matching is only available on names and descriptive text fields. {% endblocktrans %}
-  </p>
+
+  <br />
+  <br />
+  
+  <h2 id="feedback_on_data">How can I give feedback on data in GrantNav?</h2>
+  <p>All of the data in GrantNav is downloaded directly from the organisations listed and is presented without change. Any queries or feedback that you have about the data itself should be directed to the individual organisation. To find out who published a particular grant, and to see more information about how to contact them, see the “Where is this data from?” section of the relevant grant’s page. </p>
+
 
   <br />
   <br />
   <br />
-  <h1>{% trans "Results" %}</h1>
-  <br />
-
-  <h2 id="filters">{% trans "How do the GrantNav filters work?" %}</h2>
-
-  <p>{% blocktrans %}GrantNav has filters which appear on the left hand side of the search results. These work in relation to certain fields in the 360Giving Data Standard in the following ways:{% endblocktrans %}</p>
-
-  <div class="row bottom-space">
-    <div class="col-xs-12">
-      <table class="table table-condensed table-bordered table-striped dt-responsive" width="100%">
-        <thead>
-          <tr>
-            <th>{% trans "GrantNav filter" %}</th>
-            <th>{% trans "360Giving Data Standard field" %}</th>
-            <th>{% trans "Notes" %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{% trans "Amount Awarded" %}</td>
-            <td>{% trans "Amount Awarded" %}</td>
-            <td>{% trans "Values are banded into the relevant categories." %}</td>
-          </tr>
-          <tr>
-            <td>{% trans "Award Year" %}</td>
-            <td>{% trans "The year (YYYY) component of date from Award Date field" %}</td>
-            <td>{% blocktrans %}This is calendar year, not fiscal/financial year. See <a href="#ranges">Ranges</a> for how to search between specific dates.{% endblocktrans %}</td>
-          </tr>
-          <tr>
-            <td>{% trans "Recipient Region" %}</td>
-            <td>{% trans "This filter is derived from 360Giving data by GrantNav" %}</td>
-            <td>{% blocktrans %}See also: <a href="#location_data">GrantNav and location data</a>{% endblocktrans %}</a></td>
-          </tr>
-          <tr>
-            <td>{% trans "Recipient District" %}</td>
-            <td>{% trans "This filter is derived from 360Giving data by GrantNav" %}</td>
-            <td>{% blocktrans %}See also: <a href="#location_data">GrantNav and location data</a>{% endblocktrans %}</a></td>
-          </tr>
-          <tr>
-            <td>{% trans "Funding Organisations" %}</td>
-            <td>{% trans "Funding Org:Name" %}</td>
-            <td>{% trans "Values are taken from the data and will change if the funder name changes." %}</td>
-          </tr>
-          <tr>
-            <td>{% trans "Recipient Organisations" %}</td>
-            <td>{% trans "Recipient Org:Name" %}</td>
-            <td>{% blocktrans %}See also: <a href="#charity_names">GrantNav and charity names</a>{% endblocktrans %}</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <h2 id="cant_find_results">{% trans "Why can't I find results that I know should match the search criteria?" %}</h2>
-  <p>{% blocktrans %} GrantNav's filters show the grants which contain the selected value in the relevant field. If the publisher of the data hasn't included that data, then GrantNav's filters will exclude the grant, even if it appears that it should be included. For example, if a grant is to the “Lancaster Rowing Club” but the grant doesn’t contain any recipient location data, then using the recipient region filter to select ‘North West’ will exclude the grant from the results. This is because GrantNav needs specific types of recipient location data to know where the grant recipient is located - see <a href="#location_data">GrantNav and location data</a> for further details. If you know that a grant is in GrantNav but doesn’t appear where you’d expect, you might want to contact the publisher of the data to let them know. Visit the <a href="http://data.threesixtygiving.org">360Giving Registry</a> for a full list of organisations and their contact details.{% endblocktrans %}</p>
-
-  <h2 id="feedback_on_data">{% trans "How can I give feedback on data in GrantNav?" %}</h2>
-  <p>{% blocktrans %}All of the data in GrantNav is downloaded directly from the organisations listed and is presented without change. Any queries or feedback that you have about the data itself should be directed to the individual organisation. To find out who published a particular grant, and to see more information about how to contact them, see the “Where is this data from?” section of the relevant grant’s page. {% endblocktrans %}</p>
-
-  <h2 id="zero_value_grants">{% trans "Why do some grants show an award of £0?" %}</h2>
-  <p>{% blocktrans %}Publishers sometimes set the grant value to be £0 for accounting reasons, or to signify something about the grant (such as that it was regranted). Refer to the relevant organisation website for the dataset for further information about their data, and to contact them for clarification. See <a href="#feedback_on_data">How can I give feedback on data in GrantNav?</a> for more information on contacting individual organisations. {% endblocktrans %}</p>
-
-  <br />
-  <br />
-  <br />
-  <h1>{% trans "Data In GrantNav" %}</h1>
-  <br />
+  
 
 
-  <h2 id="data_in_grantnav">{% trans "What data is in GrantNav?" %}</h2>
-  <p>{% blocktrans %}GrantNav contains a curated selection of the data listed in the <a href="http://data.threesixtygiving.org">360Giving Registry</a>. Data loaded into GrantNav has, at a minimum, a license allowing re-use for any purpose (eg OGL, CC-BY 4.0) and validates against the <a href="http://standard.threesixtygiving.org"</a>360Giving Data Standard</a> at time of download. 360Giving aims to include as much data as possible, but omits datasets that we consider to skew results or that aren't relevant to GrantNav's users. GrantNav is updated on a daily basis. The grants data is then enhanced with data from various open datasets to help power the search tools. For details, please see the <a href="datasets">Data Used in GrantNav</a> page.{% endblocktrans %}</p>
 
-  <h2 id="beneficiary_data">{% trans "Why do GrantNav filters show recipient rather than beneficiary location?" %}</h2>
-  <p>{% blocktrans %}While the 360Giving Data Standard allows publishers to include beneficiary location data (the place where funded activity is taking place), it can sometimes be hard to determine and record this information in a meaningful way, and so not all data includes this type of information. When there is beneficiary location information available about a grant you will find this data on the grant page and included in the data download.{% endblocktrans %}</p>
 
-  <h2 id="additional_data">{% trans "Additional data and GrantNav" %}</h2>
-  <p>{% blocktrans %}When data is imported into GrantNav, we undertake two processes to provide additional data.{% endblocktrans %}</p>
 
-  <h3 id="location_data">{% trans "GrantNav and location data" %}</h3>
-  <p>{% blocktrans %}When we import this data, we look at the Location information associated with the Recipient Organisation. This data can vary across publishers.{% endblocktrans %}</p>
+  
 
-  <h4>{% trans "When a Recipient Org:Postal Code is provided" %}</h4>
-  <p>{% blocktrans %}We use the postcode to add Ward, District and Region codes to the data. This is used in the relevant filters in GrantNav, and also Ward, District and Region names are included in the download files. To see the datasets used, see <a href="/datasets/">Data used in GrantNav</a>{% endblocktrans %}</p>
-
-  <h4>{% trans "When a Recipient Org:Postal Code is missing" %}</h4>
-  <p>{% blocktrans %}If other types of administrative geography are included in the data (such as District or Ward codes) then we attempt to match it to relevant areas. Again, these are used in the filters and the names and codes are included in the download files.{% endblocktrans %}</p>
-
-  <h3 id="charity_names">{% trans "GrantNav and charity names" %}</h3>
-  <p>{% blocktrans %}It’s useful for people to see multiple grants associated with a single organisation together in GrantNav. To do this, we rely on publishers to include the relevant company, charity or other registration number in the Recipient Org:Identifier
-    field.{% endblocktrans %}</p>
-
-  <p>{% blocktrans %}When we import data into GrantNav, we aim to match these identifiers, in order to provide pages that bring together grants from different publishers, even if they spell the recipient names differently.{% endblocktrans %}</p>
-
-  <p>{% blocktrans %}When we undertook research to do this, we found that quite often registered charities were given different names by various publishers. Even if the Recipient Org:Identifier reference were exactly the same, the name given was often different,
-    e.g. “Salford Lads Club” vs “Salford Lads & Girls Club”.{% endblocktrans %}</p>
-
-  <p>{% blocktrans %}In order to help users, we therefore <a href="http://grantnav.threesixtygiving.org/datasets/">utilise the data</a> available from the <a href="http://data.charitycommission.gov.uk/default.aspx">Charity Commission for England and Wales</a>, if the recipient is registered. We look for the official name on this register. With this, we populate the Recipient Org:Name field, which in turn is
-    used in the relevant filter on GrantNav. However, we also maintain the original name from the publisher, and use that in the grant page and freetext search.{% endblocktrans %}</p>
-
-  <h2 id="export_files">{% trans "What is included in the GrantNav export files?" %}</h2>
-  <p>{% blocktrans %}You can export data from GrantNav searches, and from views of funders and recipients, in either CSV or JSON formats. You can also <a href="/developers/">download the whole data set</a> used in GrantNav.{% endblocktrans %}</p>
-
-  <h3 id="export_search">{% trans "Exporting from a search" %}</h3>
-  <p>{% blocktrans %}When you export data from a GrantNav search the download uses the same field names as the <a href="http://standard.threesixtygiving.org/en/latest/">360Giving Data Standard</a>. This is provided in a single file - in the case of the CSV
-    file there will be multiple columns for fields that may have more than one value for some grants, such as geographic terms. Please note that not all fields in the 360Giving Data Standard are included in the GrantNav export CSV.{% endblocktrans %}
-  </p>
-  <p>{% blocktrans %}The CSV file contains more fields than are used by core GrantNav functionality, including fields such as beneficiary location data, if this has been provided by the publisher(s). Columns may be entirely blank if no grant in your download uses a particular field. Sometimes, publishers add more fields to the standards for their own use. Such fields are not included in the CSV export, but are included in the JSON export. {% endblocktrans %} 
-  </p>
-
-  <p>{% blocktrans %}The following fields are not in the 360Giving Data Standard and are added to the export data by GrantNav:{% endblocktrans %}</p>
-
-  <div class="row bottom-space">
-    <div class="col-xs-12">
-      <table class="table table-condensed table-bordered table-striped dt-responsive" width="100%">
-        <tr>
-          <th>{% trans "Field" %}</th>
-          <th>{% trans "Description" %}</th>
-        </tr>
-        <tr>
-          <td>{% trans "Data Source" %}</td>
-          <td>{% trans "This is the URL (web link) for the data file containing this grant record." %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Publisher:Name" %}</td>
-          <td>{% trans "This is the name of the organisation publishing the data file. This data is held centrally by 360Giving." %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Recipient Region" %}</td>
-          <td>{% blocktrans %}This is the name of the geographic area, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).{% endblocktrans %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Recipient District" %}</td>
-          <td>{% blocktrans %}This is the name of the geographic area, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).{% endblocktrans %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Recipient Ward" %}</td>
-          <td>{% blocktrans %}This is the name of the geographic area, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).{% endblocktrans %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Retrieved for use in GrantNav" %}</td>
-          <td>{% trans "This is the date and time the data was accessed for use in GrantNav." %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "License (see note below)" %}</td>
-          <td>{% trans "The URL (web link) to the specific licence under which the data file containing this grant record was published." %}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <h3 id="export_funders_recipients">{% trans "Exporting from the funders and recipients pages" %}</h3>
-  <p>{% blocktrans %}Data downloaded from the <a href="/funders/">funders</a> and <a href="/recipients/">recipients</a> pages contain only the details seen on screen, plus an extra column
-    with the funder or recipient identifiers.{% endblocktrans %}</p>
-
-  <div class="row bottom-space">
-    <div class="col-xs-12">
-      <table class="table table-condensed table-bordered table-striped dt-responsive" width="100%">
-        <tr>
-          <th>{% trans "Field" %}</th>
-          <th>{% trans "Description" %}</th>
-        </tr>
-        <tr>
-          <td>{% trans "Funder / Recipient" %}</td>
-          <td>{% trans "Funder or recipient name" %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Funder Id / Recipient Id" %}</td>
-          <td>{% trans "Identifier code of the funder or recipient" %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Grants" %}</td>
-          <td>{% trans "Number of grants made by/to the funder or recipient" %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Total" %}</td>
-          <td>{% trans "Total value of all grants made by/to the funder or recipient" %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Average" %}</td>
-          <td>{% trans "Average value of a grant made by/to the funder or recipient" %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Largest" %}</td>
-          <td>{% trans "Value of the largest grant made by/to the funder or recipient" %}</td>
-        </tr>
-        <tr>
-          <td>{% trans "Smallest" %}</td>
-          <td>{% trans "Value of the smallest grant made by/to the funder or recipient" %}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <h2 id="exported_data">{% trans "Working with the exported data" %}</h2>
-  <p>{% blocktrans %} Since the data is presented in a standard format, it is pretty clean and ready to use. We recommend you import it to your favourite data analysis tool (like PowerBI or Tableau) and work from there. Depending on your search, some exported data can be very large, so it might take some time to load on Google Sheets or Microsoft Excel. See <a href="http://www.threesixtygiving.org/news-2/">our blog</a> for more ideas of what you can do with the data.  {% endblocktrans %}</p>
+  
 
   {% endblock %}

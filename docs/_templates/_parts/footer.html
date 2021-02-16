@@ -1,0 +1,65 @@
+<footer class="footer">
+  <div class="footer__row wrapper">
+    <div class="footer__column-2 footer__branding">
+      <div class="footer__logo"><img src="{{ pathto('_static/images/360-giving-logo-white.svg', 1) }}" alt="360Giving"></div>
+      <p class="footer__tagline">{{ settings360.footer_tagline }}</p>
+    </div>
+    <div class="footer__column-1 footer__social">
+      <a href="https://github.com/threesixtygiving/" class="github-icon"><img src="{{ pathto('_static/images/github-logo.svg', 1) }}" alt="Check our Github"></a>
+      <a href="https://twitter.com/360Giving/" class="twitter-icon"><img src="{{ pathto('_static/images/twitter-logo.svg', 1) }}" alt="Follow us on Twitter"></a>
+    </div>
+  </div>
+  
+  <div class="footer__row wrapper">
+    <div class="footer__column-1 footer__section medium-up">
+      <h3 class="footer__heading">{{ settings360.menus.menu_1.title }}</h3>
+      <ul>
+        {% for m in settings360.menus.menu_1["items"] %}
+        <li><a href="{{ m.url }}">{{ m.title|safe }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="footer__column-1 footer__section medium-up">
+      <h3 class="footer__heading">{{ settings360.menus.menu_2.title }}</h3>
+      <ul>
+        {% for m in settings360.menus.menu_2["items"] %}
+        <li><a href="{{ m.url }}">{{ m.title|safe }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% for w in settings360.widgets %}
+    <div class="footer__column-2 footer__section">
+      <h3 class="footer__heading">{{ w.title|safe }}</h3>
+      {{ w.contents|safe }}
+    </div>
+    {% endfor %}
+
+    <!-- <div class="footer__column-2 footer__section">
+      <h3 class="footer__heading">360 Resources</h3>
+      <p>Data in JSON format is ideal for direct use by developers building visualisations and web apps. The JSON should conform to the 360Giving JSON Schemas. Anyone automating the publication of their data from their internal databases or via</p>
+    </div> -->
+  </div>
+  <div class="wrapper footer__small-print">
+    {% include '_parts/sourcelink.html' %}
+    <p>© Copyright {{ now.strftime("%Y") }} 360Giving, licensed under a <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</p>
+  </div>
+
+  <div class="footer__row wrapper footer__small-print">
+    
+    <div class="footer__column-2">
+      <p>360Giving: 
+        Company <a href="https://beta.companieshouse.gov.uk/company/09668396" target="_blank">09668396</a>
+        Charity <a href="http://beta.charitycommission.gov.uk/charity-details/?regid=1164883&subid=0" target="_blank">1164883</a>
+      </p>
+    </div>
+    <div class="footer__column-2 footer__policy-links">
+      <p>
+        {% for m in settings360.menus.menu_terms["items"] %}
+        <a href="{{ m.url }}">{{ m.title|safe }}</a>{% if not loop.last %} | {% endif %}
+        {% endfor %}
+      </p>
+    </div>
+  </div>
+</footer>
