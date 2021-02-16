@@ -28,7 +28,8 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # Award Year
     {"bool": {"should": []}},  # additional_data.recipientRegionName
     {"bool": {"should": []}},  # additional_data.recipientDistrictName
-    {"bool": {"should": []}}   # currency
+    {"bool": {"should": []}},  # currency
+    {"bool": {"should": []}}   # additional_data.TSGFundingOrgType
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json is_dropdown')
@@ -38,6 +39,7 @@ TERM_FACETS = [
     TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True, True),
     TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False, False),
     TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False, True),
+    TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False, False),
     TermFacet("currency", "currency", 7, "Currency", False, True)
 ]
 
