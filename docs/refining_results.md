@@ -1,3 +1,7 @@
+```eval_rst
+.. _refining-results:
+```
+
 Refining Results
 ================
 
@@ -9,53 +13,35 @@ The numbers in brackets next to the values show the number of grants in the sear
 
 ## Filter Reference
 
-  <div class="row bottom-space">
-    <div class="col-xs-12">
-      <table class="table table-condensed table-bordered table-striped dt-responsive" width="100%">
-        <thead>
-          <tr>
-            <th>GrantNav filter</th>
-            <th>360Giving Data Standard field</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-            <td>Currency</td>
-            <td>Currency</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Amount Awarded (GBP)</td>
-            <td>Amount Awarded</td>
-            <td>Using this filter will exclude all non-GBP grants from the search results</td>
-          </tr>
-          <tr>
-            <td>Award Year</td>
-            <td>The year (YYYY) component of date from Award Date field</td>
-            <td>This is calendar year, not fiscal/financial year. See <a href="#ranges">Ranges</a> for how to search between specific dates.</td>
-          </tr>
-          <tr>
-            <td>Recipient Region</td>
-            <td>This filter is derived from 360Giving data by GrantNav</td>
-            <td>See also: <a href="#location_data">GrantNav and location data</a></a></td>
-          </tr>
-          <tr>
-            <td>Recipient District</td>
-            <td>This filter is derived from 360Giving data by GrantNav</td>
-            <td>See also: <a href="#location_data">GrantNav and location data</a></a></td>
-          </tr>
-          <tr>
-            <td>Funding Organisations</td>
-            <td>Funding Org:Name</td>
-            <td>Values are taken from the data and will change if the funder name changes.</td>
-          </tr>
-          <tr>
-            <td>Recipient Organisations</td>
-            <td>Recipient Org:Name</td>
-            <td>See also: <a href="#charity_names">GrantNav and charity names</a></a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+```eval_rst
+.. list-table::
+    :header-rows: 1
+    :widths: 1 2 2 
+
+  * - GrantNav filter
+    - 360Giving Data Standard field
+    - Notes
+  * - Currency
+    - Currency
+    -            
+  * - Amount Awarded (GBP)
+    - Amount Awarded
+    - Using this filter will exclude all non-GBP grants from the search results
+  * - Award Year
+    - The year (YYYY) component of date from Award Date field
+    - This is calendar year, not fiscal/financial year. See <a href="#ranges">Ranges</a> for how to search between specific dates.
+  * - Recipient Region
+    - This filter is derived from 360Giving data by GrantNav
+    - See also: [GrantNav and location data](locations)
+  * - Recipient District
+    - This filter is derived from 360Giving data by GrantNav
+    - See also: [GrantNav and location data](locations)
+  * - Funding Organisations
+    - Funding Org:Name
+    - Values are taken from the data and will change if the funder name changes.
+  * - Recipient Organisations
+    - Recipient Org:Name
+    - See also: [Organisations in GrantNav](organisations)
+```
+
+  
