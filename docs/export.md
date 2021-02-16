@@ -1,99 +1,96 @@
 Exporting Data From GrantNav
 ============================
 
-<h2 id="export_files">What is included in the GrantNav export files?</h2>
-  <p>You can export data from GrantNav searches, and from views of funders and recipients, in either CSV or JSON formats. You can also <a href="/developers/">download the whole data set</a> used in GrantNav.</p>
+GrantNav offers a range of data exports as CSV or JSON files:
 
-  <h3 id="export_search">Exporting from a search</h3>
-  <p>When you export data from a GrantNav search the download uses the same field names as the <a href="http://standard.threesixtygiving.org/en/latest/">360Giving Data Standard</a>. This is provided in a single file - in the case of the CSV
-    file there will be multiple columns for fields that may have more than one value for some grants, such as geographic terms. Please note that not all fields in the 360Giving Data Standard are included in the GrantNav export CSV.
-  </p>
-  <p>The CSV file contains more fields than are used by core GrantNav functionality, including fields such as beneficiary location data, if this has been provided by the publisher(s). Columns may be entirely blank if no grant in your download uses a particular field. Sometimes, publishers add more fields to the standards for their own use. Such fields are not included in the CSV export, but are included in the JSON export.  
-  </p>
+* The entire grants data set
+* Search results
+* Grants per region, district, funder and recipient 
+* Summary data by funder 
 
-  <p>The following fields are not in the 360Giving Data Standard and are added to the export data by GrantNav:</p>
+## What is included in the GrantNav export files?
 
-  <div class="row bottom-space">
-    <div class="col-xs-12">
-      <table class="table table-condensed table-bordered table-striped dt-responsive" width="100%">
-        <tr>
-          <th>Field</th>
-          <th>Description</th>
-        </tr>
-        <tr>
-          <td>Data Source</td>
-          <td>This is the URL (web link) for the data file containing this grant record.</td>
-        </tr>
-        <tr>
-          <td>Publisher:Name</td>
-          <td>This is the name of the organisation publishing the data file. This data is held centrally by 360Giving.</td>
-        </tr>
-        <tr>
-          <td>Recipient Region</td>
-          <td>This is the name of the geographic area, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).</td>
-        </tr>
-        <tr>
-          <td>Recipient District</td>
-          <td>This is the name of the geographic area, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).</td>
-        </tr>
-        <tr>
-          <td>Recipient Ward</td>
-          <td>This is the name of the geographic area, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).</td>
-        </tr>
-        <tr>
-          <td>Retrieved for use in GrantNav</td>
-          <td>This is the date and time the data was accessed for use in GrantNav.</td>
-        </tr>
-        <tr>
-          <td>License (see note below)</td>
-          <td>The URL (web link) to the specific licence under which the data file containing this grant record was published.</td>
-        </tr>
-      </table>
-    </div>
-  </div>
+### Grants Exports
 
-  <h3 id="export_funders_recipients">Exporting from the funders and recipients pages</h3>
-  <p>Data downloaded from the <a href="/funders/">funders</a> and <a href="/recipients/">recipients</a> pages contain only the details seen on screen, plus an extra column
-    with the funder or recipient identifiers.</p>
+The JSON files of grants contain all of the data supplied in the original data (both fields from the standard, and any extra fields included by the publisher), plus the [additional data added by the 360Giving pipeline](additional-fields). 
 
-  <div class="row bottom-space">
-    <div class="col-xs-12">
-      <table class="table table-condensed table-bordered table-striped dt-responsive" width="100%">
-        <tr>
-          <th>Field</th>
-          <th>Description</th>
-        </tr>
-        <tr>
-          <td>Funder / Recipient</td>
-          <td>Funder or recipient name</td>
-        </tr>
-        <tr>
-          <td>Funder Id / Recipient Id</td>
-          <td>Identifier code of the funder or recipient</td>
-        </tr>
-        <tr>
-          <td>Grants</td>
-          <td>Number of grants made by/to the funder or recipient</td>
-        </tr>
-        <tr>
-          <td>Total</td>
-          <td>Total value of all grants made by/to the funder or recipient</td>
-        </tr>
-        <tr>
-          <td>Average</td>
-          <td>Average value of a grant made by/to the funder or recipient</td>
-        </tr>
-        <tr>
-          <td>Largest</td>
-          <td>Value of the largest grant made by/to the funder or recipient</td>
-        </tr>
-        <tr>
-          <td>Smallest</td>
-          <td>Value of the smallest grant made by/to the funder or recipient</td>
-        </tr>
-      </table>
-    </div>
-  </div>
+The CSV files of grants contain all of the required fields from the 360Giving standard, the most commonly-used optional fields from the standard, plus some commonly-used fields from the data added by the 360Giving pipeline. Columns may be entirely blank if no grant in your download uses a particular field; individual rows may have blank fields if the source data doesn't contain that field. 
 
-  <h2 id="exported_data">Working with the exported data</h2>
-  <p> Since the data is presented in a standard format, it is pretty clean and ready to use. We recommend you import it to your favourite data analysis tool (like PowerBI or Tableau) and work from there. Depending on your search, some exported data can be very large, so it might take some time to load on Google Sheets or Microsoft Excel. See <a href="http://www.threesixtygiving.org/news-2/">our blog</a> for more ideas of what you can do with the data.  </p>
+Because the export files use the [360Giving Standard](https://standard.threesixtygiving.org/en/latest/) you can use the standard reference to understand the meaning and contents of the fields. 
+
+
+### Funder Summary Exports
+
+The funder page provides summary statistics on recipients who have been funded by that funder. These statistics can be exported. The files contain 
+
+The JSON and CSV files for the recipient and funder pages contain all of the fields that are visible in the tables in GrantNav, plus an extra column containing the organisation ID:
+
+```eval_rst
+.. list-table::
+    :header-rows: 1
+    :widths: 1 3
+
+        * - Field
+          - Description
+        * - Funder / Recipient
+          - Funder or recipient name
+        * - Funder Id / Recipient Id
+          - Identifier code of the funder or recipient
+        * - Grants
+          - Number of grants made by/to the funder or recipient
+        * - Total
+          - Total value of all grants made by/to the funder or recipient
+        * - Average
+          - Average value of a grant made by/to the funder or recipient
+        * - Largest
+          - Value of the largest grant made by/to the funder or recipient
+        * - Smallest
+          - Value of the smallest grant made by/to the funder or recipient
+
+```
+
+
+Note that export files can be very large - in particular the whole dataset is several hundred MB, and large search results can be a similar size. Refining your search or splitting up your export can help, but be aware of the constraints around [refining search results](refining-results)
+
+
+```eval_rst
+.. _additional-fields:
+```
+
+## Fields added by the 360Giving pipeline
+
+The following fields are not in the 360Giving Data Standard and are added to the export data by the 360Giving pipeline:
+
+
+```eval_rst
+.. list-table::
+    :header-rows: 1
+    :widths: 1 3
+
+    * - Field
+      - Description
+    * - Data Source
+      - This is the URL (web link) for the data file containing this grant record.
+    * - Publisher:Name
+      - This is the name of the organisation publishing the data file. This data is held centrally by 360Giving.
+    * - Recipient Region
+      - This is the name of the geographic area at Region level, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).
+    * - Recipient District
+      - This is the name of the geographic area at District level, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).
+    * - Recipient Ward
+      - This is the name of the geographic area at Ward level, added by GrantNav (see <a href="#location_data">GrantNav and location data</a> for explanation).
+    * - Retrieved for use in GrantNav
+      - This is the date and time the data was accessed for use in GrantNav.
+    * - License (see note below)
+      - The URL (web link) to the specific licence under which the data file containing this grant record was published.
+
+```
+
+```eval_rst
+.. _funder-summary-fields:
+```
+
+## Fields available on the Funder and Recipient page exports
+
+
+

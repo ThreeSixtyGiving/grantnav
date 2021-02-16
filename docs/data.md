@@ -1,12 +1,19 @@
 Data in GrantNav
 ================
 
-<h1>Data In GrantNav</h1>
-  <br />
+## What data is in GrantNav?
 
+Every night (UK time), GrantNav loads all data that:
+* is listed in the <a href="http://data.threesixtygiving.org">360Giving Registry</a> 
+* passes validation against the 360Giving Schema
+* is available under a license that allows re-use for any purpose (such as OGL or CC-BY 4.0)
 
-  <h2 id="data_in_grantnav">What data is in GrantNav?</h2>
-  <p>GrantNav contains a curated selection of the data listed in the <a href="http://data.threesixtygiving.org">360Giving Registry</a>. Data loaded into GrantNav has, at a minimum, a license allowing re-use for any purpose (eg OGL, CC-BY 4.0) and validates against the <a href="http://standard.threesixtygiving.org"</a>360Giving Data Standard</a> at time of download. 360Giving aims to include as much data as possible, but omits datasets that we consider to skew results or that aren't relevant to GrantNav's users. GrantNav is updated on a daily basis. The grants data is then enhanced with data from various open datasets to help power the search tools. For details, please see the <a href="datasets">Data Used in GrantNav</a> page.</p>
+GrantNav incorporates some of the enhancements to data that are carried out by the 360Giving Data Store. These enhancements don't introduce any new information, but provide helpful description of the information already in the grant, such as including the names of geographical locations and providing the Charity Commission registered name for charities. 
 
+For details, please see the <a href="http://grantnav.threesixtygiving.org/datasets/">Data Used in GrantNav</a> page.
 
-TODO: add info about enrichment 
+## What data isn't included in GrantNav?
+
+GrantNav only includes data that has been published by funders using the 360Giving standard. 
+
+Other tools that work with grants data will often incorporate multiple data sources, including primary research, reports in other formats, and 360Giving data. GrantNav doesn't include anything other than the data provided by funders, with the enrichments described above.  
