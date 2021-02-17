@@ -19,42 +19,69 @@
         {% include 'components/filter-wrapper.html' %}
       </div>
     </div>
-    <div class="grantnav-search__content">
-      {% include 'components/search-summary.html' %}
+    {% if results and results.hits.hits %}
+      <div class="grantnav-search__content">
+        {% include 'components/search-summary.html' %}
 
-      {% include 'components/results-title.html' %}
+        {% include 'components/results-title.html' %}
 
-      {% if selected_facets %}
-        {% include 'components/filter-summary.html' %}
-      {% endif %}
+        {% if selected_facets %}
+          {% include 'components/filter-summary.html' %}
+        {% endif %}
 
-      <section class="grantnav-search__content--filters">
-        {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
+        <section class="grantnav-search__content--filters">
+          {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
 
-        <div class="export-wrapper">
-          <div class="export-label">Export search data:</div>
+          <div class="export-wrapper">
+            <div class="export-label">Export search data:</div>
 
-          <div class="export-button">
-            {% include 'components/export-data-button.html' %}
+            <div class="export-button">
+              {% include 'components/export-data-button.html' %}
+            </div>
+
+            <div class="export-button">
+              {% include 'components/export-data-button--json.html' %}
+            </div>
           </div>
+        </section>
 
-          <div class="export-button">
-            {% include 'components/export-data-button--json.html' %}
-          </div>
-        </div>
-      </section>
+        <section class="grantnav-search__content--results">
+        {% for result in results.hits.hits %}
+          {% include 'components/grant-search-result.html' with result=result %}
+        {% endfor %}
+        </section>
 
-      <section class="grantnav-search__content--results">
-      {% for result in results.hits.hits %}
-        {% include 'components/grant-search-result.html' with result=result %}
-      {% endfor %}
-      </section>
-
-      <section class="grantnav-search__content--footer">
-        {% include 'components/pager.html' %}
-      </section>
+        <section class="grantnav-search__content--footer">
+          {% include 'components/pager.html' %}
+        </section>
+      </div>
     </div>
-  </div>
+    {% elif results %}
+
+     <div class="col-xs-9">
+        <div id="no-results">
+          <h1>No Results</h1>
+          <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
+          <ul>
+          <li>Using more general terms</li>
+          <li>Checking your spelling</li>
+          </ul>
+        </div>
+     </div>
+
+  {% elif search_error %}
+   
+     <div class="col-xs-9">
+        <div id="not_valid">
+          <h1>Search input is not valid</h1>
+          <p>We can't find what you tried to search for.<br>Try something like:</p>
+          <ul>
+          <li>Using more general terms</li>
+          <li>Checking your spelling</li>
+        </div>
+     </div>
+   
+  {% endif %}
 {% endblock %}
 
 
