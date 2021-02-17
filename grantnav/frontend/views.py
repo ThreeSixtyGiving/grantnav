@@ -922,12 +922,12 @@ def search(request):
 
 
 def get_radio_items(context, default_field):
-    context['radioItems'] = []
-    context['radioItems'].append({"value": "*", "name": "Search All Fields", "default": True if default_field == "*" else False})
-    context['radioItems'].append({"value": "recipientLocation", "name": "Locations", "default": True if default_field == "recipientLocation" else False})
-    context['radioItems'].append({"value": "recipientOrganization.name", "name": "Recipients", "default": True if default_field == "recipientOrganization.name" else False})
-    context['radioItems'].append({"value": "title_and_description", "name": "Titles & Descriptions", "default": True if default_field == "title_and_description" else False})
-
+    context['searchRadio'] = []
+    context['searchRadio'].append({"value": "*", "name": "Search All Fields", "checked": True if default_field == "*" else False})
+    context['searchRadio'].append({"value": "recipientLocation", "name": "Locations", "checked": True if default_field == "recipientLocation" else False})
+    context['searchRadio'].append({"value": "recipientOrganization.name", "name": "Recipients", "checked": True if default_field == "recipientOrganization.name" else False})
+    context['searchRadio'].append({"value": "title_and_description", "name": "Titles & Descriptions", "checked": True if default_field == "title_and_description" else False})
+    context['default_field_name'] = [radioItem['name'] for radioItem in context['searchRadio'] if radioItem['checked'] == True][0]
 
 def get_dropdown_filters(context):
     context['dropdownFilterOptions'] = []

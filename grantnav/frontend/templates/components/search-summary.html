@@ -1,4 +1,4 @@
 {% load get_amount from frontend %}
 <div class="search-summary">
-  Your search ‘{{ text_query }}’ returned {{ results.hits.total|get_amount }} results in ‘{{ search_group }}’
+  Your search ‘{{ text_query }}’ returned {{ results.hits.total|get_amount }} results in ‘{{ default_field_name }}’
 </div>
