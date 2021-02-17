@@ -1,0 +1,11 @@
+<div class="filter-group">
+  <details class="filter-group__accordion" {% if opened %} open{% endif %}>
+    <summary class="filter-group__label">
+      <div>Time Filters</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-group_contents-wrapper">
+      {% include 'components/filters/lists/filter-list-year.html' %}
+    </div>
+  </details>
+</div>

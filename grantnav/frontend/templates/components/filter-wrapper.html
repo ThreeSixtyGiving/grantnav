@@ -1,19 +1,16 @@
-<details class="filter-wrapper">
+<details class="filter-wrapper" open>
   <summary class="filter-wrapper__summary">
-    <span class="filter-wrapper__summary--heading">{{ heading }}</span>
-
-    {% include 'tokens/accordion-toggle-icon.html' %}
+    <span class="filter-wrapper__summary--heading">Filter By</span>
   </summary>
 
   <div class="filter-wrapper__filters" aria-hidden="false">
-    {# Filters go here #}
     {% block filters %}
 
-      {% include 'components/filter-group.html' %}
+      {% include 'components/filters/groups/financial-filters.html' %}
+      {% include 'components/filters/groups/location-filters.html' %}
+      {% include 'components/filters/groups/year-filters.html' %}
+      {% include 'components/filters/groups/organization-filters.html' %}
 
-      {% include 'components/filter-group.html' %}
-
-      {% include 'components/filter-group.html' %}
     {% endblock filters %}
   </div>
 </details>

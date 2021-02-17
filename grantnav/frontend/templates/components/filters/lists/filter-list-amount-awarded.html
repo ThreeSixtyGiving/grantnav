@@ -1,0 +1,49 @@
+{% load get_amount_range get_amount from frontend %}
+<div class="filter-list">
+  <details class="filter-list__accordion" {% if opened %} open{% endif %}>
+    <summary class="filter-list__label">
+      <div>Amount Awarded ({{current_currency}}) {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      {% block filterForm %}
+        <form class="filter-list__contents--form">
+          <div class="filter-list__contents--form-item">
+            <label for="min-amount">Smallest (£)</label>
+            <input id="min-amount" min="0" type="number">
+          </div>
+          <div class="filter-list__contents--form-item">
+            <label for="max-amount">Largest (£)</label>
+            <input id="max-amount" min="0" type="number">
+          </div>
+          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+          <input class="filter-list__contents--form-submit" type="submit" value="Apply">
+        </form>
+      {% endblock filterForm %}
+      <ul class="filter-list__listing">
+        {% if not query.query.bool.filter.3.bool.should.range.amountAwarded %}
+          {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
+            {% if forloop.counter <= query.extra_context.amountAwardedFixed_facet_size %}
+              <li>
+                <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
+                  {{bucket|get_amount_range:current_currency}} <small>({{bucket.doc_count|get_amount}})</small> 
+
+                  {% if bucket.selected %}
+                    <span class="screen-reader-only">(active filter)</span>
+                  {% endif%}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% if results.aggregations.amountAwardedFixed.buckets|length > 2 %}
+          <li>
+            <a class="filter-list__expand-button" href="{{see_more_url.amountAwardedFixed.url}}">
+              <span class="see-more">{% if see_more_url.amountAwardedFixed.more%}See More{% else %}See Less{% endif %}</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </details>
+</div>
