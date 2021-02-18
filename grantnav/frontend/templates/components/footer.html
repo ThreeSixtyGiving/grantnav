@@ -1,12 +1,14 @@
+{% load static %}
+
 <footer class="footer">
   <div class="footer__row wrapper">
     <div class="footer__column-2 footer__branding">
-      <div class="footer__logo"><img src="static/images/360-giving-logo-white.svg" alt="360Giving"></div>
+      <div class="footer__logo"><img src={% static "/images/360-giving-logo-white.svg" %} alt="360Giving"></div>
       <p class="footer__tagline">Open data for more effective grantmaking</p>
     </div>
     <div class="footer__column-1 footer__social">
-      <a href="#" class="github-icon"><img src="static/images/github-logo.svg" alt="Check our Github"></a>
-      <a href="#" class="twitter-icon"><img src="static/images/twitter-logo.svg" alt="Follow us on Twitter"></a>
+      <a href="#" class="github-icon"><img src={% static "/images/github-logo.svg" %} alt="Check our Github"></a>
+      <a href="#" class="twitter-icon"><img src={% static "/images/twitter-logo.svg" %} alt="Follow us on Twitter"></a>
     </div>
   </div>
   
