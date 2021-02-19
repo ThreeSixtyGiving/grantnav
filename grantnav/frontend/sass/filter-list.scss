@@ -84,7 +84,7 @@
       content: '';
       width: 10px;
       height: 10px;
-      background: url('/images/checkmark-icon.svg') no-repeat;
+      background: url('/static/images/checkmark-icon.svg') no-repeat;
       background-size: cover;
       border-radius: 2px;
       position: absolute;
@@ -310,7 +310,7 @@
         &::after {
           content: '';
           position: absolute;
-          background: url('/images/checkmark-icon.svg') no-repeat;
+          background: url('/static/images/checkmark-icon.svg') no-repeat;
           background-size: cover;
           left: 10px;
           top: 10px;

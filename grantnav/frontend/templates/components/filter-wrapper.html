@@ -6,10 +6,17 @@
   <div class="filter-wrapper__filters" aria-hidden="false">
     {% block filters %}
 
-      {% include 'components/filters/groups/financial-filters.html' %}
-      {% include 'components/filters/groups/location-filters.html' %}
-      {% include 'components/filters/groups/year-filters.html' %}
-      {% include 'components/filters/groups/organization-filters.html' %}
+      {% comment %} {% include 'components/filters/groups/financial-filters.html' %} {% endcomment %}
+      {% include 'components/filters/lists/filter-list-currency.html' %}
+      {% include 'components/filters/lists/filter-list-amount-awarded.html' %}
+      {% comment %} {% include 'components/filters/groups/location-filters.html' %} {% endcomment %}
+      {% include 'components/filters/lists/filter-list-region.html' %}
+      {% include 'components/filters/lists/filter-list-district.html' %}
+      {% comment %} {% include 'components/filters/groups/year-filters.html' %} {% endcomment %}
+      {% include 'components/filters/lists/filter-list-year.html' %}
+      {% comment %} {% include 'components/filters/groups/organization-filters.html' %} {% endcomment %}
+      {% include 'components/filters/lists/filter-list-funding-org.html' %}
+      {% include 'components/filters/lists/filter-list-recipient-org.html' %}
 
     {% endblock filters %}
   </div>

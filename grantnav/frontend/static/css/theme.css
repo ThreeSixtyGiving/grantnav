@@ -1510,7 +1510,7 @@ p {
       content: '';
       width: 10px;
       height: 10px;
-      background: url("/images/checkmark-icon.svg") no-repeat;
+      background: url("/static/images/checkmark-icon.svg") no-repeat;
       background-size: cover;
       border-radius: 2px;
       position: absolute;
@@ -1675,7 +1675,7 @@ p {
   .filter-list--with-checkboxes .filter-list__form--checkbox-item label::after {
     content: '';
     position: absolute;
-    background: url("/images/checkmark-icon.svg") no-repeat;
+    background: url("/static/images/checkmark-icon.svg") no-repeat;
     background-size: cover;
     left: 10px;
     top: 10px;
