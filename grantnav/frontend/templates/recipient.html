@@ -1,122 +1,176 @@
-{% extends 'base.html' %}
-
-{% load frontend %}
-{% load static %}
-
+{% extends 'base.html' %} 
+{% load frontend %} 
+{% load static %} 
 {% block main_content %}
-
-<div class="row">
-  <div class="col-md-4">
-    <h1 class="funder-header text-center">
-      {{ recipient.id_and_name|get_facet_org_name }}
-    </h1>
-  </div>
-  <div class="col-md-8">
-   <div class="row">
-     <div class="col-xs-6">
-       <dl class="dl-horizontal top-stats">
-         <dt>Total grants</dt> <dd>{{results.hits.total|get_amount}}</dd>
-         <dt>Total funders</dt> <dd>{{results.aggregations.funder_orgs.value|get_amount}}</dd>
-         <dt>Earliest award date</dt> <dd>{{results.aggregations.min_date.value_as_string|get_date}}</dd>
-         <dt>Latest award date</dt> <dd>{{results.aggregations.max_date.value_as_string|get_date}}</dd>
-       </dl>
-     </div>
-     <div class="col-xs-6">
-        {% include 'currency_stats.html' %}
-     </div>
-   </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        Grants
-        <a class="pull-right" href="{% url 'recipient.json' recipient.id %}">
-          <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
-        </a>
-        <a class="pull-right" href="{% url 'recipient.csv' recipient.id %}">
-          <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button"/>
-        </a>
-
+<div class="layout layout--single-column">
+  <main class="layout__content">
+    <div class="spacer-4">
+      <div class="col-md-4">
+        <h1 class="funder-header text-center">
+          {{ recipient.id_and_name|get_facet_org_name }}
+        </h1>
       </div>
-      <div class="panel-body">
-        <table class="table table-condensed table-bordered table-striped dt-responsive" id="grants_datatable" width="100%">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Amount</th>
-              <th>Funder</th>
-              <th>Title</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-        </table>
+      <div class="col-md-8">
+        <div class="spacer-4">
+          <div class="col-xs-6">
+            <dl class="dl-horizontal top-stats">
+              <dt>Total grants</dt>
+              <dd>{{results.hits.total|get_amount}}</dd>
+              <dt>Total funders</dt>
+              <dd>{{results.aggregations.funder_orgs.value|get_amount}}</dd>
+              <dt>Earliest award date</dt>
+              <dd>
+                {{results.aggregations.min_date.value_as_string|get_date}}
+              </dd>
+              <dt>Latest award date</dt>
+              <dd>
+                {{results.aggregations.max_date.value_as_string|get_date}}
+              </dd>
+            </dl>
+          </div>
+          <div class="col-xs-6">{% include 'currency_stats.html' %}</div>
+        </div>
       </div>
     </div>
-  </div>
+    <div class="spacer-4">
+      <div class="col-xs-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            Grants
+            <a
+              class="pull-right"
+              href="{% url 'recipient.json' recipient.id %}"
+            >
+              <img
+                src="{% static 'images/json_download_icon.png' %}"
+                alt="Download JSON"
+                class="download_button"
+              />
+            </a>
+            <a class="pull-right" href="{% url 'recipient.csv' recipient.id %}">
+              <img
+                src="{% static 'images/csv_download_icon.png' %}"
+                alt="Download CSV"
+                class="download_button"
+              />
+            </a>
+          </div>
+          <div class="panel-body">
+            <table
+              class="table table-condensed table-bordered table-striped dt-responsive"
+              id="grants_datatable"
+              width="100%"
+            >
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Funder</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endblock %} {% block extra_style %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css"
+    />
+    {% endblock %} {% block extra_scripts %}
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"
+    ></script>
+
+    <script>
+      function truncate(string, len) {
+        if (string.length > len) return string.substring(0, len) + "...";
+        else return string;
+      }
+
+      jQuery(function ($) {
+        $("#grants_datatable").dataTable({
+          serverSide: true,
+          responsive: true,
+          searching: true,
+          autoWidth: false,
+          scrollY: 400,
+          scroller: true,
+          dom: "fit",
+          scroller: { displayBuffer: 20, loadingIndicator: true },
+          order: [[0, "desc"]],
+          language: {
+            info: "_START_ to _END_ of _TOTAL_",
+            search: "Search All Fields",
+          },
+          ajax: {
+            url: "{% url 'grants_datatables' %}",
+            data: function (d) {
+              d.recipient = "{{recipient.id|escapejs}}";
+            },
+          },
+          columns: [
+            { data: "awardDate" },
+            { data: "amountAwarded", className: "amount" },
+            {
+              data: "fundingOrganization.0.name",
+              render: function (data, type, row) {
+                return (
+                  '<a href="/funder/' +
+                  encodeURIComponent(row.fundingOrganization[0].id) +
+                  '">' +
+                  truncate(data, 60) +
+                  "</a>"
+                );
+              },
+            },
+            {
+              data: "title",
+              orderable: false,
+              render: function (data, type, row) {
+                return (
+                  '<a href="/grant/' +
+                  encodeURIComponent(row.id) +
+                  '">' +
+                  truncate(data, 60) +
+                  "</a>"
+                );
+              },
+            },
+            { data: "description" },
+          ],
+        });
+      });
+    </script>
+    {% endblock %} {% block models %} {% include 'currency_stats_modal.html' %}
+    {% endblock %}
+  </main>
 </div>
-
-{% endblock %}
-
-{% block extra_style %}
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css">
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css">
-{% endblock %}
-
-{% block extra_scripts %}
-   <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-   <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
-   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
-   <script type="text/javascript" src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
-
-   <script>
-    function truncate(string, len){
-       if (string.length > len)
-          return string.substring(0,len)+'...';
-       else
-          return string;
-    };
-
-   jQuery(function($) {
-     $('#grants_datatable').dataTable({
-       "serverSide": true,
-       "responsive": true,
-       "searching": true,
-       "autoWidth": false,
-       "scrollY": 400,
-       "scroller": true,
-       "dom": "fit",
-       "scroller": {"displayBuffer": 20,
-                    "loadingIndicator": true},
-       "order": [[0, "desc"]],
-       "language": {
-           "info": "_START_ to _END_ of _TOTAL_",
-           "search": "Search All Fields"
-       },
-       "ajax": {
-         "url": "{% url 'grants_datatables' %}",
-         "data": function ( d ) {
-           d.recipient = "{{recipient.id|escapejs}}";
-         }
-       },
-       "columns": [
-         {"data": "awardDate"},
-         {"data": "amountAwarded", "className": "amount"},
-         {"data": "fundingOrganization.0.name", "render": function (data, type, row) {return '<a href="/funder/' + encodeURIComponent(row.fundingOrganization[0].id) + '">' + truncate(data, 60) + '</a>'}},
-         {"data": "title",
-          "orderable": false,
-          "render": function (data, type, row) {
-             return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 60) + '</a>'
-         }},
-         {"data": "description"},
-       ]
-     });
-   })
-   </script>
-{% endblock %}
-
-{% block models %}
-  {% include 'currency_stats_modal.html' %}
-{% endblock %}

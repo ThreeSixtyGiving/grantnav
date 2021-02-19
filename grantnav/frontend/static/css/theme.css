@@ -2111,6 +2111,87 @@ p {
   --box-bg-hsl: var(--red-hsl);
   --box-text-hsl: var(--red-hsl); }
 
+.grant-info-highlight {
+  box-shadow: 1px 4px 4px 4px rgba(0, 0, 0, 0.06);
+  border-top: 4px solid #EFC329;
+  border-bottom: 4px solid #EFC329;
+  padding: 22px 24px 34px; }
+  @media (min-width: 36em) {
+    .grant-info-highlight {
+      padding: 22px 44px 34px; } }
+  .grant-info-highlight a {
+    font-size: 24px;
+    font-weight: 400;
+    text-decoration: underline; }
+  .grant-info-highlight__funder {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 42px;
+    background: white; }
+    @media (min-width: 36em) {
+      .grant-info-highlight__funder {
+        margin-bottom: 0; } }
+  .grant-info-highlight__data {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 42px; }
+    @media (min-width: 36em) {
+      .grant-info-highlight__data {
+        margin-bottom: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; } }
+    .grant-info-highlight__data--amount {
+      color: #2e666b;
+      font-weight: 400;
+      font-size: 27px;
+      width: 33.33%;
+      text-align: right; }
+      @media (min-width: 36em) {
+        .grant-info-highlight__data--amount {
+          text-align: left;
+          width: auto; } }
+    .grant-info-highlight__data--infographic {
+      width: 33.33%;
+      transform: rotateZ(90deg);
+      z-index: -1;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      @media (min-width: 36em) {
+        .grant-info-highlight__data--infographic {
+          transform: none;
+          width: 100%; } }
+      .grant-info-highlight__data--infographic .infographic-arrow {
+        width: 100px;
+        height: 60px;
+        display: block; }
+        @media (min-width: 36em) {
+          .grant-info-highlight__data--infographic .infographic-arrow {
+            width: unset;
+            height: unset; } }
+    .grant-info-highlight__data--date {
+      width: 33.33%;
+      color: #2e666b;
+      font-weight: 500;
+      font-size: 20px; }
+      @media (min-width: 36em) {
+        .grant-info-highlight__data--date {
+          width: auto; } }
+  .grant-info-highlight__recipient {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; }
+  .grant-info-highlight__label {
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 8px; }
+
 .dataTables_filter {
   margin: 8px; }
 
@@ -2122,3 +2203,6 @@ p {
 
 .panel-heading {
   padding: 4px; }
+
+.full-width {
+  width: 100%; }

@@ -9,8 +9,8 @@
       {% block filterOption %}
       {% endblock filterOption %}
       <ul class="filter-list__listing">
-          {% for bucket in results.aggregations.fundingOrganization.buckets %}
-            <li>
+        {% for bucket in results.aggregations.fundingOrganization.buckets %}
+          <li>
             <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
               {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small>
               {% if bucket.selected %}

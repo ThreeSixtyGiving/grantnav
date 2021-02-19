@@ -13,9 +13,9 @@
 {% endif %}
 
 {% for grant in grants %}
-
-  <div class="row">
-    <div class="col-xs-12">
+<div class="layout layout--single-column">
+  <main class="layout__content">
+    <div class="spacer-1">
       <h1 class="heading-in-panel">
           {{ grant.source|get_title }}
         <small>({{grant.source.id}})</small>
@@ -24,46 +24,54 @@
     </div>
 
     {% if grant.source.fundingOrganization.0.id and grant.source.recipientOrganization.0.id %}
-    <div class="col-xs-5">
-      <div class="panel panel-default fixed-org-height">
-        <div class="panel-body">
-          <b>Funding Organization </b> 
-          <p><a href="{% url 'funder' grant.source.fundingOrganization.0.id %}"> {{ grant.source.fundingOrganization.0 | get_name }} <small>({{ grant.source.fundingOrganization.0.id }}) </small> </a> </p>
+    <div class="spacer-4">
+      <div class="grant-info-highlight grid grid--three-columns">
+        <div class="grant-info-highlight__funder">
+          <div class="grant-info-highlight__label">Funding Organization</div>
+          <div>
+            <a href="{% url 'funder' grant.source.fundingOrganization.0.id %}"> {{ grant.source.fundingOrganization.0 | get_name }} <small>({{ grant.source.fundingOrganization.0.id }}) </small> </a>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="col-xs-2">
-          <p class="text-center"> 
-          {{grant.source|get_currency}}{{grant.source.amountAwarded|get_amount}} </br>  
-          <span class="glyphicon glyphicon-arrow-right large-arrow" style="font-size:40px" aria-hidden="true"></span> </br>
-          {{grant.source.awardDate|get_date}} </p>
-    </div>
-    <div class="col-xs-5">
-      <div class="panel panel-default fixed-org-height">
-        <div class="panel-body">
-          <b>Recipient Organization </b> 
-          <p><a href="{% url 'recipient' grant.source.recipientOrganization.0.id %}"> {{ grant.source.recipientOrganization.0|get_name|truncatechars:50 }} <small>({{ grant.source.recipientOrganization.0.id|truncatechars:20}}) </small> </a> </p>
+
+        <div class="grant-info-highlight__data">
+          <div class="grant-info-highlight__data--amount">{{grant.source|get_currency}}{{grant.source.amountAwarded|get_amount}}</div>
+
+          <div class="grant-info-highlight__data--infographic">
+            {% include 'tokens/infographic-arrow.html' %}
+          </div>
+
+          <div class="grant-info-highlight__data--date"><time datetime="{{ grant.source.awardDate }}">{{grant.source.awardDate|get_date}}</time></div>
+        </div>
+
+        <div class="grant-info-highlight__recipient">
+          <div class="grant-info-highlight__label">Recipient Organization</div>
+          <div>
+            <p><a href="{% url 'recipient' grant.source.recipientOrganization.0.id %}"> {{ grant.source.recipientOrganization.0|get_name|truncatechars:50 }} <small>({{ grant.source.recipientOrganization.0.id|truncatechars:20}}) </small> </a>
+          </div>
         </div>
       </div>
     </div>
     {% endif %}
 
 
-    <div class="col-xs-12">
-      <div id="provenance" class="alert alert-info" role="alert">
-        <p>Where is this data from?</p>
-        {% with dataset=grant|get_dataset %}
-          <p>This data was originally published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>. If you need to report a problem in the data please contact {{ dataset.publisher.name }} directly, see <a href="{% url 'publisher' dataset.publisher.prefix %}">their GrantNav publisher page</a> for more information.
-        {% endwith %}
+    <div class="spacer-4">
+      <div class='spacer-4'>
+        <div class="box box--teal">
+          <h3 class="box__heading">Where is this data from?</h3>
+          {% with dataset=grant|get_dataset %}
+            <p>This data was originally published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>. If you need to report a problem in the data please contact {{ dataset.publisher.name }} directly, see <a href="{% url 'publisher' dataset.publisher.prefix %}">their GrantNav publisher page</a> for more information.
+          {% endwith %}
+        </div>
       </div>
-      <div class="panel panel-default bottom-space">
-        <div class="panel-heading">Grant details</div>
-        <div class="table-responsive">
-          <table class="table table-bordered">
+
+      <div class="panel-body">
+        <div class="table table--zebra">
+          <table class="full-width">
             <tbody>
               {% for key, grant in grant.source|flatten %}
               <tr> 
-                <td style="width: 40%"> <b>{{ key }}</b> 
+                <td>
+                  <b>{{ key }}</b> 
                 </td> 
                 <td> 
                   {{grant}}
@@ -77,7 +85,9 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-12">
+
+    {% if grant.source|get_additional_fields %}
+    <div class="spacer-4">
       <div class="panel panel-default bottom-space">
         <div class="panel-heading">Additional data added by GrantNav</div>
         <div class="table-responsive">
@@ -91,8 +101,10 @@
         </div>
       </div>
     </div>
-  </div>
-{% endfor %}
+    {% endif %}
 
+  </main>
+</div>
+{% endfor %}
 
 {% endblock %}
