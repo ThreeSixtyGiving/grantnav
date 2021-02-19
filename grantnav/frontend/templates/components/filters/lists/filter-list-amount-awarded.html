@@ -1,6 +1,6 @@
 {% load get_amount_range get_amount from frontend %}
 <div class="filter-list">
-  <details class="filter-list__accordion" {% if opened %} open{% endif %}>
+  <details class="filter-list__accordion" {% if results.aggregations.amountAwardedFixed.clear_url %} open{% endif %}>
     <summary class="filter-list__label">
       <div>Amount Awarded ({{current_currency}}) {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
