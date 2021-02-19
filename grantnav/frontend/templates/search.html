@@ -36,12 +36,12 @@
             <div class="export-label">Export search data:</div>
 
             <div class="export-button">
-              {% include 'components/export-data-button.html' %}
+              {% include 'components/export-data-button--csv.html' with data_function='search.csv' query=query_string only %}
             </div>
 
             <div class="export-button">
-              {% include 'components/export-data-button--json.html' %}
-            </div>
+              {% include 'components/export-data-button--json.html' with data_function='search.json' query=query_string only %}
+            </div>only 
           </div>
         </section>
 

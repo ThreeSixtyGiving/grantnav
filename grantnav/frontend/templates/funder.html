@@ -56,31 +56,19 @@
     </div>
     <div class="spacer-4">
       <div class="panel panel-info">
-        <div class="panel-heading">
+        <div class="panel-heading grantnav-datatable__content--filters">
           Recipients
-          <small>
-            ({{results.aggregations.currency_stats.buckets|first|get:"key"|upper}})
-          </small>
-          <a
-            class="pull-right"
-            href="{% url 'funder_recipients_datatables.json' %}?funder_id={{ funder.id }}"
-          >
-            <img
-              src="{% static 'images/json_download_icon.png' %}"
-              alt="Download JSON"
-              class="download_button"
-            />
-          </a>
-          <a
-            class="pull-right"
-            href="{% url 'funder_recipients_datatables.csv' %}?funder_id={{ funder.id }}"
-          >
-            <img
-              src="{% static 'images/csv_download_icon.png' %}"
-              alt="Download CSV"
-              class="download_button"
-            />
-          </a>
+          <div class="export-wrapper">
+            <div class="export-label">Export search data:</div>
+
+            <div class="export-button">
+              {% include 'components/export-data-button--csv.html' with data_function='funder_recipients_datatables.csv' parameter="funder_id=" query=funder.id %}
+            </div>
+
+            <div class="export-button">
+              {% include 'components/export-data-button--json.html' with data_function='funder_recipients_datatables.json' parameter="funder_id=" query=funder.id %}
+            </div>
+          </div>
         </div>
         <div class="panel-body">
           <div class="table table--zebra">
@@ -102,22 +90,19 @@
     </div>
     <div class="spacer-4">
       <div class="panel panel-info">
-        <div class="panel-heading">
+        <div class="panel-heading grantnav-datatable__content--filters">
           Grants
-          <a class="pull-right" href="{% url 'funder.json' funder.id %}">
-            <img
-              src="{% static 'images/json_download_icon.png' %}"
-              alt="Download JSON"
-              class="download_button"
-            />
-          </a>
-          <a class="pull-right" href="{% url 'funder.csv' funder.id %}">
-            <img
-              src="{% static 'images/csv_download_icon.png' %}"
-              alt="Download CSV"
-              class="download_button"
-            />
-          </a>
+          <div class="export-wrapper">
+            <div class="export-label">Export search data:</div>
+
+            <div class="export-button">
+              {% include 'components/export-data-button--csv.html' with data_function='search.csv' query_string=query_string %}
+            </div>
+
+            <div class="export-button">
+              {% include 'components/export-data-button--json.html' with data_function='search.json' query_string=query_string %}
+            </div>
+          </div>
         </div>
         <div class="panel-body">
           <div class="table table--zebra">
@@ -137,23 +122,7 @@
       </div>
     </div>
     {% endblock %} 
-    {% block extra_style %}
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css"
-    />
-    {% endblock %} {% block extra_scripts %}
+    {% block extra_scripts %}
     <script
       type="text/javascript"
       src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"
