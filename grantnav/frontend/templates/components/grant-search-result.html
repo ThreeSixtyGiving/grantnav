@@ -34,12 +34,12 @@
 
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Region:</span>
-      <span><a href="{% url 'region' result.source.recipientRegionName %}">{{ result.source.recipientRegionName }}</a></span>
+      <span><a href="{% url 'region' result.source.additional_data.recipientRegionName %}">{{ result.source.additional_data.recipientRegionName }}</a></span>
     </div>
 
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">District:</span>
-      <span><a href="{% url 'district' result.source.recipientDistrictName %}">{{ result.source.recipientDistrictName }}</a></span>
+      <span><a href="{% url 'district' result.source.additional_data.recipientDistrictName %}">{{ result.source.additional_data.recipientDistrictName }}</a></span>
     </div>
   </div>
 </div>
