@@ -8,10 +8,10 @@
 
 {% block main_content %}
   <div class="grid grid--three-columns">
-    {% include 'components/homepage-card.html' with title="Funders" value=results.aggregations.funder_count.value|get_amount %}
+    {% include 'components/homepage-card.html' with title="Funders" value=results.aggregations.funder_count.value|get_amount link="funders" %}
 
-    {% include 'components/homepage-card.html' with title="Recipients" value=results.aggregations.recipient_count.value|get_amount %}
+    {% include 'components/homepage-card.html' with title="Recipients" value=results.aggregations.recipient_count.value|get_amount link="recipients" %}
 
-    {% include 'components/homepage-card.html' with title="Grants" value=results.hits.total|get_amount %}
+    {% include 'components/homepage-card.html' with title="Grants" value=results.hits.total|get_amount link="search" %}
   </div>
 {% endblock %}
