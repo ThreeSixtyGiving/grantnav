@@ -7,40 +7,64 @@
       <p class="footer__tagline">Open data for more effective grantmaking</p>
     </div>
     <div class="footer__column-1 footer__social">
-      <a href="#" class="github-icon"><img src={% static "/images/github-logo.svg" %} alt="Check our Github"></a>
-      <a href="#" class="twitter-icon"><img src={% static "/images/twitter-logo.svg" %} alt="Follow us on Twitter"></a>
+      <a href="https://github.com/threesixtygiving/" class="github-icon"><img src={% static "/images/github-logo.svg" %} alt="Check our Github"></a>
+      <a href="https://twitter.com/360Giving/" class="twitter-icon"><img src={% static "/images/twitter-logo.svg" %} alt="Follow us on Twitter"></a>
     </div>
   </div>
-  
+
   <div class="footer__row wrapper">
     <div class="footer__column-2 footer__section medium-up">
-      <h3 class="footer__heading">Products</h3>
+      <h3 class="footer__heading">Links</h3>
       <ul>
-        <li><a href="#">GrantNav</a></li>
-        <li><a href="#">Insights</a></li>
-        <li><a href="#">Resources</a></li>
-        <li><a href="#">Cove</a></li>
+          <li>
+            <a href="{% url 'about' %}">About</a>
+          </li>
+          <li>
+            <a href="{% url 'funders' %}">Funders</a>
+          </li>
+          <li>
+            <a href="{% url 'recipients' %}">Recipients</a>
+          </li>
+          <li>
+            <a href="{% url 'terms' %}">Terms and Conditions</a>
+          </li>
+          <li>
+            <a href="{% url 'take_down_policy' %}">Take Down Policy</a>
+          </li>
+          <li>
+            <a href="{% url 'datasets' %}">Data Used in GrantNav</a>
+          </li>
+          <li>
+            <a href="{% url 'datasets' %}#reuse">Reusing GrantNav Data</a>
+          </li>
+          <li>
+            <a href="{% url 'developers' %}">Developers</a>
+          </li>
       </ul>
     </div>
 
     <div class="footer__column-2 footer__section medium-up">
       <h3 class="footer__heading">Other Products</h3>
       <ul>
-        <li><a href="#">Data Registry</a></li>
-        <li><a href="#">Data Standard</a></li>
-        <li><a href="#">Data Challenge</a></li>
-        <li><a href="#">Data Champions</a></li>
+        <li><a href="https://data.threesixtygiving.org">Data Registry</a></li>
+        <li><a href="https://standard.threesixtygiving.org">Data Standard</a></li>
+        <li><a href="https://insights.threesixtygiving.org">360Insights</a></li>
+        <li><a href="https://covidtracker.threesixtygiving.org">Covid-19 Grants Tracker</a></li>
       </ul>
     </div>
 
     <div class="footer__column-3 footer__section">
-      <h3 class="footer__heading">360 Resources</h3>
-      <p>Data in JSON format is ideal for direct use by developers building visualisations and web apps. The JSON should conform to the 360Giving JSON Schemas. Anyone automating the publication of their data from their internal databases or via</p>
+      <h3 class="footer__heading">GrantNav</h3>
+      <p>GrantNav uses open data published by funders about their grants in the <a href="http://www.threesixtygiving.org/standard/">360Giving Data Standard</a>.</p>
+      <p>You can use GrantNav to search, filter and download data about where funding goes and how much is given across billions of pounds of grants, for causes and locations across the UK.</p>
+      <p>If you have questions or feedback, please email <a href="mailto:grantnav@threesixtygiving.org">grantnav@threesixtygiving.org</a></p>
     </div>
 
     <div class="footer__column-3 footer__section">
-      <h3 class="footer__heading">360 Resources</h3>
-      <p>Data in JSON format is ideal for direct use by developers building visualisations and web apps. The JSON should conform to the 360Giving JSON Schemas. Anyone automating the publication of their data from their internal databases or via</p>
+      <h3 class="footer__heading">360Giving</h3>
+      <p>We help organisations openly publish grants data, and help people use it to improve charitable giving.</p>
+
+      <p><a href="https://threesixtygiving.org">Find out more about 360Giving</a>.</p>
 
     </div>
   </div>
@@ -53,7 +77,7 @@
   </div>
 
   <div class="footer__row wrapper footer__small-print">
-    
+
     <div class="footer__column-2">
     <p>© Copyright 2021 360Giving.<br>Licensed under a <a href="#" target="_blank">Creative Commons Attribution 4.0 International License</a>.</p>
     </div>
