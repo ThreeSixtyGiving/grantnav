@@ -32,18 +32,17 @@ BASIC_FILTER = [
     {"bool": {"should": []}}   # additional_data.TSGFundingOrgType
 ]
 
-TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json is_dropdown')
+TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json')
 
 TERM_FACETS = [
-    TermFacet("fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True, True),
-    TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True, True),
-    TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False, False),
-    TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False, True),
-    TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False, False),
-    TermFacet("currency", "currency", 7, "Currency", False, True)
+    TermFacet("fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True),
+    TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True),
+    TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False),
+    TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False),
+    TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False),
+    TermFacet("currency", "currency", 7, "Currency", False)
 ]
 
-DROPDOWN_SIZE = 5000
 LESS_SIZE = 3
 MORE_SIZE = 50
 SIZE = 20
@@ -56,7 +55,7 @@ BASIC_QUERY = {"query": {"bool": {"must":
 
 for term_facet in TERM_FACETS:
     BASIC_QUERY['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
-                                                            "size": DROPDOWN_SIZE if term_facet.is_dropdown else LESS_SIZE}}
+                                                            "size": LESS_SIZE}}
 
 FIXED_AMOUNT_RANGES = [
     {"from": 0, "to": 500},
@@ -266,8 +265,6 @@ def get_terms_facet_size(request, context, json_query, page):
         if "terms" not in agg:
             continue
         size = agg["terms"]["size"]
-        if size == DROPDOWN_SIZE:
-            continue
         if size == LESS_SIZE:
             new_size = MORE_SIZE
             see_more_url[agg_name] = {"more": True}
@@ -613,7 +610,7 @@ def term_facet_size_from_parameters(request, json_query):
         aggs = BASIC_QUERY['aggs']
 
     for agg_name, agg in aggs.items():
-        if "terms" not in agg or agg["terms"]["size"] == DROPDOWN_SIZE:
+        if "terms" not in agg:
             continue
 
         more = request.GET.get(agg_name + 'More')
