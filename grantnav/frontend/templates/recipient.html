@@ -4,63 +4,52 @@
 {% block main_content %}
 <div class="layout layout--single-column">
   <main class="layout__content">
-    <div class="spacer-4">
-      <div class="col-md-4">
+    <div class="grid grid--two-columns spacer-4">
+      <div class="grid__1">
         <h1 class="funder-header text-center">
           {{ recipient.id_and_name|get_facet_org_name }}
         </h1>
       </div>
-      <div class="col-md-8">
-        <div class="spacer-4">
-          <div class="col-xs-6">
-            <dl class="dl-horizontal top-stats">
-              <dt>Total grants</dt>
-              <dd>{{results.hits.total|get_amount}}</dd>
-              <dt>Total funders</dt>
-              <dd>{{results.aggregations.funder_orgs.value|get_amount}}</dd>
-              <dt>Earliest award date</dt>
-              <dd>
-                {{results.aggregations.min_date.value_as_string|get_date}}
-              </dd>
-              <dt>Latest award date</dt>
-              <dd>
-                {{results.aggregations.max_date.value_as_string|get_date}}
-              </dd>
-            </dl>
-          </div>
-          <div class="col-xs-6">{% include 'currency_stats.html' %}</div>
+      <div class="grid grid--two-columns grid__1">
+        <div class="grid__1">
+          <dl class="dl-horizontal top-stats">
+            <dt>Total grants</dt>
+            <dd>{{results.hits.total|get_amount}}</dd>
+            <dt>Total funders</dt>
+            <dd>{{results.aggregations.funder_orgs.value|get_amount}}</dd>
+            <dt>Earliest award date</dt>
+            <dd>
+              {{results.aggregations.min_date.value_as_string|get_date}}
+            </dd>
+            <dt>Latest award date</dt>
+            <dd>
+              {{results.aggregations.max_date.value_as_string|get_date}}
+            </dd>
+          </dl>
+        </div>
+        <div class="grid__1">
+          {% include 'currency_stats.html' %}
         </div>
       </div>
     </div>
     <div class="spacer-4">
-      <div class="col-xs-12">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            Grants
-            <a
-              class="pull-right"
-              href="{% url 'recipient.json' recipient.id %}"
-            >
-              <img
-                src="{% static 'images/json_download_icon.png' %}"
-                alt="Download JSON"
-                class="download_button"
-              />
-            </a>
-            <a class="pull-right" href="{% url 'recipient.csv' recipient.id %}">
-              <img
-                src="{% static 'images/csv_download_icon.png' %}"
-                alt="Download CSV"
-                class="download_button"
-              />
-            </a>
+      <div class="panel panel-info">
+        <div class="panel-heading grantnav-datatable__content--filters">
+          Grants
+          <div class="export-wrapper">
+            <div class="export-label">Export table data:</div>
+            <div class="export-button">
+              {% include 'components/export-data-button--csv.html' with data_function='recipient.csv' only %}
+            </div>
+
+            <div class="export-button">
+              {% include 'components/export-data-button--json.html' with data_function='recipient.json' only %}
+            </div>
           </div>
-          <div class="panel-body">
-            <table
-              class="table table-condensed table-bordered table-striped dt-responsive"
-              id="grants_datatable"
-              width="100%"
-            >
+        </div>
+        <div class="panel-body">
+          <div class="table table--zebra">
+            <table id="grants_datatable">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -76,23 +65,8 @@
       </div>
     </div>
 
-    {% endblock %} {% block extra_style %}
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css"
-    />
-    {% endblock %} {% block extra_scripts %}
+    {% endblock %}  
+    {% block extra_scripts %}
     <script
       type="text/javascript"
       src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"
