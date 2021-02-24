@@ -10,6 +10,14 @@
     margin-left: 8px;
 }
 
+.panel {
+display: flex;
+    flex-direction: column;
+    border-left: 4px solid #DE6E26;
+    box-shadow: 1px 4px 4px 4px rgba(0, 0, 0, 0.06);
+    padding: 20px 24px;
+}
+
 .panel-heading {
     padding: 4px;
 }
@@ -17,3 +25,56 @@
 .full-width {
     width: 100%;
 }
+
+.pull-right {
+    float: right;
+}
+
+// Horizontal description lists
+//
+// Defaults to being stacked without any of the below styles applied, until the
+// grid breakpoint is reached (default of ~768px).
+// Description Lists
+dl {
+    margin-top: 0; // Remove browser default
+    margin-bottom: 14px;
+}
+
+dt,
+dd {
+    line-height: 1;
+}
+
+dd {
+    margin-left: 0; // Undo browser default
+}
+
+.dl-horizontal, .top-stats {
+    font-size: 14px;
+
+    dd {
+        &:before,
+        &:after {
+            content: " "; // 1
+            display: table; // 2
+        }
+        &:after {
+            clear: both;
+        }
+    }
+  
+    @media (min-width: 180px) {
+      dt {
+        float: left;
+        width: (180 - 20)px;
+        clear: left;
+        text-align: right;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      dd {
+        margin-left: 180px;
+      }
+    }
+  }

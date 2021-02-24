@@ -7,79 +7,97 @@
 {% endblock %}
 
 {% block main_content %}
-  <div class="grantnav-search__wrapper">
-    <div class="grantnav-search__sidebar">
-      <h2 class="grantnav-search__sidebar--heading">Refine your search</h2>
+  <main class="layout__content">
+    <div class="grantnav-search__wrapper">
+      <div class="grantnav-search__sidebar">
+        <h2 class="grantnav-search__sidebar--heading">Refine your search</h2>
 
-      <div class="inline-block">
-        {% include 'components/alert-tag--anchor.html' %}
+        <div class="inline-block">
+          {% include 'components/alert-tag--anchor.html' %}
+        </div>
+
+        <div class="grantnav-search__sidebar--filters">
+          {% include 'components/filter-wrapper.html' %}
+        </div>
       </div>
+      {% if results and results.hits.hits %}
+        <div class="grantnav-search__content">
+          {% include 'components/search-summary.html' %}
 
-      <div class="grantnav-search__sidebar--filters">
-        {% include 'components/filter-wrapper.html' %}
-      </div>
-    </div>
-    {% if results and results.hits.hits %}
-      <div class="grantnav-search__content">
-        {% include 'components/search-summary.html' %}
+          {% include 'components/results-title.html' %}
 
-        {% include 'components/results-title.html' %}
-
-        {% if selected_facets %}
-          {% include 'components/filter-summary.html' %}
-        {% endif %}
-
-        <section class="grantnav-search__content--filters">
-          {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
-
-          <div class="export-wrapper">
-            <div class="export-label">Export search data:</div>
-
-            <div class="export-button">
-              {% include 'components/export-data-button--csv.html' with data_function='search.csv' query=query_string only %}
+            <div class="panel spacer-4">
+              <div class="grid grid--two-columns grid__1">
+                <div class="grid__1">
+                  <dl class="dl-horizontal top-stats">
+                    <dt>Total grants</dt> <dd>{{results.hits.total|get_amount}} </dd>
+                    <dt>Total funders</dt> <dd>{{results.aggregations.funding_orgs.value|get_amount}}</dd>
+                    <dt>Total recipients</dt> <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
+                    <dt>Earliest award date</dt> <dd>{{results.aggregations.min_date.value_as_string|get_date}}</dd>
+                    <dt>Latest award date</dt> <dd>{{results.aggregations.max_date.value_as_string|get_date}}</dd>
+                  </dl>
+                </div>
+                <div class="grid__1">
+                  {% include 'currency_stats.html' %}
+                </div>
+              </div>
             </div>
 
-            <div class="export-button">
-              {% include 'components/export-data-button--json.html' with data_function='search.json' query=query_string only %}
-            </div> 
-          </div>
-        </section>
+          {% if selected_facets %}
+            {% include 'components/filter-summary.html' %}
+          {% endif %}
 
-        <section class="grantnav-search__content--results">
-        {% for result in results.hits.hits %}
-          {% include 'components/grant-search-result.html' with result=result %}
-        {% endfor %}
-        </section>
+          <section class="grantnav-search__content--filters">
+            {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
 
-        <section class="grantnav-search__content--footer">
-          {% include 'components/pager.html' %}
-        </section>
+            <div class="export-wrapper">
+              <div class="export-label">Export search data:</div>
+
+              <div class="export-button">
+                {% include 'components/export-data-button--csv.html' with data_function='search.csv' query=query_string only %}
+              </div>
+
+              <div class="export-button">
+                {% include 'components/export-data-button--json.html' with data_function='search.json' query=query_string only %}
+              </div> 
+            </div>
+          </section>
+
+          <section class="grantnav-search__content--results">
+          {% for result in results.hits.hits %}
+            {% include 'components/grant-search-result.html' with result=result %}
+          {% endfor %}
+          </section>
+
+          <section class="grantnav-search__content--footer">
+            {% include 'components/pager.html' %}
+          </section>
+        </div>
       </div>
-    </div>
-    {% elif results %}
+      {% elif results %}
 
-     <div class="col-xs-9">
-        <div id="no-results">
-          <h1>No Results</h1>
-          <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
-          <ul>
-          <li>Using more general terms</li>
-          <li>Checking your spelling</li>
-          </ul>
-        </div>
-     </div>
+      <div class="spacer-4">
+          <div id="no-results">
+            <h1>No Results</h1>
+            <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
+            <ul>
+            <li>Using more general terms</li>
+            <li>Checking your spelling</li>
+            </ul>
+          </div>
+      </div>
 
-  {% elif search_error %}
-   
-     <div class="col-xs-9">
-        <div id="not_valid">
-          <h1>Search input is not valid</h1>
-          <p>We can't find what you tried to search for.<br>Try something like:</p>
-          <ul>
-          <li>Using more general terms</li>
-          <li>Checking your spelling</li>
-        </div>
-     </div>
-   
-  {% endif %}
+    {% elif search_error %}
+    
+      <div class="spacer-4">
+          <div id="not_valid">
+            <h1>Search input is not valid</h1>
+            <p>We can't find what you tried to search for.<br>Try something like:</p>
+            <ul>
+            <li>Using more general terms</li>
+            <li>Checking your spelling</li>
+          </div>
+      </div>
+    {% endif %}
+  </main>
 {% endblock %}
