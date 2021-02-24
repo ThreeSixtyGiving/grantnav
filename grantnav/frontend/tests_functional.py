@@ -421,7 +421,6 @@ def test_currency_facet(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-button").click()
     element = browser.find_element_by_xpath("//div[@class='filter-list'][1]")
-    print('element1', element.get_attribute('innerHTML'))
     element.click()
     browser.find_element_by_xpath("//div[@class='filter-list'][1]/details/div/ul[@class='filter-list__listing']/li[2]/a").click()
     browser.find_element_by_xpath("//div[@class='filter-list'][2]").click()
