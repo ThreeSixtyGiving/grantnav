@@ -308,7 +308,7 @@ template, [hidden] {
   height: 0;
   clear: both; }
 
-.u-material-icons {
+.u-material-icons, .modal__close:after {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -2192,6 +2192,46 @@ p {
     font-size: 20px;
     margin-bottom: 8px; }
 
+.modal {
+  transition: all .4s ease;
+  align-items: center;
+  justify-content: center;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100vw;
+  height: 100vh; }
+  .modal__overlay {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    background-color: hsl(var(--white-hsl), 0.95); }
+  .modal__trigger {
+    cursor: pointer; }
+  .modal__close {
+    all: unset;
+    float: right; }
+    .modal__close:after {
+      content: 'close'; }
+  .modal__window {
+    position: relative;
+    padding: 40px;
+    max-height: 90vh;
+    max-width: 80vw;
+    overflow-y: scroll;
+    background-color: hsl(var(--white-hsl), 1);
+    box-shadow: 8px 8px 32px hsl(var(--base-hsl), 0.1); }
+
+.modal.modal--shown {
+  display: flex; }
+
+body.modal--shown {
+  overflow: hidden; }
+
 .dataTables_filter {
   margin: 8px; }
 
@@ -2201,8 +2241,48 @@ p {
 .input-sm {
   margin-left: 8px; }
 
+.panel {
+  display: flex;
+  flex-direction: column;
+  border-left: 4px solid #DE6E26;
+  box-shadow: 1px 4px 4px 4px rgba(0, 0, 0, 0.06);
+  padding: 20px 24px; }
+
 .panel-heading {
   padding: 4px; }
 
 .full-width {
   width: 100%; }
+
+.pull-right {
+  float: right; }
+
+dl {
+  margin-top: 0;
+  margin-bottom: 14px; }
+
+dt,
+dd {
+  line-height: 1; }
+
+dd {
+  margin-left: 0; }
+
+.dl-horizontal, .top-stats {
+  font-size: 14px; }
+  .dl-horizontal dd:before, .dl-horizontal dd:after, .top-stats dd:before, .top-stats dd:after {
+    content: " ";
+    display: table; }
+  .dl-horizontal dd:after, .top-stats dd:after {
+    clear: both; }
+  @media (min-width: 180px) {
+    .dl-horizontal dt, .top-stats dt {
+      float: left;
+      width: 160 px;
+      clear: left;
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
+    .dl-horizontal dd, .top-stats dd {
+      margin-left: 180px; } }
