@@ -9,7 +9,7 @@
       {% if results.aggregations.currency.buckets %}
         {% include 'components/filters/lists/filter-list-currency.html' %}
       {% endif %}
-      {% if results.aggregations.amountAwarded.buckets %}
+      {% if results.aggregations.amountAwardedFixed.buckets %}
         {% include 'components/filters/lists/filter-list-amount-awarded.html' %}
       {% endif %}
       {% if results.aggregations.recipientRegionName.buckets %}
