@@ -64,9 +64,12 @@
         </div>
       </div>
 
+      <div class="panel-heading">
+        <h4>Grant Details</h4>
+      </div>
       <div class="panel-body">
         <div class="table table--zebra">
-          <table class="full-width">
+          <table class="table table--zebra table--primary dt-responsive full-width">
             <tbody>
               {% for key, grant in grant.source|flatten %}
               <tr> 
@@ -89,9 +92,9 @@
     {% if grant.source|get_additional_fields %}
     <div class="spacer-4">
       <div class="panel panel-default bottom-space">
-        <div class="panel-heading">Additional data added by GrantNav</div>
+        <div class="panel-heading"><h4>Additional data added by GrantNav</h4></div>
         <div class="table table--zebra">
-          <table class="full-width">
+          <table class="table table--zebra table--secondary dt-responsive full-width">
             <tbody>
               {% for key, grant in grant.source|get_additional_fields %}
               <tr> <td style="width: 40%"> <b>{{ key }} </b> </td> <td> {{grant}} </td>
