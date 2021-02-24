@@ -6,13 +6,14 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
+import chromedriver_autoinstaller
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
 
 # Data from Branch "test-currency"
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/560a8d9f21a069a9d51468850188f34ae72a0ec3/'
 
-
+chromedriver_autoinstaller.install()
 BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
 
 
@@ -21,7 +22,7 @@ def browser(request):
     if BROWSER == 'ChromeHeadless':
         chrome_options = Options()
         chrome_options.add_argument("--headless")
-        browser = webdriver.Chrome(chrome_options=chrome_options)
+        browser = webdriver.Chrome(options=chrome_options)
     elif BROWSER == "Firefox":
         # Make downloads work
         profile = webdriver.FirefoxProfile()
@@ -65,17 +66,18 @@ def test_home(provenance_dataload, server_url, browser):
     browser.get(server_url)
     assert 'GrantNav' in browser.find_element_by_tag_name('body').text
 
-    assert 'Cookies disclaimer' in browser.find_element_by_id('CookielawBanner').text
-    browser.find_element_by_class_name("btn").click()
+    # Cookie banner is currently disabled until analytics issues are resolved
+    # assert 'Cookies disclaimer' in browser.find_element_by_id('CookielawBanner').text
+    # browser.find_element_by_class_name("btn").click()
     browser.get(server_url)
-    assert 'Cookies disclaimer' not in browser.find_element_by_tag_name('body').text
+    # assert 'Cookies disclaimer' not in browser.find_element_by_tag_name('body').text
     assert '360Giving Data Standard' in browser.find_element_by_tag_name('body').text
     assert '360Giving data standard' not in browser.find_element_by_tag_name('body').text
 
 
 @pytest.mark.parametrize(('link_text'), [
     ('Forum'),
-    ('Help'),
+    ('Get Help'),
     ])
 def test_navbar_links(provenance_dataload, server_url, browser, link_text):
     browser.get(server_url)
@@ -110,26 +112,26 @@ def test_footer_links(provenance_dataload, server_url, browser, link_text):
     browser.get(server_url)
     browser.find_element_by_link_text(link_text)
 
+### We are replacing help links with contextual links, or different links ###
+# def test_export_icons_help_link(provenance_dataload, server_url, browser):
+#     browser.get(server_url)
+#     browser.find_element_by_class_name("large-search-button").click()
+#     browser.find_element_by_id("files_help_link").click()
 
-def test_export_icons_help_link(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    browser.find_element_by_class_name("large-search-icon").click()
-    browser.find_element_by_id("files_help_link").click()
-
-    assert browser.current_url == server_url + '/help#export_files'
+#     assert browser.current_url == server_url + '/help#export_files'
 
 
-def test_filter_by_help_link(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    browser.find_element_by_class_name("large-search-icon").click()
-    browser.find_element_by_id("filter_by_help_link").click()
+# def test_filter_by_help_link(provenance_dataload, server_url, browser):
+#     browser.get(server_url)
+#     browser.find_element_by_class_name("large-search-button").click()
+#     browser.find_element_by_id("filter_by_help_link").click()
 
-    assert browser.current_url == server_url + '/help#filters'
+#     assert browser.current_url == server_url + '/help#filters'
 
 
 def test_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
     # Total number of expected grants 4,764
     assert '4,764' in browser.find_element_by_tag_name('body').text
     assert 'Lloyds Bank Foundation for England and Wales (4,116)' in browser.find_element_by_tag_name('body').text
@@ -149,7 +151,7 @@ def test_search_by_titles_and_descriptions_radio_button_in_home(provenance_datal
 
 def test_search_by_titles_and_descriptions_radio_button_in_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert "Titles & Descriptions" in browser.find_element_by_tag_name('body').text
 
@@ -162,7 +164,7 @@ def test_search_by_titles_and_descriptions(provenance_dataload, server_url, brow
     # search "laboratory"
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('laboratory')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert "New science laboratory" in browser.find_element_by_tag_name('body').text
     assert "laboratories" in browser.find_element_by_tag_name('body').text
@@ -174,7 +176,7 @@ def test_search_by_titles_and_descriptions(provenance_dataload, server_url, brow
     # search "laboratory" in "Search All"
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('laboratory')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert "New science laboratory" in browser.find_element_by_tag_name('body').text
     assert "laboratories" in browser.find_element_by_tag_name('body').text
@@ -185,31 +187,31 @@ def test_search_by_titles_and_descriptions(provenance_dataload, server_url, brow
 
 def test_search_current_url(provenance_dataload, server_url, browser):
     browser.get(server_url)
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     current_url_split_by_json_query = browser.current_url.split('?')
     assert current_url_split_by_json_query[0][-6:] == 'search'
 
 
-def test_search_two_words_without_quotes(provenance_dataload, server_url, browser):
-    """
-    When a user's search query is 2+ words without quotes,
-    we want to inform the user that with quotes will have a better search result.
-    """
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('social change')
-    browser.find_element_by_class_name("large-search-icon").click()
+# def test_search_two_words_without_quotes(provenance_dataload, server_url, browser):
+#     """
+#     When a user's search query is 2+ words without quotes,
+#     we want to inform the user that with quotes will have a better search result.
+#     """
+#     browser.get(server_url)
+#     search_box = browser.find_element_by_class_name("large-search")
+#     search_box.send_keys('social change')
+#     browser.find_element_by_class_name("large-search-button").click()
 
-    assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
-           in browser.find_element_by_tag_name('body').text
+#     assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
+#            in browser.find_element_by_tag_name('body').text
 
 
 def test_search_two_words_with_single_quotes(provenance_dataload, server_url, browser):
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys("'social change'")
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
            not in browser.find_element_by_tag_name('body').text
@@ -219,7 +221,7 @@ def test_search_two_words_with_double_quotes(provenance_dataload, server_url, br
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('"social change"')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
            not in browser.find_element_by_tag_name('body').text
@@ -232,7 +234,7 @@ def test_search_includes_and(provenance_dataload, server_url, browser):
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('mental and health')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert 'The AND keyword (not case-sensitive) means that results must have both words present. ' \
            'If you\'re looking for a phrase that has the word "and" in it, put quotes around the phrase ' \
@@ -243,7 +245,7 @@ def test_search_does_not_include_and(provenance_dataload, server_url, browser):
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('secondhand clothes')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert 'The AND keyword (not case-sensitive) means that results must have both words present. ' \
            'If you\'re looking for a phrase that has the word "and" in it, put quotes around the phrase ' \
@@ -257,7 +259,7 @@ def test_search_includes_or(provenance_dataload, server_url, browser):
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('mental or health')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert 'The OR keyword (not case-sensitive) means that results must have one of the words present. ' \
            'This is the default. If you\'re looking for a phrase that has the word "or" in ' \
@@ -268,7 +270,7 @@ def test_search_does_not_include_or(provenance_dataload, server_url, browser):
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('meteor clothes')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert 'The OR keyword (not case-sensitive) means that results must have one of the words present. ' \
            'This is the default. If you\'re looking for a phrase that has the word "or" in ' \
@@ -283,7 +285,7 @@ def test_search_display_tip(provenance_dataload, server_url, browser):
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('social change')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert 'Tip: ' in browser.find_element_by_tag_name('body').text
 
@@ -292,7 +294,7 @@ def test_search_do_not_display_tip(provenance_dataload, server_url, browser):
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('grant')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert 'Tip: ' not in browser.find_element_by_tag_name('body').text
 
@@ -305,7 +307,7 @@ def test_search_display_advanced_search_link(provenance_dataload, server_url, br
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('social change')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert 'For more tips, see Advanced Search' in browser.find_element_by_tag_name('body').text
 
@@ -314,7 +316,7 @@ def test_search_advanced_search_correct_link(provenance_dataload, server_url, br
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('social change')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
     browser.find_element_by_class_name("advanced_search").click()
 
     assert browser.current_url == 'https://grantnav.threesixtygiving.org/help#advanced_search'
@@ -324,7 +326,7 @@ def test_search_do_not_display_advance_search_link(provenance_dataload, server_u
     browser.get(server_url)
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('grant')
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
 
     assert 'For more tips, see Advanced Search' not in browser.find_element_by_tag_name('body').text
 
@@ -332,7 +334,7 @@ def test_search_do_not_display_advance_search_link(provenance_dataload, server_u
 def test_bad_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_name("text_query").send_keys(" £s:::::afdsfas")
-    browser.find_element_by_class_name("large-search-icon").click()
+    browser.find_element_by_class_name("large-search-button").click()
     not_valid = browser.find_element_by_id('not_valid').text
     assert 'Search input is not valid' in not_valid
     assert "We can't find what you tried to search for." in not_valid
@@ -417,15 +419,20 @@ def test_disclaimers(server_url, browser, path, identifier, text):
 
 def test_currency_facet(provenance_dataload, server_url, browser):
     browser.get(server_url)
-    browser.find_element_by_class_name("large-search-icon").click()
-    browser.find_element_by_link_text("USD (4)").click()
+    browser.find_element_by_class_name("large-search-button").click()
+    element = browser.find_element_by_xpath("//div[@class='filter-list'][1]")
+    print('element1', element.get_attribute('innerHTML'))
+    element.click()
+    browser.find_element_by_xpath("//div[@class='filter-list'][1]/details/div/ul[@class='filter-list__listing']/li[2]/a").click()
+    browser.find_element_by_xpath("//div[@class='filter-list'][2]").click()
     assert 'USD 0 - USD 500' in browser.find_element_by_tag_name('body').text
 
 
 def test_amount_awarded_facet(provenance_dataload, server_url, browser):
     browser.get(server_url)
-    browser.find_element_by_class_name("large-search-icon").click()
-    browser.find_element_by_link_text("£1,000 - £5,000 (42)").click()
+    browser.find_element_by_class_name("large-search-button").click()
+    browser.find_element_by_xpath("//div[@class='filter-list'][2]").click()
+    browser.find_element_by_xpath("//div[@class='filter-list'][2]/details/div/ul[@class='filter-list__listing']/li[3]/a").click()
     total_grants = browser.find_elements_by_css_selector(".top-stats-search dd")[0].text
     assert "42" in total_grants, "Expected number of grants not found"
 
