@@ -49,7 +49,7 @@
         </div>
         <div class="panel-body">
           <div class="table table--zebra">
-            <table id="grants_datatable">
+            <table class="table table--zebra table--primary dt-responsive" id="grants_datatable" style="width: 100%">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -65,7 +65,11 @@
       </div>
     </div>
 
-    {% endblock %}  
+    {% endblock %}
+    {% block extra_style %}
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css">
+    {% endblock %}
     {% block extra_scripts %}
     <script
       type="text/javascript"

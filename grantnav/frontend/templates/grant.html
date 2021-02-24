@@ -90,8 +90,8 @@
     <div class="spacer-4">
       <div class="panel panel-default bottom-space">
         <div class="panel-heading">Additional data added by GrantNav</div>
-        <div class="table-responsive">
-          <table class="table table-bordered">
+        <div class="table table--zebra">
+          <table class="full-width">
             <tbody>
               {% for key, grant in grant.source|get_additional_fields %}
               <tr> <td style="width: 40%"> <b>{{ key }} </b> </td> <td> {{grant}} </td>
