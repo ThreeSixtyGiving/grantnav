@@ -27,8 +27,8 @@
     align-items: flex-start;
 
     @include breakpoint($regular) {
-      min-width: 280px;
-      max-width: 280px;
+      min-width: 320px;
+      max-width: 320px;
       margin-right: 32px;
     }
 
@@ -47,6 +47,7 @@
 
   &__content {
     padding-top: 0px;
+    width: 100%;
 
     @include breakpoint($regular) {
       padding-top: 24px;

@@ -32,35 +32,33 @@
         </div>
       </div>
     </div>
-    <div class="spacer-4">
-      <div class="panel panel-info">
-        <div class="panel-heading grantnav-datatable__content--filters">
-          <h4>Grants</h4>
-          <div class="export-wrapper">
-            <div class="export-label">Export table data:</div>
-            <div class="export-button">
-              {% include 'components/export-data-button--csv.html' with data_function='recipient.csv' only %}
-            </div>
+    <div class="section">
+      <div class="grantnav-datatable__content--filters">
+        <h4>Grants</h4>
+        <div class="export-wrapper">
+          <div class="export-label">Export table data:</div>
+          <div class="export-button">
+            {% include 'components/export-data-button--csv.html' with data_function='recipient.csv' only %}
+          </div>
 
-            <div class="export-button">
-              {% include 'components/export-data-button--json.html' with data_function='recipient.json' only %}
-            </div>
+          <div class="export-button">
+            {% include 'components/export-data-button--json.html' with data_function='recipient.json' only %}
           </div>
         </div>
-        <div class="panel-body">
-          <div class="table table--zebra">
-            <table class="table table--zebra table--primary dt-responsive" id="grants_datatable" style="width: 100%">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Amount</th>
-                  <th>Funder</th>
-                  <th>Title</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
+      </div>
+
+        <div class="table table--zebra">
+          <table class="table table--zebra table--primary dt-responsive" id="grants_datatable" style="width: 100%">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Funder</th>
+                <th>Title</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+          </table>
         </div>
       </div>
     </div>

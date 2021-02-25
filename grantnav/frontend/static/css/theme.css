@@ -767,8 +767,8 @@ p {
   align-items: flex-start; }
   @media (min-width: 60em) {
     .grantnav-search__sidebar {
-      min-width: 280px;
-      max-width: 280px;
+      min-width: 320px;
+      max-width: 320px;
       margin-right: 32px; } }
   .grantnav-search__sidebar--heading {
     font-size: 24px;
@@ -780,7 +780,8 @@ p {
     margin-bottom: 24px; }
 
 .grantnav-search__content {
-  padding-top: 0px; }
+  padding-top: 0px;
+  width: 100%; }
   @media (min-width: 60em) {
     .grantnav-search__content {
       padding-top: 24px; } }
