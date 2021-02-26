@@ -1305,7 +1305,7 @@ def region(request, region):
         region = re.match(r'(.*)\.\w*$', region).group(1)
 
     query = {"query": {"bool": {"filter":
-                [{"term": {"recipientRegionName": region}}]}},
+                [{"term": {"additional_data.recipientRegionName": region}}]}},
             "aggs": {
                 "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                 "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
