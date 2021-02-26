@@ -112,7 +112,7 @@ def test_footer_links(provenance_dataload, server_url, browser, link_text):
     browser.get(server_url)
     browser.find_element_by_link_text(link_text)
 
-### We are replacing help links with contextual links, or different links ###
+# We are replacing help links with contextual links, or different links
 # def test_export_icons_help_link(provenance_dataload, server_url, browser):
 #     browser.get(server_url)
 #     browser.find_element_by_class_name("large-search-button").click()

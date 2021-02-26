@@ -924,15 +924,17 @@ def get_radio_items(context, default_field):
     context['searchRadio'].append({"value": "recipientLocation", "name": "Locations", "checked": True if default_field == "recipientLocation" else False})
     context['searchRadio'].append({"value": "recipientOrganization.name", "name": "Recipients", "checked": True if default_field == "recipientOrganization.name" else False})
     context['searchRadio'].append({"value": "title_and_description", "name": "Titles & Descriptions", "checked": True if default_field == "title_and_description" else False})
-    context['default_field_name'] = [radioItem['name'] for radioItem in context['searchRadio'] if radioItem['checked'] == True][0]
+    context['default_field_name'] = [radioItem['name'] for radioItem in context['searchRadio'] if radioItem['checked'] is True][0]
+
 
 def get_dropdown_filters(context):
     context['dropdownFilterOptions'] = []
-    context['dropdownFilterOptions'].append({"value": "_score desc" ,"label": "Best Match"})
-    context['dropdownFilterOptions'].append({"value": "amountAwarded desc" ,"label": "Amount - Highest First"})
-    context['dropdownFilterOptions'].append({"value": "amountAwarded asc" ,"label": "Amount - Lowest First"})
-    context['dropdownFilterOptions'].append({"value": "awardDate desc" ,"label": "Award Date - Latest First"})
-    context['dropdownFilterOptions'].append({"value": "awardDate asc" ,"label": "Award Date - Earliest First"})
+    context['dropdownFilterOptions'].append({"value": "_score desc", "label": "Best Match"})
+    context['dropdownFilterOptions'].append({"value": "amountAwarded desc", "label": "Amount - Highest First"})
+    context['dropdownFilterOptions'].append({"value": "amountAwarded asc", "label": "Amount - Lowest First"})
+    context['dropdownFilterOptions'].append({"value": "awardDate desc", "label": "Award Date - Latest First"})
+    context['dropdownFilterOptions'].append({"value": "awardDate asc", "label": "Award Date - Earliest First"})
+
 
 def flatten_mapping(mapping, current_path=''):
     for key, value in mapping.items():
