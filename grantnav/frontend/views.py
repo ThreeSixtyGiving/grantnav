@@ -1320,10 +1320,7 @@ def region(request, region):
     elif result_format == "json":
         return grants_json_paged(query)
 
-    print('query', query)
-    print('results_size', results_size)
     results = get_results(query, results_size)
-    print('results', results)
 
     if results['hits']['total']['value'] == 0:
         raise Http404
