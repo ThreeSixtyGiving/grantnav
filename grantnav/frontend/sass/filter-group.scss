@@ -51,7 +51,7 @@
       }
     }
 
-    &::-webkit-details-marker {
+    &::marker {
       display: none;
     }
   }

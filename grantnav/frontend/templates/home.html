@@ -8,10 +8,17 @@
 
 {% block main_content %}
   <div class="grid grid--three-columns">
-    {% include 'components/homepage-card.html' with title="Funders" value=results.aggregations.funder_count.value|get_amount link="funders" %}
+    {% include 'components/homepage-card.html' with title="Funders" button_text="Funder summary" value=results.aggregations.funder_count.value|get_amount link="funders" %}
 
-    {% include 'components/homepage-card.html' with title="Recipients" value=results.aggregations.recipient_count.value|get_amount link="recipients" %}
+    {% include 'components/homepage-card.html' with title="Recipients" button_text="Recipient summary" value=results.aggregations.recipient_count.value|get_amount link="recipients" %}
 
-    {% include 'components/homepage-card.html' with title="Grants" value=results.hits.total|get_amount link="search" %}
+    {% include 'components/homepage-card.html' with title="Grants" button_text="See all grants" value=results.hits.total|get_amount link="search" %}
   </div>
+  <div class="grid margin-bottom:4">
+    {% include 'components/covid-card.html' %}
+  </div>
+  <div class="grid margin-bottom:4">
+    {% include 'components/frame.html' with url="https://www.youtube.com/watch?v=t6nzLXuntno" %}
+  </div>
+
 {% endblock %}
