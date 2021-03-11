@@ -33,7 +33,6 @@ def provenance_dataload(dataload, settings, tmpdir):
     ('GrantNav'),
     ('Search'),
     ('Help'),
-    ('Advanced Search')
     ])
 def test_home(provenance_dataload, client, expected_text):
     response = client.get('/')
