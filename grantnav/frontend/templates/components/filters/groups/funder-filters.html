@@ -1,12 +1,13 @@
 <div class="filter-group">
   <details class="filter-group__accordion" {% if opened %} open{% endif %}>
     <summary class="filter-group__label">
-      <div>Location Filters</div>
+      <div>Funder</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-group_contents-wrapper">
-      {% include 'components/filters/lists/filter-list-region.html' %}
-      {% include 'components/filters/lists/filter-list-district.html' %}
+      {% if results.aggregations.fundingOrganization.buckets %}
+        {% include 'components/filters/lists/filter-list-funding-org.html' %}
+      {% endif %}
     </div>
   </details>
 </div>

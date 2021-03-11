@@ -2,7 +2,7 @@
 <div class="filter-list">
   <details class="filter-list__accordion" {% if results.aggregations.recipientRegionName.clear_url %} open{% endif %}>
     <summary class="filter-list__label">
-      <div>Recipient Region {% if results.aggregations.recipientRegionName.clear_url %} <a href="{{results.aggregations.recipientRegionName.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
+      <div>Country and region {% if results.aggregations.recipientRegionName.clear_url %} <a href="{{results.aggregations.recipientRegionName.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-list__contents-wrapper">

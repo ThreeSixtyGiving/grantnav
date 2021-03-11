@@ -1,11 +1,13 @@
 <div class="filter-group">
   <details class="filter-group__accordion" {% if opened %} open{% endif %}>
     <summary class="filter-group__label">
-      <div>Time Filters</div>
+      <div>Recipient</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-group_contents-wrapper">
-      {% include 'components/filters/lists/filter-list-year.html' %}
+      {% if results.aggregations.recipientOrganization.buckets %}
+        {% include 'components/filters/lists/filter-list-recipient-org.html' %}
+      {% endif %}
     </div>
   </details>
 </div>
