@@ -19,6 +19,44 @@
  *  parameter 3 (0-100% | 0): the luminosity of the color
  *  parameter 4 (optional, 1 by default): the alpha channel of the color
  */
+:root {
+  --gray-05-hsl: 0, 0%, 95%;
+  --gray-10-hsl: 0, 0%, 90%;
+  --gray-20-hsl: 0, 0%, 80%;
+  --gray-30-hsl: 0, 0%, 70%;
+  --gray-70-hsl: 0, 0%, 30%;
+  --gray-80-hsl: 0, 0%, 20%;
+  --black-hsl:   0, 0%, 10%;
+  --white-hsl:   0, 100%, 100%;
+  --success-green-hsl:  140, 100%, 17%;
+  --error-red-hsl:        5,  81%, 95%;
+  --warning-yellow-hsl:  45, 78%, 98%;
+  --base-hsl:     176, 44%, 15%;
+  --orange-hsl:    23, 74%, 51%;
+  --teal-hsl:     186, 42%, 51%;
+  --yellow-hsl:    47, 86%, 55%;
+  --red-hsl:        2, 66%, 44%;
+  --teal-dark-hsl: 185, 40%, 30%;
+  --orange-dark-hsl: 23, 73%, 38%;
+  --yellow-dark-hsl: 47, 85%, 30%;
+  --default-hsl: var(--base-hsl);
+  --primary-hsl: var(--orange-hsl);
+  --accent-hsl:  var(--teal-hsl);
+  --color-error:   hsla(var(--red-hsl), 1);
+  --color-warning: hsla(var(--yellow-hsl), 1);
+  --color-success: hsla(var(--success-green-hsl), 1);
+  --color-base:     hsla(var(--base-hsl),   1);
+  --color-orange:   hsla(var(--orange-hsl), 1);
+  --color-teal:     hsla(var(--teal-hsl),   1);
+  --color-yellow:   hsla(var(--yellow-hsl), 1);
+  --color-red:      hsla(var(--red-hsl),    1);
+  --color-orange-dark: hsla(var(--orange-dark-hsl), 1);
+  --color-teal-dark:   hsla(var(--teal-dark-hsl),   1);
+  --color-yellow-dark: hsla(var(--yellow-dark-hsl), 1);
+  --color-default: hsla(var(--base-hsl),   1);
+  --color-primary: hsla(var(--orange-hsl), 1);
+  --color-accent:  hsla(var(--teal-hsl),   1); }
+
 *,
 *::before,
 *::after {
@@ -34,7 +72,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 body {
-  color: var(--colors-default);
+  color: var(--color-default);
   font-family: var(--fonts-primary);
   font-size: var(--text-base-size);
   font-weight: 300;
@@ -522,44 +560,6 @@ template, [hidden] {
 
 .spacer-10 {
   padding-bottom: 80px; }
-
-:root {
-  --gray-05-hsl: 0, 0%, 95%;
-  --gray-10-hsl: 0, 0%, 90%;
-  --gray-20-hsl: 0, 0%, 80%;
-  --gray-30-hsl: 0, 0%, 70%;
-  --gray-70-hsl: 0, 0%, 30%;
-  --gray-80-hsl: 0, 0%, 20%;
-  --black-hsl:   0, 0%, 10%;
-  --white-hsl:   0, 100%, 100%;
-  --success-green-hsl:  140, 100%, 17%;
-  --error-red-hsl:        5,  81%, 95%;
-  --warning-yellow-hsl:  45, 78%, 98%;
-  --base-hsl:     176, 44%, 15%;
-  --orange-hsl:    23, 74%, 51%;
-  --teal-hsl:     186, 42%, 51%;
-  --yellow-hsl:    47, 86%, 55%;
-  --red-hsl:        2, 66%, 44%;
-  --teal-dark-hsl: 185, 40%, 30%;
-  --orange-dark-hsl: 23, 73%, 38%;
-  --yellow-dark-hsl: 47, 85%, 30%;
-  --default-hsl: var(--base-hsl);
-  --primary-hsl: var(--orange-hsl);
-  --accent-hsl:  var(--teal-hsl);
-  --color-error:   hsla(var(--red-hsl), 1);
-  --color-warning: hsla(var(--yellow-hsl), 1);
-  --color-success: hsla(var(--success-green-hsl), 1);
-  --color-base:     hsla(var(--base-hsl),   1);
-  --color-orange:   hsla(var(--orange-hsl), 1);
-  --color-teal:     hsla(var(--teal-hsl),   1);
-  --color-yellow:   hsla(var(--yellow-hsl), 1);
-  --color-red:      hsla(var(--red-hsl),    1);
-  --color-orange-dark: hsla(var(--orange-dark-hsl), 1);
-  --color-teal-dark:   hsla(var(--teal-dark-hsl),   1);
-  --color-yellow-dark: hsla(var(--yellow-dark-hsl), 1);
-  --color-default: hsla(var(--base-hsl),   1);
-  --color-primary: hsla(var(--orange-hsl), 1);
-  --color-accent:  hsla(var(--teal-hsl),   1); }
 
 :root {
   --text-base-size: 1rem;
