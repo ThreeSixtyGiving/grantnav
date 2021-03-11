@@ -31,15 +31,17 @@
       <span class="grant-search-result__data-item--label">Recipient:</span>
       <span><a href="{% url 'recipient' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:40 }}</a></span>
     </div>
-
-    <div class="grant-search-result__data-item">
-      <span class="grant-search-result__data-item--label">Region:</span>
-      <span><a href="{% url 'region' result.source.additional_data.recipientRegionName %}">{{ result.source.additional_data.recipientRegionName }}</a></span>
-    </div>
-
+    {% if result.source.additional_data.recipientRegionName %}
+      <div class="grant-search-result__data-item">
+        <span class="grant-search-result__data-item--label">Region:</span>
+        <span><a href="{% url 'region' result.source.additional_data.recipientRegionName %}">{{ result.source.additional_data.recipientRegionName }}</a></span>
+      </div>
+    {% endif %}
+    {% if result.source.additional_data.recipientDistrictName %}
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">District:</span>
       <span><a href="{% url 'district' result.source.additional_data.recipientDistrictName %}">{{ result.source.additional_data.recipientDistrictName }}</a></span>
     </div>
+    {% endif %}
   </div>
 </div>
