@@ -19,13 +19,6 @@
             </a>
           </li>
         {% endfor %}
-          {% if results.aggregations.fundingOrganization.buckets|length > 2 %}
-          <li>
-            <a class="filter-list__expand-button" href="{{see_more_url.fundingOrganization.url}}">
-              <span class="see-more">{% if see_more_url.fundingOrganization.more%}See More{% else %}See Less{% endif %}</span>
-            </a>
-          </li>
-        {% endif %}
       </ul>
     </div>
   </details>

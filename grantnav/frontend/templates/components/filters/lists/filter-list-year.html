@@ -20,13 +20,6 @@
           </li>
           {% endif %}
         {% endfor %}
-          {% if results.aggregations.awardYear.buckets|length > 2 %}
-          <li>
-            <a class="filter-list__expand-button" href="{{see_more_url.awardYear.url}}">
-              <span class="see-more">{% if see_more_url.awardYear.more %}See More{% else %}See Less{% endif %}</span>
-            </a>
-          </li>
-        {% endif %}
       </ul>
     </div>
   </details>

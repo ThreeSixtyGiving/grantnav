@@ -1,5 +1,5 @@
 {% load get_facet_org_name get_amount from frontend %}
-<div class="filter-list">
+<div class="filter-list filter-list--with-checkboxes">
   <details class="filter-list__accordion" {% if results.aggregations.recipientOrganization.clear_url %} open{% endif %}>
     <a class="anchor" id="recipientOrganization"></a>
     <summary class="filter-list__label">
@@ -7,27 +7,52 @@
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-list__contents-wrapper">
-      {% block filterOption %}
-      {% endblock filterOption %}
-      <ul class="filter-list__listing">
+      <form class="filter-list__form" action="#">
+        {% block filterRadios %}
+          <div class="filter-list__form--radios">
+            <div class="filter-list__form--radio-item">
+              <input class="screen-reader-only" type="radio" id="include" name="radioGroupName" value="include" checked>
+              <label for="include">Include selected</label>
+            </div>
+            <div class="filter-list__form--radio-item">
+              <input class="screen-reader-only" type="radio" id="exclude" name="radioGroupName" value="exclude">
+              <label for="exclude">Exclude Selected</label>
+            </div>
+          </div>
+        {% endblock filterRadios %}
+        <ul class="filter-list__listing">
           {% for bucket in results.aggregations.recipientOrganization.buckets %}
             <li>
-            <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
-              {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small>
-              {% if bucket.selected %}
-                <span class="screen-reader-only">(active filter)</span>
-              {% endif%}
-            </a>
-          </li>
-        {% endfor %}
-          {% if results.aggregations.recipientOrganization.buckets|length > 2 %}
-          <li>
-            <a class="filter-list__expand-button" href="{{see_more_url.recipientOrganization.url}}">
-              <span class="see-more">{% if see_more_url.recipientOrganization.more %}See More{% else %}See Less{% endif %}</span>
-            </a>
-          </li>
-        {% endif %}
-      </ul>
+              <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
+                {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small>
+                {% if bucket.selected %}
+                  <span class="screen-reader-only">(active filter)</span>
+                {% endif%}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <div class="filter-list__form--summary">
+          <div class="filter-list__form--summary-label">Selected:</div>
+          <ul class="filter-list__form--summary-contents">
+            {% for filterItem in filterItems %}
+              <li data-option-id="{{ filterItem.value }}" class="filter-list__form--summary-item {% if filterItem.checked == true %} active{% endif %}">
+                <button class="filter-list__form--summary-button">
+                  <span class="screen-reader-only">(remove)</span>
+                  <span class="filter-list__form--summary-button__label">{{ filterItem.label }}</span>
+                  {% include 'tokens/accordion-toggle-icon.html' %}
+                </button>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="filter-list__form--actions">
+          <input class="filter-list__contents--form-submit" type="submit" value="Apply">
+          <input class="filter-list__contents--form-clear" type="submit" value="Clear all">
+        </div>
+      </form>
     </div>
   </details>
 </div>

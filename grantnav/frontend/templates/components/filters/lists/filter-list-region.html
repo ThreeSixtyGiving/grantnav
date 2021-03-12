@@ -20,13 +20,6 @@
             </a>
           </li>
         {% endfor %}
-          {% if results.aggregations.recipientRegionName.buckets|length > 2 %}
-          <li>
-            <a class="filter-list__expand-button" href="{{see_more_url.recipientRegionName.url}}">
-              <span class="see-more">{% if see_more_url.recipientRegionName.more %}See More{% else %}See Less{% endif %}</span>
-            </a>
-          </li>
-        {% endif %}
       </ul>
     </div>
   </details>
