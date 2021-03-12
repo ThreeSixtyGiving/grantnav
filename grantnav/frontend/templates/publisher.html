@@ -6,69 +6,69 @@
 
 <div class="layout layout--single-column">
   <div class="grantnav-page__content layout__content">
+    <div class="prose">
+      <section class="prose__section">
+        <h1>Publisher: {{ publisher.name }} </h1>
+      </section>
 
-    <div class="section">
-      <h1>Publisher: {{ publisher.name }} </h1>
-    </div>
+      <div class="box box--red">
+        <h2 class="box__heading">Contact this publisher</h2>
+        <p>GrantNav is not directly responsible for any of the data on this site. If you notice a problem with the data please contact the relevant publisher directly.</p>
+      </div>
 
-    <div class="box box--red">
-      <h2 class="box__heading">Contact this publisher</h2>
-      <p>GrantNav is not directly responsible for any of the data on this site. If you notice a problem with the data please contact the relevant publisher directly.</p>
-    </div>
+      <section class="prose__section">
 
-    <div class="section">
+        <p>
+          {% if publisher.datasets.0.distribution.0.accessURL %}
+          {{ publisher.name }} has provided the following link for information about their data: <a
+            href="{{ publisher.datasets.0.distribution.0.accessURL }}">{{ publisher.datasets.0.distribution.0.accessURL }}</a>
+          {% else %}
+          Unfortunately {{ publisher.name }} has not provided a link to information about their data.
+          {% endif %}
 
-      <p>
-        {% if publisher.datasets.0.distribution.0.accessURL %}
-        {{ publisher.name }} has provided the following link for information about their data: <a
-          href="{{ publisher.datasets.0.distribution.0.accessURL }}">{{ publisher.datasets.0.distribution.0.accessURL }}</a>
+        <h2>More information about this publisher</h2>
+
+        <p>
+          360Giving prefix: {{ publisher.prefix }}
+
+        <p>
+          Website: {% if publisher.website %}
+          <a href="{{ publisher.website }}">{{ publisher.website }}</a>
+        </p>
         {% else %}
-        Unfortunately {{ publisher.name }} has not provided a link to information about their data.
+        (none known)
         {% endif %}
 
-      <h2>More information about this publisher</h2>
+      </section>
 
-      <p>
-        360Giving prefix: {{ publisher.prefix }}
-
-      <p>
-        Website: {% if publisher.website %}
-        <a href="{{ publisher.website }}">{{ publisher.website }}</a>
-      </p>
-      {% else %}
-      (none known)
-      {% endif %}
-
+      <section class="prose__section">
+        <h2>Datasets</h2>
+        <table class="table table--primary table--primary dt-responsive">
+          <thead>
+            <tr>
+              <th>Dataset (download link)</th>
+              <th>Retrieved for use in GrantNav</th>
+              <th>License</th>
+              <th>Funders covered</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for dataset in publisher.datasets %}
+            <tr>
+              <td><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
+              <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
+              <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
+              <td>
+                {% for funder_name, funder_id in dataset.funders %}
+                <a href="{% url 'funder'  funder_id %}">{{ funder_name}}</a>
+                {% endfor %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
     </div>
-
-    <div class="section">
-      <h2>Datasets</h2>
-      <table class="table table--primary table--primary dt-responsive">
-        <thead>
-          <tr>
-            <th>Dataset (download link)</th>
-            <th>Retrieved for use in GrantNav</th>
-            <th>License</th>
-            <th>Funders covered</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for dataset in publisher.datasets %}
-          <tr>
-            <td><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
-            <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
-            <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
-            <td>
-              {% for funder_name, funder_id in dataset.funders %}
-              <a href="{% url 'funder'  funder_id %}">{{ funder_name}}</a>
-              {% endfor %}
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-
   </div>
 </div>
 

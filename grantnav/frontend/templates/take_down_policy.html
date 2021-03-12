@@ -2,14 +2,15 @@
 {% load i18n %}
 {% block main_content %}
 
-<div class="layout--single-column spacer-5">
+<div class="layout layout--single-column">
   <div class="grantnav-page__content layout__content">
-    <div>
-      <h1>{% trans "Take Down Policy" %}</h1>
-      <p>{% blocktrans %}This policy sets out what 360Giving will do if it receives a request to remove data that is published to the 360Giving Data Standard.{% endblocktrans %}</p>
+    <div class="prose">
+      <section class="prose__section">
+        <h1>{% trans "Take Down Policy" %}</h1>
+        <p>{% blocktrans %}This policy sets out what 360Giving will do if it receives a request to remove data that is published to the 360Giving Data Standard.{% endblocktrans %}</p>
 
-      <p>{% blocktrans %}Further details can be found on the 360Giving website at: <a href="http://www.threesixtygiving.org/take-down-policy/">http://www.threesixtygiving.org/take-down-policy/</a>{% endblocktrans %}</p>
-
+        <p>{% blocktrans %}Further details can be found on the 360Giving website at: <a href="http://www.threesixtygiving.org/take-down-policy/">http://www.threesixtygiving.org/take-down-policy/</a>{% endblocktrans %}</p>
+      </section>
     </div>
   </div>
 </div>

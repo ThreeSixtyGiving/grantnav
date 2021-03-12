@@ -6,130 +6,128 @@
 
 <div class="layout layout--single-column">
   <div class="grantnav-page__content layout__content">
+    <div class="prose">
+      <section class="prose__section">
+        <h1>Data used in GrantNav</h1>
 
-    <div class="section">
-      <h1>Data used in GrantNav</h1>
+        <p>The data used by GrantNav is open data. GrantNav contains:</p>
+        <ul>
+          <li>Data published to the <a href="http://www.threesixtygiving.org/standard/">360Giving Data Standard</a></li>
+          <li>Data derived from <a
+              href="https://www.ordnancesurvey.co.uk/business-and-government/products/code-point-open.html">Code-Point Open</a>
+          </li>
+          <li>Data derived from <a href="http://data.charitycommission.gov.uk/default.aspx">Charity Commission data</a></li>
+          <li>Data derived from <a
+              href="https://geoportal.statistics.gov.uk/datasets/ward-to-local-government-district-april-2015-lookup-in-northern-ireland">Northern
+              Ireland Ward to Council Area Lookup</a></li>
+        </ul>
 
-      <p>The data used by GrantNav is open data. GrantNav contains:</p>
-      <ul>
-        <li>Data published to the <a href="http://www.threesixtygiving.org/standard/">360Giving Data Standard</a></li>
-        <li>Data derived from <a
+        <p>Data published to the 360Giving Data Standard is taken from an <a href="http://data.threesixtygiving.org/">up to date
+            list on the 360Giving website</a>. The <a href="/datasets/#datasets-used">360Giving Datasets Used table</a> below
+          lists the specific datasets used in GrantNav, how they are licensed, and when they were retrieved.
+        </p>
+
+        <p>We use the <a
             href="https://www.ordnancesurvey.co.uk/business-and-government/products/code-point-open.html">Code-Point Open</a>
-        </li>
-        <li>Data derived from <a href="http://data.charitycommission.gov.uk/default.aspx">Charity Commission data</a></li>
-        <li>Data derived from <a
-            href="https://geoportal.statistics.gov.uk/datasets/ward-to-local-government-district-april-2015-lookup-in-northern-ireland">Northern
-            Ireland Ward to Council Area Lookup</a></li>
-      </ul>
+          data to augment some of the location data. We use the <a
+            href="http://data.charitycommission.gov.uk/default.aspx">Charity Commission data</a> to look up charity names. Both
+          these datasets are licensed under an <a
+            href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government License</a>.
+        <p>
 
-      <p>Data published to the 360Giving Data Standard is taken from an <a href="http://data.threesixtygiving.org/">up to date
-          list on the 360Giving website</a>. The <a href="/datasets/#datasets-used">360Giving Datasets Used table</a> below
-        lists the specific datasets used in GrantNav, how they are licensed, and when they were retrieved.
-      </p>
+        <h2>Updates to data in GrantNav</h2>
 
-      <p>We use the <a
-          href="https://www.ordnancesurvey.co.uk/business-and-government/products/code-point-open.html">Code-Point Open</a>
-        data to augment some of the location data. We use the <a
-          href="http://data.charitycommission.gov.uk/default.aspx">Charity Commission data</a> to look up charity names. Both
-        these datasets are licensed under an <a
-          href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government License</a>.
-      <p>
+        <p>GrantNav is updated on a daily basis. In order for data to be included in updates of GrantNav, the dataset needs to
+          meet these three criteria:</p>
+        <ul>
+          <li>Listed on the <a href="http://data.threesixtygiving.org/">360Giving Data Registry</a>;</li>
+          <li>Openly licensed;</li>
+          <li>Valid according to the schema used for the 360Giving Data Standard.</li>
+        </ul>
 
-      <h2>Updates to data in GrantNav</h2>
+        <p>The data listed on the 360Giving Data Registry is downloaded each day into the 360Giving Datastore. The Datastore
+          then creates a data package which is loaded into Grantnav.</p>
 
-      <p>GrantNav is updated on a daily basis. In order for data to be included in updates of GrantNav, the dataset needs to
-        meet these three criteria:</p>
-      <ul>
-        <li>Listed on the <a href="http://data.threesixtygiving.org/">360Giving Data Registry</a>;</li>
-        <li>Openly licensed;</li>
-        <li>Valid according to the schema used for the 360Giving Data Standard.</li>
-      </ul>
+        <p>When GrantNav is updated, the data included may change. There are several reasons for this:</p>
 
-      <p>The data listed on the 360Giving Data Registry is downloaded each day into the 360Giving Datastore. The Datastore
-        then creates a data package which is loaded into Grantnav.</p>
+        <ul>
+          <li>An organisation has updated its data to include more grants</li>
+          <li>New organisations have published data in the 360Giving Data Standard</li>
+          <li>Data that was previously in GrantNav is no longer available</li>
+          <li>We have received a request from an organisation to take their data down</li>
+        </ul>
 
-      <p>When GrantNav is updated, the data included may change. There are several reasons for this:</p>
+        <p>If a dataset linked from the 360Giving Data Registry becomes invalid according to the 360Giving Data Standard schema
+          or temporarily unavailable, for example because the location of the dataset has changed, the data package loaded into
+          GrantNav will use the last valid downloaded version of the dataset. The 360Giving Datastore keeps a backup version of
+          each dataset for 30 days. If a dataset remains invalid or unavailable the data will disappear from GrantNav after 31
+          days. In these cases, 360Giving will work closely with the relevant organisation to ensure continued access to their
+          data in GrantNav.</p>
+        <p>Take down requests - requests to remove data listed on the 360Giving Data Registry or data from GrantNav - are
+          managed by a separate process which is not affected by the daily update and backup cycles. This process is detailed in
+          our <a href="http://grantnav.threesixtygiving.org/take_down_policy">Take Down Policy</a>.</p>
 
-      <ul>
-        <li>An organisation has updated its data to include more grants</li>
-        <li>New organisations have published data in the 360Giving Data Standard</li>
-        <li>Data that was previously in GrantNav is no longer available</li>
-        <li>We have received a request from an organisation to take their data down</li>
-      </ul>
+        <h2>Reporting a problem with data</h2>
+        <p>If you see a problem with any data on this site, please report it directly to the relevant organisation. To find out
+          how to contact them, see the "Where is this data from?" section at the bottom of each grant page.
 
-      <p>If a dataset linked from the 360Giving Data Registry becomes invalid according to the 360Giving Data Standard schema
-        or temporarily unavailable, for example because the location of the dataset has changed, the data package loaded into
-        GrantNav will use the last valid downloaded version of the dataset. The 360Giving Datastore keeps a backup version of
-        each dataset for 30 days. If a dataset remains invalid or unavailable the data will disappear from GrantNav after 31
-        days. In these cases, 360Giving will work closely with the relevant organisation to ensure continued access to their
-        data in GrantNav.</p>
-      <p>Take down requests - requests to remove data listed on the 360Giving Data Registry or data from GrantNav - are
-        managed by a separate process which is not affected by the daily update and backup cycles. This process is detailed in
-        our <a href="http://grantnav.threesixtygiving.org/take_down_policy">Take Down Policy</a>.</p>
+        <h2 id="datasets-used">360Giving datasets used</h2>
 
-      <h2>Reporting a problem with data</h2>
-      <p>If you see a problem with any data on this site, please report it directly to the relevant organisation. To find out
-        how to contact them, see the "Where is this data from?" section at the bottom of each grant page.
-
-      <h2 id="datasets-used">360Giving datasets used</h2>
-
-      <table class="table table--primary table--zebra dt-responsive">
-        <thead>
-          <tr>
-            <th>Dataset (download link) </th>
-            <th>Publisher (page on GrantNav)</th>
-            <th>Retrieved for use in GrantNav</th>
-            <th>License</th>
-            <th>Funders covered</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for dataset in datasets %}
-          <tr>
-            <td class="table__lead-cell"><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
-            <td><a href="{% url 'publisher' dataset.publisher.prefix %}">{{ dataset.publisher.name }}</a></td>
-            <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
-            <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
-            <td>{% for funder_name, funder_id in dataset.funders %}<a href="{% url 'funder'  funder_id %}">{{ funder_name
-                }}</a> {% endfor %}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+        <table class="table table--primary table--zebra dt-responsive">
+          <thead>
+            <tr>
+              <th>Dataset (download link) </th>
+              <th>Publisher (page on GrantNav)</th>
+              <th>Retrieved for use in GrantNav</th>
+              <th>License</th>
+              <th>Funders covered</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for dataset in datasets %}
+            <tr>
+              <td class="table__lead-cell"><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
+              <td><a href="{% url 'publisher' dataset.publisher.prefix %}">{{ dataset.publisher.name }}</a></td>
+              <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
+              <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
+              <td>{% for funder_name, funder_id in dataset.funders %}<a href="{% url 'funder'  funder_id %}">{{ funder_name
+                  }}</a> {% endfor %}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
 
 
-      <h2 id="reuse">Reusing GrantNav data</h2>
+        <h2 id="reuse">Reusing GrantNav data</h2>
 
-      <p>The data included in GrantNav is made openly available for anyone to access and reuse.</p>
-      <p>All the data has been published under compatible open licenses. The data can be reused for any purposes under the
-        terms of the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution Sharealike license
-          (CC-BY-SA)</a>. This means it can be reused for any purpose provided that it is attributed, and any derived works
-        are released under the same license.
-      </p>
-      <p><strong>To reuse data from GrantNav, you must:</strong></p>
-      <ul>
-        <li>Provide copyright and attribution information about the original data, and</li>
-        <li><a href="#attributing-grantnav">Attribute GrantNav</a></li>
-      </ul>
+        <p>The data included in GrantNav is made openly available for anyone to access and reuse.</p>
+        <p>All the data has been published under compatible open licenses. The data can be reused for any purposes under the
+          terms of the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution Sharealike license
+            (CC-BY-SA)</a>. This means it can be reused for any purpose provided that it is attributed, and any derived works
+          are released under the same license.
+        </p>
+        <p><strong>To reuse data from GrantNav, you must:</strong></p>
+        <ul>
+          <li>Provide copyright and attribution information about the original data, and</li>
+          <li><a href="#attributing-grantnav">Attribute GrantNav</a></li>
+        </ul>
 
-      <h4>Attributing the original data</h4>
-      <p>Details of the copyright and attribution information for the original data can be found in files downloaded from
-        GrantNav.</p>
+        <h4>Attributing the original data</h4>
+        <p>Details of the copyright and attribution information for the original data can be found in files downloaded from
+          GrantNav.</p>
 
-      <h4 id="attributing-grantnav">Attributing GrantNav</h4>
+        <h4 id="attributing-grantnav">Attributing GrantNav</h4>
 
-      <blockquote>
-        <p>Contains data from <a href="">GrantNav</a> a <a href="http://www.threesixtygiving.org/">360Giving</a> application
-          released under the terms of the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
-            Attribution Sharealike license (CC-BY-SA)</a></p>
-      </blockquote>
+        <blockquote>
+          <p>Contains data from <a href="">GrantNav</a> a <a href="http://www.threesixtygiving.org/">360Giving</a> application
+            released under the terms of the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
+              Attribution Sharealike license (CC-BY-SA)</a></p>
+        </blockquote>
 
-      <h2>Attribution</h2>
-      <p>Forum and help icons are from <a href="https://beta.icons8.com/icons">Icons 8</a></p>
-
+        <h2>Attribution</h2>
+        <p>Forum and help icons are from <a href="https://beta.icons8.com/icons">Icons 8</a></p>
+      </section>
     </div>
-
-
   </div>
 </div>
 
