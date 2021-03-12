@@ -46,6 +46,8 @@
   }
 
   &__listing {
+    max-height: 250px;
+    overflow-y: auto;
     list-style: none;
     padding: 0;
     margin: 0;

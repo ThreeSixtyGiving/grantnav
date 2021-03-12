@@ -44,7 +44,7 @@ TERM_FACETS = [
 ]
 
 LESS_SIZE = 3
-MORE_SIZE = 50
+MORE_SIZE = 5000
 SIZE = 20
 
 BASIC_QUERY = {"query": {"bool": {"must":
