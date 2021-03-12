@@ -10,7 +10,7 @@
     <dd>
     {% with total_other=buckets|first|get:"amount_stats"|get:"count"|reverse_minus:results.hits.total.value %}
       {% if total_other %}
-        <a class="javascript-enabled" id="other-currencies-modal" data-toggle="modal" data-target="#summary-info-model">
+        <a class="javascript-enabled modal__trigger" id="other-currencies-modal" data-id="summary-info-model">
           {{total_other|get_amount}}
         </a>
         <noscript>
@@ -23,3 +23,53 @@
     </dd>
   {% endwith %}
 </dl>
+
+<div id="summary-info-model" class="modal" aria-hidden>
+  <div class="modal__overlay modal__trigger" data-id="summary-info-model"></div>
+  <div class="modal__window">
+    <button class="modal__close modal__trigger" data-id="summary-info-model"></button>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Award amounts in other currencies</h4>
+      </div>
+      <div class="modal-body">
+        {% for bucket in results.aggregations.currency_stats.buckets %}
+          {% if not forloop.first %}
+            {% with currency=bucket|get:"key"|upper %}
+              <dl class="dl-horizontal top-stats-search">
+                <dt>Total {{currency}} grants</dt> <dd>{{bucket|get:"amount_stats"|get:"count"|get_amount}}</dd>
+                <dt>Total {{currency}} awarded</dt> <dd>{{currency|currency_symbol}}{{bucket|get:"amount_stats"|get:"sum"|get_amount}}</dd>
+                <dt>Largest {{currency}} award</dt> <dd>{{currency|currency_symbol}}{{bucket|get:"amount_stats"|get:"max"|get_amount}}</dd>
+                <dt>Smallest {{currency}} award</dt> <dd>{{currency|currency_symbol}}{{bucket|get:"amount_stats"|get:"min"|get_amount}}</dd>
+              </dl>
+              <hr>
+            {% endwith %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.modal__trigger').forEach(function(el) {
+el.onclick = function(){
+  const target = el.getAttribute('data-id');
+  const modal = document.getElementById(target);
+  const body = document.getElementsByTagName('body');
+
+
+  if (modal.hasAttribute('aria-hidden')) {
+    
+    modal.removeAttribute('aria-hidden')
+    modal.classList.add('modal--shown');
+    body[0].classList.add('modal--shown');
+
+  } else {
+    modal.setAttribute('aria-hidden', '')
+    modal.classList.remove('modal--shown');
+    body[0].classList.remove('modal--shown');
+  }
+};
+});
+</script>
