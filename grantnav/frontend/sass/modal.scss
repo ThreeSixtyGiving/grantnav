@@ -36,7 +36,7 @@
     max-height: 90vh;
     max-width: 80vw;
     min-width: 22vw;
-    overflow-y: scroll;
+    overflow-y: auto;
     background-color: hsla(var(--white-hsl), 1);
     box-shadow: 8px 8px 32px hsla(var(--base-hsl), .1);
   }
