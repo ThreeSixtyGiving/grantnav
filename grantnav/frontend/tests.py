@@ -96,11 +96,6 @@ def test_search_accents(provenance_dataload, client):
 #    assert "379" in str(response.content)
 
 
-def test_help_page(provenance_dataload, client):
-    response = client.get('/help')
-    assert 'Help with using GrantNav' in str(response.content)
-
-
 def test_json_download(provenance_dataload, client):
     initial_response = client.get('/search.json?text_query=gardens')
     assert initial_response.status_code == 302
