@@ -1,11 +1,14 @@
 <div class="filter-group">
-  <details class="filter-group__accordion" {% if opened %} open{% endif %}>
+  <details class="filter-group__accordion" open>
     <summary class="filter-group__label">
       <div>Funder</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-group_contents-wrapper">
-      {% if results.aggregations.fundingOrganization.buckets %}
+      {% if results.aggregations.fundingOrganizationTSGType.buckets %}
+        {% include 'components/filters/lists/filter-list-funding-org-type.html' %}
+      {% endif %}
+      {% if results.aggregations.fundingOrganizationTSGType.buckets %}
         {% include 'components/filters/lists/filter-list-funding-org.html' %}
       {% endif %}
     </div>
