@@ -43,7 +43,6 @@ TERM_FACETS = [
     TermFacet("currency", "currency", 7, "Currency", False)
 ]
 
-LESS_SIZE = 3
 MORE_SIZE = 5000
 SIZE = 20
 
@@ -55,7 +54,7 @@ BASIC_QUERY = {"query": {"bool": {"must":
 
 for term_facet in TERM_FACETS:
     BASIC_QUERY['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
-                                                            "size": LESS_SIZE}}
+                                                            "size": MORE_SIZE}}
 
 FIXED_AMOUNT_RANGES = [
     {"from": 0, "to": 500},
@@ -253,47 +252,11 @@ def get_pagination(request, context, page):
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': total_pages}), "type": "last", "label": "Last"})
 
 
-def get_terms_facet_size(request, context, json_query, page):
-    json_query = copy.deepcopy(json_query)
-    see_more_url = {}
-    try:
-        aggs = json_query["aggs"]
-    except KeyError:
-        aggs = BASIC_QUERY['aggs']
-    for agg_name, agg in aggs.items():
-        new_aggs = copy.deepcopy(aggs)
-        if "terms" not in agg:
-            continue
-        size = agg["terms"]["size"]
-        if size == LESS_SIZE:
-            new_size = MORE_SIZE
-            see_more_url[agg_name] = {"more": True}
-        else:
-            new_size = LESS_SIZE
-            see_more_url[agg_name] = {"more": False}
-        new_aggs[agg_name]["terms"]["size"] = new_size
-
-        json_query["aggs"] = new_aggs
-        see_more_url[agg_name]["url"] = request.path + '?' + create_parameters_from_json_query(json_query, page=page) + '#' + agg_name
-
-    context['see_more_url'] = see_more_url
-
-
 def get_non_terms_facet_size(request, context, json_query, page, agg_name):
-    see_more = {}
     new_json_query = copy.deepcopy(json_query)
     facet_size = new_json_query['extra_context'][agg_name + '_facet_size']
-    if facet_size == LESS_SIZE:
-        facet_size = MORE_SIZE
-        see_more["more"] = True
-    else:
-        facet_size = LESS_SIZE
-        see_more["more"] = False
 
     new_json_query['extra_context'][agg_name + '_facet_size'] = facet_size
-    new_url = request.path + '?' + create_parameters_from_json_query(new_json_query, page=page) + '#' + agg_name
-    see_more['url'] = new_url
-    context['see_more_url'][agg_name] = see_more
 
 
 def create_amount_aggregate(json_query):
@@ -613,20 +576,12 @@ def term_facet_size_from_parameters(request, json_query):
         if "terms" not in agg:
             continue
 
-        more = request.GET.get(agg_name + 'More')
-        if more:
-            agg["terms"]["size"] = MORE_SIZE
-        else:
-            agg["terms"]["size"] = LESS_SIZE
+        agg["terms"]["size"] = MORE_SIZE
+
 
 
 def non_term_facet_size_from_parameters(request, json_query, agg_name):
-
-    more = request.GET.get(agg_name + 'More')
-    if more:
-        json_query['extra_context'][agg_name + '_facet_size'] = MORE_SIZE
-    else:
-        json_query['extra_context'][agg_name + '_facet_size'] = LESS_SIZE
+    json_query['extra_context'][agg_name + '_facet_size'] = MORE_SIZE
 
 
 def create_json_query_from_parameters(request):
@@ -902,7 +857,6 @@ def search(request):
 
         get_amount_facet_fixed(request, context, json_query)
         get_date_facets(request, context, json_query)
-        get_terms_facet_size(request, context, json_query, page)
         get_non_terms_facet_size(request, context, json_query, page, 'awardYear')
         get_non_terms_facet_size(request, context, json_query, page, 'amountAwardedFixed')
 
