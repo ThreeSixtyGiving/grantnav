@@ -1,4 +1,4 @@
-{% load get_facet_org_name get_amount from frontend %}
+{% load get_facet_org_name get_facet_org_id get_amount from frontend %}
 <div class="filter-list filter-list--with-checkboxes">
   <details class="filter-list__accordion" {% if results.aggregations.recipientOrganization.clear_url %} open{% endif %}>
     <a class="anchor" id="recipientOrganization"></a>
@@ -6,29 +6,28 @@
       <div>Recipient Organizations {% if results.aggregations.recipientOrganization.clear_url %} <a href={{results.aggregations.recipientOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
-    <div class="filter-list__contents-wrapper">
-      <form class="filter-list__form" action="#">
+    <div class="filter-list__contents-wrapper facet-multiselect">
+      <form class="filter-list__form" id="recipientOrganization-select" data-param="recipientOrganization" action="#">
         {% block filterRadios %}
-          <div class="filter-list__form--radios">
+          <div class="filter-list__form--radios radio">
             <div class="filter-list__form--radio-item">
-              <input class="screen-reader-only" type="radio" id="include" name="radioGroupName" value="include" checked>
-              <label for="include">Include selected</label>
+              <input class="screen-reader-only" type="radio" id="recipientOrganization-include" data-target="#recipientOrganization-select" name="recipientOrganization-exclude" value="false" {% if not results.aggregations.recipientOrganization.exclude %}checked{%endif%}>
+              <label for="recipientOrganization-include">Include selected</label>
             </div>
             <div class="filter-list__form--radio-item">
-              <input class="screen-reader-only" type="radio" id="exclude" name="radioGroupName" value="exclude">
-              <label for="exclude">Exclude Selected</label>
+              <input class="screen-reader-only" type="radio" id="recipientOrganization-exclude" data-target="#recipientOrganization-select" name="recipientOrganization-exclude" value="true" {% if results.aggregations.recipientOrganization.exclude %}checked{%endif%}>
+              <label for="recipientOrganization-exclude">Exclude Selected</label>
             </div>
           </div>
+          {% if results.aggregations.recipientOrganization.buckets|length >= 5000 %} <div class="alert alert-danger"><b>Warning:</b> More than 5000 Recipient Organizations found. Can only select first 5000.</div> {% endif %}
         {% endblock filterRadios %}
-        <ul class="filter-list__listing">
+        <ul class="filter-list__listing facet-options" id="recipientOrganization-select" data-param="recipientOrganization">
           {% for bucket in results.aggregations.recipientOrganization.buckets %}
             <li>
-              <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
-                {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small>
-                {% if bucket.selected %}
-                  <span class="screen-reader-only">(active filter)</span>
-                {% endif%}
-              </a>
+              <div class="filter-list__form--checkbox-item">
+                <input class="screen-reader-only" value={{bucket.key|get_facet_org_id}} id="{{bucket.key|get_facet_org_id}}" type="checkbox"{% if bucket.selected %} checked{% endif %}>
+                <label for="{{bucket.key|get_facet_org_id}}">{{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small></label>
+              </div>
             </li>
           {% endfor %}
         </ul>
@@ -49,7 +48,7 @@
         </div>
 
         <div class="filter-list__form--actions">
-          <input class="filter-list__contents--form-submit" type="submit" value="Apply">
+          <input class="filter-list__contents--form-submit" id="recipientOrganization-button" type="submit" value="Apply" form="recipientOrganization-select">
           <input class="filter-list__contents--form-clear" type="submit" value="Clear all">
         </div>
       </form>
