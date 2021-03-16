@@ -579,7 +579,6 @@ def term_facet_size_from_parameters(request, json_query):
         agg["terms"]["size"] = MORE_SIZE
 
 
-
 def non_term_facet_size_from_parameters(request, json_query, agg_name):
     json_query['extra_context'][agg_name + '_facet_size'] = MORE_SIZE
 
