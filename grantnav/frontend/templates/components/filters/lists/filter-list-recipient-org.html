@@ -19,7 +19,7 @@
               <label for="recipientOrganization-exclude">Exclude Selected</label>
             </div>
           </div>
-          {% if results.aggregations.recipientOrganization.buckets|length >= 5000 %} <div class="alert alert-danger"><b>Warning:</b> More than 5000 Recipient Organizations found. Can only select first 5000.</div> {% endif %}
+          {% if results.aggregations.recipientOrganization.buckets|length >= 5000 %}<b>Warning:</b> More than 5000 Recipient Organizations found. Can only select first 5000. {% endif %}
         {% endblock filterRadios %}
         <ul class="filter-list__listing facet-options" id="recipientOrganization-select" data-param="recipientOrganization">
           {% for bucket in results.aggregations.recipientOrganization.buckets %}
@@ -32,7 +32,8 @@
           {% endfor %}
         </ul>
 
-        <div class="filter-list__form--summary">
+        {% comment %} This section was in the spec but isn't currently functional. {% endcomment %}
+        {% comment %} <div class="filter-list__form--summary">
           <div class="filter-list__form--summary-label">Selected:</div>
           <ul class="filter-list__form--summary-contents">
             {% for filterItem in filterItems %}
@@ -45,7 +46,7 @@
               </li>
             {% endfor %}
           </ul>
-        </div>
+        </div> {% endcomment %}
 
         <div class="filter-list__form--actions">
           <input class="filter-list__contents--form-submit" id="recipientOrganization-submit" type="submit" value="Apply" form="recipientOrganization-select">
