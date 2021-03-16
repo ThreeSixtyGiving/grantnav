@@ -1658,7 +1658,6 @@ p {
   padding-left: 34px;
   padding-right: 34px;
   position: relative;
-  width: 100%;
   font-size: 15px;
   font-weight: 400; }
   .filter-list--with-checkboxes .filter-list__form--checkbox-item label:hover {
