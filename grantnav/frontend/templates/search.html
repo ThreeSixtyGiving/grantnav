@@ -109,44 +109,53 @@
 $(function() {
 
   document.getElementById('recipientOrganization-select').addEventListener('submit', function(e) {
+    console.log("ping");
     e.preventDefault(); //to prevent form submission
-      var param = $(this).data('param');
-      var new_url = calculate_new_url(param, $(this));
-      var changed = window.location.href !== new_url;
+    var param = $(this).data('param');
+    var clear = false;
+    if (e.submitter.id == "recipientOrganization-clear") {
+      clear = true;
+    }
+    console.log(clear);
+    var new_url = calculate_new_url(param, $(this), clear);
+    var changed = window.location.href !== new_url;
 
-      if (changed) {
-        window.location.href = new_url
-      }
+    if (changed) {
+      window.location.href = new_url
+    }
   });
 
-    $facet_selects = $(".facet-options");
 
-    function calculate_new_url(param, $select) {
-      var uri = URI(window.location.href);
-      uri.removeSearch(param);
+  $facet_selects = $(".facet-options");
+
+  function calculate_new_url(param, $select, clear) {
+    var uri = URI(window.location.href);
+    uri.removeSearch(param);
+    uri.removeSearch('exclude_' + param);
+
+    if (!clear) {
       $select.find(':checked').each(function (index, element) {
         uri.addSearch(param, element.value);
       })
-
-      uri.removeSearch('exclude_' + param);
-
       if ($('#' + param + '-exclude').prop("checked")) {
         uri.addSearch('exclude_' + param, 'true');
       }
+    }
 
-      return uri.toString()
-    };
+    return uri.toString()
+  };
 
-    $facet_selects.on('change', function (e) {
-      var param = $(this).data('param');
-      var new_url = calculate_new_url(param, $(this));
-      var changed = window.location.href !== new_url;
-      if (changed) {
-        $('#' + param + '-button').show()
-      } else {
-        $('#' + param + '-button').hide()
-      }
-    })
-  });
+  $facet_selects.on('change', function (e) {
+    var param = $(this).data('param');
+    var clear = false
+    var new_url = calculate_new_url(param, $(this), clear);
+    var changed = window.location.href !== new_url;
+    if (changed) {
+      $('#' + param + '-button').show()
+    } else {
+      $('#' + param + '-button').hide()
+    }
+  })
+});
 </script>
 {% endblock %}
