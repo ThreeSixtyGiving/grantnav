@@ -130,7 +130,6 @@
   }
 
   &__contents--form {
-    display: flex;
     align-items: baseline;
     padding: 6px 8px;
     background: $blue-tint-fade;
@@ -139,9 +138,9 @@
     flex-wrap: wrap;
 
     &-item {
-      display: flex;
+      display: inline-block;
       flex-direction: column;
-      margin-right: 6px;
+      margin-right: 14px;
       flex-shrink: 2;
       max-width: 35%;
       margin-bottom: 4px;
@@ -165,6 +164,7 @@
     &-submit {
       appearance: none;
       border: none;
+      display: inline-block;
       align-self: flex-end;
       font-weight: 400;
       font-size: 15px;

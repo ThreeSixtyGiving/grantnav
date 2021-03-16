@@ -10,14 +10,14 @@
         <form class="filter-list__contents--form">
           <div class="filter-list__contents--form-item">
             <label for="min-amount">Smallest (£)</label>
-            <input id="min-amount" min="0" type="number">
+            <input id="min-amount" name="new_min_amount" class="form-control" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.gte}}"/>
           </div>
           <div class="filter-list__contents--form-item">
             <label for="max-amount">Largest (£)</label>
-            <input id="max-amount" min="0" type="number">
+            <input id="max-amount" name="new_max_amount" class="form-control input-xs" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.lte}}"/>
           </div>
           <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
-          <input class="filter-list__contents--form-submit" type="submit" value="Apply">
+          <button type="submit" class="filter-list__contents--form-submit">Apply</button>
         </form>
       {% endblock filterForm %}
       <ul class="filter-list__listing">

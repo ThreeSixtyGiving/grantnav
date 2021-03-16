@@ -1542,7 +1542,6 @@ p {
     font-size: 15px;
     font-weight: 500; }
   .filter-list__contents--form {
-    display: flex;
     align-items: baseline;
     padding: 6px 8px;
     background: #F6FBFB;
@@ -1550,9 +1549,9 @@ p {
     max-width: 100%;
     flex-wrap: wrap; }
     .filter-list__contents--form-item {
-      display: flex;
+      display: inline-block;
       flex-direction: column;
-      margin-right: 6px;
+      margin-right: 14px;
       flex-shrink: 2;
       max-width: 35%;
       margin-bottom: 4px; }
@@ -1570,6 +1569,7 @@ p {
     .filter-list__contents--form-submit {
       appearance: none;
       border: none;
+      display: inline-block;
       align-self: flex-end;
       font-weight: 400;
       font-size: 15px;
