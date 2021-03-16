@@ -101,3 +101,56 @@
     {% endif %}
   </main>
 {% endblock %}
+
+{% block extra_scripts %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
+<script>
+$(function() {
+
+  document.getElementById('recipientOrganization-select').addEventListener('submit', function(e) {
+    e.preventDefault(); //to prevent form submission
+      var param = $(this).data('param');
+      var new_url = calculate_new_url(param, $(this));
+      var changed = window.location.href !== new_url;
+
+      if (changed) {
+        window.location.href = new_url
+      }
+  });
+
+    $facet_selects = $(".facet-options");
+
+    function calculate_new_url(param, $select) {
+      var uri = URI(window.location.href);
+      uri.removeSearch(param);
+      $select.find(':checked').each(function (index, element) {
+        uri.addSearch(param, element.value);
+      })
+
+      uri.removeSearch('exclude_' + param);
+
+      if ($('#' + param + '-exclude').prop("checked")) {
+        uri.addSearch('exclude_' + param, 'true');
+      }
+
+      return uri.toString()
+    };
+
+    $facet_selects.on('change', function (e) {
+      var param = $(this).data('param');
+      var new_url = calculate_new_url(param, $(this));
+      var changed = window.location.href !== new_url;
+      if (changed) {
+        $('#' + param + '-button').show()
+      } else {
+        $('#' + param + '-button').hide()
+      }
+//
+    })
+//
+//
+//
+  });
+</script>
+{% endblock %}
