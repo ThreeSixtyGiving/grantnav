@@ -109,22 +109,32 @@
 $(function() {
 
   document.getElementById('recipientOrganization-select').addEventListener('submit', function(e) {
-    console.log("ping");
     e.preventDefault(); //to prevent form submission
-    var param = $(this).data('param');
     var clear = false;
     if (e.submitter.id == "recipientOrganization-clear") {
       clear = true;
     }
-    console.log(clear);
-    var new_url = calculate_new_url(param, $(this), clear);
+    execute_submit(this, clear)
+  });
+
+  document.getElementById('fundingOrganization-select').addEventListener('submit', function(e) {
+    e.preventDefault(); //to prevent form submission
+    var clear = false;
+    if (e.submitter.id == "fundingOrganization-clear") {
+      clear = true;
+    }
+    execute_submit(this, clear)
+  });
+
+  function execute_submit(form_object, clear) {
+    var param = $(form_object).data('param');
+    var new_url = calculate_new_url(param, $(form_object), clear);
     var changed = window.location.href !== new_url;
 
     if (changed) {
       window.location.href = new_url
     }
-  });
-
+  }
 
   $facet_selects = $(".facet-options");
 
