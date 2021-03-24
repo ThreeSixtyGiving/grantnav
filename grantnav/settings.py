@@ -75,7 +75,6 @@ INSTALLED_APPS = (
     'grantnav.frontend',
     'grantnav.prometheus',
     'raven.contrib.django.raven_compat',
-    'cookielaw',
     'favicon',
 )
 

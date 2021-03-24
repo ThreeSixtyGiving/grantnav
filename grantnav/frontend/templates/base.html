@@ -1,6 +1,5 @@
 {% load staticfiles %}
 {% load favicon %}
-{% load cookielaw_tags %}
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -16,7 +15,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
         {% block extra_style %} {% endblock %}
-        <link rel="stylesheet" href="{% static 'cookielaw/css/cookielaw.css'%}">
         <link rel="stylesheet" href="{% static 'fonts/ostrich/ostrich-sans.css'%}">
         <link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet">
 
@@ -37,36 +35,6 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    {% cookielaw_banner %}
-    <nav class="navbar navbar-inverse" role="navigation">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-vlg-offset-1">
-            <div class="navbar-header">
-              <a href="/"><span class="navbar-brand">GrantNav</span></a>
-            </div>
-          </div>
-          <div class="container">
-            <div>
-              <ul class="nav navbar-nav pull-right">
-                <li class="text-center">
-                  <a id="forum_link" href="https://forum.threesixtygiving.org/c/grantnav/8">
-                    <img src="{% static 'images/icon-forum-50-grey.png'%}" width="40" height="40">
-                    <br>Forum
-                  </a>
-                </li>
-                <li class="text-center">
-                  <a id="help_link" href="/help">
-                    <img src="{% static 'images/icon-help-50-grey.png'%}" width="40" height="40">
-                    <br>Help
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
 
     {% block main %}
     <div class="main-block">
@@ -136,6 +104,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {% block models %}{% endblock %}
     {% block extra_scripts %}{% endblock %}
+
+    {% comment %}
+
+    DISABLED until upgrade to matomo for cookieless support
+
     {% if piwik.url and piwik.site_id %}
     <!-- Piwik -->
     <script type="text/javascript">
@@ -154,7 +127,9 @@
     </script>
     <noscript><p><img src="{{ piwik.url }}/piwik.php?idsite={{ piwik.site_id }}" style="border:0;" alt="" /></p></noscript>
     {% endif %}
-    <script src="{% static 'cookielaw/js/cookielaw.js'%}"></script>
     <!-- End Piwik Code -->
+
+    {% endcomment %}
+
     </body>
 </html>
