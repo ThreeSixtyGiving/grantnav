@@ -1,0 +1,33 @@
+<div class="table table--zebra">
+  <table>
+    {% if header %}
+    <thead>
+      <th>{{ header.th1 }}</th>
+      <th>{{ header.th2 }}</th>
+      <th>{{ header.th3 }}</th>
+      <th>{{ header.th4 }}</th>  
+    </thead>
+    {% endif %}
+    <tbody>
+      {% for i in body %}
+      <tr>
+        <td class="table__lead-cell" data-header="{{ header.th1 }}">{{ i.row.cell1 | safe }}</td>
+        <td data-header="{{ header.th2 }}">{{ i.row.cell2 | safe }}</td>
+        <td data-header="{{ header.th3 }}"><code>{{ i.row.cell3 | safe }}</code></td>
+        <td data-header="{{ header.th4 }}"class="table__checks">
+          {% if i.row.cell4 %}
+          <i class="material-icons table--{{i.row.cell4}}">check</i>
+          {% else %}
+          <i class="material-icons table--{{i.row.cell4}}">close</i>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+
+ 
+  

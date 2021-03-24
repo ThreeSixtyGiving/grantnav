@@ -1,0 +1,60 @@
+// We need to add this one in order to raise the specificity of the boxes 
+// that will be used inside the Prose module. 
+// Prose elements (headings, ul, p) are at 0011 and 
+// the regular .box is at 0010. With the ".prose .box" we raise 
+// the specificity to 0020 applying the proper overrides.
+
+.prose .box,
+.box {
+  --box-bg-hsl: var(--base-hsl);
+  --box-text-hsl: var(--base-hsl);
+  background-color: hsla(var(--box-bg-hsl), .1);
+  position: relative;
+  padding: 24px 24px 24px 24px;
+
+  &:before {
+    background-color: hsla(var(--box-bg-hsl), 1);
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 4px;
+    left: 0;
+    top: 0;
+  }
+
+  h3, 
+  &__heading {
+    margin: 0 0 4px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: hsla(var(--box-text-hsl), 1);
+  }
+}
+
+// Check explanation at the top of this file
+.prose .box:only-child { margin-top: 0; }
+
+.prose .box.box--teal,
+.box--teal {
+  --box-bg-hsl: var(--teal-hsl);
+  --box-text-hsl: var(--teal-dark-hsl);
+}
+
+.prose .box.box--orange,
+.box--orange {
+  --box-bg-hsl: var(--orange-hsl);
+  --box-text-hsl: var(--orange-dark-hsl);
+}
+
+.prose .box.box--yellow,
+.box--yellow {
+  --box-bg-hsl: var(--yellow-hsl);
+  --box-text-hsl: var(--yellow-dark-hsl);
+}
+
+.prose .box.box--red,
+.box--red {
+  --box-bg-hsl: var(--red-hsl);
+  --box-text-hsl: var(--red-hsl);
+}
+

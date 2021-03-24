@@ -1,0 +1,171 @@
+.search-block {
+  &--simple {
+    background: $orange;
+  }
+
+  padding: 82px 1.5rem 67px;
+
+  &__description {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 48px;
+
+    @include breakpoint($medium) {
+      font-size: 35px;
+    }
+  }
+
+  form {
+    text-align: left;
+  }
+
+  &__form-item-label {
+    font-weight: 500;
+    font-size: 19px;
+    margin-bottom: 6px;
+    margin-top: 10px;
+  }
+
+  &__form-group {
+    display: flex;
+
+    input[type="text"] {
+      border: none;
+      appearance: none;
+      font-size: 20px;
+      padding: 22px 12px;
+      margin: 0;
+      display: block;
+      border-radius: 3px 0px 0px 3px;
+      flex-grow: 0;
+      min-width: 20px;
+      width: 100%;
+
+      @include breakpoint($medium) {
+        min-width: 100px;
+        font-size: 22px;
+        padding: 24px 16px;
+        flex-grow: 2;
+      }
+
+      @include breakpoint($regular) {
+        min-width: 160px;
+        font-size: 24px;
+        padding: 28px 18px;
+        flex-grow: 2;
+      }
+    }
+
+  }
+
+  input[type="submit"] {
+    border: none;
+    appearance: none;
+    background: $black;
+    color: $white;
+    font-size: 20px;
+    padding: 20px 30px;
+    font-weight: 500;
+    border-radius: 0px 3px 3px 0px;
+
+    @include breakpoint($medium) {
+      padding: 24px 36px;
+      font-size: 22px;
+    }
+
+    @include breakpoint($regular) {
+      padding: 28px 42px;
+      font-size: 24px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+
+/* Advanced variant styling */
+.search-block {
+  &--advanced {
+    padding-top: 26px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    background: $orange-tint;
+    border-top: 20px solid $orange;
+
+    .search-block__description {
+      margin-bottom: 36px;
+    }
+
+    input[type="text"] {
+      border-radius: 3px;
+
+    }
+
+    input[type="submit"] {
+      border-radius: 3px;
+      padding: 14px 30px;
+
+      @include breakpoint($medium) {
+        padding: 16px 36px;
+        font-size: 22px;
+      }
+
+      @include breakpoint($regular) {
+        padding: 18px 50px;
+        font-size: 24px;
+      }
+    }
+
+    .search-block__label {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 6px;
+
+      @include breakpoint($regular) {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+    }
+  }
+
+  &__form-radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 22px;
+    margin-bottom: 22px;
+
+    @include breakpoint($medium) {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    label {
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+  }
+
+  &__form-group-label {
+    font-weight: 400;
+    font-size: 18px;
+    height: 100%;
+
+    @include breakpoint($medium) {
+      margin-top: 10px;
+      margin-right: 8px;
+      margin-bottom: 6px;
+    }
+  }
+
+  &__form-action-group {
+    display: flex;
+    justify-content: center;
+  }
+}
