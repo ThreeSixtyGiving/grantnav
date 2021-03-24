@@ -13,13 +13,14 @@
         <meta property="og:description" content="Search, explore and download UK grants data published by funders in the 360Giving Data Standard">
         <meta name="description" content="Search, explore and download UK grants data published by funders in the 360Giving Data Standard">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
         {% block extra_style %} {% endblock %}
         <link rel="stylesheet" href="{% static 'fonts/ostrich/ostrich-sans.css'%}">
         <link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <link rel="stylesheet" href="{% static 'css/theme.css'%}">
-        <link rel="stylesheet" href="{% static 'css/main.css'%}">
+        
         <noscript>
           <style>
             .javascript-enabled {
@@ -28,7 +29,7 @@
           </style>
         </noscript>
 
-{% get_favicons prefix="favicons/" %}
+    {% include "components/favicons.html" %}
 
     </head>
     <body>
@@ -36,69 +37,18 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-    {% block main %}
-    <div class="main-block">
-      <div class="container">
-          {% block main_content %}{% endblock %}
-      </div> 
-    </div> 
-    {% endblock %}
+    {% include "components/nav-bar.html" %}
 
-    <div class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-sm-4">
-            <img src="{% static 'images/360-giving-logo-white.svg'%}" height="80" width="196">
-            <p class="footer-info">360Giving helps organisations openly publish grants data, and helps people use it to improve charitable giving.</p>
-            <p class="footer-info">Find out more about <a href="http://www.threesixtygiving.org/">360Giving</a></p>
-          </div>
-          <div class="col-md-4 col-sm-4">
-            <p class="footer-info">GrantNav uses open data published by funders about their grants in the <a href="http://www.threesixtygiving.org/standard/">360Giving Data Standard</a>.</p>
-            <p class="footer-info">You can use GrantNav to search, filter and download data about where funding goes and how much is given across billions of pounds of grants, for causes and locations across the UK.</p>
-            <p class="footer-info">If you have questions or feedback, please email <a href="mailto:grantnav@threesixtygiving.org">grantnav@threesixtygiving.org</a></p>
-          </div>
-          <div class="col-md-4 col-sm-4">
-            <p class="footer-info">Links</p>
-            <ul id="menu-footer2" class="footer-menu">
-              <li class="menu-item">
-                <a href="{% url 'about' %}">About</a>
-              </li>
-              <li class="menu-item">
-                <a href="{% url 'funders' %}">Funders</a>
-              </li>
-              <li class="menu-item">
-                <a href="{% url 'recipients' %}">Recipients</a>
-              </li>
-              <li class="menu-item">
-                <a href="{% url 'terms' %}">Terms and Conditions</a>
-              </li>
-              <li class="menu-item">
-                <a href="{% url 'take_down_policy' %}">Take Down Policy</a>
-              </li>
-              <li class="menu-item">
-                <a href="{% url 'datasets' %}">Data Used in GrantNav</a>
-              </li>
-              <li class="menu-item">
-                <a href="{% url 'datasets' %}#reuse">Reusing GrantNav Data</a>
-              </li>
-              <li class="menu-item">
-                <a href="{% url 'developers' %}">Developers</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <p class="footer-info">360Giving is a company limited by guarantee (Company Number <a href="https://beta.companieshouse.gov.uk/company/09668396">09668396</a>) and a registered charity (Charity Number <a href="http://beta.charitycommission.gov.uk/charity-details/?regid=1164883&subid=0">1164883</a>)</p>
-          </div>
-        </div>
-         <div class="row">
-          <div class="col-sm-12">
-            <p class="footer-info text-muted">Running version <a href="https://github.com/OpenDataServices/grantnav/tree/{{request.tag}}">{{request.tag}}</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <header class="layout__header">
+    {% block header %}{% endblock %}
+    </header>
+
+    <main>
+    {% block main_content %}{% endblock %}
+    </main>
+
+    {% include "components/subscribe.html"%}
+    {% include "components/footer.html" %}
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

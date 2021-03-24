@@ -5,35 +5,48 @@
 
 {% block main_content %}
 
-<div class="row">
-  <div class="col-xs-6">
-    <h1> Funders </h1>
-  </div>
-  <div class="col-xs-6">
-    <h1 class="pull-right">
-      <a href="{% url 'funders_datatables.json' %}">
-        <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
-      </a>
-      <a href="{% url 'funders_datatables.csv' %}">
-        <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button"/>
-      </a>
-    </h1>
-  </div>
-</div>
-<div class="row bottom-space">
-  <div class="col-xs-12">
-    <table class="table table-condensed table-bordered table-striped dt-responsive" id="funders_datatable" width="100%">
-      <thead>
-        <tr>
-          <th>Funder</th>
-          <th>Grants</th>
-          <th>Total</th>
-          <th>Average</th>
-          <th>Largest</th>
-          <th>Smallest</th>
-        </tr>
-      </thead>
-    </table>
+<div class="layout layout--single-column">
+  <div class="grantnav-page__content layout__content">
+
+    <div class="section">
+      <h1 class="page-title">Funders</h1>
+    </div>
+
+    <div class="section">
+      <div class="grantnav-datatable__content--filters">
+        [text-here]
+        <div class="export-wrapper">
+
+          <div class="export-label">Export search data:</div>
+
+          <div class="export-button">
+            {% include 'components/export-data-button--csv.html' with data_function='funders_datatables.csv' %}
+          </div>
+
+          <div class="export-button">
+            {% include 'components/export-data-button--json.html' with data_function='funders_datatables.json' %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <table class="table table--zebra table--primary dt-responsive" id="funders_datatable" width="100%">
+        <thead>
+          <tr>
+            <th>Funder</th>
+            <th>Grants</th>
+            <th>Total</th>
+            <th>Average</th>
+            <th>Largest</th>
+            <th>Smallest</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+
   </div>
 </div>
 {% endblock %}

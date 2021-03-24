@@ -2,324 +2,34 @@
 {% load frontend %}
 {% load static %}
 
+{% block header %}
+  {% include 'components/search-block--advanced.html' %}
+{% endblock %}
+
 {% block main_content %}
+  <main class="layout__content">
+    <div class="grantnav-search__wrapper">
+      <div class="grantnav-search__sidebar">
+        <h2 class="grantnav-search__sidebar--heading">Refine your search</h2>
 
-  <div class="row">
-    <div class="col-xs-8 col-xs-offset-2">
-      <form role="search">
-        <div class="input-group">
-          <input name="text_query" class="form-control search-box" placeholder="What are you searching for?" type="text" value="{{text_query}}">
-          <span class="input-group-btn">
-            <input class="search-icon" name="submit" src="{% static 'images/search_icon.png' %}" type="image" height="30px" width="30px">
-          </span>
-          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+        <div class="inline-block">
+          {% include 'components/alert-tag--anchor.html' %}
         </div>
-        <div class="input-group search-checkbox-align">
-          <div class="form-group">
-            <div class="text-center">
-              <label class="radio-inline">
-                <input {% if default_field == "*" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio1" value="*"> Search All Fields
-              </label>
-              <label class="radio-inline">
-                <input {% if default_field == "additional_data.recipientLocation" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio2" value="additional_data.recipientLocation"> Locations
-              </label>
-              <label class="radio-inline">
-                <input {% if default_field == "recipientOrganization.name" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio3" value="recipientOrganization.name"> Recipients
-              </label>
-              <label class="radio-inline">
-                <input {% if default_field == "title_and_description" %} checked {% endif %} type="radio" name="default_field" id="inlineRadio4" value="title_and_description"> Titles & Descriptions
-              </label>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
 
-
-  {% if selected_facets %}
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="panel panel-default clear-margin-bottom">
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-xs-6">
-               <h4 class="smaller-top-margin-heading"> Current Filters </h4>
-            </div>
-            <div class="col-xs-6">
-              <a href="{{results.clear_all_facet_url}}" class="pull-right btn btn-success btn-xs smaller-top-margin-button"> Clear All Filters </a>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              {% for name, selected_list in selected_facets.items %}
-                <div class="row">
-                  <div class="col-xs-12 marg">
-                    <b>{{name}}:</b>
-                    {% for item in selected_list %}
-                      <div class="filter-list-item">
-                        {{item.display_value}}
-                        <a href="{{item.url}}">
-                          <span class="glyphicon glyphicon-remove filter-list-remove-icon" aria-hidden="true"></span>
-                        </a>
-                      </div>
-                    {% endfor %}
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-          </div>
+        <div class="grantnav-search__sidebar--filters">
+          {% include 'components/filter-wrapper.html' %}
         </div>
       </div>
-    </div>
-  </div>
-  {% endif %}
+      {% if results and results.hits.hits %}
+        <div class="grantnav-search__content">
+          {% include 'components/search-summary.html' %}
 
+          {% include 'components/results-title.html' %}
 
-  <div class="row">
-    {% if advanced_search_info %}
-      <div class="col-xs-12">
-        <p class="advanced-search-info">
-          <strong>Tip:</strong> {{ advanced_search_info }}
-          For more tips, see <a href="https://grantnav.threesixtygiving.org/help#advanced_search" class="advanced_search">Advanced Search</a>
-        </p>
-      </div>
-    {% endif %}
-
-    <div class="col-xs-3 filters">
-      <h3 class="indent"> Filter By <a id="filter_by_help_link" href="/help#filters"><sup><img src="{% static 'images/icon-help-50.png'%}" width="15" height="15"></sup></a></h3>
-
-      <div class="panel panel-default">
-        <a class="anchor" id="TSGOrganizationType"></a>
-        <div class="panel-heading list-group-compact">
-          Funding Organization Type {% if results.aggregations.fundingOrganizationTSGType.clear_url %} <a href="{{results.aggregations.currency.clear_url}}"> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="list-group">
-          {% for bucket in results.aggregations.fundingOrganizationTSGType.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
-          {% endfor %}
-          {% if results.aggregations.fundingOrganizationTSGType.buckets|length > 2 %}
-            <a href="{{see_more_url.fundingOrganizationTSGType.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.fundingOrganizationTSGType.more%}See More{% else %}See Less{% endif %}</b> </a>
-          {% endif %}
-        </div>
-      </div>
-
-
-      <div class="panel panel-default">
-        <a class="anchor" id="currency"></a>
-        <div class="panel-heading list-group-compact">
-          Currency {% if results.aggregations.currency.clear_url %} <a href="{{results.aggregations.currency.clear_url}}"> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="list-group">
-          {% for bucket in results.aggregations.currency.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
-          {% endfor %}
-          {% if results.aggregations.currency.buckets|length > 2 %}
-            <a href="{{see_more_url.currency.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.currency.more%}See More{% else %}See Less{% endif %}</b> </a>
-          {% endif %}
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <a class="anchor" id="amountAwardedFixed"></a>
-        <div class="panel-heading list-group-compact">
-          Amount Awarded ({{current_currency}}) {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="list-group">
-
-          <div id="min-max-form">
-            <form class="form-inline">
-              <div class="row">
-                <div class="col-lg-5 col-md-6 no-padding-hor">
-                  <div class="form-group form-group-sm">
-                    <label for="min-amount">Smallest
-                    <input id="min-amount" name="new_min_amount" class="form-control" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.gte}}"/>
-                    </label>
-                  </div>
-                </div>
-
-                <div class="col-lg-5 col-md-6 no-padding-hor">
-                  <div class="form-group form-group-sm">
-                    <label for="max-amount">Largest
-                    <input id="max-amount" name="new_max_amount" class="form-control input-xs" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.lte}}"/>
-                    </label>
-
-                  </div>
-                </div>
-
-                <div class="col-lg-2 col-xs-12 no-padding-hor">
-                  <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
-                  <div class="form-group form-group-sm">
-                    <button type="submit" class="btn btn-default btn-xs">Apply</button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-          {% if not query.query.bool.filter.3.bool.should.range.amountAwarded %}
-            {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
-              {% if forloop.counter <= query.extra_context.amountAwardedFixed_facet_size %}
-                  <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket|get_amount_range:current_currency}} <small>({{bucket.doc_count|get_amount}})</small> </a>
-              {% endif %}
-            {% endfor %}
-            {% if results.aggregations.amountAwardedFixed.buckets|length > 2 %}
-              <a href="{{see_more_url.amountAwardedFixed.url}}" class="see-more list-group-item list-group-compact"> <b>{% if see_more_url.amountAwardedFixed.more%}See More{% else %}See Less{% endif %}</b> </a>
-            {% endif %}
-          {% endif %}
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <a class="anchor" id="recipientRegionName"></a>
-        <div class="panel-heading list-group-compact">
-          Recipient Region {% if results.aggregations.recipientRegionName.clear_url %} <a href="{{results.aggregations.recipientRegionName.clear_url}}"> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="list-group">
-          {% for bucket in results.aggregations.recipientRegionName.buckets %}
-            <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </a>
-          {% endfor %}
-          {% if results.aggregations.recipientRegionName.buckets|length > 2 %}
-            <a href="{{see_more_url.recipientRegionName.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.recipientRegionName.more%}See More{% else %}See Less{% endif %}</b> </a>
-          {% endif %}
-        </div>
-      </div>
-      <div class="panel panel-default facet-multiselect">
-        <a class="anchor" id="recipientDistrictName"></a>
-        <div class="panel-heading list-group-compact">
-          Recipient Districts {% if results.aggregations.recipientDistrictName.clear_url %} <a href={{results.aggregations.recipientDistrictName.clear_url}}> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="recipientDistrictName-exclude" data-target="#recipientDistrictName-select" {% if not results.aggregations.recipientDistrictName.exclude %}checked{%endif%}>
-            Include or
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" id="recipientDistrictName-exclude" name="recipientDistrictName-exclude" data-target="#recipientDistrictName-select" {% if results.aggregations.recipientDistrictName.exclude %}checked{%endif%}>
-            Exclude selection
-          </label>
-        </div>
-        {% if results.aggregations.recipientDistrictName.buckets|length >= 5000 %} <div class="alert alert-danger"><b>Warning:</b> More than 5000 Recipient Districts found. Can only select first 5000.</div> {% endif %}
-
-        <select id="recipientDistrictName-select" class="facet-dropdown" multiple="multiple" data-param="recipientDistrictName" data-placeholder="Select Recipient District">
-          {% for bucket in results.aggregations.recipientDistrictName.buckets %}
-            <option {% if bucket.selected %}selected{%endif%} value="{{bucket.key}}" label="{{bucket.key}}"> {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small> </option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="panel panel-default">
-        <a class="anchor" id="awardYear"></a>
-        <div class="panel-heading list-group-compact">
-          Award Year {% if results.aggregations.awardYear.clear_url %} <a href="{{results.aggregations.awardYear.clear_url}}"> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="list-group">
-          {% for bucket in results.aggregations.awardYear.buckets %}
-            {% if forloop.counter <= query.extra_context.awardYear_facet_size %}
-              <a href="{{bucket.url}}" class="list-group-item list-group-compact {% if bucket.selected %}list-group-item-success{%endif%}">
-                {% if bucket.from_as_string %} {{bucket.from_as_string}} {% else %} {{bucket.key_as_string}} {% endif %} <small>({{bucket.doc_count|get_amount}})</small> </a>
-            {% endif %}
-          {% endfor %}
-          {% if results.aggregations.awardYear.buckets|length > 2 %}
-            <a href="{{see_more_url.awardYear.url}}" class="list-group-item list-group-compact see-more"> <b>{% if see_more_url.awardYear.more%}See More{% else %}See Less{% endif %}</b> </a>
-          {% endif %}
-        </div>
-      </div>
-      <div class="panel panel-default facet-multiselect">
-        <a class="anchor" id="fundingOrganization"></a>
-        <div class="panel-heading list-group-compact">
-          Funding Organizations {% if results.aggregations.fundingOrganization.clear_url %} <a href={{results.aggregations.fundingOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="fundingOrganization-exclude" data-target="#fundingOrganization-select" {% if not results.aggregations.fundingOrganization.exclude %}checked{%endif%}>
-            Include or
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" id="fundingOrganization-exclude" name="fundingOrganization-exclude" data-target="#fundingOrganization-select" {% if results.aggregations.fundingOrganization.exclude %}checked{%endif%}>
-            Exclude selection
-          </label>
-        </div>
-        {% if results.aggregations.fundingOrganization.buckets|length >= 5000 %} <div class="alert alert-danger"><b>Warning:</b> More than 5000 Funding Organizations found. Can only select first 5000.</div> {% endif %}
-
-        <select id="fundingOrganization-select" class="facet-dropdown" multiple="multiple" data-param="fundingOrganization" data-placeholder="Select Funding Organization">
-          {% for bucket in results.aggregations.fundingOrganization.buckets %}
-            <option {% if bucket.selected %}selected{%endif%} value="{{bucket.key|get_facet_org_id}}" label="{{bucket.key|get_facet_org_name}}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="panel panel-default facet-multiselect">
-        <a class="anchor" id="recipientOrganization"></a>
-        <div class="panel-heading list-group-compact">
-          Recipient Organizations {% if results.aggregations.recipientOrganization.clear_url %} <a href={{results.aggregations.recipientOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="recipientOrganization-exclude" data-target="#recipientOrganization-select" {% if not results.aggregations.recipientOrganization.exclude %}checked{%endif%}>
-            Include or
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" id="recipientOrganization-exclude" name="recipientOrganization-exclude" data-target="#recipientOrganization-select" {% if results.aggregations.recipientOrganization.exclude %}checked{%endif%}>
-            Exclude selection
-          </label>
-        </div>
-        {% if results.aggregations.recipientOrganization.buckets|length >= 5000 %} <div class="alert alert-danger"><b>Warning:</b> More than 5000 Recipient Organizations found. Can only select first 5000.</div> {% endif %}
-
-        <select id="recipientOrganization-select" class="facet-dropdown" multiple="multiple" data-param="recipientOrganization" data-placeholder="Select Recipient Organization">
-          {% for bucket in results.aggregations.recipientOrganization.buckets %}
-            <option {% if bucket.selected %}selected{%endif%} value="{{bucket.key|get_facet_org_id}}" label="{{bucket.key|get_facet_org_name}}"> {{bucket.key|get_facet_org_name}} <small>({{bucket.doc_count|get_amount}})</small> </option>
-          {% endfor %}
-        </select>
-      </div>
-    </div>
-
-    {% if results and results.hits.hits %}
-    <div class="col-xs-9">
-      <div class="row">
-        <div class="col-md-7 col-xs-12">
-          <h3 class="pull-left"> Results </h3>
-          <form id="sort-form" class="form-inline">
-            <div class="form-group pull-left">
-              <label for="sort_options">Sort By:</label>
-              <select id="sort_options" name="sort" class="form-control" onchange="this.form.submit()">
-                {% with current_sort=query|get_current_sort %}
-                  <option value="_score desc" {% if current_sort == "_score desc"%} selected {% endif %}>Best Match</option>
-                  <option value="amountAwarded desc" {% if current_sort == "amountAwarded desc"%} selected {% endif %}>Amount - Highest First</option>
-                  <option value="amountAwarded asc" {% if current_sort == "amountAwarded asc"%} selected {% endif %}>Amount - Lowest First</option>
-                  <option value="awardDate desc" {% if current_sort == "awardDate desc"%} selected {% endif %}>Award Date - Latest First</option>
-                  <option value="awardDate asc" {% if current_sort == "awardDate asc"%} selected {% endif %}>Award Date - Earliest First</option>
-                {% endwith %}
-              </select>
-
-              <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
-            </div>
-          </form>
-        </div>
-        <div class="col-md-5 col-xs-12">
-          <div>
-            <a href="/help#export_files">
-              <sup><img src="{% static 'images/icon-help-50.png'%}" class="pull-right" id="files_help_link" width="15" height="15"/></sup>
-            </a>
-            <a href="{% url 'search.json' %}?{{ query_string }}">
-              <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button" id="json_download_button"/>
-            </a>
-            <a href="{% url 'search.csv' %}?{{ query_string }}">
-              <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button" id="csv_download_button"/>
-            </a>
-            <a href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}?{{ query_string }}" title="Download search results into Insights data visualiser" target="_blank">
-              <img src="{% static 'images/insights_download_icon.png' %}" alt="Download to Insights" class="download_button" id="insights_download_button"/>
-            </a>
-          </div>
-        </div>
-      </div>
-
-         <div class="panel panel-default">
-            <div class="panel-body panel-no-padding">
-              <div class="row">
-                <div class="col-sm-6">
-                  <dl class="dl-horizontal top-stats-search">
+            <div class="panel spacer-4">
+              <div class="grid grid--two-columns grid__1">
+                <div class="grid__1">
+                  <dl class="dl-horizontal top-stats">
                     <dt>Total grants</dt> <dd>{{results.hits.total|get_amount}} </dd>
                     <dt>Total funders</dt> <dd>{{results.aggregations.funding_orgs.value|get_amount}}</dd>
                     <dt>Total recipients</dt> <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
@@ -327,249 +37,135 @@
                     <dt>Latest award date</dt> <dd>{{results.aggregations.max_date.value_as_string|get_date}}</dd>
                   </dl>
                 </div>
-                <div class="col-sm-6">
+                <div class="grid__1">
                   {% include 'currency_stats.html' %}
                 </div>
               </div>
             </div>
-         </div>
 
-      {% for result in results.hits.hits %}
-         <div class="panel panel-default">
-            <div class="panel-body panel-less-padding">
-              <div class="row">
-                <div class="col-xs-6">
-                  <h4 class="heading-in-panel">
-                    <a href="{% url 'grant' result.source.id %}">
-                      {{ result.source|get_title }}
-                    </a>
-                    <small class="pull-right"> {{result.source.awardDate|get_date}} </small>
-                  </h4>
-                  <p> {{ result.source.description }} </p>
-                </div>
+          {% if selected_facets %}
+            {% include 'components/filter-summary.html' %}
+          {% endif %}
 
-                {% if result.source.fundingOrganization.0.id and result.source.recipientOrganization.0.id %}
-                <div class="col-xs-6">
-                  <div class="panel panel-default">
-                    <div class="panel-body">
-                      <b>Amount: </b> {{result.source|get_currency}}{{result.source.amountAwarded|get_amount}}
-                      {% if result.source.amountAwarded|get_amount == '0' %}
-                        <a href="/help#zero_value_grants"><img src="/static/images/icon-help-50.png" width="15" height="15"></a>
-                      {% endif %}
-                      <br/>
-                      <b>Funder: </b> <a href="{% url 'funder' result.source.fundingOrganization.0.id %}">{{ result.source.fundingOrganization.0 | get_name }}</a> <br/>
-                      <b>Recipient: </b> <a href="{% url 'recipient' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:40 }} </a> <br/>
-                      {% if result.source.recipientRegionName %}
-                        <b>Region: </b> <a href="{% url 'region' result.source.recipientRegionName %}">{{ result.source.recipientRegionName }} </a> <br/>
-                      {% endif %}
-                      {% if result.source.recipientRegionName %}
-                        <b>District: </b> <a href="{% url 'district' result.source.recipientDistrictName %}">{{ result.source.recipientDistrictName }} </a> <br/>
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-                {% endif %}
+          <section class="grantnav-search__content--filters">
+            {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
+
+            <div class="export-wrapper">
+              <div class="export-label">Export search data:</div>
+
+              <div class="export-button">
+                {% include 'components/export-data-button--csv.html' with data_function='search.csv' query=query_string only %}
               </div>
+
+              <div class="export-button">
+                {% include 'components/export-data-button--json.html' with data_function='search.json' query=query_string only %}
+              </div> 
             </div>
-         </div>
-      {% endfor %}
+          </section>
 
-      {% if next_page or prev_page %}
-        <nav>
-          <ul class="pager">
-            {% if prev_page %}
-            <li class="previous"><a href="{{prev_page}}"><span aria-hidden="true">&larr;</span>Previous</a></li>
-            {% endif %}
-            {% if next_page %}
-            <li class="next"><a href="{{next_page}}">Next<span aria-hidden="true">&rarr;</span></a></li>
-            {% endif %}
-          </ul>
-        </nav>
-      {% endif %}
-    </div>
+          <section class="grantnav-search__content--results">
+          {% for result in results.hits.hits %}
+            {% include 'components/grant-search-result.html' with result=result %}
+          {% endfor %}
+          </section>
 
-  {% elif results %}
-
-     <div class="col-xs-9">
-        <div id="no-results">
-          <h1>No Results</h1>
-          <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
-          <ul>
-          <li>Using more general terms</li>
-          <li>Checking your spelling</li>
-          </ul>
+          <section class="grantnav-search__content--footer">
+            {% include 'components/pager.html' %}
+          </section>
         </div>
-     </div>
+      </div>
+      {% elif results %}
 
-  {% elif search_error %}
+      <div class="spacer-4">
+          <div id="no-results">
+            <h1>No Results</h1>
+            <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
+            <ul>
+            <li>Using more general terms</li>
+            <li>Checking your spelling</li>
+            </ul>
+          </div>
+      </div>
 
-     <div class="col-xs-9">
-        <div id="not_valid">
-          <h1>Search input is not valid</h1>
-          <p>We can't find what you tried to search for.<br>Try something like:</p>
-          <ul>
-          <li>Using more general terms</li>
-          <li>Checking your spelling</li>
-        </div>
-     </div>
-
-  {% endif %}
-
-  </div>
-</div>
-{% endblock %}
-
-{% block models %}
-  {% include 'currency_stats_modal.html' %}
-{% endblock %}
-
-{% block extrapiwik %}
-_paq.push(["trackSiteSearch", "{{text_query}}", false, {{results.hits.total.value}}]);
-{% endblock %}
-
-{% block extra_style %}
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+    {% elif search_error %}
+    
+      <div class="spacer-4">
+          <div id="not_valid">
+            <h1>Search input is not valid</h1>
+            <p>We can't find what you tried to search for.<br>Try something like:</p>
+            <ul>
+            <li>Using more general terms</li>
+            <li>Checking your spelling</li>
+          </div>
+      </div>
+    {% endif %}
+  </main>
 {% endblock %}
 
 {% block extra_scripts %}
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-
 <script>
 $(function() {
-  var page_y = URI(window.location.href).search(true).page_y
-  if (page_y) {
-     $( 'html, body' ).scrollTop(page_y);
-  }
-  $('.see-more').click(function (e) {
-    var page_y = $( document ).scrollTop();
-    var $target = $(this);
-    var new_url = URI($target.attr('href')).addSearch("page_y", page_y).fragment("").toString();
 
-    if ($target.find('b')[0].innerText === "See Less") {
-      if ($target.closest(".panel").offset().top < page_y) {
-         return true
-      }
+  document.getElementById('recipientOrganization-select').addEventListener('submit', function(e) {
+    e.preventDefault(); //to prevent form submission
+    var clear = false;
+    if (e.submitter.id == "recipientOrganization-clear") {
+      clear = true;
     }
-    window.location.href = new_url;
-    return false
+    execute_submit(this, clear)
+  });
 
-  })
+  document.getElementById('fundingOrganization-select').addEventListener('submit', function(e) {
+    e.preventDefault(); //to prevent form submission
+    var clear = false;
+    if (e.submitter.id == "fundingOrganization-clear") {
+      clear = true;
+    }
+    execute_submit(this, clear)
+  });
 
-  $.fn.select2.amd.require([
-    'select2/utils',
-    'select2/dropdown',
-    'select2/dropdown/attachBody',
-  ], function (Utils, Dropdown, AttachBody) {
-    function Submit() { }
+  function execute_submit(form_object, clear) {
+    var param = $(form_object).data('param');
+    var new_url = calculate_new_url(param, $(form_object), clear);
+    var changed = window.location.href !== new_url;
 
-    Submit.prototype.render = function (decorated) {
-      var $rendered = decorated.call(this);
-      var self = this;
+    if (changed) {
+      window.location.href = new_url
+    }
+  }
 
-      var $submit = $(
-        '<div class="dropdown-button-container"><button style="display: none" id=' + self.$element.data('param') + '-button type="button" class="btn btn-default btn-xs">Apply</button></div>'
-      );
+  $facet_selects = $(".facet-options");
 
-      $rendered.find('.select2-dropdown').append($submit);
+  function calculate_new_url(param, $select, clear) {
+    var uri = URI(window.location.href);
+    uri.removeSearch(param);
+    uri.removeSearch('exclude_' + param);
 
-      $submit.on('click', function (e) {
-        self.$element.data('allow-close', true);
-        self.trigger('close');
-      });
-
-      return $rendered;
-    };
-
-    function formatState (state) {
-      return state.element.label;
-    };
-
-
-
-    $facet_selects = $(".facet-dropdown");
-
-    $facet_selects.each(function (index, element) {
-      $(element).select2({
-        placeholder: $(element).data('placeholder'),
-        closeOnSelect: false,
-        width: '100%',
-        templateSelection: formatState,
-        dropdownAdapter: Utils.Decorate(
-          Utils.Decorate(
-            Dropdown,
-            AttachBody
-          ),
-          Submit
-        ),
-      });
-    })
-
-    function calculate_new_url(param, $select) {
-      var uri = URI(window.location.href);
-      uri.removeSearch(param);
-      $select.find(':selected').each(function (index, element) {
+    if (!clear) {
+      $select.find(':checked').each(function (index, element) {
         uri.addSearch(param, element.value);
       })
-
-      uri.removeSearch('exclude_' + param);
-
       if ($('#' + param + '-exclude').prop("checked")) {
         uri.addSearch('exclude_' + param, 'true');
       }
+    }
 
-      return uri.toString()
-    };
+    return uri.toString()
+  };
 
-    $facet_selects.on('select2:closing', function (e) {
-
-      var param = $(this).data('param');
-
-      var new_url = calculate_new_url(param, $(this));
-
-      var changed = window.location.href !== new_url;
-
-      // if dropdown has changed only allow close when apply is pressed
-      if (!($(this).data('allow-close')) && changed) {
-        e.preventDefault();
-        return
-      }
-
-      if (changed) {
-        window.location.href = new_url
-      }
-    });
-
-    $facet_selects.on('change', function (e) {
-      var param = $(this).data('param');
-      var new_url = calculate_new_url(param, $(this));
-      var changed = window.location.href !== new_url;
-      if (changed) {
-        $('#' + param + '-button').show()
-      } else {
-        $('#' + param + '-button').hide()
-      }
-
-    })
-
-    $include_or_exclude_radios = $(".facet-multiselect .radio input");
-
-    $include_or_exclude_radios.on("click", function (e) {
-      $select = $($(this).data('target'))
-      $select.select2("open")
-      var param = $select.data('param');
-      var new_url = calculate_new_url(param, $select);
-      var changed = window.location.href !== new_url;
-      if (changed) {
-        $('#' + param + '-button').show()
-      } else {
-        $('#' + param + '-button').hide()
-      }
-
-    })
-
-  });
+  $facet_selects.on('change', function (e) {
+    var param = $(this).data('param');
+    var clear = false
+    var new_url = calculate_new_url(param, $(this), clear);
+    var changed = window.location.href !== new_url;
+    if (changed) {
+      $('#' + param + '-button').show()
+    } else {
+      $('#' + param + '-button').hide()
+    }
+  })
 });
 </script>
 {% endblock %}
