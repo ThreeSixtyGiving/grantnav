@@ -20,7 +20,6 @@
           {{ grant.source|get_title }}
         <small>({{grant.source.id}})</small>
       </h1>
-      <p> {{ grant.source.description }} </p>
     </div>
 
     {% if grant.source.fundingOrganization.0.id and grant.source.recipientOrganization.0.id %}
@@ -53,6 +52,9 @@
     </div>
     {% endif %}
 
+    <div class="spacer-1">
+      <p> {{ grant.source.description }} </p>
+    </div>
 
     <div class="spacer-4">
       <div class='spacer-4'>
