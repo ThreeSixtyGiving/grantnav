@@ -17,6 +17,10 @@
       <h3 class="footer__heading">Links</h3>
       <ul>
           <li>
+            <a href="{% url 'home' %}">Home</a>
+          </li>
+          <li>
+          <li>
             <a href="{% url 'about' %}">About</a>
           </li>
           <li>
@@ -32,7 +36,7 @@
             <a href="{% url 'take_down_policy' %}">Take Down Policy</a>
           </li>
           <li>
-            <a href="{% url 'datasets' %}">Data Used in GrantNav</a>
+            <a href="{% url 'datasets' %}">Data sources used in GrantNav</a>
           </li>
           <li>
             <a href="{% url 'datasets' %}#reuse">Reusing GrantNav Data</a>
@@ -79,10 +83,10 @@
   <div class="footer__row wrapper footer__small-print">
 
     <div class="footer__column-2">
-    <p>© Copyright 2021 360Giving.<br>Licensed under a <a href="#" target="_blank">Creative Commons Attribution 4.0 International License</a>.</p>
+    <p>© Copyright 2021 360Giving.<br>Licensed under a <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.</p>
     </div>
     <div class="footer__column-2 footer__policy-links">
-      <p><a href="#">Privacy Notice</a> | <a href="#">Terms & Conditions</a> | <a href="#">Cookie Policy</a> | <a href="#">Take Down Policy</a> | <a href="#">License</a></p>
+      <p><a href="{% url 'terms' %}#privacy-notice">Privacy Notice</a> | <a href="{% url 'terms' %}">Terms & Conditions</a> | <a href="{% url 'terms' %}#how-we-use-cookies">Cookie Policy</a> | <a href="http://www.threesixtygiving.org/take-down-policy/">Take Down Policy</a></p>
     </div>
   </div>
 </footer>
