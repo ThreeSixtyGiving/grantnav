@@ -1,11 +1,11 @@
 <div class="nav-bar">
-    <a class="nav-bar__home-button" href="/">
+    <a class="nav-bar__home-button" href="{% url 'home' %}">
       {# TO DO: REFACTOR LOGO INTO COMPONENT #}
       {% include 'tokens/main-logo--animated.html' %}
-  
+
       <span class="screen-reader-only">Home</span>
     </a>
-  
+
     <nav class="nav-bar__nav-menu">
       <ul>
         {% for item in nav_menu %}
