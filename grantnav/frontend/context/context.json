@@ -1,0 +1,19 @@
+{
+    "search-block": {
+        "description": "Search, explore and download UK grants data published by funders in the 360Giving Data Standard.",
+        "form_action": "#",
+        "submit_text": "Search",
+        "search_name": "search-view",
+        "search_label": "Enter a search term"
+    },
+    "search-block--advanced": {
+        "description": "Search UK grants data",
+        "form_action": "#",
+        "submit_text": "Search",
+        "search_name": "search-view",
+        "search_label": "Enter a search term"
+    },
+    "filter-wrapper": {
+        "heading": "Filters"
+    }
+}

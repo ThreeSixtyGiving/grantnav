@@ -1,0 +1,106 @@
+.base-card {
+  --card-bg-hsl: var(--base-hsl);
+  background: hsla(var(--white-hsl), 1);
+  box-shadow: 0px 4px 8px hsla(var(--base-hsl), .15);
+  position: relative;
+  text-align: center;
+  display: block;
+
+  @include breakpoint($touch) { margin-bottom: 16px; }
+
+  &:before {
+    content: '';
+    width: 4px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: hsla(var(--card-bg-hsl), 1);
+    transition: all .2s ease;
+  }
+}
+
+.base-card {
+  &__content {
+    padding: 16px;
+    @include breakpoint($large) { padding: 32px; }
+  }
+
+  &__header {
+    text-align: left;
+    padding-bottom: 24px;
+    padding-left: 24px;
+  }
+
+   &__heading {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0;
+   }
+
+   &__subheading {
+    font-size: 1rem;
+    font-weight: 200;
+    margin: 0;
+   }
+
+  &__title {
+    font-size: 2rem;
+    line-height: 1.3;
+    font-weight: 100;
+    margin: 0;
+  }
+
+  &__text {
+    font-size: 1rem;
+    font-weight: 100;
+  }
+}
+
+.base-card--orange:before { --card-bg-hsl: var(--orange-hsl); }
+.base-card--yellow:before { --card-bg-hsl: var(--yellow-hsl); }
+.base-card--teal:before   { --card-bg-hsl: var(--teal-hsl); }
+.base-card--red:before    { --card-bg-hsl: var(--red-hsl); }
+.base-card--none:before   { background-color: transparent !important; }
+
+.base-card--spacious {
+  @include breakpoint($large) { padding: 24px 16px; }
+}
+
+.base-card--new {
+  --card-bg-hsl: var(--base-hsl);
+  background: hsla(var(--orange-hsl), 0.2);
+  border-left: 4px solid $orange;
+  border-right: 4px solid $orange;
+  padding-top: 32px;
+  padding-bottom: 58px;
+
+  /* I've opted to hide the before element and use borders for this instead.
+  I didn't want to update the other base cards as to not break anything
+  but I don't think a whole new element is needed. */
+  &::before {
+    content: none;
+  }
+
+  .base-card__title {
+    font-size: 33px;
+    margin-bottom: 32px;
+  }
+
+  .base-card__text:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .button {
+    &:hover {
+      color: $black;
+      border-color: $orange-dark;
+    }
+  }
+}
+
+a.base-card { color: currentColor; }
+
+a.base-card:hover {
+  &:before { width: 12px; }
+}

@@ -2,6 +2,7 @@
 *.swp
 *.mo
 *~
+*.pyc
 
 .DS_Store
 .cache/

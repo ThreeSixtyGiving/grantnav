@@ -33,7 +33,6 @@ def provenance_dataload(dataload, settings, tmpdir):
     ('GrantNav'),
     ('Search'),
     ('Help'),
-    ('Advanced Search')
     ])
 def test_home(provenance_dataload, client, expected_text):
     response = client.get('/')
@@ -95,11 +94,6 @@ def test_search_accents(provenance_dataload, client):
 #def test_stats(provenance_dataload, client):
 #    response = client.get('/stats')
 #    assert "379" in str(response.content)
-
-
-def test_help_page(provenance_dataload, client):
-    response = client.get('/help')
-    assert 'Help with using GrantNav' in str(response.content)
 
 
 def test_json_download(provenance_dataload, client):

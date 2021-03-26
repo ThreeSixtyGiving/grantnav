@@ -1,0 +1,9 @@
+{% if arg %}
+ {% url data_function arg as download_base_url %}
+{% else %}
+ {% url data_function as download_base_url %}
+{% endif %}
+
+<a class="export-data-button export-data-button--json" href="{{download_base_url}}?{% if parameter %}{{parameter}}{% endif %}{{ query }}" aria-label="Export results data as JSON">
+  <span>{% include 'tokens/export-json-icon.html' %}</span>
+</a>

@@ -1,0 +1,27 @@
+<div class="grant-info-highlight grid grid--three-columns">
+  <div class="grant-info-highlight__funder">
+    <div class="grant-info-highlight__label">Funding Organization</div>
+
+    <div>
+      <a href="{{ funder_url }}">{{ funder_name }}</a>
+    </div>
+  </div>
+
+  <div class="grant-info-highlight__data">
+    <div class="grant-info-highlight__data--amount">{{ amount }}</div>
+
+    <div class="grant-info-highlight__data--infographic">
+      {% include '@infographic-arrow' %}
+    </div>
+
+    <div class="grant-info-highlight__data--date"><time datetime="{{ date_timestamp }}">{{ date }}</time></div>
+  </div>
+
+  <div class="grant-info-highlight__recipient">
+    <div class="grant-info-highlight__label">Recipient Organization</div>
+
+    <div>
+      <a href="{{ recipient_url }}">{{ recipient_name }}</a>
+    </div>
+  </div>
+</div>

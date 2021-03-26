@@ -1,0 +1,50 @@
+<div class="pager">
+  <div class="screen-reader-only">Change page to</div>
+  <ul>
+    {% for page in pages %}
+      {% if page.type == 'ellipsis' %}
+        <li class="pager__item--ellipsis">...</li>
+      {% elif page.type == 'first' %}
+        <li class="pager__item--first">
+          <a href="{{ page.url }}">
+            {{ page.label }}
+          </a>
+        </li>
+      {% elif page.type == 'prev' %}
+        <li class="pager__item--prev">
+          <a href="{{ page.url }}">
+            {% include 'tokens/prev-icon.html' %}
+
+            <span class="screen-reader-only">
+              {{ page.label }}
+            </span>
+          </a>
+        </li>
+      {% elif page.type == 'next' %}
+        <li class="pager__item--next">
+          <a href="{{ page.url }}">
+            <span class="screen-reader-only">
+              {{ page.label }}
+            </span>
+
+            {% include 'tokens/next-icon.html' %}
+          </a>
+        </li>
+      {% elif page.type == 'last' %}
+        <li class="pager__item--last">
+          <a href="{{ page.url }}">
+            {{ page.label }}
+          </a>
+        </li>
+      {% else %}
+        <li class="pager__item--page">
+          {% if page.type == 'number' %}
+            <a {% if page.active %}class="active"{% endif %} href="{{ page.url }}">
+              {{ page.label }}
+            </a>
+          {% endif %}
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>

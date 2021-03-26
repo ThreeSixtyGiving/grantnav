@@ -75,7 +75,6 @@ INSTALLED_APPS = (
     'grantnav.frontend',
     'grantnav.prometheus',
     'raven.contrib.django.raven_compat',
-    'cookielaw',
     'favicon',
 )
 
@@ -96,7 +95,7 @@ ROOT_URLCONF = 'grantnav.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,6 +104,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'grantnav.frontend.context_processors.piwik',
+                'grantnav.frontend.context_processors.navigation'
             ],
         },
     },

@@ -1,0 +1,107 @@
+.grant-info-highlight {
+  box-shadow: 1px 4px 4px 4px rgba(0, 0, 0, 0.06);
+  border-top: 4px solid $yellow;
+  border-bottom: 4px solid $yellow;
+  padding: 22px 24px 34px;
+
+  @include breakpoint($medium) {
+    padding: 22px 44px 34px;
+  }
+
+  a {
+    font-size: 24px;
+    font-weight: 400;
+    text-decoration: underline;
+  }
+
+  &__funder {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 42px;
+    background: $white;
+
+    @include breakpoint($medium) {
+      margin-bottom: 0;
+    }
+  }
+
+  &__data {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 42px;
+
+    @include breakpoint($medium) {
+      margin-bottom: 0;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &--amount {
+      color: $teal-dark;
+      font-weight: 400;
+      font-size: 27px;
+      width: 33.33%;
+      text-align: right;
+
+      @include breakpoint($medium) {
+        text-align: left;
+        width: auto;
+      }
+    }
+
+    &--infographic {
+      width: 33.33%;
+      transform: rotateZ(90deg);
+      z-index: -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @include breakpoint($medium) {
+        transform: none;
+        width: 100%;
+      }
+
+      .infographic-arrow {
+        width: 100px;
+        height: 60px;
+        display: block;
+
+        @include breakpoint($medium) {
+          width: unset;
+          height: unset;
+        }
+      }
+
+    }
+
+    &--date {
+      width: 33.33%;
+      color: $teal-dark;
+      font-weight: 500;
+      font-size: 20px;
+
+      @include breakpoint($medium) {
+        width: auto;
+      }
+    }
+  }
+
+  &__recipient {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__label {
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+}

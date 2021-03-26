@@ -1,0 +1,13 @@
+<div class="filter-group">
+  <details class="filter-group__accordion" {% if results.aggregations.recipientOrganization.clear_url %} open{% endif %}>
+    <summary class="filter-group__label">
+      <div>Recipient</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-group_contents-wrapper">
+      {% if results.aggregations.recipientOrganization.buckets %}
+        {% include 'components/filters/lists/filter-list-recipient-org.html' %}
+      {% endif %}
+    </div>
+  </details>
+</div>

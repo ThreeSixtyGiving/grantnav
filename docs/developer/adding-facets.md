@@ -15,14 +15,13 @@ There are multiple types of facets: Terms, Amount, Date and Non-Terms.
 * `filter_index` - The location of this filter mechanism in `BASIC_FILTER`
 * `display_name` - Facet name displayed in the template
 * `is_json` - Whether the value in `field_name` is in json format
-* `is_dropdown` - Whether to show as a drop down UI element
 
 Example:
 ```
  TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False, False),
  ```
 
- 3. Add a panel to display the facet filter information in `frontend/templates/search.html`. Note the field name in the template context is the `param_name`.
+ 1. Add a panel to display the facet filter information in `frontend/templates/search.html`. Note the field name in the template context is the `param_name`.
 
 Example:
 ```html

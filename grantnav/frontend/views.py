@@ -32,20 +32,18 @@ BASIC_FILTER = [
     {"bool": {"should": []}}   # additional_data.TSGFundingOrgType
 ]
 
-TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json is_dropdown')
+TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json')
 
 TERM_FACETS = [
-    TermFacet("fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True, True),
-    TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True, True),
-    TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False, False),
-    TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False, True),
-    TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False, False),
-    TermFacet("currency", "currency", 7, "Currency", False, True)
+    TermFacet("fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True),
+    TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True),
+    TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False),
+    TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False),
+    TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False),
+    TermFacet("currency", "currency", 7, "Currency", False)
 ]
 
-DROPDOWN_SIZE = 5000
-LESS_SIZE = 3
-MORE_SIZE = 50
+MORE_SIZE = 5000
 SIZE = 20
 
 BASIC_QUERY = {"query": {"bool": {"must":
@@ -56,7 +54,7 @@ BASIC_QUERY = {"query": {"bool": {"must":
 
 for term_facet in TERM_FACETS:
     BASIC_QUERY['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
-                                                            "size": DROPDOWN_SIZE if term_facet.is_dropdown else LESS_SIZE}}
+                                                            "size": MORE_SIZE}}
 
 FIXED_AMOUNT_RANGES = [
     {"from": 0, "to": 500},
@@ -222,55 +220,43 @@ def orgs_csv_paged(data, org_type):
 
 def get_pagination(request, context, page):
     total_pages = math.ceil(context['results']['hits']['total']['value'] / SIZE)
-    if page < total_pages:
-        context['next_page'] = request.path + '?' + create_parameters_from_json_query(context['query'], page=page + 1)
+    context['pages'] = []
+    if page != 1 and total_pages > 5:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': 1}), "type": "first", "label": "First"})
+
     if page != 1 and total_pages > 1:
-        context['prev_page'] = request.path + '?' + create_parameters_from_json_query(context['query'], page=page - 1)
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "prev", "label": "Previous"})
+    
+    if total_pages > 1 and page > 3:
+        context['pages'].append({"type": "ellipsis"})
 
+    if total_pages > 1 and page > 2:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 2}), "type": "number", "label": str(page - 2)})
+    if total_pages > 1 and page > 1:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "number", "label": str(page - 1)})
+    
+    context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page}), "type": "number", "label": str(page), "active": True})
+    
+    if page < total_pages - 1:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "number", "label": str(page + 1)})
+    if page < total_pages - 2:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 2}), "type": "number", "label": str(page + 2)})
+    
+    if page < total_pages - 3:
+        context['pages'].append({"type": "ellipsis"})
 
-def get_terms_facet_size(request, context, json_query, page):
-    json_query = copy.deepcopy(json_query)
-    see_more_url = {}
-    try:
-        aggs = json_query["aggs"]
-    except KeyError:
-        aggs = BASIC_QUERY['aggs']
-    for agg_name, agg in aggs.items():
-        new_aggs = copy.deepcopy(aggs)
-        if "terms" not in agg:
-            continue
-        size = agg["terms"]["size"]
-        if size == DROPDOWN_SIZE:
-            continue
-        if size == LESS_SIZE:
-            new_size = MORE_SIZE
-            see_more_url[agg_name] = {"more": True}
-        else:
-            new_size = LESS_SIZE
-            see_more_url[agg_name] = {"more": False}
-        new_aggs[agg_name]["terms"]["size"] = new_size
-
-        json_query["aggs"] = new_aggs
-        see_more_url[agg_name]["url"] = request.path + '?' + create_parameters_from_json_query(json_query, page=page) + '#' + agg_name
-
-    context['see_more_url'] = see_more_url
+    if page < total_pages:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "next", "label": "Next"})
+    
+    if page < total_pages and total_pages > 5:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': total_pages}), "type": "last", "label": "Last"})
 
 
 def get_non_terms_facet_size(request, context, json_query, page, agg_name):
-    see_more = {}
     new_json_query = copy.deepcopy(json_query)
     facet_size = new_json_query['extra_context'][agg_name + '_facet_size']
-    if facet_size == LESS_SIZE:
-        facet_size = MORE_SIZE
-        see_more["more"] = True
-    else:
-        facet_size = LESS_SIZE
-        see_more["more"] = False
 
     new_json_query['extra_context'][agg_name + '_facet_size'] = facet_size
-    new_url = request.path + '?' + create_parameters_from_json_query(new_json_query, page=page) + '#' + agg_name
-    see_more['url'] = new_url
-    context['see_more_url'][agg_name] = see_more
 
 
 def create_amount_aggregate(json_query):
@@ -587,23 +573,14 @@ def term_facet_size_from_parameters(request, json_query):
         aggs = BASIC_QUERY['aggs']
 
     for agg_name, agg in aggs.items():
-        if "terms" not in agg or agg["terms"]["size"] == DROPDOWN_SIZE:
+        if "terms" not in agg:
             continue
 
-        more = request.GET.get(agg_name + 'More')
-        if more:
-            agg["terms"]["size"] = MORE_SIZE
-        else:
-            agg["terms"]["size"] = LESS_SIZE
+        agg["terms"]["size"] = MORE_SIZE
 
 
 def non_term_facet_size_from_parameters(request, json_query, agg_name):
-
-    more = request.GET.get(agg_name + 'More')
-    if more:
-        json_query['extra_context'][agg_name + '_facet_size'] = MORE_SIZE
-    else:
-        json_query['extra_context'][agg_name + '_facet_size'] = LESS_SIZE
+    json_query['extra_context'][agg_name + '_facet_size'] = MORE_SIZE
 
 
 def create_json_query_from_parameters(request):
@@ -800,14 +777,14 @@ def search(request):
 
         try:
             context['text_query'] = json_query["query"]["bool"]["must"]["query_string"]["query"]
-            context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
+            default_field = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
         except KeyError:
             json_query = copy.deepcopy(BASIC_QUERY)
             json_query["query"]["bool"]["must"]["query_string"]["query"] = ''
             context['text_query'] = ''
             if default_field:
                 json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
-            context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
+            default_field = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
 
         if result_format == "csv":
             return grants_csv_paged(json_query)
@@ -879,7 +856,6 @@ def search(request):
 
         get_amount_facet_fixed(request, context, json_query)
         get_date_facets(request, context, json_query)
-        get_terms_facet_size(request, context, json_query, page)
         get_non_terms_facet_size(request, context, json_query, page, 'awardYear')
         get_non_terms_facet_size(request, context, json_query, page, 'amountAwardedFixed')
 
@@ -887,9 +863,30 @@ def search(request):
 
         context['selected_facets'] = dict(context['selected_facets'])
 
+        get_radio_items(context, default_field)
+        get_dropdown_filters(context)
+
         add_advanced_search_information_in_context(context)
 
         return render(request, "search.html", context=context)
+
+
+def get_radio_items(context, default_field):
+    context['searchRadio'] = []
+    context['searchRadio'].append({"value": "*", "name": "All grant fields", "checked": True if default_field == "*" else False})
+    context['searchRadio'].append({"value": "additional_data.recipientLocation", "name": "Locations", "checked": True if default_field == "additional_data.recipientLocation" else False})
+    context['searchRadio'].append({"value": "recipientOrganization.name", "name": "Recipients", "checked": True if default_field == "recipientOrganization.name" else False})
+    context['searchRadio'].append({"value": "title_and_description", "name": "Titles & Descriptions", "checked": True if default_field == "title_and_description" else False})
+    context['default_field_name'] = [radioItem['name'] for radioItem in context['searchRadio'] if radioItem['checked'] is True][0]
+
+
+def get_dropdown_filters(context):
+    context['dropdownFilterOptions'] = []
+    context['dropdownFilterOptions'].append({"value": "_score desc", "label": "Best Match"})
+    context['dropdownFilterOptions'].append({"value": "amountAwarded desc", "label": "Amount - Highest First"})
+    context['dropdownFilterOptions'].append({"value": "amountAwarded asc", "label": "Amount - Lowest First"})
+    context['dropdownFilterOptions'].append({"value": "awardDate desc", "label": "Award Date - Latest First"})
+    context['dropdownFilterOptions'].append({"value": "awardDate asc", "label": "Award Date - Earliest First"})
 
 
 def flatten_mapping(mapping, current_path=''):
@@ -1263,7 +1260,7 @@ def region(request, region):
         region = re.match(r'(.*)\.\w*$', region).group(1)
 
     query = {"query": {"bool": {"filter":
-                [{"term": {"recipientRegionName": region}}]}},
+                [{"term": {"additional_data.recipientRegionName": region}}]}},
             "aggs": {
                 "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                 "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},

@@ -1,0 +1,45 @@
+.radio-buttons {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__group {
+    margin-right: 12px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+
+  &__button {
+    color: $black;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 4px;
+    border-radius: 3px;
+    border: 2px solid $black;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: 1px dashed red;
+    }
+  }
+
+  input[type="radio"] {
+    &:checked {
+      & ~ .radio-buttons__button {
+        background: $black;
+        color: $white;
+      }
+    }
+
+    &:focus {
+      & ~ .radio-buttons__button {
+        outline: 1px dashed $orange;
+        outline-offset: -2px;
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{% load get_amount_range get_amount from frontend %}
+<div class="filter-list margin-bottom:2">
+  <details class="filter-list__accordion" open>
+    <summary class="filter-list__label">
+      <div>Amount Awarded ({{current_currency}}) {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      {% block filterForm %}
+        <form class="filter-list__contents--form">
+          <div class="filter-list__contents--form-item">
+            <label for="min-amount">Smallest (£)</label>
+            <input id="min-amount" name="new_min_amount" class="form-control" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.gte}}"/>
+          </div>
+          <div class="filter-list__contents--form-item">
+            <label for="max-amount">Largest (£)</label>
+            <input id="max-amount" name="new_max_amount" class="form-control input-xs" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.lte}}"/>
+          </div>
+          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+          <button type="submit" class="filter-list__contents--form-submit">Apply</button>
+        </form>
+      {% endblock filterForm %}
+      <ul class="filter-list__listing">
+        {% if not query.query.bool.filter.3.bool.should.range.amountAwarded %}
+          {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
+            {% if forloop.counter <= query.extra_context.amountAwardedFixed_facet_size %}
+              <li>
+                <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
+                  {{bucket|get_amount_range:current_currency}} <small>({{bucket.doc_count|get_amount}})</small> 
+
+                  {% if bucket.selected %}
+                    <span class="screen-reader-only">(active filter)</span>
+                  {% endif%}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+  </details>
+</div>

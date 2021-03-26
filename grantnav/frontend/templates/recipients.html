@@ -5,35 +5,46 @@
 
 {% block main_content %}
 
-<div class="row">
-  <div class="col-xs-6">
-    <h1> Recipients </h1>
-  </div>
-  <div class="col-xs-6">
-    <h1 class="pull-right">
-      <a href="{% url 'funder_recipients_datatables.json' %}">
-        <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
-      </a>
-      <a href="{% url 'funder_recipients_datatables.csv' %}">
-        <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button"/>
-      </a>
-    </h1>
-  </div>
-</div>
-<div class="row bottom-space">
-  <div class="col-xs-12">
-    <table class="table table-condensed table-bordered table-striped dt-responsive" id="recipients_datatable" width="100%">
-      <thead>
-        <tr>
-          <th>Recipient</th>
-          <th>Grants</th>
-          <th>Total</th>
-          <th>Average</th>
-          <th>Largest</th>
-          <th>Smallest</th>
-        </tr>
-      </thead>
-    </table>
+<div class="layout layout--single-column layout">
+  <div class="grantnav-page__content layout__content">
+
+    <div class="section">
+      <h1 class="page-title">Recipients</h1>
+    </div>
+
+    <div class="section">
+      <div class="grantnav-datatable__content--filters">
+        <div class="export-wrapper">
+
+          <div class="export-label">Export search data:</div>
+
+          <div class="export-button">
+            {% include 'components/export-data-button--csv.html' with data_function='funder_recipients_datatables.csv' %}
+          </div>
+
+          <div class="export-button">
+            {% include 'components/export-data-button--json.html' with data_function='funder_recipients_datatables.json' %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <table class="table table--zebra table--primary dt-responsive" id="recipients_datatable" style="width: 100%">
+        <thead>
+          <tr>
+            <th>Recipient</th>
+            <th>Grants</th>
+            <th>Total</th>
+            <th>Average</th>
+            <th>Largest</th>
+            <th>Smallest</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
   </div>
 </div>
 {% endblock %}
@@ -46,7 +57,6 @@
 
 {% block extra_scripts %}
    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-   <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
    <script type="text/javascript" src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
 

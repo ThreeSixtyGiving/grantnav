@@ -1,0 +1,8 @@
+<div class="radio-buttons">
+  {% for radioItem in searchRadio %}
+    <div class="radio-buttons__group">
+      <input class="screen-reader-only" type="radio" id="{{ radioItem.value }}" name="default_field" value="{{ radioItem.value }}"{% if radioItem.checked %} checked{% endif %}>
+      <label class="radio-buttons__button" for="{{ radioItem.value }}">{{ radioItem.name }}</label>
+    </div>
+  {% endfor %}
+</div>
