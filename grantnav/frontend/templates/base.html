@@ -56,10 +56,6 @@
     {% block models %}{% endblock %}
     {% block extra_scripts %}{% endblock %}
 
-    {% comment %}
-
-    DISABLED until upgrade to matomo for cookieless support
-
     {% if piwik.url and piwik.site_id %}
     <!-- Piwik -->
     <script type="text/javascript">
@@ -79,8 +75,6 @@
     <noscript><p><img src="{{ piwik.url }}/piwik.php?idsite={{ piwik.site_id }}" style="border:0;" alt="" /></p></noscript>
     {% endif %}
     <!-- End Piwik Code -->
-
-    {% endcomment %}
 
     </body>
 </html>
