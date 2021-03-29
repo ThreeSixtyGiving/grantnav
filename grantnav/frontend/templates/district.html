@@ -5,56 +5,76 @@
 
 {% block main_content %}
 
-<div class="row">
-  <div class="col-md-4">
-    <h1 class="funder-header text-center">
-      {{ district }}
-    </h1>
-  </div>
-  <div class="col-md-8">
-    <div class="row">
-      <div class="col-sm-6">
-        <dl class="dl-horizontal top-stats-search">
-          <dt>Total grants</dt> <dd>{{results.hits.total|get_amount}} </dd>
-          <dt>Total funders</dt> <dd>{{results.aggregations.funding_orgs.value|get_amount}}</dd>
-          <dt>Total recipients</dt> <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
-          <dt>Earliest award date</dt> <dd>{{results.aggregations.min_date.value_as_string|get_date}}</dd>
-          <dt>Latest award date</dt> <dd>{{results.aggregations.max_date.value_as_string|get_date}}</dd>
-        </dl>
-      </div>
-      <div class="col-sm-6">
-        {% include 'currency_stats.html' %}
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        Grants
-        <a class="pull-right" href="{% url 'district.json' district %}">
-          <img src="{% static 'images/json_download_icon.png' %}" alt="Download JSON" class="download_button"/>
-        </a>
-        <a class="pull-right" href="{% url 'district.csv' district %}">
-          <img src="{% static 'images/csv_download_icon.png' %}" alt="Download CSV" class="download_button"/>
-        </a>
-      </div>
-      <div class="panel-body">
-        <table class="table table-condensed table-bordered table-striped dt-responsive" id="grants_datatable" width="100%">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Amount</th>
-              <th>Funder</th>
-              <th>Recipient</th>
-              <th>Date</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-        </table>
+<div class="layout layout--single-column">
+  <div class="grantnav-page__content layout__content">
+
+    <div class="section">
+      <div class="grid grid--two-columns spacer-4">
+
+        <div class="grid__1">
+          <h1 class="funder-header text-center">{{district}}</h1>
+        </div>
+
+        <div class="grid__1">
+          <div class="grid grid--two-columns">
+
+            <div class="grid__1">
+              <dl class="top-stats">
+                <dt>Total grants</dt>
+                <dd>{{results.hits.total|get_amount}} </dd>
+                <dt>Total funders</dt>
+                <dd>{{results.aggregations.funding_orgs.value|get_amount}}</dd>
+                <dt>Total recipients</dt>
+                <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
+                <dt>Earliest award date</dt>
+                <dd>{{results.aggregations.min_date.value_as_string|get_date}}</dd>
+                <dt>Latest award date</dt>
+                <dd>{{results.aggregations.max_date.value_as_string|get_date}}</dd>
+              </dl>
+            </div>
+
+            <div class="grid__1">
+              {% include 'currency_stats.html' %}
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
+
+    <div class="section">
+      <div class="grantnav-datatable__content--filters">
+        <h4>Grants in {{district}}</h4>
+        <div class="export-wrapper">
+          <div class="export-label">Export Grant data:</div>
+
+          <div class="export-button">
+              {% include 'components/export-data-button--csv.html' with data_function='district.csv' arg=district %}
+          </div>
+
+          <div class="export-button">
+             {% include 'components/export-data-button--json.html' with data_function='district.json' arg=district %}
+          </div>
+
+        </div>
+      </div>
+      <div class="table table--zebra">
+        <table class="table--primary table--zebra dt-responsive" id="grants_datatable" width="100%">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Funder</th>
+                <th>Recipient</th>
+                <th>Date</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+    </div>
+
   </div>
 </div>
 {% endblock %}
@@ -67,7 +87,6 @@
 
 {% block extra_scripts %}
    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-   <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
    <script type="text/javascript" src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
 

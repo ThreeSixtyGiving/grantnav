@@ -1,0 +1,18 @@
+{% if READTHEDOCS %}
+<div class="sidebar-content sidebar-content--orange">
+  {% if versions %}
+  <h3 class="sidebar-content__heading">Versions</h3>
+  <p class="sidebar-content__text">Current version: {{ current_version }}</p>
+  {% for slug, url in versions %}
+    <p class="sidebar-content__text"><a class="" href="{{ url }}">{{ slug }}</a></p>
+  {% endfor %}
+  {% endif %}
+
+  {% if downloads %}
+  <h3 class="sidebar-content__heading">Downloads</h3>
+  {% for slug, url in downloads %}
+    <p class="sidebar-content__text"><a class="" href="{{ url }}">{{ slug }}</a></p>
+  {% endfor %}
+  {% endif %}
+</div>
+{% endif %}

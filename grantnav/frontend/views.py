@@ -26,24 +26,35 @@ BASIC_FILTER = [
     {"bool": {"should": [], "must": {}, "minimum_should_match": 1}},  # Amount Awarded Fixed
     {"bool": {"should": {"range": {"amountAwarded": {}}}, "must": {}, "minimum_should_match": 1}},  # Amount Awarded
     {"bool": {"should": []}},  # Award Year
-    {"bool": {"should": []}},  # recipientRegionName
-    {"bool": {"should": []}},  # recipientDistrictName
-    {"bool": {"should": []}}   # currency
+    {"bool": {"should": []}},  # additional_data.recipientRegionName
+    {"bool": {"should": []}},  # additional_data.recipientDistrictName
+    {"bool": {"should": []}},  # currency
+    {"bool": {"should": []}}   # additional_data.TSGFundingOrgType
 ]
 
+TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json')
+
+TERM_FACETS = [
+    TermFacet("fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True),
+    TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True),
+    TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False),
+    TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False),
+    TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False),
+    TermFacet("currency", "currency", 7, "Currency", False)
+]
+
+MORE_SIZE = 5000
+SIZE = 20
 
 BASIC_QUERY = {"query": {"bool": {"must":
                                   {"query_string": {"query": "", "default_field": "*"}}, "filter": BASIC_FILTER}},
                "extra_context": {"awardYear_facet_size": 3, "amountAwardedFixed_facet_size": 3},
                "sort": {"_score": {"order": "desc"}},
-               "aggs": {
-                   "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": 3}},
-                   "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": 3}},
-                   "recipientRegionName": {"terms": {"field": "recipientRegionName", "size": 3}},
-                   "recipientDistrictName": {"terms": {"field": "recipientDistrictName", "size": 3}},
-                   "currency": {"terms": {"field": "currency", "size": 3}}}}
+               "aggs": {}}
 
-SIZE = 20
+for term_facet in TERM_FACETS:
+    BASIC_QUERY['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
+                                                            "size": MORE_SIZE}}
 
 FIXED_AMOUNT_RANGES = [
     {"from": 0, "to": 500},
@@ -209,53 +220,43 @@ def orgs_csv_paged(data, org_type):
 
 def get_pagination(request, context, page):
     total_pages = math.ceil(context['results']['hits']['total']['value'] / SIZE)
-    if page < total_pages:
-        context['next_page'] = request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1})
+    context['pages'] = []
+    if page != 1 and total_pages > 5:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': 1}), "type": "first", "label": "First"})
+
     if page != 1 and total_pages > 1:
-        context['prev_page'] = request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1})
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "prev", "label": "Previous"})
+    
+    if total_pages > 1 and page > 3:
+        context['pages'].append({"type": "ellipsis"})
 
+    if total_pages > 1 and page > 2:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 2}), "type": "number", "label": str(page - 2)})
+    if total_pages > 1 and page > 1:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "number", "label": str(page - 1)})
+    
+    context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page}), "type": "number", "label": str(page), "active": True})
+    
+    if page < total_pages - 1:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "number", "label": str(page + 1)})
+    if page < total_pages - 2:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 2}), "type": "number", "label": str(page + 2)})
+    
+    if page < total_pages - 3:
+        context['pages'].append({"type": "ellipsis"})
 
-def get_terms_facet_size(request, context, json_query, page):
-    json_query = copy.deepcopy(json_query)
-    see_more_url = {}
-    try:
-        aggs = json_query["aggs"]
-    except KeyError:
-        aggs = BASIC_QUERY['aggs']
-    for agg_name, agg in aggs.items():
-        new_aggs = copy.deepcopy(aggs)
-        if "terms" not in agg:
-            continue
-        size = agg["terms"]["size"]
-        if size == 3:
-            new_size = 50
-            see_more_url[agg_name] = {"more": True}
-        else:
-            new_size = 3
-            see_more_url[agg_name] = {"more": False}
-        new_aggs[agg_name]["terms"]["size"] = new_size
-
-        json_query["aggs"] = new_aggs
-        see_more_url[agg_name]["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query), 'page': page}) + '#' + agg_name
-
-    context['see_more_url'] = see_more_url
+    if page < total_pages:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "next", "label": "Next"})
+    
+    if page < total_pages and total_pages > 5:
+        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': total_pages}), "type": "last", "label": "Last"})
 
 
 def get_non_terms_facet_size(request, context, json_query, page, agg_name):
-    see_more = {}
     new_json_query = copy.deepcopy(json_query)
     facet_size = new_json_query['extra_context'][agg_name + '_facet_size']
-    if facet_size == 3:
-        facet_size = 50
-        see_more["more"] = True
-    else:
-        facet_size = 3
-        see_more["more"] = False
 
     new_json_query['extra_context'][agg_name + '_facet_size'] = facet_size
-    new_url = request.path + '?' + urlencode({"json_query": json.dumps(new_json_query), 'page': page}) + '#' + agg_name
-    see_more['url'] = new_url
-    context['see_more_url'][agg_name] = see_more
 
 
 def create_amount_aggregate(json_query):
@@ -291,7 +292,7 @@ def get_amount_facet_fixed(request, context, original_json_query):
         new_json_query["query"]["bool"]["filter"][2]["bool"]["must"] = {}
         new_json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = {}
         new_json_query["query"]["bool"]["filter"][3]["bool"]["must"] = {}
-        results["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + urlencode({"json_query": json.dumps(new_json_query)})
+        results["aggregations"]["amountAwardedFixed"]["clear_url"] = request.path + '?' + create_parameters_from_json_query(new_json_query)
 
     for bucket in results["aggregations"]["amountAwardedFixed"]['buckets']:
         new_json_query = copy.deepcopy(original_json_query)
@@ -314,7 +315,7 @@ def get_amount_facet_fixed(request, context, original_json_query):
         elif not existing_currency and current_currency:
             new_json_query["query"]["bool"]["filter"][2]["bool"]["must"] = {"term": {"currency": current_currency}}
 
-        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(new_json_query)})
+        bucket["url"] = request.path + '?' + create_parameters_from_json_query(new_json_query)
 
         if bucket.get("selected"):
             display_value = "{}{:,}".format(utils.currency_prefix(current_currency), int(bucket["from"]))
@@ -338,7 +339,7 @@ def get_amount_facet_fixed(request, context, original_json_query):
         new_json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = {}
         new_json_query["query"]["bool"]["filter"][3]["bool"]["must"] = {}
 
-        context["selected_facets"]["Amounts"].append({"url": request.path + '?' + urlencode({"json_query": json.dumps(new_json_query)}), "display_value": display_value})
+        context["selected_facets"]["Amounts"].append({"url": request.path + '?' + create_parameters_from_json_query(new_json_query), "display_value": display_value})
 
     main_results["aggregations"]["amountAwardedFixed"] = results["aggregations"]["amountAwardedFixed"]
 
@@ -380,40 +381,49 @@ def get_date_facets(request, context, json_query):
 
         new_filter = [{"range": {"awardDate": value}} for value in filter_values]
         json_query["query"]["bool"]["filter"][4]["bool"]["should"] = new_filter
-        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+        bucket["url"] = request.path + '?' + create_parameters_from_json_query(json_query)
 
         if bucket.get("selected"):
             context["selected_facets"]["Award Year"].append({"url": bucket["url"], "display_value": value})
 
     if current_filter:
         json_query["query"]["bool"]["filter"][4]["bool"]["should"] = []
-        results['aggregations']["awardYear"]['clear_url'] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+        results['aggregations']["awardYear"]['clear_url'] = request.path + '?' + create_parameters_from_json_query(json_query)
     main_results['aggregations']["awardYear"] = results['aggregations']["awardYear"]
 
 
 def get_terms_facets(request, context, json_query, field, aggregate, bool_index, display_name, is_json=False):
+
     json_query = copy.deepcopy(json_query)
     try:
-        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]
+        if "must_not" in json_query["query"]["bool"]["filter"][bool_index]["bool"]:
+            bool_condition = "must_not"
+        else:
+            bool_condition = "should"
+
+        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"].get(bool_condition, [])
     except KeyError:
         json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
-        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]
+        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"].get(bool_condition, [])
 
     main_results = context["results"]
     if current_filter:
-        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = []
+        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = []
         results = get_results(json_query)
     else:
         results = context["results"]
 
+    if bool_condition == 'must_not':
+        display_name = 'Excluded ' + display_name
+
     for filter in current_filter:
         new_filter = [x for x in current_filter if x != filter]
-        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = new_filter
+        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = new_filter
         display_value = filter["term"][field]
         if is_json:
             display_value = json.loads(display_value)[0]
         context["selected_facets"][display_name].append(
-            {"url": request.path + '?' + urlencode({"json_query": json.dumps(json_query)}),
+            {"url": request.path + '?' + create_parameters_from_json_query(json_query),
              "display_value": display_value}
         )
 
@@ -427,11 +437,13 @@ def get_terms_facets(request, context, json_query, field, aggregate, bool_index,
             filter_values.append(facet_value)
 
         new_filter = [{"term": {field: value}} for value in filter_values]
-        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = new_filter
-        bucket["url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = new_filter
+        bucket["url"] = request.path + '?' + create_parameters_from_json_query(json_query)
     if current_filter:
-        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = []
-        results['aggregations'][aggregate]['clear_url'] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = []
+        results['aggregations'][aggregate]['clear_url'] = request.path + '?' + create_parameters_from_json_query(json_query)
+        results['aggregations'][aggregate]["exclude"] = True if bool_condition == "must_not" else False
+
     main_results['aggregations'][aggregate] = results['aggregations'][aggregate]
 
 
@@ -445,7 +457,7 @@ def get_clear_all(request, context, json_query):
 
     if current_filter != BASIC_FILTER:
         json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
-        context["results"]["clear_all_facet_url"] = request.path + '?' + urlencode({"json_query": json.dumps(json_query)})
+        context["results"]["clear_all_facet_url"] = request.path + '?' + create_parameters_from_json_query(json_query)
 
 
 def totals_query():
@@ -491,6 +503,214 @@ def add_advanced_search_information_in_context(context):
     return context
 
 
+def term_facet_from_parameters(request, json_query, field_name, param_name, bool_index, field, is_json=False):
+    new_filter = []
+
+    if is_json:
+        query_filter = []
+        for value in request.GET.getlist(param_name):
+            query_filter.append({"term": {param_name + '.id': value}})
+
+        if query_filter:
+            query = {
+                "query": {
+                    "bool": {"should": query_filter}
+                },
+                "aggs": {
+                    param_name: {"terms": {"field": field_name, "size": len(query_filter)}}
+                }
+            }
+
+            results = get_results(query, 1)
+
+            for bucket in results['aggregations'][param_name]['buckets']:
+                new_filter.append({"term": {field_name: bucket['key']}})
+
+    else:
+        for value in request.GET.getlist(param_name):
+            new_filter.append({"term": {field_name: value}})
+
+    if request.GET.get("exclude_" + param_name):
+        json_query["query"]["bool"]["filter"][bool_index]["bool"].pop("should", None)
+        json_query["query"]["bool"]["filter"][bool_index]["bool"]["must_not"] = new_filter
+    else:
+        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = new_filter
+
+
+def amount_facet_from_parameters(request, json_query):
+    new_filter = []
+    for value in request.GET.getlist('amountAwarded'):
+        for item in FIXED_AMOUNT_RANGES:
+            if value == str(item['from']):
+                new_range = {"gte": item["from"]}
+                to_ = item.get("to")
+                if to_:
+                    new_range["lt"] = to_
+                new_filter.append({"range": {"amountAwarded": new_range}})
+
+    json_query["query"]["bool"]["filter"][2]["bool"]["should"] = new_filter
+
+
+def date_facet_from_parameters(request, json_query):
+    new_filter = []
+    for value in request.GET.getlist("awardDate"):
+        new_filter.append(
+            {"range": {
+                "awardDate": {"format": "year",
+                              "gte": value + "||/y",
+                              "lte": value + "||/y"}
+            }
+            }
+        )
+
+    json_query["query"]["bool"]["filter"][4]["bool"]["should"] = new_filter
+
+
+def term_facet_size_from_parameters(request, json_query):
+    try:
+        aggs = json_query["aggs"]
+    except KeyError:
+        aggs = BASIC_QUERY['aggs']
+
+    for agg_name, agg in aggs.items():
+        if "terms" not in agg:
+            continue
+
+        agg["terms"]["size"] = MORE_SIZE
+
+
+def non_term_facet_size_from_parameters(request, json_query, agg_name):
+    json_query['extra_context'][agg_name + '_facet_size'] = MORE_SIZE
+
+
+def create_json_query_from_parameters(request):
+    ''' Transforms the URL GET parameters of the request into an object (json_query) that is to be used by elasticsearch  '''
+
+    json_query = copy.deepcopy(BASIC_QUERY)
+    json_query["query"]["bool"]["must"]["query_string"]["query"] = request.GET.get('query', '*')
+    json_query["query"]["bool"]["must"]["query_string"]["default_field"] = request.GET.get('default_field', '*')
+
+    sort_order = request.GET.get('sort', '').split()
+    if sort_order and len(sort_order) == 2:
+        sort = {sort_order[0]: {"order": sort_order[1]}}
+        json_query["sort"] = sort
+
+    amount_filter = {}
+    min_amount = request.GET.get('min_amount')
+    if min_amount:
+        amount_filter['gte'] = min_amount
+    max_amount = request.GET.get('max_amount')
+    if max_amount:
+        amount_filter['lte'] = max_amount
+    json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = amount_filter
+
+    for term_facet in TERM_FACETS:
+        term_facet_from_parameters(request, json_query, term_facet.field_name, term_facet.param_name,
+                                   term_facet.filter_index, term_facet.display_name, term_facet.is_json)
+
+    amount_facet_from_parameters(request, json_query)
+    date_facet_from_parameters(request, json_query)
+    term_facet_size_from_parameters(request, json_query)
+
+    non_term_facet_size_from_parameters(request, json_query, 'awardYear')
+    non_term_facet_size_from_parameters(request, json_query, 'amountAwardedFixed')
+
+    return json_query
+
+
+def term_parameters_from_json_query(parameters, json_query, field_name, param_name, bool_index, field, is_json=False):
+    values = []
+    if "must_not" in json_query["query"]["bool"]["filter"][bool_index]["bool"]:
+        filters = json_query["query"]["bool"]["filter"][bool_index]["bool"]["must_not"]
+        must_not = True
+    else:
+        filters = json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]
+        must_not = False
+
+    for filter in filters:
+        if is_json:
+            values.append(json.loads(filter['term'][field_name])[1])
+        else:
+            values.append(filter['term'][field_name])
+    parameters[param_name] = values
+    if must_not:
+        parameters["exclude_" + param_name] = "true"
+
+
+def amount_parameters_from_json_query(parameters, json_query):
+    values = []
+    for filter in json_query["query"]["bool"]["filter"][2]["bool"]["should"]:
+        values.append(int(filter['range']['amountAwarded']['gte']))
+    parameters['amountAwarded'] = values
+
+
+def date_parameters_from_json_query(parameters, json_query):
+    values = []
+    for filter in json_query["query"]["bool"]["filter"][4]["bool"]["should"]:
+        values.append(filter['range']['awardDate']['gte'][:-4])  # remove the ||/y from the end
+    parameters['awardDate'] = values
+
+
+def term_facet_size_from_json_query(parameters, json_query):
+
+    try:
+        aggs = json_query["aggs"]
+    except KeyError:
+        aggs = BASIC_QUERY['aggs']
+
+    for agg_name, agg in aggs.items():
+        if "terms" not in agg:
+            continue
+        if agg["terms"]["size"] == MORE_SIZE:
+            parameters[agg_name + 'More'] = ['true']
+
+
+def non_term_facet_size_from_json_query(parameters, json_query, agg_name):
+
+    if json_query['extra_context'][agg_name + '_facet_size'] == MORE_SIZE:
+        parameters[agg_name + 'More'] = ['true']
+
+
+def create_parameters_from_json_query(json_query, **extra_parameters):
+    ''' Transforms json_query (the query that is passed to elasticsearch) to URL GET parameters'''
+
+    parameters = {}
+
+    parameters['query'] = [json_query["query"]["bool"]["must"]["query_string"]["query"]]
+    parameters['default_field'] = [json_query["query"]["bool"]["must"]["query_string"]["default_field"]]
+
+    sort_key = list(json_query["sort"].keys())[0]
+    parameters['sort'] = [sort_key + ' ' + json_query['sort'][sort_key]['order']]
+
+    min_amount = json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"].get('gte')
+    if min_amount:
+        parameters['min_amount'] = [str(min_amount)]
+    max_amount = json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"].get('lte')
+    if max_amount:
+        parameters['max_amount'] = [str(max_amount)]
+
+    for term_facet in TERM_FACETS:
+        term_parameters_from_json_query(parameters, json_query, term_facet.field_name, term_facet.param_name,
+                                        term_facet.filter_index, term_facet.display_name, term_facet.is_json)
+
+    amount_parameters_from_json_query(parameters, json_query)
+    date_parameters_from_json_query(parameters, json_query)
+    term_facet_size_from_json_query(parameters, json_query)
+
+    non_term_facet_size_from_json_query(parameters, json_query, 'awardYear')
+    non_term_facet_size_from_json_query(parameters, json_query, 'amountAwardedFixed')
+
+    parameter_list = []
+
+    for parameter, list_value in parameters.items():
+        for value in list_value:
+            parameter_list.append((parameter, value))
+    for parameter, value in extra_parameters.items():
+        parameter_list.append((parameter, value))
+
+    return urlencode(parameter_list)
+
+
 def search(request):
     [result_format, results_size] = get_request_type_and_size(request)
 
@@ -508,6 +728,9 @@ def search(request):
     except ValueError:
         json_query = {}
 
+    if not json_query:
+        json_query = create_json_query_from_parameters(request)
+
     default_field = request.GET.get('default_field')
 
     # URL query backwards compatibility
@@ -516,13 +739,13 @@ def search(request):
     try:
         if "_all" in json_query["query"]["bool"]["must"]["query_string"]["default_field"]:
             json_query["query"]["bool"]["must"]["query_string"]["default_field"] = "*"
-            return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
+            return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
     except KeyError:
         pass
     # End URL query backwards compatibility
 
     text_query = request.GET.get('text_query')
-    if text_query is not None or not json_query:
+    if text_query is not None:
         if not text_query:
             text_query = '*'
         try:
@@ -533,12 +756,15 @@ def search(request):
 
         if default_field:
             json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
-        return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
+        return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
     sort_order = request.GET.get('sort', '').split()
     if sort_order and len(sort_order) == 2:
-        json_query["sort"] = {sort_order[0]: {"order": sort_order[1]}}
-        return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
+        new_sort = {sort_order[0]: {"order": sort_order[1]}}
+        old_sort = json_query["sort"]
+        if new_sort != old_sort:
+            json_query["sort"] = new_sort
+            return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
     results = None
     if json_query:
@@ -551,14 +777,14 @@ def search(request):
 
         try:
             context['text_query'] = json_query["query"]["bool"]["must"]["query_string"]["query"]
-            context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
+            default_field = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
         except KeyError:
             json_query = copy.deepcopy(BASIC_QUERY)
             json_query["query"]["bool"]["must"]["query_string"]["query"] = ''
             context['text_query'] = ''
             if default_field:
                 json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
-            context['default_field'] = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
+            default_field = json_query["query"]["bool"]["must"]["query_string"]["default_field"]
 
         if result_format == "csv":
             return grants_csv_paged(json_query)
@@ -603,8 +829,8 @@ def search(request):
         context['existing_currency'] = existing_currency
         context['current_currency'] = current_currency
 
-        min_amount = request.GET.get('min_amount')
-        max_amount = request.GET.get('max_amount')
+        min_amount = request.GET.get('new_min_amount')
+        max_amount = request.GET.get('new_max_amount')
         if min_amount or max_amount:
             new_filter = {}
             if min_amount:
@@ -619,22 +845,17 @@ def search(request):
                     pass
             json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = new_filter
             json_query["query"]["bool"]["filter"][3]["bool"]["must"] = {"term": {"currency": current_currency}}
-            return redirect(request.path + '?' + urlencode({"json_query": json.dumps(json_query)}))
+            return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
         context['selected_facets'] = collections.defaultdict(list)
         get_clear_all(request, context, json_query)
 
-        get_terms_facets(request, context, json_query, "fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True)
-        get_terms_facets(request, context, json_query, "recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True)
-
-        get_terms_facets(request, context, json_query, "recipientRegionName", "recipientRegionName", 5, "Regions")
-        get_terms_facets(request, context, json_query, "recipientDistrictName", "recipientDistrictName", 6, "Districts")
-
-        get_terms_facets(request, context, json_query, "currency", "currency", 7, "Currency")
+        for term_facet in TERM_FACETS:
+            get_terms_facets(request, context, json_query, term_facet.field_name, term_facet.param_name,
+                             term_facet.filter_index, term_facet.display_name, term_facet.is_json)
 
         get_amount_facet_fixed(request, context, json_query)
         get_date_facets(request, context, json_query)
-        get_terms_facet_size(request, context, json_query, page)
         get_non_terms_facet_size(request, context, json_query, page, 'awardYear')
         get_non_terms_facet_size(request, context, json_query, page, 'amountAwardedFixed')
 
@@ -642,9 +863,30 @@ def search(request):
 
         context['selected_facets'] = dict(context['selected_facets'])
 
+        get_radio_items(context, default_field)
+        get_dropdown_filters(context)
+
         add_advanced_search_information_in_context(context)
 
         return render(request, "search.html", context=context)
+
+
+def get_radio_items(context, default_field):
+    context['searchRadio'] = []
+    context['searchRadio'].append({"value": "*", "name": "All grant fields", "checked": True if default_field == "*" else False})
+    context['searchRadio'].append({"value": "additional_data.recipientLocation", "name": "Locations", "checked": True if default_field == "additional_data.recipientLocation" else False})
+    context['searchRadio'].append({"value": "recipientOrganization.name", "name": "Recipients", "checked": True if default_field == "recipientOrganization.name" else False})
+    context['searchRadio'].append({"value": "title_and_description", "name": "Titles & Descriptions", "checked": True if default_field == "title_and_description" else False})
+    context['default_field_name'] = [radioItem['name'] for radioItem in context['searchRadio'] if radioItem['checked'] is True][0]
+
+
+def get_dropdown_filters(context):
+    context['dropdownFilterOptions'] = []
+    context['dropdownFilterOptions'].append({"value": "_score desc", "label": "Best Match"})
+    context['dropdownFilterOptions'].append({"value": "amountAwarded desc", "label": "Amount - Highest First"})
+    context['dropdownFilterOptions'].append({"value": "amountAwarded asc", "label": "Amount - Lowest First"})
+    context['dropdownFilterOptions'].append({"value": "awardDate desc", "label": "Award Date - Latest First"})
+    context['dropdownFilterOptions'].append({"value": "awardDate asc", "label": "Award Date - Earliest First"})
 
 
 def flatten_mapping(mapping, current_path=''):
@@ -907,11 +1149,11 @@ grant_datatables_metadata = {
         "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "title", "description"],
     },
     "recipientRegionName": {
-        "term": "recipientRegionName",
+        "term": "additional_data.recipientRegionName",
         "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "title", "description"],
     },
     "recipientDistrictName": {
-        "term": "recipientDistrictName",
+        "term": "additional_data.recipientDistrictName",
         "order": ["awardDate", "amountAwarded", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "title", "description"],
     }
 }
@@ -1018,7 +1260,7 @@ def region(request, region):
         region = re.match(r'(.*)\.\w*$', region).group(1)
 
     query = {"query": {"bool": {"filter":
-                [{"term": {"recipientRegionName": region}}]}},
+                [{"term": {"additional_data.recipientRegionName": region}}]}},
             "aggs": {
                 "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                 "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
@@ -1050,7 +1292,7 @@ def district(request, district):
         district = re.match(r'(.*)\.\w*$', district).group(1)
 
     query = {"query": {"bool": {"filter":
-                [{"term": {"recipientDistrictName": district}}]}},
+                [{"term": {"additional_data.recipientDistrictName": district}}]}},
             "aggs": {
                 "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                 "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},

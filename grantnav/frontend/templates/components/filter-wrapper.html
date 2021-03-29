@@ -1,0 +1,31 @@
+<details class="filter-wrapper" open>
+  <summary class="filter-wrapper__summary margin-bottom:1">
+    <span class="filter-wrapper__summary--heading">Filter By</span>
+  </summary>
+
+  <div class="filter-wrapper__filters" aria-hidden="false">
+    {% block filters %}
+
+      {% if results.aggregations.currency.buckets %}
+        {% include 'components/filters/lists/filter-list-currency.html' %}
+      {% endif %}
+      {% if results.aggregations.amountAwardedFixed.buckets %}
+        {% include 'components/filters/lists/filter-list-amount-awarded.html' %}
+      {% endif %}
+      {% if results.aggregations.awardYear.buckets %}
+        {% include 'components/filters/lists/filter-list-year.html' %}
+      {% endif %}
+      {% if results.aggregations.recipientRegionName.buckets or results.aggregations.recipientDistrictName.buckets %}
+        {% include 'components/filters/groups/geography-filters.html' %}
+      {% endif %}
+      {% if results.aggregations.fundingOrganization.buckets %}
+        {% include 'components/filters/groups/funder-filters.html' %}
+      {% endif %}
+      {% if results.aggregations.recipientOrganization.buckets %}
+        {% include 'components/filters/groups/recipient-filters.html' %}
+      {% endif %}
+
+    {% endblock filters %}
+  </div>
+</details>
+

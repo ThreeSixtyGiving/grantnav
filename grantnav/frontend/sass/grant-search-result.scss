@@ -1,0 +1,90 @@
+.grant-search-result {
+  display: flex;
+  flex-direction: column;
+  border-left: 4px solid $orange;
+  box-shadow: 1px 4px 4px 4px rgba(0, 0, 0, 0.06);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+
+  a {
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @include breakpoint($medium) {
+    flex-direction: row;
+  }
+
+  &__left-side {
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    width: 100%;
+
+    @include breakpoint($medium) {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      width: 50%;
+      padding-right: 24px;
+      margin-right: 24px;
+    }
+
+    &::after {
+      content: '';
+      width: 60%;
+      height: 1px;
+      background: $black;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+
+      @include breakpoint($medium) {
+        width: 1px;
+        height: 100%;
+        left: auto;
+        right: 0;
+      }
+    }
+  }
+
+  &__right-side {
+    padding-top: 12px;
+    padding-bottom: 6px;
+  }
+
+  &__title {
+    font-weight: 400;
+    font-size: 24px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  &__description {
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  &__date {
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  &__data-item {
+    margin-bottom: 6px;
+
+    a {
+      color: $black;
+
+      &:hover {
+        color: $orange;
+      }
+    }
+
+    &--label {
+      font-weight: 700;
+    }
+  }
+}

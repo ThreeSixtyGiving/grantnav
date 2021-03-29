@@ -2,93 +2,23 @@
 {% load frontend %}
 {% load static %}
 
+{% block header %}
+  {% include 'components/search-block.html' %}
+{% endblock %}
 
-{% block main %}
-<div class="container-wrapper">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        <p class="search-help"><a href="/help#advanced_search">Advanced Search</a></p>
-      </div>
-      <div class="col-xs-12">
-<!-- Dropdown -->
-		 <form role="search" action="{% url 'search' %}">
-			<div class="form-group">
-				<select name="default_field" class="front_search selectpicker">
-					<option name="default_field" id="inlineRadio1" value="*">Search All</option>
-					<option name="default_field" id="inlineRadio2" value="recipientLocation">Locations</option>
-					<option name="default_field" id="inlineRadio3" value="recipientOrganization.name">Recipients</option>
-          <option name="default_field" id="inlineRadio4" value="title_and_description">Titles & Descriptions</option>
-				</select>
-				<input name="text_query" class="form-control large-search" placeholder="What are you searching for?" type="text">
-				<input class="large-search-icon" name="submit" src="{% static 'images/search_icon.png' %}" type="image" height="55px" width="55px">
-			</div>
-		</form>
-		
- <!-- Delete when safe
-       <form role="search" action="{% url 'search' %}">
-          <div class="form-group">
-            <input name="text_query" class="form-control large-search" placeholder="What are you searching for?" type="text">
-            <input class="large-search-icon" name="submit" src="{% static 'images/search_icon.png' %}" type="image" height="55px" width="55px">
-          </div>
-          <div class="form-group large-radio">
-            <div class="text-center">
-              <label class="radio-inline">
-                <input checked type="radio" name="default_field" id="inlineRadio1" value="_all"> Search All Fields
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="default_field" id="inlineRadio2" value="recipientLocation"> Only Locations
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="default_field" id="inlineRadio3" value="recipientOrganization.name"> Only Recipients
-              </label>
-            </div>
-          </div>
-        </form>
- -->       
-        
-      </div>
-      <div class="col-xs-12">
-        <h1 class="home-info text-center"> Search, explore and download UK grants data published by funders in the 360Giving Data Standard.</h1>
-      </div>
-    </div>
-  </div>
-</div>
+{% block main_content %}
+  <div class="grid grid--three-columns">
+    {% include 'components/homepage-card.html' with title="Funders" button_text="Funder summary" value=results.aggregations.funder_count.value|get_amount link="funders" %}
 
-<div class="banner-container">
-  <div class="full-width-banner">
-    <a href="https://covidtracker.threesixtygiving.org/" class="covid-link">
-      <div class="home-info covid-text">COVID-19 GRANTS TRACKER</div>
-    </a>
-  </div>
-</div>
+    {% include 'components/homepage-card.html' with title="Recipients" button_text="Recipient summary" value=results.aggregations.recipient_count.value|get_amount link="recipients" %}
 
-<div class="container-wrapper">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="row stat-group">
-          <div class="col-sm-4 left-stat">
-            <a href="{% url 'funders' %}">
-              <h1 class="text-center home-number">{{results.aggregations.funder_count.value|get_amount}}</h1>
-              <h2 class="text-center home-number-text">Funders</h2>
-            </a>
-          </div>
-          <div class="col-sm-4">
-            <a href="{% url 'recipients' %}">
-              <h1 class="text-center home-number">{{results.aggregations.recipient_count.value|get_amount}}</h1>
-              <h2 class="text-center home-number-text">Recipients</h2>
-            </a>
-          </div>
-          <div class="col-sm-4 right-stat">
-            <a href="{% url 'search' %}?text_query=">
-              <h1 class="text-center home-number">{{results.hits.total|get_amount}}</h1>
-              <h2 class="text-center home-number-text">Grants</h2>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% include 'components/homepage-card.html' with title="Grants" button_text="See all grants" value=results.hits.total|get_amount link="search" %}
   </div>
-</div>
+  <div class="grid margin-bottom:4">
+    {% include 'components/covid-card.html' %}
+  </div>
+  <div class="grid margin-bottom:4">
+    {% include 'components/frame.html' with url="https://www.youtube.com/watch?v=t6nzLXuntno" %}
+  </div>
+
 {% endblock %}

@@ -1,0 +1,62 @@
+.button {
+  --border-color: hsla(var(--base-hsl), 1);
+  --text-color: hsla(var(--base-hsl), 1);
+  --bg-color: transparent;
+  border: 2px solid var(--border-color);
+  color: var(--text-color);
+  display: inline-block;
+  border-radius: 3px;
+  padding: 6px 24px 8px;
+  font-size: 1rem;
+  font-weight: 400;
+  background-color: var(--bg-color);
+  text-decoration: none;
+
+  &.button--small {
+    padding: 2px 16px 2px;
+    border-width: 1px;
+    font-size: .9rem;
+  }
+
+  &.button--large {
+    padding: 10px 32px 12px;
+    border-width: 3px;
+    font-size: 1.3rem;
+  }
+
+  &.button--unstyled {
+    border: 0;
+    padding: 0;
+  }
+
+  &.button--white { 
+    --border-color: hsla(var(--white-hsl), 1);
+    --text-color: hsla(var(--white-hsl), 1);
+  }
+
+  &.button--orange { 
+    --border-color: var(--color-orange);
+    --text-color: hsla(var(--orange-dark-hsl), 1);
+  }
+
+  &.button--teal { 
+    --border-color: var(--color-teal);
+    --text-color: hsla(var(--teal-dark-hsl), 1);
+  }
+
+  &.button--yellow { 
+    --border-color: var(--color-yellow);
+    --text-color: var(--color-yellow-dark);
+  }
+
+  &.button--red { 
+    --border-color: var(--color-red);
+    --text-color: var(--color-red);
+  }
+
+  &.button--disabled { 
+    opacity: .3 !important;
+    pointer-events: none !important;
+  }
+
+}

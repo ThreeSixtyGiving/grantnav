@@ -1,0 +1,27 @@
+.grid {
+  @include wrapper;
+
+
+  @include breakpoint($medium) { 
+    display: grid;
+    grid-gap: 16px;
+    grid-auto-rows: auto;
+    grid-auto-flow: row;
+    grid-gap: 32px; 
+  }
+
+  &--two-columns { 
+    @include breakpoint($medium) { grid-template-columns: repeat(2, 1fr); }
+  }
+  &--three-columns { 
+    @include breakpoint($medium) { grid-template-columns: repeat(3, 1fr); }
+  }
+  &--four-columns { 
+    @include breakpoint($medium) { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  &__2 { grid-column: auto / span 2; }
+  &__3 { grid-column: auto / span 3; }
+  &__all { grid-column: 1 / -1; }
+}
+

@@ -1,7 +1,6 @@
 import datetime
 import json
 import math
-from collections import OrderedDict
 
 import dateutil.parser as date_parser
 import jsonref
@@ -55,14 +54,6 @@ def flatten_dict(data, path=tuple()):
             yield schema_titles.get(field) or field, value
 
 
-ADDITIONAL_FIELDS = OrderedDict((
-    ("recipientRegionName", "Recipient Region"),
-    ("recipientDistrictName", "Recipient District"),
-    ("recipientDistrictGeoCode", "Recipient District Geographic Code"),
-    ("recipientWardName", "Recipient Ward"),
-    ("recipientWardNameGeoCode", "Recipient Ward Geographic Code")
-))
-
 SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
              "amountAwarded", "Currency",
              "awardDate", "Recipient Org: Name",
@@ -73,32 +64,14 @@ SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
              "fundingOrganization: id_and_name", "recipientLocation",
              "awardDateDateOnly", "plannedDates: endDateDateOnly",
              "plannedDates: startDateDateOnly",
-             "id_and_name",
-             "additional_data_added",
-             "recipientDistrictGeoCode", "title_and_description"] + list(ADDITIONAL_FIELDS.keys())
+             "additional_data_added", "title_and_description"
+             ]
 
 
 @register.filter(name='flatten')
 def flatten(d):
     return sorted([(key, value) for key, value in flatten_dict(d)
                   if key not in SKIP_KEYS])
-
-
-@register.filter(name='get_additional_fields')
-def get_additional_fields(data):
-    additional_fields = []
-    try:
-        facet_org_name = get_facet_org_name(data['recipientOrganization'][0]["id_and_name"])
-        if facet_org_name != data['recipientOrganization'][0]["name"]:
-            additional_fields.append(('Alternate Recipient Name', facet_org_name))
-    except (KeyError, IndexError, TypeError):
-        pass
-
-    for field_name, name in ADDITIONAL_FIELDS.items():
-        value = data.get(field_name)
-        if value:
-            additional_fields.append((name, value))
-    return additional_fields
 
 
 @register.filter(name='half_sorted_items')
@@ -187,6 +160,11 @@ def get_amount_range(bucket, currency):
 @register.filter(name='get_facet_org_name')
 def get_facet_org_name(facet):
     return json.loads(facet)[0]
+
+
+@register.filter(name='get_facet_org_id')
+def get_facet_org_id(facet):
+    return json.loads(facet)[1]
 
 
 @register.filter(name='get_currency_list')

@@ -1,0 +1,10 @@
+<div class="subscribe-section">
+  <div class="subscribe-section__wrapper">
+    <form action="{{ settings360.newsletter.form_url }}" method="POST" class="subscribe-section__form">
+      <input type="hidden" name="u" value="{{ settings360.newsletter.u }}">
+      <input type="hidden" name="id" value="{{ settings360.newsletter.id }}">
+      <input type="email" name="{{ settings360.newsletter.email_field }}" id="{{ settings360.newsletter.email_field }}" placeholder="Subscribe to our newsletter">
+      <input type="submit" value="Send">
+    </form>
+  </div>
+</div>

@@ -1,0 +1,151 @@
+/* boxes */
+.prose .admonition,
+.admonition {
+  background-color: rgba(77, 172, 182, 0.1);
+  position: relative;
+  padding: 24px 24px 24px 24px; }
+  .prose .admonition:before,
+  .admonition:before {
+    background-color: #4DACB6;
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 4px;
+    left: 0;
+    top: 0; }
+  .prose .admonition h3, .prose .admonition-title,
+  .admonition h3,
+  .admonition-title {
+    margin: 0 0 4px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4DACB6; }
+
+.prose .admonition.admonition-for-example,
+.admonition-for-example {
+  background-color: rgba(222, 110, 38, 0.1); }
+  .prose .admonition.admonition-for-example:before,
+  .admonition-for-example:before {
+    background-color: #DE6E26; }
+  .prose .admonition.admonition-for-example .admonition-title,
+  .admonition-for-example .admonition-title {
+    color: #DE6E26; }
+
+.prose .admonition.admonition--orange,
+.admonition--orange {
+  background-color: rgba(222, 110, 38, 0.1); }
+  .prose .admonition.admonition--orange:before,
+  .admonition--orange:before {
+    background-color: #DE6E26; }
+  .prose .admonition.admonition--orange .admonition-title,
+  .admonition--orange .admonition-title {
+    color: #DE6E26; }
+
+.prose .admonition.admonition--yellow,
+.admonition--yellow {
+  background-color: rgba(239, 195, 41, 0.1); }
+  .prose .admonition.admonition--yellow:before,
+  .admonition--yellow:before {
+    background-color: #EFC329; }
+  .prose .admonition.admonition--yellow .admonition-title,
+  .admonition--yellow .admonition-title {
+    color: #EFC329; }
+
+.prose .admonition.admonition--red,
+.admonition--red {
+  background-color: rgba(188, 44, 38, 0.1); }
+  .prose .admonition.admonition--red:before,
+  .admonition--red:before {
+    background-color: #BC2C26; }
+  .prose .admonition.admonition--red .admonition-title,
+  .admonition--red .admonition-title {
+    color: #BC2C26; }
+
+/* headerlink */
+.headerlink {
+    visibility: hidden;
+    font-size: 18px;
+}
+h1:hover .headerlink::after,
+h2:hover .headerlink::after,
+h3:hover .headerlink::after,
+h4:hover .headerlink::after,
+h5:hover .headerlink::after,
+h6:hover .headerlink::after {
+    visibility: visible;
+    content: "link";
+    font-family: "Material Icons";
+}
+
+/* table */
+table.docutils {
+  font-size: .9rem;
+  border: 1px solid rgba(21, 54, 52, 0.2);
+  border-radius: 3px; }
+  table.docutils table {
+    margin: 0; }
+  table.docutils th, table.docutils td {
+    border: 0px solid rgba(21, 54, 52, 0.2);
+    padding: 8px;
+    vertical-align: top;
+    color: #153634;
+    display: block; }
+    @media (min-width: 36em) {
+      table.docutils th, table.docutils td {
+        display: table-cell;
+        padding: 8px 16px; } }
+  table.docutils th {
+    background-color: rgba(21, 54, 52, 0.1); }
+  table.docutils tr + tr {
+    border-top: 1px solid rgba(21, 54, 52, 0.2); }
+  table.docutils th {
+    display: none; }
+    @media (min-width: 36em) {
+      table.docutils th {
+        display: table-cell; } }
+  table.docutils td {
+    display: block; }
+    @media (min-width: 36em) {
+      table.docutils td {
+        display: table-cell; } }
+
+@media (max-width: 35.98em) {
+  table.docutils td:before {
+    content: attr(data-header);
+    display: block;
+    font-weight: 400;
+    background-color: rgba(21, 54, 52, 0.1);
+    margin: -8px -8px 4px -8px;
+    padding: 4px 8px; } }
+
+table.docutils tr:nth-of-type(even) {
+  background-color: rgba(21, 54, 52, 0.04); }
+
+table.docutils__lead-cell {
+  font-weight: 500;
+  min-width: 180px; }
+
+@media (min-width: 36em) {
+  table.docutils__checks {
+    text-align: center; } }
+
+table.docutils--true {
+  color: #4DACB6; }
+
+table.docutils--false {
+  color: #BC2C26; }
+
+/* code blocks */
+
+.highlight {
+  padding: 0 16px;
+  margin-top: 24px;
+  background-color: rgba(21, 54, 52, 0.03);
+  border: 1px solid rgba(21, 54, 52, 0.1); }
+  .highlight pre, .highlight code {
+    white-space: pre-wrap; }
+
+#custom-docson-container iframe {
+  height:400px !important;
+  border:1px solid grey !important;
+}

@@ -1,0 +1,16 @@
+// [Breakpoints]
+$small-only: '(max-width: 35.98em)';
+$medium: '(min-width: 36em)';
+$medium-only: '(min-width: 36em) and (max-width: 59.98em)';
+$medium-max: '(max-width: 59.98em)';
+$regular: '(min-width: 60em)';
+$regular-only: '(min-width: 60em) and (max-width: 84.98em)';
+$large: '(min-width: 85em)';
+$large-only: '(min-width: 85em) and (max-width: 104.98em)';
+$x-large: '(min-width: 105em)';
+
+// Temp Variables
+$medium-up: $medium;
+$touch: $medium-max;
+
+@import 'breakpoints';

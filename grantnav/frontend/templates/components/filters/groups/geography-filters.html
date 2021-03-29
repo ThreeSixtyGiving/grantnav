@@ -1,0 +1,16 @@
+<div class="filter-group">
+  <details class="filter-group__accordion" {% if opened %} open{% endif %}>
+    <summary class="filter-group__label">
+      <div>Geography</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-group_contents-wrapper">
+      {% if results.aggregations.recipientRegionName.buckets %}
+        {% include 'components/filters/lists/filter-list-region.html' %}
+      {% endif %}
+      {% if results.aggregations.recipientDistrictName.buckets %}
+        {% include 'components/filters/lists/filter-list-district.html' %}
+      {% endif %}
+    </div>
+  </details>
+</div>

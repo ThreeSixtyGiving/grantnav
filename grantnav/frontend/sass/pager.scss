@@ -1,0 +1,108 @@
+.pager {
+  font-size: 16px;
+  font-weight: 400;
+  border: 1px solid $teal-dark;
+  display: inline-block;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    padding: 8px 14px;
+    flex-wrap: wrap;
+
+    @include breakpoint($medium) {
+      padding: 12px 18px;
+    }
+  }
+
+  &__item {
+    a {
+      display: block;
+
+      &:hover {
+        svg {
+          stroke: $orange;
+        }
+      }
+    }
+
+    &--first {
+      text-decoration: underline;
+      margin-right: 8px;
+
+      @include breakpoint($medium) {
+        margin-right: 18px;
+      }
+    }
+
+    &--prev {
+      margin-right: 8px;
+
+      @include breakpoint($medium) {
+        margin-right: 20px;
+      }
+
+      a {
+        padding: 0 6px;
+        &:hover {
+          svg {
+            stroke: $orange;
+          }
+        }
+      }
+    }
+
+    &--ellipsis {
+      padding: 0 6px;
+
+      @include breakpoint($medium) {
+        padding: 0 12px;
+      }
+    }
+
+    &--page {
+      margin: 0 4px;
+
+      a {
+        padding: 6px;
+
+        &.active {
+          font-weight: bold;
+        }
+
+        &:hover {
+          text-decoration: dotted underline;
+        }
+      }
+    }
+
+    &--next {
+      margin-left: 8px;
+
+      @include breakpoint($medium) {
+        margin-left: 20px;
+      }
+
+      a {
+        padding: 0 6px;
+
+        &:hover {
+          svg {
+            stroke: $orange;
+          }
+        }
+      }
+    }
+
+    &--last {
+      text-decoration: underline;
+      margin-left: 8px;
+
+      @include breakpoint($medium) {
+        margin-left: 18px;
+      }
+    }
+  }
+}

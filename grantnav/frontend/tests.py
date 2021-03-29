@@ -1,18 +1,16 @@
 import json
 import time
-import urllib.parse
 
 import pytest
 import requests
 
-from dataload.import_to_elasticsearch import import_to_elasticsearch, get_area_mappings
+from dataload.import_to_elasticsearch import import_to_elasticsearch
 
-prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/b6135e6fb8960323031e9013bf55b5391fd243a9/'
+prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/44ea7fdad8f32e9fab1d870e2f25fc31c5cdf2fd/'
 
 
 @pytest.fixture(scope="module")
 def dataload():
-    get_area_mappings()
     import_to_elasticsearch(
         [
             prefix + 'a002400000KeYdsAAF.json',
@@ -35,7 +33,6 @@ def provenance_dataload(dataload, settings, tmpdir):
     ('GrantNav'),
     ('Search'),
     ('Help'),
-    ('Advanced Search')
     ])
 def test_home(provenance_dataload, client, expected_text):
     response = client.get('/')
@@ -57,18 +54,12 @@ def test_search(provenance_dataload, client):
     wolfson_facet = response.context['results']['aggregations']['fundingOrganization']['buckets'][0]
     assert wolfson_facet['doc_count'] == 7
     assert wolfson_facet['key'] == '["Wolfson Foundation", "GB-CHC-1156077"]'
-    json_query = json.loads(urllib.parse.parse_qs(initial_response.url.split('?')[-1])['json_query'][0])
-
-    json_query['query']['bool']['filter'][0]['bool']['should'] = [{'term': {'fundingOrganization.id_and_name': '["Wolfson Foundation", "GB-CHC-1156077"]'}}]
-    assert json.loads(urllib.parse.parse_qs(wolfson_facet['url'].split('?')[-1])['json_query'][0]) == json_query
 
     # click again
     response = client.get(wolfson_facet['url'])
     wolfson_facet = response.context['results']['aggregations']['fundingOrganization']['buckets'][0]
     assert wolfson_facet['doc_count'] == 7
     assert wolfson_facet['key'] == '["Wolfson Foundation", "GB-CHC-1156077"]'
-    json_query['query']['bool']['filter'][0]['bool']['should'] = []
-    assert json.loads(urllib.parse.parse_qs(wolfson_facet['url'].split('?')[-1])['json_query'][0]) == json_query
 
     # Test the data is extended by grantnav adding geo codes
     # Original data contains postal codes only
@@ -103,11 +94,6 @@ def test_search_accents(provenance_dataload, client):
 #def test_stats(provenance_dataload, client):
 #    response = client.get('/stats')
 #    assert "379" in str(response.content)
-
-
-def test_help_page(provenance_dataload, client):
-    response = client.get('/help')
-    assert 'Help with using GrantNav' in str(response.content)
 
 
 def test_json_download(provenance_dataload, client):

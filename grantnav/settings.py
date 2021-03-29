@@ -75,7 +75,6 @@ INSTALLED_APPS = (
     'grantnav.frontend',
     'grantnav.prometheus',
     'raven.contrib.django.raven_compat',
-    'cookielaw',
     'favicon',
 )
 
@@ -85,7 +84,6 @@ MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'dealer.contrib.django.Middleware',
@@ -97,7 +95,7 @@ ROOT_URLCONF = 'grantnav.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -106,6 +104,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'grantnav.frontend.context_processors.piwik',
+                'grantnav.frontend.context_processors.navigation'
             ],
         },
     },
