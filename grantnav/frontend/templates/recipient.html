@@ -38,11 +38,15 @@
         <div class="export-wrapper">
           <div class="export-label">Export table data:</div>
           <div class="export-button">
-            {% include 'components/export-data-button--csv.html' with data_function='recipient.csv' only %}
+            <a class="export-data-button" href="{% url 'recipient.csv' recipient.id %}" aria-label="Export results data as CSV">
+              <span>{% include 'tokens/export-csv-icon.html' %}</span>
+            </a>
           </div>
 
           <div class="export-button">
-            {% include 'components/export-data-button--json.html' with data_function='recipient.json' only %}
+            <a class="export-data-button" href="{% url 'recipient.json' recipient.id %}" aria-label="Export results data as JSON">
+              <span>{% include 'tokens/export-json-icon.html' %}</span>
+            </a>
           </div>
         </div>
       </div>
