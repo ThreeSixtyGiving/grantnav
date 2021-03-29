@@ -92,11 +92,16 @@
             <div class="export-label">Export search data:</div>
 
             <div class="export-button">
-              {% include 'components/export-data-button--csv.html' with data_function='search.csv' query_string=query_string %}
+              <a class="export-data-button" href="{% url 'funder.csv' funder.id %}" aria-label="Export results data as CSV">
+                <span>{% include 'tokens/export-csv-icon.html' %}</span>
+              </a>
+
             </div>
 
             <div class="export-button">
-              {% include 'components/export-data-button--json.html' with data_function='search.json' query_string=query_string %}
+              <a class="export-data-button" href="{% url 'funder.json' funder.id %}" aria-label="Export results data as JSON">
+                <span>{% include 'tokens/export-json-icon.html' %}</span>
+              </a>
             </div>
           </div>
         </div>
