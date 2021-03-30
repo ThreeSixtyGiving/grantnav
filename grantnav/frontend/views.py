@@ -722,11 +722,29 @@ def search(request):
     else:
         context['query_string'] = ""
 
-    json_query = request.GET.get('json_query') or ""
-    try:
-        json_query = json.loads(json_query)
-    except ValueError:
-        json_query = {}
+    json_query = {}
+
+    json_query_param = request.GET.get('json_query')
+    if json_query_param:
+        try:
+            # This allows GrantNav to be backward compatible with
+            # pre-2020-sprint urls. This isn't ideal and json_query as a GET
+            # parameter will need to be phased out including where used in
+            # hidden fields in forms in the templates.
+            json_query_param = json_query_param.replace('"recipientRegionName"', '"additional_data.recipientRegionName"')
+            json_query_param = json_query_param.replace('"recipientDistrictName"', '"additional_data.recipientDistrictName"')
+            json_query = json.loads(json_query_param)
+            filter_ = json_query['query']['bool']['filter']
+            # There were originally 8 filters ES now expects all 9 so append
+            # the missing one
+            if len(filter_) == 8:
+                filter_.append({"bool": {"should": []}})  # additional_data.TSGFundingOrgType
+            json_query['aggs'] = {}
+            for term_facet in TERM_FACETS:
+                json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
+                                                             "size": MORE_SIZE}}
+        except (ValueError, KeyError):
+            json_query = {}
 
     if not json_query:
         json_query = create_json_query_from_parameters(request)
