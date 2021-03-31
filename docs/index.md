@@ -94,58 +94,6 @@ GrantNav has a page for each location - at ward, district and region levels - th
 To learn more about locations in GrantNav, see [Locations](locations)
 
 
-
-## Examples
-
-Table without horizontal scrollbar:
-
-```eval_rst
-.. list-table::
-    :header-rows: 1
-    :widths: 1 3 1 1
-
-    * - A
-      - B
-      - C
-      - D
-    * - Lorem
-      - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum urna non purus tristique pharetra.
-      - Yes
-      - False
-    * - Ipsum
-      - Mauris et lobortis nibh. Nullam vitae velit turpis. Vestibulum facilisis sit amet sapien nec maximus.
-      - No
-      - True
-    * - Dolor
-      - Pellentesque sit amet sapien tincidunt, fringilla dui id, porttitor purus. Nam tincidunt ac ex id porttitor. Praesent varius lectus nisl, ac luctus erat lacinia vitae.
-      - Yes
-      - True
-```
-
-### Markdown reference links
-
-Link to [a ref](a-ref).
-
-
-```eval_rst
-.. _a-ref:
-```
-#### Referenced section
-
-# Markdown inside an admonition
-
-```eval_rst
-.. admonition:: Admonition
-    :class: hint
-
-    .. markdown::
-
-        Some markdown [a URL](http://example.org), `single backtick literals`.
-```
-
-(from <https://sphinxcontrib-opendataservices.readthedocs.io/en/latest/misc/>)
-
-
 ## Contents
 
 ```eval_rst
