@@ -72,7 +72,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 body {
-  color: var(--color-default);
+  color: var(--color-base);
   font-family: var(--fonts-primary);
   font-size: var(--text-base-size);
   font-weight: 300;
@@ -168,14 +168,14 @@ sup {
   top: -0.5ex; }
 
 a {
-  color: var(--colors-alt);
+  color: var(--color-accent);
   text-decoration: none;
   -webkit-text-decoration-skip: objects; }
   a:hover, a:focus {
-    color: var(--colors-alt);
+    color: var(--color-accent);
     text-decoration: none; }
   a:active {
-    color: var(--colors-orange);
+    color: var(--color-orange);
     text-decoration: none; }
 
 a:not([href]):not([tabindex]) {
@@ -2089,6 +2089,15 @@ p {
     font-size: 1rem;
     font-weight: 600;
     color: hsl(var(--box-text-hsl), 1); }
+  .prose .box a,
+  .box a {
+    color: hsl(var(--box-text-hsl), 1);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-position: under; }
+    .prose .box a:hover,
+    .box a:hover {
+      background-color: hsl(var(--box-bg-hsl), 0.1); }
 
 .prose .box:only-child {
   margin-top: 0; }
