@@ -29,6 +29,17 @@
     font-weight: 600;
     color: hsla(var(--box-text-hsl), 1);
   }
+
+    a {
+      color: hsla(var(--box-text-hsl), 1);
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-position: under;
+
+      &:hover {
+        background-color: hsl(var(--box-bg-hsl), 0.1);
+      }
+    }
 }
 
 // Check explanation at the top of this file

@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  color: var(--color-default);
+  color: var(--color-base);
   font-family: var(--fonts-primary);
   font-size: var(--text-base-size);
   font-weight: 300;
@@ -129,17 +129,17 @@ sup {
 }
 
 a {
-  color: var(--colors-alt);
+  color: var(--color-accent);
   text-decoration: none;
   -webkit-text-decoration-skip: objects;
 
   &:hover, &:focus {
-    color: var(--colors-alt);
+    color: var(--color-accent);
     text-decoration: none;
   }
 
   &:active {
-    color: var(--colors-orange);
+    color: var(--color-orange);
     text-decoration: none;
   }
 }
