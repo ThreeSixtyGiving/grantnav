@@ -108,7 +108,7 @@ Compile theme
 In order to compile the sass theme run:
 
 ```
-sassc grantnav/frontend/sass/main.scss grantnav/frontend/static/css/theme.css
+pysassc grantnav/frontend/sass/main.scss grantnav/frontend/static/css/theme.css
 ```
 
 
