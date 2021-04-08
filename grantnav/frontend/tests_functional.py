@@ -440,7 +440,7 @@ def test_amount_awarded_facet(provenance_dataload, server_url, browser):
 def test_zero_grant_info_link_present(provenance_dataload, server_url, browser, path):
     browser.get(server_url + path)
     browser.find_element_by_id("zero_value_grant_help_link").click()
-    assert browser.current_url == server_url + '/help#zero_value_grants'
+    assert browser.current_url == "https://help.grantnav.threesixtygiving.org/en/latest/search_results.html?#some-grantmakers-publish-grants-with-0-or-negative-values"
 
 
 @pytest.mark.parametrize(('path'), ['/grant/360G-LBFEW-99233'])
