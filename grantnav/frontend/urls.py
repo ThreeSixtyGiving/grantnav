@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from . import views
 from django.views.generic import TemplateView
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
@@ -34,7 +35,7 @@ urlpatterns = [
     url(r'^datasets/$', views.datasets, name='datasets'),
     url(r'^take_down_policy', TemplateView.as_view(template_name='take_down_policy.html'), name='take_down_policy'),
     url(r'^terms', TemplateView.as_view(template_name='terms.html'), name='terms'),
-    url(r'^help', TemplateView.as_view(template_name='help.html'), name="help"),
+    url(r'^help', RedirectView.as_view(url="https://help.grantnav.threesixtygiving.org/"), name="help"),
     url(r'^developers', TemplateView.as_view(template_name='developers.html'), name='developers'),
     url(r'^about', TemplateView.as_view(template_name='about.html'), name='about'),
     url(r'^api/grants.json', views.api_grants, name='api.grants.json'),
