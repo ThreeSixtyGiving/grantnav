@@ -26,13 +26,14 @@ docutils==0.16
     # via
     #   recommonmark
     #   sphinx
+    #   sphinx-rtd-theme
 idna==2.10
     # via requests
 imagesize==1.2.0
     # via sphinx
 jinja2==2.11.3
     # via sphinx
-jsonpointer==2.0
+jsonpointer==2.1
     # via
     #   sphinxcontrib-jsonschema
     #   sphinxcontrib-opendataservices
@@ -40,7 +41,7 @@ jsonref==0.2
     # via sphinxcontrib-jsonschema
 markupsafe==1.1.1
     # via jinja2
-pygments==2.8.0
+pygments==2.8.1
     # via sphinx
 pytz==2021.1
     # via babel
@@ -57,7 +58,7 @@ snowballstemmer==2.1.0
     # via sphinx
 sphinx-intl==2.0.1
     # via -r requirements_docs.in
-sphinx-rtd-theme==0.5.1
+sphinx-rtd-theme==0.5.2
     # via -r requirements_docs.in
 sphinx==1.5.3
     # via
@@ -67,7 +68,7 @@ sphinx==1.5.3
     #   sphinx-rtd-theme
     #   sphinxcontrib-jsonschema
     #   sphinxcontrib-opendataservices
-urllib3==1.26.3
+urllib3==1.26.4
     # via requests
 
 # The following packages are considered to be unsafe in a requirements file:
