@@ -1,4 +1,4 @@
-{% load get_currency get_amount get_title get_name from frontend %}
+{% load get_currency get_amount get_title get_name get_date from frontend %}
 
 <div class="grant-search-result">
   <div class="grant-search-result__left-side">
@@ -13,8 +13,9 @@
 
   <div class="grant-search-result__right-side">
     <div class="grant-search-result__date">
-      {# Using datetime, make sure your timestamp is valid https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time#valid_datetime_values #}
-      <time datetime="{{ date_timestamp }}">{{ date }}</time>
+      <time datetime="{{ result.source.awardDateDateOnly }}">
+        {{ result.source.awardDateDateOnly | get_date }}
+      </time>
     </div>
 
     <div class="grant-search-result__data-item">
