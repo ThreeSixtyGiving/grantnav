@@ -226,7 +226,7 @@ def get_pagination(request, context, page):
 
     if page != 1 and total_pages > 1:
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "prev", "label": "Previous"})
-    
+
     if total_pages > 1 and page > 3:
         context['pages'].append({"type": "ellipsis"})
 
@@ -234,20 +234,20 @@ def get_pagination(request, context, page):
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 2}), "type": "number", "label": str(page - 2)})
     if total_pages > 1 and page > 1:
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "number", "label": str(page - 1)})
-    
+
     context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page}), "type": "number", "label": str(page), "active": True})
-    
+
     if page < total_pages - 1:
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "number", "label": str(page + 1)})
     if page < total_pages - 2:
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 2}), "type": "number", "label": str(page + 2)})
-    
+
     if page < total_pages - 3:
         context['pages'].append({"type": "ellipsis"})
 
     if page < total_pages:
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "next", "label": "Next"})
-    
+
     if page < total_pages and total_pages > 5:
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': total_pages}), "type": "last", "label": "Last"})
 
@@ -1351,11 +1351,12 @@ def get_funders_for_datasets(datasets):
 
 
 def publisher(request, publisher_id):
+    if publisher_id not in provenance.by_publisher:
+        raise Http404
+
     publisher = provenance.by_publisher[publisher_id]
     get_funders_for_datasets(publisher['datasets'])
 
-    if publisher_id not in provenance.by_publisher:
-        raise Http404
     return render(request, "publisher.html", context={
         'publisher': publisher,
     })
