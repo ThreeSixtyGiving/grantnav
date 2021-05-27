@@ -32,7 +32,8 @@ env = environ.Env(  # set default values and casting
     SECRET_KEY=(str, secret_key),
     GRANT_SCHEMA=(str, 'https://raw.githubusercontent.com/ThreeSixtyGiving/standard/master/schema/360-giving-schema.json'),
     DB_NAME=(str, os.path.join(BASE_DIR, 'db.sqlite3')),
-    PROVENANCE_JSON=(str, None)
+    PROVENANCE_JSON=(str, None),
+    ELASTICSEARCH_HOST=(str, 'localhost')
 )
 
 PIWIK = {
@@ -48,6 +49,8 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
+
+ELASTICSEARCH_HOST = env('ELASTICSEARCH_HOST')
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
