@@ -1,0 +1,27 @@
+version: "3.5"
+
+services:
+
+  grantnav-web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DEBUG: 'True'
+      ELASTICSEARCH_HOST: 'elasticsearch'
+      PROVENANCE_JSON: "/code/datastoredata/data/data_all.json"
+    volumes:
+      - "./:/code"
+    command: "sh -c 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000'"
+
+  elasticsearch:
+    image: elasticsearch:7.12.1
+    environment:
+      "discovery.type": 'single-node'
+      "TAKE_FILE_OWNERSHIP": "True"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "./elasticsearch_dev_data:/usr/share/elasticsearch/data/"
+

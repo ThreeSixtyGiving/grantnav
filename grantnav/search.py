@@ -1,6 +1,6 @@
 import elasticsearch
+from django.conf import settings
 
 
 def get_es():
-    # todo add config options
-    return elasticsearch.Elasticsearch()
+    return elasticsearch.Elasticsearch(hosts=[settings.ELASTICSEARCH_HOST])

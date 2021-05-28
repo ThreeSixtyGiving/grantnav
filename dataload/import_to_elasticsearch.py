@@ -16,6 +16,7 @@ import dateutil.parser as date_parser
 
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
+ELASTICSEARCH_HOST = os.environ.get("ELASTICSEARCH_HOST", "localhost")
 
 id_name_org_mappings = {"fundingOrganization": {}, "recipientOrganization": {}}
 name_duplicates = [["file_name", "org_type", "org_id", "first_name", "duplicate_name"]]
@@ -71,7 +72,7 @@ def convert_spreadsheet(file_path, file_type, tmp_dir):
 def maybe_create_index(index_name=ES_INDEX):
     """ Creates a new ES index based on value of ES_INDEX
     unless it already exists """
-    es = elasticsearch.Elasticsearch()
+    es = elasticsearch.Elasticsearch(hosts=[ELASTICSEARCH_HOST])
 
     # Add the extra mapping info we want
     # (the rest will be auto inferred from the data we feed in)
@@ -256,7 +257,7 @@ def maybe_create_index(index_name=ES_INDEX):
 
 def import_to_elasticsearch(files, clean):
 
-    es = elasticsearch.Elasticsearch()
+    es = elasticsearch.Elasticsearch(hosts=[ELASTICSEARCH_HOST])
 
     # Delete the index
     if clean:
