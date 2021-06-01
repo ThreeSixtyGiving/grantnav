@@ -10,6 +10,8 @@ certifi==2020.12.5
     # via requests
 chardet==4.0.0
     # via requests
+chromedriver-autoinstaller==0.2.2
+    # via -r requirements_dev.in
 contextlib2==0.6.0.post1
     # via schema
 coverage==5.5
