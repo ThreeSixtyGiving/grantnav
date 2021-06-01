@@ -36,3 +36,11 @@ $ docker-compose -f docker-compose.dev.yml up # (to restart)
 
 If you edit Python code the changes should be reloaded automatically.
 
+
+## Compile theme
+
+In order to compile the sass theme run:
+
+``` 
+$ docker-compose -f docker-compose.dev.yml run grantnav-web su -c 'pip install -r requirements_dev.txt && pysassc grantnav/frontend/sass/main.scss grantnav/frontend/static/css/theme.css'
+```
