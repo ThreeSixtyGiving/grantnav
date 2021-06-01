@@ -22,6 +22,8 @@ def browser(request):
     if BROWSER == 'ChromeHeadless':
         chrome_options = Options()
         chrome_options.add_argument("--headless")
+        #  no-sandbox prevents an error when running as the root user
+        chrome_options.add_argument("--no-sandbox")
         browser = webdriver.Chrome(options=chrome_options)
     elif BROWSER == "Firefox":
         # Make downloads work

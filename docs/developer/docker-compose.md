@@ -44,3 +44,12 @@ In order to compile the sass theme run:
 ``` 
 $ docker-compose -f docker-compose.dev.yml run grantnav-web su -c 'pip install -r requirements_dev.txt && pysassc grantnav/frontend/sass/main.scss grantnav/frontend/static/css/theme.css'
 ```
+
+
+## Running Tests
+
+To run the tests with docker-compose locally:
+
+```
+$ docker-compose -p threesixtygiving-grantnav-test -f docker-compose.test.yml up
+```
