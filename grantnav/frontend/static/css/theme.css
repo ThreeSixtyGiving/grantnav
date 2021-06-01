@@ -2693,6 +2693,9 @@ a.base-card:hover:before {
 .input-sm {
   margin-left: 8px; }
 
+.layout {
+  margin-bottom: 20px; }
+
 .panel {
   display: flex;
   flex-direction: column;
