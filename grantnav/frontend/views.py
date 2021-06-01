@@ -237,12 +237,12 @@ def get_pagination(request, context, page):
 
     context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page}), "type": "number", "label": str(page), "active": True})
 
-    if page < total_pages - 1:
+    if page <= total_pages - 1:
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "number", "label": str(page + 1)})
-    if page < total_pages - 2:
+    if page <= total_pages - 2:
         context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 2}), "type": "number", "label": str(page + 2)})
 
-    if page < total_pages - 3:
+    if page <= total_pages - 3:
         context['pages'].append({"type": "ellipsis"})
 
     if page < total_pages:
