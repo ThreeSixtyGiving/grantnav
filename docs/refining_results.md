@@ -15,8 +15,8 @@ The numbers in brackets next to the values show the number of grants in the sear
 
 ```eval_rst
 .. list-table::
-    :header-rows: 1
-    :widths: 1 2 2 
+  :header-rows: 1
+  :widths: 1 2 2 
 
   * - GrantNav filter
     - 360Giving Data Standard field
