@@ -7,7 +7,13 @@
     </a>
 
     <div class="grant-search-result__description">
-      {{ result.source.description }}
+      {# Lengths are 500/400 so that if the string is 401 chars long it won't be truncated - let's make sure we actually truncate a decent amount! #}
+      {% if result.source.description|length > 500 %}
+        {{ result.source.description|truncatechars:400 }}
+        <a href="{% url 'grant' result.source.id %}">more</a>
+      {% else %}
+        {{ result.source.description }}
+      {% endif %}
     </div>
   </div>
 
