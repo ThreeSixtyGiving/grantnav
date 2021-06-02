@@ -20,6 +20,9 @@ Grants export files use the [360Giving Standard](https://standard.threesixtygivi
 
 Note that export files can be very large - in particular the whole dataset is several hundred MB, and large search results can be a similar size. Refining your search or splitting up your export can help, but be aware of the constraints around [refining search results](refining-results)
 
+The entire data set can be exported as [JSON](http://grantnav.threesixtygiving.org/api/grants.json) or [CSV](http://grantnav.threesixtygiving.org/api/grants.csv)
+
+
 ```eval_rst
 .. _funder-recipient-summary-fields:
 ```
