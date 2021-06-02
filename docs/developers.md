@@ -3,7 +3,7 @@ GrantNav for Developers, Researchers & Analysts
 
 ## Developers
 
-GrantNav provide a rich source of grants data for developers; the JSON download for search results (or, indeed, for the full data set) can be used to experiment with 360Giving data for an application. 
+GrantNav provides a rich source of grants data for developers; the JSON download for search results (or, indeed, for the full data set) can be used to experiment with 360Giving data for an application. 
 
 GrantNav isn't designed to be incorporated into an application, and we don't guarantee API stability or performance, so developers should ensure that they don't rely on GrantNav for time-critical processes. The data's updated once a day, overnight (UK time), so it's not necessary to poll for updates more regularly than that. 
 
