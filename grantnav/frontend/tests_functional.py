@@ -142,33 +142,33 @@ def test_search_by_titles_and_descriptions_radio_button_in_search(provenance_dat
     assert "Titles & Descriptions" in browser.find_element_by_tag_name('body').text
 
 
-# def test_search_by_titles_and_descriptions(provenance_dataload, server_url, browser):
-#     browser.get(server_url)
-#     # select title_and_description from dropdown menu
-#     search_dropdown = Select(browser.find_element_by_class_name("front_search"))
-#     search_dropdown.select_by_value("title_and_description")
-#     # search "laboratory"
-#     search_box = browser.find_element_by_class_name("large-search")
-#     search_box.send_keys('laboratory')
-#     browser.find_element_by_class_name("large-search-button").click()
-#
-#     assert "New science laboratory" in browser.find_element_by_tag_name('body').text
-#     assert "laboratories" in browser.find_element_by_tag_name('body').text
-#     assert "£4,846,774" in browser.find_element_by_tag_name('body').text
-#     # result in "Search All" query
-#     assert "£4,991,774" not in browser.find_element_by_tag_name('body').text
-#
-#     browser.get(server_url)
-#     # search "laboratory" in "Search All"
-#     search_box = browser.find_element_by_class_name("large-search")
-#     search_box.send_keys('laboratory')
-#     browser.find_element_by_class_name("large-search-button").click()
-#
-#     assert "New science laboratory" in browser.find_element_by_tag_name('body').text
-#     assert "laboratories" in browser.find_element_by_tag_name('body').text
-#     assert "£4,991,774" in browser.find_element_by_tag_name('body').text
-#     # result in "Titles and Descriptions" query.
-#     assert "£4,846,774" not in browser.find_element_by_tag_name('body').text
+def test_search_by_titles_and_descriptions(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    # search "laboratory"
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('laboratory')
+    browser.find_element_by_class_name("large-search-button").click()
+    # select title_and_description
+    browser.find_element_by_xpath("//label[@for='title_and_description']").click()
+    browser.find_element_by_class_name("large-search-button").click()
+
+    assert "New science laboratory" in browser.find_element_by_tag_name('body').text
+    assert "laboratories" in browser.find_element_by_tag_name('body').text
+    assert "£4,846,774" in browser.find_element_by_tag_name('body').text
+    # result in "Search All" query
+    assert "£4,991,774" not in browser.find_element_by_tag_name('body').text
+
+    browser.get(server_url)
+    # search "laboratory" in "Search All"
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('laboratory')
+    browser.find_element_by_class_name("large-search-button").click()
+
+    assert "New science laboratory" in browser.find_element_by_tag_name('body').text
+    assert "laboratories" in browser.find_element_by_tag_name('body').text
+    assert "£4,991,774" in browser.find_element_by_tag_name('body').text
+    # result in "Titles and Descriptions" query.
+    assert "£4,846,774" not in browser.find_element_by_tag_name('body').text
 
 
 def test_search_current_url(provenance_dataload, server_url, browser):
@@ -403,23 +403,26 @@ def test_disclaimers(server_url, browser, path, text):
     assert text in browser.find_element_by_tag_name('body').text
 
 
-# def test_currency_facet(provenance_dataload, server_url, browser):
-#     browser.get(server_url)
-#     browser.find_element_by_class_name("large-search-button").click()
-#     element = browser.find_element_by_xpath("//div[@class='filter-list'][1]")
-#     element.click()
-#     browser.find_element_by_xpath("//div[@class='filter-list'][1]/details/div/ul[@class='filter-list__listing']/li[2]/a").click()
-#     browser.find_element_by_xpath("//div[@class='filter-list'][2]").click()
-#     assert 'USD 0 - USD 500' in browser.find_element_by_tag_name('body').text
+def test_currency_facet(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    browser.find_element_by_class_name("large-search-button").click()
+    # Select USD
+    browser.get_screenshot_as_file("test2.png")
+    browser.find_element_by_xpath(
+        "//div[contains(@class, 'filter-list')][1]/details/div/form/ul[@class='filter-list__listing']/li[2]/a").click()
+    # Check USD options appear
+    assert 'USD 0 - USD 500' in browser.find_element_by_tag_name('body').text
 
 
-# def test_amount_awarded_facet(provenance_dataload, server_url, browser):
-#     browser.get(server_url)
-#     browser.find_element_by_class_name("large-search-button").click()
-#     browser.find_element_by_xpath("//div[@class='filter-list'][2]").click()
-#     browser.find_element_by_xpath("//div[@class='filter-list'][2]/details/div/ul[@class='filter-list__listing']/li[3]/a").click()
-#     total_grants = browser.find_elements_by_css_selector(".top-stats-search dd")[0].text
-#     assert "42" in total_grants, "Expected number of grants not found"
+def test_amount_awarded_facet(provenance_dataload, server_url, browser):
+    browser.get(server_url)
+    browser.find_element_by_class_name("large-search-button").click()
+    # Select an option
+    browser.get_screenshot_as_file("test3.png")
+    browser.find_element_by_xpath(
+        "//div[contains(@class, 'filter-list')][2]/details/div/ul[@class='filter-list__listing']/li[3]/a").click()
+    total_grants = browser.find_elements_by_css_selector(".top-stats-search dd")[0].text
+    assert "42" in total_grants, "Expected number of grants not found"
 
 
 @pytest.mark.parametrize(('path'), ['/grant/360G-wolfson-19916'])
