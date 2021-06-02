@@ -11,3 +11,4 @@ pytest-localserver
 coveralls
 selenium
 libsass
+chromedriver-autoinstaller
