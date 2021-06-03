@@ -83,6 +83,18 @@
       cursor: pointer;
     }
   }
+
+  .search-block__label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 6px;
+
+    @include breakpoint($regular) {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+  }
 }
 
 
@@ -119,17 +131,6 @@
       }
     }
 
-    .search-block__label {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 6px;
-
-      @include breakpoint($regular) {
-        flex-direction: row-reverse;
-        justify-content: space-between;
-        align-items: baseline;
-      }
-    }
   }
 
   &__form-radio-group {
