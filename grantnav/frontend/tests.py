@@ -5,6 +5,8 @@ import pytest
 import requests
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
+from grantnav.frontend.views import get_pagination
+from django.test.client import RequestFactory
 
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/44ea7fdad8f32e9fab1d870e2f25fc31c5cdf2fd/'
 
@@ -111,3 +113,413 @@ def test_orgid_with_dots(provenance_dataload, client):
     recipient = client.get('/recipient/XI-GRID-grid.5292.c')
 
     assert recipient.status_code == 200
+
+
+def test_get_pagination_single_page():
+    request = RequestFactory().get('/')
+    context = {
+        "results": {
+            "hits": {
+                "total": {
+                    "value": 5
+                }
+            }
+        },
+        "json_query": ""
+    }
+    get_pagination(request, context, 1)
+    assert 1 == len(context['pages'])
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "1" == page['label']
+    assert page['active']
+
+
+def test_get_pagination_ten_pages_on_page_1():
+    request = RequestFactory().get('/')
+    context = {
+        "results": {
+            "hits": {
+                "total": {
+                    "value": 199
+                }
+            }
+        },
+        "json_query": ""
+    }
+    get_pagination(request, context, 1)
+    assert 6 == len(context['pages'])
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "1" == page['label']
+    assert page['active']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "2" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "3" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "next" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "last" == page['type']
+
+
+def test_get_pagination_ten_pages_on_page_2():
+    request = RequestFactory().get('/')
+    context = {
+        "results": {
+            "hits": {
+                "total": {
+                    "value": 199
+                }
+            }
+        },
+        "json_query": ""
+    }
+    get_pagination(request, context, 2)
+    assert 9 == len(context['pages'])
+
+    page = context['pages'].pop(0)
+    assert "first" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "prev" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "1" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "2" == page['label']
+    assert page['active']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "3" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "4" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "next" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "last" == page['type']
+
+
+def test_get_pagination_ten_pages_on_page_5():
+    request = RequestFactory().get('/')
+    context = {
+        "results": {
+            "hits": {
+                "total": {
+                    "value": 199
+                }
+            }
+        },
+        "json_query": ""
+    }
+    get_pagination(request, context, 5)
+    assert 11 == len(context['pages'])
+
+    page = context['pages'].pop(0)
+    assert "first" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "prev" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "3" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "4" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "5" == page['label']
+    assert page['active']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "6" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "7" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "next" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "last" == page['type']
+
+
+def test_get_pagination_ten_pages_on_page_6():
+    request = RequestFactory().get('/')
+    context = {
+        "results": {
+            "hits": {
+                "total": {
+                    "value": 199
+                }
+            }
+        },
+        "json_query": ""
+    }
+    get_pagination(request, context, 6)
+    assert 11 == len(context['pages'])
+
+    page = context['pages'].pop(0)
+    assert "first" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "prev" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "4" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "5" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "6" == page['label']
+    assert page['active']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "7" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "8" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "next" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "last" == page['type']
+
+
+def test_get_pagination_ten_pages_on_page_7():
+    request = RequestFactory().get('/')
+    context = {
+        "results": {
+            "hits": {
+                "total": {
+                    "value": 199
+                }
+            }
+        },
+        "json_query": ""
+    }
+    get_pagination(request, context, 7)
+    assert 11 == len(context['pages'])
+
+    page = context['pages'].pop(0)
+    assert "first" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "prev" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "5" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "6" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "7" == page['label']
+    assert page['active']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "8" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "9" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "next" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "last" == page['type']
+
+
+def test_get_pagination_ten_pages_on_page_8():
+    request = RequestFactory().get('/')
+    context = {
+        "results": {
+            "hits": {
+                "total": {
+                    "value": 199
+                }
+            }
+        },
+        "json_query": ""
+    }
+    get_pagination(request, context, 8)
+    assert 10 == len(context['pages'])
+
+    page = context['pages'].pop(0)
+    assert "first" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "prev" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "6" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "7" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "8" == page['label']
+    assert page['active']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "9" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "10" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "next" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "last" == page['type']
+
+
+def test_get_pagination_ten_pages_on_page_9():
+    request = RequestFactory().get('/')
+    context = {
+        "results": {
+            "hits": {
+                "total": {
+                    "value": 199
+                }
+            }
+        },
+        "json_query": ""
+    }
+    get_pagination(request, context, 9)
+    assert 9 == len(context['pages'])
+
+    page = context['pages'].pop(0)
+    assert "first" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "prev" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "7" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "8" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "9" == page['label']
+    assert page['active']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "10" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "next" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "last" == page['type']
+
+
+def test_get_pagination_ten_pages_on_page_10():
+    request = RequestFactory().get('/')
+    context = {
+        "results": {
+            "hits": {
+                "total": {
+                    "value": 199
+                }
+            }
+        },
+        "json_query": ""
+    }
+    get_pagination(request, context, 10)
+    assert 6 == len(context['pages'])
+
+    page = context['pages'].pop(0)
+    assert "first" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "prev" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "ellipsis" == page['type']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "8" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "9" == page['label']
+
+    page = context['pages'].pop(0)
+    assert "number" == page['type']
+    assert "10" == page['label']
+    assert page['active']
