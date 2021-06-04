@@ -21,6 +21,7 @@ services:
     image: elasticsearch:7.12.1
     environment:
       "discovery.type": 'single-node'
+      "search.max_buckets": "200000"
       "TAKE_FILE_OWNERSHIP": "True"
     ports:
       - "9200:9200"
