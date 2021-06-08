@@ -254,6 +254,12 @@ def maybe_create_index(index_name=ES_INDEX):
     else:
         pprint(result)
 
+    # set cluster level settings
+
+    result = es.cluster.put_settings(body={"persistent": {
+        "search.max_buckets": "500000"
+    }})
+
 
 def import_to_elasticsearch(files, clean):
 

@@ -989,7 +989,7 @@ def funder(request, funder_id):
 
 def funder_recipients_datatables(request):
     # Make 100k the default max length. Overrideable by setting ?length= parameter
-    MAX_DEFAULT_FUNDER_RECIPIENTS_LENGTH = 100000
+    MAX_DEFAULT_FUNDER_RECIPIENTS_LENGTH = 500000
 
     match = re.search(r'\.(\w+)$', request.path)
     if match:
@@ -1075,7 +1075,7 @@ def funder_recipients_datatables(request):
 def funders_datatables(request):
     match = re.search(r'\.(\w+)$', request.path)
     # Make 100k the default max length. Overrideable by setting ?length= parameter
-    MAX_DEFAULT_FUNDERS_LENGTH = 100000
+    MAX_DEFAULT_FUNDERS_LENGTH = 500000
 
     if match:
         result_format = match.group(1)
