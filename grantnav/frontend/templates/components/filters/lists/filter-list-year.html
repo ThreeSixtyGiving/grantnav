@@ -1,14 +1,38 @@
-{% load get_amount from frontend %}
+{% load frontend %}
+
 <div class="filter-list margin-bottom:2">
   <details class="filter-list__accordion" open>
     <summary class="filter-list__label">
-      <div>Award Year {% if results.aggregations.awardYear.clear_url %} <a href="{{results.aggregations.awardYear.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
+      <div>Award Date {% if results.aggregations.awardYear.clear_url %} <a href="{{results.aggregations.awardYear.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-list__contents-wrapper">
+      {% block filterForm %}
+        <form class="filter-list__contents--form">
+
+          <span class="input-daterange input-group" id="datepicker">
+            <div class="filter-list__contents--form-item">
+              <label for="min-month">From Month</label>
+              <input id="min-month" name="new_min_date" class="form-control" placeholder="mm/yyyy" value="{{query.query.bool.filter.9.bool.should.range.awardDate.gte | min_yearmonth}}"/>
+            </div>
+
+            <div class="filter-list__contents--form-item">
+              <label for="max-month">To Month</label>
+              <input id="max-month" name="new_max_date" placeholder="mm/yyyy" class="form-control input-xs" value="{{query.query.bool.filter.9.bool.should.range.awardDate.lt | max_yearmonth}}"/>
+            </div>
+          </span>
+
+
+          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+          <button type="submit" class="filter-list__contents--form-submit">Apply</button>
+
+        </form>
+      {% endblock filterForm %}
+
       {% block filterOption %}
       {% endblock filterOption %}
       <ul class="filter-list__listing">
+         {% if not query.query.bool.filter.9.bool.should.range.awardDate %}
          {% for bucket in results.aggregations.awardYear.buckets %}
             {% if forloop.counter <= query.extra_context.awardYear_facet_size %}          <li>
             <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
@@ -20,6 +44,7 @@
           </li>
           {% endif %}
         {% endfor %}
+        {% endif %}
       </ul>
     </div>
   </details>
