@@ -28,7 +28,7 @@ django-environ==0.4.5
     # via -r requirements.in
 django-super-favicon==0.6.1
     # via -r requirements.in
-django==2.2.20
+django==2.2.24
     # via
     #   -r requirements.in
     #   django-bootstrap3
@@ -46,12 +46,6 @@ idna==2.10
     # via requests
 ijson==2.5.1
     # via -r requirements.in
-importlib-metadata==2.1.1
-    # via
-    #   django-bootstrap3
-    #   flake8
-    #   pluggy
-    #   pytest
 iniconfig==1.1.1
     # via pytest
 jsonref==0.2
@@ -131,5 +125,3 @@ werkzeug==1.0.1
     # via pytest-localserver
 xmltodict==0.12.0
     # via flattentool
-zipp==3.4.1
-    # via importlib-metadata
