@@ -1,0 +1,72 @@
+<section class="search-summary">
+  <header class="search-summary--header">
+    {# You could make this as an H1 as it sits within the section tag if you do that consistently on other pages #}
+    <div class="search-summary--title">
+      <span>Search summary</span>
+    </div>
+    <div class="search-summary--description">
+      <span>To explore this data-set in more detail, open in <a href="#">360Giving Insights</a></span>
+    </div>
+  </header>
+
+  <main class="search-summary--main">
+    <div class="search-summary--main__left-column">
+      <div class="graph-item">
+        <div class="graph-label">{{ first_graph_label }}</div>
+        <div class="graph-container">
+          Pending
+        </div>
+      </div>
+
+      <div class="graph-item">
+        <div class="graph-label">{{ second_graph_label }}</div>
+        <div class="graph-container">
+          Pending
+        </div>
+      </div>
+    </div>
+
+    <div class="search-summary--main__right-column">
+      <div class="summary-content--item">
+        <span>Total grants: {{ total_grants }}</span>
+      </div>
+      <div class="summary-content--item">
+        <span>Total value: {{ total_value }}</span>
+      </div>
+      <div class="summary-content--item">
+        <span>Total funders: {{ total_funders }}</span>
+      </div>
+      <div class="summary-content--item">
+        <span>Total recipients: {{ total_recipients }}</span>
+      </div>
+      <div class="summary-content--item">
+        <span>Another: {{ another }}</span>
+      </div>
+
+      <div class="summary-illustration">{% include './summary-illustration.html' %}</div>
+    </div>
+  </main>
+
+  <footer class="search-summary--footer">
+    <details class="search-summary--footer__details" {% if opened == true %} open{% endif %}>
+      <summary>
+        <span class="summary-label">Show highlighted grants</span>
+        <span class="summary-icon" aria-hidden="true"></span>
+      </summary>
+      <div class="summary-footer--content">
+        {# Content below, note that I am using the |safe filter to render html, this only applies to the data set here #}
+        {% for item in summaryFooterItems %}
+          <div class="summary-footer--item">
+            <span class="summary-footer--item__label">{{ item.label }}</span>
+            <span class="summary-footer--item__value">{{ item.value|safe }}</span>
+          </div>
+        {% endfor %}
+        {# You can mix the list #}
+        <div class="summary-footer--item">
+          <span class="summary-footer--item__label">Total non-GBP grants:</span>
+          <span class="summary-footer--item__value">65 {% include './alert-tag--anchor.html' %}</span>
+        </div>
+      </div>
+    </details>
+  </footer>
+</section>
