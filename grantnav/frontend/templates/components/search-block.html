@@ -3,7 +3,10 @@
     <div class="search-block__description">Search, explore and download grants data published by UK funders in the 360Giving Data Standard.</div>
     <div>
       <form role="search" action="{% url 'search' %}">
-        <div>
+        <div class="search-block__label">
+          {% block alert %}
+            {% include 'components/targeting-search-tag.html' %}
+          {% endblock alert %}
           <label class="search-block__form-item-label" for="search_query">Enter a search term</label>
         </div>
         <div class="search-block__form-group">
