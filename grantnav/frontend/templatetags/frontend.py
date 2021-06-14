@@ -184,3 +184,13 @@ def get_dataset(grant):
 def get_current_sort(query):
     for key, value in query['sort'].items():
         return key + " " + value["order"]
+
+
+@register.filter(name='min_yearmonth')
+def min_yearmonth(date):
+    return utils.date_to_yearmonth(date)
+
+
+@register.filter(name='max_yearmonth')
+def max_yearmonth(date):
+    return utils.date_to_yearmonth(date, True)
