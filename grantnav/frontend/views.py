@@ -411,7 +411,10 @@ def get_date_facets(request, context, json_query):
     main_results['aggregations']["awardYear"] = results['aggregations']["awardYear"]
 
 
-def get_terms_facets(request, context, json_query, field, aggregate, bool_index, display_name, is_json=False):
+def get_terms_facets(request, context, json_query, field, aggregate, bool_index, display_name, is_json=False, path=None):
+
+    if not path:
+        path = request.path
 
     json_query = copy.deepcopy(json_query)
     try:
@@ -442,7 +445,7 @@ def get_terms_facets(request, context, json_query, field, aggregate, bool_index,
         if is_json:
             display_value = json.loads(display_value)[0]
         context["selected_facets"][display_name].append(
-            {"url": request.path + '?' + create_parameters_from_json_query(json_query),
+            {"url": path + '?' + create_parameters_from_json_query(json_query),
              "display_value": display_value}
         )
 
@@ -457,10 +460,10 @@ def get_terms_facets(request, context, json_query, field, aggregate, bool_index,
 
         new_filter = [{"term": {field: value}} for value in filter_values]
         json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = new_filter
-        bucket["url"] = request.path + '?' + create_parameters_from_json_query(json_query)
+        bucket["url"] = path + '?' + create_parameters_from_json_query(json_query)
     if current_filter:
         json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = []
-        results['aggregations'][aggregate]['clear_url'] = request.path + '?' + create_parameters_from_json_query(json_query)
+        results['aggregations'][aggregate]['clear_url'] = path + '?' + create_parameters_from_json_query(json_query)
         results['aggregations'][aggregate]["exclude"] = True if bool_condition == "must_not" else False
 
     main_results['aggregations'][aggregate] = results['aggregations'][aggregate]
@@ -915,6 +918,72 @@ def search(request):
         add_advanced_search_information_in_context(context)
 
         return render(request, "search.html", context=context)
+
+
+def filter_search_organization(request):
+    ''' Ajax request returning the format that select2 libary wants '''
+
+    org_type = request.GET.get('org_type', 'fundingOrganization')
+
+    json_query = create_json_query_from_parameters(request)
+
+    # Only need single aggregate to run for this query
+    json_query['aggs'] = {}
+    json_query['aggs'][org_type] = {"terms": {"field": f'{org_type}.id_and_name', "size": 100}}
+
+    new_json_query = copy.deepcopy(json_query)
+
+    new_must = [new_json_query["query"]["bool"]["must"]]
+
+    # the users search from select2
+    filter_search = request.GET.get("filter_search")
+
+    if filter_search:
+        # split search term by space.
+        # for each word in the split add wildcard (*) before and after
+        # allow both the original search term and a capitalized version of the word using OR
+        # AND all the individual word queries together.
+        and_terms = " AND ".join([f"(*{part}* OR *{part.capitalize()}*)" for part in filter_search.split()])
+
+        new_must.append(
+            {"query_string":
+                {"query": and_terms, "default_field": f"{org_type}.id_and_name", "analyze_wildcard": True}}
+        )
+
+    new_json_query["query"]["bool"]["must"] = new_must
+
+    results = get_results(new_json_query, 0)
+
+    context = {}
+
+    context['selected_facets'] = collections.defaultdict(list)
+    context['results'] = results
+
+    if org_type == 'fundingOrganization':
+        bool_index, display_name = 0, 'Funders'
+    elif org_type == 'recipientOrganization':
+        bool_index, display_name = 1, 'Recipients'
+
+    get_terms_facets(request, context, json_query, f'{org_type}.id_and_name', org_type, bool_index, display_name, is_json=True, path='/search')
+
+    context['selected_facets'] = dict(context['selected_facets'])
+
+    output = []
+
+    for bucket in results['aggregations'][org_type]['buckets']:
+        name, id = json.loads(bucket['key'])
+
+        output.append({
+            "id": id,
+            "text": name,
+            "count": bucket['doc_count'],
+            "url": bucket['url'],
+            "selected": bucket.get("selected", False)
+        })
+
+    return JsonResponse(
+        {"results": output}
+    )
 
 
 def get_radio_items(context, default_field):

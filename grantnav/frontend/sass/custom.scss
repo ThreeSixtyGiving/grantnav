@@ -98,6 +98,39 @@ dd {
   background-color: #d3eaed;
 }
 
+// Select2 Custom Styles
+
+.select2-results__option {
+  padding: 0px
+}
+
+.filter-list__form--checkbox-item label {
+  width: 100%;
+  color: black;
+  background-color: white
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: white !important;
+  padding-left: 5px;
+  border: 1px solid #A6D5DA !important;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.select2-selection__choice__remove{
+  display: none
+}
+
+.select2-results__options {
+   max-height: 350px !important;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+  height: 22px;
+  font-size: 90%
+}
+
 // From main.css
 
 /* ==========================================================================

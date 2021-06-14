@@ -107,77 +107,162 @@
 
 
 {% block extra_style %}
-
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
+
 {% block extra_scripts %}
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
+
+
 <script>
-$(function() {
 
-  document.getElementById('recipientOrganization-select').addEventListener('submit', function(e) {
-    e.preventDefault(); //to prevent form submission
-    var clear = false;
-    if (e.submitter.id == "recipientOrganization-clear") {
-      clear = true;
-    }
-    execute_submit(this, clear)
-  });
 
-  document.getElementById('fundingOrganization-select').addEventListener('submit', function(e) {
-    e.preventDefault(); //to prevent form submission
-    var clear = false;
-    if (e.submitter.id == "fundingOrganization-clear") {
-      clear = true;
-    }
-    execute_submit(this, clear)
-  });
-
-  function execute_submit(form_object, clear) {
-    var param = $(form_object).data('param');
-    var new_url = calculate_new_url(param, $(form_object), clear);
-    var changed = window.location.href !== new_url;
-
-    if (changed) {
-      window.location.href = new_url
-    }
+// This returns the html for select2 to render each item in the dropdown.
+function formatDropdownItem (item) {
+  if (item.loading) {
+    return
   }
 
-  $facet_selects = $(".facet-options");
+  html = '<div class="filter-list__form--checkbox-item">'
+  html += '<input class="screen-reader-only" value="" type="checkbox">'
+  html += '<label></label>'
+  html += '</div>'
+  var $dropdownItem = $(html);
 
-  function calculate_new_url(param, $select, clear) {
-    var uri = URI(window.location.href);
-    uri.removeSearch(param);
-    uri.removeSearch('exclude_' + param);
+  var small = $('<small> (' + item.count + ')</small>');
 
-    if (!clear) {
-      $select.find(':checked').each(function (index, element) {
-        uri.addSearch(param, element.value);
+  $dropdownItem.find('input').val(item.id).attr("id", item.id);
+
+  if (item.selected) {
+    $dropdownItem.find('input').attr("checked", "checked");
+  }
+
+  $dropdownItem.find('label').attr("for", item.id).text(item.text).append(small);
+
+  return $dropdownItem;
+};
+
+
+// This returns the html for select2 to render each tag in the select box.
+function formatSelection (item) {
+
+  html = '<a class="remove-select2-option" href="">'
+  html += '<span class="filter-summary__filters-item--label"></span>'
+  // This is ugly bet needed for the select2 to display the same cross as in the theme.
+  html += '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">'
+  html += '<path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"></path>'
+  html += '</svg>'
+  html += '</a>'
+
+  var $selection = $(html);
+  $selection.attr('href', item.id);
+  if (item.text.length > 28) {
+    item.text = item.text.substring(0,25) + '...'
+  }
+  $selection.find('span').text(item.text);
+  return $selection;
+};
+
+// Runs the ajax call for select2 adding org_type and filter query to the existing url params
+function get_org_filter_ajax(org_type) { 
+  return {
+    url: '/filter_search_organization',
+    delay: 100,
+    traditional: true, // this makes sure that multiparams are repeated when the value is a list.
+    data: function (params) {
+      // true here just returns an object. For multiparams this will give you a list as the values. 
+      var query_obj = URI(window.location.href).search(true);
+      query_obj["org_type"] = org_type;
+      query_obj["filter_search"] = params.term;
+      return query_obj;
+
+     }
+  }
+}
+
+// when a new item is selected then refresh the page
+function redirect_on_selection(param, data) {
+  var uri = URI(data.url);
+  uri.removeSearch('exclude_' + param);
+  if ($('#' + param + '-exclude').prop("checked")) {
+     uri.addSearch('exclude_' + param, 'true');
+  }
+  window.location.href = uri.toString();
+};
+
+
+// refresh the page when moving from exclude to include selection.
+// BUT do not do this if there is no curent selection
+function maybe_redirect_on_exclude(param) {
+
+  if ($('.' + param + '-search-box').select2('data').length == 0) {
+    return
+  }
+
+  var uri = URI(window.location.href);
+
+  uri.removeSearch('exclude_' + param);
+  if ($('#' + param + '-exclude').prop("checked")) {
+     uri.addSearch('exclude_' + param, 'true');
+  }
+  window.location.href = uri.toString();
+};
+
+
+$(function() {
+  $.fn.select2.amd.require(['select2/selection/search'], function (Search) {  
+
+      // this is to prevent backspace from removing selections
+      Search.prototype.searchRemoveChoice = function () {
+      };
+
+      funder_options = {"width": "100%", 
+           templateResult: formatDropdownItem, 
+           templateSelection: formatSelection, 
+           dropdownCssClass: "filter-list filter-list--with-checkboxes",
+           placeholder: "Search for funding organizations",
+           ajax: get_org_filter_ajax('fundingOrganization')
+           }
+
+      recipent_options = $.extend({}, funder_options)
+
+      recipent_options = $.extend(recipent_options, {
+          placeholder: "Search for recipient organizations",
+          ajax: get_org_filter_ajax('recipientOrganization')
       })
-      if ($('#' + param + '-exclude').prop("checked")) {
-        uri.addSearch('exclude_' + param, 'true');
-      }
-    }
 
-    return uri.toString()
-  };
+      $('.fundingOrganization-search-box').select2(funder_options)
+      $('.recipientOrganization-search-box').select2(recipent_options)
 
-  $facet_selects.on('change', function (e) {
-    var param = $(this).data('param');
-    var clear = false
-    var new_url = calculate_new_url(param, $(this), clear);
-    var changed = window.location.href !== new_url;
-    if (changed) {
-      $('#' + param + '-button').show()
-    } else {
-      $('#' + param + '-button').hide()
-    }
+      $('.fundingOrganization-search-box').on('select2:select', function (e) {
+          var data = e.params.data;
+          redirect_on_selection('fundingOrganization', data)
+      });
+
+      $('.recipientOrganization-search-box').on('select2:select', function (e) {
+          var data = e.params.data;
+          redirect_on_selection('recipientOrganization', data)
+      });
+
+      $('#fundingOrganization-select input[type=radio]').on('change', function (e) {
+          maybe_redirect_on_exclude('fundingOrganization')
+      });
+
+      $('#recipientOrganization-select input[type=radio]').on('change', function (e) {
+          maybe_redirect_on_exclude('recipientOrganization')
+      });
+
+  });
+
+  $('body').on('click', '.remove-select2-option', function(e) {
+      // keep select box closed when removing a selection
+      $('.filter-search-box').select2('close');
+
   })
-
 
   $('#datepicker').datepicker({
     format: "mm/yyyy",
