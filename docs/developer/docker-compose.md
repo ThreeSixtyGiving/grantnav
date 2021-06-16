@@ -53,3 +53,23 @@ To run the tests with docker-compose locally:
 ```
 $ docker-compose -p threesixtygiving-grantnav-test -f docker-compose.test.yml up
 ```
+
+
+## Updating Requirements
+
+To update all requirements to the latest version (both production and dev) run:
+
+```
+$ docker-compose -f docker-compose.dev.yml run grantnav-web su -c 'pip install -r requirements_dev.txt && pip-compile --upgrade --output-file=requirements.txt requirements.in'
+$ docker-compose -f docker-compose.dev.yml run grantnav-web su -c 'pip install -r requirements_dev.txt && pip-compile --upgrade --output-file=requirements_dev.txt requirements_dev.in'
+```
+
+You can tweak the pip-compile part of those commands as needed to do other tasks, like only upgrading some packages or adding new packages.
+
+You will then need to rebuild your containers:
+
+```
+$ docker-compose -f docker-compose.dev.yml down # (if running)
+$ docker-compose -f docker-compose.dev.yml build --no-cache
+$ docker-compose -f docker-compose.dev.yml up # (to restart)
+```
