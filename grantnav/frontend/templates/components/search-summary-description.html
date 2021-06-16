@@ -1,5 +1,5 @@
 {% load get_amount from frontend %}
-<div class="search-summary">
+<div class="search-summary-description">
     Your search ‘{{ text_query }}’ returned {{ results.hits.total|get_amount }} results in ‘{{ default_field_name }}’
   {% if advanced_search_info %}
   <div class="spacer-1"></div >
