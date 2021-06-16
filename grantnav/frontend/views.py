@@ -679,26 +679,6 @@ def date_parameters_from_json_query(parameters, json_query):
     parameters['awardDate'] = values
 
 
-def term_facet_size_from_json_query(parameters, json_query):
-
-    try:
-        aggs = json_query["aggs"]
-    except KeyError:
-        aggs = BASIC_QUERY['aggs']
-
-    for agg_name, agg in aggs.items():
-        if "terms" not in agg:
-            continue
-        if agg["terms"]["size"] == MORE_SIZE:
-            parameters[agg_name + 'More'] = ['true']
-
-
-def non_term_facet_size_from_json_query(parameters, json_query, agg_name):
-
-    if json_query['extra_context'][agg_name + '_facet_size'] == MORE_SIZE:
-        parameters[agg_name + 'More'] = ['true']
-
-
 def create_parameters_from_json_query(json_query, **extra_parameters):
     ''' Transforms json_query (the query that is passed to elasticsearch) to URL GET parameters'''
 
@@ -730,10 +710,6 @@ def create_parameters_from_json_query(json_query, **extra_parameters):
 
     amount_parameters_from_json_query(parameters, json_query)
     date_parameters_from_json_query(parameters, json_query)
-    term_facet_size_from_json_query(parameters, json_query)
-
-    non_term_facet_size_from_json_query(parameters, json_query, 'awardYear')
-    non_term_facet_size_from_json_query(parameters, json_query, 'amountAwardedFixed')
 
     parameter_list = []
 
