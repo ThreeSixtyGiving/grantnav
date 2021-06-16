@@ -5,7 +5,7 @@ import pytest
 import requests
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
-from grantnav.frontend.views import get_pagination
+from grantnav.frontend.views import get_pagination, BASIC_QUERY
 from django.test.client import RequestFactory
 
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/44ea7fdad8f32e9fab1d870e2f25fc31c5cdf2fd/'
@@ -125,7 +125,7 @@ def test_get_pagination_single_page():
                 }
             }
         },
-        "json_query": ""
+        "query": BASIC_QUERY
     }
     get_pagination(request, context, 1)
     assert 1 == len(context['pages'])
@@ -146,7 +146,7 @@ def test_get_pagination_ten_pages_on_page_1():
                 }
             }
         },
-        "json_query": ""
+        "query": BASIC_QUERY
     }
     get_pagination(request, context, 1)
     assert 6 == len(context['pages'])
@@ -184,7 +184,7 @@ def test_get_pagination_ten_pages_on_page_2():
                 }
             }
         },
-        "json_query": ""
+        "query": BASIC_QUERY
     }
     get_pagination(request, context, 2)
     assert 9 == len(context['pages'])
@@ -232,7 +232,7 @@ def test_get_pagination_ten_pages_on_page_5():
                 }
             }
         },
-        "json_query": ""
+        "query": BASIC_QUERY
     }
     get_pagination(request, context, 5)
     assert 11 == len(context['pages'])
@@ -287,7 +287,7 @@ def test_get_pagination_ten_pages_on_page_6():
                 }
             }
         },
-        "json_query": ""
+        "query": BASIC_QUERY
     }
     get_pagination(request, context, 6)
     assert 11 == len(context['pages'])
@@ -342,7 +342,7 @@ def test_get_pagination_ten_pages_on_page_7():
                 }
             }
         },
-        "json_query": ""
+        "query": BASIC_QUERY
     }
     get_pagination(request, context, 7)
     assert 11 == len(context['pages'])
@@ -397,7 +397,7 @@ def test_get_pagination_ten_pages_on_page_8():
                 }
             }
         },
-        "json_query": ""
+        "query": BASIC_QUERY
     }
     get_pagination(request, context, 8)
     assert 10 == len(context['pages'])
@@ -449,7 +449,7 @@ def test_get_pagination_ten_pages_on_page_9():
                 }
             }
         },
-        "json_query": ""
+        "query": BASIC_QUERY
     }
     get_pagination(request, context, 9)
     assert 9 == len(context['pages'])
@@ -497,7 +497,7 @@ def test_get_pagination_ten_pages_on_page_10():
                 }
             }
         },
-        "json_query": ""
+        "query": BASIC_QUERY
     }
     get_pagination(request, context, 10)
     assert 6 == len(context['pages'])

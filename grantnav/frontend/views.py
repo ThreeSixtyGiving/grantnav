@@ -29,7 +29,8 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # additional_data.recipientRegionName
     {"bool": {"should": []}},  # additional_data.recipientDistrictName
     {"bool": {"should": []}},  # currency
-    {"bool": {"should": []}}   # additional_data.TSGFundingOrgType
+    {"bool": {"should": []}},   # additional_data.TSGFundingOrgType
+    {"bool": {"should": {"range": {"awardDate": {}}}, "must": {}, "minimum_should_match": 1}},   # Date range
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json')
@@ -222,34 +223,34 @@ def get_pagination(request, context, page):
     total_pages = math.ceil(context['results']['hits']['total']['value'] / SIZE)
     context['pages'] = []
     if page != 1 and total_pages > 5:
-        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': 1}), "type": "first", "label": "First"})
+        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=1), "type": "first", "label": "First"})
 
     if page != 1 and total_pages > 1:
-        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "prev", "label": "Previous"})
+        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page - 1), "type": "prev", "label": "Previous"})
 
     if total_pages > 1 and page > 3:
         context['pages'].append({"type": "ellipsis"})
 
     if total_pages > 1 and page > 2:
-        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 2}), "type": "number", "label": str(page - 2)})
+        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page - 2), "type": "number", "label": str(page - 2)})
     if total_pages > 1 and page > 1:
-        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page - 1}), "type": "number", "label": str(page - 1)})
+        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page - 1), "type": "number", "label": str(page - 1)})
 
-    context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page}), "type": "number", "label": str(page), "active": True})
+    context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page), "type": "number", "label": str(page), "active": True})
 
     if page <= total_pages - 1:
-        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "number", "label": str(page + 1)})
+        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page + 1), "type": "number", "label": str(page + 1)})
     if page <= total_pages - 2:
-        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 2}), "type": "number", "label": str(page + 2)})
+        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page + 2), "type": "number", "label": str(page + 2)})
 
     if page <= total_pages - 3:
         context['pages'].append({"type": "ellipsis"})
 
     if page < total_pages:
-        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': page + 1}), "type": "next", "label": "Next"})
+        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page + 1), "type": "next", "label": "Next"})
 
     if page < total_pages and total_pages > 5:
-        context['pages'].append({"url": request.path + '?' + urlencode({"json_query": context['json_query'], 'page': total_pages}), "type": "last", "label": "Last"})
+        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=total_pages), "type": "last", "label": "Last"})
 
 
 def get_non_terms_facet_size(request, context, json_query, page, agg_name):
@@ -386,9 +387,27 @@ def get_date_facets(request, context, json_query):
         if bucket.get("selected"):
             context["selected_facets"]["Award Year"].append({"url": bucket["url"], "display_value": value})
 
-    if current_filter:
+    input_range = json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"]
+
+    if current_filter or input_range:
         json_query["query"]["bool"]["filter"][4]["bool"]["should"] = []
+        json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"] = {}
         results['aggregations']["awardYear"]['clear_url'] = request.path + '?' + create_parameters_from_json_query(json_query)
+
+    if input_range:
+        new_json_query = copy.deepcopy(json_query)
+        new_json_query["query"]["bool"]["filter"][4]["bool"]["should"] = []
+        new_json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"] = {}
+
+        lt, gte = input_range.get('lt'), input_range.get('gte')
+        display_value = ''
+        if gte:
+            display_value += f'From: {utils.date_to_yearmonth(gte)} '
+        if lt:
+            display_value += f'To: {utils.date_to_yearmonth(lt, max=True)}'
+
+        context["selected_facets"]["Award Date"].append({"url": request.path + '?' + create_parameters_from_json_query(new_json_query), "display_value": display_value})
+
     main_results['aggregations']["awardYear"] = results['aggregations']["awardYear"]
 
 
@@ -604,6 +623,15 @@ def create_json_query_from_parameters(request):
         amount_filter['lte'] = max_amount
     json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = amount_filter
 
+    date_filter = {}
+    min_date = utils.yearmonth_to_date(request.GET.get('min_date', ''))
+    if min_date:
+        date_filter['gte'] = min_date
+    max_date = utils.yearmonth_to_date(request.GET.get('max_date', ''), True)
+    if max_date:
+        date_filter['lt'] = max_date
+    json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"] = date_filter
+
     for term_facet in TERM_FACETS:
         term_facet_from_parameters(request, json_query, term_facet.field_name, term_facet.param_name,
                                    term_facet.filter_index, term_facet.display_name, term_facet.is_json)
@@ -651,26 +679,6 @@ def date_parameters_from_json_query(parameters, json_query):
     parameters['awardDate'] = values
 
 
-def term_facet_size_from_json_query(parameters, json_query):
-
-    try:
-        aggs = json_query["aggs"]
-    except KeyError:
-        aggs = BASIC_QUERY['aggs']
-
-    for agg_name, agg in aggs.items():
-        if "terms" not in agg:
-            continue
-        if agg["terms"]["size"] == MORE_SIZE:
-            parameters[agg_name + 'More'] = ['true']
-
-
-def non_term_facet_size_from_json_query(parameters, json_query, agg_name):
-
-    if json_query['extra_context'][agg_name + '_facet_size'] == MORE_SIZE:
-        parameters[agg_name + 'More'] = ['true']
-
-
 def create_parameters_from_json_query(json_query, **extra_parameters):
     ''' Transforms json_query (the query that is passed to elasticsearch) to URL GET parameters'''
 
@@ -689,16 +697,19 @@ def create_parameters_from_json_query(json_query, **extra_parameters):
     if max_amount:
         parameters['max_amount'] = [str(max_amount)]
 
+    min_date = json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"].get('gte')
+    if min_date:
+        parameters['min_date'] = [utils.date_to_yearmonth(min_date)]
+    max_date = json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"].get('lt')
+    if max_date:
+        parameters['max_date'] = [utils.date_to_yearmonth(max_date, True)]
+
     for term_facet in TERM_FACETS:
         term_parameters_from_json_query(parameters, json_query, term_facet.field_name, term_facet.param_name,
                                         term_facet.filter_index, term_facet.display_name, term_facet.is_json)
 
     amount_parameters_from_json_query(parameters, json_query)
     date_parameters_from_json_query(parameters, json_query)
-    term_facet_size_from_json_query(parameters, json_query)
-
-    non_term_facet_size_from_json_query(parameters, json_query, 'awardYear')
-    non_term_facet_size_from_json_query(parameters, json_query, 'amountAwardedFixed')
 
     parameter_list = []
 
@@ -863,6 +874,23 @@ def search(request):
                     pass
             json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = new_filter
             json_query["query"]["bool"]["filter"][3]["bool"]["must"] = {"term": {"currency": current_currency}}
+            return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
+
+        min_date = utils.yearmonth_to_date(request.GET.get('new_min_date', ''))
+        max_date = utils.yearmonth_to_date(request.GET.get('new_max_date', ''), True)
+        if min_date or max_date:
+            new_filter = {}
+            if min_date:
+                try:
+                    new_filter['gte'] = min_date
+                except ValueError:
+                    pass
+            if max_date:
+                try:
+                    new_filter['lt'] = max_date
+                except ValueError:
+                    pass
+            json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"] = new_filter
             return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
         context['selected_facets'] = collections.defaultdict(list)

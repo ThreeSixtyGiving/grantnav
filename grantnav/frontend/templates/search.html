@@ -8,6 +8,7 @@
 
 {% block main_content %}
   <main class="layout__content">
+
     <div class="grantnav-search__wrapper">
       <div class="grantnav-search__sidebar">
         <h2 class="grantnav-search__sidebar--heading">Refine your search</h2>
@@ -81,8 +82,10 @@
             <h1>No Results</h1>
             <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
             <ul>
-            <li>Using more general terms</li>
-            <li>Checking your spelling</li>
+              <li>Using more general terms</li>
+              <li>Checking your spelling</li>
+              <li>Removing some filters</li>
+              <li>To clear your search, <a href="{% url 'home' %}">click here</a></li>
             </ul>
           </div>
       </div>
@@ -102,7 +105,15 @@
   </main>
 {% endblock %}
 
+
+{% block extra_style %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+
+{% endblock %}
 {% block extra_scripts %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
 <script>
@@ -166,6 +177,19 @@ $(function() {
       $('#' + param + '-button').hide()
     }
   })
+
+
+  $('#datepicker').datepicker({
+    format: "mm/yyyy",
+    startDate: "01/1990",
+    endDate: "{% now "12/Y" %}",
+    startView: 2,
+    minViewMode: 1,
+    maxViewMode: 2,
+    autoclose: true,
+    defaultViewDate: '01/2010'
+  });
 });
+
 </script>
 {% endblock %}
