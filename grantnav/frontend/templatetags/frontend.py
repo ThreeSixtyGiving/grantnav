@@ -194,3 +194,10 @@ def min_yearmonth(date):
 @register.filter(name='max_yearmonth')
 def max_yearmonth(date):
     return utils.date_to_yearmonth(date, True)
+@register.filter(name='human_format')
+def human_format(num):
+    magnitude = 0
+    while abs(num) >= 1000:
+        magnitude += 1
+        num /= 1000.0
+    return '%.0f%s' % (num, ['', 'k', 'm', 'b'][magnitude])

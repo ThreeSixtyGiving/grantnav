@@ -1,72 +1,131 @@
+{% load frontend graphs %}
+
 <section class="search-summary">
-  <header class="search-summary--header">
-    {# You could make this as an H1 as it sits within the section tag if you do that consistently on other pages #}
-    <div class="search-summary--title">
-      <span>Search summary</span>
-    </div>
-    <div class="search-summary--description">
-      <span>To explore this data-set in more detail, open in <a href="#">360Giving Insights</a></span>
-    </div>
-  </header>
+  {% with currency=results.aggregations.currency_stats.buckets|first|get:"key"|upper buckets=results.aggregations.currency_stats.buckets%}
+    <header class="search-summary--header">
+      <div class="search-summary--title">
+        <span>Search summary</span>
+      </div>
+      <div class="search-summary--description">
+        <span>To explore this dataset in more detail, open in <a href="https://insights.threesixtygiving.org/">360Giving Insights</a></span>
+      </div>
+    </header>
 
-  <main class="search-summary--main">
-    <div class="search-summary--main__left-column">
-      <div class="graph-item">
-        <div class="graph-label">{{ first_graph_label }}</div>
-        <div class="graph-container">
-          Pending
-        </div>
-      </div>
 
-      <div class="graph-item">
-        <div class="graph-label">{{ second_graph_label }}</div>
-        <div class="graph-container">
-          Pending
-        </div>
-      </div>
-    </div>
-
-    <div class="search-summary--main__right-column">
-      <div class="summary-content--item">
-        <span>Total grants: {{ total_grants }}</span>
-      </div>
-      <div class="summary-content--item">
-        <span>Total value: {{ total_value }}</span>
-      </div>
-      <div class="summary-content--item">
-        <span>Total funders: {{ total_funders }}</span>
-      </div>
-      <div class="summary-content--item">
-        <span>Total recipients: {{ total_recipients }}</span>
-      </div>
-      <div class="summary-content--item">
-        <span>Another: {{ another }}</span>
-      </div>
-
-      <div class="summary-illustration">{% include './summary-illustration.html' %}</div>
-    </div>
-  </main>
-
-  <footer class="search-summary--footer">
-    <details class="search-summary--footer__details" {% if opened == true %} open{% endif %}>
-      <summary>
-        <span class="summary-label">Show highlighted grants</span>
-        <span class="summary-icon" aria-hidden="true"></span>
-      </summary>
-      <div class="summary-footer--content">
-        {# Content below, note that I am using the |safe filter to render html, this only applies to the data set here #}
-        {% for item in summaryFooterItems %}
-          <div class="summary-footer--item">
-            <span class="summary-footer--item__label">{{ item.label }}</span>
-            <span class="summary-footer--item__value">{{ item.value|safe }}</span>
+    <main class="search-summary--main">
+      <div class="search-summary--main__left-column">
+        <div class="graph-item">
+          <div class="graph-label">Amount awarded</div>
+          <div class="graph-container">
+            {% amount_awarded_graph %}
           </div>
-        {% endfor %}
-        {# You can mix the list #}
-        <div class="summary-footer--item">
-          <span class="summary-footer--item__label">Total non-GBP grants:</span>
-          <span class="summary-footer--item__value">65 {% include './alert-tag--anchor.html' %}</span>
+        </div>
+
+        <div class="graph-item">
+          <div class="graph-label">Date awarded</div>
+          <div class="graph-container">
+            {% award_date_graph %}
+          </div>
         </div>
       </div>
-    </details>
-  </footer>
+      
+
+      <div class="search-summary--main__right-column">
+        <div class="summary-content--item">
+          <span>Total grants: {{results.hits.total|get_amount}}</span>
+        </div>
+        <div class="summary-content--item">
+          <span>Total value: {{currency|currency_symbol}}{{buckets|first|get:"amount_stats"|get:"sum"|get_amount}}</span>
+        </div>
+        <div class="summary-content--item">
+          <span>Total funders: {{results.aggregations.funding_orgs.value|get_amount}}</span>
+        </div>
+        <div class="summary-content--item">
+          <span>Total recipients: {{results.aggregations.recipient_orgs.value|get_amount}}</span>
+        </div>
+        <div class="summary-illustration">{% include './summary-illustration.html' %}</div>
+      </div>
+    </main>
+
+    <footer class="search-summary--footer">
+      <details class="search-summary--footer__details">
+        <summary>
+          <span class="summary-label">Show highlighted grants</span>
+          <span class="summary-icon" aria-hidden="true">
+            <svg width="15" height="9" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.5715 2L7.73867 7.66956L2 2.0128" stroke="#153634" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="summary-footer--content">
+          <div class="summary-footer--item">
+            <span class="summary-footer--item__label">Largest grant:</span>
+            <span class="summary-footer--item__value">
+              {{currency|currency_symbol}}{{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"amountAwarded"|human_format}}
+              from
+              <a href="">
+                {{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
+              </a>
+              to
+              <a href="">
+                {{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization"|first|get:"name"}}
+              </a>
+            </span>
+          </div>
+          <div class="summary-footer--item">
+            <span class="summary-footer--item__label">Smallest grant:</span>
+            <span class="summary-footer--item__value">
+              {{currency|currency_symbol}}{{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"amountAwarded"|human_format}}
+              from
+              <a href="">
+                {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
+              </a>
+              to
+              <a href="">
+                {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization"|first|get:"name"}}
+              </a>
+            </span>
+          </div>
+          <div class="summary-footer--item">
+            <span class="summary-footer--item__label">Most recent grant:</span>
+            <span class="summary-footer--item__value">
+              {{currency|currency_symbol}}{{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"amountAwarded"|human_format}}
+              from
+              <a href="">
+                {{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
+              </a>
+              to
+              <a href="">
+                {{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization"|first|get:"name"}}
+              </a>
+              </span>
+            </div>
+          <div class="summary-footer--item">
+            <span class="summary-footer--item__label">Oldest grant:</span>
+            <span class="summary-footer--item__value">
+              {{currency|currency_symbol}}{{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"amountAwarded"|human_format}}
+              from
+              <a href="">
+                {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
+              </a>
+              to
+              <a href="">
+                {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization"|first|get:"name"}}
+              </a>
+              </span>
+          </div>
+          <div class="summary-footer--item">
+              {% with total_other=buckets|first|get:"amount_stats"|get:"count"|reverse_minus:results.hits.total.value %}
+                <span class="summary-footer--item__label">Total non-{{currency}} grants:</span>
+                {% if total_other %}
+                    <span class="summary-footer--item__value">{{total_other|get_amount}} {% include './alert-tag--anchor.html' %}</span>
+                {% else %}
+                  0
+                {% endif %}
+              {% endwith %}
+          </div>
+        </div>
+      </details>
+    </footer>
+  {% endwith %}
 </section>
