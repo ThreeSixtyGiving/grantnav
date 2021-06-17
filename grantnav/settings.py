@@ -41,6 +41,9 @@ PIWIK = {
     'site_id': env('PIWIK_SITE_ID'),
 }
 
+# Plotly
+PLOTLY_JS_CDN = 'https://cdn.plot.ly/plotly-1.54.6.min.js'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
