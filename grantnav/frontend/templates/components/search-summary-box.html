@@ -6,9 +6,13 @@
       <div class="search-summary--title">
         <span>Search summary</span>
       </div>
-      <div class="search-summary--description">
-        <span>To explore this dataset in more detail, open in <a href="https://insights.threesixtygiving.org/">360Giving Insights</a></span>
-      </div>
+    <div class="search-summary--description">
+      <span>To explore this data-set in more detail, open in
+        <a href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}?{{ query_string }}" title="Download search results into 360Giving Insights data visualiser" target="_blank">
+          360Giving Insights
+        </a>
+      </span>
+    </div>
     </header>
 
 
