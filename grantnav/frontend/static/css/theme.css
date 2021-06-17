@@ -106,37 +106,6 @@ hr {
   overflow: visible;
   margin: 1rem 0; }
 
-dd,
-p,
-label {
-  margin: 0 0 1.62ex 0; }
-
-ol,
-ul,
-dl,
-table,
-p,
-pre,
-address,
-figure {
-  margin: 0 0 1.62ex 0; }
-
-abbr[title],
-abbr[data-original-title] {
-  text-decoration: underline;
-  text-decoration: underline dotted;
-  cursor: help;
-  border-bottom: 0; }
-
-address {
-  font-style: normal;
-  line-height: inherit; }
-
-ol ol,
-ul ul,
-ol ul,
-ul ol {
-  margin-bottom: 0; }
 
 dt {
   font-weight: 700; }
