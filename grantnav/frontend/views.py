@@ -351,6 +351,8 @@ def create_date_aggregate(json_query):
 
 def get_date_facets(request, context, json_query):
     json_query = copy.deepcopy(json_query)
+
+    # Year filter
     try:
         current_filter = json_query["query"]["bool"]["filter"][4]["bool"]["should"]
     except KeyError:
@@ -361,9 +363,29 @@ def get_date_facets(request, context, json_query):
         json_query["query"]["bool"]["filter"][4]["bool"]["should"] = []
         create_date_aggregate(json_query)
         results = get_results(json_query)
+
+        # Look for current filters applied, and add them to selected_facets
+        # This must be done independently of checking the years buckets available (the next step).
+        # It's possible to get in a state in the no results page where the year filter is applied
+        # but the buckets that come back don't include that filter.
+        # In that case the filter isn't shown as a selected facet to the user and they can't clear it.
+        # eg search for "dogs", filter by "2020", search for "parrots" - no grants for parrots were made in 2020
+        #    so it doesn't appear in the buckets but we must show "2020" as on selected facet to the user!
+        for filter in current_filter:
+            try:
+                year = filter['range']['awardDate']['gte'].split("|")[0]
+                filter_values = [f for f in current_filter if f['range']['awardDate']['gte'].split("|")[0] != year]
+                new_json_query = copy.deepcopy(json_query)
+                new_json_query["query"]["bool"]["filter"][4]["bool"]["should"] = filter_values
+                url = request.path + '?' + create_parameters_from_json_query(new_json_query)
+                context["selected_facets"]["Award Year"].append({"url": url, "display_value": year})
+            except KeyError:
+                pass
+
     else:
         results = context["results"]
 
+    # Check year buckets available, add URL
     for bucket in results['aggregations']['awardYear']['buckets']:
         range = {'format': 'year'}
         value = bucket.get("key_as_string")
@@ -384,16 +406,16 @@ def get_date_facets(request, context, json_query):
         json_query["query"]["bool"]["filter"][4]["bool"]["should"] = new_filter
         bucket["url"] = request.path + '?' + create_parameters_from_json_query(json_query)
 
-        if bucket.get("selected"):
-            context["selected_facets"]["Award Year"].append({"url": bucket["url"], "display_value": value})
-
+    # Get Custom Filter
     input_range = json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"]
 
+    # If either Year or Custom filter, add clear_url
     if current_filter or input_range:
         json_query["query"]["bool"]["filter"][4]["bool"]["should"] = []
         json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"] = {}
         results['aggregations']["awardYear"]['clear_url'] = request.path + '?' + create_parameters_from_json_query(json_query)
 
+    # If custom filter, add to selected_facets
     if input_range:
         new_json_query = copy.deepcopy(json_query)
         new_json_query["query"]["bool"]["filter"][4]["bool"]["should"] = []
@@ -408,6 +430,7 @@ def get_date_facets(request, context, json_query):
 
         context["selected_facets"]["Award Date"].append({"url": request.path + '?' + create_parameters_from_json_query(new_json_query), "display_value": display_value})
 
+    # We may have changed year buckets available or clear URL - put our changes back in the main results for the user
     main_results['aggregations']["awardYear"] = results['aggregations']["awardYear"]
 
 

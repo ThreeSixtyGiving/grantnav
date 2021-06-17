@@ -80,6 +80,12 @@
       <div class="spacer-4">
           <div id="no-results">
             <h1>No Results</h1>
+
+            {% if selected_facets %}
+              {% include 'components/filter-summary.html' %}
+              <div class="spacer-4"></div>
+            {% endif %}
+
             <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
             <ul>
               <li>Using more general terms</li>
