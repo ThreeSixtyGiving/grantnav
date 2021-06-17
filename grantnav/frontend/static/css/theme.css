@@ -2749,12 +2749,12 @@ dd {
       margin-left: 180px; } }
 .datepicker table tr td span.active.active,
 .datepicker table tr td span.active:active,
-.datepicker table tr td span.active.active:hover,
+.datepicker table tr td span.active:hover.active,
 .datepicker table tr td span.active.active.focus,
 .datepicker table tr td span.active.active:focus,
 .datepicker table tr td span.active.active:hover,
 .datepicker table tr td span.active:hover:active,
-.datepicker table tr td span.active.active:hover:hover {
+.datepicker table tr td span.active:hover.active:hover {
   color: #000;
   background-color: #d3eaed; }
 
