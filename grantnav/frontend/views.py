@@ -342,6 +342,7 @@ def get_amount_facet_fixed(request, context, original_json_query):
 
         context["selected_facets"]["Amounts"].append({"url": request.path + '?' + create_parameters_from_json_query(new_json_query), "display_value": display_value})
 
+    main_results["aggregations"]["amountAwardedFixedOriginal"] = main_results["aggregations"]["amountAwardedFixed"]
     main_results["aggregations"]["amountAwardedFixed"] = results["aggregations"]["amountAwardedFixed"]
 
 
@@ -435,6 +436,7 @@ def get_date_facets(request, context, json_query):
         context["selected_facets"]["Award Date"].append({"url": request.path + '?' + create_parameters_from_json_query(new_json_query), "display_value": display_value})
 
     # We may have changed year buckets available or clear URL - put our changes back in the main results for the user
+    main_results['aggregations']["awardYearOriginal"] = main_results['aggregations']["awardYear"]
     main_results['aggregations']["awardYear"] = results['aggregations']["awardYear"]
 
 
