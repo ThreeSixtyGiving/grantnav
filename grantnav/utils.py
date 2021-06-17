@@ -1,6 +1,7 @@
 CURRENCY_SYMBOLS = {
     'GBP': '£',
-    'USD': '$'
+    'USD': '$',
+    'EUR': '€',
 }
 
 
