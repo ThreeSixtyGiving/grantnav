@@ -2221,7 +2221,7 @@ p {
     right: 0;
     bottom: 0;
     position: fixed;
-    background-color: hsl(var(--white-hsl), 0.95); }
+    background-color: hsl(var(--white-hsl), 0.4); }
   .modal__trigger {
     cursor: pointer; }
   .modal__close {
@@ -2233,9 +2233,8 @@ p {
     position: relative;
     padding: 40px;
     max-height: 90vh;
-    max-width: 80vw;
-    min-width: 22vw;
-    overflow-y: auto;
+    max-width: 960px;
+    overflow-y: scroll;
     background-color: hsl(var(--white-hsl), 1);
     box-shadow: 8px 8px 32px hsl(var(--base-hsl), 0.1); }
 

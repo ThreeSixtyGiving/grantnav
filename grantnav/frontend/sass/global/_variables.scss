@@ -13,4 +13,6 @@ $x-large: '(min-width: 105em)';
 $medium-up: $medium;
 $touch: $medium-max;
 
+$single-column: 960px;
+
 @import 'breakpoints';
