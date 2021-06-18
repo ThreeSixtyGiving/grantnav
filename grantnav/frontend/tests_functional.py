@@ -326,7 +326,6 @@ def test_bad_search(provenance_dataload, server_url, browser):
     not_valid = browser.find_element_by_id('not_valid').text
     assert 'Search input is not valid' in not_valid
     assert "We can't find what you tried to search for." in not_valid
-    assert "Filter By" in browser.find_element_by_tag_name('body').text
 
 
 def test_terms(server_url, browser):
@@ -363,7 +362,6 @@ def test_no_results_page(server_url, browser):
     no_results = browser.find_element_by_id('no-results').text
     assert 'No Results' in no_results
     assert 'Your search - "dfsergegrdtytdrthgrtyh" - did not match any records.' in no_results
-    assert "Filter By" in browser.find_element_by_tag_name('body').text
 
 
 @pytest.mark.parametrize(('path'), [
