@@ -130,7 +130,13 @@ def test_search(provenance_dataload, server_url, browser):
     # Total number of expected grants 4,764
     print(browser.find_element_by_tag_name('body').text)
     assert '4,764' in browser.find_element_by_tag_name('body').text
-    other_currencies_modal = browser.find_element_by_id("other-currencies-modal")
+
+    # open show highlighted grants section
+    browser.find_element_by_class_name("summary-icon").click()
+
+    # other_currencies_modal = browser.find_element_by_id("other-currencies-modal")
+    # search "laboratory"
+    other_currencies_modal = browser.find_element_by_xpath("//a[@id='other-currencies-modal']/span")
     assert other_currencies_modal.text == '7'
     other_currencies_modal.click()
     time.sleep(0.5)
@@ -421,7 +427,7 @@ def test_amount_awarded_facet(provenance_dataload, server_url, browser):
     browser.get_screenshot_as_file("test3.png")
     browser.find_element_by_xpath(
         "//div[contains(@class, 'filter-list')][2]/details/div/ul[@class='filter-list__listing']/li[3]/a").click()
-    total_grants = browser.find_elements_by_css_selector(".top-stats-search dd")[0].text
+    total_grants = browser.find_elements_by_css_selector(".summary-content--item span")[0].text
     assert "42" in total_grants, "Expected number of grants not found"
 
 
