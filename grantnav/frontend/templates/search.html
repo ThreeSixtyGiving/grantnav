@@ -11,15 +11,17 @@
 
     <div class="grantnav-search__wrapper">
       <div class="grantnav-search__sidebar">
-        <h2 class="grantnav-search__sidebar--heading">Refine your search</h2>
+        {% if results and results.hits.hits %}
+          <h2 class="grantnav-search__sidebar--heading">Refine your search</h2>
 
-        <div class="inline-block">
-          {% include 'components/alert-tag--anchor.html' %}
-        </div>
+          <div class="inline-block">
+            {% include 'components/alert-tag--anchor.html' %}
+          </div>
 
-        <div class="grantnav-search__sidebar--filters">
-          {% include 'components/filter-wrapper.html' %}
-        </div>
+          <div class="grantnav-search__sidebar--filters">
+            {% include 'components/filter-wrapper.html' %}
+          </div>
+        {% endif %}
       </div>
       {% if results and results.hits.hits %}
         <div class="grantnav-search__content">
