@@ -194,6 +194,8 @@ def min_yearmonth(date):
 @register.filter(name='max_yearmonth')
 def max_yearmonth(date):
     return utils.date_to_yearmonth(date, True)
+
+
 @register.filter(name='human_format')
 def human_format(num):
     magnitude = 0

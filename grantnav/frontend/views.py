@@ -72,12 +72,14 @@ FIXED_AMOUNT_RANGES = [
 SEARCH_SUMMARY_AGGREGATES = {
     "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
     "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
-    "currency_stats": {"terms": {"field": "currency"},
-                       "aggs": {
-                           "amount_stats": {"stats": {"field": "amountAwarded"}},
-                           "largest_grant": {"top_hits": {"size": 1, "sort": [{"amountAwarded": {"order": "desc"}}]}},
-                           "smallest_grant": {"top_hits": {"size": 1, "sort": [{"amountAwarded": {"order": "asc"}}]}},
-                      }},
+    "currency_stats": {
+        "terms": {"field": "currency"},
+        "aggs": {
+            "amount_stats": {"stats": {"field": "amountAwarded"}},
+            "largest_grant": {"top_hits": {"size": 1, "sort": [{"amountAwarded": {"order": "desc"}}]}},
+            "smallest_grant": {"top_hits": {"size": 1, "sort": [{"amountAwarded": {"order": "asc"}}]}},
+        }
+    },
     "min_date": {"min": {"field": "awardDate"}},
     "max_date": {"max": {"field": "awardDate"}},
     "earliest_grant": {"top_hits": {"size": 1, "sort": [{"awardDate": {"order": "asc"}}]}},
