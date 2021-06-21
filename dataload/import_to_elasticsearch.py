@@ -332,7 +332,7 @@ def import_to_elasticsearch(files, clean):
                     yield grant
 
         pprint(file_name)
-        result = elasticsearch.helpers.bulk(es, grant_generator(), raise_on_error=False)
+        result = elasticsearch.helpers.bulk(es, grant_generator(), raise_on_error=False, max_retries=10, initial_backoff=5)
         pprint(result)
 
         shutil.rmtree(tmp_dir)
