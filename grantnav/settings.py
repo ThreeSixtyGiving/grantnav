@@ -190,6 +190,9 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
+        },
+        'null': {
+            'class': 'logging.NullHandler',
         }
     },
     'loggers': {
@@ -197,6 +200,10 @@ LOGGING = {
             'level': 'ERROR',
             'handlers': ['console'],
             'propagate': False,
+        },
+        'django.security.DisallowedHost': {
+            "handlers": ["null"],
+            "propagate": False,
         },
         'raven': {
             'level': 'DEBUG',
