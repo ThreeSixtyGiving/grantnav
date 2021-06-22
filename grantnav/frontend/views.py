@@ -6,6 +6,7 @@ import json
 import math
 import re
 from itertools import chain
+from retry import retry
 
 import dateutil.parser as date_parser
 import elasticsearch.exceptions
@@ -107,6 +108,7 @@ def clean_for_es(json_query):
     return json_query
 
 
+@retry(tries=5, delay=0.5, backoff=2, max_delay=20)
 def get_results(json_query, size=10, from_=0):
     es = get_es()
     extra_context = json_query.pop('extra_context', None)
