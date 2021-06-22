@@ -79,6 +79,13 @@ SEARCH_SUMMARY_AGGREGATES = {
     "max_date": {"max": {"field": "awardDate"}}
 }
 
+DEFAULT_FIELDS = [
+    {"value": "*", "name": "All grant fields"},
+    {"value": "additional_data.recipientLocation", "name": "Locations"},
+    {"value": "recipientOrganization.name", "name": "Recipients"},
+    {"value": "title_and_description", "name": "Titles & Descriptions"}
+]
+
 
 def clean_object(obj):
     for key, value in list(obj.items()):
@@ -636,6 +643,9 @@ def create_json_query_from_parameters(request):
     json_query = copy.deepcopy(BASIC_QUERY)
     json_query["query"]["bool"]["must"]["query_string"]["query"] = request.GET.get('query', '*')
     json_query["query"]["bool"]["must"]["query_string"]["default_field"] = request.GET.get('default_field', '*')
+    default_field_values = [i['value'] for i in DEFAULT_FIELDS]
+    if json_query["query"]["bool"]["must"]["query_string"]["default_field"] not in default_field_values:
+        raise Exception("User has tried to search with a default field that is not allowed")
 
     sort_order = request.GET.get('sort', '').split()
     if sort_order and len(sort_order) == 2:
@@ -1015,10 +1025,10 @@ def filter_search_organization(request):
 
 def get_radio_items(context, default_field):
     context['searchRadio'] = []
-    context['searchRadio'].append({"value": "*", "name": "All grant fields", "checked": True if default_field == "*" else False})
-    context['searchRadio'].append({"value": "additional_data.recipientLocation", "name": "Locations", "checked": True if default_field == "additional_data.recipientLocation" else False})
-    context['searchRadio'].append({"value": "recipientOrganization.name", "name": "Recipients", "checked": True if default_field == "recipientOrganization.name" else False})
-    context['searchRadio'].append({"value": "title_and_description", "name": "Titles & Descriptions", "checked": True if default_field == "title_and_description" else False})
+    for default_field_definition in DEFAULT_FIELDS:
+        default_field_definition = default_field_definition.copy()
+        default_field_definition['checked'] = (default_field == default_field_definition['value'])
+        context['searchRadio'].append(default_field_definition)
     context['default_field_name'] = [radioItem['name'] for radioItem in context['searchRadio'] if radioItem['checked'] is True][0]
 
 
