@@ -723,12 +723,14 @@ def create_parameters_from_json_query(json_query, **extra_parameters):
     if max_amount:
         parameters['max_amount'] = [str(max_amount)]
 
-    min_date = json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"].get('gte')
-    if min_date:
-        parameters['min_date'] = [utils.date_to_yearmonth(min_date)]
-    max_date = json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"].get('lt')
-    if max_date:
-        parameters['max_date'] = [utils.date_to_yearmonth(max_date, True)]
+    # Date range filter was only added recently and old URL's will not have it in the JSON. So check it is there first:
+    if len(json_query["query"]["bool"]["filter"]) >= 10:
+        min_date = json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"].get('gte')
+        if min_date:
+            parameters['min_date'] = [utils.date_to_yearmonth(min_date)]
+        max_date = json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"].get('lt')
+        if max_date:
+            parameters['max_date'] = [utils.date_to_yearmonth(max_date, True)]
 
     for term_facet in TERM_FACETS:
         term_parameters_from_json_query(parameters, json_query, term_facet.field_name, term_facet.param_name,
