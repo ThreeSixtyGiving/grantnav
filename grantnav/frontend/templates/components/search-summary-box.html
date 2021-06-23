@@ -39,13 +39,13 @@
           <span>Total grants: {{results.hits.total|get_amount}}</span>
         </div>
         <div class="summary-content--item">
-          <span>Total value: {{currency|currency_symbol}}{{buckets|first|get:"amount_stats"|get:"sum"|get_amount}}</span>
+          <span>Total amount: {{currency|currency_symbol}}{{buckets|first|get:"amount_stats"|get:"sum"|get_amount}}</span>
         </div>
         <div class="summary-content--item">
-          <span>Total funders: {{results.aggregations.funding_orgs.value|get_amount}}</span>
+          <span>Funders: {{results.aggregations.funding_orgs.value|get_amount}}</span>
         </div>
         <div class="summary-content--item">
-          <span>Total recipients: {{results.aggregations.recipient_orgs.value|get_amount}}</span>
+          <span>Recipients: {{results.aggregations.recipient_orgs.value|get_amount}}</span>
         </div>
         <div class="summary-illustration">{% include './summary-illustration.html' %}</div>
       </div>
@@ -131,7 +131,6 @@
               {% endwith %}
           </div>
           <div class="summary-footer--item">
-            {% include './alert-tag--anchor.html' %}
           </div>
         </div>
       </details>
