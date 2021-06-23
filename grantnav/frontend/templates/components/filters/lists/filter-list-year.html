@@ -34,7 +34,7 @@
       <ul class="filter-list__listing">
          {% if not query.query.bool.filter.9.bool.should.range.awardDate %}
          {% for bucket in results.aggregations.awardYear.buckets %}
-            {% if forloop.counter <= query.extra_context.awardYear_facet_size %}          <li>
+          <li>
             <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
               {% if bucket.from_as_string %} {{bucket.from_as_string}} {% else %} {{bucket.key_as_string}} {% endif %} <small>({{bucket.doc_count|get_amount}})</small>
               {% if bucket.selected %}
@@ -42,7 +42,6 @@
               {% endif%}
             </a>
           </li>
-          {% endif %}
         {% endfor %}
         {% endif %}
       </ul>

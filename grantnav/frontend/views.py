@@ -34,29 +34,27 @@ BASIC_FILTER = [
     {"bool": {"should": {"range": {"awardDate": {}}}, "must": {}, "minimum_should_match": 1}},   # Date range
 ]
 
-TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json')
+TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
 
 TERM_FACETS = [
-    TermFacet("fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True),
-    TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True),
-    TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False),
-    TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False),
-    TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False),
-    TermFacet("currency", "currency", 7, "Currency", False)
+    TermFacet("fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True, 1),  # facet size 1 so template knows if there are results.
+    TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True, 1),
+    TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False, 5000),
+    TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False, 5000),
+    TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False, 5000),
+    TermFacet("currency", "currency", 7, "Currency", False, 5000)
 ]
 
-MORE_SIZE = 5000
 SIZE = 20
 
 BASIC_QUERY = {"query": {"bool": {"must":
                                   {"query_string": {"query": "", "default_field": "*"}}, "filter": BASIC_FILTER}},
-               "extra_context": {"awardYear_facet_size": 3, "amountAwardedFixed_facet_size": 3},
                "sort": {"_score": {"order": "desc"}},
                "aggs": {}}
 
 for term_facet in TERM_FACETS:
     BASIC_QUERY['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
-                                                            "size": MORE_SIZE}}
+                                                            "size": term_facet.facet_size}}
 
 FIXED_AMOUNT_RANGES = [
     {"from": 0, "to": 500},
@@ -253,13 +251,6 @@ def get_pagination(request, context, page):
 
     if page < total_pages and total_pages > 5:
         context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=total_pages), "type": "last", "label": "Last"})
-
-
-def get_non_terms_facet_size(request, context, json_query, page, agg_name):
-    new_json_query = copy.deepcopy(json_query)
-    facet_size = new_json_query['extra_context'][agg_name + '_facet_size']
-
-    new_json_query['extra_context'][agg_name + '_facet_size'] = facet_size
 
 
 def create_amount_aggregate(json_query):
@@ -613,23 +604,6 @@ def date_facet_from_parameters(request, json_query):
     json_query["query"]["bool"]["filter"][4]["bool"]["should"] = new_filter
 
 
-def term_facet_size_from_parameters(request, json_query):
-    try:
-        aggs = json_query["aggs"]
-    except KeyError:
-        aggs = BASIC_QUERY['aggs']
-
-    for agg_name, agg in aggs.items():
-        if "terms" not in agg:
-            continue
-
-        agg["terms"]["size"] = MORE_SIZE
-
-
-def non_term_facet_size_from_parameters(request, json_query, agg_name):
-    json_query['extra_context'][agg_name + '_facet_size'] = MORE_SIZE
-
-
 def create_json_query_from_parameters(request):
     ''' Transforms the URL GET parameters of the request into an object (json_query) that is to be used by elasticsearch  '''
 
@@ -666,10 +640,6 @@ def create_json_query_from_parameters(request):
 
     amount_facet_from_parameters(request, json_query)
     date_facet_from_parameters(request, json_query)
-    term_facet_size_from_parameters(request, json_query)
-
-    non_term_facet_size_from_parameters(request, json_query, 'awardYear')
-    non_term_facet_size_from_parameters(request, json_query, 'amountAwardedFixed')
 
     return json_query
 
@@ -791,7 +761,7 @@ def search(request):
             json_query['aggs'] = {}
             for term_facet in TERM_FACETS:
                 json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
-                                                             "size": MORE_SIZE}}
+                                                             "size": term_facet.facet_size}}
         except (ValueError, KeyError):
             json_query = {}
 
@@ -940,8 +910,6 @@ def search(request):
 
         get_amount_facet_fixed(request, context, json_query)
         get_date_facets(request, context, json_query)
-        get_non_terms_facet_size(request, context, json_query, page, 'awardYear')
-        get_non_terms_facet_size(request, context, json_query, page, 'amountAwardedFixed')
 
         get_pagination(request, context, page)
 
