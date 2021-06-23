@@ -400,7 +400,11 @@ def get_date_facets(request, context, json_query):
         bucket["url"] = request.path + '?' + create_parameters_from_json_query(json_query)
 
     # Get Custom Filter
-    input_range = json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"]
+    try:
+        input_range = json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"]
+    except IndexError:
+        # old json_query do not have the new filter
+        input_range = []
 
     # If either Year or Custom filter, add clear_url
     if current_filter or input_range:
