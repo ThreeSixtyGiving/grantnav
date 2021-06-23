@@ -23,17 +23,15 @@
       <ul class="filter-list__listing">
         {% if not query.query.bool.filter.3.bool.should.range.amountAwarded %}
           {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
-            {% if forloop.counter <= query.extra_context.amountAwardedFixed_facet_size %}
-              <li>
-                <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
-                  {{bucket|get_amount_range:current_currency}} <small>({{bucket.doc_count|get_amount}})</small> 
+            <li>
+              <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
+                {{bucket|get_amount_range:current_currency}} <small>({{bucket.doc_count|get_amount}})</small> 
 
-                  {% if bucket.selected %}
-                    <span class="screen-reader-only">(active filter)</span>
-                  {% endif%}
-                </a>
-              </li>
-            {% endif %}
+                {% if bucket.selected %}
+                  <span class="screen-reader-only">(active filter)</span>
+                {% endif%}
+              </a>
+            </li>
           {% endfor %}
         {% endif %}
       </ul>
