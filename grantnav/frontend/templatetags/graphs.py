@@ -31,10 +31,10 @@ def amount_awarded_graph(context):
 
         fig = go.Figure(data=go.Bar(x=x, y=y), layout=layout)
         
-        fig.update_xaxes(title="Value (log)", type="category", tickmode="array", tickvals=[1, 4, 7])
-        fig.update_yaxes(title="Grants")
+        fig.update_xaxes(type="category", tickmode="array", tickvals=[1, 4, 7], fixedrange=True, showgrid=False)
+        fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False)
 
-        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH)
+        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR)
 
         fig.update_traces(marker_color=BAR_COLOUR)
 
@@ -71,10 +71,10 @@ def award_date_graph(context):
 
         fig = go.Figure(data=go.Bar(x=x, y=y), layout=layout)
         
-        fig.update_xaxes(title="Year", type="category", tickmode="array", tickvals=[1, 4, 7, 10, 13, 16])
-        fig.update_yaxes(title="Grants")
+        fig.update_xaxes(type="category", tickmode="array", fixedrange=True, showgrid=False)
+        fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False)
 
-        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH)
+        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR)
 
         fig.update_traces(marker_color=BAR_COLOUR)
 
