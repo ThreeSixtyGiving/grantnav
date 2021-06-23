@@ -138,6 +138,17 @@ def get_date(date):
     return date_parser.parse(date).strftime("%d %b %Y")
 
 
+@register.filter(name='get_year')
+def get_year(date):
+    valid = strict_rfc3339.validate_rfc3339(date)
+    if not valid:
+        try:
+            datetime.datetime.strptime(date, "%Y-%m-%d")
+        except ValueError:
+            return date
+    return date_parser.parse(date).strftime("%Y")
+
+
 @register.filter(name='currency_symbol')
 def currency_symbol(currency):
     return utils.CURRENCY_SYMBOLS.get(currency.upper(), '')
