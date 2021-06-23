@@ -712,8 +712,16 @@ def create_parameters_from_json_query(json_query, **extra_parameters):
 
     parameters = {}
 
-    parameters['query'] = [json_query["query"]["bool"]["must"]["query_string"]["query"]]
-    parameters['default_field'] = [json_query["query"]["bool"]["must"]["query_string"]["default_field"]]
+    must_query = json_query["query"]["bool"]["must"]
+
+    # For the funder/recipient filter ajax request a new must clause is added here making this a list not a dict.
+    # would be better for it to be a list always but will be difficult for backwards compatibility currently.
+    if isinstance(must_query, list):
+        # second search terms should not go in paremeters.
+        must_query = must_query[0]
+
+    parameters['query'] = [must_query["query_string"]["query"]]
+    parameters['default_field'] = [must_query["query_string"]["default_field"]]
 
     sort_key = list(json_query["sort"].keys())[0]
     parameters['sort'] = [sort_key + ' ' + json_query['sort'][sort_key]['order']]
@@ -991,7 +999,7 @@ def filter_search_organization(request):
     elif org_type == 'recipientOrganization':
         bool_index, display_name = 1, 'Recipients'
 
-    get_terms_facets(request, context, json_query, f'{org_type}.id_and_name', org_type, bool_index, display_name, is_json=True, path='/search')
+    get_terms_facets(request, context, new_json_query, f'{org_type}.id_and_name', org_type, bool_index, display_name, is_json=True, path='/search')
 
     context['selected_facets'] = dict(context['selected_facets'])
 
