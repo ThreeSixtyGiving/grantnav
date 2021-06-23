@@ -31,8 +31,8 @@ def amount_awarded_graph(context):
 
         fig = go.Figure(data=go.Bar(x=x, y=y), layout=layout)
         
-        fig.update_xaxes(type="category", tickmode="array", tickvals=[1, 4, 7], fixedrange=True, showgrid=False)
-        fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False)
+        fig.update_xaxes(type="category", tickmode="array", tickvals=[1, 4, 7], fixedrange=True, showgrid=False, zeroline=False)
+        fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
         fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR)
 
@@ -71,8 +71,8 @@ def award_date_graph(context):
 
         fig = go.Figure(data=go.Bar(x=x, y=y), layout=layout)
         
-        fig.update_xaxes(type="category", tickmode="array", fixedrange=True, showgrid=False)
-        fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False)
+        fig.update_xaxes(type="category", tickmode="array", fixedrange=True, showgrid=False, zeroline=False)
+        fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
         fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR)
 
