@@ -143,10 +143,10 @@ def get_year(date):
     valid = strict_rfc3339.validate_rfc3339(date)
     if not valid:
         try:
-            datetime.datetime.strptime(date, "%Y-%m-%d")
+            datetime.datetime.strptime(date, "%Y")
         except ValueError:
             return date
-    return date_parser.parse(date).strftime("%Y")
+    return date.split("-")[0]
 
 
 @register.filter(name='currency_symbol')
