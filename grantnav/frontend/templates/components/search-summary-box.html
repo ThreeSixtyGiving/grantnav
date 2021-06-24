@@ -79,18 +79,22 @@
               ({{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"awardDate"|get_year}})
             </span>
           </div>
-          <div class="summary-footer--item">
-            <span class="summary-footer--item__label">Smallest grant:</span>
-            <span class="summary-footer--item__value">
-              {{currency|currency_symbol}}{{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"amountAwarded"|human_format}}
-              from
-              <a href="grant/{{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"id"}}">
-                {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
-              to
-                {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization"|first|get:"name"}}</a>
-              ({{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"awardDate"|get_year}})
-            </span>
-          </div>
+          {% if buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"amountAwarded" > 0 %}
+            <div class="summary-footer--item">
+              <span class="summary-footer--item__label">Smallest grant:</span>
+              <span class="summary-footer--item__value">
+                {{currency|currency_symbol}}{{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"amountAwarded"|human_format}}
+                from
+                <a href="grant/{{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"id"}}">
+                  {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
+                to
+                  {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization"|first|get:"name"}}</a>
+                ({{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"awardDate"|get_year}})
+              </span>
+            </div>
+          {% endif %}
+
+
           <div class="summary-footer--item">
             <span class="summary-footer--item__label">Most recent grant:</span>
             <span class="summary-footer--item__value">
@@ -127,8 +131,10 @@
                 {% endif %}
               {% endwith %}
           </div>
+          {% if buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"amountAwarded" > 0 %}
           <div class="summary-footer--item">
           </div>
+          {% endif %}
         </div>
       </details>
     </footer>
