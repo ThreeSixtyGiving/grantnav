@@ -1,4 +1,5 @@
-{% load frontend graphs %}
+{% load frontend %}
+{% load graphs %}
 
 <section class="search-summary">
   {% with currency=results.aggregations.currency_stats.buckets|first|get:"key"|upper buckets=results.aggregations.currency_stats.buckets%}
@@ -74,8 +75,7 @@
               <a href="grant/{{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"id"}}">
                 {{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
-                {{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization"|first|get:"name"}}
-              </a>
+                {{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization"|first|get:"name"}}</a>
               ({{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"awardDate"|get_year}})
             </span>
           </div>
@@ -87,8 +87,7 @@
               <a href="grant/{{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"id"}}">
                 {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
-                {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization"|first|get:"name"}}
-              </a>
+                {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization"|first|get:"name"}}</a>
               ({{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"awardDate"|get_year}})
             </span>
           </div>
@@ -100,8 +99,7 @@
               <a href="grant/{{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"id"}}">
                 {{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
-                {{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization"|first|get:"name"}}
-              </a>
+                {{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization"|first|get:"name"}}</a>
               ({{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"awardDate"|get_year}})
               </span>
             </div>
@@ -113,8 +111,7 @@
               <a href="grant/{{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"id"}}">
                 {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
-                {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization"|first|get:"name"}}
-              </a>
+                {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization"|first|get:"name"}}</a>
               ({{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"awardDate"|get_year}})
               </span>
           </div>
