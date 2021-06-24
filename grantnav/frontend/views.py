@@ -230,6 +230,7 @@ def orgs_csv_paged(data, org_type):
 
 def get_pagination(request, context, page):
     total_pages = math.ceil(context['results']['hits']['total']['value'] / SIZE)
+    context['total_pages'] = total_pages
     context['pages'] = []
     if page != 1 and total_pages > 5:
         context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=1), "type": "first", "label": "First"})
