@@ -6,29 +6,31 @@
 {% block main_content %}
 <div class="layout layout--single-column">
   <main class="layout__content">
-    <div class="grid grid--two-columns spacer-4">
+    <div class="grid grid--one-column spacer-4">
       <div class="grid__1">
         <h1 class="funder-header text-center">{{ region }}</h1>
       </div>
-      <div class="grid grid--two-columns grid__1">
-        <div class="grid__1">
-          <dl class="top-stats">
-            <dt>Total grants</dt>
-            <dd>{{results.hits.total|get_amount}}</dd>
-            <dt>Total recipients</dt>
-            <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
-            <dt>Earliest award date</dt>
-            <dd>
-              {{results.aggregations.min_date.value_as_string|get_date}}
-            </dd>
-            <dt>Latest award date</dt>
-            <dd>
-              {{results.aggregations.max_date.value_as_string|get_date}}
-            </dd>
-          </dl>
-        </div>
-        <div class="grid__1">
-          {% include 'currency_stats.html' %}
+      <div class="grid__1">
+        <div class="grid grid--two-columns">
+          <div class="grid__1">
+            <dl class="top-stats">
+              <dt>Total grants</dt>
+              <dd>{{results.hits.total|get_amount}}</dd>
+              <dt>Total recipients</dt>
+              <dd>{{results.aggregations.recipient_orgs.value|get_amount}}</dd>
+              <dt>Earliest award date</dt>
+              <dd>
+                {{results.aggregations.min_date.value_as_string|get_date}}
+              </dd>
+              <dt>Latest award date</dt>
+              <dd>
+                {{results.aggregations.max_date.value_as_string|get_date}}
+              </dd>
+            </dl>
+          </div>
+          <div class="grid__1">
+            {% include 'currency_stats.html' %}
+          </div>
         </div>
       </div>
     </div>
