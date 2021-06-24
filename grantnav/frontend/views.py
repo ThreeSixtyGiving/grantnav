@@ -286,7 +286,11 @@ def get_amount_facet_fixed(request, context, original_json_query):
         json_query["query"]["bool"]["filter"][2]["bool"]["must"] = {"term": {"currency": current_currency}}
 
     json_query["query"]["bool"]["filter"][2]["bool"]["minimum_should_match"] = 0
-    results = get_results(json_query)
+
+    if current_filter:
+        results = get_results(json_query)
+    else:
+        results = main_results
 
     input_range = json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"]
     new_filter = copy.deepcopy(current_filter)
