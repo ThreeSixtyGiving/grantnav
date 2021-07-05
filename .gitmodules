@@ -2,3 +2,6 @@
 	path = docs/_static/docson
 	url = https://github.com/OpenDataServices/docson
 	branch = master
+[submodule "360-ds"]
+	path = 360-ds
+	url = git@github.com:ThreeSixtyGiving/360-ds.git
