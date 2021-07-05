@@ -10,6 +10,7 @@ services:
       DEBUG: 'True'
       ELASTICSEARCH_HOST: 'elasticsearch'
       PROVENANCE_JSON: "/code/datastoredata/data/data_all.json"
+      PYTHONUNBUFFERED: 1
     volumes:
       - "./:/code"
     command: "sh -c 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000'"
