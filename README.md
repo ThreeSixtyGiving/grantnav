@@ -105,11 +105,7 @@ PROVENANCE_JSON=path/to/datagetter/data/data_acceptable_license_valid.json pytho
 Compile theme
 -------------
 
-In order to compile the sass theme run:
-
-```
-pysassc grantnav/frontend/sass/main.scss grantnav/frontend/static/css/theme.css
-```
+In order to compile the sass theme please see the [360-ds](https://github.com/ThreeSixtyGiving/360-ds) submodule. All styles are built and imported from there.
 
 
 Run tests
