@@ -2,6 +2,7 @@ from django import template
 from django.conf import settings
 from grantnav.frontend.templatetags.frontend import currency_symbol
 import plotly.graph_objs as go
+import datetime
 
 register = template.Library()
 
@@ -9,7 +10,8 @@ GRAPH_HEIGHT = 160
 GRAPH_WIDTH = 320
 BAR_COLOUR = '#DE6E26'
 PAPER_COLOUR = 'rgba(0,0,0,0)'
-YEAR_CUT_OFF = 1009843200000  # 2002
+GRAPH_DURATION = 20  # Years
+YEAR_CUT_OFF = int((datetime.datetime.now() - datetime.timedelta(days=GRAPH_DURATION * 365)).timestamp()) * 1000
 
 
 @register.inclusion_tag('components/generic.html', takes_context=True)
