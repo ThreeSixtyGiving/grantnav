@@ -1699,7 +1699,7 @@ p {
     .filter-list__contents--form-item {
       display: inline-block;
       flex-direction: column;
-      margin-right: 14px;
+      margin-right: 8px;
       flex-shrink: 2;
       max-width: 35%;
       margin-bottom: 4px; }
