@@ -12,6 +12,7 @@ BAR_COLOUR = '#DE6E26'
 PAPER_COLOUR = 'rgba(0,0,0,0)'
 GRAPH_DURATION = 20  # Years
 YEAR_CUT_OFF = int((datetime.datetime.now() - datetime.timedelta(days=GRAPH_DURATION * 365)).timestamp()) * 1000
+TOOLTIP_STYLE = dict(bgcolor="white", font_size=16, font_family="Roboto")
 
 
 @register.inclusion_tag('components/generic.html', takes_context=True)
@@ -21,22 +22,24 @@ def amount_awarded_graph(context):
         amount_awarded_buckets = context['results']['aggregations']['amountAwardedFixedOriginal']['buckets']
 
         x = []
+        x2 = []
         y = []
         for bucket in amount_awarded_buckets:
             x.append('{}{:,.0f}'.format(currency_symbol(context['currency']), bucket['from']))
             y.append(bucket['doc_count'])
+            x2.append(' - {}{:,.0f}'.format(currency_symbol(context['currency']), bucket['to'])) if 'to' in bucket else x2.append('+')
 
         layout = go.Layout(
             margin=go.layout.Margin(l=50, r=0, b=20, t=0),
             paper_bgcolor=PAPER_COLOUR,
         )
 
-        fig = go.Figure(data=go.Bar(x=x, y=y), layout=layout)
+        fig = go.Figure(data=go.Bar(x=x, y=y, text=x2, hovertemplate='Amount awarded: %{x}%{text}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
         
         fig.update_xaxes(type="category", tickmode="array", tickvals=[1, 4, 7], fixedrange=True, showgrid=False, zeroline=False)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
-        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR)
+        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
 
         fig.update_traces(marker_color=BAR_COLOUR)
 
@@ -71,12 +74,12 @@ def award_date_graph(context):
             paper_bgcolor=PAPER_COLOUR,
         )
 
-        fig = go.Figure(data=go.Bar(x=x, y=y), layout=layout)
+        fig = go.Figure(data=go.Bar(x=x, y=y, hovertemplate='Date awarded: %{x}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
         
         fig.update_xaxes(type="category", tickmode="array", fixedrange=True, showgrid=False, zeroline=False)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
-        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR)
+        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
 
         fig.update_traces(marker_color=BAR_COLOUR)
 
