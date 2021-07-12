@@ -3623,8 +3623,7 @@ a.base-card:hover:before {
   .nav-bar__home-button {
     display: block;
     margin: 2px;
-    margin-bottom: 22px;
-    width: 100%; }
+    margin-bottom: 22px; }
     .nav-bar__home-button img {
       width: 190px; }
     @media (min-width: 60em) {
