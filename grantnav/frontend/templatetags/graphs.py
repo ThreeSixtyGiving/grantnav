@@ -8,7 +8,8 @@ from millify import millify
 
 register = template.Library()
 
-GRAPH_HEIGHT = 160
+AMOUNT_AWARDED_GRAPH_HEIGHT = 160
+AWARD_DATE_GRAPH_HEIGHT = 210
 GRAPH_WIDTH = 320
 BAR_COLOUR = '#DE6E26'
 PAPER_COLOUR = 'rgba(0,0,0,0)'
@@ -42,7 +43,7 @@ def amount_awarded_graph(context):
         fig.update_xaxes(type="category", tickmode="array", tickvals=[1, 3, 5, 7], fixedrange=True, showgrid=False, zeroline=False)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
-        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
+        fig.update_layout(height=AMOUNT_AWARDED_GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
 
         fig.update_traces(marker_color=BAR_COLOUR)
 
@@ -74,7 +75,7 @@ def award_date_graph(context):
                 y.append(bucket['doc_count'])
 
         x, y = (list(sync) for sync in zip(*sorted(zip(x, y))))
-        x.insert(0, f'{context["results"]["aggregations"]["earliest_grant"]["hits"]["hits"][0]["_source"]["awardDate"][:4]}+')
+        x.insert(0, 'Older data')
         y.insert(0, early_total)
 
         x2 = deepcopy(x)
@@ -90,7 +91,7 @@ def award_date_graph(context):
         fig.update_xaxes(type="category", tickmode="array", fixedrange=True, showgrid=False, zeroline=False)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
-        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
+        fig.update_layout(height=AWARD_DATE_GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
 
         fig.update_traces(marker_color=BAR_COLOUR)
 
