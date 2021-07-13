@@ -78,7 +78,6 @@ def award_date_graph(context):
         y.insert(0, early_total)
 
         x2 = deepcopy(x)
-        print(YEAR_CUT_OFF)
         x2[0] = f'{context["results"]["aggregations"]["earliest_grant"]["hits"]["hits"][0]["_source"]["awardDate"][:4]} - {datetime.datetime.utcfromtimestamp(YEAR_CUT_OFF/1000).strftime("%Y")}'
 
         layout = go.Layout(
