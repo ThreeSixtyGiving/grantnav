@@ -3,11 +3,13 @@ from django.conf import settings
 from grantnav.frontend.templatetags.frontend import currency_symbol
 import plotly.graph_objs as go
 import datetime
+from copy import deepcopy
 from millify import millify
 
 register = template.Library()
 
-GRAPH_HEIGHT = 160
+AMOUNT_AWARDED_GRAPH_HEIGHT = 160
+AWARD_DATE_GRAPH_HEIGHT = 210
 GRAPH_WIDTH = 320
 BAR_COLOUR = '#DE6E26'
 PAPER_COLOUR = 'rgba(0,0,0,0)'
@@ -41,7 +43,7 @@ def amount_awarded_graph(context):
         fig.update_xaxes(type="category", tickmode="array", tickvals=[1, 3, 5, 7], fixedrange=True, showgrid=False, zeroline=False)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
-        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
+        fig.update_layout(height=AMOUNT_AWARDED_GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
 
         fig.update_traces(marker_color=BAR_COLOUR)
 
@@ -64,24 +66,32 @@ def award_date_graph(context):
 
         x = []
         y = []
+        early_total = 0
         for bucket in award_year_buckets:
+            if bucket['key'] < YEAR_CUT_OFF:
+                early_total += bucket['doc_count']
             if bucket['key'] > YEAR_CUT_OFF:
                 x.append(bucket['key_as_string'])
                 y.append(bucket['doc_count'])
 
         x, y = (list(sync) for sync in zip(*sorted(zip(x, y))))
+        x.insert(0, 'Older data')
+        y.insert(0, early_total)
+
+        x2 = deepcopy(x)
+        x2[0] = f'{context["results"]["aggregations"]["earliest_grant"]["hits"]["hits"][0]["_source"]["awardDate"][:4]} - {datetime.datetime.utcfromtimestamp(YEAR_CUT_OFF/1000).strftime("%Y")}'
 
         layout = go.Layout(
             margin=go.layout.Margin(l=50, r=0, b=20, t=0),
             paper_bgcolor=PAPER_COLOUR,
         )
 
-        fig = go.Figure(data=go.Bar(x=x, y=y, hovertemplate='Date awarded: %{x}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
+        fig = go.Figure(data=go.Bar(x=x, y=y, text=x2, hovertemplate='Date awarded: %{text}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
         
         fig.update_xaxes(type="category", tickmode="array", fixedrange=True, showgrid=False, zeroline=False)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
-        fig.update_layout(height=GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
+        fig.update_layout(height=AWARD_DATE_GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
 
         fig.update_traces(marker_color=BAR_COLOUR)
 
