@@ -53,10 +53,10 @@
           <span>Recipients: {{results.aggregations.recipient_orgs.value|get_amount}}</span>
         </div>
         <div class="summary-content--item">
-          <span>Earliest year: {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"awardDate"|get_year}}</span>
+          <span>Earliest grant: {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"awardDate"|get_date}}</span>
         </div>
         <div class="summary-content--item">
-          <span>Latest year: {{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"awardDate"|get_year}}</span>
+          <span>Latest grant: {{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"awardDate"|get_date}}</span>
         </div>
         <div class="summary-illustration">{% include './summary-illustration.html' %}</div>
       </div>
