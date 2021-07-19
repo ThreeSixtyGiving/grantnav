@@ -25,20 +25,20 @@ def amount_awarded_graph(context):
         amount_awarded_buckets = context['results']['aggregations']['amountAwardedFixedOriginal']['buckets']
 
         x = []
-        x2 = []
+        x_labels = []
         y = []
         for bucket in amount_awarded_buckets:
             print(bucket)
             x.append('{}{}'.format(currency_symbol(context['currency']), millify(bucket['from'])))
             y.append(bucket['doc_count'])
-            x2.append(' - {}{}'.format(currency_symbol(context['currency']), millify(bucket['to']))) if 'to' in bucket else x2.append('+')
+            x_labels.append(' - {}{}'.format(currency_symbol(context['currency']), millify(bucket['to']))) if 'to' in bucket else x_labels.append('+')
 
         layout = go.Layout(
             margin=go.layout.Margin(l=50, r=0, b=20, t=0),
             paper_bgcolor=PAPER_COLOUR,
         )
 
-        fig = go.Figure(data=go.Bar(x=x, y=y, text=x2, hovertemplate='Amount awarded: %{x}%{text}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
+        fig = go.Figure(data=go.Bar(x=x, y=y, text=x_labels, hovertemplate='Amount awarded: %{x}%{text}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
         
         fig.update_xaxes(type="category", tickmode="array", tickvals=[1, 3, 5, 7], fixedrange=True, showgrid=False, zeroline=False)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
@@ -78,15 +78,15 @@ def award_date_graph(context):
         x.insert(0, 'Older')
         y.insert(0, early_total)
 
-        x2 = deepcopy(x)
-        x2[0] = f'{context["results"]["aggregations"]["earliest_grant"]["hits"]["hits"][0]["_source"]["awardDate"][:4]} - {datetime.datetime.utcfromtimestamp(YEAR_CUT_OFF/1000).strftime("%Y")}'
+        x_labels = deepcopy(x)
+        x_labels[0] = f'{context["results"]["aggregations"]["earliest_grant"]["hits"]["hits"][0]["_source"]["awardDate"][:4]} - {datetime.datetime.utcfromtimestamp(YEAR_CUT_OFF/1000).strftime("%Y")}'
 
         layout = go.Layout(
             margin=go.layout.Margin(l=50, r=0, b=20, t=0),
             paper_bgcolor=PAPER_COLOUR,
         )
 
-        fig = go.Figure(data=go.Bar(x=x, y=y, text=x2, hovertemplate='Date awarded: %{text}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
+        fig = go.Figure(data=go.Bar(x=x, y=y, text=x_labels, hovertemplate='Date awarded: %{text}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
         
         fig.update_xaxes(type="category", tickmode="array", fixedrange=True, showgrid=False, zeroline=False, tickangle=45)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
