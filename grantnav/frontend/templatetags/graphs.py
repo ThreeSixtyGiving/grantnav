@@ -9,7 +9,7 @@ from millify import millify
 register = template.Library()
 
 AMOUNT_AWARDED_GRAPH_HEIGHT = 160
-AWARD_DATE_GRAPH_HEIGHT = 210
+AWARD_DATE_GRAPH_HEIGHT = 180
 GRAPH_WIDTH = 320
 BAR_COLOUR = '#DE6E26'
 PAPER_COLOUR = 'rgba(0,0,0,0)'
@@ -75,7 +75,7 @@ def award_date_graph(context):
                 y.append(bucket['doc_count'])
 
         x, y = (list(sync) for sync in zip(*sorted(zip(x, y))))
-        x.insert(0, 'Older data')
+        x.insert(0, 'Older')
         y.insert(0, early_total)
 
         x2 = deepcopy(x)
@@ -88,7 +88,7 @@ def award_date_graph(context):
 
         fig = go.Figure(data=go.Bar(x=x, y=y, text=x2, hovertemplate='Date awarded: %{text}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
         
-        fig.update_xaxes(type="category", tickmode="array", fixedrange=True, showgrid=False, zeroline=False)
+        fig.update_xaxes(type="category", tickmode="array", fixedrange=True, showgrid=False, zeroline=False, tickangle=45)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
         fig.update_layout(height=AWARD_DATE_GRAPH_HEIGHT, width=GRAPH_WIDTH, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
