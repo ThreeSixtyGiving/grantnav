@@ -8,14 +8,14 @@
         <span>Search summary</span>
       </div>
     <div class="search-summary--description">
-      {% if results.hits.total.value <= 1000 %}
+      {% if results.hits.total.value <= 10000 %}
         <span>To explore this dataset in more detail, open in
           <a href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}?{{ query_string }}" title="Download search results into 360Insights data visualiser" target="_blank">
             360Insights
           </a>
         </span>
       {% else %}
-        <span>To explore the data in more detail using <a href="https://insights.threesixtygiving.org/">360Insights</a>, narrow your search to fewer than 1,000 results</span>
+        <span>To explore the data in more detail using <a href="https://insights.threesixtygiving.org/">360Insights</a>, narrow your search to 10,000 results or fewer</span>
       {% endif %}
     </div>
     </header>
