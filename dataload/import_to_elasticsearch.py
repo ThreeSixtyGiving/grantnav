@@ -162,6 +162,9 @@ def maybe_create_index(index_name=ES_INDEX):
                     "name": {
                         "type": "text", "analyzer": "english_with_folding"
                     },
+                    "description": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
                     "streetAddress": {
                         "type": "text", "analyzer": "english_with_folding"
                     },
@@ -182,7 +185,24 @@ def maybe_create_index(index_name=ES_INDEX):
                 "properties": {
                     "title": {
                         "type": "text", "analyzer": "english_with_folding"
-                    }
+                    },
+                    "description": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                }
+            },
+            "fundingType": {
+                "properties": {
+                    "title": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                }
+            },
+            "classifications": {
+                "properties": {
+                    "title": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
                 }
             },
             "additional_data": {
