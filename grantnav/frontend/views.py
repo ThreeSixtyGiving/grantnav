@@ -1070,29 +1070,57 @@ def funder(request, funder_id):
     if result_format != "html":
         funder_id = re.match(r'(.*)\.\w*$', funder_id).group(1)
 
-    query = {"query": {"bool": {"filter":
-                [{"term": {"fundingOrganization.id": funder_id}}]}},
-            "aggs": {
-                "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
-                "filenames": {"terms": {"field": "filename", "size": 10}},
-                "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
-                "min_date": {"min": {"field": "awardDate"}},
-                "max_date": {"max": {"field": "awardDate"}},
-                "recipients": {"terms": {"field": "recipientOrganization.id_and_name", "size": 10},
-                               "aggs": {"recipient_stats": {"stats": {"field": "amountAwarded"}}}}
+    query = {
+        "query": {
+            "bool": {
+                "filter": [
+                    {"term": {"fundingOrganization.id": funder_id}}
+                ]
+            }
+        },
+        "aggs": {
+            "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
+            "filenames": {"terms": {"field": "filename", "size": 10}},
+            "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
+            "min_date": {"min": {"field": "awardDate"}},
+            "max_date": {"max": {"field": "awardDate"}},
+            "recipients": {"terms": {"field": "recipientOrganization.id_and_name", "size": 10},
+                        "aggs": {"recipient_stats": {"stats": {"field": "amountAwarded"}}}},
+            "amount_awarded_fixed": {"range": {"field": "amountAwarded", "ranges": FIXED_AMOUNT_RANGES}},         # "script": "Math.log10(_value)","interval": 1}}
+            "recipient_regions": {
+                "terms": {
+                    "field": "additional_data.recipientRegionName",
+                }
+            }
         }
     }
+
+    query_locations = {
+        # "_source": False,
+        "query": {
+            "bool": {
+                "filter": [
+                    {"term": {"fundingOrganization.id": funder_id}},
+                    {"exists": {"field": "additional_data.location"}}
+                ]
+            }
+        },
+    }
+
     if result_format == "csv":
         return grants_csv_paged(query)
     elif result_format == "json":
         return grants_json_paged(query)
 
     results = get_results(query, results_size)
+    results_with_location = get_results(query_locations, results_size)
 
     if results['hits']['total']['value'] == 0:
         raise Http404
     context = {}
     context['results'] = results
+    sources = [hit['_source'] for hit in results_with_location['hits']['hits']]
+    context['locations'] = {source['title']: source['additional_data']['location'] for source in sources}
 
     funder = results['hits']['hits'][0]["_source"]["fundingOrganization"][0].copy()
     # funder name for this case to come from same place as Filters.

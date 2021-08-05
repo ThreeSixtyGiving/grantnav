@@ -1,5 +1,5 @@
 {% extends "base.html" %} 
-{% load frontend %} 
+{% load frontend graphs %}
 {% load static %} 
 {% block main_content %}
 <div class="layout layout--single-column">
@@ -30,6 +30,45 @@
             {% include 'currency_stats.html' %}
           </div>
         </div>
+      </div>
+    </div>
+
+    <span class="tab tab--active">
+        <a class="tab__inner" href="#">360Insights</a>
+    </span>
+    <span class="tab tab--inactive">
+        <a class="tab__inner" href="#">360Grantnav</a>
+    </span>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+    <h2>Grants by location</h2>
+    <div id="mapid" style="height: 400px"></div>
+
+    <script>
+    var map = L.map('mapid').setView([51.505, -0.09], 7);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+    var grants = {{ locations | to_json }}
+    for (const [title, location] of Object.entries(grants)) {
+    L.marker([location[1], location[0]]).addTo(map)
+        .bindPopup(title)
+        .openPopup();
+    }
+    </script>
+
+    <div class="spacer-4">
+      <div class="text-center">
+        <h2>Recipient locations by Region</h2>
+        {% recipient_regions_graph %}
       </div>
     </div>
 

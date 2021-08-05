@@ -99,6 +99,7 @@ def maybe_create_index(index_name=ES_INDEX):
             "amountAppliedFor": {"type": "double"},
             "amountAwarded": {"type": "double"},
             "amountDisbursed": {"type": "double"},
+            "awardType": {"type": "keyword"},
             "awardDate": {
                 "type": "date",
                 "ignore_malformed": True
@@ -138,6 +139,9 @@ def maybe_create_index(index_name=ES_INDEX):
                         "type": "text", "analyzer": "english_with_folding"
                     },
                     "id_and_name": {
+                        "type": "keyword"
+                    },
+                    "country": {
                         "type": "keyword"
                     }
                 }
@@ -202,6 +206,9 @@ def maybe_create_index(index_name=ES_INDEX):
                     "recipientLocation": {
                         "type": "text"
                     },
+                    "location": {
+                        "type": "geo_point"
+                    }
                 }
             }
 
@@ -328,6 +335,8 @@ def import_to_elasticsearch(files, clean):
                     update_doc_with_dateonly_fields(grant)
                     # grant.currency
                     update_doc_with_currency_upper_case(grant)
+                    # grant.additionalData.locationLookup.location
+                    update_doc_with_location(grant)
 
                     yield grant
 
@@ -336,6 +345,14 @@ def import_to_elasticsearch(files, clean):
         pprint(result)
 
         shutil.rmtree(tmp_dir)
+
+
+def update_doc_with_location(grant):
+    locationArray = grant.get('additional_data', {}).get('locationLookup', {})
+    latitude = locationArray[0].get('latitude') if locationArray else None
+    longitude = locationArray[0].get('longitude') if locationArray else None
+    if latitude and longitude:
+        grant['additional_data']['location'] = [longitude, latitude]
 
 
 def update_doc_with_currency_upper_case(grant):

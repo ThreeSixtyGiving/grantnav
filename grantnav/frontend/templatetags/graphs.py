@@ -104,3 +104,35 @@ def award_date_graph(context):
     return {
         'html': plot_div,
     }
+
+
+@register.inclusion_tag('components/generic.html', takes_context=True)
+def recipient_regions_graph(context):
+
+    # try:
+    buckets = context['results']['aggregations']['recipient_regions']['buckets']
+
+    labels = []
+    values = []
+    for bucket in buckets:
+        labels.append(bucket['key'])
+        values.append(bucket['doc_count'])
+
+    layout = go.Layout(
+        margin=go.layout.Margin(l=50, r=0, b=20, t=0),
+        paper_bgcolor=PAPER_COLOUR,
+    )
+
+    fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.3)], layout=layout)
+
+    fig.update_layout(height=400, width=800, plot_bgcolor=PAPER_COLOUR, hoverlabel=TOOLTIP_STYLE)
+
+    plot_div = fig.to_html(full_html=False, include_plotlyjs=settings.PLOTLY_JS_CDN, config={'displayModeBar': False})
+
+    # except Exception as e:
+    #     print(e)
+    #     plot_div = ''
+
+    return {
+        'html': plot_div,
+    }

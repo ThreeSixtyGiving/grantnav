@@ -1,6 +1,7 @@
 import datetime
 import json
 import math
+from django.utils.safestring import mark_safe
 
 import dateutil.parser as date_parser
 import jsonref
@@ -12,6 +13,11 @@ from grantnav import provenance
 from grantnav import utils
 
 register = template.Library()
+
+
+@register.filter
+def to_json(value):
+    return mark_safe(json.dumps(value))
 
 
 @register.filter(name='get')
