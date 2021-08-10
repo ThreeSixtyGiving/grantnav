@@ -282,8 +282,6 @@ def import_to_elasticsearch(files, clean):
         funding_org_name = json.load(fd)
     id_name_org_mappings["fundingOrganization"].update(funding_org_name)
 
-    get_mapping_from_index(es)
-
     for file_name in files:
         tmp_dir = tempfile.mkdtemp()
         if file_name.startswith('http'):
@@ -342,22 +340,6 @@ def update_doc_with_currency_upper_case(grant):
     currency = grant.get('currency')
     if currency:
         grant['currency'] = currency.upper()
-
-
-def get_mapping_from_index(es):
-    MAX_INT = 2147483647
-    QUERY = {"query": {"match_all": {}},
-             "aggs": {
-                 "fundingOrganization": {"terms": {"field": "fundingOrganization.id_and_name", "size": MAX_INT}},
-                 "recipientOrganization": {"terms": {"field": "recipientOrganization.id_and_name", "size": MAX_INT}}}}
-    results = es.search(body=QUERY, index=ES_INDEX)
-    for bucket in results["aggregations"]["fundingOrganization"]["buckets"]:
-        id_name = json.loads(bucket["key"])
-        id_name_org_mappings["fundingOrganization"][id_name[0]] = id_name[1]
-
-    for bucket in results["aggregations"]["recipientOrganization"]["buckets"]:
-        id_name = json.loads(bucket["key"])
-        id_name_org_mappings["recipientOrganization"][id_name[0]] = id_name[1]
 
 
 def update_doc_with_title_and_description(grant):
