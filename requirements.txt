@@ -14,16 +14,16 @@ dealer==2.1.0
     # via -r requirements.in
 decorator==5.0.9
     # via retry
+django==2.2.24
+    # via
+    #   -r requirements.in
+    #   django-bootstrap3
 django-bootstrap3==15.0.0
     # via -r requirements.in
 django-environ==0.4.5
     # via -r requirements.in
 django-super-favicon==0.6.1
     # via -r requirements.in
-django==2.2.24
-    # via
-    #   -r requirements.in
-    #   django-bootstrap3
 elasticsearch==7.0.5
     # via -r requirements.in
 et-xmlfile==1.1.0
@@ -72,7 +72,7 @@ six==1.16.0
     #   plotly
     #   python-dateutil
     #   retrying
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via django
 strict-rfc3339==0.7
     # via -r requirements.in
