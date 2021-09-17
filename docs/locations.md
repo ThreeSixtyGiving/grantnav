@@ -9,7 +9,7 @@ Understanding where a grant is located is one of the most common tasks that Gran
 
 The [360Giving Data Standard](https://standard.threesixtygiving.org/en/latest/reference/) doesn't require that grants contain location data. This is because this isn't data that all grantmakers keep, and it's not always relevant - for example, if a grant relates to policy or research. 
 
-If a grant doesn't have any location information, then it won't show up in searches using the **Locations** search mode, or when using the location-based filters on the search results page. 
+If a grant doesn't have any location information, then it won't show up in searches using the **Locations** search mode, or when using the location-based filters on the search results page. Only UK locations can be searched and filtered using the location functions. To search for locations outside of the UK use 'All grant fields' search option.
 
 Often, grants will contain limited geographical information (such as just a postcode, or a region name), and so GrantNav adds extra detail - such as the name of the ward, district and region that the postcode given is in. Where possible, GrantNav also adds GeoGSS codes from the [ONS Register of Geographic Codes](https://geoportal.statistics.gov.uk/). 
 
