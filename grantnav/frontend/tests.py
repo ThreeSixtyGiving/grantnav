@@ -523,3 +523,9 @@ def test_get_pagination_ten_pages_on_page_10():
     assert "number" == page['type']
     assert "10" == page['label']
     assert page['active']
+
+
+def test_pre_2020_sprint_url_compatibility(client):
+    response = client.get('/search?json_query={"query"%3A+{"bool"%3A+{"must"%3A+{"query_string"%3A+{"query"%3A+"test"%2C+"default_field"%3A+"*"}}%2C+"filter"%3A+[{"bool"%3A+{"should"%3A+[]}}%2C+{"bool"%3A+{"should"%3A+[]}}%2C+{"bool"%3A+{"should"%3A+[]%2C+"must"%3A+{}%2C+"minimum_should_match"%3A+1}}%2C+{"bool"%3A+{"should"%3A+{"range"%3A+{"amountAwarded"%3A+{}}}%2C+"must"%3A+{}%2C+"minimum_should_match"%3A+1}}%2C+{"bool"%3A+{"should"%3A+[]}}%2C+{"bool"%3A+{"should"%3A+[]}}%2C+{"bool"%3A+{"should"%3A+[]}}%2C+{"bool"%3A+{"should"%3A+[]}}]}}%2C+"extra_context"%3A+{"awardYear_facet_size"%3A+3%2C+"amountAwardedFixed_facet_size"%3A+3}%2C+"sort"%3A+{"_score"%3A+{"order"%3A+"desc"}}%2C+"aggs"%3A+{"fundingOrganization"%3A+{"terms"%3A+{"field"%3A+"fundingOrganization.id_and_name"%2C+"size"%3A+3}}%2C+"recipientOrganization"%3A+{"terms"%3A+{"field"%3A+"recipientOrganization.id_and_name"%2C+"size"%3A+3}}%2C+"recipientRegionName"%3A+{"terms"%3A+{"field"%3A+"recipientRegionName"%2C+"size"%3A+3}}%2C+"recipientDistrictName"%3A+{"terms"%3A+{"field"%3A+"recipientDistrictName"%2C+"size"%3A+3}}%2C+"currency"%3A+{"terms"%3A+{"field"%3A+"currency"%2C+"size"%3A+3}}}}')
+    assert response.status_code == 200
+    assert response.context['text_query'] == 'test'
