@@ -371,15 +371,30 @@ def update_doc_with_title_and_description(grant):
     grant['title_and_description'] = title + ' ' + description
 
 
+def get_canonical_name(grant, org_key):
+    additional_data = grant.get('additional_data')
+    if additional_data:
+        canonical_org = additional_data.get('{}Canonical'.format(org_key))
+        if canonical_org:
+            return canonical_org.get('name')
+
+    return None
+
+
 def update_doc_with_org_mappings(grant, org_key, file_name):
     mapping = id_name_org_mappings[org_key]
     orgs = grant.get(org_key, [])
     for org in orgs:
-        org_id, name = org.get('id'), org.get('name')
+        org_id, org_name = org.get('id'), org.get('name')
+        name = get_canonical_name(grant, org_key)
+
         if not name:
+            name = org_name
+        if not org_name:
             name = org_id
         if not org_id:
             return
+
         if '/' in org_id:
             bad_org_ids.append([file_name, org_key, org_id])
 
@@ -387,6 +402,8 @@ def update_doc_with_org_mappings(grant, org_key, file_name):
         if found_name:
             if found_name != name:
                 name_duplicates.append([file_name, org_key, org_id, found_name, name])
+            if found_name != org_name and name != org_name:
+                name_duplicates.append([file_name, org_key, org_id, found_name, org_name])
         else:
             mapping[org_id] = name
             found_name = name
