@@ -15,6 +15,9 @@
       {% if results.aggregations.awardYear.buckets %}
         {% include 'components/filters/lists/filter-list-year.html' %}
       {% endif %}
+      {% if results.aggregations.grantProgramme.buckets %}
+        {% include 'components/filters/lists/filter-list-programme-title.html' %}
+      {% endif %}
       {% if results.aggregations.recipientRegionName.buckets or results.aggregations.recipientDistrictName.buckets %}
         {% include 'components/filters/groups/geography-filters.html' %}
       {% endif %}

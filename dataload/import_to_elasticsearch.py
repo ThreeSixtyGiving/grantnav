@@ -183,6 +183,11 @@ def maybe_create_index(index_name=ES_INDEX):
             },
             "grantProgramme": {
                 "properties": {
+                    # Include title as keyword and text, so that both facets
+                    # and free text search work
+                    "title_keyword": {
+                        "type": "keyword"
+                    },
                     "title": {
                         "type": "text", "analyzer": "english_with_folding"
                     },
@@ -341,6 +346,8 @@ def import_to_elasticsearch(files, clean):
                     update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
                     # grant.title_and_description
                     update_doc_with_title_and_description(grant)
+                    # grant.grantProgramme.title_keyword
+                    update_doc_with_grantprogramme_title_keyword(grant)
                     # grant.actualDates.N.[start,end]DateDateOnly
                     # grant.plannedDates.N.[start,end]DateDateOnly
                     update_doc_with_dateonly_fields(grant)
@@ -379,6 +386,13 @@ def get_canonical_name(grant, org_key):
             return canonical_org.get('name')
 
     return None
+
+
+def update_doc_with_grantprogramme_title_keyword(grant):
+    if 'grantProgramme' in grant and isinstance(grant['grantProgramme'], list):
+        for grant_programme in grant['grantProgramme']:
+            if 'title' in grant_programme:
+                grant_programme['title_keyword'] = grant_programme['title']
 
 
 def update_doc_with_org_mappings(grant, org_key, file_name):

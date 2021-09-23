@@ -32,6 +32,7 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # currency
     {"bool": {"should": []}},   # additional_data.TSGFundingOrgType
     {"bool": {"should": {"range": {"awardDate": {}}}, "must": {}, "minimum_should_match": 1}},   # Date range
+    {"bool": {"should": []}},  # Programme Title
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
@@ -39,6 +40,7 @@ TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_in
 TERM_FACETS = [
     TermFacet("fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True, 1),  # facet size 1 so template knows if there are results.
     TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True, 1),
+    TermFacet("grantProgramme.title_keyword", "grantProgramme", 10, "Programme Titles", False, 1),
     TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False, 5000),
     TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False, 5000),
     TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False, 5000),
@@ -774,10 +776,12 @@ def search(request):
             json_query_param = json_query_param.replace('"recipientDistrictName"', '"additional_data.recipientDistrictName"')
             json_query = json.loads(json_query_param)
             filter_ = json_query['query']['bool']['filter']
-            # There were originally 8 filters ES now expects all 9 so append
-            # the missing one
+            # There were originally 8 filters ES now expects all 11 so append
+            # the missing ones
             if len(filter_) == 8:
                 filter_.append({"bool": {"should": []}})  # additional_data.TSGFundingOrgType
+                filter_.append({"bool": {"should": {"range": {"awardDate": {}}}, "must": {}, "minimum_should_match": 1}})   # Date range
+                filter_.append({"bool": {"should": []}})  # Programme Title
             json_query['aggs'] = {}
             for term_facet in TERM_FACETS:
                 json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
@@ -943,16 +947,17 @@ def search(request):
         return render(request, "search.html", context=context)
 
 
-def filter_search_organization(request):
+def filter_search_ajax(request):
     ''' Ajax request returning the format that select2 libary wants '''
 
-    org_type = request.GET.get('org_type', 'fundingOrganization')
+    parent_field = request.GET.get('parent_field', 'fundingOrganization')
+    child_field = request.GET.get('child_field', 'id_and_name')
 
     json_query = create_json_query_from_parameters(request)
 
     # Only need single aggregate to run for this query
     json_query['aggs'] = {}
-    json_query['aggs'][org_type] = {"terms": {"field": f'{org_type}.id_and_name', "size": 100}}
+    json_query['aggs'][parent_field] = {"terms": {"field": f'{parent_field}.{child_field}', "size": 100}}
 
     new_json_query = copy.deepcopy(json_query)
 
@@ -970,7 +975,7 @@ def filter_search_organization(request):
 
         new_must.append(
             {"query_string":
-                {"query": and_terms, "default_field": f"{org_type}.id_and_name", "analyze_wildcard": True}}
+                {"query": and_terms, "default_field": f"{parent_field}.{child_field}", "analyze_wildcard": True}}
         )
 
     new_json_query["query"]["bool"]["must"] = new_must
@@ -982,23 +987,30 @@ def filter_search_organization(request):
     context['selected_facets'] = collections.defaultdict(list)
     context['results'] = results
 
-    if org_type == 'fundingOrganization':
+    if parent_field == 'fundingOrganization':
         bool_index, display_name = 0, 'Funders'
-    elif org_type == 'recipientOrganization':
+    elif parent_field == 'recipientOrganization':
         bool_index, display_name = 1, 'Recipients'
+    elif parent_field == 'grantProgramme':
+        bool_index, display_name = 10, 'Programme Titles'
 
-    get_terms_facets(request, context, new_json_query, f'{org_type}.id_and_name', org_type, bool_index, display_name, is_json=True, path='/search')
+    get_terms_facets(request, context, new_json_query, f'{parent_field}.{child_field}', parent_field, bool_index, display_name, is_json=True, path='/search')
 
     context['selected_facets'] = dict(context['selected_facets'])
 
     output = []
 
-    for bucket in results['aggregations'][org_type]['buckets']:
-        name, id = json.loads(bucket['key'])
+    for bucket in results['aggregations'][parent_field]['buckets']:
+        if child_field == 'id_and_name':
+            name, id = json.loads(bucket['key'])
+            text = name
+        else:
+            text = bucket['key']
+            id = text
 
         output.append({
             "id": id,
-            "text": name,
+            "text": text,
             "count": bucket['doc_count'],
             "url": bucket['url'],
             "selected": bucket.get("selected", False)
@@ -1014,6 +1026,7 @@ def get_radio_items(context, default_field):
     context['searchRadio'].append({"value": "*", "name": "All grant fields", "checked": True if default_field == "*" else False})
     context['searchRadio'].append({"value": "additional_data.recipientLocation", "name": "Locations", "checked": True if default_field == "additional_data.recipientLocation" else False})
     context['searchRadio'].append({"value": "recipientOrganization.name", "name": "Recipients", "checked": True if default_field == "recipientOrganization.name" else False})
+    context['searchRadio'].append({"value": "grantProgramme.title_keyword", "name": "Programme Titles", "checked": True if default_field == "grantProgramme.title_keyword" else False})
     context['searchRadio'].append({"value": "title_and_description", "name": "Titles & Descriptions", "checked": True if default_field == "title_and_description" else False})
     context['default_field_name'] = [radioItem['name'] for radioItem in context['searchRadio'] if radioItem['checked'] is True][0]
 
