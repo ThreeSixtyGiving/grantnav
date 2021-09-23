@@ -160,16 +160,17 @@ function formatSelection (item) {
   return $selection;
 };
 
-// Runs the ajax call for select2 adding org_type and filter query to the existing url params
-function get_org_filter_ajax(org_type) { 
+// Runs the ajax call for select2 adding parent_field and filter query to the existing url params
+function get_filter_search_ajax(parent_field, child_field) {
   return {
-    url: '/filter_search_organization',
+    url: '/filter_search_ajax',
     delay: 100,
     traditional: true, // this makes sure that multiparams are repeated when the value is a list.
     data: function (params) {
       // true here just returns an object. For multiparams this will give you a list as the values. 
       var query_obj = URI(window.location.href).search(true);
-      query_obj["org_type"] = org_type;
+      query_obj["parent_field"] = parent_field;
+      query_obj["child_field"] = child_field;
       query_obj["filter_search"] = params.term;
       return query_obj;
 
@@ -218,18 +219,26 @@ $(function() {
            templateSelection: formatSelection, 
            dropdownCssClass: "filter-list filter-list--with-checkboxes",
            placeholder: "Search for funding organizations",
-           ajax: get_org_filter_ajax('fundingOrganization')
+           ajax: get_filter_search_ajax('fundingOrganization', 'id_and_name')
            }
 
       recipent_options = $.extend({}, funder_options)
 
       recipent_options = $.extend(recipent_options, {
           placeholder: "Search for recipient organizations",
-          ajax: get_org_filter_ajax('recipientOrganization')
+          ajax: get_filter_search_ajax('recipientOrganization', 'id_and_name')
+      })
+
+      programme_options = $.extend({}, funder_options)
+
+      programme_options = $.extend(programme_options, {
+          placeholder: "Search for programme titles",
+          ajax: get_filter_search_ajax('grantProgramme', 'title_keyword')
       })
 
       $('.fundingOrganization-search-box').select2(funder_options)
       $('.recipientOrganization-search-box').select2(recipent_options)
+      $('.grantProgramme-search-box').select2(programme_options)
 
       $('.fundingOrganization-search-box').on('select2:select', function (e) {
           var data = e.params.data;
@@ -241,12 +250,21 @@ $(function() {
           redirect_on_selection('recipientOrganization', data)
       });
 
+      $('.grantProgramme-search-box').on('select2:select', function (e) {
+          var data = e.params.data;
+          redirect_on_selection('grantProgramme', data)
+      });
+
       $('#fundingOrganization-select input[type=radio]').on('change', function (e) {
           maybe_redirect_on_exclude('fundingOrganization')
       });
 
       $('#recipientOrganization-select input[type=radio]').on('change', function (e) {
           maybe_redirect_on_exclude('recipientOrganization')
+      });
+
+      $('#grantProgramme-select input[type=radio]').on('change', function (e) {
+          maybe_redirect_on_exclude('grantProgramme')
       });
 
   });

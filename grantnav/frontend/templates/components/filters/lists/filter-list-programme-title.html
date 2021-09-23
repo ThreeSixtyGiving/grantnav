@@ -1,0 +1,40 @@
+{% load get_facet_org_name get_facet_org_id get_amount from frontend %}
+<div class="filter-list filter-list--with-checkboxes margin-bottom:2">
+  <details class="filter-list__accordion" {% if results.aggregations.grantProgramme.clear_url %} open{% endif %}>
+    <a class="anchor" id="grantProgramme"></a>
+    <summary class="filter-list__label">
+      <div>Programme Title {% if results.aggregations.grantProgramme.clear_url %} <a href={{results.aggregations.grantProgramme.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-list__contents-wrapper facet-multiselect">
+      <form class="filter-list__form" id="grantProgramme-select" data-param="grantProgramme" action="#">
+        {% block filterRadios %}
+          <div class="filter-list__form--radios radio">
+            <div class="filter-list__form--radio-item">
+              <input class="screen-reader-only" type="radio" id="grantProgramme-include" data-target="#grantProgramme-select" name="grantProgramme-exclude" value="false" {% if not results.aggregations.grantProgramme.exclude %}checked{%endif%}>
+              <label for="grantProgramme-include">Include selected</label>
+            </div>
+            <div class="filter-list__form--radio-item">
+              <input class="screen-reader-only" type="radio" id="grantProgramme-exclude" data-target="#grantProgramme-select" name="grantProgramme-exclude" value="true" {% if results.aggregations.grantProgramme.exclude %}checked{%endif%}>
+              <label for="grantProgramme-exclude">Exclude Selected</label>
+            </div>
+          </div>
+        {% endblock filterRadios %}
+
+
+        <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
+          <select class="filter-search-box grantProgramme-search-box" multiple="multiple">
+            {% for key, selected in selected_facets.items %}
+              {% if key == 'Programme Titles' or key == 'Excluded Programme Titles' %}
+                {% for item in selected %}
+                   <option value="{{item.url}}" selected="selected">{{item.display_value}}</option>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+
+      </form>
+    </div>
+  </details>
+</div>
