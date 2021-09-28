@@ -4,8 +4,14 @@
 #
 #    pip-compile requirements.in
 #
+backports-datetime-fromisoformat==1.0.0
+    # via flattentool
+btrees==4.9.2
+    # via zodb
 certifi==2021.5.30
     # via requests
+cffi==1.14.6
+    # via persistent
 charset-normalizer==2.0.5
     # via requests
 contextlib2==21.6.0
@@ -14,6 +20,8 @@ dealer==2.1.0
     # via -r requirements.in
 decorator==5.1.0
     # via retry
+defusedxml==0.7.1
+    # via odfpy
 django==2.2.24
     # via
     #   -r requirements.in
@@ -28,12 +36,14 @@ elasticsearch==7.0.5
     # via -r requirements.in
 et-xmlfile==1.1.0
     # via openpyxl
-flattentool==0.9.0
+flattentool==0.17.1
     # via -r requirements.in
 idna==3.2
     # via requests
 ijson==2.5.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   flattentool
 importlib-metadata==2.1.1
     # via django-bootstrap3
 jsonref==0.2
@@ -42,8 +52,14 @@ lxml==4.6.3
     # via flattentool
 millify==0.1.1
     # via -r requirements.in
-openpyxl==3.0.8
+odfpy==1.4.1
     # via flattentool
+openpyxl==3.0.9
+    # via flattentool
+persistent==4.7.0
+    # via
+    #   btrees
+    #   zodb
 pillow==8.3.2
     # via django-super-favicon
 plotly==5.3.1
@@ -52,6 +68,8 @@ prometheus_client==0.7
     # via -r requirements.in
 py==1.10.0
     # via retry
+pycparser==2.20
+    # via cffi
 python-dateutil==2.8.2
     # via -r requirements.in
 pytz==2021.1
@@ -68,9 +86,9 @@ schema==0.7.4
     # via flattentool
 six==1.16.0
     # via
-    #   flattentool
     #   plotly
     #   python-dateutil
+    #   zodb
 sqlparse==0.4.2
     # via django
 strict-rfc3339==0.7
@@ -79,11 +97,35 @@ tenacity==8.0.1
     # via plotly
 titlecase==2.3
     # via -r requirements.in
+transaction==3.0.1
+    # via zodb
 urllib3==1.26.6
     # via
     #   elasticsearch
     #   requests
 xmltodict==0.12.0
     # via flattentool
+zc.lockfile==2.0
+    # via zodb
+zc.zlibstorage==1.2.0
+    # via flattentool
+zconfig==3.6.0
+    # via zodb
 zipp==3.5.0
     # via importlib-metadata
+zodb==5.6.0
+    # via
+    #   flattentool
+    #   zc.zlibstorage
+zodbpickle==2.1.0
+    # via zodb
+zope.interface==5.4.0
+    # via
+    #   btrees
+    #   persistent
+    #   transaction
+    #   zc.zlibstorage
+    #   zodb
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
