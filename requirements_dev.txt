@@ -6,9 +6,15 @@
 #
 attrs==21.2.0
     # via pytest
+backports-datetime-fromisoformat==1.0.0
+    # via flattentool
+btrees==4.9.2
+    # via zodb
 certifi==2021.5.30
     # via requests
-charset-normalizer==2.0.5
+cffi==1.14.6
+    # via persistent
+charset-normalizer==2.0.6
     # via requests
 chromedriver-autoinstaller==0.2.2
     # via -r requirements_dev.in
@@ -28,6 +34,8 @@ dealer==2.1.0
     # via -r requirements.in
 decorator==5.1.0
     # via retry
+defusedxml==0.7.1
+    # via odfpy
 django==2.2.24
     # via
     #   -r requirements.in
@@ -46,12 +54,14 @@ et-xmlfile==1.1.0
     # via openpyxl
 flake8==3.9.2
     # via -r requirements_dev.in
-flattentool==0.9.0
+flattentool==0.17.1
     # via -r requirements.in
 idna==3.2
     # via requests
 ijson==2.5.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   flattentool
 importlib-metadata==2.1.1
     # via
     #   click
@@ -72,15 +82,21 @@ mccabe==0.6.1
     # via flake8
 millify==0.1.1
     # via -r requirements.in
-openpyxl==3.0.8
+odfpy==1.4.1
+    # via flattentool
+openpyxl==3.0.9
     # via flattentool
 packaging==21.0
     # via pytest
 pep517==0.11.0
     # via pip-tools
+persistent==4.7.0
+    # via
+    #   btrees
+    #   zodb
 pillow==8.3.2
     # via django-super-favicon
-pip-tools==6.2.0
+pip-tools==6.3.0
     # via -r requirements_dev.in
 plotly==5.3.1
     # via -r requirements.in
@@ -94,6 +110,8 @@ py==1.10.0
     #   retry
 pycodestyle==2.7.0
     # via flake8
+pycparser==2.20
+    # via cffi
 pyflakes==2.3.1
     # via flake8
 pyparsing==2.4.7
@@ -129,10 +147,10 @@ selenium==3.141.0
     # via -r requirements_dev.in
 six==1.16.0
     # via
-    #   flattentool
     #   libsass
     #   plotly
     #   python-dateutil
+    #   zodb
 sqlparse==0.4.2
     # via django
 strict-rfc3339==0.7
@@ -147,7 +165,9 @@ toml==0.10.2
     #   pytest-cov
 tomli==1.2.1
     # via pep517
-urllib3==1.26.6
+transaction==3.0.1
+    # via zodb
+urllib3==1.26.7
     # via
     #   elasticsearch
     #   requests
@@ -158,10 +178,29 @@ wheel==0.37.0
     # via pip-tools
 xmltodict==0.12.0
     # via flattentool
+zc.lockfile==2.0
+    # via zodb
+zc.zlibstorage==1.2.0
+    # via flattentool
+zconfig==3.6.0
+    # via zodb
 zipp==3.5.0
     # via
     #   importlib-metadata
     #   pep517
+zodb==5.6.0
+    # via
+    #   flattentool
+    #   zc.zlibstorage
+zodbpickle==2.1.0
+    # via zodb
+zope.interface==5.4.0
+    # via
+    #   btrees
+    #   persistent
+    #   transaction
+    #   zc.zlibstorage
+    #   zodb
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
