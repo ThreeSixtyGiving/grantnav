@@ -11,6 +11,9 @@
       {% if results.aggregations.fundingOrganizationTSGType.buckets %}
         {% include 'components/filters/lists/filter-list-funding-org.html' %}
       {% endif %}
+      {% if results.aggregations.grantProgramme.buckets %}
+        {% include 'components/filters/lists/filter-list-programme-title.html' %}
+      {% endif %}
     </div>
   </details>
 </div>
