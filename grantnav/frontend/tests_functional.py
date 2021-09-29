@@ -221,6 +221,20 @@ def test_search_two_words_with_double_quotes(provenance_dataload, server_url, br
            not in browser.find_element_by_tag_name('body').text
 
 
+def test_search_two_words_with_hyphen(provenance_dataload, server_url, browser):
+    """
+    When a user's search query is 2 words with a hyphen,
+    we want to inform the user that with quotes will have a better search result.
+    """
+    browser.get(server_url)
+    search_box = browser.find_element_by_class_name("large-search")
+    search_box.send_keys('covid-19')
+    browser.find_element_by_class_name("large-search-button").click()
+
+    assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
+           in browser.find_element_by_tag_name('body').text
+
+
 def test_search_includes_and(provenance_dataload, server_url, browser):
     """
     When a user's search query includes 'and', we want to inform the user of what it means.
