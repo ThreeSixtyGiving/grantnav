@@ -987,14 +987,16 @@ def filter_search_ajax(request):
     context['selected_facets'] = collections.defaultdict(list)
     context['results'] = results
 
+    is_json = True
     if parent_field == 'fundingOrganization':
         bool_index, display_name = 0, 'Funders'
     elif parent_field == 'recipientOrganization':
         bool_index, display_name = 1, 'Recipients'
     elif parent_field == 'grantProgramme':
         bool_index, display_name = 10, 'Grant Programme Titles'
+        is_json = False
 
-    get_terms_facets(request, context, new_json_query, f'{parent_field}.{child_field}', parent_field, bool_index, display_name, is_json=True, path='/search')
+    get_terms_facets(request, context, new_json_query, f'{parent_field}.{child_field}', parent_field, bool_index, display_name, is_json=is_json, path='/search')
 
     context['selected_facets'] = dict(context['selected_facets'])
 
