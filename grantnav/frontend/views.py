@@ -987,14 +987,16 @@ def filter_search_ajax(request):
     context['selected_facets'] = collections.defaultdict(list)
     context['results'] = results
 
+    is_json = True
     if parent_field == 'fundingOrganization':
         bool_index, display_name = 0, 'Funders'
     elif parent_field == 'recipientOrganization':
         bool_index, display_name = 1, 'Recipients'
     elif parent_field == 'grantProgramme':
-        bool_index, display_name = 10, 'Programme Titles'
+        bool_index, display_name = 10, 'Grant Programme Titles'
+        is_json = False
 
-    get_terms_facets(request, context, new_json_query, f'{parent_field}.{child_field}', parent_field, bool_index, display_name, is_json=True, path='/search')
+    get_terms_facets(request, context, new_json_query, f'{parent_field}.{child_field}', parent_field, bool_index, display_name, is_json=is_json, path='/search')
 
     context['selected_facets'] = dict(context['selected_facets'])
 
@@ -1026,7 +1028,7 @@ def get_radio_items(context, default_field):
     context['searchRadio'].append({"value": "*", "name": "All grant fields", "checked": True if default_field == "*" else False})
     context['searchRadio'].append({"value": "additional_data.recipientLocation", "name": "Locations", "checked": True if default_field == "additional_data.recipientLocation" else False})
     context['searchRadio'].append({"value": "recipientOrganization.name", "name": "Recipients", "checked": True if default_field == "recipientOrganization.name" else False})
-    context['searchRadio'].append({"value": "grantProgramme.title_keyword", "name": "Programme Titles", "checked": True if default_field == "grantProgramme.title_keyword" else False})
+    context['searchRadio'].append({"value": "grantProgramme.title_keyword", "name": "Grant Programme Titles", "checked": True if default_field == "grantProgramme.title_keyword" else False})
     context['searchRadio'].append({"value": "title_and_description", "name": "Titles & Descriptions", "checked": True if default_field == "title_and_description" else False})
     context['default_field_name'] = [radioItem['name'] for radioItem in context['searchRadio'] if radioItem['checked'] is True][0]
 
