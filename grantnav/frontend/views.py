@@ -557,7 +557,8 @@ def add_advanced_search_information_in_context(context):
                 'in (e.g. "children or adults"), put quotes around it.'
         elif ' ' in context.get('text_query') \
                 and not (text_query.startswith("'") and text_query.endswith("'")) \
-                and not (text_query.startswith('"') and text_query.endswith('"')):
+                and not (text_query.startswith('"') and text_query.endswith('"')) \
+                or '-' in context.get('text_query'):
             context["advanced_search_info"] = 'If you\'re looking for a specific phrase, put quotes around it to ' \
                 'refine your search. e.g. "youth clubs".'
     return context
