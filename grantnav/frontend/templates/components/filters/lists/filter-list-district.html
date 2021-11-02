@@ -1,26 +1,38 @@
-{% load get_amount from frontend %}
-<div class="filter-list">
+<div class="filter-list filter-list--with-checkboxes margin-bottom:2">
   <details class="filter-list__accordion" {% if results.aggregations.recipientDistrictName.clear_url %} open{% endif %}>
+    <a class="anchor" id="recipientDistrictName"></a>
     <summary class="filter-list__label">
       <div>District {% if results.aggregations.recipientDistrictName.clear_url %} <a href={{results.aggregations.recipientDistrictName.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
-    <div class="filter-list__contents-wrapper">
-      {% block filterOption %}
-      {% endblock filterOption %}
-      <ul class="filter-list__listing">
-          {% for bucket in results.aggregations.recipientDistrictName.buckets %}
-          <li>
-            <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
-              {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small>
+    <div class="filter-list__contents-wrapper facet-multiselect">
+      <form class="filter-list__form" id="recipientDistrictName-select" data-param="recipientDistrictName" action="#">
+        {% block filterRadios %}
+          <div class="filter-list__form--radios radio">
+            <div class="filter-list__form--radio-item">
+              <input class="screen-reader-only" type="radio" id="recipientDistrictName-include" data-target="#recipientDistrictName-select" name="recipientDistrictName-exclude" value="false" {% if not results.aggregations.recipientDistrictName.exclude %}checked{%endif%}>
+              <label for="recipientDistrictName-include">Include selected</label>
+            </div>
+            <div class="filter-list__form--radio-item">
+              <input class="screen-reader-only" type="radio" id="recipientDistrictName-exclude" data-target="#recipientDistrictName-select" name="recipientDistrictName-exclude" value="true" {% if results.aggregations.recipientDistrictName.exclude %}checked{%endif%}>
+              <label for="recipientDistrictName-exclude">Exclude selected</label>
+            </div>
+          </div>
+        {% endblock filterRadios %}
 
-              {% if bucket.selected %}
-                <span class="screen-reader-only">(active filter)</span>
-              {% endif%}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
+        <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
+          <select class="filter-search-box recipientDistrictName-search-box" multiple="multiple">
+            {% for key, selected in selected_facets.items %}
+              {% if key == 'Districts' or key == 'Excluded Districts' %}
+                {% for item in selected %}
+                   <option value="{{item.url}}" selected="selected">{{item.display_value}}</option>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+
+      </form>
     </div>
   </details>
 </div>

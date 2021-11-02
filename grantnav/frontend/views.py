@@ -988,6 +988,7 @@ def filter_search_ajax(request):
     context['selected_facets'] = collections.defaultdict(list)
     context['results'] = results
 
+    # bool_index is the index # of the facet in BASIC_FILTER
     is_json = True
     if parent_field == 'fundingOrganization':
         bool_index, display_name = 0, 'Funders'
@@ -995,6 +996,9 @@ def filter_search_ajax(request):
         bool_index, display_name = 1, 'Recipients'
     elif parent_field == 'grantProgramme':
         bool_index, display_name = 10, 'Grant Programme Titles'
+        is_json = False
+    elif parent_field == 'additional_data':
+        bool_index, display_name = 6, 'District'
         is_json = False
 
     get_terms_facets(request, context, new_json_query, f'{parent_field}.{child_field}', parent_field, bool_index, display_name, is_json=is_json, path='/search')
