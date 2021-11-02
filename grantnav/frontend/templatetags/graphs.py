@@ -28,7 +28,6 @@ def amount_awarded_graph(context):
         x_labels = []
         y = []
         for bucket in amount_awarded_buckets:
-            print(bucket)
             x.append('{}{}'.format(currency_symbol(context['currency']), millify(bucket['from'])))
             y.append(bucket['doc_count'])
             x_labels.append(' - {}{}'.format(currency_symbol(context['currency']), millify(bucket['to']))) if 'to' in bucket else x_labels.append('+')
@@ -39,7 +38,7 @@ def amount_awarded_graph(context):
         )
 
         fig = go.Figure(data=go.Bar(x=x, y=y, text=x_labels, hovertemplate='Amount awarded: %{x}%{text}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
-        
+
         fig.update_xaxes(type="category", tickmode="array", tickvals=[1, 3, 5, 7], fixedrange=True, showgrid=False, zeroline=False)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
@@ -87,7 +86,7 @@ def award_date_graph(context):
         )
 
         fig = go.Figure(data=go.Bar(x=x, y=y, text=x_labels, hovertemplate='Date awarded: %{text}' + '<br>Total grants: %{y}<br><extra></extra>',), layout=layout)
-        
+
         fig.update_xaxes(type="category", tickmode="array", fixedrange=True, showgrid=False, zeroline=False, tickangle=45)
         fig.update_yaxes(fixedrange=True, showgrid=False, showticklabels=False, zeroline=False)
 
