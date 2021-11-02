@@ -47,7 +47,7 @@
 
               <div class="export-button">
                 {% include 'components/export-data-button--json.html' with data_function='search.json' query=query_string only %}
-              </div> 
+              </div>
             </div>
           </section>
 
@@ -84,7 +84,7 @@
       </div>
 
     {% elif search_error %}
-    
+
       <div class="spacer-4">
           <div id="not_valid">
             <h1>Search input is not valid</h1>
@@ -167,7 +167,7 @@ function get_filter_search_ajax(parent_field, child_field) {
     delay: 100,
     traditional: true, // this makes sure that multiparams are repeated when the value is a list.
     data: function (params) {
-      // true here just returns an object. For multiparams this will give you a list as the values. 
+      // true here just returns an object. For multiparams this will give you a list as the values.
       var query_obj = URI(window.location.href).search(true);
       query_obj["parent_field"] = parent_field;
       query_obj["child_field"] = child_field;
