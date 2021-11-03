@@ -7,6 +7,8 @@ import requests
 from dataload.import_to_elasticsearch import import_to_elasticsearch
 from grantnav.frontend.views import get_pagination, BASIC_QUERY
 from django.test.client import RequestFactory
+from django.urls import reverse_lazy
+
 
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/44ea7fdad8f32e9fab1d870e2f25fc31c5cdf2fd/'
 
@@ -529,3 +531,21 @@ def test_pre_2020_sprint_url_compatibility(client):
     response = client.get('/search?json_query={"query"%3A+{"bool"%3A+{"must"%3A+{"query_string"%3A+{"query"%3A+"test"%2C+"default_field"%3A+"*"}}%2C+"filter"%3A+[{"bool"%3A+{"should"%3A+[]}}%2C+{"bool"%3A+{"should"%3A+[]}}%2C+{"bool"%3A+{"should"%3A+[]%2C+"must"%3A+{}%2C+"minimum_should_match"%3A+1}}%2C+{"bool"%3A+{"should"%3A+{"range"%3A+{"amountAwarded"%3A+{}}}%2C+"must"%3A+{}%2C+"minimum_should_match"%3A+1}}%2C+{"bool"%3A+{"should"%3A+[]}}%2C+{"bool"%3A+{"should"%3A+[]}}%2C+{"bool"%3A+{"should"%3A+[]}}%2C+{"bool"%3A+{"should"%3A+[]}}]}}%2C+"extra_context"%3A+{"awardYear_facet_size"%3A+3%2C+"amountAwardedFixed_facet_size"%3A+3}%2C+"sort"%3A+{"_score"%3A+{"order"%3A+"desc"}}%2C+"aggs"%3A+{"fundingOrganization"%3A+{"terms"%3A+{"field"%3A+"fundingOrganization.id_and_name"%2C+"size"%3A+3}}%2C+"recipientOrganization"%3A+{"terms"%3A+{"field"%3A+"recipientOrganization.id_and_name"%2C+"size"%3A+3}}%2C+"recipientRegionName"%3A+{"terms"%3A+{"field"%3A+"recipientRegionName"%2C+"size"%3A+3}}%2C+"recipientDistrictName"%3A+{"terms"%3A+{"field"%3A+"recipientDistrictName"%2C+"size"%3A+3}}%2C+"currency"%3A+{"terms"%3A+{"field"%3A+"currency"%2C+"size"%3A+3}}}}')
     assert response.status_code == 200
     assert response.context['text_query'] == 'test'
+
+
+def test_recipientOrganization_filter_ajax(client):
+    uri = reverse_lazy('filter_search_ajax')
+    response = client.get(f"{uri}?parent_field=recipientOrganization&child_field=id_and_name&filter_search=a")
+    assert len(json.loads(response.content)["results"]) == 100
+
+
+def test_programmeTitle_filter_ajax(client):
+    uri = reverse_lazy('filter_search_ajax')
+    response = client.get(f"{uri}?parent_field=grantProgramme&child_field=title_keyword&filter_search=a")
+    assert len(json.loads(response.content)["results"]) == 23
+
+
+def test_district_filter_ajax(client):
+    uri = reverse_lazy('filter_search_ajax')
+    response = client.get(f"{uri}?parent_field=additional_data&child_field=recipientDistrictName&filter_search=a")
+    assert len(json.loads(response.content)["results"]) == 73
