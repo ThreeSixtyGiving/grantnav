@@ -1378,7 +1378,7 @@ def recipient(request, recipient_id):
         recipient_id = re.match(r'(.*)\.\w*$', recipient_id).group(1)
 
     query = {"query": {"bool": {"filter":
-                 [{"term": {"recipientOrganization.id": recipient_id}}]}},
+                 [{"term": {"recipientOrganization.id": urllib.parse.unquote(recipient_id)}}]}},
              "aggs": {
                  "funder_orgs": {"cardinality": {"field": "fundingOrganization.id"}},
                  "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
