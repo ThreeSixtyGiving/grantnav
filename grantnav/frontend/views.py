@@ -5,6 +5,7 @@ import datetime
 import json
 import math
 import re
+import urllib
 from itertools import chain
 from retry import retry
 
@@ -1091,7 +1092,7 @@ def funder(request, funder_id):
         funder_id = re.match(r'(.*)\.\w*$', funder_id).group(1)
 
     query = {"query": {"bool": {"filter":
-                [{"term": {"fundingOrganization.id": funder_id}}]}},
+                [{"term": {"fundingOrganization.id": urllib.parse.unquote(funder_id)}}]}},
             "aggs": {
                 "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
                 "filenames": {"terms": {"field": "filename", "size": 10}},
