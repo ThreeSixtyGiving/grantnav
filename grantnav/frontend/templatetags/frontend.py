@@ -64,7 +64,9 @@ SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
              "fundingOrganization: id_and_name", "recipientLocation",
              "awardDateDateOnly", "plannedDates: endDateDateOnly",
              "plannedDates: startDateDateOnly",
-             "additional_data_added", "title_and_description"
+             "additional_data_added", "title_and_description",
+             # https://github.com/ThreeSixtyGiving/grantnav/issues/795
+             "grantProgramme: title_keyword",
              ]
 
 
