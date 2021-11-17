@@ -3207,7 +3207,11 @@ a.base-card:hover:before {
           right: 0; } }
   .grant-search-result__right-side {
     padding-top: 12px;
-    padding-bottom: 6px; }
+    padding-bottom: 6px;
+    width: 100%; }
+    @media (min-width: 36em) {
+      .grant-search-result__right-side {
+        width: 30%; } }
   .grant-search-result__title {
     font-weight: 400;
     font-size: 24px;
