@@ -110,7 +110,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'grantnav.frontend.context_processors.piwik',
-                'grantnav.frontend.context_processors.navigation'
+                'grantnav.frontend.context_processors.navigation',
+                'grantnav.frontend.context_processors.main_css_cache_key',
             ],
         },
     },
