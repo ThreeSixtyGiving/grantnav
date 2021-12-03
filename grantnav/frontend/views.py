@@ -157,7 +157,7 @@ def get_data_from_path(path, data):
         except (KeyError, IndexError, TypeError):
             return ""
     if isinstance(current_pos, list):
-        return ", ".join(current_pos)
+        return ", ".join([str(i) for i in current_pos])
     else:
         return current_pos
 
