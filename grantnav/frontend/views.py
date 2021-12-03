@@ -156,7 +156,10 @@ def get_data_from_path(path, data):
             current_pos = current_pos[part]
         except (KeyError, IndexError, TypeError):
             return ""
-    return current_pos
+    if isinstance(current_pos, list):
+        return ", ".join(current_pos)
+    else:
+        return current_pos
 
 
 def grants_csv_generator(query):
