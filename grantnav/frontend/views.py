@@ -1037,7 +1037,7 @@ def get_radio_items(context, default_field):
     context['searchRadio'].append({"value": "*", "name": "All grant fields", "checked": True if default_field == "*" else False})
     context['searchRadio'].append({"value": "additional_data.recipientLocation", "name": "Locations", "checked": True if default_field == "additional_data.recipientLocation" else False})
     context['searchRadio'].append({"value": "recipientOrganization.name", "name": "Recipients", "checked": True if default_field == "recipientOrganization.name" else False})
-    context['searchRadio'].append({"value": "grantProgramme.title_keyword", "name": "Grant Programme Titles", "checked": True if default_field == "grantProgramme.title_keyword" else False})
+    context['searchRadio'].append({"value": "grantProgramme.title", "name": "Grant Programme Titles", "checked": True if default_field == "grantProgramme.title" else False})
     context['searchRadio'].append({"value": "title_and_description", "name": "Titles & Descriptions", "checked": True if default_field == "title_and_description" else False})
     context['default_field_name'] = [radioItem['name'] for radioItem in context['searchRadio'] if radioItem['checked'] is True][0]
 
