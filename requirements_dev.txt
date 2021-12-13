@@ -28,8 +28,6 @@ coverage==5.5
     #   pytest-cov
 coveralls==3.2.0
     # via -r requirements_dev.in
-dataclasses==0.8
-    # via werkzeug
 dealer==2.1.0
     # via -r requirements.in
 decorator==5.1.0
@@ -62,21 +60,13 @@ ijson==2.5.1
     # via
     #   -r requirements.in
     #   flattentool
-importlib-metadata==2.1.1
-    # via
-    #   click
-    #   django-bootstrap3
-    #   flake8
-    #   pep517
-    #   pluggy
-    #   pytest
 iniconfig==1.1.1
     # via pytest
 jsonref==0.2
     # via flattentool
 libsass==0.21.0
     # via -r requirements_dev.in
-lxml==4.6.3
+lxml==4.6.5
     # via flattentool
 mccabe==0.6.1
     # via flake8
@@ -184,10 +174,6 @@ zc.zlibstorage==1.2.0
     # via flattentool
 zconfig==3.6.0
     # via zodb
-zipp==3.5.0
-    # via
-    #   importlib-metadata
-    #   pep517
 zodb==5.6.0
     # via
     #   flattentool
