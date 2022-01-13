@@ -44,8 +44,6 @@ ijson==2.5.1
     # via
     #   -r requirements.in
     #   flattentool
-importlib-metadata==2.1.1
-    # via django-bootstrap3
 jsonref==0.2
     # via flattentool
 lxml==4.6.3
@@ -60,7 +58,7 @@ persistent==4.7.0
     # via
     #   btrees
     #   zodb
-pillow==8.3.2
+pillow==9.0.0
     # via django-super-favicon
 plotly==5.3.1
     # via -r requirements.in
@@ -111,8 +109,6 @@ zc.zlibstorage==1.2.0
     # via flattentool
 zconfig==3.6.0
     # via zodb
-zipp==3.5.0
-    # via importlib-metadata
 zodb==5.6.0
     # via
     #   flattentool
