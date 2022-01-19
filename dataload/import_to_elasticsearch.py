@@ -212,6 +212,9 @@ def maybe_create_index(index_name=ES_INDEX):
             },
             "additional_data": {
                 "properties": {
+                    "recipientDistrictGeoCode": {
+                        "type": "keyword"
+                    },
                     "recipientDistrictName": {
                         "type": "keyword"
                     },
@@ -227,6 +230,16 @@ def maybe_create_index(index_name=ES_INDEX):
                     "recipientLocation": {
                         "type": "text"
                     },
+                    "recipientOrganizationLocation": {
+                        "properties": {
+                            "rgn": {
+                                "type": "keyword"
+                            },
+                            "ctry": {
+                                "type": "keyword"
+                            }
+                        }
+                    }
                 }
             }
 
