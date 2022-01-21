@@ -80,7 +80,7 @@ GrantNav uses the JSON field names rather than the "human-friendly" form that yo
 
         Search the `recipientOrganization.postalCode` field for 'NW1' (where the publisher has provided this field): e.g. <code>[recipientOrganization.postalCode:NW1](https://grantnav.threesixtygiving.org/search?text_query=recipientOrganization.postalCode:NW1)</code>
 
-        Search the `Funding Organisation:Name` field for "London Councils" (where the publisher has provided this field): <code>[fundingOrganization.name:\"London Councils\"](https://grantnav.threesixtygiving.org/search?text_query=fundingOrganization.name:%22London Councils%22)</code>. Note that the quotes operate the same way as above - so the name has to match the phrase in order to be returned in these results. 
+        Search the `Funding Organisation:Name` field for "London Councils" (where the publisher has provided this field): <code>[fundingOrganization.name:\"London Councils\"](https://grantnav.threesixtygiving.org/search?text_query=fundingOrganization.name:%22London+Councils%22)</code>. Note that the quotes operate the same way as above - so the name has to match the phrase in order to be returned in these results.
 ```
 
 
@@ -109,13 +109,13 @@ As ever, searching for a field that's optional in the standard will exclude all 
 
     .. markdown::
 
-        Award date in FY17/18: <code>[awardDate:[2017-04-01 TO 2018-03-31]](https://grantnav.threesixtygiving.org/search?text_query=awardDate:[2017-04-01 TO 2018-03-31])</code>
+        Award date in FY17/18: <code>[awardDate:[2017-04-01 TO 2018-03-31]](https://grantnav.threesixtygiving.org/search?text_query=awardDate:[2017-04-01+TO+2018-03-31])</code>
 
-        Planned start date in 2016: <code>plannedDates.startDate:>2016-01-01 AND plannedDates.startDate:<2016-12-31](https://grantnav.threesixtygiving.org/search?text_query=plannedDates.startDate:>2016-01-01 AND plannedDates.startDate:<2016-12-31)</code>
+        Planned start date in 2016: <code>[plannedDates.startDate:>2016-01-01 AND plannedDates.startDate:<2016-12-31](https://grantnav.threesixtygiving.org/search?text_query=plannedDates.startDate:>2016-01-01+AND+plannedDates.startDate:<2016-12-31)</code>
 
-        Planned start date in 2015 <strong>and</strong> planned end date in 2017: <code>[plannedDates.startDate:[2015-01-01 TO 2015-12-31] AND plannedDates.endDate:[2017-01-01 TO 2017-12-31]](https://grantnav.threesixtygiving.org/search?text_query=plannedDates.startDate:[2015-01-01 TO 2015-12-31] AND plannedDates.endDate:[2017-01-01 TO 2017-12-31])</code>. Note that the quotes operate the same way as above - so the name has to match the phrase in order to be returned in these results. 
+        Planned start date in 2015 <strong>and</strong> planned end date in 2017: <code>[plannedDates.startDate:[2015-01-01 TO 2015-12-31] AND plannedDates.endDate:[2017-01-01 TO 2017-12-31]](https://grantnav.threesixtygiving.org/search?text_query=plannedDates.startDate:[2015-01-01+TO+2015-12-31]+AND+plannedDates.endDate:[2017-01-01+TO+2017-12-31])</code>. Note that the quotes operate the same way as above - so the name has to match the phrase in order to be returned in these results.
 
-        Amount Awarded between £0 and £150: <code>[amountAwarded:[0 TO 150]](https://grantnav.threesixtygiving.org/search?text_query=amountAwarded:[0 TO 150])</code>
+        Amount Awarded between £0 and £150: <code>[amountAwarded:[0 TO 150]](https://grantnav.threesixtygiving.org/search?text_query=amountAwarded:[0+TO+150])</code>
 
         Amount Applied for £1000 or more: <code>[amountAppliedFor:>=1000](https://grantnav.threesixtygiving.org/search?text_query=amountAppliedFor:>=1000)</code>
      
@@ -175,7 +175,7 @@ However, be aware that the more specific the search, the more data is excluded d
 
     .. markdown::
 
-        Grants under £500 given in 2019 by funders whose name contains "Community Foundation" and whose description relates to disability: <code>awardDate:[2019-01-01 TO 2019-12-31] AND amountAwarded:<500 AND fundingOrganization.name:"Community Foundation" AND description:disability](https://grantnav.threesixtygiving.org/search?text_query=awardDate:[2019-01-01 TO 2019-12-31] AND amountAwarded:<500 AND fundingOrganization.name:"Community Foundation" AND description:disability)</code>
+        Grants under £500 given in 2019 by funders whose name contains "Community Foundation" and whose description relates to disability: <code>[awardDate:[2019-01-01 TO 2019-12-31] AND amountAwarded:<500 AND fundingOrganization.name:"Community Foundation" AND description:disability](https://grantnav.threesixtygiving.org/search?text_query=awardDate:[2019-01-01+TO+2019-12-31]+AND+amountAwarded:<500+AND+fundingOrganization.name:"Community+Foundation"+AND+description:disability)</code>
 
 ```
 
