@@ -28,8 +28,6 @@ coverage==5.5
     #   pytest-cov
 coveralls==3.2.0
     # via -r requirements_dev.in
-dataclasses==0.8
-    # via werkzeug
 dealer==2.1.0
     # via -r requirements.in
 decorator==5.1.0
