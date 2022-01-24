@@ -3,15 +3,12 @@ import copy
 import csv
 import datetime
 import json
-import math
 import re
 import urllib
 from itertools import chain
-from retry import retry
 
 import dateutil.parser as date_parser
 import elasticsearch.exceptions
-from django.conf import settings
 from django.http import Http404, JsonResponse
 from django.http import HttpResponse, StreamingHttpResponse
 from django.shortcuts import render, redirect
@@ -21,6 +18,9 @@ from elasticsearch.helpers import scan
 from grantnav import provenance, csv_layout, utils
 from grantnav.search import get_es
 from grantnav.index import get_index
+from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, get_data_from_path
+import grantnav.frontend.search_helpers as helpers
+
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # Funding Orgs
@@ -51,7 +51,7 @@ TERM_FACETS = [
 SIZE = 20
 
 BASIC_QUERY = {"query": {"bool": {"must":
-                                  {"query_string": {"query": "", "default_field": "*"}}, 
+                                  {"query_string": {"query": "", "default_field": "*"}},
                                   "filter": BASIC_FILTER}},
                "sort": {"_score": {"order": "desc"}},
                "aggs": {}}
@@ -91,88 +91,6 @@ SEARCH_SUMMARY_AGGREGATES = {
 }
 
 
-def clean_object(obj):
-    for key, value in list(obj.items()):
-        if isinstance(value, dict):
-            clean_object(value)
-        elif isinstance(value, list):
-            clean_array(value)
-        if isinstance(value, (dict, list)) and not value:
-            obj.pop(key, None)
-
-
-def clean_array(array):
-    new_array = []
-    for item in array:
-        if isinstance(item, dict):
-            clean_object(item)
-        elif isinstance(item, list):
-            clean_array(item)
-        if isinstance(item, (dict, list)) and item:
-            new_array.append(item)
-    array[:] = new_array
-    return array
-
-
-def clean_for_es(json_query):
-    clean_object(json_query)
-    return json_query
-
-
-@retry(tries=5, delay=0.5, backoff=2, max_delay=20)
-def get_results(json_query, size=10, from_=0, data_type='grant'):
-    es = get_es()
-    extra_context = json_query.pop('extra_context', None)
-
-    new_json_query = clean_for_es(copy.deepcopy(json_query))
-
-    if 'query' not in new_json_query:
-        new_json_query['query'] = {}
-
-    query = new_json_query['query']
-        
-    if 'bool' not in query:
-        query['bool'] = {'filter': []}
-
-    query['bool']['filter'].append({"term": {"dataType": {"value": data_type}}})
-
-    results = es.search(body=new_json_query, size=size, from_=from_,
-                        index=get_index(), track_total_hits=True)
-    if extra_context is not None:
-        json_query['extra_context'] = extra_context
-    return results
-
-
-def get_request_type_and_size(request):
-    results_size = SIZE
-
-    match = re.search(r'\.(\w+)$', request.path)
-    if match and match.group(1) in ["csv", "json", "ajax"]:
-        result_format = match.group(1)
-        results_size = settings.FLATTENED_DOWNLOAD_LIMIT
-    else:
-        result_format = "html"
-
-    return [result_format, results_size]
-
-
-def get_data_from_path(path, data):
-    current_pos = data
-    for part in path.split("."):
-        try:
-            part = int(part)
-        except ValueError:
-            pass
-        try:
-            current_pos = current_pos[part]
-        except (KeyError, IndexError, TypeError):
-            return ""
-    if isinstance(current_pos, list):
-        return ", ".join([str(i) for i in current_pos])
-    else:
-        return current_pos
-
-
 def grants_csv_generator(query):
     yield csv_layout.grant_csv_titles
     es = get_es()
@@ -183,7 +101,7 @@ def grants_csv_generator(query):
         }
         line = []
         for path in csv_layout.grant_csv_paths:
-            line.append(get_data_from_path(path, result_with_provenance))
+            line.append(helpers.get_data_from_path(path, result_with_provenance))
         yield line
 
 
@@ -212,7 +130,7 @@ def grants_csv_paged(query):
     query['query']['bool']['filter'].append({"term": {"dataType": {"value": "grant"}}})
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer)
-    response = StreamingHttpResponse(chain(['\ufeff'], (writer.writerow(row) for row in grants_csv_generator(clean_for_es(query)))), content_type='text/csv')
+    response = StreamingHttpResponse(chain(['\ufeff'], (writer.writerow(row) for row in grants_csv_generator(helpers.clean_for_es(query)))), content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
 
@@ -221,7 +139,7 @@ def grants_json_paged(query):
     query.pop('extra_context', None)
     query.pop('aggs', None)
     query['query']['bool']['filter'].append({"term": {"dataType": {"value": "grant"}}})
-    response = StreamingHttpResponse(grants_json_generator(clean_for_es(query)), content_type='application/json')
+    response = StreamingHttpResponse(grants_json_generator(helpers.clean_for_es(query)), content_type='application/json')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
 
@@ -245,41 +163,6 @@ def orgs_csv_paged(data, org_type):
     response = StreamingHttpResponse(chain(['\ufeff'], (writer.writerow(row) for row in org_csv_generator(data, org_type))), content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.csv"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
-
-
-def get_pagination(request, context, page):
-    total_pages = math.ceil(context['results']['hits']['total']['value'] / SIZE)
-    context['total_pages'] = total_pages
-    context['pages'] = []
-    if page != 1 and total_pages > 5:
-        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=1), "type": "first", "label": "First"})
-
-    if page != 1 and total_pages > 1:
-        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page - 1), "type": "prev", "label": "Previous"})
-
-    if total_pages > 1 and page > 3:
-        context['pages'].append({"type": "ellipsis"})
-
-    if total_pages > 1 and page > 2:
-        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page - 2), "type": "number", "label": str(page - 2)})
-    if total_pages > 1 and page > 1:
-        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page - 1), "type": "number", "label": str(page - 1)})
-
-    context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page), "type": "number", "label": str(page), "active": True})
-
-    if page <= total_pages - 1:
-        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page + 1), "type": "number", "label": str(page + 1)})
-    if page <= total_pages - 2:
-        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page + 2), "type": "number", "label": str(page + 2)})
-
-    if page <= total_pages - 3:
-        context['pages'].append({"type": "ellipsis"})
-
-    if page < total_pages:
-        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=page + 1), "type": "next", "label": "Next"})
-
-    if page < total_pages and total_pages > 5:
-        context['pages'].append({"url": request.path + '?' + create_parameters_from_json_query(context['query'], page=total_pages), "type": "last", "label": "Last"})
 
 
 def create_amount_aggregate(json_query):
@@ -466,77 +349,6 @@ def get_date_facets(request, context, json_query):
     main_results['aggregations']["awardYear"] = results['aggregations']["awardYear"]
 
 
-def get_terms_facets(request, context, json_query, field, aggregate, bool_index, display_name, is_json=False, path=None):
-
-    if not path:
-        path = request.path
-
-    json_query = copy.deepcopy(json_query)
-    try:
-        if "must_not" in json_query["query"]["bool"]["filter"][bool_index]["bool"]:
-            bool_condition = "must_not"
-        else:
-            bool_condition = "should"
-
-        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"].get(bool_condition, [])
-    except KeyError:
-        json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
-        current_filter = json_query["query"]["bool"]["filter"][bool_index]["bool"].get(bool_condition, [])
-
-    main_results = context["results"]
-    if current_filter:
-        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = []
-        results = get_results(json_query)
-    else:
-        results = context["results"]
-
-    if bool_condition == 'must_not':
-        display_name = 'Excluded ' + display_name
-
-    for filter in current_filter:
-        new_filter = [x for x in current_filter if x != filter]
-        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = new_filter
-        display_value = filter["term"][field]
-        if is_json:
-            display_value = json.loads(display_value)[0]
-        context["selected_facets"][display_name].append(
-            {"url": path + '?' + create_parameters_from_json_query(json_query),
-             "display_value": display_value}
-        )
-
-    for bucket in results['aggregations'][aggregate]['buckets']:
-        facet_value = bucket['key']
-        filter_values = [filter["term"][field] for filter in current_filter]
-        if facet_value in filter_values:
-            bucket["selected"] = True
-            filter_values.remove(facet_value)
-        else:
-            filter_values.append(facet_value)
-
-        new_filter = [{"term": {field: value}} for value in filter_values]
-        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = new_filter
-        bucket["url"] = path + '?' + create_parameters_from_json_query(json_query)
-    if current_filter:
-        json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = []
-        results['aggregations'][aggregate]['clear_url'] = path + '?' + create_parameters_from_json_query(json_query)
-        results['aggregations'][aggregate]["exclude"] = True if bool_condition == "must_not" else False
-
-    main_results['aggregations'][aggregate] = results['aggregations'][aggregate]
-
-
-def get_clear_all(request, context, json_query):
-    json_query = copy.deepcopy(json_query)
-    try:
-        current_filter = json_query["query"]["bool"]["filter"]
-    except KeyError:
-        json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
-        current_filter = json_query["query"]["bool"]["filter"]
-
-    if current_filter != BASIC_FILTER:
-        json_query["query"]["bool"]["filter"] = copy.deepcopy(BASIC_FILTER)
-        context["results"]["clear_all_facet_url"] = request.path + '?' + create_parameters_from_json_query(json_query)
-
-
 def totals_query():
     query = {"query": {"match_all": {}},
              "aggs": {
@@ -579,40 +391,6 @@ def add_advanced_search_information_in_context(context):
             context["advanced_search_info"] = 'If you\'re looking for a specific phrase, put quotes around it to ' \
                 'refine your search. e.g. "youth clubs".'
     return context
-
-
-def term_facet_from_parameters(request, json_query, field_name, param_name, bool_index, field, is_json=False):
-    new_filter = []
-
-    if is_json:
-        query_filter = []
-        for value in request.GET.getlist(param_name):
-            query_filter.append({"term": {param_name + '.id': value}})
-
-        if query_filter:
-            query = {
-                "query": {
-                    "bool": {"should": query_filter}
-                },
-                "aggs": {
-                    param_name: {"terms": {"field": field_name, "size": len(query_filter)}}
-                }
-            }
-
-            results = get_results(query, 1)
-
-            for bucket in results['aggregations'][param_name]['buckets']:
-                new_filter.append({"term": {field_name: bucket['key']}})
-
-    else:
-        for value in request.GET.getlist(param_name):
-            new_filter.append({"term": {field_name: value}})
-
-    if request.GET.get("exclude_" + param_name):
-        json_query["query"]["bool"]["filter"][bool_index]["bool"].pop("should", None)
-        json_query["query"]["bool"]["filter"][bool_index]["bool"]["must_not"] = new_filter
-    else:
-        json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"] = new_filter
 
 
 def amount_facet_from_parameters(request, json_query):
@@ -675,32 +453,13 @@ def create_json_query_from_parameters(request):
     json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"] = date_filter
 
     for term_facet in TERM_FACETS:
-        term_facet_from_parameters(request, json_query, term_facet.field_name, term_facet.param_name,
-                                   term_facet.filter_index, term_facet.display_name, term_facet.is_json)
+        helpers.term_facet_from_parameters(request, json_query, term_facet.field_name, term_facet.param_name,
+                                           term_facet.filter_index, term_facet.display_name, term_facet.is_json)
 
     amount_facet_from_parameters(request, json_query)
     date_facet_from_parameters(request, json_query)
 
     return json_query
-
-
-def term_parameters_from_json_query(parameters, json_query, field_name, param_name, bool_index, field, is_json=False):
-    values = []
-    if "must_not" in json_query["query"]["bool"]["filter"][bool_index]["bool"]:
-        filters = json_query["query"]["bool"]["filter"][bool_index]["bool"]["must_not"]
-        must_not = True
-    else:
-        filters = json_query["query"]["bool"]["filter"][bool_index]["bool"]["should"]
-        must_not = False
-
-    for filter in filters:
-        if is_json:
-            values.append(json.loads(filter['term'][field_name])[1])
-        else:
-            values.append(filter['term'][field_name])
-    parameters[param_name] = values
-    if must_not:
-        parameters["exclude_" + param_name] = "true"
 
 
 def amount_parameters_from_json_query(parameters, json_query):
@@ -753,8 +512,8 @@ def create_parameters_from_json_query(json_query, **extra_parameters):
             parameters['max_date'] = [utils.date_to_yearmonth(max_date, True)]
 
     for term_facet in TERM_FACETS:
-        term_parameters_from_json_query(parameters, json_query, term_facet.field_name, term_facet.param_name,
-                                        term_facet.filter_index, term_facet.display_name, term_facet.is_json)
+        helpers.term_parameters_from_json_query(parameters, json_query, term_facet.field_name, term_facet.param_name,
+                                                term_facet.filter_index, term_facet.display_name, term_facet.is_json)
 
     amount_parameters_from_json_query(parameters, json_query)
     date_parameters_from_json_query(parameters, json_query)
@@ -944,16 +703,16 @@ def search(request):
             return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
         context['selected_facets'] = collections.defaultdict(list)
-        get_clear_all(request, context, json_query)
+        helpers.get_clear_all(request, context, json_query, BASIC_FILTER, create_parameters_from_json_query)
 
         for term_facet in TERM_FACETS:
             get_terms_facets(request, context, json_query, term_facet.field_name, term_facet.param_name,
-                             term_facet.filter_index, term_facet.display_name, term_facet.is_json)
+                             term_facet.filter_index, term_facet.display_name, BASIC_FILTER, create_parameters_from_json_query, term_facet.is_json)
 
         get_amount_facet_fixed(request, context, json_query)
         get_date_facets(request, context, json_query)
 
-        get_pagination(request, context, page)
+        helpers.get_pagination(request, context, page, create_parameters_from_json_query)
 
         context['selected_facets'] = dict(context['selected_facets'])
 
@@ -1018,7 +777,8 @@ def filter_search_ajax(request):
         bool_index, display_name = 6, 'District'
         is_json = False
 
-    get_terms_facets(request, context, new_json_query, f'{parent_field}.{child_field}', parent_field, bool_index, display_name, is_json=is_json, path='/search')
+    get_terms_facets(request, context, new_json_query, f'{parent_field}.{child_field}', parent_field, bool_index, display_name,
+                     BASIC_FILTER, create_parameters_from_json_query, is_json=is_json, path='/search')
 
     context['selected_facets'] = dict(context['selected_facets'])
 
