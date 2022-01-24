@@ -51,7 +51,8 @@ TERM_FACETS = [
 SIZE = 20
 
 BASIC_QUERY = {"query": {"bool": {"must":
-                                  {"query_string": {"query": "", "default_field": "*"}}, "filter": BASIC_FILTER}},
+                                  {"query_string": {"query": "", "default_field": "*"}}, 
+                                  "filter": BASIC_FILTER}},
                "sort": {"_score": {"order": "desc"}},
                "aggs": {}}
 
@@ -119,11 +120,21 @@ def clean_for_es(json_query):
 
 
 @retry(tries=5, delay=0.5, backoff=2, max_delay=20)
-def get_results(json_query, size=10, from_=0):
+def get_results(json_query, size=10, from_=0, data_type='grant'):
     es = get_es()
     extra_context = json_query.pop('extra_context', None)
 
     new_json_query = clean_for_es(copy.deepcopy(json_query))
+
+    if 'query' not in new_json_query:
+        new_json_query['query'] = {}
+
+    query = new_json_query['query']
+        
+    if 'bool' not in query:
+        query['bool'] = {'filter': []}
+
+    query['bool']['filter'].append({"term": {"dataType": {"value": data_type}}})
 
     results = es.search(body=new_json_query, size=size, from_=from_,
                         index=get_index(), track_total_hits=True)
@@ -198,6 +209,7 @@ class Echo(object):
 def grants_csv_paged(query):
     query.pop('extra_context', None)
     query.pop('aggs', None)
+    query['query']['bool']['filter'].append({"term": {"dataType": {"value": "grant"}}})
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer)
     response = StreamingHttpResponse(chain(['\ufeff'], (writer.writerow(row) for row in grants_csv_generator(clean_for_es(query)))), content_type='text/csv')
@@ -208,6 +220,7 @@ def grants_csv_paged(query):
 def grants_json_paged(query):
     query.pop('extra_context', None)
     query.pop('aggs', None)
+    query['query']['bool']['filter'].append({"term": {"dataType": {"value": "grant"}}})
     response = StreamingHttpResponse(grants_json_generator(clean_for_es(query)), content_type='application/json')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
