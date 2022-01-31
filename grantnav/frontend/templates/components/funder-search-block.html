@@ -1,0 +1,22 @@
+<div class="search-block search-block--advanced search-block--funders">
+  <div class="wrapper">
+    <div class="search-block__description">{{ description }}</div>
+
+    <div class="search-block__label">
+      <label></label>
+      <label class="search-block__form-item-label" for="search-view">Enter a search term:</label>
+    </div>
+
+    <form role="search" action="{% url 'funders' %}">
+      <div class="search-block__form-group">
+          <input name="text_query" class="form-control large-search" placeholder="Search Funders" type="text" value="{{text_query}}">
+          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+      </div>
+      <br/>
+
+      <div class="search-block__form-action-group">
+        <input class="large-search-button" name="submit" type="submit" value="Search">
+      </div>
+    </form>
+  </div>
+</div>
