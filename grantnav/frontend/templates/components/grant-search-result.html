@@ -31,12 +31,12 @@
 
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Funder:</span>
-      <span><a href="{% url 'funder' result.source.fundingOrganization.0.id %}">{{ result.source.fundingOrganization.0 | get_name }}</a></span>
+      <span><a href="{% url 'org' result.source.fundingOrganization.0.id %}">{{ result.source.fundingOrganization.0 | get_name }}</a></span>
     </div>
 
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Recipient:</span>
-      <span><a href="{% url 'recipient' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:40 }}</a></span>
+      <span><a href="{% url 'org' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:40 }}</a></span>
     </div>
     {% if result.source.additional_data.recipientRegionName %}
       <div class="grant-search-result__data-item">

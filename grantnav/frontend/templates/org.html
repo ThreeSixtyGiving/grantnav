@@ -1,0 +1,117 @@
+{% extends "base.html" %} 
+{% load frontend %} 
+{% load static %} 
+{% block main_content %}
+<div class="layout layout--single-column">
+  <main class="layout__content">
+    <div class="grid grid--one-column spacer-4">
+      <div class="grid__1">
+        <div class="org-header-card">
+          <h1 class="org-header-card__header">{{ main_name }}</h1> <small class="org-header-card__subheading">{{org_types | join:",&nbsp;" }}</small>
+          <div class="grid grid--two-columns">
+            <div class="grid__1">
+              <div class="org-header-card__data_title">Org IDs</div>
+              {% for org_id in org_ids %}
+                <p class="org-header-card__data_text">{{org_id}}</p>
+              {% endfor %}
+            </div>
+
+            <div class="grid__1">
+              <div class="org-header-card__data_title">Other Names</div>
+              {% if other_names %}
+                {% for other_name in other_names %}
+                  <p class="org-header-card__data_text">{{other_name}}</p>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if funder %}
+        <div class="grid__1">
+          {% include 'components/org-page-funder.html' %}
+        </div>
+      {% endif  %}
+      {% if recipient %}
+        <div class="grid__1">
+          {% include 'components/org-page-recipient.html' %}
+        </div>
+      {% endif  %}
+      {% if publisher %}
+        <div class="grid__1">
+          {% include 'components/org-page-publisher.html' %}
+        </div>
+      {% endif  %}
+    </div>
+  </main>
+</div>
+{% endblock %}
+{% block extra_style %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css">
+{% endblock %}
+{% block extra_scripts %}
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"
+></script>
+
+{{ funder.orgIDs|json_script:"orgIDs" }}
+
+<script>
+    function truncate(string, len){
+      if (string.length > len)
+          return string.substring(0,len)+'...';
+      else
+          return string;
+    };
+
+  jQuery(function($) {
+    $('#recipients_datatable').dataTable({
+      "serverSide": true,
+      "responsive": true,
+      "searching": true,
+      "autoWidth": false,
+      "scrollY": 400,
+      "scroller": true,
+      "dom": "fit",
+      "scroller": {"displayBuffer": 15,
+                    "loadingIndicator": true},
+      "order": [[2, "desc"]],
+      "language": {
+          "info": "_START_ to _END_ of _TOTAL_",
+          "search": "Search Recipients"
+      },
+      "ajax": {
+        "url": "{% url 'funder_recipients_datatables' %}",
+        "data": function ( d ) {
+          d.funder_id = document.getElementById('orgIDs').textContent;
+          d.currency = "{{funder.stats_by_currency.0.currency|escapejs}}";
+        }
+      },
+      "columns": [
+        {"data": "org_name", "width": "10px", "render": function (data, type, row) {
+            return '<a href="/org/' + encodeURIComponent(row.org_id) + '">' + truncate(data, 20) + '</a>'
+        }},
+        {"data": "count"},
+        {"data": "sum", "className": "amount"},
+        {"data": "avg", "className": "amount"},
+        {"data": "max", "className": "amount"},
+        {"data": "min", "className": "amount"}
+      ]
+    });
+  })
+</script>
+{% endblock %} 
+{% block modals %} 
+  {% include 'currency_stats_modal.html' %}
+{% endblock %}
