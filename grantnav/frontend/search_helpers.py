@@ -29,7 +29,7 @@ def clean_array(array):
             clean_object(item)
         elif isinstance(item, list):
             clean_array(item)
-        if isinstance(item, (dict, list)) and item:
+        if isinstance(item, (dict, list, str)) and item:
             new_array.append(item)
     array[:] = new_array
     return array
@@ -53,7 +53,10 @@ def get_results(json_query, size=10, from_=0, data_type="grant"):
     query = new_json_query["query"]
 
     if "bool" not in query:
-        query["bool"] = {"filter": []}
+        query["bool"] = {}
+    
+    if "filter" not in query["bool"]:
+        query["bool"]["filter"] = []
 
     query["bool"]["filter"].append({"term": {"dataType": {"value": data_type}}})
 
@@ -208,6 +211,7 @@ def get_terms_facets(
     create_parameters_from_json_query,
     is_json=False,
     path=None,
+    data_type="grant"
 ):
 
     if not path:
@@ -228,7 +232,7 @@ def get_terms_facets(
     main_results = context["results"]
     if current_filter:
         json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = []
-        results = get_results(json_query)
+        results = get_results(json_query, data_type=data_type)
     else:
         results = context["results"]
 
@@ -268,7 +272,7 @@ def get_terms_facets(
     main_results["aggregations"][aggregate] = results["aggregations"][aggregate]
 
 
-def term_facet_from_parameters(request, json_query, field_name, param_name, bool_index, field, is_json=False):
+def term_facet_from_parameters(request, json_query, field_name, param_name, bool_index, field, is_json=False, data_type="grant"):
     new_filter = []
 
     if is_json:
@@ -279,14 +283,14 @@ def term_facet_from_parameters(request, json_query, field_name, param_name, bool
         if query_filter:
             query = {
                 "query": {
-                    "bool": {"should": query_filter}
+                    "bool": {"filter": [{"bool": {"should": query_filter}}]}
                 },
                 "aggs": {
                     param_name: {"terms": {"field": field_name, "size": len(query_filter)}}
                 }
             }
 
-            results = get_results(query, 1)
+            results = get_results(query, 1, data_type=data_type)
 
             for bucket in results['aggregations'][param_name]['buckets']:
                 new_filter.append({"term": {field_name: bucket['key']}})

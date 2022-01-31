@@ -247,7 +247,7 @@ def maybe_create_index(index_name=ES_INDEX):
                 "type": "keyword"
             },
             "organizationName": {
-                "type": "text", 
+                "type": "text",
                 "analyzer": "english_with_folding"
             },
             "orgIDs": {
@@ -255,6 +255,14 @@ def maybe_create_index(index_name=ES_INDEX):
             },
             "grants": {
                 "type": "double"
+            },
+            "maxAwardDate": {
+                "type": "date",
+                "ignore_malformed": True
+            },
+            "minAwardDate": {
+                "type": "date",
+                "ignore_malformed": True
             },
             "currencyGrants": {
                 "dynamic": True,
@@ -332,7 +340,7 @@ def maybe_create_index(index_name=ES_INDEX):
     }})
 
 
-def import_to_elasticsearch(files, clean, recipients):
+def import_to_elasticsearch(files, clean, recipients, funders):
 
     es = elasticsearch.Elasticsearch(hosts=[ELASTICSEARCH_HOST])
 
@@ -345,20 +353,20 @@ def import_to_elasticsearch(files, clean, recipients):
 
     time.sleep(1)
 
+    def org_generator(filename, data_type):
+        with open(filename) as f:
+            for obj in ijson.items(f, '', multiple_values=True):
+                obj['dataType'] = data_type
+                obj['_id'] = str(uuid.uuid4())
+                obj['_index'] = ES_INDEX
+                yield obj
+
     if recipients:
-        print("uploading recipients")
-        def recipient_generator():
-            with open(recipients) as f:
-                for obj in ijson.items(f, '', multiple_values=True):
-                    obj['dataType'] = 'recipient'
-                    obj['_id'] = str(uuid.uuid4())
-                    obj['_index'] = ES_INDEX
-                    yield obj
-
-        result = elasticsearch.helpers.bulk(es, recipient_generator(), raise_on_error=False, max_retries=10, initial_backoff=5)
+        result = elasticsearch.helpers.bulk(es, org_generator(recipients, 'recipient'), raise_on_error=False, max_retries=10, initial_backoff=5)
         print(result)
-
-
+    if funders:
+        result = elasticsearch.helpers.bulk(es, org_generator(funders, 'funder'), raise_on_error=False, max_retries=10, initial_backoff=5)
+        print(result)
 
     with open(os.path.join(current_dir, 'charity_names.json')) as fd:
         charity_names = json.load(fd)
@@ -510,10 +518,11 @@ if __name__ == '__main__':
     parser.add_argument('--clean', help='Delete existing data before import', action='store_true')
     parser.add_argument('--reports', help='Generate reports of differing names and bad organisation IDs.', action='store_true')
     parser.add_argument('--recipients', help='recipients file')
+    parser.add_argument('--funders', help='funders file')
     parser.add_argument('files', help='files to import', nargs='*')
     args = parser.parse_args()
 
-    import_to_elasticsearch(args.files, args.clean, args.recipients)
+    import_to_elasticsearch(args.files, args.clean, args.recipients, args.funders)
 
     if args.reports:
         with open("differing_names.csv.report", "w+") as differing_names_file:
