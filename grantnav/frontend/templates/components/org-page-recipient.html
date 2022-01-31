@@ -1,0 +1,90 @@
+{% load frontend %} 
+
+<article class="media-card media-card--yellow">
+    <div class="media-card__content_no_image">
+    <header class="media-card__header">
+        <h3 class="media-card__heading">As Recipient</h3>
+    </header>
+    <div class="media-card__box_container">
+        <div class="media-card__box">
+        {{recipient.grants | get_amount }} <br/>
+        <strong>Total Grants</strong>
+        </div>
+        <div class="media-card__box">
+        {{recipient.minAwardDate | get_date }} <br/>
+        <strong>Earliest Award</strong>
+        </div>
+        <div class="media-card__box">
+        {{recipient.maxAwardDate | get_date }} <br/>
+        <strong>Latest Award</strong>
+        </div>
+    </div>
+    <div class="media-card__box_container">
+        {% for stat in recipient.stats_by_currency %}
+        <div class="media-card__box">
+            {{stat.grants | get_amount }} <br/>
+            <strong> Grants in {{stat.currency}} </strong>
+        </div>
+        <div class="media-card__box">
+            {{stat.currency | currency_symbol}}{{stat.total | get_amount}} <br/>
+            <strong> Total Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+        </div>
+        <div class="media-card__box">
+            {{stat.currency | currency_symbol}}{{stat.max | get_amount}} <br/>
+            <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+        </div>
+        <div class="media-card__box">
+            {{stat.currency | currency_symbol}}{{stat.min | get_amount}} <br/>
+            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+        </div>
+        <div class="media-card__box">
+            {{stat.currency | currency_symbol}}{{stat.avg | get_amount}} <br/>
+            <strong> Average Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% for currency, funders in recipient_funders.items %}
+        <h4>Recpients Funders <small>({{currency}})</small></h4>
+        <table class="table table--primary table--primary table--small dt-responsive">
+            <thead>
+                <tr>
+                <th>Funder</th>
+                <th>Grants</th>
+                <th>Total</th>
+                <th>Smallest</th>
+                <th>Largest</th>
+                <th>Average</th>
+            </thead>
+            <tbody>
+                {% for funder in funders %}
+                <tr>
+                <td><a href="{% url 'org' funder.org_id %}">{{ funder.name }}</a></td>
+                <td>{{ funder.count | get_amount }}</td>
+                <td>{{currency | currency_symbol}}{{ funder.sum | get_amount }}</td>
+                <td>{{currency | currency_symbol}}{{ funder.min | get_amount }}</td>
+                <td>{{currency | currency_symbol}}{{ funder.max | get_amount }}</td>
+                <td>{{currency | currency_symbol}}{{ funder.avg | get_amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+
+    <div>
+        <a href="{% url 'search' %}?{{recipient.grant_search_parameters}}">
+            <div class="hero hero--orange hero__center padding-top:2 padding-bottom:2">
+                <!-- .hero--orange, .hero--yellow, .hero--red -->
+                <div class="hero__column">
+                    <p class="hero__blurb">
+                        Explore grants in GrantNav.
+                    </p>
+                </div>
+                <div class="hero__column hero__logo hero__lead">
+                    {% include 'tokens/main-logo.html' %}
+                </div>
+            </div>
+        </a>
+    </div>
+
+</article>
