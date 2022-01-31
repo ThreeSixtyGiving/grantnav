@@ -1,0 +1,44 @@
+{% load currency_symbol get_currency get_amount get_title get_name get_date from frontend %}
+
+<div class="grant-search-result grant-search-result__recipients">
+  <div class="grant-search-result__left-side">
+      <a class="grant-search-result__title" href="{% url 'org' result.source.id %}">
+        {{ result.name }}
+      </a>
+ 
+    <div class="grant-search-result__box_container">
+      {% for stat in result.stats_by_currency %}
+        <div class="grant-search-result__box">
+          {{stat.grants | get_amount }} <br/>
+          <strong> Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+        </div>
+        <div class="grant-search-result__box">
+          {{stat.currency | currency_symbol}}{{stat.total | get_amount}} <br/>
+          <strong> Total Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+        </div>
+        <div class="grant-search-result__box">
+          {{stat.currency | currency_symbol}}{{stat.max | get_amount}} <br/>
+          <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+        </div>
+        <div class="grant-search-result__box">
+          {{stat.currency | currency_symbol}}{{stat.min | get_amount}} <br/>
+          <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+        </div>
+        <div class="grant-search-result__box">
+          {{stat.currency | currency_symbol}}{{stat.avg | get_amount}} <br/>
+          <strong> Average Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="grant-search-result__right-side">
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label">Org IDs: </span>
+      <span>{{ result.source.orgIDs | join:", " }}</span>
+    </div>
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label"><a href="{% url 'search' %}?{{result.grant_search_parameters}}">Grant Search</a> </span>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,8 @@
 from django.conf.urls import url
 
 from . import views
+from . import recipients_search_view
+from . import funders_search_view
 from django.views.generic import TemplateView
 from django.views.generic import RedirectView
 
@@ -22,8 +24,9 @@ urlpatterns = [
     url(r'^funders_datatables$', views.funders_datatables, name='funders_datatables'),
     url(r'^funders_datatables.csv$', views.funders_datatables, name='funders_datatables.csv'),
     url(r'^funders_datatables.json$', views.funders_datatables, name='funders_datatables.json'),
-    url(r'^recipients', views.recipients, name='recipients'),
-    url(r'^funders', views.funders, name='funders'),
+    url(r'^recipients', recipients_search_view.search, name='recipients'),
+    url(r'^funders', funders_search_view.search, name='funders'),
+    url(r'^org/(.*)$', views.org, name='org'),
     url(r'^recipient/(.*)$', views.recipient, name='recipient'),
     url(r'^recipient/(.*)\.csv$', views.recipient, name='recipient.csv'),
     url(r'^recipient/(.*)\.json$', views.recipient, name='recipient.json'),
