@@ -350,14 +350,15 @@ def get_date_facets(request, context, json_query):
 
 
 def totals_query():
-    query = {"query": {"match_all": {}},
-             "aggs": {
-                 "recipient_count": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
-                 "funder_count": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
-        }
+    query = {"query": {"match_all": {}}}
+
+    counts = {
+        'grants': get_results(query)['hits']['total'],
+        'funders': get_results(query, data_type='funder')['hits']['total'],
+        'recipients': get_results(query, data_type='recipient')['hits']['total']
     }
 
-    return get_results(query)
+    return counts
 
 
 def home(request):
@@ -860,6 +861,168 @@ def grant(request, grant_id):
     return render(request, "grant.html", context=context)
 
 
+def augment_org(org):
+    if not org:
+        return
+    org["stats_by_currency"] = []
+    for currency in org['currency']:
+        stats = {
+            "currency": currency,
+            "grants": org["currencyGrants"].get(currency),
+            "total": org["currencyTotal"].get(currency),
+            "max": org["currencyMaxAmount"].get(currency),
+            "min": org["currencyMinAmount"].get(currency),
+            "avg": org["currencyAvgAmount"].get(currency),
+        }
+        org["stats_by_currency"].append(stats)
+    org["stats_by_currency"].sort(key=lambda i: i["total"], reverse=True)
+    org["main_currency"] = org["stats_by_currency"][0]['currency']
+    return org
+
+
+def get_funder_info(funder_org_ids):
+    query = {
+        "query": {
+            "bool": {
+                "filter":
+                    [{"terms": {"fundingOrganization.id": funder_org_ids}}]
+            },
+        },
+        "aggs": {
+            "filenames": {"terms": {"field": "filename", "size": 10}},
+            "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}}
+        }
+    }
+
+    results = get_results(query, 0)
+
+    output = {'funder_publisher': {},
+              'recipients': results['aggregations']['recipient_orgs']['value']}
+    try:
+        output['funder_publisher'] = provenance.by_identifier[provenance.identifier_from_filename(results['aggregations']['filenames']['buckets'][0]['key'])]['publisher']
+    except KeyError:
+        pass
+
+    return output
+
+
+def get_recipient_funders(recipient_org_ids):
+    query = {
+        "query": {
+            "bool": {
+                "filter":
+                    [{"terms": {"recipientOrganization.id": recipient_org_ids}}]
+                },
+        },
+        "aggs": {
+            "currency": {
+                "terms": {"field": "currency"},
+                "aggs": {
+                    "funders": {
+                        "terms": {
+                            "field": "fundingOrganization.id_and_name", "size": 10
+                        },
+                        "aggs": {
+                            "funder_stats": {
+                                "stats": {"field": "amountAwarded"}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    results = get_results(query, 0)
+
+    results_by_currency = {}
+
+    for currency_bucket in results['aggregations']['currency']['buckets']:
+        funder_list = []
+        for funder_bucket in currency_bucket['funders']['buckets']:
+            name, org_id = json.loads(funder_bucket['key'])
+            funder = {"name": name, "org_id": org_id}
+            funder.update(funder_bucket['funder_stats'])
+            funder_list.append(funder)
+        results_by_currency[currency_bucket['key']] = funder_list
+
+    return results_by_currency
+
+
+def org(request, org_id):
+
+    org_query = {
+        "query": {
+            "bool": {"filter":
+                [{"term": {"orgIDs": urllib.parse.unquote(org_id)}}]
+            }
+        }
+    }
+
+    funder_results = get_results(org_query, data_type="funder")
+    recipient_results = get_results(org_query, data_type="recipient")
+    
+    org_types = []
+    funder = {}
+    recipient = {}
+    recipient_funders = {}
+
+    org_names = []
+    org_ids = [org_id]
+
+    publisher = provenance.by_publisher.get(org_id, {})
+    if publisher:
+        get_funders_for_datasets(publisher['datasets'])
+        org_types.append('Publisher')
+        
+        # if publisher use that as main name, this goes in the list first
+        org_names.append(publisher['name'])
+
+    if funder_results['hits']['hits']:
+        org_types.append('Funder')
+        funder = funder_results['hits']['hits'][0]['_source']
+
+        parameters = [("fundingOrganization", org_id) for org_id in funder["orgIDs"]]
+        funder["grant_search_parameters"] = urlencode(parameters)
+
+        funder_info = get_funder_info(funder['orgIDs'])
+        funder.update(funder_info)
+
+    if recipient_results['hits']['hits']:
+        org_types.append('Recipient')
+        recipient = recipient_results['hits']['hits'][0]['_source']
+        parameters = [("recipientOrganization", org_id) for org_id in recipient["orgIDs"]]
+        recipient["grant_search_parameters"] = urlencode(parameters)
+        recipient_funders = get_recipient_funders(recipient['orgIDs'])
+    
+    for org in (funder, recipient):
+        augment_org(org)
+        if org:
+            # use charity finder name first
+            org_names.extend(org["nameCharityFinder"])
+            # lastly use names from data
+            org_names.extend(org['organizationName'])
+            org_ids.extend(org['orgIDs'])
+
+    if not org_types:
+        raise Http404
+    
+    # first org name is our selection
+    main_name = org_names[0]
+    other_names = list({name for name in org_names if name != main_name})
+
+    context = {"funder": funder,
+               "recipient": recipient,
+               "publisher": publisher,
+               "recipient_funders": recipient_funders,
+               "org_types": org_types,
+               "org_ids": list(set(org_ids)),
+               "main_name": main_name,
+               "other_names": other_names}
+    
+    return render(request, "org.html", context=context)
+
+
 def funder(request, funder_id):
 
     [result_format, results_size] = get_request_type_and_size(request)
@@ -931,7 +1094,7 @@ def funder_recipients_datatables(request):
 
     funder_id = request.GET.get('funder_id')
     if funder_id:
-        filter = {"term": {"fundingOrganization.id": funder_id}}
+        filter = {"terms": {"fundingOrganization.id": json.loads(funder_id)}}
     else:
         filter = {}
 

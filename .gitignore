@@ -9,6 +9,7 @@
 .idea/
 .coverage
 .ve
+.vscode
 
 chromedriver/
 grantnav/.DS_Store
