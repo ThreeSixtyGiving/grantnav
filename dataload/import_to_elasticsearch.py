@@ -340,7 +340,7 @@ def maybe_create_index(index_name=ES_INDEX):
     }})
 
 
-def import_to_elasticsearch(files, clean, recipients, funders):
+def import_to_elasticsearch(files, clean, recipients=None, funders=None):
 
     es = elasticsearch.Elasticsearch(hosts=[ELASTICSEARCH_HOST])
 
