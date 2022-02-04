@@ -5,7 +5,8 @@ import pytest
 import requests
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
-from grantnav.frontend.views import get_pagination, BASIC_QUERY
+from grantnav.frontend.search_helpers import get_pagination
+from grantnav.frontend.views import BASIC_QUERY, create_parameters_from_json_query
 from django.test.client import RequestFactory
 from django.urls import reverse_lazy
 
@@ -129,7 +130,7 @@ def test_get_pagination_single_page():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 1)
+    get_pagination(request, context, 1, create_parameters_from_json_query)
     assert 1 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -150,7 +151,7 @@ def test_get_pagination_ten_pages_on_page_1():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 1)
+    get_pagination(request, context, 1, create_parameters_from_json_query)
     assert 6 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -188,7 +189,7 @@ def test_get_pagination_ten_pages_on_page_2():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 2)
+    get_pagination(request, context, 2, create_parameters_from_json_query)
     assert 9 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -236,7 +237,7 @@ def test_get_pagination_ten_pages_on_page_5():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 5)
+    get_pagination(request, context, 5, create_parameters_from_json_query)
     assert 11 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -291,7 +292,7 @@ def test_get_pagination_ten_pages_on_page_6():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 6)
+    get_pagination(request, context, 6, create_parameters_from_json_query)
     assert 11 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -346,7 +347,7 @@ def test_get_pagination_ten_pages_on_page_7():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 7)
+    get_pagination(request, context, 7, create_parameters_from_json_query)
     assert 11 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -401,7 +402,7 @@ def test_get_pagination_ten_pages_on_page_8():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 8)
+    get_pagination(request, context, 8, create_parameters_from_json_query)
     assert 10 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -453,7 +454,7 @@ def test_get_pagination_ten_pages_on_page_9():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 9)
+    get_pagination(request, context, 9, create_parameters_from_json_query)
     assert 9 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -501,7 +502,7 @@ def test_get_pagination_ten_pages_on_page_10():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 10)
+    get_pagination(request, context, 10, create_parameters_from_json_query)
     assert 6 == len(context['pages'])
 
     page = context['pages'].pop(0)
