@@ -384,37 +384,12 @@ def test_no_results_page(server_url, browser):
     assert 'Your search - "dfsergegrdtytdrthgrtyh" - did not match any records.' in no_results
 
 
-@pytest.mark.parametrize(('path'), [
-    ('/funder/GB-CHC-327114'),  # funder: Lloyds
-    #('/region/South West'),  # region
-    ('/recipient/GB-CHC-1092728'),  # recipient: Open Doors
-    #('/district/City of Bristol')  # district
-    ])
-def test_right_align_amounts_in_grant_table(provenance_dataload, server_url, browser, path):
-    browser.get(server_url + path)
-    grants_table = browser.find_element_by_id('grants_datatable')
-    grants_table.find_element_by_css_selector('td.amount')
-
-
-@pytest.mark.parametrize(('path', 'identifier'), [
-    ('/funders', 'funders_datatable'),
-    ('/recipients', 'recipients_datatable'),
-    ('/funder/GB-CHC-327114', 'recipients_datatable'),  # funder: Lloyds
-    ])
-def test_right_align_amounts_in_other_tables(provenance_dataload, server_url, browser, path, identifier):
-    browser.get(server_url + path)
-    table = browser.find_element_by_id(identifier)
-    table.find_elements_by_css_selector('td.amount')
-
-
 def test_datasets_page(server_url, browser):
     browser.get(server_url + '/datasets')
     assert 'Data used in GrantNav' in browser.find_element_by_tag_name('h1').text
 
 
 @pytest.mark.parametrize(('path', 'text'), [
-    ('/funder/GB-CHC-327114', 'This data is provided for information purposes only.'),
-    ('/funder/GB-CHC-327114', 'Please refer to the funder website for details of current grant programmes, application guidelines and eligibility criteria.'),
     ('/grant/360G-LBFEW-111657', 'Where is this data from?'),
     ('/grant/360G-LBFEW-111657', 'This data was originally published by')
     ])
