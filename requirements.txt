@@ -22,7 +22,7 @@ decorator==5.1.0
     # via retry
 defusedxml==0.7.1
     # via odfpy
-django==2.2.24
+django==2.2.27
     # via
     #   -r requirements.in
     #   django-bootstrap3
@@ -44,8 +44,6 @@ ijson==2.5.1
     # via
     #   -r requirements.in
     #   flattentool
-importlib-metadata==2.1.1
-    # via django-bootstrap3
 jsonref==0.2
     # via flattentool
 lxml==4.6.3
@@ -64,7 +62,7 @@ pillow==8.3.2
     # via django-super-favicon
 plotly==5.3.1
     # via -r requirements.in
-prometheus_client==0.7
+prometheus-client==0.7
     # via -r requirements.in
 py==1.10.0
     # via retry
@@ -105,26 +103,24 @@ urllib3==1.26.6
     #   requests
 xmltodict==0.12.0
     # via flattentool
-zc.lockfile==2.0
+zc-lockfile==2.0
     # via zodb
-zc.zlibstorage==1.2.0
+zc-zlibstorage==1.2.0
     # via flattentool
 zconfig==3.6.0
     # via zodb
-zipp==3.5.0
-    # via importlib-metadata
 zodb==5.6.0
     # via
     #   flattentool
-    #   zc.zlibstorage
+    #   zc-zlibstorage
 zodbpickle==2.1.0
     # via zodb
-zope.interface==5.4.0
+zope-interface==5.4.0
     # via
     #   btrees
     #   persistent
     #   transaction
-    #   zc.zlibstorage
+    #   zc-zlibstorage
     #   zodb
 
 # The following packages are considered to be unsafe in a requirements file:
