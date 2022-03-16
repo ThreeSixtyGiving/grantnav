@@ -1,48 +1,61 @@
-{% extends "base.html" %} 
-{% load frontend %} 
-{% load static %} 
+{% extends "base.html" %}
+{% load frontend %}
+{% load static %}
 {% block main_content %}
 <div class="layout layout--single-column">
   <main class="layout__content">
-    <div class="grid grid--one-column spacer-4">
-      <div class="grid__1">
-        <div class="org-header-card">
-          <h1 class="org-header-card__header">{{ main_name }}</h1> <small class="org-header-card__subheading">{{org_types | join:",&nbsp;" }}</small>
-          <div class="grid grid--two-columns">
-            <div class="grid__1">
-              <div class="org-header-card__data_title">Org IDs</div>
-              {% for org_id in org_ids %}
-                <p class="org-header-card__data_text">{{org_id}}</p>
-              {% endfor %}
-            </div>
+    <div class="spacer-1">
+      <h1 class="heading-in-panel">{{ main_name }}</h1>
+    </div>
 
-            <div class="grid__1">
-              <div class="org-header-card__data_title">Other Names</div>
-              {% if other_names %}
-                {% for other_name in other_names %}
-                  <p class="org-header-card__data_text">{{other_name}}</p>
-                {% endfor %}
-              {% endif %}
-            </div>
+    <div class="media-card media-card--base">
+      <div class="media-card__content_no_image">
+        <header class="media-card__header">
+          <h3 class="media-card__heading">Organisation information</h3>
+        </header>
+
+
+        <div class="media-card__box_container">
+
+          <div class="media-card__box">
+            <strong>Type</strong><br />
+            {{org_types | join:",&nbsp;" }}
+          </div>
+
+          <div class="media-card__box">
+            <strong>Org IDs</strong> <br/>
+            {% for org_id in org_ids %}
+            {{org_id}} &nbsp;
+            {% endfor %}
+          </div>
+
+          <div class="media-card__box">
+            <strong>Other Names</strong> <br/>
+            {% if other_names %}
+            {% for other_name in other_names %}
+            {{other_name}} &nbsp;
+            {% endfor %}
+            {% endif %}
           </div>
         </div>
       </div>
-      {% if funder %}
-        <div class="grid__1">
-          {% include 'components/org-page-funder.html' %}
-        </div>
-      {% endif  %}
-      {% if recipient %}
-        <div class="grid__1">
-          {% include 'components/org-page-recipient.html' %}
-        </div>
-      {% endif  %}
-      {% if publisher %}
-        <div class="grid__1">
-          {% include 'components/org-page-publisher.html' %}
-        </div>
-      {% endif  %}
     </div>
+
+    <div class="spacer-4"></div>
+
+    {% if funder %}
+      {% include 'components/org-page-funder.html' %}
+    {% endif  %}
+
+    <div class="spacer-4"></div>
+    {% if recipient %}
+      {% include 'components/org-page-recipient.html' %}
+    {% endif  %}
+
+    <div class="spacer-4"></div>
+    {% if True or publisher %}
+      {% include 'components/org-page-publisher.html' %}
+    {% endif  %}
   </main>
 </div>
 {% endblock %}
@@ -111,7 +124,7 @@
     });
   })
 </script>
-{% endblock %} 
-{% block modals %} 
+{% endblock %}
+{% block modals %}
   {% include 'currency_stats_modal.html' %}
 {% endblock %}
