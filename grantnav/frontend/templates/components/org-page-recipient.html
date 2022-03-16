@@ -1,45 +1,47 @@
-{% load frontend %} 
+{% load frontend %}
 
 <article class="media-card media-card--yellow">
     <div class="media-card__content_no_image">
     <header class="media-card__header">
         <h3 class="media-card__heading">As Recipient</h3>
     </header>
+    <p>[ copy to introduce to as recipient here ]</p>
+    <h4>Summary</h4>
     <div class="media-card__box_container">
         <div class="media-card__box">
-        {{recipient.grants | get_amount }} <br/>
-        <strong>Total Grants</strong>
+        <strong>Total Grants</strong> <br />
+        {{recipient.grants | get_amount }}
         </div>
         <div class="media-card__box">
-        {{recipient.minAwardDate | get_date }} <br/>
-        <strong>Earliest Award</strong>
+        <strong>Earliest Award</strong> <br />
+        {{recipient.minAwardDate | get_date }}
         </div>
         <div class="media-card__box">
-        {{recipient.maxAwardDate | get_date }} <br/>
-        <strong>Latest Award</strong>
+        <strong>Latest Award</strong> <br />
+        {{recipient.maxAwardDate | get_date }}
         </div>
     </div>
     <div class="media-card__box_container">
         {% for stat in recipient.stats_by_currency %}
         <div class="media-card__box">
-            {{stat.grants | get_amount }} <br/>
-            <strong> Grants in {{stat.currency}} </strong>
+            <strong> Grants in {{stat.currency}} </strong> <br/>
+            {{stat.grants | get_amount }}
         </div>
         <div class="media-card__box">
-            {{stat.currency | currency_symbol}}{{stat.total | get_amount}} <br/>
-            <strong> Total Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+            <strong> Total Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br/>
+            {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
         </div>
         <div class="media-card__box">
-            {{stat.currency | currency_symbol}}{{stat.max | get_amount}} <br/>
-            <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+            <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br/>
+            {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
         </div>
         <div class="media-card__box">
-            {{stat.currency | currency_symbol}}{{stat.min | get_amount}} <br/>
-            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br/>
+            {{stat.currency | currency_symbol}}{{stat.min | get_amount}}
         </div>
         <div class="media-card__box">
-            {{stat.currency | currency_symbol}}{{stat.avg | get_amount}} <br/>
-            <strong> Average Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+            <strong> Average Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br/>
+            {{stat.currency | currency_symbol}}{{stat.avg | get_amount}}
         </div>
         {% endfor %}
     </div>
@@ -71,20 +73,6 @@
         </table>
     {% endfor %}
 
-    <div>
-        <a href="{% url 'search' %}?{{recipient.grant_search_parameters}}">
-            <div class="hero hero--orange hero__center padding-top:2 padding-bottom:2">
-                <!-- .hero--orange, .hero--yellow, .hero--red -->
-                <div class="hero__column">
-                    <p class="hero__blurb">
-                        Explore grants in GrantNav.
-                    </p>
-                </div>
-                <div class="hero__column hero__logo hero__lead">
-                    {% include 'tokens/main-logo.html' %}
-                </div>
-            </div>
-        </a>
+    <a href="{% url 'search' %}?{{recipient.grant_search_parameters}}" class="button">Explore grants</a>
     </div>
-
 </article>
