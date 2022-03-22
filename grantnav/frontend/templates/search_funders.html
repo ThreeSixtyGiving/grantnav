@@ -66,8 +66,10 @@
               <li>Using more general terms</li>
               <li>Checking your spelling</li>
               <li>Removing some filters</li>
-              <li>To clear your search, <a href="{% url 'funders' %}">click here</a></li>
+              <li><a href="{% url 'recipients' %}{{view.request.GET}}?{{request.META.QUERY_STRING}}">Searching recipients</a></li>
+              <li><a href="{% url 'search' %}{{view.request.GET}}?{{request.META.QUERY_STRING}}">Search all Grantnav</a></li>
             </ul>
+            <a href="{% url 'funders' %}">Clear your search</a>
           </div>
       </div>
 
