@@ -23,11 +23,6 @@
           {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
         </div>
         <div class="grant-search-result__box">
-          <strong> Smallest {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
-
-          {{stat.currency | currency_symbol}}{{stat.min | get_amount}}
-        </div>
-        <div class="grant-search-result__box">
           <strong> Average {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
 
           {{stat.currency | currency_symbol}}{{stat.avg | get_amount}}
@@ -42,7 +37,11 @@
       <span>{{ result.source.orgIDs | join:", " }}</span>
     </div>
     <div class="grant-search-result__data-item">
-      <span class="grant-search-result__data-item--label"><a href="{% url 'search' %}?{{result.grant_search_parameters}}">Grant Search</a> </span>
+      <span class="grant-search-result__data-item--label">Latest Award: </span>
+      <span>{{ result.source.maxAwardDate | get_date }}</span>
+    </div>
+    <div class="grant-search-result__data-item">
+      <span class="grant-search-result__data-item--label"><a class="button" style="text-decoration: none;" href="{% url 'search' %}?{{result.grant_search_parameters}}">Explore Grants</a> </span>
     </div>
   </div>
 </div>
