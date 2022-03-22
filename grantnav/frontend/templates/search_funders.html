@@ -61,15 +61,15 @@
               <div class="spacer-4"></div>
             {% endif %}
 
-            <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
+            <p>Your search - <strong>"{{text_query}}"</strong> - did not match any funder records.<br>Try something like</p>
             <ul>
               <li>Using more general terms</li>
               <li>Checking your spelling</li>
               <li>Removing some filters</li>
               <li><a href="{% url 'recipients' %}{{view.request.GET}}?{{request.META.QUERY_STRING}}">Searching recipients</a></li>
-              <li><a href="{% url 'search' %}{{view.request.GET}}?{{request.META.QUERY_STRING}}">Search all Grantnav</a></li>
+              <li><a href="{% url 'search' %}{{view.request.GET}}?{{request.META.QUERY_STRING}}">Searching grants</a></li>
             </ul>
-            <a href="{% url 'funders' %}">Clear your search</a>
+           <p>Or <a href="{% url 'funders' %}">clear your search</a>.</p>
           </div>
       </div>
 
