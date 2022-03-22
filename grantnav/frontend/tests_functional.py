@@ -381,7 +381,7 @@ def test_no_results_page(server_url, browser):
 
     no_results = browser.find_element_by_id('no-results').text
     assert 'No Results' in no_results
-    assert 'Your search - "dfsergegrdtytdrthgrtyh" - did not match any records.' in no_results
+    assert 'Your search - "dfsergegrdtytdrthgrtyh" - did not match any grant records.' in no_results
 
 
 def test_datasets_page(server_url, browser):
