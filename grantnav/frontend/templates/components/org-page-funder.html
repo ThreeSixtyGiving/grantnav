@@ -40,10 +40,6 @@
             {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
         </div>
         <div class="media-card__box">
-            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
-            {{stat.currency | currency_symbol}}{{stat.min | get_amount}}
-        </div>
-        <div class="media-card__box">
             <strong> Average Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
             {{stat.currency | currency_symbol}}{{stat.avg | get_amount}} <br/>
         </div>
@@ -64,6 +60,9 @@
         </p>
 
     {% endif %}
+
+    <a href="{% url 'search' %}?{{funder.grant_search_parameters}}" class="button pull-right">Explore grants</a>
+
 
     <p>This data is provided for information purposes only.
     Please refer to the funder website for details of current grant programmes,
@@ -101,6 +100,5 @@
     </div>
 
     <div class="spacer-1"></div>
-        <a href="{% url 'search' %}?{{funder.grant_search_parameters}}" class="button">Explore grants</a>
 </div>
 </article>
