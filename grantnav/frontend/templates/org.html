@@ -29,14 +29,14 @@
             {% endfor %}
           </div>
 
+          {% if other_names %}
           <div class="media-card__box">
             <strong>Other Names</strong> <br/>
-            {% if other_names %}
             {% for other_name in other_names %}
             {{other_name}} &nbsp;
             {% endfor %}
-            {% endif %}
           </div>
+          {% endif %}
         </div>
       </div>
     </div>
