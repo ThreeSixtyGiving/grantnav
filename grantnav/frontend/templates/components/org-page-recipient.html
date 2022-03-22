@@ -36,16 +36,13 @@
             {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
         </div>
         <div class="media-card__box">
-            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br/>
-            {{stat.currency | currency_symbol}}{{stat.min | get_amount}}
-        </div>
-        <div class="media-card__box">
             <strong> Average Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br/>
             {{stat.currency | currency_symbol}}{{stat.avg | get_amount}}
         </div>
         {% endfor %}
     </div>
 
+    <a href="{% url 'search' %}?{{recipient.grant_search_parameters}}" class="button pull-right">Explore grants</a>
     {% for currency, funders in recipient_funders.items %}
         <h4>Recpients Funders <small>({{currency}})</small></h4>
         <table class="table table--primary table--primary table--small dt-responsive">
@@ -73,6 +70,5 @@
         </table>
     {% endfor %}
 
-    <a href="{% url 'search' %}?{{recipient.grant_search_parameters}}" class="button">Explore grants</a>
     </div>
 </article>
