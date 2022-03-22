@@ -42,7 +42,7 @@
         {% endfor %}
     </div>
 
-    <a href="{% url 'search' %}?{{recipient.grant_search_parameters}}" class="button pull-right">Explore grants</a>
+    <a href="{% url 'search' %}?{{recipient.grant_search_parameters}}" class="button pull-right">Explore Grants</a>
     {% for currency, funders in recipient_funders.items %}
         <h4>Recpients Funders <small>({{currency}})</small></h4>
         <table class="table table--primary table--primary table--small dt-responsive">
