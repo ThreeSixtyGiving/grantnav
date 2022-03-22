@@ -68,9 +68,9 @@
               <li>Checking your spelling</li>
               <li>Removing some filters</li>
               <li><a href="{% url 'funders' %}{{view.request.GET}}?{{request.META.QUERY_STRING}}">Searching funders</a></li>
-              <li><a href="{% url 'search' %}{{view.request.GET}}?{{request.META.QUERY_STRING}}">Search all Grantnav</a></li>
+              <li><a href="{% url 'search' %}{{view.request.GET}}?{{request.META.QUERY_STRING}}">Searching grants</a></li>
             </ul>
-            <a href="{% url 'recipients' %}">Clear the search</a>
+            <p>Or <a href="{% url 'recipients' %}">clear the search</a>.</p>
           </div>
       </div>
 

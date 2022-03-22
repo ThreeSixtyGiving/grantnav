@@ -73,13 +73,13 @@
               <div class="spacer-4"></div>
             {% endif %}
 
-            <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
+            <p>Your search - <strong>"{{text_query}}"</strong> - did not match any grant records.<br>Try something like</p>
             <ul>
               <li>Using more general terms</li>
               <li>Checking your spelling</li>
               <li>Removing some filters</li>
             </ul>
-            <a href="{% url 'search' %}">Clear your search</a></li>
+            <p>Or <a href="{% url 'search' %}">clear your search</a>.</p>
           </div>
       </div>
 
