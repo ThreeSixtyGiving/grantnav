@@ -1,6 +1,6 @@
 import os
 import time
-
+import tempfile
 import pytest
 import requests
 from selenium import webdriver
@@ -12,6 +12,9 @@ from dataload.import_to_elasticsearch import import_to_elasticsearch
 
 # Data from Branch "test-currency"
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/560a8d9f21a069a9d51468850188f34ae72a0ec3/'
+prefix_master = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/master/'
+
+prefix = prefix_master
 
 chromedriver_autoinstaller.install()
 BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
@@ -50,9 +53,23 @@ def server_url(request, live_server):
 
 @pytest.fixture(scope="module")
 def dataload():
+    tmpdir = tempfile.mkdtemp()
+    recipients_file = os.path.join(tmpdir, "recipients.jl")
+    funders_file = os.path.join(tmpdir, "funders.jl")
+
+    with open(recipients_file, "wb") as recipients_file_p:
+        recipients_file_p.write(requests.get(prefix_master + "recipients.jl").content)
+
+    with open(funders_file, "wb") as funders_file_p:
+        funders_file_p.write(requests.get(prefix_master + "funders.jl").content)
+
+
     import_to_elasticsearch([prefix + 'a002400000KeYdsAAF.json',
                              prefix + 'a002400000OiDBQAA3.xlsx',
-                             prefix + 'a002400000G4KGJAA3.csv'], clean=True)
+                             prefix + 'a002400000G4KGJAA3.csv'],
+                             clean=True,
+                             funders=funders_file,
+                             recipients=recipients_file)
     #elastic search needs some time to commit its data
     time.sleep(2)
 
@@ -435,3 +452,30 @@ def test_zero_grant_info_link_present(provenance_dataload, server_url, browser, 
 def test_zero_grant_info_link_absent(provenance_dataload, server_url, browser, path):
     browser.get(server_url + path)
     assert len(browser.find_elements_by_id('zero_value_grant_help_link')) == 0
+
+
+def test_search_recipients(provenance_dataload, server_url, browser):
+    browser.get(server_url + "/recipients")
+    browser.find_element_by_name("text_query").send_keys("Social Justice")
+    browser.find_element_by_class_name("large-search-button").click()
+
+    #browser.get_screenshot_as_file("recipients-search.png")
+
+    assert len(browser.find_elements_by_class_name("grant-search-result__recipients")) == 2
+
+
+def test_search_funders(provenance_dataload, server_url, browser):
+    browser.get(server_url + "/funders")
+    browser.find_element_by_name("text_query").send_keys("Oxford")
+    browser.find_element_by_class_name("large-search-button").click()
+
+    #browser.get_screenshot_as_file("recipients-search.png")
+
+    assert len(browser.find_elements_by_class_name("grant-search-result__funders")) == 2
+
+
+def test_org_page(provenance_dataload, server_url, browser):
+    browser.get(server_url + "/org/360G-ABCT-ORG:0010X00004GNB1f")
+    #browser.get_screenshot_as_file("org-page.png")
+
+    assert "University of Oxford" in browser.find_element_by_tag_name('h1').text
