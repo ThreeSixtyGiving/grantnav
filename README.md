@@ -70,24 +70,25 @@ The above command gives you a local server listening on port 8000. If you're ins
 4. Start the server with the allowed host: `python manage.py runserver 192.168.33.10:8000`
 
 
-Upload Data
+Loading Data
 ------------
 
-In order to upload some data use the dataload/import_to_elasticsearch.py command line tool e.g:
-    
+In order to load some data use the dataload/import_to_elasticsearch.py command line tool e.g:
+
 `python dataload/import_to_elasticsearch.py --clean filename1.csv filename2.csv *.json`
 
 The clean command is optional; it will delete the index and start again, so leave it off if you want to add just another file to an existing index.
 You can specify as many file or patterns as you like at the end of the command.
 
-### Getting data for upload
+The funders and recipients search requires the datastore generated `funders.jl` and `recipients.jl` files to be passed in as arguments to import_to_elasticsearch.
 
-There is a list of 360Giving datasets at http://data.threesixtygiving.org/. There's an API for this list http://data.threesixtygiving.org/data.json and some code to help download from it -  https://github.com/ThreeSixtyGiving/datagetter
+### Getting data for loading
 
-If you see the message "Killed", you need to increase the memory in your VM.
+There is a list of 360Giving datasets at http://data.threesixtygiving.org/. There's an API for this list http://data.threesixtygiving.org/data.json and a datagetter tool to download and convert it -  https://github.com/ThreeSixtyGiving/datagetter
 
 If your data is in a flat format (eg Excel spreadsheet, CSV), or needs validating, you can use [CoVE](http://cove.opendataservices.coop/360/) to convert and validate your data.
 
+Alternatively contact 360Giving for the latest data dump from the datastore.
 ### Provenance JSON
 
 Most parts of GrantNav work fine without provenance information. However, in order for the publisher/datasets pages to work correctly you must point the `PROVENANCE_JSON` environment variable at a local copy of [data.json](http://data.threesixtygiving.org/data.json). You must also load the data into GrantNav using filenames that correspond to the identifiers in this JSON. The [datagetter](https://github.com/ThreeSixtyGiving/datagetter) saves files with the correct name, and also makes a copy of data.json for you.
@@ -125,7 +126,7 @@ CUSTOM_SERVER_URL=http://dev.grantnav.opendataservices.coop py.test
 
 The tests delete an elastic search index and repopulate it.  The default index name is threesixtygiving
 
-We also use flake8 to test code quality, see https://github.com/OpenDataServices/developer-docs/blob/master/tests.md#flake8 
+We also use flake8 to test code quality, see https://github.com/OpenDataServices/developer-docs/blob/master/tests.md#flake8
 
 
 Adding and updating requirements
@@ -139,7 +140,7 @@ Fetching external datasets
 
 ### Open code point
 
-Go to https://www.ordnancesurvey.co.uk/opendatadownload/products.html and request a download of Code-Point open. The will send you a link to a zip file and extract that zip into a directory and cd into that directory.  It should contain a Docs and a Data directory. 
+Go to https://www.ordnancesurvey.co.uk/opendatadownload/products.html and request a download of Code-Point open. The will send you a link to a zip file and extract that zip into a directory and cd into that directory.  It should contain a Docs and a Data directory.
 
 Get the second line of the heading file with the following command:
 
