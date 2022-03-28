@@ -149,3 +149,18 @@ table.docutils--false {
   height:400px !important;
   border:1px solid grey !important;
 }
+
+/* cookie consent */
+
+.cookie-consent {
+  padding-top: 0 !important;
+  width: 450px;
+  height: 325px;
+  position: fixed !important;
+  bottom: 0;
+  left: 0;
+  background: #f9e1d3 !important;
+  z-index: 99;
+}
+
+
