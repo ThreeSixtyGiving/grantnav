@@ -12,9 +12,9 @@ from dataload.import_to_elasticsearch import import_to_elasticsearch
 
 # Data from Branch "test-currency"
 prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/560a8d9f21a069a9d51468850188f34ae72a0ec3/'
+# Data from Branch "master"
 prefix_master = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/master/'
 
-prefix = prefix_master
 
 chromedriver_autoinstaller.install()
 BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
@@ -63,13 +63,12 @@ def dataload():
     with open(funders_file, "wb") as funders_file_p:
         funders_file_p.write(requests.get(prefix_master + "funders.jl").content)
 
-
     import_to_elasticsearch([prefix + 'a002400000KeYdsAAF.json',
                              prefix + 'a002400000OiDBQAA3.xlsx',
                              prefix + 'a002400000G4KGJAA3.csv'],
-                             clean=True,
-                             funders=funders_file,
-                             recipients=recipients_file)
+                            clean=True,
+                            funders=funders_file,
+                            recipients=recipients_file)
     #elastic search needs some time to commit its data
     time.sleep(2)
 
