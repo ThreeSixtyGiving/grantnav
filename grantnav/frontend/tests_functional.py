@@ -449,12 +449,12 @@ def test_search_recipients(provenance_dataload, server_url, browser):
 
 def test_search_funders(provenance_dataload, server_url, browser):
     browser.get(server_url + "/funders")
-    browser.find_element_by_name("text_query").send_keys("Oxford")
+    browser.find_element_by_name("text_query").send_keys("foundation")
     browser.find_element_by_class_name("large-search-button").click()
 
     #browser.get_screenshot_as_file("recipients-search.png")
 
-    assert len(browser.find_elements_by_class_name("grant-search-result__funders")) == 2
+    assert len(browser.find_elements_by_class_name("grant-search-result__funders")) == 9
 
 
 def test_org_page(provenance_dataload, server_url, browser):
