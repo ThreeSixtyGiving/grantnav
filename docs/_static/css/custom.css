@@ -152,15 +152,6 @@ table.docutils--false {
 
 /* cookie consent */
 
-.cookie-consent {
-  padding-top: 0 !important;
-  width: 450px;
-  height: 325px;
-  position: fixed !important;
-  bottom: 0;
-  left: 0;
-  background: #f9e1d3 !important;
-  z-index: 99;
+.cookie-consent-info {
+  color: hsl(var(--teal-dark-hsl), 1) !important;
 }
-
-
