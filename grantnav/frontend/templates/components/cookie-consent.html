@@ -1,59 +1,56 @@
-<head>
-    <!-- Matomo -->
-    <script type="text/javascript">
-      var _paq = window._paq = window._paq || [];
-      var siteID = 9;
-      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-      _paq.push(['requireCookieConsent']); // Don't use cookies unless we have consent
-      _paq.push(['setCookieDomain', '*.threesixtygiving.org']);
-      _paq.push(['setDomains', '*.threesixtygiving.org']);
-      _paq.push(['setDownloadExtensions', "json|csv|xlsx"]);
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-        var u="https://analytics.threesixtygiving.org/";
-        _paq.push(['setTrackerUrl', u+'matomo.php']);
-        if(!siteID) throw new Error("siteID not set");
-        _paq.push(['setSiteId', siteID]);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-      })();
-    </script>
-    <!-- End Matomo Code -->
+<!-- Matomo -->
+<script type="text/javascript">
+  var _paq = window._paq = window._paq || [];
+  var siteID = 9;
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['requireCookieConsent']); // Don't use cookies unless we have consent
+  _paq.push(['setCookieDomain', '*.threesixtygiving.org']);
+  _paq.push(['setDomains', '*.threesixtygiving.org']);
+  _paq.push(['setDownloadExtensions', "json|csv|xlsx"]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="https://analytics.threesixtygiving.org/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    if(!siteID) throw new Error("siteID not set");
+    _paq.push(['setSiteId', siteID]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Code -->
 
-    <script type="text/javascript">
-        function hideCookieConsentDialog(){
-          document.getElementsByClassName("cookie-consent")[0].style.display = 'none';
-        }
+<script type="text/javascript">
+    function hideCookieConsentDialog(){
+      document.getElementsByClassName("cookie-consent")[0].style.display = 'none';
+    }
 
-        function noCookieConsent() {
-          document.cookie = "noEnhancedAnalytics=1; domain=threesixtygiving.org";
-        }
+    function noCookieConsent() {
+      document.cookie = "noEnhancedAnalytics=1; domain=threesixtygiving.org";
+    }
 
-        document.addEventListener('DOMContentLoaded', function(){
-          if (document.cookie.indexOf("mtm_cookie_consent") > -1 ||
-              document.cookie.indexOf("mtm_consent_removed") > -1 ||
-              document.cookie.indexOf("noEnhancedAnalytics") > -1) {
-             hideCookieConsentDialog();
-          }
-        });
-    </script>
-</head>
+    document.addEventListener('DOMContentLoaded', function(){
+      if (document.cookie.indexOf("mtm_cookie_consent") > -1 ||
+          document.cookie.indexOf("mtm_consent_removed") > -1 ||
+          document.cookie.indexOf("noEnhancedAnalytics") > -1) {
+         hideCookieConsentDialog();
+      }
+    });
+</script>
 
-<body>
-  <div role="dialog" aria-labelledby="cookie-dialog-title" aria-describedby="cookie-dialog-desc">
-    <div class="base-card base-card--new cookie-consent">
-      <div class="base-card__content">
-          <h2 class="base-card__title" id="cookie-dialog-title">Allow analytics cookies? <br/>
-            <a class="base-card__text" href="https://www.threesixtygiving.org/privacy/"> More Information &amp; Privacy Policy</a>
-          </h2>
-          <p class="base-card__text">
-              <a href="#" onclick="_paq.push(['rememberCookieConsentGiven']); hideCookieConsentDialog();" class="button">Yes</a>
-              <a href="#" onclick="noCookieConsent(); hideCookieConsentDialog();" class="button">No</a>
-              <a href="#" onclick="_paq.push(['optUserOut']); hideCookieConsentDialog();" class="button">Disable Analytics</a>
-          </p>
-          <p id="cookie-dialog-desc" style="font-style: italic;">360Giving uses privacy-respecting analytics. If you don't accept cookies, we will track only basic information about your visit. Click "Disable Analytics" if you don't want us to track at all. </p>
-      </div>
+<div role="dialog" aria-labelledby="cookie-dialog-title" aria-describedby="cookie-dialog-desc">
+  <div class="base-card base-card--new cookie-consent">
+    <div class="base-card__content">
+        <h2 class="base-card__title" id="cookie-dialog-title">Allow analytics cookies? <br/>
+          <a class="base-card__text" href="https://www.threesixtygiving.org/privacy/"> More Information &amp; Privacy Policy</a>
+        </h2>
+        <p class="base-card__text">
+            <a href="#" onclick="_paq.push(['rememberCookieConsentGiven']); hideCookieConsentDialog();" class="button">Yes</a>
+            <a href="#" onclick="noCookieConsent(); hideCookieConsentDialog();" class="button">No</a>
+            <a href="#" onclick="_paq.push(['optUserOut']); hideCookieConsentDialog();" class="button">Disable Analytics</a>
+        </p>
+        <p id="cookie-dialog-desc" style="font-style: italic;">360Giving uses privacy-respecting analytics. If you don't accept cookies, we will track only basic information about your visit. Click "Disable Analytics" if you don't want us to track at all. </p>
     </div>
-   </div>
-</body>
+  </div>
+ </div>
+
