@@ -2511,7 +2511,9 @@ body.modal--shown {
     padding-bottom: 64px; }
   .layout--single-column {
     display: grid;
-    grid-template-areas: "header" "content" "footer"; }
+    grid-template-areas: "header"
+ "content"
+ "footer"; }
     .layout--single-column .layout__content {
       max-width: 960px;
       margin-left: auto;
@@ -2523,12 +2525,16 @@ body.modal--shown {
     width: 100vw; }
   .layout--two-columns {
     display: grid;
-    grid-template-areas: "header" "content" "footer"; }
+    grid-template-areas: "header"
+ "content"
+ "footer"; }
     @media (min-width: 36em) {
       .layout--two-columns {
         grid-template-columns: 320px 1fr;
         grid-template-rows: auto 1fr auto;
-        grid-template-areas: "header header" "sidebar content" "footer footer"; } }
+        grid-template-areas: "header header"
+ "sidebar content"
+ "footer footer"; } }
     .layout--two-columns .layout__header {
       grid-area: header; }
     .layout--two-columns .layout__content {
@@ -2567,3 +2573,37 @@ body.modal--shown {
 
 .sidebar-section--red:before {
   background-color: #BC2C26; }
+
+/* cookie consent */
+
+.cookie-consent {
+  padding-top: 0 !important;
+  width: 450px;
+  height: 325px;
+  position: fixed !important;
+  bottom: 0;
+  left: 0;
+  background: #f9e1d3 !important;
+  z-index: 99;
+}
+
+.base-card--new {
+  --card-bg-hsl: var(--base-hsl);
+  background: hsl(var(--orange-hsl), 0.2);
+  border-left: 4px solid #DE6E26;
+  border-right: 4px solid #DE6E26;
+  padding-top: 32px;
+  padding-bottom: 58px;
+  /* I've opted to hide the before element and use borders for this instead.
+  I didn't want to update the other base cards as to not break anything
+  but I don't think a whole new element is needed. */ }
+  .base-card--new::before {
+    content: none; }
+  .base-card--new .base-card__title {
+    font-size: 33px;
+    margin-bottom: 32px; }
+  .base-card--new .base-card__text:last-of-type {
+    margin-bottom: 0; }
+  .base-card--new .button:hover {
+    color: #153634;
+    border-color: #A7531D; }

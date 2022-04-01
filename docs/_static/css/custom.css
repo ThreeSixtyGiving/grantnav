@@ -149,3 +149,9 @@ table.docutils--false {
   height:400px !important;
   border:1px solid grey !important;
 }
+
+/* cookie consent */
+
+.cookie-consent-info {
+  color: hsl(var(--teal-dark-hsl), 1) !important;
+}
