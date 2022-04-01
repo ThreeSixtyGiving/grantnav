@@ -47,7 +47,7 @@
     <main>
     {% block main_content %}{% endblock %}
     </main>
-
+    {% include "components/cookie-consent.html" %}
     {% include "components/subscribe.html"%}
     {% include "components/footer.html" %}
 
@@ -55,27 +55,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {% block models %}{% endblock %}
     {% block extra_scripts %}{% endblock %}
-
-    {% if piwik.url and piwik.site_id %}
-    <!-- Piwik -->
-    <script type="text/javascript">
-      var _paq = _paq || [];
-      {% block extrapiwik %}{% endblock %}
-      _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-      _paq.push(['disableCookies']);
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-        var u="{{ piwik.url }}";
-        _paq.push(['setTrackerUrl', u+'piwik.php']);
-        _paq.push(['setSiteId', {{ piwik.site_id }}]);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-      })();
-    </script>
-    <noscript><p><img src="{{ piwik.url }}/matomo.php?idsite={{ piwik.site_id }}" style="border:0;" alt="" /></p></noscript>
-    {% endif %}
-    <!-- End Piwik Code -->
 
     </body>
 </html>

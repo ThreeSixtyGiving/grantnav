@@ -156,6 +156,7 @@ def test_search_by_titles_and_descriptions(provenance_dataload, server_url, brow
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('laboratory')
     browser.find_element_by_class_name("large-search-button").click()
+    browser.find_element_by_class_name("cookie-consent-no").click()
     # select title_and_description
     browser.find_element_by_xpath("//label[@for='title_and_description']").click()
     browser.find_element_by_class_name("large-search-button").click()
@@ -325,6 +326,7 @@ def test_search_advanced_search_correct_link(provenance_dataload, server_url, br
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('social change')
     browser.find_element_by_class_name("large-search-button").click()
+    browser.find_element_by_class_name("cookie-consent-no").click()
     browser.find_element_by_link_text("targeting your search").click()
 
     assert browser.current_url.startswith('https://help.grantnav.threesixtygiving.org/en/latest/search_bar.html')
@@ -426,6 +428,7 @@ def test_disclaimers(server_url, browser, path, text):
 def test_currency_facet(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-button").click()
+    browser.find_element_by_class_name("cookie-consent-no").click()
     # Select USD
     browser.get_screenshot_as_file("test2.png")
     browser.find_element_by_xpath(
@@ -437,6 +440,7 @@ def test_currency_facet(provenance_dataload, server_url, browser):
 def test_amount_awarded_facet(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-button").click()
+    browser.find_element_by_class_name("cookie-consent-no").click()
     # Select an option
     browser.get_screenshot_as_file("test3.png")
     browser.find_element_by_xpath(
