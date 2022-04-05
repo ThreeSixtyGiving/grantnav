@@ -32,10 +32,13 @@
       <span class="grant-search-result__data-item--label">Org IDs: </span>
       <span>{{ result.source.orgIDs | join:", " }}</span>
     </div>
+
+    {% if result.other_names|length > 0 %}
     <div class="grant-search-result__data-item">
-      <span class="grant-search-result__data-item--label">Org IDs: </span>
-      <span>{{ result.source.orgIDs | join:", " }}</span>
+      <span class="grant-search-result__data-item--label">Other Names: </span>
+      <span>{{result.other_names | join:", "}}</span>
     </div>
+    {% endif %}
 
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Latest Award: </span>

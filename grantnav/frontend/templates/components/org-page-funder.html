@@ -3,14 +3,15 @@
 <article class="media-card media-card--teal">
   <div class="media-card__content_no_image">
     <header class="media-card__header">
+        <a name="Funder"></a>
         <h3 class="media-card__heading">As Funder</h3>
     </header>
-    <p>[ copy to introduce as funder here ]</p>
+    <p>{{funder.organizationName.0}} appears in the 360Giving data as a funder of grants. Here is an overview of the grants they have funded.</p>
     <h4>Summary</h4>
     <div class="media-card__box_container">
         <div class="media-card__box">
             <strong>Total Grants</strong> <br />
-            {{funder.grants | get_amount }}
+            <span style="word-break: break-all">{{funder.grants | get_amount }}</span>
         </div>
         <div class="media-card__box">
             <strong>Recipients</strong> <br />
@@ -61,12 +62,14 @@
 
     {% endif %}
 
-    <a href="{% url 'search' %}?{{funder.grant_search_parameters}}" class="button pull-right">Explore Grants</a>
-
+    <a href="{% url 'search' %}?{{funder.grant_search_parameters}}" class="button pull-right" title="Explore all the grants made by {{funder.organizationName.0}}">Explore Grants</a>
 
     <p>This data is provided for information purposes only.
     Please refer to the funder website for details of current grant programmes,
     application guidelines and eligibility criteria.</p>
+
+
+    <p>This table shows the recipients who have received grants made by {{funder.organizationName.0}}.</p>
 
     <div class="section">
         <div class="grantnav-datatable__content--filters margin-top:05">
