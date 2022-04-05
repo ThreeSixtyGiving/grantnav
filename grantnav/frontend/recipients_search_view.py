@@ -196,6 +196,8 @@ def search(request):
             else:
                 hit['name'] = source['organizationName'][0]
 
+            hit['other_names'] = list({name for name in source['organizationName'] if name != hit['name']})
+
         context["results"] = results
         context["json_query"] = json.dumps(json_query)
         context["query"] = json_query
