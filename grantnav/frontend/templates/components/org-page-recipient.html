@@ -3,9 +3,10 @@
 <article class="media-card media-card--yellow">
     <div class="media-card__content_no_image">
     <header class="media-card__header">
-        <h3 class="media-card__heading">As Recipient</h3>
+        <a name="Recipient"></a>
+        <h3 class="media-card__heading">As Recipients</h3>
     </header>
-    <p>[ copy to introduce to as recipient here ]</p>
+    <p>{{recipient.organizationName.0}} appears in the 360Giving data as a recipient of grants. Here is an overview of the grants they have received.</p>
     <h4>Summary</h4>
     <div class="media-card__box_container">
         <div class="media-card__box">
@@ -42,9 +43,12 @@
         {% endfor %}
     </div>
 
-    <a href="{% url 'search' %}?{{recipient.grant_search_parameters}}" class="button pull-right">Explore Grants</a>
+    <a href="{% url 'search' %}?{{recipient.grant_search_parameters}}" class="button pull-right" title="Explore all the grants {{recipient.organizationName.0}} has received">Explore Grants</a>
+
+    <p>This table shows the funders who have made grants to {{recipient.organizationName.0}}</p>
+
     {% for currency, funders in recipient_funders.items %}
-        <h4>Recpients Funders <small>({{currency}})</small></h4>
+        <h4>Recipients Funders <small>({{currency}})</small></h4>
         <table class="table table--primary table--primary table--small dt-responsive">
             <thead>
                 <tr>
