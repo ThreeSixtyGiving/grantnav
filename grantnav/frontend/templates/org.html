@@ -10,16 +10,28 @@
 
     <div class="media-card media-card--base">
       <div class="media-card__content_no_image">
+       <div style="display: inline-block" class="pull-right">
+          <a class="alert-tag alert-tag--anchor" href="https://help.grantnav.threesixtygiving.org/en/latest/organisations.html">
+            <span class="alert-tag__icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M7 5.83333C6.70833 5.83333 6.41667 6.06667 6.41667 6.41667V9.91667C6.41667 10.2667 6.65 10.5 7 10.5C7.29167 10.5 7.58333 10.2667 7.58333 9.91667V6.41667C7.58333 6.125 7.29167 5.83333 7 5.83333ZM7 3.5C6.70833 3.5 6.41667 3.73333 6.41667 4.08333C6.41667 4.375 6.65 4.66667 7 4.66667C7.29167 4.66667 7.58333 4.43333 7.58333 4.08333C7.58333 3.79167 7.29167 3.5 7 3.5ZM7 0C3.15 0 0 3.15 0 7C0 10.85 3.15 14 7 14C10.85 14 14 10.85 14 7C14 3.15 10.85 0 7 0ZM7 12.8333C3.79167 12.8333 1.16667 10.2083 1.16667 7C1.16667 3.79167 3.79167 1.16667 7 1.16667C10.2083 1.16667 12.8333 3.79167 12.8333 7C12.8333 10.2083 10.2083 12.8333 7 12.8333Z" fill="#1D1536"></path>
+          </svg>
+          </span>
+            <span class="alert-tag__content">Learn more about organisations</span>
+          </a>
+        </div>
+
+
         <header class="media-card__header">
           <h3 class="media-card__heading">Organisation Information</h3>
-        </header>
-
+       </header>
 
         <div class="media-card__box_container">
 
           <div class="media-card__box">
             <strong>Type</strong><br />
-            {{org_types | join:",&nbsp;" }}
+            {% for org_type in org_types %}
+            <a href="#{{org_type}}">{{org_type}}</a>{% if forloop.counter != org_types|length %},{% endif %}
+            {% endfor %}
           </div>
 
           <div class="media-card__box">
@@ -38,7 +50,18 @@
           </div>
           {% endif %}
         </div>
+        {% if org_types|length > 1 %}
+        <p>{{ main_name }} has been identified using different organisation identifiers within the 360Giving data. This may be, for example, because they are both a registered charity and a registered company  and different publishers have used either a company or charity number to identify them.</p>
+        {% endif %}
+
+        {% if other_names %}
+        <p>{{ main_name }} has been referred to using several different names in the 360Giving data. This may be because a publisher has abbreviated the name or used an alternative spelling, or the name has changed over time. In other cases, one organisation identifier is shared by multiple entities (for example subsidiaries or branches of the same organisation) receiving distinct grants.</p>
+        {% endif %}
+
+
+
       </div>
+
     </div>
 
     <div class="spacer-4"></div>
