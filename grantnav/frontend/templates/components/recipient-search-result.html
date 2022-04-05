@@ -47,7 +47,7 @@
       <span>{{ result.source.maxAwardDate | get_date }}</span>
     </div>
     <div class="grant-search-result__data-item">
-      <span class="grant-search-result__data-item--label"><a class="button" style="text-decoration: none;" href="{% url 'search' %}?{{result.grant_search_parameters}}">Explore Grants</a> </span>
+      <span class="grant-search-result__data-item--label"><a class="button" style="text-decoration: none;" title="Explore the grants received by {{result.name}}" href="{% url 'search' %}?{{result.grant_search_parameters}}">Explore Grants</a> </span>
     </div>
   </div>
 </div>
