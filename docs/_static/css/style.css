@@ -2577,6 +2577,7 @@ body.modal--shown {
 /* cookie consent */
 
 .cookie-consent {
+  display: none;
   padding-top: 0 !important;
   width: 450px;
   height: 325px;
