@@ -1,4 +1,4 @@
-FROM python:3.6.13-buster
+FROM python:3.8.13-bullseye
 
 RUN mkdir /code
 COPY . /code/

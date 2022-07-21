@@ -9,7 +9,7 @@ jobs:
     - name: Setup python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.6
+        python-version: 3.8
         architecture: x64
     # This is from https://github.com/elastic/elastic-github-actions/tree/master/elasticsearch
     - name: Configure sysctl limits
