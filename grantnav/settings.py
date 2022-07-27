@@ -223,3 +223,7 @@ LOGGING = {
 }
 
 GRANTNAV_LOG_DIR = os.path.expanduser("~/logs/")
+
+# https://docs.djangoproject.com/en/4.0/releases/3.2/#customizing-type-of-auto-created-primary-keys
+# This project currently has no models, but in case it does later:
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
