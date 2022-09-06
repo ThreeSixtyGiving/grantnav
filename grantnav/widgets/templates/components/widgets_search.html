@@ -1,0 +1,13 @@
+<div class="search-block search-block--no-padding">
+  <div class="wrapper">
+    <div>
+      <form role="search" action="{% url 'search' %}">
+        <div class="search-block__form-group">
+          <input name="text_query" class="form-control large-search" placeholder="Search grants" type="text" value="{{text_query}}">
+          <input class="large-search-button" name="submit" type="submit" value="Search">
+          <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

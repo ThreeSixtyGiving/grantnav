@@ -12,7 +12,7 @@
               alt="360 "></a>
         </div>
         <div class="hero__column hero__lead">
-          <h2 class="hero__title">See your grantmaking in new ways</h2>
+          <h2 class="hero__title">Visualise grant data in new ways</h2>
           <p class="hero__blurb">Combine and visualise 360Giving, charity and other data to answer questions about your
             grantmaking</p>
         </div>
@@ -20,5 +20,77 @@
     </div>
   </div>
 </header>
-<div><h1>WIDGETS!</h1></div>
+<div class="cards-section">
+  <section class="grid grid--four-columns">
+    <div class="grid__1">
+      <div class="base-card base-card--yellow">
+        <div class="base-card__content">
+            <h2 class="base-card__title">1</h2>
+            <p class="base-card__text">Enter search terms</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid__1">
+      <div class="base-card base-card--orange">
+        <div class="base-card__content">
+            <h2 class="base-card__title">2</h2>
+            <p class="base-card__text">Select optional filters</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid__1">
+      <div class="base-card base-card--teal">
+        <div class="base-card__content">
+            <h2 class="base-card__title">3</h2>
+            <p class="base-card__text">Select a widget view</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid__1">
+      <div class="base-card base-card--red">
+        <div class="base-card__content">
+            <h2 class="base-card__title">4</h2>
+            <p class="base-card__text">Copy the code</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="cards-section">
+  <section class="grid grid--seven-columns">
+    <div class="grid__1 box box--yellow flex-centre">
+      <h2>1</h2>
+    </div>
+    <div class="grid__6 box box--yellow">
+      {% include 'components/widgets_search.html' %}
+    </div>
+  </section>
+</div>
+<div class="cards-section">
+  <section class="grid grid--seven-columns">
+    <div class="grid__1 box box--orange flex-centre">
+      <h2>2</h2>
+    </div>
+    <div class="grid__6 box box--orange">
+    </div>
+  </section>
+</div>
+<div class="cards-section">
+  <section class="grid grid--seven-columns">
+    <div class="grid__1 box box--teal flex-centre">
+      <h2>3</h2>
+    </div>
+    <div class="grid__6 box box--teal">
+    </div>
+  </section>
+</div>
+<div class="cards-section">
+  <section class="grid grid--seven-columns">
+    <div class="grid__1 box box--red flex-centre">
+      <h2>4</h2>
+    </div>
+    <div class="grid__6 box box--red">
+    </div>
+  </section>
+</div>
 {% endblock %}
