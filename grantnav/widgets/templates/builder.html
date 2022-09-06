@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main_content %}
+<header class="layout__header">
+  <div class="hero-section">
+    <div class="wrapper">
+      <div class="hero hero--orange">
+        <!-- .hero--orange, .hero--yellow, .hero--red -->
+        <div class="hero__column hero__logo">
+          <a href="/"><img src={% static "/images/360widgets-color.svg" %} alt="360Giving"
+              alt="360 "></a>
+        </div>
+        <div class="hero__column hero__lead">
+          <h2 class="hero__title">See your grantmaking in new ways</h2>
+          <p class="hero__blurb">Combine and visualise 360Giving, charity and other data to answer questions about your
+            grantmaking</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div><h1>WIDGETS!</h1></div>
+{% endblock %}
