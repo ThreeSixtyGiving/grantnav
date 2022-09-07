@@ -1,0 +1,29 @@
+{% load static %}
+<script src="{% static "/js/vue.min.js" %}"></script>
+<script src="{% static "/js/vue-tables.min.js" %}"></script>
+<link href="{% static "/css/bootstrap.css" %}" rel="stylesheet"/>
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+<div id="people">
+  <v-client-table :data="tableData" :columns="columns" :options="options"></v-client-table>
+</div>
+
+<script>
+Vue.use(VueTables.ClientTable, [theme = 'bootstrap3']);
+var app = new Vue({
+  el:"#people",
+  data: {
+    columns:['id','name','age'],
+    tableData: [
+      {id:1, name:"John",age:"20"},
+      {id:2, name:"Jane",age:"24"},
+      {id:3, name:"Susan",age:"16"},
+      {id:4, name:"Chris",age:"55"},
+      {id:5, name:"Dan",age:"40"}
+    ],
+    options: {
+    }
+  }
+});
+
+</script>
