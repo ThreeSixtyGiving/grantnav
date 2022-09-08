@@ -94,10 +94,41 @@
       <div class="code-block">
         <pre>
           <code>
-&lt;iframe src="https://grantnav.threesixtygiving.org/search?query="&gt;&lt;/iframe&gt;
+&lt;iframe src="/widgets/tabular"&gt;&lt;/iframe&gt;
           </code>
         </pre>
     </div>
+    <h2>Preview</h2>
+    <iframe id="scaled-frame" src="/widgets/tabular"></iframe>
   </section>
 </div>
+
+<style>
+  #wrap {
+    width: 750px;
+    height: 1500px;
+    padding: 0;
+    overflow: hidden;
+  }
+  #scaled-frame {
+    width: 1000px;
+    height: 400px;
+    border: 0px;
+  }
+  #scaled-frame {
+    zoom: 0.75;
+    -moz-transform: scale(0.75);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.75);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.75);
+    -webkit-transform-origin: 0 0;
+  }
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+    #scaled-frame {
+      zoom: 1;
+    }
+  }
+</style>
 {% endblock %}
+
