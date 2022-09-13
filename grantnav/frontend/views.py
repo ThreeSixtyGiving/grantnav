@@ -865,7 +865,7 @@ def augment_org(org):
     if not org:
         return
     org["stats_by_currency"] = []
-    for currency in org['currency']:
+    for currency in org['currency']: # FIXME issue see also funders_Search_view
         stats = {
             "currency": currency,
             "grants": org["currencyGrants"].get(currency),
@@ -932,7 +932,7 @@ def get_recipient_funders(recipient_org_ids):
             }
         }
     }
-    
+
     results = get_results(query, 0)
 
     results_by_currency = {}
@@ -954,14 +954,14 @@ def org(request, org_id):
     org_query = {
         "query": {
             "bool": {"filter":
-                [{"term": {"orgIDs": urllib.parse.unquote(org_id)}}]
+                [{"term": {"id": urllib.parse.unquote(org_id)}}]
             }
         }
     }
 
     funder_results = get_results(org_query, data_type="funder")
     recipient_results = get_results(org_query, data_type="recipient")
-    
+
     org_types = []
     funder = {}
     recipient = {}
@@ -974,7 +974,7 @@ def org(request, org_id):
     if publisher:
         get_funders_for_datasets(publisher['datasets'])
         org_types.append('Publisher')
-        
+
         # if publisher use that as main name, this goes in the list first
         org_names.append(publisher['name'])
 
@@ -982,19 +982,19 @@ def org(request, org_id):
         org_types.append('Funder')
         funder = funder_results['hits']['hits'][0]['_source']
 
-        parameters = [("fundingOrganization", org_id) for org_id in funder["orgIDs"]]
+        parameters = [("fundingOrganization", org_id) for org_id in funder["id"]]
         funder["grant_search_parameters"] = urlencode(parameters)
 
-        funder_info = get_funder_info(funder['orgIDs'])
+        funder_info = get_funder_info([funder['id']]) # Todo list of all orgids
         funder.update(funder_info)
 
     if recipient_results['hits']['hits']:
         org_types.append('Recipient')
         recipient = recipient_results['hits']['hits'][0]['_source']
-        parameters = [("recipientOrganization", org_id) for org_id in recipient["orgIDs"]]
+        parameters = [("recipientOrganization", org_id) for org_id in recipient["id"]]
         recipient["grant_search_parameters"] = urlencode(parameters)
-        recipient_funders = get_recipient_funders(recipient['orgIDs'])
-    
+        recipient_funders = get_recipient_funders([recipient['id']]) # TODO list of all orgids
+
     for org in (funder, recipient):
         augment_org(org)
         if org:
@@ -1006,7 +1006,7 @@ def org(request, org_id):
 
     if not org_types:
         raise Http404
-    
+
     # first org name is our selection
     main_name = org_names[0]
     other_names = list({name for name in org_names if name != main_name})
@@ -1019,7 +1019,7 @@ def org(request, org_id):
                "org_ids": list(set(org_ids)),
                "main_name": main_name,
                "other_names": other_names}
-    
+
     return render(request, "org.html", context=context)
 
 

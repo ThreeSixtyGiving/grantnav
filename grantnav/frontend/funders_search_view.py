@@ -176,28 +176,48 @@ def search(request):
             hit["source"] = hit["_source"]
             source = hit["source"]
             hit["stats_by_currency"] = []
-            for currency in hit['source']['currency']:
+            for currency in source["aggregate"]['currencies'].keys():
+                currency_info = source["aggregate"]["currencies"][currency]
+
                 stats = {
                     "currency": currency,
-                    "grants": source["currencyGrants"].get(currency),
-                    "total": source["currencyTotal"].get(currency),
-                    "max": source["currencyMaxAmount"].get(currency),
-                    "min": source["currencyMinAmount"].get(currency),
-                    "avg": source["currencyAvgAmount"].get(currency),
+                    "grants": currency_info["grants"],
+                    "total": currency_info["total"],
+                    "max": currency_info["max"],
+                    "min": currency_info["min"],
+                    "avg": currency_info["avg"],
                 }
                 hit["stats_by_currency"].append(stats)
             hit["stats_by_currency"].sort(key=lambda i: i["total"], reverse=True)
 
-            parameters = [("fundingOrganization", org_id) for org_id in hit["source"]["orgIDs"]]
+            org_ids = [hit["source"]["id"]]
+
+            if hit["source"]["ftcData"]:
+                org_ids.extend(hit["source"]["ftcData"]["orgIDs"])
+
+            parameters = [("fundingOrganization", org_id) for org_id in org_ids]
 
             hit["grant_search_parameters"] = urlencode(parameters)
 
-            if source['nameCharityFinder']:
-                hit['name'] = source['nameCharityFinder'][0]
-            else:
-                hit['name'] = source['organizationName'][0]
+            # Name ordering is important: Publisher, FTC, Grant
+            names = []
 
-            hit['other_names'] = list({name for name in source['organizationName'] if name != hit['name']})
+            if source["publisherName"] and source["publisherName"] not in names:
+                names.append(source["publisherName"])
+
+            if source["ftcData"] and source["ftcData"]["name"] not in names:
+                names.append(source["ftcData"]["name"])
+
+            if source["additionalData"]["alternative_names"]:
+                names.extend(source["additionalData"]["alternative_names"])
+
+            if source["name"] not in names:
+                names.append(source["name"])
+
+
+            hit["org_ids"] = set(org_ids)
+            hit["names"] = names
+            hit["other_names"] = names[1:]
 
         context["results"] = results
         context["json_query"] = json.dumps(json_query)
