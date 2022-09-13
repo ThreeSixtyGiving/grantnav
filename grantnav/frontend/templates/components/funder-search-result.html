@@ -3,7 +3,7 @@
 <div class="grant-search-result grant-search-result__funders">
   <div class="grant-search-result__left-side">
       <a class="grant-search-result__title" href="{% url 'org' result.source.id %}">
-        {{ result.name }}
+        {{ result.names.0 }}
       </a>
     <div class="grant-search-result__box_container">
       {% for stat in result.stats_by_currency %}
@@ -30,10 +30,10 @@
   <div class="grant-search-result__right-side">
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Org IDs: </span>
-      <span>{{ result.source.orgIDs | join:", " }}</span>
+      <span>{{ result.org_ids | join:", " }}</span>
     </div>
 
-    {% if result.other_names|length > 0 %}
+    {% if result.names|length > 1 %}
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Other Names: </span>
       <span>{{result.other_names | join:", "}}</span>
@@ -42,13 +42,13 @@
 
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Latest Award: </span>
-      <span>{{ result.source.maxAwardDate | get_date}}</span>
+      <span>{{ result.source.aggregate.maxAwardDate | get_date}}</span>
     </div>
 
 
 
     <div class="grant-search-result__data-item">
-      <span class="grant-search-result__data-item--label"><a class="button" href="{% url 'search' %}?{{result.grant_search_parameters}}" title="Explore the Grants funded by {{result.name}}" style="text-decoration: none;">Explore Grants</a> </span>
+      <span class="grant-search-result__data-item--label"><a class="button" href="{% url 'search' %}?{{result.grant_search_parameters}}" title="Explore the Grants funded by {{result.names.0}}" style="text-decoration: none;">Explore Grants</a> </span>
     </div>
   </div>
 </div>

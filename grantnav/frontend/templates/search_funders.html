@@ -19,10 +19,27 @@
         {% endif %}
       </div>
       {% if results and results.hits.hits %}
-        <div class="grantnav-search__content">
-          <div class="search-summary-description">
-            Your search ‘{{ text_query }}’ returned {{ results.hits.total|get_amount }} funders.
-          </div>
+      <div class="grantnav-search__content">
+
+        <div class="pull-right">
+          <a class="alert-tag alert-tag--anchor" href="https://help.grantnav.threesixtygiving.org/en/latest/organisations.html">
+            <span class="alert-tag__icon">
+              {% include 'tokens/info-icon.html' %}
+            </span>
+            <span class="alert-tag__content">Learn more about organisations</span>
+          </a>
+        </div>
+
+        <div class="search-summary-description">
+          Your search ‘{{ text_query }}’ returned {{ results.hits.total|get_amount }} funders.
+        </div>
+
+        <div class="spacer-3"></div>
+        <div class="box box--teal">
+          <h3 class="box__heading">Where is this data from?</h3>
+          <p>This data was published in the 360Giving Data Standard, with additional data including organisation identifiers and
+            names added via FindThatCharity.</p>
+        </div>
 
           {# include 'components/search-summary-box.html' #}
 

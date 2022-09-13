@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import json
 import argparse
-import flattentool
 import shutil
 import uuid
 import tempfile
@@ -9,10 +8,15 @@ import os
 import csv
 from pprint import pprint
 import elasticsearch.helpers
-import requests
 import time
 import ijson
 import dateutil.parser as date_parser
+
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids
 
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
@@ -30,41 +34,6 @@ district_name_to_code = {}
 current_dir = os.path.dirname(os.path.realpath(__file__))
 
 
-def convert_spreadsheet(file_path, file_type, tmp_dir):
-    #file_type = file_name.split('.')[-1]
-    encoding = 'utf-8'
-    converted_path = os.path.join(tmp_dir, 'output.json')
-    if file_type == 'csv':
-        destination = os.path.join(tmp_dir, 'grants.csv')
-        shutil.copy(file_path, destination)
-        try:
-            with open(destination, encoding='utf-8') as main_sheet_file:
-                main_sheet_file.read()
-        except UnicodeDecodeError:
-            try:
-                with open(destination, encoding='cp1252') as main_sheet_file:
-                    main_sheet_file.read()
-                encoding = 'cp1252'
-            except UnicodeDecodeError:
-                encoding = 'latin_1'
-        input_name = tmp_dir
-    else:
-        input_name = file_path
-    try:
-        flattentool.unflatten(
-            input_name,
-            output_name=converted_path,
-            input_format=file_type,
-            main_sheet_name='grants',
-            root_list_path='grants',
-            root_id='',
-            schema='https://raw.githubusercontent.com/ThreeSixtyGiving/standard/master/schema/360-giving-schema.json',
-            convert_titles=True,
-            encoding=encoding
-        )
-    except Exception:
-        print("Unflattening failed for file {}".format(file_path))
-        raise
 
 # curl http://test-360giving.pantheon.io/api/3/action/current_package_list_with_resources | grep -Eo '[^"]+\.json' | sed 's/\\\//\//g' | while read url; do wget "$url"; done
 
@@ -243,9 +212,7 @@ def maybe_create_index(index_name=ES_INDEX):
                     }
                 }
             },
-            "currencies": {
-                "type": "keyword"
-            },
+            # Additional funding/recipient organisation mappings
             "organizationName": {
                 "type": "text",
                 "analyzer": "english_with_folding"
@@ -253,36 +220,30 @@ def maybe_create_index(index_name=ES_INDEX):
             "orgIDs": {
                 "type": "keyword"
             },
-            "grants": {
-                "type": "double"
-            },
-            "maxAwardDate": {
-                "type": "date",
-                "ignore_malformed": True
-            },
-            "minAwardDate": {
-                "type": "date",
-                "ignore_malformed": True
-            },
-            "currencyGrants": {
-                "dynamic": True,
-                "properties": {}
-            },
-            "currencyTotal": {
-                "dynamic": True,
-                "properties": {}
-            },
-            "currencyMaxAmount": {
-                "dynamic": True,
-                "properties": {}
-            },
-            "currencyMinAmount": {
-                "dynamic": True,
-                "properties": {}
-            },
-            "currencyAvgAmount": {
-                "dynamic": True,
-                "properties": {}
+            "aggregate": {
+                "properties": {
+                    "grants": {"type": "double"},
+                    "maxAwardDate": {
+                        "type": "date",
+                        "ignore_malformed": True
+                    },
+                    "minAwardDate": {
+                        "type": "date",
+                        "ignore_malformed": True
+                    },
+                    "currencies": {
+                        "properties": {
+                            # Currently we do things like order-by on GBP
+                            "GBP": {
+                                "properties": {
+                                    "avg": {"type": "double"},
+                                    "total": {"type": "double"},
+                                }
+                            }
+
+                        }
+                    }
+                }
             },
         }
     }
@@ -359,6 +320,9 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                 obj['dataType'] = data_type
                 obj['_id'] = str(uuid.uuid4())
                 obj['_index'] = ES_INDEX
+                obj['currency'] = list(obj["aggregate"]["currencies"].keys())
+                obj['organizationName'] = " ".join(new_ordered_names(obj))
+                obj['orgIDs'] = new_org_ids(obj)
                 yield obj
 
     if recipients:
@@ -376,44 +340,30 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
         funding_org_name = json.load(fd)
     id_name_org_mappings["fundingOrganization"].update(funding_org_name)
 
-    for file_name in files:
+    for grants_file_path in files:
         tmp_dir = tempfile.mkdtemp()
-        if file_name.startswith('http'):
-            content = requests.get(file_name).content
-            new_filename = file_name.split('/')[-1].split('?')[0]
-            downloaded_filename = os.path.join(tmp_dir, new_filename)
-            with open(downloaded_filename, 'wb+') as downloaded_file:
-                downloaded_file.write(content)
-            file_name = downloaded_filename
 
-        file_type = file_name.split('.')[-1]
+        file_type = grants_file_path.split('.')[-1]
 
-        if file_type == 'json':
-            json_file_name = file_name
-        elif file_type in ('csv', 'xlsx'):
-            json_file_name = os.path.join(tmp_dir, 'output.json')
-            convert_spreadsheet(file_name, file_type, tmp_dir)
-        elif file_type in ('report'):
-            continue
-        else:
-            print('unimportable file {} (bad) file type'.format(file_name))
+        if file_type != 'json':
+            print('unimportable file {} (bad) file type'.format(grants_file_path))
             continue
 
         def grant_generator():
             """ Add / Update GrantNav specific optimisation fields """
 
-            with open(json_file_name) as fp:
+            with open(grants_file_path) as fp:
                 stream = ijson.items(fp, 'grants.item')
                 for grant in stream:
-                    grant['filename'] = file_name.strip('./')
+                    grant['filename'] = os.path.basename(grants_file_path)
                     grant['_id'] = str(uuid.uuid4())
                     grant['_index'] = ES_INDEX
                     grant['dataType'] = 'grant'
 
                     # grant.fundingOrganization.id_and_name
-                    update_doc_with_org_mappings(grant, "fundingOrganization", file_name)
+                    update_doc_with_org_mappings(grant, "fundingOrganization", grant['filename'])
                     # grant.recipientOrganization.id_and_name
-                    update_doc_with_org_mappings(grant, "recipientOrganization", file_name)
+                    update_doc_with_org_mappings(grant, "recipientOrganization", grant['filename'])
                     # grant.title_and_description
                     update_doc_with_title_and_description(grant)
                     # grant.grantProgramme.title_keyword
@@ -426,7 +376,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
 
                     yield grant
 
-        pprint(file_name)
+        pprint(grants_file_path)
         result = elasticsearch.helpers.bulk(es, grant_generator(), raise_on_error=False, max_retries=10, initial_backoff=5)
         pprint(result)
 
