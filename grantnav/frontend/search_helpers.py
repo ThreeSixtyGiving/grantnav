@@ -60,7 +60,11 @@ def get_results(json_query, size=10, from_=0, data_type="grant"):
 
     query["bool"]["filter"].append({"term": {"dataType": {"value": data_type}}})
 
-    results = es.search(body=new_json_query, size=size, from_=from_, index=get_index(), track_total_hits=True)
+    if from_ == -1:
+        results = es.search(body=new_json_query, index=get_index(), track_total_hits=True)
+    else:
+        results = es.search(body=new_json_query, size=size, from_=from_, index=get_index(), track_total_hits=True)
+
     if extra_context is not None:
         json_query["extra_context"] = extra_context
     return results
@@ -70,7 +74,7 @@ def get_request_type_and_size(request):
     results_size = SIZE
 
     match = re.search(r"\.(\w+)$", request.path)
-    if match and match.group(1) in ["csv", "json", "ajax"]:
+    if match and match.group(1) in ["csv", "json", "ajax", "api"]:
         result_format = match.group(1)
         results_size = settings.FLATTENED_DOWNLOAD_LIMIT
     else:
