@@ -9,6 +9,11 @@ from django.views.generic import RedirectView
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^search$', views.search, name='search'),
+    url(r'^widgets', views.search, {'template_name': 'search_widgets.html'}, name='search.widgets'),
+    url(r'^widgets.api', views.search, name='widgets.api'),
+    url(r'^tabular', views.search, {'template_name': 'widgets/tabular_grants.html'}, name='widgets.tabular'),
+    url(r'^amount_graph', views.search, {'template_name': 'widgets/amount_graph.html'}, name='widgets.amount_graph'),
+    url(r'^date_graph', views.search, {'template_name': 'widgets/date_graph.html'}, name='widgets.date_graph'),
     url(r'^search\.csv$', views.search, name='search.csv'),
     url(r'^search\.json$', views.search, name='search.json'),
     url(r'^search\.json$', views.search, name='search.json'),
