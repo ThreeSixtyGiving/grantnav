@@ -8,6 +8,7 @@ import urllib
 from itertools import chain
 
 import dateutil.parser as date_parser
+from dateutil.relativedelta import relativedelta
 import elasticsearch.exceptions
 from django.http import Http404, JsonResponse
 from django.http import HttpResponse, StreamingHttpResponse
@@ -143,6 +144,35 @@ def grants_json_paged(query):
     response = StreamingHttpResponse(grants_json_generator(helpers.clean_for_es(query)), content_type='application/json')
     response['Content-Disposition'] = 'attachment; filename="grantnav-{0}.json"'.format(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
     return response
+
+
+def grants_json(query, length, start):
+    query.pop('extra_context', None)
+    query.pop('aggs', None)
+    query['query']['bool']['filter'].append({"term": {"dataType": {"value": "grant"}}})
+    try:
+        results = get_results(helpers.clean_for_es(query), length, start)
+    except elasticsearch.exceptions.RequestError as e:
+        if e.error == 'search_phase_execution_exception':
+            results = {"hits": {"total": {"value": 0}, "hits": []}}
+    result_list = []
+    for result in results["hits"]["hits"]:
+        grant = result["_source"]
+        try:
+            grant["awardDate"] = date_parser.parse(grant["awardDate"]).strftime("%d %b %Y")
+        except ValueError:
+            pass
+        try:
+            grant["amountAwarded"] = utils.currency_prefix(grant.get("currency")) + "{:,.0f}".format(grant["amountAwarded"])
+        except ValueError:
+            pass
+        grant["description"] = grant.get("description", "")
+        grant["title"] = grant.get("title", "")
+        result_list.append(grant)
+    
+    return {'data': result_list,
+            'recordsTotal': results["hits"]["total"]['value'],
+            'recordsFiltered': results["hits"]["total"]['value']}
 
 
 def org_csv_generator(data, org_type):
@@ -446,12 +476,19 @@ def create_json_query_from_parameters(request):
     json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = amount_filter
 
     date_filter = {}
-    min_date = utils.yearmonth_to_date(request.GET.get('min_date', ''))
+    recency_period = request.GET.get('recency_period')
+    if recency_period:
+        min_date= (datetime.datetime.today() - relativedelta(months=int(recency_period))).strftime('%Y-%m-%d')
+        max_date = datetime.datetime.today().strftime('%Y-%m-%d')
+    else:
+        min_date = utils.yearmonth_to_date(request.GET.get('min_date', ''))
+        max_date = utils.yearmonth_to_date(request.GET.get('max_date', ''), True)
+
     if min_date:
         date_filter['gte'] = min_date
-    max_date = utils.yearmonth_to_date(request.GET.get('max_date', ''), True)
     if max_date:
         date_filter['lt'] = max_date
+
     json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"] = date_filter
 
     for term_facet in TERM_FACETS:
@@ -531,7 +568,7 @@ def create_parameters_from_json_query(json_query, **extra_parameters):
     return urlencode(parameter_list)
 
 
-def search(request):
+def search(request, template_name="search.html"):
     [result_format, results_size] = get_request_type_and_size(request)
 
     context = {}
@@ -630,6 +667,16 @@ def search(request):
             return grants_csv_paged(json_query)
         elif result_format == "json":
             return grants_json_paged(json_query)
+        elif result_format == "api":
+            start = int(request.GET['start'])
+            length = int(request.GET['length'])
+            search_value = request.GET['search[value]']
+            if search_value:
+                current_query = json_query["query"]["bool"]["must"]["query_string"]['query']
+                json_query["query"]["bool"]["must"] = {"query_string": {"query": current_query + " " + search_value, "default_operator": "and"}}
+            json_response = grants_json(json_query, length, start)
+            json_response['draw'] = request.GET['draw'],
+            return JsonResponse(json_response)
 
         if context['text_query'] == '*':
             context['text_query'] = ''
@@ -723,7 +770,7 @@ def search(request):
 
         add_advanced_search_information_in_context(context)
 
-        return render(request, "search.html", context=context)
+        return render(request, template_name, context=context)
 
 
 def filter_search_ajax(request):
