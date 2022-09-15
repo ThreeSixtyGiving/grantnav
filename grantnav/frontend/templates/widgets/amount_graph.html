@@ -1,0 +1,14 @@
+{% extends 'widgets/widgets_base.html' %}
+{% load graphs %}
+{% load frontend %}
+
+{% block main_content %}
+  {% with currency=results.aggregations.currency_stats.buckets|first|get:"key"|upper buckets=results.aggregations.currency_stats.buckets%}
+    <div class="graph-item">
+      <div class="graph-label">Amount awarded</div>
+      <div class="graph-container">
+        {% amount_awarded_graph %}
+      </div>
+    </div>
+  {% endwith %}
+{% endblock %}
