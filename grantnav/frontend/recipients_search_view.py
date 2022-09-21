@@ -5,6 +5,7 @@ import json
 import elasticsearch.exceptions
 from django.utils.http import urlencode
 from django.shortcuts import render, redirect
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency
 
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, SIZE
 import grantnav.frontend.search_helpers as helpers
@@ -175,28 +176,16 @@ def search(request):
         for hit in results["hits"]["hits"]:
             hit["source"] = hit["_source"]
             source = hit["source"]
-            hit["stats_by_currency"] = []
-            for currency in hit['source']['currency']:
-                stats = {
-                    "currency": currency,
-                    "grants": source["currencyGrants"].get(currency),
-                    "total": source["currencyTotal"].get(currency),
-                    "max": source["currencyMaxAmount"].get(currency),
-                    "min": source["currencyMinAmount"].get(currency),
-                    "avg": source["currencyAvgAmount"].get(currency),
-                }
-                hit["stats_by_currency"].append(stats)
-            hit["stats_by_currency"].sort(key=lambda i: i["total"], reverse=True)
+            hit["stats_by_currency"] = new_stats_by_currency(source)
+            org_ids = new_org_ids(source)
+            names = new_ordered_names(source)
 
-            parameters = [("recipientOrganization", org_id) for org_id in hit["source"]["orgIDs"]]
+            parameters = [("recipientOrganization", org_id) for org_id in org_ids]
             hit["grant_search_parameters"] = urlencode(parameters)
 
-            if source['nameCharityFinder']:
-                hit['name'] = source['nameCharityFinder'][0]
-            else:
-                hit['name'] = source['organizationName'][0]
-
-            hit['other_names'] = list({name for name in source['organizationName'] if name != hit['name']})
+            hit["org_ids"] = org_ids
+            hit["names"] = names
+            hit["other_names"] = names[1:]
 
         context["results"] = results
         context["json_query"] = json.dumps(json_query)

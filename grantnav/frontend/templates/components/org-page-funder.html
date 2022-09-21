@@ -6,12 +6,13 @@
         <a name="Funder"></a>
         <h3 class="media-card__heading">As Funder</h3>
     </header>
-    <p>{{funder.organizationName.0}} appears in the 360Giving data as a funder of grants. Here is an overview of the grants they have funded.</p>
+    <pre>{{funder}}</pre>
+    <p>{{org_names.0}} appears in the 360Giving data as a funder of grants. Here is an overview of the grants they have funded.</p>
     <h4>Summary</h4>
     <div class="media-card__box_container">
         <div class="media-card__box">
             <strong>Total Grants</strong> <br />
-            <span style="word-break: break-all">{{funder.grants | get_amount }}</span>
+            <span style="word-break: break-all">{{funder.aggregate.grants | get_amount }}</span>
         </div>
         <div class="media-card__box">
             <strong>Recipients</strong> <br />
@@ -19,11 +20,11 @@
         </div>
         <div class="media-card__box">
             <strong>Earliest Award</strong> <br />
-            {{funder.minAwardDate | get_date }}
+            {{funder.aggregate.minAwardDate | get_date }}
         </div>
         <div class="media-card__box">
             <strong>Latest Award</strong> <br />
-            {{funder.maxAwardDate | get_date }}
+            {{funder.aggregate.maxAwardDate | get_date }}
         </div>
     </div>
     <div class="media-card__box_container">

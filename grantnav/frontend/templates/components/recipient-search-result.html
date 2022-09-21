@@ -3,28 +3,25 @@
 <div class="grant-search-result grant-search-result__recipients">
   <div class="grant-search-result__left-side">
       <a class="grant-search-result__title" href="{% url 'org' result.source.id %}">
-        {{ result.name }}
+        {{ result.names.0 }}
       </a>
 
     <div class="grant-search-result__box_container">
       {% for stat in result.stats_by_currency %}
-        <div class="grant-search-result__box">
-          <strong> Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
+        <div class="grant-search-result__box" style="padding-bottom:0">
+          <strong>Grants {%if stat.currency != 'GBP' or result.stats_by_currency|length > 1%} <br /><small>{{stat.currency}}</small> {% endif %}</strong><br/>
           {{stat.grants | get_amount }}
         </div>
-        <div class="grant-search-result__box">
-          <strong> Total {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
-
+        <div class="grant-search-result__box" style="padding-bottom:0">
+          <strong>Total {%if stat.currency != 'GBP' or result.stats_by_currency|length > 1 %} <br /><small>{{stat.currency}}</small>{% endif %}</strong><br/>
           {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
         </div>
-        <div class="grant-search-result__box">
-          <strong> Greatest {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
-
+        <div class="grant-search-result__box" style="padding-bottom:0">
+          <strong>Greatest {%if stat.currency != 'GBP' or result.stats_by_currency|length > 1 %} <br /><small>{{stat.currency}}</small> {% endif %}</strong><br/>
           {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
         </div>
-        <div class="grant-search-result__box">
-          <strong> Average {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
-
+        <div class="grant-search-result__box" style="padding-bottom:0">
+          <strong>Average {%if stat.currency != 'GBP' or result.stats_by_currency|length > 1 %} <br /> <small>{{stat.currency}}</small> {% endif %}</strong><br/>
           {{stat.currency | currency_symbol}}{{stat.avg | get_amount}}
         </div>
       {% endfor %}
@@ -32,19 +29,21 @@
   </div>
 
   <div class="grant-search-result__right-side">
-    <div class="grant-search-result__data-item">
+     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Org IDs: </span>
-      <span>{{ result.source.orgIDs | join:", " }}</span>
+      <span>{{ result.org_ids | join:", " }}</span>
     </div>
-   {% if result.other_names|length > 0 %}
+
+    {% if result.names|length > 1 %}
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Other Names: </span>
       <span>{{result.other_names | join:", "}}</span>
     </div>
     {% endif %}
+
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Latest Award: </span>
-      <span>{{ result.source.maxAwardDate | get_date }}</span>
+      <span>{{ result.source.aggregate.maxAwardDate | get_date}}</span>
     </div>
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label"><a class="button" style="text-decoration: none;" title="Explore the grants received by {{result.name}}" href="{% url 'search' %}?{{result.grant_search_parameters}}">Explore Grants</a> </span>

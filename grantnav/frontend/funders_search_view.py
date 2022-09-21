@@ -5,6 +5,7 @@ import json
 import elasticsearch.exceptions
 from django.utils.http import urlencode
 from django.shortcuts import render, redirect
+from grantnav.frontend.org_utils import new_ordered_names, new_stats_by_currency
 
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, SIZE
 import grantnav.frontend.search_helpers as helpers
@@ -175,20 +176,7 @@ def search(request):
         for hit in results["hits"]["hits"]:
             hit["source"] = hit["_source"]
             source = hit["source"]
-            hit["stats_by_currency"] = []
-            for currency in source["aggregate"]['currencies'].keys():
-                currency_info = source["aggregate"]["currencies"][currency]
-
-                stats = {
-                    "currency": currency,
-                    "grants": currency_info["grants"],
-                    "total": currency_info["total"],
-                    "max": currency_info["max"],
-                    "min": currency_info["min"],
-                    "avg": currency_info["avg"],
-                }
-                hit["stats_by_currency"].append(stats)
-            hit["stats_by_currency"].sort(key=lambda i: i["total"], reverse=True)
+            hit["stats_by_currency"] = new_stats_by_currency(hit["source"])
 
             org_ids = [hit["source"]["id"]]
 
@@ -200,22 +188,22 @@ def search(request):
             hit["grant_search_parameters"] = urlencode(parameters)
 
             # Name ordering is important: Publisher, FTC, Grant
-            names = []
+            names = new_ordered_names(hit["source"])
 
-            if source["publisherName"] and source["publisherName"] not in names:
-                names.append(source["publisherName"])
+#            if source["publisherName"] and source["publisherName"] not in names:
+#                names.append(source["publisherName"])
+#
+#            if source["ftcData"] and source["ftcData"]["name"] not in names:
+#                names.append(source["ftcData"]["name"])
+#
+#            if source["additionalData"]["alternative_names"]:
+#                names.extend(source["additionalData"]["alternative_names"])
+#
+#            if source["name"] not in names:
+ #               names.append(source["name"])
 
-            if source["ftcData"] and source["ftcData"]["name"] not in names:
-                names.append(source["ftcData"]["name"])
 
-            if source["additionalData"]["alternative_names"]:
-                names.extend(source["additionalData"]["alternative_names"])
-
-            if source["name"] not in names:
-                names.append(source["name"])
-
-
-            hit["org_ids"] = set(org_ids)
+            hit["org_ids"] = org_ids
             hit["names"] = names
             hit["other_names"] = names[1:]
 

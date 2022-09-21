@@ -5,7 +5,6 @@
       <a class="grant-search-result__title" href="{% url 'org' result.source.id %}">
         {{ result.names.0 }}
       </a>
-      <pre>{{result}}</pre>
     <div class="grant-search-result__box_container">
       {% for stat in result.stats_by_currency %}
         <div class="grant-search-result__box" style="padding-bottom:0">

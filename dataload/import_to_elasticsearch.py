@@ -359,6 +359,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                 obj['dataType'] = data_type
                 obj['_id'] = str(uuid.uuid4())
                 obj['_index'] = ES_INDEX
+                obj['currency'] = list(obj["aggregate"]["currencies"].keys())
                 yield obj
 
     if recipients:

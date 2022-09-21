@@ -20,6 +20,7 @@ from grantnav.search import get_es
 from grantnav.index import get_index
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, get_data_from_path
 import grantnav.frontend.search_helpers as helpers
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency
 
 
 BASIC_FILTER = [
@@ -864,18 +865,9 @@ def grant(request, grant_id):
 def augment_org(org):
     if not org:
         return
-    org["stats_by_currency"] = []
-    for currency in org['currency']: # FIXME issue see also funders_Search_view
-        stats = {
-            "currency": currency,
-            "grants": org["currencyGrants"].get(currency),
-            "total": org["currencyTotal"].get(currency),
-            "max": org["currencyMaxAmount"].get(currency),
-            "min": org["currencyMinAmount"].get(currency),
-            "avg": org["currencyAvgAmount"].get(currency),
-        }
-        org["stats_by_currency"].append(stats)
-    org["stats_by_currency"].sort(key=lambda i: i["total"], reverse=True)
+    org["stats_by_currency"] = new_stats_by_currency(org)
+    org["org_ids"] = new_org_ids(org)
+    org["names"] = new_ordered_names(org)
     org["main_currency"] = org["stats_by_currency"][0]['currency']
     return org
 
@@ -967,17 +959,6 @@ def org(request, org_id):
     recipient = {}
     recipient_funders = {}
 
-    org_names = []
-    org_ids = [org_id]
-
-    publisher = provenance.by_publisher.get(org_id, {})
-    if publisher:
-        get_funders_for_datasets(publisher['datasets'])
-        org_types.append('Publisher')
-
-        # if publisher use that as main name, this goes in the list first
-        org_names.append(publisher['name'])
-
     if funder_results['hits']['hits']:
         org_types.append('Funder')
         funder = funder_results['hits']['hits'][0]['_source']
@@ -995,30 +976,48 @@ def org(request, org_id):
         recipient["grant_search_parameters"] = urlencode(parameters)
         recipient_funders = get_recipient_funders([recipient['id']]) # TODO list of all orgids
 
+    ftc_data = None
+    publisher_prefix = None
+
     for org in (funder, recipient):
-        augment_org(org)
         if org:
-            # use charity finder name first
-            org_names.extend(org["nameCharityFinder"])
-            # lastly use names from data
-            org_names.extend(org['organizationName'])
-            org_ids.extend(org['orgIDs'])
+            augment_org(org)
+            if not publisher_prefix:
+                publisher_prefix = org.get("publisherPrefix")
+            if not ftc_data:
+                # Fetch the FTC data from the first org that has it (it should be the same)
+                ftc_data = org.get("ftcData")
+
+
+    for org in (funder, recipient):
+        if org:
+            org_ids = new_org_ids(org)
+            org_names = new_ordered_names(org)
+            break
+
+    publisher = provenance.by_publisher.get(publisher_prefix, {}) #publisher
+    if publisher:
+        get_funders_for_datasets(publisher['datasets'])
+        org_types.append('Publisher')
 
     if not org_types:
         raise Http404
 
     # first org name is our selection
     main_name = org_names[0]
-    other_names = list({name for name in org_names if name != main_name})
+    other_names = org_names[1:]
 
     context = {"funder": funder,
                "recipient": recipient,
                "publisher": publisher,
                "recipient_funders": recipient_funders,
                "org_types": org_types,
-               "org_ids": list(set(org_ids)),
+               "org_ids": org_ids,
+               "org_names": org_names,
                "main_name": main_name,
-               "other_names": other_names}
+               "other_names": other_names,
+               "ftc_data": ftc_data,
+               }
 
     return render(request, "org.html", context=context)
 

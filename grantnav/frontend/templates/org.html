@@ -58,10 +58,25 @@
         <p>{{ main_name }} has been referred to using several different names in the 360Giving data. This may be because a publisher has abbreviated the name or used an alternative spelling, or the name has changed over time. In other cases, one organisation identifier is shared by multiple entities (for example subsidiaries or branches of the same organisation) receiving distinct grants.</p>
         {% endif %}
 
+          <button class="button" onClick='$("#additional-data-section").toggle()'>Show Additional Data</button>
+          <div id="additional-data-section" style="display:none;">
+            <div class="spacer-2"></div>
+            <div class="table table--zebra">
+              <table class="table table--zebra table--secondary dt-responsive full-width">
+                <tbody>
+                  {% for key, val in ftc_data|flatten %}
+                  <tr>
+                    <td style="width: 40%"> <b>{{ key }} </b> </td>
+                    <td> {{val}} </td>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div class="spacer-2"></div>
+            <p>Data sourced from <a href="findthatcharity.uk">FindThatCharity</a></p>
+          </div>
 
-
-      </div>
-
+          </div>
     </div>
 
     <div class="spacer-4"></div>
@@ -101,7 +116,8 @@
   src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"
 ></script>
 
-{{ funder.orgIDs|json_script:"orgIDs" }}
+{# https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#json-script #}
+{{ funder.org_ids|json_script:"orgIDs" }}
 
 <script>
     function truncate(string, len){
