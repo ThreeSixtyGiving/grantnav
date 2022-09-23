@@ -24,7 +24,7 @@ if settings.PROVENANCE_JSON:
     except FileNotFoundError as e:
         warnings.warn(e)
 else:
-    warnings.warn("No publisher (provenance) data loaded")
+    warnings.warn("No publisher (provenance) data loaded. Hint: Set PROVENANCE_JSON")
 
 
 def identifier_from_filename(filename):

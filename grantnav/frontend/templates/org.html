@@ -36,17 +36,13 @@
 
           <div class="media-card__box">
             <strong>Org IDs</strong> <br/>
-            {% for org_id in org_ids %}
-            {{org_id}} &nbsp;
-            {% endfor %}
+            {{org_ids|join:", "}}
           </div>
 
           {% if other_names %}
           <div class="media-card__box">
             <strong>Other Names</strong> <br/>
-            {% for other_name in other_names %}
-            {{other_name}} &nbsp;
-            {% endfor %}
+            {{other_names|join:", "}}
           </div>
           {% endif %}
         </div>
@@ -58,6 +54,7 @@
         <p>{{ main_name }} has been referred to using several different names in the 360Giving data. This may be because a publisher has abbreviated the name or used an alternative spelling, or the name has changed over time. In other cases, one organisation identifier is shared by multiple entities (for example subsidiaries or branches of the same organisation) receiving distinct grants.</p>
         {% endif %}
 
+        {% if ftc_data %}
           <button class="button" onClick='$("#additional-data-section").toggle()'>Show Additional Data</button>
           <div id="additional-data-section" style="display:none;">
             <div class="spacer-2"></div>
@@ -73,8 +70,9 @@
               </table>
             </div>
             <div class="spacer-2"></div>
-            <p>Data sourced from <a href="findthatcharity.uk">FindThatCharity</a></p>
+            <p>Data sourced from <a href="https://findthatcharity.uk/orgid/{{org_ids.0}}">"{{org_names.0}}" on FindThatCharity</a>.
           </div>
+          {% endif %}
 
           </div>
     </div>

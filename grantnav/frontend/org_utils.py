@@ -39,6 +39,8 @@ def new_org_ids(org_result):
     org_ids = [org_result["id"]]
 
     if org_result["ftcData"]:
-        org_ids.extend(org_result["ftcData"]["orgIDs"])
+        for org_id in org_result["ftcData"]["orgIDs"]:
+            if org_id not in org_ids:
+                org_ids.append(org_id)
 
-    return list(set(org_ids))
+    return org_ids
