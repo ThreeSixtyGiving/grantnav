@@ -14,6 +14,12 @@ import time
 import ijson
 import dateutil.parser as date_parser
 
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids
+
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 ELASTICSEARCH_HOST = os.environ.get("ELASTICSEARCH_HOST", "localhost")
@@ -360,6 +366,8 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                 obj['_id'] = str(uuid.uuid4())
                 obj['_index'] = ES_INDEX
                 obj['currency'] = list(obj["aggregate"]["currencies"].keys())
+                obj['organizationName'] = new_ordered_names(obj)
+                obj['orgIDs'] = new_org_ids(obj)
                 yield obj
 
     if recipients:
