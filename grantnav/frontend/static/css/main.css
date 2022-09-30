@@ -913,10 +913,7 @@ a {
   background-color: transparent !important; }
 
 .cookie-consent {
-<<<<<<< HEAD
-=======
   display: none !important;
->>>>>>> e5e3caa (widgets (WIP): builder columns)
   padding-top: 0 !important;
   width: 450px;
   height: 325px;
