@@ -8,6 +8,7 @@ import urllib
 from itertools import chain
 
 import dateutil.parser as date_parser
+from dateutil.relativedelta import relativedelta
 import elasticsearch.exceptions
 from django.http import Http404, JsonResponse
 from django.http import HttpResponse, StreamingHttpResponse
@@ -475,12 +476,19 @@ def create_json_query_from_parameters(request):
     json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = amount_filter
 
     date_filter = {}
-    min_date = utils.yearmonth_to_date(request.GET.get('min_date', ''))
+    recency_period = request.GET.get('recency_period')
+    if recency_period:
+        min_date= (datetime.datetime.today() - relativedelta(months=int(recency_period))).strftime('%Y-%m-%d')
+        max_date = datetime.datetime.today().strftime('%Y-%m-%d')
+    else:
+        min_date = utils.yearmonth_to_date(request.GET.get('min_date', ''))
+        max_date = utils.yearmonth_to_date(request.GET.get('max_date', ''), True)
+
     if min_date:
         date_filter['gte'] = min_date
-    max_date = utils.yearmonth_to_date(request.GET.get('max_date', ''), True)
     if max_date:
         date_filter['lt'] = max_date
+
     json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"] = date_filter
 
     for term_facet in TERM_FACETS:
