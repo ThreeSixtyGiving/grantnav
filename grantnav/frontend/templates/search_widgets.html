@@ -287,7 +287,8 @@ function redirect_on_selection(param, data) {
   if ($('#' + param + '-exclude').prop("checked")) {
      uri.addSearch('exclude_' + param, 'true');
   }
-  window.location.href = uri.toString();
+  var query = uri.query()
+  window.location.href = window.location.href.split('?')[0] + "?" + query
 };
 
 
