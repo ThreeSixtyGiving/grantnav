@@ -167,6 +167,7 @@
       </div>
     {% endif %}
   </main>
+
 {% endblock %}
 
 
@@ -200,7 +201,7 @@ function updateFrames() {
   if (selectElement) {
     var selectedView = selectElement.value;
     document.getElementById('sample-frame').src = "/" + selectedView + window.location.search;
-    document.getElementById('generated-code').innerHTML = "&lt;iframe src='/widgets/" + selectedView + window.location.search + "'&gt;&lt;/iframe&gt;";
+    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + "/" + selectedView + window.location.search + "' style='height: 640px; width: 1024px;'&gt;&lt;/iframe&gt;";
   }
 }
 
