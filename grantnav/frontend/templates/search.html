@@ -35,31 +35,40 @@
             {% include 'components/filter-summary.html' %}
           {% endif %}
 
-          <section class="grantnav-search__content--filters">
-            {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
-
-            <div class="export-wrapper">
-              <div class="export-label">Export search data:</div>
-
-              <div class="export-button">
-                {% include 'components/export-data-button--csv.html' with data_function='search.csv' query=query_string only %}
+          <div class="card-view">
+            <section class="grantnav-search__content--filters">
+              {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
+  
+              <div class="export-wrapper">
+                <div class="export-label">Export search data:</div>
+  
+                <div class="export-button">
+                  {% include 'components/export-data-button--csv.html' with data_function='search.csv' query=query_string only %}
+                </div>
+  
+                <div class="export-button">
+                  {% include 'components/export-data-button--json.html' with data_function='search.json' query=query_string only %}
+                </div>
               </div>
+            </section>
 
-              <div class="export-button">
-                {% include 'components/export-data-button--json.html' with data_function='search.json' query=query_string only %}
-              </div>
-            </div>
-          </section>
+            <section class="grantnav-search__content--results">
+            {% for result in results.hits.hits %}
+              {% include 'components/grant-search-result.html' with result=result %}
+            {% endfor %}
+            </section>
 
-          <section class="grantnav-search__content--results">
-          {% for result in results.hits.hits %}
-            {% include 'components/grant-search-result.html' with result=result %}
-          {% endfor %}
-          </section>
+            <section class="grantnav-search__content--footer">
+              {% include 'components/pager.html' %}
+            </section>
+          </div>
 
-          <section class="grantnav-search__content--footer">
-            {% include 'components/pager.html' %}
-          </section>
+          <div class="table-view">
+            <section class="grantnav-search__content--results">
+              {% include 'components/grants_table.html' %}
+            </section>
+          </div>
+
         </div>
       </div>
       {% elif results %}
@@ -100,16 +109,17 @@
 
 
 {% block extra_style %}
+{% include 'components/grants_table_styles.html' %}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block extra_scripts %}
 
+{% include 'components/grants_table_scripts.html' %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
-
 
 <script>
 
@@ -139,6 +149,23 @@ function formatDropdownItem (item) {
   return $dropdownItem;
 };
 
+$( document ).ready(function() {
+  $( ".table-view" ).css('display', 'none');
+  $('input[type=radio][name=results-switcher]').change(function() {
+    if (this.value == 'card') {
+      $( ".card-view" ).css('display', 'block');
+      $( ".table-view" ).css('display', 'none');
+      $( ".results-title__subtitle").css('display', 'inline');
+    }
+    else if (this.value == 'table') {
+      $( ".card-view" ).css('display', 'none');
+      $( ".table-view" ).css('display', 'flex');
+      $( ".results-title__subtitle").css('display', 'none');
+      $('#grants_datatable').DataTable().responsive.recalc();
+      $('#grants_datatable').DataTable().columns.adjust();
+    }
+  });
+});
 
 // This returns the html for select2 to render each tag in the select box.
 function formatSelection (item) {

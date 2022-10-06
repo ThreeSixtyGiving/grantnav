@@ -1,0 +1,61 @@
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"
+  ></script>
+
+  <script>
+  
+    $( document ).ready(function() {
+      var grantnavLinkElement = document.getElementById('grantnav-link');
+      if (grantnavLinkElement) {
+        grantnavLinkElement.href = "https://grantnav.threesixtygiving.org/search" + window.location.search;
+      }
+    });
+    
+    function truncate(string, len){
+        if (string.length > len)
+          return string.substring(0,len)+'...';
+        else
+          return string;
+    };
+
+    jQuery(function($) {
+      $('#grants_datatable').dataTable({
+        "serverSide": true,
+        "responsive": true,
+        "searching": true,
+        "autoWidth": true,
+        "scrollY": 400,
+        "scroller": true,
+        "dom": "fit",
+        "scroller": {"displayBuffer": 20,
+                    "loadingIndicator": true},
+        "language": {
+            "info": "_START_ to _END_ of _TOTAL_",
+            "search": "Search All Fields"
+        },
+        "ajax": {
+          "url": "{% url 'widgets.api' %}" + window.location.search,
+        },
+        "columns": [
+          {"data": "title",
+          "render": function (data, type, row) {
+              return '<a href="https://grantnav.threesixtygiving.org/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>'
+          },"orderable": false,},
+          {"data": "amountAwarded", "className": "amount", "orderable": false},
+          {"data": "awardDate", "orderable": false},
+          {"data": "fundingOrganization.0.name", "render": function (data, type, row) {return '<a href="/funder/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'}, "orderable": false},
+          {"data": "recipientOrganization.0.name", "render": function (data, type, row) {return '<a href="/recipient/' + row.recipientOrganization[0].id + '">' + truncate(data?data:row.recipientOrganization[0].id, 30) + '</a>'}, "orderable": false},
+          {"data": "description", "orderable": false},
+        ]
+      });
+    })
+    </script>

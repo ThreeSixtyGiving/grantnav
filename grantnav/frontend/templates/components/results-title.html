@@ -1,5 +1,20 @@
 {% load get_amount from frontend %}
-<h2 class="results-title">
-  <span>Search results</span>
-  <span class="results-title__subtitle">(Displaying {{ results.hits.total|get_amount }} grants - {% for page in pages%}{% if page.active%}page {{ page.label }} of {{ total_pages }}{% endif%}{% endfor %})</span>
-</h2>
+<div class="results-title__wrapper">
+  <h2 class="results-title">
+    <span>Search results</span>
+    <span class="results-title__subtitle">(Displaying {{ results.hits.total|get_amount }} grants - {% for page in pages%}{% if page.active%}page {{ page.label }} of {{ total_pages }}{% endif%}{% endfor %})</span>
+  </h2>
+  <div class="radio-buttons">
+
+    <div class="radio-buttons__group">
+        <input class="screen-reader-only" type="radio" id="card-view" name="results-switcher" value="card" checked>
+        <label class="radio-buttons__button" for="card-view">Card view</label>
+    </div>
+
+    <div class="radio-buttons__group">
+        <input class="screen-reader-only" type="radio" id="table-view" name="results-switcher" value="table">
+        <label class="radio-buttons__button" for="table-view">Table view</label>
+    </div>
+
+  </div>
+</div>
