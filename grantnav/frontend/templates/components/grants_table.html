@@ -1,0 +1,38 @@
+{% load frontend %} 
+{% load static %} 
+    <div class="section">
+      <div class="grantnav-datatable__content--filters">
+        <h4>Grants</h4>
+        <div class="export-wrapper">
+          <div class="export-label">Export table data:</div>
+          <div class="export-button">
+            <a class="export-data-button" href="{% url 'search.csv' %}" aria-label="Export results data as CSV">
+              <span>{% include 'tokens/export-csv-icon.html' %}</span>
+            </a>
+          </div>
+
+          <div class="export-button">
+            <a class="export-data-button" href="{% url 'search.json' %}" aria-label="Export results data as JSON">
+              <span>{% include 'tokens/export-json-icon.html' %}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="table table--zebra">
+        <table class="table table--zebra table--primary dt-responsive" id="grants_datatable" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Funder</th>
+              <th>Recipient</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+{% block models %} {% include 'currency_stats_modal.html' %}
+{% endblock %}

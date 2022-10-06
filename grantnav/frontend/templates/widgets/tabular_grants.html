@@ -1,118 +1,21 @@
 {% extends 'widgets/widgets_base.html' %}
-{% load frontend %} 
-{% load static %} 
-{% block main_content %}
-<div class="layout layout--single-column">
-  <main class="layout__content">
-    <div class="section">
-      <div class="grantnav-datatable__content--filters">
-        <h4>Grants</h4>
-        <div class="export-wrapper">
-          <div class="export-label">Export table data:</div>
-          <div class="export-button">
-            <a class="export-data-button" href="{% url 'search.csv' %}" aria-label="Export results data as CSV">
-              <span>{% include 'tokens/export-csv-icon.html' %}</span>
-            </a>
-          </div>
 
-          <div class="export-button">
-            <a class="export-data-button" href="{% url 'search.json' %}" aria-label="Export results data as JSON">
-              <span>{% include 'tokens/export-json-icon.html' %}</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="table table--zebra">
-        <table class="table table--zebra table--primary dt-responsive" id="grants_datatable" style="width: 100%">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Amount</th>
-              <th>Date</th>
-              <th>Funder</th>
-              <th>Recipient</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-
-      <div class="alert-tag">
-        <span class="alert-tag__icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M7 5.83333C6.70833 5.83333 6.41667 6.06667 6.41667 6.41667V9.91667C6.41667 10.2667 6.65 10.5 7 10.5C7.29167 10.5 7.58333 10.2667 7.58333 9.91667V6.41667C7.58333 6.125 7.29167 5.83333 7 5.83333ZM7 3.5C6.70833 3.5 6.41667 3.73333 6.41667 4.08333C6.41667 4.375 6.65 4.66667 7 4.66667C7.29167 4.66667 7.58333 4.43333 7.58333 4.08333C7.58333 3.79167 7.29167 3.5 7 3.5ZM7 0C3.15 0 0 3.15 0 7C0 10.85 3.15 14 7 14C10.85 14 14 10.85 14 7C14 3.15 10.85 0 7 0ZM7 12.8333C3.79167 12.8333 1.16667 10.2083 1.16667 7C1.16667 3.79167 3.79167 1.16667 7 1.16667C10.2083 1.16667 12.8333 3.79167 12.8333 7C12.8333 10.2083 10.2083 12.8333 7 12.8333Z" fill="#1D1536" />
-            </svg>
-        </span>
-        <span class="alert-tag__content"><a id="grantnav-link" href="about:blank">To explore this data in more detail, visit Grantnav</a></span>
-      </div>
-    </div>
-  </main>
-</div>
-
-{% endblock %}
 {% block extra_style %}
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css">
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css">
+{% include 'components/grants_table_styles.html' %}
 {% endblock %}
+
+{% block main_content%}
+{% include 'components/grants_table.html' %}
+<div class="alert-tag">
+  <span class="alert-tag__icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M7 5.83333C6.70833 5.83333 6.41667 6.06667 6.41667 6.41667V9.91667C6.41667 10.2667 6.65 10.5 7 10.5C7.29167 10.5 7.58333 10.2667 7.58333 9.91667V6.41667C7.58333 6.125 7.29167 5.83333 7 5.83333ZM7 3.5C6.70833 3.5 6.41667 3.73333 6.41667 4.08333C6.41667 4.375 6.65 4.66667 7 4.66667C7.29167 4.66667 7.58333 4.43333 7.58333 4.08333C7.58333 3.79167 7.29167 3.5 7 3.5ZM7 0C3.15 0 0 3.15 0 7C0 10.85 3.15 14 7 14C10.85 14 14 10.85 14 7C14 3.15 10.85 0 7 0ZM7 12.8333C3.79167 12.8333 1.16667 10.2083 1.16667 7C1.16667 3.79167 3.79167 1.16667 7 1.16667C10.2083 1.16667 12.8333 3.79167 12.8333 7C12.8333 10.2083 10.2083 12.8333 7 12.8333Z" fill="#1D1536" />
+      </svg>
+  </span>
+  <span class="alert-tag__content"><a id="grantnav-link" href="about:blank">To explore this data in more detail, visit Grantnav</a></span>
+</div>
+</div>
+{% endblock %}
+
 {% block extra_scripts %}
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"
-  ></script>
-
-  <script>
-  
-    $( document ).ready(function() {
-      document.getElementById('grantnav-link').href = "https://grantnav.threesixtygiving.org/search" + window.location.search;
-    });
-    
-    function truncate(string, len){
-        if (string.length > len)
-          return string.substring(0,len)+'...';
-        else
-          return string;
-    };
-
-    jQuery(function($) {
-      $('#grants_datatable').dataTable({
-        "serverSide": true,
-        "responsive": true,
-        "searching": true,
-        "autoWidth": true,
-        "scrollY": 400,
-        "scroller": true,
-        "dom": "fit",
-        "scroller": {"displayBuffer": 20,
-                    "loadingIndicator": true},
-        "language": {
-            "info": "_START_ to _END_ of _TOTAL_",
-            "search": "Search All Fields"
-        },
-        "ajax": {
-          "url": "{% url 'widgets.api' %}" + window.location.search,
-        },
-        "columns": [
-          {"data": "title",
-          "render": function (data, type, row) {
-              return '<a href="https://grantnav.threesixtygiving.org/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>'
-          },"orderable": false,},
-          {"data": "amountAwarded", "className": "amount", "orderable": false},
-          {"data": "awardDate", "orderable": false},
-          {"data": "fundingOrganization.0.name", "render": function (data, type, row) {return '<a href="/funder/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'}, "orderable": false},
-          {"data": "recipientOrganization.0.name", "render": function (data, type, row) {return '<a href="/recipient/' + row.recipientOrganization[0].id + '">' + truncate(data?data:row.recipientOrganization[0].id, 30) + '</a>'}, "orderable": false},
-          {"data": "description", "orderable": false},
-        ]
-      });
-    })
-    </script>
-{% endblock %} {% block models %} {% include 'currency_stats_modal.html' %}
+{% include 'components/grants_table_scripts.html' %}
 {% endblock %}
