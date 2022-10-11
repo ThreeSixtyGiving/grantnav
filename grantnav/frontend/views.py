@@ -668,12 +668,18 @@ def search(request, template_name="search.html"):
         elif result_format == "json":
             return grants_json_paged(json_query)
         elif result_format == "api":
+            COLUMN_ORDER = ["_score", "amountAwarded", "awardDate", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "description"]
             start = int(request.GET['start'])
             length = int(request.GET['length'])
             search_value = request.GET['search[value]']
+            if 'sort' in request.GET:
+                order_field = COLUMN_ORDER[int(request.GET['order[0][column]'])]
+                order_dir = request.GET['order[0][dir]']
+                json_query["sort"] = [{order_field: order_dir}]
             if search_value:
                 current_query = json_query["query"]["bool"]["must"]["query_string"]['query']
                 json_query["query"]["bool"]["must"] = {"query_string": {"query": current_query + " " + search_value, "default_operator": "and"}}
+            
             json_response = grants_json(json_query, length, start)
             json_response['draw'] = request.GET['draw'],
             return JsonResponse(json_response)
