@@ -73,7 +73,7 @@
           {% endif %}
 
           <div class="cards-section">
-            <section class="grid grid--seven-columns margin-left:2">
+            <section class="grid grid--seven-columns max-width__100 margin-left:2">
               <div class="grid__2 box box--teal flex-centre">
                 <h2>Settings:</h2>
               </div>
@@ -106,7 +106,7 @@
             </section>
           </div>
           <div class="cards-section">
-            <section class="grid grid--seven-columns margin-left:2">
+            <section class="grid grid--seven-columns max-width__100 margin-left:2">
               <div class="grid__2 box box--red flex-centre">
                 <h2>Code:</h2>
               </div>
@@ -119,12 +119,12 @@
             </section>
           </div>
           <div class="cards-section">
-            <section class="grid grid--seven-columns margin-left:2">
+            <section class="grid grid--seven-columns max-width__100 margin-left:2">
               <div class="grid__2 box box--black">
                 <h2>Preview:</h2>
               </div>
               <div class="grid__5 box box--black">
-                <iframe id="sample-frame" src="about:blank" style="width: 600px; height: 400px;"></iframe>
+                <iframe id="sample-frame" src="about:blank" style="width: 100%; height: 400px;" frameBorder="0"></iframe>
               </div>
             </section>
           </div>
@@ -201,7 +201,7 @@ function updateFrames() {
   if (selectElement) {
     var selectedView = selectElement.value;
     document.getElementById('sample-frame').src = "/" + selectedView + window.location.search;
-    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + "/" + selectedView + window.location.search + "' style='height: 640px; width: 1024px;'&gt;&lt;/iframe&gt;";
+    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + "/" + selectedView + window.location.search + "' style='height: 640px; width: 1024px;' frameBorder='0'&gt;&lt;/iframe&gt;";
   }
 }
 
