@@ -19,6 +19,11 @@
         grantnavLinkElement.href = "https://grantnav.threesixtygiving.org/search" + window.location.search;
       }
     });
+
+    $( window ).resize(function() {
+      $('#grants_datatable').DataTable().responsive.recalc();
+      $('#grants_datatable').DataTable().columns.adjust();
+    });
     
     function truncate(string, len){
         if (string.length > len)
