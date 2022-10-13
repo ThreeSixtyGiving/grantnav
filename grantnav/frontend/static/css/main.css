@@ -881,18 +881,30 @@ a {
     --border-color: var(--color-orange);
     --text-color: hsla(var(--orange-dark-hsl), 1);
     --bg-color: transparent; }
+    .button.button--orange.button--solid {
+      --text-color: hsla(var(--white-hsl), 1);
+      --bg-color: var(--color-orange); }
   .button.button--teal {
     --border-color: var(--color-teal);
     --text-color: hsla(var(--teal-dark-hsl), 1);
     --bg-color: transparent; }
+    .button.button--teal.button--solid {
+      --text-color: hsla(var(--white-hsl), 1);
+      --bg-color: var(--color-teal); }
   .button.button--yellow {
     --border-color: var(--color-yellow);
     --text-color: var(--color-yellow-dark);
     --bg-color: transparent; }
+    .button.button--yellow.button--solid {
+      --text-color: hsla(var(--base-hsl), 1);
+      --bg-color: var(--color-yellow); }
   .button.button--red {
     --border-color: var(--color-red);
     --text-color: var(--color-red);
     --bg-color: transparent; }
+    .button.button--red.button--solid {
+      --text-color: hsla(var(--white-hsl), 1);
+      --bg-color: var(--color-red); }
   .button.button--black {
     --border-color: var(--color-black);
     --bg-color: var(--color-black);
@@ -900,6 +912,11 @@ a {
   .button.button--disabled {
     opacity: .3 !important;
     pointer-events: none !important; }
+    .button.button--disabled.button--solid {
+      --text-color: hsla(var(--base-hsl), 1);
+      --bg-color: var(--base-hsl); }
+  .button.bold {
+    font-weight: bold; }
 
 .code-block {
   padding: 0 16px;
@@ -3668,6 +3685,9 @@ a.base-card:hover:before {
 
 .grid__all {
   grid-column: 1 / -1; }
+
+.grid.max-width__100 {
+  max-width: 100%; }
 
 .slick-dots {
   position: absolute;
