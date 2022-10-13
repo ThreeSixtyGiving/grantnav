@@ -58,8 +58,8 @@
           }},
           {data: "amountAwarded", className: "amount"},
           {data: "awardDate"},
-          {data: "fundingOrganization.0.name", render: function (data, type, row) {return '<a href="/funder/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'}},
-          {data: "recipientOrganization.0.name", render: function (data, type, row) {return '<a href="/recipient/' + row.recipientOrganization[0].id + '">' + truncate(data?data:row.recipientOrganization[0].id, 30) + '</a>'}},
+          {data: "fundingOrganization.0.name", render: function (data, type, row) {return '<a href="/org/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'}},
+          {data: "recipientOrganization.0.name", render: function (data, type, row) {return '<a href="/org/' + row.recipientOrganization[0].id + '">' + truncate(data?data:row.recipientOrganization[0].id, 30) + '</a>'}},
           {data: "description", orderable: false},
         ]
       });
