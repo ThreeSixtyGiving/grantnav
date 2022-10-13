@@ -54,7 +54,7 @@
         columns: [
           {data: "title",
           render: function (data, type, row) {
-              return '<a href="https://grantnav.threesixtygiving.org/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>'
+              return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>'
           }},
           {data: "amountAwarded", className: "amount"},
           {data: "awardDate"},
