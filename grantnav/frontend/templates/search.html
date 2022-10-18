@@ -38,6 +38,12 @@
           <section class="grantnav-search__content--filters">
             {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
 
+            {% if results.hits.total.value <= 10000 %}
+              <a href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}%3F{{ query_string|urlencode }}" title="Download search results into 360Insights data visualiser" target="_blank">
+                <button class="button button--large button--teal-dark bold">Visualise your search results in 360Insights</button>
+              </a>
+            {% endif %}
+
             <div class="export-wrapper">
               <div class="export-label">Export search data:</div>
 
