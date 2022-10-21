@@ -12,6 +12,7 @@ from dateutil.relativedelta import relativedelta
 import elasticsearch.exceptions
 from django.http import Http404, JsonResponse
 from django.http import HttpResponse, StreamingHttpResponse
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import render, redirect
 from django.utils.http import urlencode
 from elasticsearch.helpers import scan
@@ -566,6 +567,12 @@ def create_parameters_from_json_query(json_query, **extra_parameters):
         parameter_list.append((parameter, value))
 
     return urlencode(parameter_list)
+
+
+@xframe_options_exempt
+def search_wrapper_xframe_exempt(request, template_name="search.html"):
+    response = search(request, template_name)
+    return response
 
 
 def search(request, template_name="search.html"):
