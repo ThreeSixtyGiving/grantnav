@@ -66,7 +66,7 @@
             </section>
           </div>
 
-          <div class="table-view">
+          <div class="table-view" style="display: none;">
             <section class="grantnav-search__content--results">
               {% include 'components/grants_table.html' %}
             </section>
@@ -153,20 +153,34 @@ function formatDropdownItem (item) {
 };
 
 $( document ).ready(function() {
-  $( ".table-view" ).css('display', 'none');
+  if ("{{ view_mode }}" === "card") {
+    $('input[type=radio][name=results-switcher][value="card"]').attr('checked', true)
+    $( ".card-view" ).css('display', 'block');
+    $( ".table-view" ).css('display', 'none');
+    $( ".results-title__subtitle").css('display', 'inline');
+    $('#grants_datatable').DataTable().responsive.recalc();
+    $('#grants_datatable').DataTable().columns.adjust();
+  } else if ("{{ view_mode }}" === "table") {
+    $('input[type=radio][name=results-switcher][value="table"]').attr('checked', true)
+    $( ".card-view" ).css('display', 'none');
+    $( ".table-view" ).css('display', 'flex');
+    $( ".results-title__subtitle").css('display', 'none');
+    $('#grants_datatable').DataTable().responsive.recalc();
+    $('#grants_datatable').DataTable().columns.adjust();
+  } else {
+    $('input[type=radio][name=results-switcher][value="card"]').attr('checked', true)
+  }
+
   $('input[type=radio][name=results-switcher]').change(function() {
+    var query = window.location.search;
+    var urlParams = new URLSearchParams(query);
     if (this.value == 'card') {
-      $( ".card-view" ).css('display', 'block');
-      $( ".table-view" ).css('display', 'none');
-      $( ".results-title__subtitle").css('display', 'inline');
+      urlParams.set('view_mode', 'card');
     }
     else if (this.value == 'table') {
-      $( ".card-view" ).css('display', 'none');
-      $( ".table-view" ).css('display', 'flex');
-      $( ".results-title__subtitle").css('display', 'none');
-      $('#grants_datatable').DataTable().responsive.recalc();
-      $('#grants_datatable').DataTable().columns.adjust();
+      urlParams.set('view_mode', 'table');
     }
+    window.location.search = urlParams;
   });
 });
 
