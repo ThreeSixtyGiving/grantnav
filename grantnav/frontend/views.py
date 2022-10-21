@@ -717,6 +717,7 @@ def search(request, template_name="search.html"):
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
         context['query'] = json_query
+        context['view_mode'] = request.GET.get('view_mode')
 
         current_currency = None
         existing_currency = None
