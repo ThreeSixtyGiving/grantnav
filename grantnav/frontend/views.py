@@ -962,19 +962,19 @@ def org(request, org_id):
     if funder_results['hits']['hits']:
         org_types.append('Funder')
         funder = funder_results['hits']['hits'][0]['_source']
-
-        parameters = [("fundingOrganization", org_id) for org_id in funder["id"]]
+        org_ids = new_org_ids(funder)
+        parameters = [("fundingOrganization", org_id) for org_id in org_ids]
         funder["grant_search_parameters"] = urlencode(parameters)
-
-        funder_info = get_funder_info([funder['id']]) # Todo list of all orgids
+        funder_info = get_funder_info(org_ids)
         funder.update(funder_info)
 
     if recipient_results['hits']['hits']:
         org_types.append('Recipient')
         recipient = recipient_results['hits']['hits'][0]['_source']
-        parameters = [("recipientOrganization", org_id) for org_id in recipient["id"]]
+        org_ids = new_org_ids(recipient)
+        parameters = [("recipientOrganization", org_id) for org_id in org_ids]
         recipient["grant_search_parameters"] = urlencode(parameters)
-        recipient_funders = get_recipient_funders([recipient['id']]) # TODO list of all orgids
+        recipient_funders = get_recipient_funders(org_ids)
 
     ftc_data = None
     publisher_prefix = None
