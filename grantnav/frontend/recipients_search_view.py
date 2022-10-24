@@ -170,7 +170,7 @@ def search(request):
         except elasticsearch.exceptions.RequestError as e:
             if e.error == "search_phase_execution_exception":
                 context["search_error"] = True
-                return render(request, "search.html", context=context)
+                return render(request, "search_recipients.html", context=context)
             raise
 
         for hit in results["hits"]["hits"]:

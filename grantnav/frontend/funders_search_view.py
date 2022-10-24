@@ -170,7 +170,7 @@ def search(request):
         except elasticsearch.exceptions.RequestError as e:
             if e.error == "search_phase_execution_exception":
                 context["search_error"] = True
-                return render(request, "search.html", context=context)
+                return render(request, "search_funders.html", context=context)
             raise
 
         for hit in results["hits"]["hits"]:
@@ -189,19 +189,6 @@ def search(request):
 
             # Name ordering is important: Publisher, FTC, Grant
             names = new_ordered_names(hit["source"])
-
-#            if source["publisherName"] and source["publisherName"] not in names:
-#                names.append(source["publisherName"])
-#
-#            if source["ftcData"] and source["ftcData"]["name"] not in names:
-#                names.append(source["ftcData"]["name"])
-#
-#            if source["additionalData"]["alternative_names"]:
-#                names.extend(source["additionalData"]["alternative_names"])
-#
-#            if source["name"] not in names:
- #               names.append(source["name"])
-
 
             hit["org_ids"] = org_ids
             hit["names"] = names
