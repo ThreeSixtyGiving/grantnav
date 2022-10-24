@@ -366,7 +366,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                 obj['_id'] = str(uuid.uuid4())
                 obj['_index'] = ES_INDEX
                 obj['currency'] = list(obj["aggregate"]["currencies"].keys())
-                obj['organizationName'] = new_ordered_names(obj)[0]
+                obj['organizationName'] = " ".join(new_ordered_names(obj))
                 obj['orgIDs'] = new_org_ids(obj)
                 yield obj
 
