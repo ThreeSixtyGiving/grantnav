@@ -5,7 +5,7 @@ import json
 import elasticsearch.exceptions
 from django.utils.http import urlencode
 from django.shortcuts import render, redirect
-from grantnav.frontend.org_utils import new_ordered_names, new_stats_by_currency
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency
 
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, SIZE
 import grantnav.frontend.search_helpers as helpers
@@ -175,19 +175,14 @@ def search(request):
 
         for hit in results["hits"]["hits"]:
             hit["source"] = hit["_source"]
-            source = hit["source"]
             hit["stats_by_currency"] = new_stats_by_currency(hit["source"])
 
-            org_ids = [hit["source"]["id"]]
-
-            if hit["source"]["ftcData"]:
-                org_ids.extend(hit["source"]["ftcData"]["orgIDs"])
+            org_ids = new_org_ids(hit["source"])
 
             parameters = [("fundingOrganization", org_id) for org_id in org_ids]
 
             hit["grant_search_parameters"] = urlencode(parameters)
 
-            # Name ordering is important: Publisher, FTC, Grant
             names = new_ordered_names(hit["source"])
 
             hit["org_ids"] = org_ids

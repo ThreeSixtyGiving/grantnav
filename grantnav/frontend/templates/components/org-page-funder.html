@@ -62,14 +62,14 @@
 
     {% endif %}
 
-    <a href="{% url 'search' %}?{{funder.grant_search_parameters}}" class="button pull-right" title="Explore all the grants made by {{funder.organizationName.0}}">Explore Grants</a>
+    <a href="{% url 'search' %}?{{funder.grant_search_parameters}}" class="button pull-right" title="Explore all the grants made by {{org_names.0}}">Explore Grants</a>
 
     <p>This data is provided for information purposes only.
     Please refer to the funder website for details of current grant programmes,
     application guidelines and eligibility criteria.</p>
 
 
-    <p>This table shows the recipients who have received grants made by {{funder.organizationName.0}}.</p>
+    <p>This table shows the recipients who have received grants made by {{org_names.0}}.</p>
 
     <div class="section">
         <div class="grantnav-datatable__content--filters margin-top:05">
