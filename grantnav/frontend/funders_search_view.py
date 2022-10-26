@@ -1,10 +1,12 @@
 import collections
 import copy
 import json
+import warnings
 
 import elasticsearch.exceptions
 from django.utils.http import urlencode
 from django.shortcuts import render, redirect
+from django.conf import settings
 from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency
 
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, SIZE
@@ -34,11 +36,11 @@ for term_facet in TERM_FACETS:
 def get_dropdown_filters(context):
     context["dropdownFilterOptions"] = []
     context["dropdownFilterOptions"].append({"value": "_score desc", "label": "Best Match"})
-    context["dropdownFilterOptions"].append({"value": "grants desc", "label": "Grant Count - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyTotal.GBP desc", "label": "Total GBP Amount - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyTotal.GBP asc", "label": "Total GBP Amount - Lowest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyAvgAmount.GBP desc", "label": "Average GBP Grant Amount - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyAvgAmount.GBP asc", "label": "Average GBP Grant Amount - Lowest First"})
+    context["dropdownFilterOptions"].append({"value": "aggregate.grants desc", "label": "Grant Count - Highest First"})
+    context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.total desc", "label": "Total GBP Amount - Highest First"})
+    context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.total asc", "label": "Total GBP Amount - Lowest First"})
+    context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.avg desc", "label": "Average GBP Grant Amount - Highest First"})
+    context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.avg asc", "label": "Average GBP Grant Amount - Lowest First"})
 
 
 def create_json_query_from_parameters(request):
@@ -169,6 +171,8 @@ def search(request):
             results = get_results(json_query, results_size, (page - 1) * SIZE, data_type="funder")
         except elasticsearch.exceptions.RequestError as e:
             if e.error == "search_phase_execution_exception":
+                if settings.DEBUG:
+                    warnings.warn(str(e))
                 context["search_error"] = True
                 return render(request, "search_funders.html", context=context)
             raise

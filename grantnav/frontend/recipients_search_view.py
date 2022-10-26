@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency
 
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, SIZE
+from grantnav.frontend.funders_search_view import get_dropdown_filters
 import grantnav.frontend.search_helpers as helpers
 
 BASIC_FILTER = [
@@ -29,16 +30,6 @@ for term_facet in TERM_FACETS:
     BASIC_QUERY["aggs"][term_facet.param_name] = {
         "terms": {"field": term_facet.field_name, "size": term_facet.facet_size}
     }
-
-
-def get_dropdown_filters(context):
-    context["dropdownFilterOptions"] = []
-    context["dropdownFilterOptions"].append({"value": "_score desc", "label": "Best Match"})
-    context["dropdownFilterOptions"].append({"value": "grants desc", "label": "Grant Count - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyTotal.GBP desc", "label": "Total GBP Amount - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyTotal.GBP asc", "label": "Total GBP Amount - Lowest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyAvgAmount.GBP desc", "label": "Average GBP Grant Amount - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyAvgAmount.GBP asc", "label": "Average GBP Grant Amount - Lowest First"})
 
 
 def create_json_query_from_parameters(request):
