@@ -22,6 +22,14 @@
         <div class="grantnav-search__content">
           <div class="search-summary-description">
             Your search ‘{{ text_query }}’ returned {{ results.hits.total|get_amount }} funders.
+           <div class="pull-right">
+              <a class="alert-tag alert-tag--anchor" href="https://help.grantnav.threesixtygiving.org/en/latest/organisations.html">
+                <span class="alert-tag__icon">
+                  {% include 'tokens/info-icon.html' %}
+                </span>
+                <span class="alert-tag__content">Learn more about organisations</span>
+              </a>
+            </div>
           </div>
 
           {# include 'components/search-summary-box.html' #}
