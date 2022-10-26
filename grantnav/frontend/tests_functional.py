@@ -97,8 +97,6 @@ def test_nav_menu_help_link(provenance_dataload, server_url, browser):
     ('About'),
     ('Funders'),
     ('Recipients'),
-    ('Terms and Conditions'),
-    ('Take Down Policy'),
     ('Data sources used in GrantNav'),
     ('Reusing GrantNav Data'),
     ('Developers')
