@@ -11,6 +11,9 @@
 .ve
 
 chromedriver/
+datastoredata/
+elasticsearch_dev_data/
+elasticsearch_test_data/
 grantnav/.DS_Store
 venv/
 
