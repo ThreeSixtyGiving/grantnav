@@ -11,14 +11,9 @@
     src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"
   ></script>
 
+  {% include 'widgets/grantnav_link_script.html' %}
+
   <script>
-  
-    $( document ).ready(function() {
-      var grantnavLinkElement = document.getElementById('grantnav-link');
-      if (grantnavLinkElement) {
-        grantnavLinkElement.href = "https://grantnav.threesixtygiving.org/search" + window.location.search;
-      }
-    });
 
     $( window ).resize(function() {
       $('#grants_datatable').DataTable().responsive.recalc();
