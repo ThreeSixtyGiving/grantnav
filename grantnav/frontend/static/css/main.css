@@ -558,6 +558,24 @@ template, [hidden] {
 .padding-bottom\:5 {
   padding-bottom: 5rem  !important; }
 
+.padding\:05 {
+  padding: .5rem  !important; }
+
+.padding\:1 {
+  padding: 1rem  !important; }
+
+.padding\:2 {
+  padding: 2rem  !important; }
+
+.padding\:3 {
+  padding: 3rem  !important; }
+
+.padding\:4 {
+  padding: 4rem  !important; }
+
+.padding\:5 {
+  padding: 5rem  !important; }
+
 .justify-content-end {
   justify-content: end; }
 
