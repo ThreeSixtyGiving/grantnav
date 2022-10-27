@@ -3,6 +3,12 @@
   align-items: center;
   display: flex; }
 
+.graph-container {
+  width: 80%;
+  height: 80%;
+  margin-left: auto;
+  margin-right: auto; }
+
 @media print {
   *,
   *:before,
@@ -405,6 +411,9 @@ template, [hidden] {
   overflow: hidden;
   white-space: nowrap; }
 
+.margin-top\:0 {
+  margin-top: 0 !important; }
+
 .margin-top\:05 {
   margin-top: .5rem !important; }
 
@@ -548,6 +557,30 @@ template, [hidden] {
 
 .padding-bottom\:5 {
   padding-bottom: 5rem  !important; }
+
+.padding\:05 {
+  padding: .5rem  !important; }
+
+.padding\:1 {
+  padding: 1rem  !important; }
+
+.padding\:2 {
+  padding: 2rem  !important; }
+
+.padding\:3 {
+  padding: 3rem  !important; }
+
+.padding\:4 {
+  padding: 4rem  !important; }
+
+.padding\:5 {
+  padding: 5rem  !important; }
+
+.justify-content-end {
+  justify-content: end; }
+
+.white-wash {
+  background-color: white !important; }
 
 :root {
   --gray-05-hsl: 0, 0%, 95%;
@@ -891,6 +924,13 @@ a {
     .button.button--teal.button--solid {
       --text-color: hsla(var(--white-hsl), 1);
       --bg-color: var(--color-teal); }
+  .button.button--teal-dark {
+    --border-color: var(--color-teal-dark);
+    --text-color: hsla(var(--teal-dark-hsl), 1);
+    --bg-color: transparent; }
+    .button.button--teal-dark.button--solid {
+      --text-color: hsla(var(--white-hsl), 1);
+      --bg-color: var(--color-teal-dark); }
   .button.button--yellow {
     --border-color: var(--color-yellow);
     --text-color: var(--color-yellow-dark);
@@ -2489,7 +2529,7 @@ body.modal--shown {
   .search-summary--description {
     color: #153634;
     background: #F4D569;
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 120%;
     font-weight: 500;
     padding: 1rem;
