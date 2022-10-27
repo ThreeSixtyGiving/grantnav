@@ -946,7 +946,7 @@ def org(request, org_id):
     org_query = {
         "query": {
             "bool": {"filter":
-                [{"term": {"id": urllib.parse.unquote(org_id)}}]
+                [{"term": {"orgIDs": urllib.parse.unquote(org_id)}}]
             }
         }
     }
