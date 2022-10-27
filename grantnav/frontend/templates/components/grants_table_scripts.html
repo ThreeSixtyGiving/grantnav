@@ -31,20 +31,21 @@
       $('#grants_datatable').dataTable({
         serverSide: true,
         responsive: true,
-        searching: true,
+        searching: false,
         autoWidth: true,
         scrollY: 400,
         scroller: true,
         order: [[0, "desc"]],
         dom: "fit",
-        scroller: {displayBuffer: 20,
-                    loadingIndicator: true},
+        scroller: {
+          displayBuffer: 20,
+          loadingIndicator: true
+        },
         language: {
-            info: "_START_ to _END_ of _TOTAL_",
-            search: "Search All Fields"
+            info: "_START_ to _END_ of _TOTAL_"
         },
         ajax: {
-          url: "{% url 'widgets.api' %}" + window.location.search,
+          url: "{% url 'widgets.api' %}" + window.location.search
         },
         columns: [
           {data: "title",
