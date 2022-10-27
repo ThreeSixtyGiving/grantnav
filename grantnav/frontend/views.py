@@ -955,6 +955,8 @@ def org(request, org_id):
     recipient_results = get_results(org_query, data_type="recipient")
 
     org_types = []
+    org_names = []
+    org_ids = []
     funder = {}
     recipient = {}
     recipient_funders = {}
@@ -1003,6 +1005,9 @@ def org(request, org_id):
     if publisher:
         get_funders_for_datasets(publisher['datasets'])
         org_types.append('Publisher')
+        if not org_names:
+            org_names = [publisher["name"]]
+            org_ids = [publisher_prefix] # Fixme when we have a datasource for this
 
     if not org_types:
         raise Http404
