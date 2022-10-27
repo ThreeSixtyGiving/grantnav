@@ -995,6 +995,10 @@ def org(request, org_id):
             org_names = new_ordered_names(org)
             break
 
+    # see if we've been supplied a publisher prefix instead of an org-id
+    if publisher_prefix is None:
+        publisher_prefix = org_id
+
     publisher = provenance.by_publisher.get(publisher_prefix, {}) #publisher
     if publisher:
         get_funders_for_datasets(publisher['datasets'])

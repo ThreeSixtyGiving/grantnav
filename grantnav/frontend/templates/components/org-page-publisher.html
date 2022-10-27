@@ -16,7 +16,7 @@
         </p>
         {% endif %}
 
-        <p><strong>360Giving prefix:</strong> <a href="{% url 'publisher' publisher.prefix %}">{{ publisher.prefix }}</a><p>
+        <p><strong>360Giving prefix:</strong> {{ publisher.prefix }}</a><p>
         {% if publisher.website %}
         <p><strong>Website:</strong> <a href="{{ publisher.website }}">{{ publisher.website }}</a></p>
         {% endif %}
