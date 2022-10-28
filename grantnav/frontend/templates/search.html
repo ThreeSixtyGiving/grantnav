@@ -39,8 +39,11 @@
             {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
 
             {% if results.hits.total.value <= 10000 %}
-              <a href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}%3F{{ query_string|urlencode }}" title="Download search results into 360Insights data visualiser" target="_blank">
-                <button class="button button--large button--teal-dark bold">Visualise your search results in 360Insights</button>
+              <a class="grantnav-search__content--insights-large button button--large button--teal-dark bold margin-left:4 margin-right:2" href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}%3F{{ query_string|urlencode }}" title="Download search results into 360Insights data visualiser" target="_blank">
+                Visualise your search results in 360Insights
+              </a>
+              <a class="grantnav-search__content--insights-small button button--large button--teal-dark bold margin-left:4 margin-right:4" href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}%3F{{ query_string|urlencode }}" title="Download search results into 360Insights data visualiser" target="_blank">
+                Visualise in 360Insights
               </a>
             {% endif %}
 
