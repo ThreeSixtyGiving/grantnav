@@ -16,7 +16,7 @@ import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-from grantnav.frontend.org_utils import new_ordered_names, new_org_ids
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids # noqa
 
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
@@ -32,8 +32,6 @@ ward_code_to_area = {}
 district_name_to_code = {}
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
-
-
 
 # curl http://test-360giving.pantheon.io/api/3/action/current_package_list_with_resources | grep -Eo '[^"]+\.json' | sed 's/\\\//\//g' | while read url; do wget "$url"; done
 
