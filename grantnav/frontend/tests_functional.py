@@ -1,20 +1,16 @@
 import os
 import time
-import tempfile
 import pytest
-import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.common import exceptions as selenium_exceptions
 #from selenium.webdriver.support.ui import Select
 import chromedriver_autoinstaller
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
 
-# Data from Branch "test-currency"
-prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/560a8d9f21a069a9d51468850188f34ae72a0ec3/'
-# Data from Branch "master"
-prefix_master = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/master/'
-
+# Test data directory
+prefix = f"{os.path.dirname(__file__)}/../../dataload/test_data/"
 
 chromedriver_autoinstaller.install()
 BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
@@ -25,8 +21,11 @@ def browser(request):
     if BROWSER == 'ChromeHeadless':
         chrome_options = Options()
         chrome_options.add_argument("--headless")
-        #  no-sandbox prevents an error when running as the root user
+        # no-sandbox prevents an error when running as the root user
         chrome_options.add_argument("--no-sandbox")
+        # uncomment this if "DevToolsActivePort" error
+        # chrome_options.add_argument("--remote-debugging-port=9222")
+
         browser = webdriver.Chrome(options=chrome_options)
     elif BROWSER == "Firefox":
         # Make downloads work
@@ -53,31 +52,18 @@ def server_url(request, live_server):
 
 @pytest.fixture(scope="module")
 def dataload():
-    tmpdir = tempfile.mkdtemp()
-    recipients_file = os.path.join(tmpdir, "recipients.jl")
-    funders_file = os.path.join(tmpdir, "funders.jl")
-
-    with open(recipients_file, "wb") as recipients_file_p:
-        recipients_file_p.write(requests.get(prefix_master + "recipients.jl").content)
-
-    with open(funders_file, "wb") as funders_file_p:
-        funders_file_p.write(requests.get(prefix_master + "funders.jl").content)
-
-    import_to_elasticsearch([prefix + 'a002400000KeYdsAAF.json',
-                             prefix + 'a002400000OiDBQAA3.xlsx',
-                             prefix + 'a002400000G4KGJAA3.csv'],
+    import_to_elasticsearch([prefix + 'a002400000KeYdsAAF-currency.json',
+                            prefix + 'a002400000OiDBQAA3.json'],
                             clean=True,
-                            funders=funders_file,
-                            recipients=recipients_file)
+                            funders=os.path.join(prefix, "funders.jl"),
+                            recipients=os.path.join(prefix, "recipients.jl"))
     #elastic search needs some time to commit its data
     time.sleep(2)
 
 
 @pytest.fixture(scope="function")
 def provenance_dataload(dataload, settings, tmpdir):
-    local_data_json = tmpdir.join('data.json')
-    local_data_json.write(requests.get(prefix + 'data.json').content)
-    settings.PROVENANCE_JSON = local_data_json.strpath
+    settings.PROVENANCE_JSON = os.path.join(prefix, "data.json")
 
 
 def test_home(provenance_dataload, server_url, browser):
@@ -125,9 +111,9 @@ def test_footer_links(provenance_dataload, server_url, browser, link_text):
 def test_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-button").click()
-    # Total number of expected grants 4,764
-    print(browser.find_element_by_tag_name('body').text)
-    assert '4,764' in browser.find_element_by_tag_name('body').text
+    # Total number of expected grants 4,495
+    assert "4,495" in \
+        browser.find_element_by_class_name('search-summary-description').text
 
     # open show highlighted grants section
     browser.find_element_by_class_name("summary-icon").click()
@@ -135,10 +121,12 @@ def test_search(provenance_dataload, server_url, browser):
     # other_currencies_modal = browser.find_element_by_id("other-currencies-modal")
     # search "laboratory"
     other_currencies_modal = browser.find_element_by_xpath("//a[@id='other-currencies-modal']/span")
-    assert other_currencies_modal.text == '7'
+    assert other_currencies_modal.text == '4'
     other_currencies_modal.click()
     time.sleep(0.5)
-    assert "$146,325" in browser.find_element_by_tag_name('body').text
+
+    # browser.get_screenshot_as_file("screenshot-test_search.png")
+    assert "$153,934" in browser.find_element_by_id('summary-info-model').text
 
 
 def test_search_by_titles_and_descriptions_radio_button_in_search(provenance_dataload, server_url, browser):
@@ -154,16 +142,19 @@ def test_search_by_titles_and_descriptions(provenance_dataload, server_url, brow
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('laboratory')
     browser.find_element_by_class_name("large-search-button").click()
-    browser.find_element_by_class_name("cookie-consent-no").click()
+    try:
+        browser.find_element_by_class_name("cookie-consent-no").click()
+    except selenium_exceptions.NoSuchElementException:
+        pass
     # select title_and_description
     browser.find_element_by_xpath("//label[@for='title_and_description']").click()
     browser.find_element_by_class_name("large-search-button").click()
 
     assert "New science laboratory" in browser.find_element_by_tag_name('body').text
     assert "laboratories" in browser.find_element_by_tag_name('body').text
-    assert "£4,846,774" in browser.find_element_by_tag_name('body').text
-    # result in "Search All" query
-    assert "£4,991,774" not in browser.find_element_by_tag_name('body').text
+
+    assert "Your search ‘laboratory’ returned 22 results in ‘Titles & Descriptions’" \
+        in browser.find_element_by_class_name('search-summary-description').text
 
     browser.get(server_url)
     # search "laboratory" in "Search All"
@@ -173,9 +164,9 @@ def test_search_by_titles_and_descriptions(provenance_dataload, server_url, brow
 
     assert "New science laboratory" in browser.find_element_by_tag_name('body').text
     assert "laboratories" in browser.find_element_by_tag_name('body').text
-    assert "£4,991,774" in browser.find_element_by_tag_name('body').text
-    # result in "Titles and Descriptions" query.
-    assert "£4,846,774" not in browser.find_element_by_tag_name('body').text
+
+    assert "Your search ‘laboratory’ returned 23 results in ‘All grant fields’" \
+        in browser.find_element_by_class_name('search-summary-description').text
 
 
 def test_search_current_url(provenance_dataload, server_url, browser):
@@ -324,7 +315,12 @@ def test_search_advanced_search_correct_link(provenance_dataload, server_url, br
     search_box = browser.find_element_by_class_name("large-search")
     search_box.send_keys('social change')
     browser.find_element_by_class_name("large-search-button").click()
-    browser.find_element_by_class_name("cookie-consent-no").click()
+
+    try:
+        browser.find_element_by_class_name("cookie-consent-no").click()
+    except selenium_exceptions.NoSuchElementException:
+        pass
+
     browser.find_element_by_link_text("targeting your search").click()
 
     assert browser.current_url.startswith('https://help.grantnav.threesixtygiving.org/en/latest/search_bar.html')
@@ -401,9 +397,14 @@ def test_disclaimers(server_url, browser, path, text):
 def test_currency_facet(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-button").click()
-    browser.find_element_by_class_name("cookie-consent-no").click()
+
+    try:
+        browser.find_element_by_class_name("cookie-consent-no").click()
+    except selenium_exceptions.NoSuchElementException:
+        pass
+
     # Select USD
-    browser.get_screenshot_as_file("test2.png")
+    #browser.get_screenshot_as_file("test2.png")
     browser.find_element_by_xpath(
         "//div[contains(@class, 'filter-list')][1]/details/div/form/ul[@class='filter-list__listing']/li[2]/a").click()
     # Check USD options appear
@@ -413,13 +414,18 @@ def test_currency_facet(provenance_dataload, server_url, browser):
 def test_amount_awarded_facet(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-button").click()
-    browser.find_element_by_class_name("cookie-consent-no").click()
+
+    try:
+        browser.find_element_by_class_name("cookie-consent-no").click()
+    except selenium_exceptions.NoSuchElementException:
+        pass
+
     # Select an option
     browser.get_screenshot_as_file("test3.png")
     browser.find_element_by_xpath(
         "//div[contains(@class, 'filter-list')][2]/details/div/ul[@class='filter-list__listing']/li[3]/a").click()
     total_grants = browser.find_elements_by_css_selector(".summary-content--item span")[0].text
-    assert "42" in total_grants, "Expected number of grants not found"
+    assert "16" in total_grants, "Expected number of grants not found"
 
 
 @pytest.mark.parametrize(('path'), ['/grant/360G-wolfson-19916'])
@@ -442,7 +448,7 @@ def test_search_recipients(provenance_dataload, server_url, browser):
 
     #browser.get_screenshot_as_file("recipients-search.png")
 
-    assert len(browser.find_elements_by_class_name("grant-search-result__recipients")) == 2
+    assert len(browser.find_elements_by_class_name("grant-search-result__recipients")) == 9
 
 
 def test_search_funders(provenance_dataload, server_url, browser):
@@ -452,11 +458,11 @@ def test_search_funders(provenance_dataload, server_url, browser):
 
     #browser.get_screenshot_as_file("recipients-search.png")
 
-    assert len(browser.find_elements_by_class_name("grant-search-result__funders")) == 9
+    assert len(browser.find_elements_by_class_name("grant-search-result__funders")) == 4
 
 
 def test_org_page(provenance_dataload, server_url, browser):
-    browser.get(server_url + "/org/360G-ABCT-ORG:0010X00004GNB1f")
+    browser.get(server_url + "/org/GB-COH-08523414")
     #browser.get_screenshot_as_file("org-page.png")
 
-    assert "University of Oxford" in browser.find_element_by_tag_name('h1').text
+    assert "EQUALITEACH C.I.C." in browser.find_element_by_tag_name('h1').text
