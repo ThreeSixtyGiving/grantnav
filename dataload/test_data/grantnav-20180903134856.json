@@ -1,0 +1,417 @@
+{
+  "grants": [
+    {
+      "id": "360G-EFF-16-3315",
+      "recipientOrganization": [
+        {
+          "id": "GB-CHC-1164859",
+          "charityNumber": "1164859",
+          "name": "Effervescent",
+          "url": "http://www.eff.org.uk",
+          "postalCode": "PL1 2TE"
+        }
+      ],
+      "fundingOrganization": [
+        {
+          "id": "GB-CHC-200051",
+          "name": "Esm\u00e9e Fairbairn Foundation"
+        }
+      ],
+      "title": "Grant to Effervescent",
+      "currency": "GBP",
+      "amountAwarded": 116471,
+      "description": "Towards the \u2018Good Enough Art Gallery\u2019, a socially engaged curating project that will work with six groups of extremely vulnerable children.",
+      "grantProgramme": [
+        {
+          "title": "Main Grant"
+        }
+      ],
+      "classifications": [
+        {
+          "title": "Funding priority / Art with a social impact"
+        },
+        {
+          "title": "Arts"
+        },
+        {
+          "title": "access to art,combined arts,visual arts"
+        },
+        {
+          "title": "Beneficiary / Children"
+        },
+        {
+          "title": "Young people (16-25)"
+        }
+      ],
+      "awardDate": "2017-11-21T00:00:00.000Z",
+      "plannedDates": [
+        {
+          "duration": 24
+        }
+      ],
+      "beneficiaryLocation": [
+        {
+          "name": "England/South West/Plymouth"
+        }
+      ],
+      "dateModified": "2018-08-24T13:12:00.000Z",
+      "additional_data": {
+        "fundingOrganizationCanonical": {
+          "id": "GB-CHC-200051",
+          "name": "Esm\u00e9e Fairbairn Foundation"
+        },
+        "recipientOrganizationCanonical": {
+          "id": "GB-CHC-1164859",
+          "name": "Effervescent Social Alchemy"
+        },
+        "recipientWardNameGeoCode": "E05002094",
+        "recipientWardName": "St. Peter and the Waterfront Ward",
+        "recipientDistrictName": "City of Plymouth",
+        "recipientDistrictGeoCode": "E06000026",
+        "recipientRegionName": "South West",
+        "recipientLocation": "E06000026 City of Plymouth South West St. Peter and the Waterfront Ward E05002094",
+        "recipientOrgInfos": [
+          {
+            "id": "GB-CHC-1164859",
+            "url": "http://www.eff.org.uk",
+            "name": "Effervescent Social Alchemy",
+            "active": "True",
+            "orgIDs": [
+              "GB-CHC-1164859",
+              "GB-COH-08049101"
+            ],
+            "source": "ccew",
+            "postalCode": "PL1 5EB",
+            "dateRemoved": "",
+            "dateModified": "2020-05-03 00:32:19.416435",
+            "latestIncome": "233919",
+            "charityNumber": "1164859",
+            "companyNumber": "08049101",
+            "dateRegistered": "2015-12-15",
+            "latestIncomeDate": "",
+            "organisationType": [
+              "Registered Charity",
+              "Registered Charity (England and Wales)",
+              "Registered Company",
+              "Incorporated Charity"
+            ]
+          }
+        ],
+        "locationLookup": []
+      }
+    },
+    {
+      "id": "360G-EFF-16-3353",
+      "recipientOrganization": [
+        {
+          "id": "360G-EFF-001b000003VLxCp",
+          "name": "Social Finance Ltd",
+          "url": "http://www.socialfinance.org.uk",
+          "postalCode": "W1W 5BB"
+        }
+      ],
+      "fundingOrganization": [
+        {
+          "id": "GB-CHC-200051",
+          "name": "Esm\u00e9e Fairbairn Foundation"
+        }
+      ],
+      "title": "Grant to Social Finance Ltd",
+      "currency": "GBP",
+      "amountAwarded": 1000000,
+      "description": "Towards a programme to improve leaving care practice in local authorities through better use of data.",
+      "grantProgramme": [
+        {
+          "title": "Main Grant"
+        }
+      ],
+      "classifications": [
+        {
+          "title": "Funding priority / Young people leaving care - a focused funding stream"
+        },
+        {
+          "title": "Children and young people"
+        },
+        {
+          "title": "digital innovation,policy change,skills development"
+        },
+        {
+          "title": "Beneficiary / Young people (16-25)"
+        },
+        {
+          "title": "Care Leavers,Looked after children"
+        }
+      ],
+      "awardDate": "2017-02-09T00:00:00.000Z",
+      "plannedDates": [
+        {
+          "duration": 36
+        }
+      ],
+      "beneficiaryLocation": [
+        {
+          "name": "England"
+        }
+      ],
+      "dateModified": "2018-08-24T13:12:00.000Z",
+      "additional_data": {
+        "fundingOrganizationCanonical": {
+          "id": "GB-CHC-200051",
+          "name": "Esm\u00e9e Fairbairn Foundation"
+        },
+        "recipientOrganizationCanonical": {
+          "id": "360G-EFF-001b000003VLxCp",
+          "name": "Social Finance Ltd"
+        },
+        "recipientWardNameGeoCode": "E05000641",
+        "recipientWardName": "Marylebone High Street Ward",
+        "recipientDistrictName": "City of Westminster London Boro",
+        "recipientDistrictGeoCode": "E09000033",
+        "recipientRegionName": "London",
+        "recipientLocation": "E09000033 City of Westminster London Boro London Marylebone High Street Ward E05000641",
+        "locationLookup": []
+      }
+    },
+    {
+      "id": "360G-EFF-16-3368",
+      "recipientOrganization": [
+        {
+          "id": "GB-CHC-Exempt",
+          "charityNumber": "Exempt",
+          "name": "Oxford University, Centre on Migration, Policy and Society",
+          "url": "http://www.compas.ox.ac.uk",
+          "postalCode": "OX2 6QS"
+        }
+      ],
+      "fundingOrganization": [
+        {
+          "id": "GB-CHC-200051",
+          "name": "Esm\u00e9e Fairbairn Foundation"
+        }
+      ],
+      "title": "Grant to Oxford University, Centre on Migration, Policy and Society",
+      "currency": "GBP",
+      "amountAwarded": 120000,
+      "description": "Towards core costs of the Migration Observatory, an independent source of data and analysis on migration.",
+      "grantProgramme": [
+        {
+          "title": "Main Grant"
+        }
+      ],
+      "classifications": [
+        {
+          "title": "Funding priority / Injustice - systemic change around injustice and inequality"
+        },
+        {
+          "title": "Social change"
+        },
+        {
+          "title": "human rights,advocacy & campaigning,capacity building,policy change,strengthening civic society"
+        },
+        {
+          "title": "Beneficiary / Society"
+        }
+      ],
+      "awardDate": "2017-03-01T00:00:00.000Z",
+      "plannedDates": [
+        {
+          "duration": 36
+        }
+      ],
+      "beneficiaryLocation": [
+        {
+          "name": "UK Whole"
+        }
+      ],
+      "dateModified": "2018-08-24T13:12:00.000Z",
+      "additional_data": {
+        "fundingOrganizationCanonical": {
+          "id": "GB-CHC-200051",
+          "name": "Esm\u00e9e Fairbairn Foundation"
+        },
+        "recipientOrganizationCanonical": {
+          "id": "GB-CHC-Exempt",
+          "name": "Oxford University, Centre on Migration, Policy and Society"
+        },
+        "recipientWardNameGeoCode": "E05006560",
+        "recipientWardName": "North Ward",
+        "recipientDistrictName": "Oxford District",
+        "recipientDistrictGeoCode": "E07000178",
+        "recipientRegionName": "South Central",
+        "recipientLocation": "E07000178 Oxford District South Central North Ward E05006560",
+        "recipientOrgInfos": [],
+        "locationLookup": []
+      }
+    },
+    {
+      "id": "360G-EFF-16-3357",
+      "recipientOrganization": [
+        {
+          "id": "GB-CHC-250277",
+          "charityNumber": "250277",
+          "name": "Philharmonia Orchestra",
+          "url": "http://www.philharmonia.co.uk",
+          "postalCode": "SE1 0UX"
+        }
+      ],
+      "fundingOrganization": [
+        {
+          "id": "GB-CHC-200051",
+          "name": "Esm\u00e9e Fairbairn Foundation"
+        }
+      ],
+      "title": "Grant to Philharmonia Orchestra",
+      "currency": "GBP",
+      "amountAwarded": 255180,
+      "description": "Towards \u2018The Virtual Orchestra\u2019, a digital and live project that will increase cultural participation amongst disadvantaged communities in Leicester, Bedford, Basingstoke and Kent.",
+      "grantProgramme": [
+        {
+          "title": "Main Grant"
+        }
+      ],
+      "classifications": [
+        {
+          "title": "Funding priority / Art with a social impact"
+        },
+        {
+          "title": "Arts"
+        },
+        {
+          "title": "access to art,arts education,music,participatory arts"
+        },
+        {
+          "title": "Beneficiary / Community"
+        }
+      ],
+      "awardDate": "2017-11-02T00:00:00.000Z",
+      "plannedDates": [
+        {
+          "duration": 36
+        }
+      ],
+      "beneficiaryLocation": [
+        {
+          "name": "England/More than one English Region"
+        }
+      ],
+      "dateModified": "2018-08-24T13:12:00.000Z",
+      "additional_data": {
+        "fundingOrganizationCanonical": {
+          "id": "GB-CHC-200051",
+          "name": "Esm\u00e9e Fairbairn Foundation"
+        },
+        "recipientOrganizationCanonical": {
+          "id": "GB-CHC-250277",
+          "name": "Philharmonia Ltd"
+        },
+        "recipientWardNameGeoCode": "E05000536",
+        "recipientWardName": "Cathedrals Ward",
+        "recipientDistrictName": "Southwark London Boro",
+        "recipientDistrictGeoCode": "E09000028",
+        "recipientRegionName": "London",
+        "recipientLocation": "E09000028 Southwark London Boro London Cathedrals Ward E05000536",
+        "recipientOrgInfos": [
+          {
+            "id": "GB-CHC-250277",
+            "url": "http://www.philharmonia.co.uk",
+            "name": "Philharmonia Ltd",
+            "active": "True",
+            "orgIDs": [
+              "GB-CHC-250277",
+              "GB-COH-00799297"
+            ],
+            "source": "ccew",
+            "postalCode": "SE1 0UX",
+            "dateRemoved": "",
+            "dateModified": "2020-05-03 00:33:30.024107",
+            "latestIncome": "12947156",
+            "charityNumber": "250277",
+            "companyNumber": "00799297",
+            "dateRegistered": "1966-11-28",
+            "latestIncomeDate": "",
+            "organisationType": [
+              "Registered Charity",
+              "Registered Charity (England and Wales)",
+              "Registered Company",
+              "Incorporated Charity"
+            ]
+          }
+        ],
+        "locationLookup": []
+      }
+    },
+    {
+      "id": "360G-EFF-16-3366",
+      "recipientOrganization": [
+        {
+          "id": "360G-EFF-001b000003VLz2b",
+          "charityNumber": "N/A",
+          "name": "Community Catalysts CIC",
+          "url": "http://www.communitycatalysts.co.uk.",
+          "postalCode": "HG1 1SP"
+        }
+      ],
+      "fundingOrganization": [
+        {
+          "id": "GB-CHC-200051",
+          "name": "Esm\u00e9e Fairbairn Foundation"
+        }
+      ],
+      "title": "Grant to Community Catalysts CIC",
+      "currency": "GBP",
+      "amountAwarded": 454835,
+      "description": "Towards the costs of a pilot programme of support for entrepreneurs running social businesses to address loneliness and increase community wellbeing.",
+      "grantProgramme": [
+        {
+          "title": "Main Grant"
+        }
+      ],
+      "classifications": [
+        {
+          "title": "Funding priority / Participation - marginalised and excluded individuals and groups"
+        },
+        {
+          "title": "Social change"
+        },
+        {
+          "title": "family support,grassroots & community action,building the social investment market,capacity building,sector infrastructure"
+        },
+        {
+          "title": "Beneficiary / Community"
+        },
+        {
+          "title": "Long term health or terminal illness,Multiple complex needs"
+        }
+      ],
+      "awardDate": "2017-04-25T00:00:00.000Z",
+      "plannedDates": [
+        {
+          "duration": 36
+        }
+      ],
+      "beneficiaryLocation": [
+        {
+          "name": "England"
+        }
+      ],
+      "dateModified": "2018-08-24T13:12:00.000Z",
+      "additional_data": {
+        "fundingOrganizationCanonical": {
+          "id": "GB-CHC-200051",
+          "name": "Esm\u00e9e Fairbairn Foundation"
+        },
+        "recipientOrganizationCanonical": {
+          "id": "360G-EFF-001b000003VLz2b",
+          "name": "Community Catalysts CIC"
+        },
+        "recipientWardNameGeoCode": "E05006244",
+        "recipientWardName": "High Harrogate Ward",
+        "recipientDistrictName": "Harrogate District",
+        "recipientDistrictGeoCode": "E07000165",
+        "recipientRegionName": "Yorkshire and the Humber",
+        "recipientLocation": "E07000165 Harrogate District Yorkshire and the Humber High Harrogate Ward E05006244",
+        "locationLookup": []
+      }
+    }
+  ]
+}

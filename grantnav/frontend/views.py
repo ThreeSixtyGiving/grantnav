@@ -990,7 +990,6 @@ def org(request, org_id):
                 # Fetch the FTC data from the first org that has it (it should be the same)
                 ftc_data = org.get("ftcData")
 
-
     for org in (funder, recipient):
         if org:
             org_ids = new_org_ids(org)
@@ -1001,13 +1000,13 @@ def org(request, org_id):
     if publisher_prefix is None:
         publisher_prefix = org_id
 
-    publisher = provenance.by_publisher.get(publisher_prefix, {}) #publisher
+    publisher = provenance.by_publisher.get(publisher_prefix, {})
     if publisher:
         get_funders_for_datasets(publisher['datasets'])
         org_types.append('Publisher')
         if not org_names:
             org_names = [publisher["name"]]
-            org_ids = [publisher_prefix] # Fixme when we have a datasource for this
+            org_ids = [publisher_prefix]  # Fixme when we have a datasource for this
 
     if not org_types:
         raise Http404

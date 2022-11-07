@@ -3,6 +3,7 @@ import time
 
 import pytest
 import requests
+import os
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
 from grantnav.frontend.search_helpers import get_pagination
@@ -11,7 +12,7 @@ from django.test.client import RequestFactory
 from django.urls import reverse_lazy
 
 
-prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/44ea7fdad8f32e9fab1d870e2f25fc31c5cdf2fd/'
+prefix = f"{os.path.dirname(__file__)}/../../dataload/test_data/"
 
 
 @pytest.fixture(scope="module")
@@ -29,9 +30,7 @@ def dataload():
 
 @pytest.fixture(scope="function")
 def provenance_dataload(dataload, settings, tmpdir):
-    local_data_json = tmpdir.join('data.json')
-    local_data_json.write(requests.get(prefix + 'data.json').content)
-    settings.PROVENANCE_JSON = local_data_json.strpath
+    settings.PROVENANCE_JSON = os.path.join(prefix, "data.json")
 
 
 @pytest.mark.parametrize(('expected_text'), [
