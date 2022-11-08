@@ -1,3 +1,4 @@
+{% if not debug %}
 <!-- Matomo -->
 <script type="text/javascript">
   var _paq = window._paq = window._paq || [];
@@ -58,8 +59,8 @@
       </p>
       <p id="cookie-dialog-desc" style="font-style: italic;">360Giving uses privacy-respecting analytics. If you don't
         accept cookies, we will track only basic information about your visit. Click "Disable Analytics" if you don't
-        want us to track at all. </p>
+        want us to track at all.</p>
     </div>
   </div>
 </div>
-
+{% endif %}
