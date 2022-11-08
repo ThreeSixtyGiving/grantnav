@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load frontend %}
 {% load static %}
+{% block subtitle %} - {{main_name}}{% endblock %}
 {% block main_content %}
 <div class="layout layout--single-column">
   <main class="layout__content">
@@ -35,22 +36,18 @@
           </div>
 
           <div class="media-card__box">
-            <strong>Org IDs</strong> <br/>
-            {% for org_id in org_ids %}
-            {{org_id}} &nbsp;
-            {% endfor %}
+            <strong>{% if "360G-" in org_ids.0 %}360Giving Prefix{% else %}Org IDs{% endif %}</strong> <br/>
+            {{org_ids|join:", "}}
           </div>
 
           {% if other_names %}
           <div class="media-card__box">
             <strong>Other Names</strong> <br/>
-            {% for other_name in other_names %}
-            {{other_name}} &nbsp;
-            {% endfor %}
+            {{other_names|join:", "}}
           </div>
           {% endif %}
         </div>
-        {% if org_types|length > 1 %}
+        {% if org_ids|length > 1 %}
         <p>{{ main_name }} has been identified using different organisation identifiers within the 360Giving data. This may be, for example, because they are both a registered charity and a registered company  and different publishers have used either a company or charity number to identify them.</p>
         {% endif %}
 
@@ -58,10 +55,34 @@
         <p>{{ main_name }} has been referred to using several different names in the 360Giving data. This may be because a publisher has abbreviated the name or used an alternative spelling, or the name has changed over time. In other cases, one organisation identifier is shared by multiple entities (for example subsidiaries or branches of the same organisation) receiving distinct grants.</p>
         {% endif %}
 
+        {% if ftc_data %}
+          <button class="button" onClick='$("#additional-data-section").toggle()'>Show Additional Data</button>
+          <div id="additional-data-section" style="display:none;">
+            <h4>Additional data added by ThreeSixtyGiving</h4>
+            <div class="box box--teal">
+              <h3 class="box__heading">Where is this data from?</h3>
+              <p>We use additional data sources via <a href="https://github.com/drkane/geo-lookups/">Geo Lookups</a>, <a
+                href="https://findthatcharity.uk">FindThatCharity</a>, <a href="https://geoportal.statistics.gov.uk/">The ONS</a>,
+              <a href="https://charitycommission.gov.uk">The Charity Commission</a> and <a href="https://findthatpostcode.uk">Find
+                That Postcode</a>. <strong>Note: This data has been added automatically and has
+              not been verified.</strong></p>
+            </div>
+            <div class="spacer-3"></div>
+            <div class="table table--zebra">
+              <table class="table table--zebra table--secondary dt-responsive full-width">
+                <tbody>
+                  {% for key, val in ftc_data|flatten %}
+                  <tr>
+                    <td style="width: 40%"> <b>{{ key }} </b> </td>
+                    <td> {{val}} </td>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endif %}
 
-
-      </div>
-
+          </div>
     </div>
 
     <div class="spacer-4"></div>
@@ -101,7 +122,8 @@
   src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"
 ></script>
 
-{{ funder.orgIDs|json_script:"orgIDs" }}
+{# https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#json-script #}
+{{ funder.org_ids|json_script:"orgIDs" }}
 
 <script>
     function truncate(string, len){
