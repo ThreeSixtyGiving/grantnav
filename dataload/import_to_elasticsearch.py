@@ -12,6 +12,12 @@ import time
 import ijson
 import dateutil.parser as date_parser
 
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids
+
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 ELASTICSEARCH_HOST = os.environ.get("ELASTICSEARCH_HOST", "localhost")
@@ -206,9 +212,7 @@ def maybe_create_index(index_name=ES_INDEX):
                     }
                 }
             },
-            "currencies": {
-                "type": "keyword"
-            },
+            # Additional funding/recipient organisation mappings
             "organizationName": {
                 "type": "text",
                 "analyzer": "english_with_folding"
@@ -216,36 +220,30 @@ def maybe_create_index(index_name=ES_INDEX):
             "orgIDs": {
                 "type": "keyword"
             },
-            "grants": {
-                "type": "double"
-            },
-            "maxAwardDate": {
-                "type": "date",
-                "ignore_malformed": True
-            },
-            "minAwardDate": {
-                "type": "date",
-                "ignore_malformed": True
-            },
-            "currencyGrants": {
-                "dynamic": True,
-                "properties": {}
-            },
-            "currencyTotal": {
-                "dynamic": True,
-                "properties": {}
-            },
-            "currencyMaxAmount": {
-                "dynamic": True,
-                "properties": {}
-            },
-            "currencyMinAmount": {
-                "dynamic": True,
-                "properties": {}
-            },
-            "currencyAvgAmount": {
-                "dynamic": True,
-                "properties": {}
+            "aggregate": {
+                "properties": {
+                    "grants": {"type": "double"},
+                    "maxAwardDate": {
+                        "type": "date",
+                        "ignore_malformed": True
+                    },
+                    "minAwardDate": {
+                        "type": "date",
+                        "ignore_malformed": True
+                    },
+                    "currencies": {
+                        "properties": {
+                            # Currently we do things like order-by on GBP
+                            "GBP": {
+                                "properties": {
+                                    "avg": {"type": "double"},
+                                    "total": {"type": "double"},
+                                }
+                            }
+
+                        }
+                    }
+                }
             },
         }
     }
@@ -322,6 +320,9 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                 obj['dataType'] = data_type
                 obj['_id'] = str(uuid.uuid4())
                 obj['_index'] = ES_INDEX
+                obj['currency'] = list(obj["aggregate"]["currencies"].keys())
+                obj['organizationName'] = " ".join(new_ordered_names(obj))
+                obj['orgIDs'] = new_org_ids(obj)
                 yield obj
 
     if recipients:
