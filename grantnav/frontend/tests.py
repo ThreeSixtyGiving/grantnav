@@ -2,7 +2,6 @@ import json
 import time
 
 import pytest
-import requests
 import os
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch

@@ -479,7 +479,7 @@ def create_json_query_from_parameters(request):
     date_filter = {}
     recency_period = request.GET.get('recency_period')
     if recency_period:
-        min_date= (datetime.datetime.today() - relativedelta(months=int(recency_period))).strftime('%Y-%m-%d')
+        min_date = (datetime.datetime.today() - relativedelta(months=int(recency_period))).strftime('%Y-%m-%d')
         max_date = datetime.datetime.today().strftime('%Y-%m-%d')
     else:
         min_date = utils.yearmonth_to_date(request.GET.get('min_date', ''))
