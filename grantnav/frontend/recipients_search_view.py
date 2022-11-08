@@ -5,8 +5,10 @@ import json
 import elasticsearch.exceptions
 from django.utils.http import urlencode
 from django.shortcuts import render, redirect
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency
 
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, SIZE
+from grantnav.frontend.funders_search_view import get_dropdown_filters
 import grantnav.frontend.search_helpers as helpers
 
 BASIC_FILTER = [
@@ -28,16 +30,6 @@ for term_facet in TERM_FACETS:
     BASIC_QUERY["aggs"][term_facet.param_name] = {
         "terms": {"field": term_facet.field_name, "size": term_facet.facet_size}
     }
-
-
-def get_dropdown_filters(context):
-    context["dropdownFilterOptions"] = []
-    context["dropdownFilterOptions"].append({"value": "_score desc", "label": "Best Match"})
-    context["dropdownFilterOptions"].append({"value": "grants desc", "label": "Grant Count - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyTotal.GBP desc", "label": "Total GBP Amount - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyTotal.GBP asc", "label": "Total GBP Amount - Lowest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyAvgAmount.GBP desc", "label": "Average GBP Grant Amount - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "currencyAvgAmount.GBP asc", "label": "Average GBP Grant Amount - Lowest First"})
 
 
 def create_json_query_from_parameters(request):
@@ -169,34 +161,22 @@ def search(request):
         except elasticsearch.exceptions.RequestError as e:
             if e.error == "search_phase_execution_exception":
                 context["search_error"] = True
-                return render(request, "search.html", context=context)
+                return render(request, "search_recipients.html", context=context)
             raise
 
         for hit in results["hits"]["hits"]:
             hit["source"] = hit["_source"]
             source = hit["source"]
-            hit["stats_by_currency"] = []
-            for currency in hit['source']['currency']:
-                stats = {
-                    "currency": currency,
-                    "grants": source["currencyGrants"].get(currency),
-                    "total": source["currencyTotal"].get(currency),
-                    "max": source["currencyMaxAmount"].get(currency),
-                    "min": source["currencyMinAmount"].get(currency),
-                    "avg": source["currencyAvgAmount"].get(currency),
-                }
-                hit["stats_by_currency"].append(stats)
-            hit["stats_by_currency"].sort(key=lambda i: i["total"], reverse=True)
+            hit["stats_by_currency"] = new_stats_by_currency(source)
+            org_ids = new_org_ids(source)
+            names = new_ordered_names(source)
 
-            parameters = [("recipientOrganization", org_id) for org_id in hit["source"]["orgIDs"]]
+            parameters = [("recipientOrganization", org_id) for org_id in org_ids]
             hit["grant_search_parameters"] = urlencode(parameters)
 
-            if source['nameCharityFinder']:
-                hit['name'] = source['nameCharityFinder'][0]
-            else:
-                hit['name'] = source['organizationName'][0]
-
-            hit['other_names'] = list({name for name in source['organizationName'] if name != hit['name']})
+            hit["org_ids"] = org_ids
+            hit["names"] = names
+            hit["other_names"] = names[1:]
 
         context["results"] = results
         context["json_query"] = json.dumps(json_query)

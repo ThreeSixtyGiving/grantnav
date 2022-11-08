@@ -28,7 +28,7 @@
         <div class="grant-info-highlight__funder">
           <div class="grant-info-highlight__label">Funding Organization</div>
           <div>
-            <a href="{% url 'funder' grant.source.fundingOrganization.0.id %}"> {{ grant.source.fundingOrganization.0 | get_name }} <small>({{ grant.source.fundingOrganization.0.id }}) </small> </a>
+            <a href="{% url 'org' grant.source.fundingOrganization.0.id %}"> {{ grant.source.fundingOrganization.0 | get_name }} <small>({{ grant.source.fundingOrganization.0.id }}) </small> </a>
           </div>
         </div>
 
@@ -45,7 +45,7 @@
         <div class="grant-info-highlight__recipient">
           <div class="grant-info-highlight__label">Recipient Organization</div>
           <div>
-            <p><a href="{% url 'recipient' grant.source.recipientOrganization.0.id %}"> {{ grant.source.recipientOrganization.0|get_name|truncatechars:50 }} <small>({{ grant.source.recipientOrganization.0.id|truncatechars:20}}) </small> </a>
+            <p><a href="{% url 'org' grant.source.recipientOrganization.0.id %}"> {{ grant.source.recipientOrganization.0|get_name|truncatechars:50 }} <small>({{ grant.source.recipientOrganization.0.id|truncatechars:20}}) </small> </a>
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@
               <p>We use additional data sources via <a href="https://github.com/drkane/geo-lookups/">Geo Lookups</a>, <a
                 href="https://findthatcharity.uk">FindThatCharity</a>, <a href="https://geoportal.statistics.gov.uk/">The ONS</a>,
               <a href="https://charitycommission.gov.uk">The Charity Commission</a> and <a href="https://findthatpostcode.uk">Find
-                That Postcode</a> we are able to add further data to Grants. <strong>Note: This data has been added automatically and has
+                That Postcode</a>. <strong>Note: This data has been added automatically and has
               not been verified.</strong></p>
             </div>
           </div>
