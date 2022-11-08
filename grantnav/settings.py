@@ -112,6 +112,7 @@ TEMPLATES = [
                 'grantnav.frontend.context_processors.piwik',
                 'grantnav.frontend.context_processors.navigation',
                 'grantnav.frontend.context_processors.main_css_cache_key',
+                'grantnav.frontend.context_processors.debug_mode',
             ],
         },
     },
