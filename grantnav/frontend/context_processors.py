@@ -25,3 +25,7 @@ MAIN_CSS_CACHE_KEY = getmtime(os.path.join(settings.BASE_DIR, 'grantnav', 'front
 
 def main_css_cache_key(request):
     return {'main_css_cache_key': MAIN_CSS_CACHE_KEY}
+
+
+def debug_mode(request):
+    return {"debug": settings.DEBUG}
