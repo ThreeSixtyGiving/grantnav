@@ -2,6 +2,7 @@
 {% load static %} 
     <div class="section">
       <div class="grantnav-datatable__content--filters {% if widget %}margin-top:0{% endif %}">
+        {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
         {% if not widget %}
         <h4>Grants</h4>
           <div class="export-wrapper">
@@ -23,7 +24,7 @@
       </div>
 
       <div class="table--zebra">
-        <table class="table table--zebra table--primary dt-responsive" id="grants_datatable" style="width: 100%">
+        <table class="table table--zebra table--primary dt-responsive" id="search_grants_datatable" style="width: 100%">
           <thead>
             <tr>
               <th>Title</th>
