@@ -1,4 +1,6 @@
-  <script
+{% load get_current_sort from frontend %}
+
+ <script
     type="text/javascript"
     src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"
   ></script>
@@ -16,26 +18,46 @@
   <script>
 
     $( window ).resize(function() {
-      $('#grants_datatable').DataTable().responsive.recalc();
-      $('#grants_datatable').DataTable().columns.adjust();
+      $('#search_grants_datatable').DataTable().responsive.recalc();
+      $('#search_grants_datatable').DataTable().columns.adjust();
     });
     
-    function truncate(string, len){
+    function truncate(string, len) {
         if (string.length > len)
           return string.substring(0,len)+'...';
         else
           return string;
     };
 
+    function getSortValue() {
+      switch ("{{ query|get_current_sort }}") {
+        case "_score desc":
+          return [[0, "desc"]]
+          break
+        case "amountAwarded desc":
+          return [[1, "desc"]]
+          break
+        case "amountAwarded asc":
+          return [[1, "asc"]]
+          break
+        case "awardDate desc":
+          return [[2, "desc"]]
+          break
+        case "awardDate asc":
+          return [[2, "asc"]]
+          break
+      }
+    };
+
     jQuery(function($) {
-      $('#grants_datatable').dataTable({
+      $('#search_grants_datatable').dataTable({
         serverSide: true,
         responsive: true,
         searching: false,
         autoWidth: true,
         scrollY: 400,
         scroller: true,
-        order: [[0, "desc"]],
+        order: getSortValue(),
         dom: "fit",
         scroller: {
           displayBuffer: 20,
@@ -51,11 +73,11 @@
           {data: "title",
           render: function (data, type, row) {
               return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>'
-          }},
-          {data: "amountAwarded", className: "amount"},
-          {data: "awardDate"},
-          {data: "fundingOrganization.0.name", render: function (data, type, row) {return '<a href="/org/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'}},
-          {data: "recipientOrganization.0.name", render: function (data, type, row) {return '<a href="/org/' + row.recipientOrganization[0].id + '">' + truncate(data?data:row.recipientOrganization[0].id, 30) + '</a>'}},
+          }, orderable: false},
+          {data: "amountAwarded", className: "amount", orderable: false},
+          {data: "awardDate", orderable: false},
+          {data: "fundingOrganization.0.name", render: function (data, type, row) {return '<a href="/org/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'}, orderable: false},
+          {data: "recipientOrganization.0.name", render: function (data, type, row) {return '<a href="/org/' + row.recipientOrganization[0].id + '">' + truncate(data?data:row.recipientOrganization[0].id, 30) + '</a>'}, orderable: false},
           {data: "description", orderable: false},
         ]
       });
