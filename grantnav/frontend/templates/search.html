@@ -160,15 +160,15 @@ $( document ).ready(function() {
     $( ".card-view" ).css('display', 'block');
     $( ".table-view" ).css('display', 'none');
     $( ".results-title__subtitle").css('display', 'inline');
-    $('#grants_datatable').DataTable().responsive.recalc();
-    $('#grants_datatable').DataTable().columns.adjust();
+    $('#search_grants_datatable').DataTable().responsive.recalc();
+    $('#search_grants_datatable').DataTable().columns.adjust();
   } else if ("{{ view_mode }}" === "table") {
     $('input[type=radio][name=results-switcher][value="table"]').attr('checked', true)
     $( ".card-view" ).css('display', 'none');
     $( ".table-view" ).css('display', 'flex');
     $( ".results-title__subtitle").css('display', 'none');
-    $('#grants_datatable').DataTable().responsive.recalc();
-    $('#grants_datatable').DataTable().columns.adjust();
+    $('#search_grants_datatable').DataTable().responsive.recalc();
+    $('#search_grants_datatable').DataTable().columns.adjust();
   } else {
     $('input[type=radio][name=results-switcher][value="card"]').attr('checked', true)
   }
