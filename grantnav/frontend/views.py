@@ -717,8 +717,7 @@ def search(request, template_name="search.html"):
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
         context['query'] = json_query
-        view_mode = request.GET.get('view_mode')
-        if view_mode:
+        if (view_mode := request.GET.get('view_mode')):
             request.session['view_mode'] = view_mode
             context['view_mode'] = view_mode
         elif 'view_mode' in request.session.keys():
