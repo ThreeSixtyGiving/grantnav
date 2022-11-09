@@ -2,13 +2,21 @@
 <form id="sort-form" class="form-inline">
   <div class="dropdown-filter">
     <label class="dropdown-filter__label" for="results-sort-dropdown">Sort By:</label>
-      <select id="sort_options" name="sort" class="form-control" onchange="this.form.submit()">
+      <select id="sort_options" name="sort" class="form-control" onchange="sort_changed(this.value)">
       {% with current_sort=query|get_current_sort %}
         {% for option in options %}
           <option value="{{ option.value }}"{% if option.disabled %} disabled{% endif %}{% if current_sort == option.value%} selected {% endif %}>{{ option.label }}</option>
         {% endfor %}
       {% endwith %}
     </select>
-  <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
   </div>
 </form>
+
+<script>
+
+  function sort_changed(value){
+    let search = new URLSearchParams(window.location.search);
+    search.set("sort", value);
+    window.location.href = `${window.location.pathname}?${search.toString()}`;
+  }
+</script>
