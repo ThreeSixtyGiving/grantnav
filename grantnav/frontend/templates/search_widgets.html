@@ -124,7 +124,7 @@
                 <h2>Preview:</h2>
               </div>
               <div class="grid__5 box box--black">
-                <iframe id="sample-frame" src="about:blank" style="width: 100%; height: 400px;" frameBorder="0"></iframe>
+                <iframe id="sample-frame" src="about:blank" style="width: 100%; height: 700px;" frameBorder="0"></iframe>
               </div>
             </section>
           </div>
@@ -201,7 +201,7 @@ function updateFrames() {
   if (selectElement) {
     var selectedView = selectElement.value;
     document.getElementById('sample-frame').src = "/" + selectedView + window.location.search;
-    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + "/" + selectedView + window.location.search + "' style='height: 640px; width: 1024px;' frameBorder='0'&gt;&lt;/iframe&gt;";
+    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + "/" + selectedView + window.location.search + "' style='height: 700px; width: 100%;' frameBorder='0'&gt;&lt;/iframe&gt;";
   }
 }
 

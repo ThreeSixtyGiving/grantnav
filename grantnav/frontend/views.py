@@ -722,8 +722,8 @@ def search(request, template_name="search.html"):
             request.session['view_mode'] = view_mode
             context['view_mode'] = view_mode
         elif 'view_mode' in request.session.keys():
-            context['view_mode'] = request.session['view_mode'] 
-        else: 
+            context['view_mode'] = request.session['view_mode']
+        else:
             context['view_mode'] = 'cards'
 
         current_currency = None
