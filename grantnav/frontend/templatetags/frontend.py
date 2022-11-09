@@ -195,8 +195,11 @@ def get_dataset(grant):
 
 @register.filter(name='get_current_sort')
 def get_current_sort(query):
-    for key, value in query['sort'].items():
-        return key + " " + value["order"]
+    if query:
+        for key, value in query['sort'].items():
+            return key + " " + value["order"]
+    else:
+        return None
 
 
 @register.filter(name='min_yearmonth')
