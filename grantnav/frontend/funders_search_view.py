@@ -39,8 +39,7 @@ def get_dropdown_filters(context):
     context["dropdownFilterOptions"].append({"value": "aggregate.grants desc", "label": "Grant Count - Highest First"})
     context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.total desc", "label": "Total GBP Amount - Highest First"})
     context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.total asc", "label": "Total GBP Amount - Lowest First"})
-    context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.avg desc", "label": "Average GBP Grant Amount - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.avg asc", "label": "Average GBP Grant Amount - Lowest First"})
+    context["dropdownFilterOptions"].append({"value": "aggregate.maxAwardDate desc", "label": "Latest Award Date - Recent First"})
 
 
 def create_json_query_from_parameters(request):
