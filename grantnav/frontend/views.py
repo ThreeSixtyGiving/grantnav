@@ -1088,6 +1088,7 @@ def org(request, org_id):
                "recipient_funders": recipient_funders,
                "org_types": org_types,
                "org_ids": org_ids,
+               "org_ids_json": json.dumps(org_ids),
                "org_names": org_names,
                "main_name": main_name,
                "other_names": other_names,
@@ -1167,8 +1168,11 @@ def funder_recipients_datatables(request):
         order_dir = "desc"
 
     funder_id = request.GET.get('funder_id')
+
     if funder_id:
-        filter = {"terms": {"fundingOrganization.id": json.loads(funder_id)}}
+        # Allow multiple funder ids
+        funder_id = json.loads(urllib.parse.unquote(funder_id))
+        filter = {"terms": {"fundingOrganization.id": funder_id}}
     else:
         filter = {}
 

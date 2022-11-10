@@ -78,11 +78,11 @@
             <div class="export-label">Export search data:</div>
 
             <div class="export-button">
-            {% include 'components/export-data-button--csv.html' with data_function='funder_recipients_datatables.csv' parameter="funder_id=" query=funder.id %}
+            {% include 'components/export-data-button--csv.html' with data_function='funder_recipients_datatables.csv' parameter="funder_id=" query=org_ids_json %}
             </div>
 
             <div class="export-button">
-            {% include 'components/export-data-button--json.html' with data_function='funder_recipients_datatables.json' parameter="funder_id=" query=funder.id %}
+            {% include 'components/export-data-button--json.html' with data_function='funder_recipients_datatables.json' parameter="funder_id=" query=org_ids_json %}
             </div>
         </div>
         </div>
