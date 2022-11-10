@@ -41,8 +41,8 @@
             {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
         </div>
         <div class="media-card__box">
-            <strong> Average Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
-            {{stat.currency | currency_symbol}}{{stat.avg | get_amount}} <br/>
+            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+            {{stat.currency | currency_symbol}}{{stat.min | get_amount}} <br/>
         </div>
         {% endfor %}
     </div>

@@ -21,8 +21,8 @@
           {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
         </div>
         <div class="grant-search-result__box" style="padding-bottom:0">
-          <strong>Average {%if stat.currency != 'GBP' or result.stats_by_currency|length > 1 %} <br /> <small>{{stat.currency}}</small> {% endif %}</strong><br/>
-          {{stat.currency | currency_symbol}}{{stat.avg | get_amount}}
+          <strong>Smallest {%if stat.currency != 'GBP' or result.stats_by_currency|length > 1 %} <br /> <small>{{stat.currency}}</small> {% endif %}</strong><br/>
+          {{stat.currency | currency_symbol}}{{stat.min | get_amount}}
         </div>
       {% endfor %}
     </div>
