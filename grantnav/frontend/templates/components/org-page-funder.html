@@ -25,13 +25,10 @@
             <strong>Latest Award</strong> <br />
             {{funder.aggregate.maxAwardDate | get_date }}
         </div>
-    </div>
-    <div class="media-card__box_container">
+<!--    </div>
+    <div class="media-card__box_container"> -->
+        {% if funder.stats_by_currency|length == 1 %}
         {% for stat in funder.stats_by_currency %}
-        <div class="media-card__box">
-            <strong> Grants in {{stat.currency}} </strong> <br />
-            {{stat.grants | get_amount }}
-        </div>
         <div class="media-card__box">
             <strong> Total Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
             {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
@@ -41,11 +38,54 @@
             {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
         </div>
         <div class="media-card__box">
-            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong>
+            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
             {{stat.currency | currency_symbol}}{{stat.min | get_amount}} <br/>
         </div>
         {% endfor %}
+        {% endif %}
     </div>
+
+    {% if funder.stats_by_currency|length > 1 %}
+<!--        <table class="table table--zebra" style="width: 100%">
+        <thead>
+            <th>Total Grants</th>
+            <th>Recipients</th>
+            <th>Earliest Award</th>
+            <th>Latest Award</th>
+        </thead>
+        <tbody>
+            <td><span style="word-break: break-all">{{funder.aggregate.grants | get_amount }}</span></td>
+            <td>{{funder.recipients | get_amount }}</td>
+            <td>{{funder.aggregate.minAwardDate | get_date }}</td>
+            <td>{{funder.aggregate.maxAwardDate | get_date }}</td>
+        </tbody>
+    </table> -->
+
+    <p>{{org_names.0}} makes grants in {{funder.stats_by_currency|length}} currencies.</p>
+
+    <table class="table table--zebra" style="width: 100%">
+        <thead>
+            <th>Currency</th>
+            <th>Grants</th>
+            <th>Total Amount</th>
+            <th>Greatest Amount</th>
+            <th>Smallest Amount</th>
+        </thead>
+        <tbody>
+        {% for stat in funder.stats_by_currency %}
+        <tr>
+            <td class="table__lead-cell">{{stat.currency}}</td>
+            <td>{{stat.grants | get_amount }}</td>
+            <td>{{stat.currency | currency_symbol}}{{stat.total | get_amount}}</td>
+            <td>{{stat.currency | currency_symbol}}{{stat.max | get_amount}}</td>
+            <td>{{stat.currency | currency_symbol}}{{stat.min | get_amount}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="spacer-2"></div>
+    {% endif %}
+
 
     {% if not publisher and funder.funder_publisher %}
         <p>
