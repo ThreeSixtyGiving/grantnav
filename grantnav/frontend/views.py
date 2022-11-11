@@ -1152,7 +1152,7 @@ def funder_recipients_datatables(request):
     else:
         result_format = "ajax"
 
-    order = ["_term", "recipient_stats.count", "recipient_stats.sum", "recipient_stats.avg", "recipient_stats.max", "recipient_stats.min"]
+    order = ["_term", "recipient_stats.count", "recipient_stats.sum", "recipient_stats.max", "recipient_stats.min"]
 
     length = int(request.GET.get('length', MAX_DEFAULT_FUNDER_RECIPIENTS_LENGTH))
 

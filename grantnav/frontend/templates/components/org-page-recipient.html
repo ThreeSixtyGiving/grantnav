@@ -57,7 +57,6 @@
                 <th>Total</th>
                 <th>Smallest</th>
                 <th>Largest</th>
-                <th>Average</th>
             </thead>
             <tbody>
                 {% for funder in funders %}
@@ -67,7 +66,6 @@
                 <td>{{currency | currency_symbol}}{{ funder.sum | get_amount }}</td>
                 <td>{{currency | currency_symbol}}{{ funder.min | get_amount }}</td>
                 <td>{{currency | currency_symbol}}{{ funder.max | get_amount }}</td>
-                <td>{{currency | currency_symbol}}{{ funder.avg | get_amount }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
