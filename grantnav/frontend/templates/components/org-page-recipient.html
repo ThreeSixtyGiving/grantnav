@@ -8,40 +8,67 @@
     </header>
     <p>{{org_names.0}} appears in the 360Giving data as a recipient of grants. Here is an overview of the grants they have received.</p>
     <h4>Summary</h4>
+
     <div class="media-card__box_container">
         <div class="media-card__box">
-        <strong>Total Grants</strong> <br />
-        {{recipient.aggregate.grants | get_amount }}
+            <strong>Total Grants</strong> <br />
+            <span style="word-break: break-all">{{recipient.aggregate.grants | get_amount }}</span>
         </div>
         <div class="media-card__box">
-        <strong>Earliest Award</strong> <br />
-        {{recipient.aggregate.minAwardDate | get_date }}
+            <strong>Earliest Award</strong> <br />
+            {{recipient.aggregate.minAwardDate | get_date }}
         </div>
         <div class="media-card__box">
-        <strong>Latest Award</strong> <br />
-        {{recipient.aggregate.maxAwardDate | get_date }}
+            <strong>Latest Award</strong> <br />
+            {{recipient.aggregate.maxAwardDate | get_date }}
         </div>
-    </div>
-    <div class="media-card__box_container">
+        {% if recipient.stats_by_currency|length == 1 %}
         {% for stat in recipient.stats_by_currency %}
         <div class="media-card__box">
-            <strong> Grants in {{stat.currency}} </strong> <br/>
-            {{stat.grants | get_amount }}
-        </div>
-        <div class="media-card__box">
-            <strong> Total Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br/>
+            <strong> Total Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
             {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
         </div>
         <div class="media-card__box">
-            <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br/>
+            <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
             {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
         </div>
         <div class="media-card__box">
-            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br/>
-            {{stat.currency | currency_symbol}}{{stat.min | get_amount}}
+            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
+            {{stat.currency | currency_symbol}}{{stat.min | get_amount}} <br/>
         </div>
         {% endfor %}
+        {% endif %}
     </div>
+
+    {% if recipient.stats_by_currency|length > 1 %}
+
+    <p>{{org_names.0}} makes grants in {{recipient.stats_by_currency|length}} currencies.</p>
+
+    <table class="table table--zebra" style="width: 100%">
+        <thead>
+            <th>Currency</th>
+            <th>Grants</th>
+            <th>Total Amount</th>
+            <th>Greatest Amount</th>
+            <th>Smallest Amount</th>
+        </thead>
+        <tbody>
+        {% for stat in recipient.stats_by_currency %}
+        <tr>
+            <td class="table__lead-cell">{{stat.currency}}</td>
+            <td>{{stat.grants | get_amount }}</td>
+            <td>{{stat.currency | currency_symbol}}{{stat.total | get_amount}}</td>
+            <td>{{stat.currency | currency_symbol}}{{stat.max | get_amount}}</td>
+            <td>{{stat.currency | currency_symbol}}{{stat.min | get_amount}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="spacer-2"></div>
+    {% endif %}
+
+
+
 
     <a href="{% url 'search' %}?{{recipient.grant_search_parameters}}" class="button pull-right" title="Explore all the grants {{org_names.0}} has received">Explore Grants</a>
 
