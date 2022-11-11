@@ -22,7 +22,10 @@ def dataload():
             prefix + 'a002400000KeYdsAAF.json',
             prefix + 'grantnav-20180903134856.json',
             prefix + 'a002400000nO46WAAS.json'
-        ], clean=True
+        ],
+        clean=True,
+        funders=os.path.join(prefix, "funders.jl"),
+        recipients=os.path.join(prefix, "recipients.jl")
     )
     #elastic search needs some time to commit its data
     time.sleep(2)
