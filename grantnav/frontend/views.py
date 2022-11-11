@@ -6,16 +6,18 @@ import json
 import re
 import urllib
 from itertools import chain
-
 import dateutil.parser as date_parser
 from dateutil.relativedelta import relativedelta
-import elasticsearch.exceptions
+
 from django.http import Http404, JsonResponse
 from django.http import HttpResponse, StreamingHttpResponse
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import render, redirect
 from django.utils.http import urlencode
+from django.urls import reverse
+
 from elasticsearch.helpers import scan
+import elasticsearch.exceptions
 
 from grantnav import provenance, csv_layout, utils
 from grantnav.search import get_es
@@ -1098,49 +1100,6 @@ def org(request, org_id):
     return render(request, "org.html", context=context)
 
 
-def funder(request, funder_id):
-
-    [result_format, results_size] = get_request_type_and_size(request)
-
-    if result_format != "html":
-        funder_id = re.match(r'(.*)\.\w*$', funder_id).group(1)
-
-    query = {"query": {"bool": {"filter":
-                [{"term": {"fundingOrganization.id": urllib.parse.unquote(funder_id)}}]}},
-            "aggs": {
-                "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
-                "filenames": {"terms": {"field": "filename", "size": 10}},
-                "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
-                "min_date": {"min": {"field": "awardDate"}},
-                "max_date": {"max": {"field": "awardDate"}},
-                "recipients": {"terms": {"field": "recipientOrganization.id_and_name", "size": 10},
-                               "aggs": {"recipient_stats": {"stats": {"field": "amountAwarded"}}}}
-        }
-    }
-    if result_format == "csv":
-        return grants_csv_paged(query)
-    elif result_format == "json":
-        return grants_json_paged(query)
-
-    results = get_results(query, results_size)
-
-    if results['hits']['total']['value'] == 0:
-        raise Http404
-    context = {}
-    context['results'] = results
-
-    funder = results['hits']['hits'][0]["_source"]["fundingOrganization"][0].copy()
-    # funder name for this case to come from same place as Filters.
-    funder['name'] = json.loads(funder['id_and_name'])[0]
-
-    context['funder'] = funder
-    try:
-        context['publisher'] = provenance.by_identifier[provenance.identifier_from_filename(results['aggregations']['filenames']['buckets'][0]['key'])]['publisher']
-    except KeyError:
-        pass
-
-    return render(request, "funder.html", context=context)
-
 
 def funder_recipients_datatables(request):
     # Make 100k the default max length. Overrideable by setting ?length= parameter
@@ -1389,47 +1348,6 @@ def grants_datatables(request):
     )
 
 
-def recipient(request, recipient_id):
-    [result_format, results_size] = get_request_type_and_size(request)
-    if result_format != "html":
-        recipient_id = re.match(r'(.*)\.\w*$', recipient_id).group(1)
-
-    query = {"query": {"bool": {"filter":
-                 [{"term": {"recipientOrganization.id": urllib.parse.unquote(recipient_id)}}]}},
-             "aggs": {
-                 "funder_orgs": {"cardinality": {"field": "fundingOrganization.id"}},
-                 "currency_stats": {"terms": {"field": "currency"}, "aggs": {"amount_stats": {"stats": {"field": "amountAwarded"}}}},
-                 "min_date": {"min": {"field": "awardDate"}},
-                 "max_date": {"max": {"field": "awardDate"}},
-                 "currencies": {"terms": {"field": "currency", "size": 1000}},  # less that 1000 currencies with code.
-                 "funders": {"terms": {"field": "fundingOrganization.id_and_name", "size": 10},
-                             "aggs": {"funder_stats": {"stats": {"field": "amountAwarded"}}}}
-                 }}
-
-    if result_format == "csv":
-        return grants_csv_paged(query)
-    elif result_format == "json":
-        return grants_json_paged(query)
-
-    results = get_results(query, results_size)
-
-    if results['hits']['total']['value'] == 0:
-        raise Http404
-    context = {}
-    context['results'] = results
-    context['recipient'] = results['hits']['hits'][0]["_source"]["recipientOrganization"][0]
-
-    return render(request, "recipient.html", context=context)
-
-
-def recipients(request):
-    return render(request, "recipients.html")
-
-
-def funders(request):
-    return render(request, "funders.html")
-
-
 def region(request, region):
     [result_format, results_size] = get_request_type_and_size(request)
     if result_format != "html":
@@ -1508,16 +1426,17 @@ def get_funders_for_datasets(datasets):
         dataset['funders'] = [json.loads(bucket['key']) for bucket in results['aggregations']['funders']['buckets']]
 
 
+# Backwards compatibility
 def publisher(request, publisher_id):
-    if publisher_id not in provenance.by_publisher:
-        raise Http404
+    return redirect(reverse("org", args=[publisher_id]))
 
-    publisher = provenance.by_publisher[publisher_id]
-    get_funders_for_datasets(publisher['datasets'])
 
-    return render(request, "publisher.html", context={
-        'publisher': publisher,
-    })
+def recipient(request, recipient_id):
+    return redirect(reverse("org", args=[recipient_id]))
+
+
+def funder(request, funder_id):
+    return redirect(reverse("org", args=[funder_id]))
 
 
 def datasets(request):
