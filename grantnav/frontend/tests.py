@@ -112,9 +112,9 @@ def test_orgid_with_dots(provenance_dataload, client):
     # Delf Universy request has a ".c" at the end.
     # Check that it is not seen as a format type.
 
-    recipient = client.get('/recipient/XI-GRID-grid.5292.c')
+    org = client.get('/org/XI-GRID-grid.5292.c')
 
-    assert recipient.status_code == 200
+    assert org.status_code == 200
 
 
 def test_get_pagination_single_page():
