@@ -1100,7 +1100,6 @@ def org(request, org_id):
     return render(request, "org.html", context=context)
 
 
-
 def funder_recipients_datatables(request):
     # Make 100k the default max length. Overrideable by setting ?length= parameter
     MAX_DEFAULT_FUNDER_RECIPIENTS_LENGTH = 500000
