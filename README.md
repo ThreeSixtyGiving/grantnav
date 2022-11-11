@@ -59,6 +59,12 @@ python manage.py runserver
 Note that if you are not on Debian based system you will need to follow https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html#setup-installation to install elasticsearch.
 Follow the instructions in your terminal to open the aplication in your browser.
 
+## Database
+
+The default django database is used in grantnav to manage user session preferences data. It must be created via the setup `manage.py migrate` for GrantNav to work correctly.
+
+note: This is not related to elasticsearch.
+
 Accessing GrantNav
 ------------------
 
