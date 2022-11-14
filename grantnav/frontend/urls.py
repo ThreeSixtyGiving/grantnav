@@ -44,7 +44,7 @@ urlpatterns = [
     # Redirects
     url(r'^publisher/(.*)$', views.publisher, name='publisher'),
     url(r'^recipient/(.*)$', views.recipient, name='recipient'),
-    url(r'^funder/(.*)$', views.recipient, name='recipient'),
+    url(r'^funder/(.*)$', views.funder, name='funder'),
     url(r'^help', RedirectView.as_view(url="https://help.grantnav.threesixtygiving.org/"), name="help"),
     # Developers content used to live on this website but it was then moved to an external help site.
     # Redirect people to make sure any old links continue to work.
