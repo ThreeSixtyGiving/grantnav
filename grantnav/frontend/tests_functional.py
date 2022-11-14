@@ -16,7 +16,6 @@ chromedriver_autoinstaller.install()
 BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
 
 
-
 @pytest.fixture(scope="module")
 def browser(request):
     if BROWSER == 'ChromeHeadless':
