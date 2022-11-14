@@ -15,7 +15,6 @@ prefix = f"{os.path.dirname(__file__)}/../../dataload/test_data/"
 chromedriver_autoinstaller.install()
 BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
 
-os.environ["ES_INDEX"] = "testing"
 
 
 @pytest.fixture(scope="module")

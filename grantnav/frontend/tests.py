@@ -12,7 +12,6 @@ from django.urls import reverse_lazy
 
 
 prefix = f"{os.path.dirname(__file__)}/../../dataload/test_data/"
-os.environ["ES_INDEX"] = "testing"
 
 
 @pytest.fixture(scope="module")
