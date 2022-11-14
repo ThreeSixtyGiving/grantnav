@@ -120,6 +120,12 @@ def test_orgid_with_dots(provenance_dataload, client):
     assert org.status_code == 200
 
 
+def test_old_org_to_new_redirects(provenance_dataload, client):
+    assert client.get("/funder/GB-CHC-1126147").status_code == 302
+    assert client.get("/recipient/GB-COH-08523414").status_code == 302
+    assert client.get("/publisher/GB-CHC-1126147").status_code == 302
+
+
 def test_get_pagination_single_page():
     request = RequestFactory().get('/')
     context = {
