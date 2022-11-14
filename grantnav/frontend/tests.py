@@ -125,6 +125,10 @@ def test_old_org_to_new_redirects(provenance_dataload, client):
     assert client.get("/publisher/GB-CHC-1126147").status_code == 302
 
 
+def test_datasets_page(provenance_dataload, client):
+    assert client.get("/datasets/").status_code == 200
+
+
 def test_get_pagination_single_page():
     request = RequestFactory().get('/')
     context = {
