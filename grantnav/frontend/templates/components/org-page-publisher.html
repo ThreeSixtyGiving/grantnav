@@ -6,9 +6,9 @@
         <h3 class="media-card__heading">As Publisher</h3>
     </header>
 
-        <p>{{ publisher.name }} appears in the 360Giving data as a publisher of grants. Here is an overview of grants they have published.</p>
+        <p>{{ publisher.name }} appears in the 360Giving data as a publisher of grants, identified with the 360Giving Publisher prefix {{publisher.prefix}}.
 
-        <p><strong>GrantNav is not directly responsible for any of the data on this site.</strong> If you notice a problem with the data please contact the relevant publisher directly.</p>
+        <p><strong>GrantNav is not directly responsible for any of the data on this site.</strong> If you notice a problem with the data, please contact the relevant publisher directly.</p>
         {% if publisher.datasets.0.distribution.0.accessURL %}
         <p>
             {{ publisher.name }} has provided the following link for information about their data:
@@ -16,12 +16,12 @@
         </p>
         {% endif %}
 
-        <p><strong>360Giving prefix:</strong> {{ publisher.prefix }}</a><p>
         {% if publisher.website %}
         <p><strong>Website:</strong> <a href="{{ publisher.website }}">{{ publisher.website }}</a></p>
         {% endif %}
 
         <h4>Datasets</h4>
+        <p>Here is an overview of grants published by {{publisher.name}}.</p>
         <table class="table table--primary table--small dt-responsive">
         <thead>
             <tr>

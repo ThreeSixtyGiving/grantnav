@@ -26,10 +26,17 @@
           <h3 class="media-card__heading">Organisation Information</h3>
        </header>
 
+        <div class="box box--teal">
+          <h3 class="box__heading">Where is this data from?</h3>
+          <p>This data was published in the 360Giving Data Standard by one or more publishers.</p>
+        </div>
+
+        <div class="spacer-2"></div>
+
         <div class="media-card__box_container">
 
           <div class="media-card__box">
-            <strong>Type</strong><br />
+            <strong>Appears in the data as</strong><br />
             {% for org_type in org_types %}
             <a href="#{{org_type}}">{{org_type}}</a>{% if forloop.counter != org_types|length %},{% endif %}
             {% endfor %}
@@ -42,30 +49,34 @@
 
           {% if other_names %}
           <div class="media-card__box">
-            <strong>Other Names</strong> <br/>
+            <strong>Other Names used in the data</strong> <br/>
             {{other_names|join:", "}}
           </div>
           {% endif %}
         </div>
         {% if org_ids|length > 1 %}
-        <p>{{ main_name }} has been identified using different organisation identifiers within the 360Giving data. This may be, for example, because they are both a registered charity and a registered company  and different publishers have used either a company or charity number to identify them.</p>
+        <p>{{ main_name }} has been identified using different organisation identifiers within the 360Giving data.</p>
         {% endif %}
 
         {% if other_names %}
-        <p>{{ main_name }} has been referred to using several different names in the 360Giving data. This may be because a publisher has abbreviated the name or used an alternative spelling, or the name has changed over time. In other cases, one organisation identifier is shared by multiple entities (for example subsidiaries or branches of the same organisation) receiving distinct grants.</p>
+        <p>{{ main_name }} has been referred to using several different names in the 360Giving data.</p>
         {% endif %}
 
+       <!-- TBC
+        <a class="button" href="https://help.grantnav.threesixtygiving.org/en/latest/organisations.html">Learn more about organisations</a>
+
+        <div class="spacer-2"></div>
+       -->
+
         {% if ftc_data %}
-          <button class="button" onClick='$("#additional-data-section").toggle()'>Show Additional Data</button>
+          <button class="button" onClick='$("#additional-data-section").toggle()' style="display: block">Show Additional Data</button>
           <div id="additional-data-section" style="display:none;">
             <h4>Additional data added by ThreeSixtyGiving</h4>
             <div class="box box--teal">
               <h3 class="box__heading">Where is this data from?</h3>
-              <p>We use additional data sources via <a href="https://github.com/drkane/geo-lookups/">Geo Lookups</a>, <a
-                href="https://findthatcharity.uk">FindThatCharity</a>, <a href="https://geoportal.statistics.gov.uk/">The ONS</a>,
-              <a href="https://charitycommission.gov.uk">The Charity Commission</a> and <a href="https://findthatpostcode.uk">Find
-                That Postcode</a>. <strong>Note: This data has been added automatically and has
-              not been verified.</strong></p>
+              <p>We use additional data sources from <a href="https://charitycommission.gov.uk">The Charity Commission</a> via
+                <a href="https://findthatcharity.uk">FindThatCharity</a> to add further data to "{{main_name}}".
+                <strong>Note: This data has been added automatically and has not been verified.</strong></p>
             </div>
             <div class="spacer-3"></div>
             <div class="table table--zebra">
@@ -73,8 +84,10 @@
                 <tbody>
                   {% for key, val in ftc_data|flatten %}
                   <tr>
+                    {% if val %}
                     <td style="width: 40%"> <b>{{ key }} </b> </td>
                     <td> {{val}} </td>
+                    {% endif %}
                     {% endfor %}
                 </tbody>
               </table>
