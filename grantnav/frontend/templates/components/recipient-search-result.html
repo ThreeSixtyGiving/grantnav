@@ -31,7 +31,7 @@
   <div class="grant-search-result__right-side">
      <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Org IDs: </span>
-      <span>{{ result.org_ids | join:", " }}</span>
+      <span style="word-break: break-all;">{{ result.org_ids | join:", " }}</span>
     </div>
 
     {% if result.names|length > 1 %}
