@@ -104,7 +104,7 @@ To learn more about locations in GrantNav, see [Locations](locations)
    understanding_results
    search_bar
    locations
-   organizations
+   organisations
    export
    data
    developers
