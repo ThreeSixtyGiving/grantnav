@@ -173,14 +173,11 @@ sup {
 
 a {
   color: var(--color-accent);
-  text-decoration: none;
   -webkit-text-decoration-skip: objects; }
   a:hover, a:focus {
-    color: var(--color-accent);
-    text-decoration: none; }
+    color: var(--color-accent); }
   a:active {
-    color: var(--color-orange);
-    text-decoration: none; }
+    color: var(--color-orange); }
 
 a:not([href]):not([tabindex]) {
   color: inherit;
@@ -558,6 +555,9 @@ template, [hidden] {
 .padding-bottom\:5 {
   padding-bottom: 5rem  !important; }
 
+.padding\:0 {
+  padding: 0  !important; }
+
 .justify-content-end {
   justify-content: end; }
 
@@ -841,7 +841,9 @@ template, [hidden] {
 
 a {
   font-weight: 400;
-  color: hsl(var(--teal-dark-hsl), 1); }
+  color: hsl(var(--teal-dark-hsl), 1);
+  text-decoration: underline;
+  text-underline-position: under; }
   a:hover {
     color: hsl(var(--orange-dark-hsl), 1); }
   a:active {
@@ -1062,8 +1064,7 @@ a {
     margin-bottom: 38px; }
     .page-title__id a {
       font-size: 24px;
-      font-weight: 400;
-      text-decoration: underline; }
+      font-weight: 400; }
 
 .pager {
   font-size: 16px;
@@ -1533,12 +1534,6 @@ p {
   .p > a {
     font-weight: 400;
     color: var(--color-teal-dark); }
-
-p > a {
-  text-decoration: underline; }
-
-ul > li > a {
-  text-decoration: underline; }
 
 .accordion__trigger {
   cursor: pointer; }
@@ -3343,8 +3338,6 @@ a.base-card:hover:before {
   .footer ul {
     list-style-type: none;
     padding: 0; }
-    .footer ul a {
-      text-decoration: none; }
   .footer a {
     color: hsl(var(--white-hsl), 1);
     text-decoration: underline;
@@ -4312,9 +4305,7 @@ a.base-card:hover:before {
 
 .prose a {
   font-weight: inherit;
-  color: hsl(var(--teal-dark-hsl), 1);
-  text-decoration: underline;
-  text-underline-position: under; }
+  color: hsl(var(--teal-dark-hsl), 1); }
   .prose a:hover {
     background-color: hsl(var(--teal-hsl), 0.1); }
   .prose a.button {
@@ -5139,9 +5130,6 @@ a.base-card:hover:before {
   list-style: none;
   margin: 0; }
 
-.top-bar a {
-  text-decoration: none; }
-
 .top-bar {
   --panel-width: 280px; }
   @media (min-width: 36em) {
@@ -5461,16 +5449,6 @@ a.base-card:hover:before {
   @media (min-width: 60em) {
     .grantnav-search__content {
       padding-top: 24px; } }
-  .grantnav-search__content--insights-large {
-    display: none; }
-    @media (min-width: 85em) {
-      .grantnav-search__content--insights-large {
-        display: block; } }
-  .grantnav-search__content--insights-small {
-    display: block; }
-    @media (min-width: 85em) {
-      .grantnav-search__content--insights-small {
-        display: none; } }
   .grantnav-search__content--filters {
     display: flex;
     justify-content: space-between;

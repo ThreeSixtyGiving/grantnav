@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load frontend %}
+{% load static %}
+
+{% block header %}
+  {% include 'components/funder-search-block.html' %}
+{% endblock %}
+
+{% block main_content %}
+  <main class="layout__content">
+    <div class="grantnav-search__wrapper">
+      <div class="grantnav-search__sidebar">
+        {% if results and results.hits.hits %}
+          <h2 class="grantnav-search__sidebar--heading">Refine your search</h2>
+
+          <div class="grantnav-search__sidebar--filters">
+            {% include 'components/filter-wrapper.html' %}
+          </div>
+        {% endif %}
+      </div>
+      {% if results and results.hits.hits %}
+      <div class="grantnav-search__content">
+
+        <div class="pull-right">
+          <a class="alert-tag alert-tag--anchor" href="https://help.grantnav.threesixtygiving.org/en/latest/organisations.html">
+            <span class="alert-tag__icon">
+              {% include 'tokens/info-icon.html' %}
+            </span>
+            <span class="alert-tag__content">Learn more about organisations</span>
+          </a>
+        </div>
+
+        <div class="search-summary-description">
+          Your search ‘{{ text_query }}’ returned {{ results.hits.total|get_amount }} funders.
+        </div>
+
+        <div class="spacer-3"></div>
+        <div class="box box--teal">
+          <h3 class="box__heading">Where is this data from?</h3>
+          <p>This data was published in the 360Giving Data Standard, with additional data including organisation identifiers and
+            names added via <a href="https://findthatcharity.uk">FindThatCharity</a>.</p>
+        </div>
+
+          {# include 'components/search-summary-box.html' #}
+
+          <h2 class="results-title">
+            <span>Search results</span>
+            <span class="results-title__subtitle">(Displaying {{ results.hits.total|get_amount }} funders - {% for page in pages%}{% if page.active%}page {{ page.label }} of {{ total_pages }}{% endif%}{% endfor %})</span>
+          </h2>
+
+          {% if selected_facets %}
+            {% include 'components/filter-summary.html' %}
+          {% endif %}
+
+          <section class="grantnav-search__content--filters">
+            {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
+          </section>
+
+          <section class="grantnav-search__content--results">
+          {% for result in results.hits.hits %}
+            {% include 'components/funder-search-result.html' with result=result %}
+          {% endfor %}
+          </section>
+
+          <section class="grantnav-search__content--footer">
+            {% include 'components/pager.html' %}
+          </section>
+        </div>
+      </div>
+      {% elif results %}
+
+      <div class="spacer-4">
+          <div id="no-results">
+            <h1>No Results</h1>
+
+            {% if selected_facets %}
+              {% include 'components/filter-summary.html' %}
+              <div class="spacer-4"></div>
+            {% endif %}
+
+            <p>Your search - <strong>"{{text_query}}"</strong> - did not match any funder records.<br>Try something like</p>
+            <ul>
+              <li>Using more general terms</li>
+              <li>Checking your spelling</li>
+              <li>Removing some filters</li>
+              <li><a href="{% url 'recipients' %}{{view.request.GET}}?{{request.META.QUERY_STRING}}">Searching recipients</a></li>
+              <li><a href="{% url 'search' %}{{view.request.GET}}?{{request.META.QUERY_STRING}}">Searching grants</a></li>
+            </ul>
+           <p>Or <a href="{% url 'funders' %}">clear your search</a>.</p>
+          </div>
+      </div>
+
+    {% elif search_error %}
+
+      <div class="spacer-4">
+          <div id="not_valid">
+            <h1>Search input is not valid</h1>
+            <p>We can't find what you tried to search for.<br>Try something like:</p>
+            <ul>
+            <li>Using more general terms</li>
+            <li>Checking your spelling</li>
+          </div>
+      </div>
+    {% endif %}
+  </main>
+{% endblock %}
+
+
+

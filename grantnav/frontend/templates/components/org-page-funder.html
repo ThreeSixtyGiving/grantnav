@@ -1,0 +1,120 @@
+{% load frontend %}
+
+<article class="media-card media-card--teal">
+  <div class="media-card__content_no_image">
+    <header class="media-card__header">
+        <a name="Funder"></a>
+        <h3 class="media-card__heading">As Funder</h3>
+    </header>
+    <p>{{org_names.0}} appears in the 360Giving data as a funder of grants. Here is an overview of the grants they have funded.</p>
+    <h4>Summary</h4>
+    <div class="media-card__box_container">
+        <div class="media-card__box">
+            <strong>Total Grants</strong> <br />
+            <span style="word-break: break-all">{{funder.aggregate.grants | get_amount }}</span>
+        </div>
+        <div class="media-card__box">
+            <strong>Recipients</strong> <br />
+            {{funder.recipients | get_amount }}
+        </div>
+        <div class="media-card__box">
+            <strong>Earliest Award</strong> <br />
+            {{funder.aggregate.minAwardDate | get_date }}
+        </div>
+        <div class="media-card__box">
+            <strong>Latest Award</strong> <br />
+            {{funder.aggregate.maxAwardDate | get_date }}
+        </div>
+        {% if funder.stats_by_currency|length == 1 %}
+        {% for stat in funder.stats_by_currency %}
+        <div class="media-card__box">
+            <strong> Total Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
+            {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
+        </div>
+        <div class="media-card__box">
+            <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
+            {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
+        </div>
+        <div class="media-card__box">
+            <strong> Smallest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
+            {{stat.currency | currency_symbol}}{{stat.min | get_amount}} <br/>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    {% if funder.stats_by_currency|length > 1 %}
+
+    <p>{{org_names.0}} makes grants in {{funder.stats_by_currency|length}} currencies.</p>
+
+    <table class="table table--zebra" style="width: 100%">
+        <thead>
+            <th>Currency</th>
+            <th>Grants</th>
+            <th>Total Amount</th>
+            <th>Greatest Amount</th>
+            <th>Smallest Amount</th>
+        </thead>
+        <tbody>
+        {% for stat in funder.stats_by_currency %}
+        <tr>
+            <td class="table__lead-cell">{{stat.currency}}</td>
+            <td>{{stat.grants | get_amount }}</td>
+            <td>{{stat.currency | currency_symbol}}{{stat.total | get_amount}}</td>
+            <td>{{stat.currency | currency_symbol}}{{stat.max | get_amount}}</td>
+            <td>{{stat.currency | currency_symbol}}{{stat.min | get_amount}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="spacer-2"></div>
+    {% endif %}
+
+
+    {% if not publisher and funder.funder_publisher %}
+    <p>This data was originally published by {{ funder.funder_publisher.name }} see <a href="{% url 'org' funder.funder_publisher.prefix %}">their GrantNav publisher page</a> for more information.</p>
+
+    {% endif %}
+
+    <a href="{% url 'search' %}?{{funder.grant_search_parameters}}" class="button pull-right" title="Explore all the grants made by {{org_names.0}}">Explore Grants</a>
+
+    <p>This data is provided for information purposes only.
+    Please refer to the funder website for details of current grant programmes,
+    application guidelines and eligibility criteria.</p>
+
+
+    <p>This table shows the recipients who have received grants made by {{org_names.0}}.</p>
+
+    <div class="section">
+        <div class="grantnav-datatable__content--filters margin-top:05">
+        <h4>Recipients</h4>
+        <div class="export-wrapper">
+            <div class="export-label">Export search data:</div>
+
+            <div class="export-button">
+            {% include 'components/export-data-button--csv.html' with data_function='funder_recipients_datatables.csv' parameter="funder_id=" query=org_ids_json %}
+            </div>
+
+            <div class="export-button">
+            {% include 'components/export-data-button--json.html' with data_function='funder_recipients_datatables.json' parameter="funder_id=" query=org_ids_json %}
+            </div>
+        </div>
+        </div>
+        <div class="table table--zebra">
+        <table class="table table--zebra table--small dt-responsive full-width" id="recipients_datatable">
+            <thead>
+            <tr>
+                <th>Recipient</th>
+                <th>Grants</th>
+                <th class="amount">Total</th>
+                <th class="amount">Largest</th>
+                <th class="amount">Smallest</th>
+            </tr>
+            </thead>
+        </table>
+        </div>
+    </div>
+
+    <div class="spacer-1"></div>
+</div>
+</article>

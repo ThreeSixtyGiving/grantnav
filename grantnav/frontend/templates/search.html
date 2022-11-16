@@ -35,15 +35,13 @@
             {% include 'components/filter-summary.html' %}
           {% endif %}
 
+        <div class="card-view">
           <section class="grantnav-search__content--filters">
             {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
 
             {% if results.hits.total.value <= 10000 %}
               <a class="grantnav-search__content--insights-large button button--large button--teal-dark bold margin-left:4 margin-right:2" href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}%3F{{ query_string|urlencode }}" title="Download search results into 360Insights data visualiser" target="_blank">
                 Visualise your search results in 360Insights
-              </a>
-              <a class="grantnav-search__content--insights-small button button--large button--teal-dark bold margin-left:4 margin-right:4" href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}%3F{{ query_string|urlencode }}" title="Download search results into 360Insights data visualiser" target="_blank">
-                Visualise in 360Insights
               </a>
             {% endif %}
 
@@ -54,21 +52,28 @@
                 {% include 'components/export-data-button--csv.html' with data_function='search.csv' query=query_string only %}
               </div>
 
-              <div class="export-button">
-                {% include 'components/export-data-button--json.html' with data_function='search.json' query=query_string only %}
-              </div>
-            </div>
-          </section>
+               <div class="export-button">
+                 {% include 'components/export-data-button--json.html' with data_function='search.json' query=query_string only %}
+               </div>
+            </section>
 
-          <section class="grantnav-search__content--results">
-          {% for result in results.hits.hits %}
-            {% include 'components/grant-search-result.html' with result=result %}
-          {% endfor %}
-          </section>
+            <section class="grantnav-search__content--results">
+            {% for result in results.hits.hits %}
+              {% include 'components/grant-search-result.html' with result=result %}
+            {% endfor %}
+            </section>
 
-          <section class="grantnav-search__content--footer">
-            {% include 'components/pager.html' %}
-          </section>
+            <section class="grantnav-search__content--footer">
+              {% include 'components/pager.html' %}
+            </section>
+          </div>
+
+          <div class="table-view" style="display: none;">
+            <section class="grantnav-search__content--results">
+              {% include 'components/grants_table.html' %}
+            </section>
+          </div>
+
         </div>
       </div>
       {% elif results %}
@@ -82,13 +87,13 @@
               <div class="spacer-4"></div>
             {% endif %}
 
-            <p>Your search - <strong>"{{text_query}}"</strong> - did not match any records.<br>Try something like</p>
+            <p>Your search - <strong>"{{text_query}}"</strong> - did not match any grant records.<br>Try something like</p>
             <ul>
               <li>Using more general terms</li>
               <li>Checking your spelling</li>
               <li>Removing some filters</li>
-              <li>To clear your search, <a href="{% url 'home' %}">click here</a></li>
             </ul>
+            <p>Or <a href="{% url 'search' %}">clear your search</a>.</p>
           </div>
       </div>
 
@@ -109,16 +114,17 @@
 
 
 {% block extra_style %}
+{% include 'components/grants_table_styles.html' %}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block extra_scripts %}
 
+{% include 'components/grants_table_scripts.html' %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
-
 
 <script>
 
@@ -148,6 +154,37 @@ function formatDropdownItem (item) {
   return $dropdownItem;
 };
 
+$( document ).ready(function() {
+  if ("{{ view_mode }}" === "card") {
+    $('input[type=radio][name=results-switcher][value="card"]').attr('checked', true)
+    $( ".card-view" ).css('display', 'block');
+    $( ".table-view" ).css('display', 'none');
+    $( ".results-title__subtitle").css('display', 'inline');
+    $('#search_grants_datatable').DataTable().responsive.recalc();
+    $('#search_grants_datatable').DataTable().columns.adjust();
+  } else if ("{{ view_mode }}" === "table") {
+    $('input[type=radio][name=results-switcher][value="table"]').attr('checked', true)
+    $( ".card-view" ).css('display', 'none');
+    $( ".table-view" ).css('display', 'flex');
+    $( ".results-title__subtitle").css('display', 'none');
+    $('#search_grants_datatable').DataTable().responsive.recalc();
+    $('#search_grants_datatable').DataTable().columns.adjust();
+  } else {
+    $('input[type=radio][name=results-switcher][value="card"]').attr('checked', true)
+  }
+
+  $('input[type=radio][name=results-switcher]').change(function() {
+    var query = window.location.search;
+    var urlParams = new URLSearchParams(query);
+    if (this.value == 'card') {
+      urlParams.set('view_mode', 'card');
+    }
+    else if (this.value == 'table') {
+      urlParams.set('view_mode', 'table');
+    }
+    window.location.search = urlParams;
+  });
+});
 
 // This returns the html for select2 to render each tag in the select box.
 function formatSelection (item) {

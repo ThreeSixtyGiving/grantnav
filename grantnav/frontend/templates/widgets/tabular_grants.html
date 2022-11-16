@@ -1,0 +1,14 @@
+{% extends 'widgets/widgets_base.html' %}
+
+{% block extra_style %}
+  {% include 'components/grants_table_styles.html' %}
+{% endblock %}
+
+{% block main_content%}
+  {% include 'widgets/widgets_header.html' with title="Grants data from 360Giving" %}
+  {% include 'components/grants_table.html' with widget=True %}
+{% endblock %}
+
+{% block extra_scripts %}
+  {% include 'components/grants_table_scripts.html' %}
+{% endblock %}

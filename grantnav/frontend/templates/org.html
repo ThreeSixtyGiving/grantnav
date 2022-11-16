@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load frontend %}
+{% load static %}
+{% block subtitle %} - {{main_name}}{% endblock %}
+{% block main_content %}
+<div class="layout layout--single-column">
+  <main class="layout__content">
+    <div class="spacer-1">
+      <h1 class="heading-in-panel">{{ main_name }}</h1>
+    </div>
+
+    <div class="media-card media-card--base">
+      <div class="media-card__content_no_image">
+
+        <header class="media-card__header">
+          <h3 class="media-card__heading">Organisation Information</h3>
+       </header>
+
+        <div class="box box--teal">
+          <h3 class="box__heading">Where is this data from?</h3>
+          <p>This data was published in the 360Giving Data Standard by one or more publishers.</p>
+        </div>
+
+        <div class="spacer-2"></div>
+
+        <div class="media-card__box_container">
+
+          <div class="media-card__box">
+            <strong>Appears in the data as</strong><br />
+            {% for org_type in org_types %}
+            <a href="#{{org_type}}">{{org_type}}</a>{% if forloop.counter != org_types|length %},{% endif %}
+            {% endfor %}
+          </div>
+
+          <div class="media-card__box">
+            <strong>Org IDs</strong> <br/>
+            {{org_ids|join:", "}}
+          </div>
+
+          {% if other_names %}
+          <div class="media-card__box">
+            <strong>Other Names used in the data</strong> <br/>
+            {{other_names|join:"; "}}
+          </div>
+          {% endif %}
+        </div>
+        {% if org_ids|length > 1 %}
+        <p>{{ main_name }} has been identified using different organisation identifiers within the 360Giving data.</p>
+        {% endif %}
+
+        {% if other_names %}
+        <p>{{ main_name }} has been referred to using several different names in the 360Giving data.</p>
+        {% endif %}
+
+        <a class="button" href="https://help.grantnav.threesixtygiving.org/en/latest/organisations.html">Learn more about organisations</a>
+
+        <div class="spacer-2"></div>
+
+        {% if ftc_data %}
+          <button class="button" onClick='$("#additional-data-section").toggle()' style="display: block">Show Additional Data</button>
+          <div id="additional-data-section" style="display:none;">
+            <h4>Additional data added by ThreeSixtyGiving</h4>
+            <div class="box box--teal">
+              <h3 class="box__heading">Where is this data from?</h3>
+              <p>We use additional data sources from <a href="https://charitycommission.gov.uk">The Charity Commission</a> via
+                <a href="https://findthatcharity.uk">FindThatCharity</a> to add further data to "{{main_name}}".
+                <strong>Note: This data has been added automatically and has not been verified.</strong></p>
+            </div>
+            <div class="spacer-3"></div>
+            <div class="table table--zebra">
+              <table class="table table--zebra table--secondary dt-responsive full-width">
+                <tbody>
+                  {% for key, val in ftc_data|flatten %}
+                  <tr>
+                    {% if val %}
+                    <td style="width: 40%"> <b>{{ key }} </b> </td>
+                    <td> {{val}} </td>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endif %}
+
+          </div>
+    </div>
+
+    <div class="spacer-4"></div>
+
+    {% if funder %}
+      {% include 'components/org-page-funder.html' %}
+    {% endif  %}
+
+    <div class="spacer-4"></div>
+    {% if recipient %}
+      {% include 'components/org-page-recipient.html' %}
+    {% endif  %}
+
+    <div class="spacer-4"></div>
+    {% if publisher %}
+      {% include 'components/org-page-publisher.html' %}
+    {% endif  %}
+  </main>
+</div>
+{% endblock %}
+{% block extra_style %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css">
+{% endblock %}
+{% block extra_scripts %}
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"
+></script>
+
+{# https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#json-script #}
+{{ funder.org_ids|json_script:"orgIDs" }}
+
+<script>
+    function truncate(string, len){
+      if (string.length > len)
+          return string.substring(0,len)+'...';
+      else
+          return string;
+    };
+
+  jQuery(function($) {
+    $('#recipients_datatable').dataTable({
+      "serverSide": true,
+      "responsive": true,
+      "searching": true,
+      "autoWidth": false,
+      "scrollY": 400,
+      "scroller": true,
+      "dom": "fit",
+      "scroller": {"displayBuffer": 15,
+                    "loadingIndicator": true},
+      "order": [[2, "desc"]],
+      "language": {
+          "info": "_START_ to _END_ of _TOTAL_",
+          "search": "Search Recipients"
+      },
+      "ajax": {
+        "url": "{% url 'funder_recipients_datatables' %}",
+        "data": function ( d ) {
+          d.funder_id = document.getElementById('orgIDs').textContent;
+          d.currency = "{{funder.stats_by_currency.0.currency|escapejs}}";
+        }
+      },
+      "columns": [
+        {"data": "org_name", "width": "10px", "render": function (data, type, row) {
+            return '<a href="/org/' + encodeURIComponent(row.org_id) + '">' + truncate(data, 20) + '</a>'
+        }},
+        {"data": "count"},
+        {"data": "sum", "className": "amount"},
+        {"data": "max", "className": "amount"},
+        {"data": "min", "className": "amount"}
+      ]
+    });
+  })
+</script>
+{% endblock %}
+{% block modals %}
+  {% include 'currency_stats_modal.html' %}
+{% endblock %}

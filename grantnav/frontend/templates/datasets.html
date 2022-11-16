@@ -71,6 +71,7 @@
         <p>If you see a problem with any data on this site, please report it directly to the relevant organisation. To find out
           how to contact them, see the "Where is this data from?" section at the bottom of each grant page.
 
+
         <h2 id="datasets-used">360Giving datasets used</h2>
 
         <table class="table table--primary table--zebra dt-responsive">
@@ -87,12 +88,12 @@
             {% for dataset in datasets %}
             <tr>
               <td class="table__lead-cell"><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
-              <td><a href="{% url 'publisher' dataset.publisher.prefix %}">{{ dataset.publisher.name }}</a></td>
+              <td><a href="{% url 'org' dataset.publisher.prefix %}">{{ dataset.publisher.name }}</a></td>
               <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
               <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
              <td>
                 {% for funder_name, funder_id in dataset.funders %}
-                  <a href="{% url 'funder'  funder_id %}">{{ funder_name }}</a>
+                  <a href="{% url 'org'  funder_id %}">{{ funder_name }}</a>
                 {% endfor %}
               </td>
             </tr>
@@ -100,6 +101,14 @@
           </tbody>
         </table>
 
+        <h2>All funders and recipients</h2>
+        <p>Downloads for all funders and recipients that appear in Grantnav grant data.</p>
+        <ul>
+          <li><a href="{% url 'funder_recipients_datatables.csv' %}">Recipients CSV</a></li>
+          <li><a href="{% url 'funder_recipients_datatables.json' %}">Recipients JSON</a></li>
+          <li><a href="{% url 'funders_datatables.csv' %}">Funders CSV</a></li>
+          <li><a href="{% url 'funders_datatables.json' %}">Funders JSON</a></li>
+        </ul>
 
         <h2 id="reuse">Reusing GrantNav data</h2>
 
@@ -114,7 +123,7 @@
           <li>Provide copyright and attribution information about the original data, and</li>
           <li><a href="#attributing-grantnav">Attribute GrantNav</a></li>
         </ul>
-        
+
         <p>You may not use the 360Giving or GrantNav logos without permission.
         </p>
 

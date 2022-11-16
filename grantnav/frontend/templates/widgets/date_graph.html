@@ -1,0 +1,18 @@
+{% extends 'widgets/widgets_base.html' %}
+{% load graphs %}
+{% load frontend %}
+
+{% block main_content %}
+  {% include 'widgets/widgets_header.html' with title="Grants: Date awarded" %}
+  {% with currency=results.aggregations.currency_stats.buckets|first|get:"key"|upper buckets=results.aggregations.currency_stats.buckets%}
+    <div class="graph-item">
+      <div class="graph-container">
+        {% award_date_widget %}
+      </div>
+    </div>
+  {% endwith %}
+{% endblock %}
+
+{% block extra_scripts %}
+  {% include 'widgets/grantnav_link_script.html' %}
+{% endblock %}

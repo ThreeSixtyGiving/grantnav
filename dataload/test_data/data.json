@@ -1,0 +1,106 @@
+[
+    {
+        "!!!WARNING!!!": "This is a sample metadata file for testing GrantNav, the metadata here is not necessarily correct!",
+        "license_name": "CCO",
+        "distribution": [
+            {
+                "downloadURL": "http://ods.sfct.org.uk/OpenDataService/sfct360givingfeed.aspx?trust=360G-indigotrust",
+                "accessURL": "http://indigotrust.org.uk/grants-awarded/",
+                "title": "Indigo Trust"
+            }
+        ],
+        "publisher": {
+            "name": "Indigo Trust",
+            "prefix": "360G-indigotrust",
+            "logo": "http://www.threesixtygiving.org/wp-content/uploads/indigo-trust.jpg",
+            "website": "https://indigotrust.org.uk/"
+        },
+        "identifier": "a002400000G4KGJAA3",
+        "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "title": "Indigo Trust",
+        "datagetter_metadata": {
+            "valid": true,
+            "acceptable_license": true,
+            "file_type": "csv",
+            "datetime_downloaded": "2016-01-01T11:42:48+01:00"
+        },
+        "description": ""
+    },
+    {
+        "license_name": "Creative Commons Attribution 4.0",
+        "distribution": [
+            {
+                "downloadURL": "http://www.lloydsbankfoundation.org.uk/assets/uploads/360_giving_LBFEW_2010_2015.xlsx",
+                "accessURL": "http://www.lloydsbankfoundation.org.uk/about-us/key-facts-and-figures/",
+                "title": "Grant Making Data 2010 - 2015"
+            }
+        ],
+        "publisher": {
+            "name": "Lloyds Bank Foundation",
+            "prefix": "360G-LBFEW",
+            "logo": "http://www.threesixtygiving.org/wp-content/uploads/Lloyds-Bank-Foundation-EW-colour.jpg",
+            "website": "http://www.lloydsbankfoundation.org.uk/"
+        },
+        "identifier": "a002400000OiDBQAA3",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "title": "Grant Making Data 2010 - 2015",
+        "datagetter_metadata": {
+            "valid": false,
+            "acceptable_license": true,
+            "file_type": "xlsx",
+            "datetime_downloaded": "2010-01-31T11:42:51+01:00"
+        },
+        "description": "This spreadsheet contains details of all grants awarded by the Foundation between 2010 and 2015, formatted to the 360Giving data standard. The Foundation will continue to publish new grants via 360Giving annually."
+    },
+    {
+        "license_name": "Creative Commons Attribution 4.0",
+        "distribution": [
+            {
+                "downloadURL": "http://www.wolfson.org.uk/media/2780/wolfson-foundation-grants-2014.xlsx",
+                "accessURL": "http://www.wolfson.org.uk/about-us/grant-data/",
+                "title": "The Wolfson Foundation Grants 2014 Excel"
+            }
+        ],
+        "publisher": {
+            "name": "The Wolfson Foundation",
+            "prefix": "360G-wolfson",
+            "logo": "http://www.threesixtygiving.org/wp-content/uploads/wolfson-foundation.jpg",
+            "website": "http://www.wolfson.org.uk"
+        },
+        "identifier": "a002400000KeYdsAAF",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "title": "The Wolfson Foundation Grants 2014 Excel",
+        "datagetter_metadata": {
+            "valid": true,
+            "acceptable_license": true,
+            "file_type": "json",
+            "datetime_downloaded": "2000-01-01T11:43:27+01:00"
+        },
+        "description": ""
+    },
+    {
+      "license_name":"Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "distribution":[
+        {
+          "downloadURL":"https://esmeefairbairn.org.uk/userfiles/Documents/Grants%20list/Esmee_Grants_Since_2008.json",
+          "accessURL":"https://esmeefairbairn.org.uk/open-data",
+          "title":"Esmée Fairbairn Foundation grants and social investments made since 2008"
+        }
+      ],
+      "publisher": {
+          "name":"Esmee Fairbairn Foundation",
+          "website":"http://esmeefairbairn.org.uk/",
+          "logo":"http://www.threesixtygiving.org/wp-content/uploads/esmee-fairbairn-foundation.png",
+          "prefix":"360G-esmeefairbairn"
+       },
+      "identifier":"a002400000G4KGjAAN",
+      "title":"Esmée Fairbairn Foundation grants and social investments made since 2008",
+      "datagetter_metadata": {
+            "valid": true,
+            "acceptable_license": true,
+            "file_type": "json",
+            "datetime_downloaded": "2000-01-01T11:43:27+01:00"
+      },
+      "description":"All grants and social investments awarded from January 2008 to June 2017."
+    }
+]

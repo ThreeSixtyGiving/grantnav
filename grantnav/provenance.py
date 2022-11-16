@@ -23,6 +23,8 @@ if settings.PROVENANCE_JSON:
             by_identifier[dataset.get('identifier')] = dataset
     except FileNotFoundError as e:
         warnings.warn(e)
+else:
+    warnings.warn("No publisher (provenance) data loaded. Hint: Set PROVENANCE_JSON")
 
 
 def identifier_from_filename(filename):

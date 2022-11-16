@@ -2,15 +2,16 @@ import json
 import time
 
 import pytest
-import requests
+import os
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
-from grantnav.frontend.views import get_pagination, BASIC_QUERY
+from grantnav.frontend.search_helpers import get_pagination
+from grantnav.frontend.views import BASIC_QUERY, create_parameters_from_json_query
 from django.test.client import RequestFactory
 from django.urls import reverse_lazy
 
 
-prefix = 'https://raw.githubusercontent.com/OpenDataServices/grantnav-sampledata/44ea7fdad8f32e9fab1d870e2f25fc31c5cdf2fd/'
+prefix = f"{os.path.dirname(__file__)}/../../dataload/test_data/"
 
 
 @pytest.fixture(scope="module")
@@ -20,7 +21,10 @@ def dataload():
             prefix + 'a002400000KeYdsAAF.json',
             prefix + 'grantnav-20180903134856.json',
             prefix + 'a002400000nO46WAAS.json'
-        ], clean=True
+        ],
+        clean=True,
+        funders=os.path.join(prefix, "funders.jl"),
+        recipients=os.path.join(prefix, "recipients.jl")
     )
     #elastic search needs some time to commit its data
     time.sleep(2)
@@ -28,9 +32,7 @@ def dataload():
 
 @pytest.fixture(scope="function")
 def provenance_dataload(dataload, settings, tmpdir):
-    local_data_json = tmpdir.join('data.json')
-    local_data_json.write(requests.get(prefix + 'data.json').content)
-    settings.PROVENANCE_JSON = local_data_json.strpath
+    settings.PROVENANCE_JSON = os.path.join(prefix, "data.json")
 
 
 @pytest.mark.parametrize(('expected_text'), [
@@ -112,9 +114,29 @@ def test_orgid_with_dots(provenance_dataload, client):
     # Delf Universy request has a ".c" at the end.
     # Check that it is not seen as a format type.
 
-    recipient = client.get('/recipient/XI-GRID-grid.5292.c')
+    org = client.get('/org/XI-GRID-grid.5292.c')
 
-    assert recipient.status_code == 200
+    assert org.status_code == 200
+
+
+def test_districts_datatables(provenance_dataload, client):
+    datatables = client.get("/grants_datatables?draw=1&columns%5B0%5D%5Bdata%5D=title&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=false&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=amountAwarded&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=fundingOrganization.0.name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=recipientOrganization.0.name&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=awardDate&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=true&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=description&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=true&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=desc&start=0&length=220&search%5Bvalue%5D=&search%5Bregex%5D=false&recipientDistrictName=Sir+Ddinbych+-+Denbighshire&_=1668523317785")
+    assert datatables.status_code == 200
+
+
+def test_region_datatables(provenance_dataload, client):
+    datatbales = client.get("/grants_datatables?draw=1&columns%5B0%5D%5Bdata%5D=title&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=false&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=amountAwarded&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=fundingOrganization.0.name&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=recipientOrganization.0.name&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=awardDate&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=true&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=description&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=true&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=desc&start=0&length=220&search%5Bvalue%5D=&search%5Bregex%5D=false&recipientRegionName=Wales&_=1668523901299")
+    assert datatbales.status_code == 200
+
+
+def test_old_org_to_new_redirects(provenance_dataload, client):
+    assert client.get("/funder/GB-CHC-1126147").status_code == 302
+    assert client.get("/recipient/GB-COH-08523414").status_code == 302
+    assert client.get("/publisher/GB-CHC-1126147").status_code == 302
+
+
+def test_datasets_page(provenance_dataload, client):
+    assert client.get("/datasets/").status_code == 200
 
 
 def test_get_pagination_single_page():
@@ -129,7 +151,7 @@ def test_get_pagination_single_page():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 1)
+    get_pagination(request, context, 1, create_parameters_from_json_query)
     assert 1 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -150,7 +172,7 @@ def test_get_pagination_ten_pages_on_page_1():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 1)
+    get_pagination(request, context, 1, create_parameters_from_json_query)
     assert 6 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -188,7 +210,7 @@ def test_get_pagination_ten_pages_on_page_2():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 2)
+    get_pagination(request, context, 2, create_parameters_from_json_query)
     assert 9 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -236,7 +258,7 @@ def test_get_pagination_ten_pages_on_page_5():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 5)
+    get_pagination(request, context, 5, create_parameters_from_json_query)
     assert 11 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -291,7 +313,7 @@ def test_get_pagination_ten_pages_on_page_6():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 6)
+    get_pagination(request, context, 6, create_parameters_from_json_query)
     assert 11 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -346,7 +368,7 @@ def test_get_pagination_ten_pages_on_page_7():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 7)
+    get_pagination(request, context, 7, create_parameters_from_json_query)
     assert 11 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -401,7 +423,7 @@ def test_get_pagination_ten_pages_on_page_8():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 8)
+    get_pagination(request, context, 8, create_parameters_from_json_query)
     assert 10 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -453,7 +475,7 @@ def test_get_pagination_ten_pages_on_page_9():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 9)
+    get_pagination(request, context, 9, create_parameters_from_json_query)
     assert 9 == len(context['pages'])
 
     page = context['pages'].pop(0)
@@ -501,7 +523,7 @@ def test_get_pagination_ten_pages_on_page_10():
         },
         "query": BASIC_QUERY
     }
-    get_pagination(request, context, 10)
+    get_pagination(request, context, 10, create_parameters_from_json_query)
     assert 6 == len(context['pages'])
 
     page = context['pages'].pop(0)
