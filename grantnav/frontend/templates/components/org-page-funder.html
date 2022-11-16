@@ -72,17 +72,7 @@
 
 
     {% if not publisher and funder.funder_publisher %}
-        <p>
-            This data was originally published by
-            <a href="{% url 'org' funder.funder_publisher.prefix %}"
-            >{{ funder.funder_publisher.name }}</a
-            >
-            see
-            <a href="{% url 'org' funder.funder_publisher.prefix %}"
-            >their GrantNav publisher page</a
-            >
-            for more information.
-        </p>
+    <p>This data was originally published by {{ funder.funder_publisher.name }} see <a href="{% url 'org' funder.funder_publisher.prefix %}">their GrantNav publisher page</a> for more information.</p>
 
     {% endif %}
 
