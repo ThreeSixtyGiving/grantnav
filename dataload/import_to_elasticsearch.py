@@ -299,7 +299,7 @@ def maybe_create_index(index_name=ES_INDEX):
     }})
 
 
-def import_to_elasticsearch(files, clean, recipients=None, funders=None):
+def import_to_elasticsearch(files, clean, recipients, funders):
 
     es = elasticsearch.Elasticsearch(hosts=[ELASTICSEARCH_HOST])
 
@@ -323,12 +323,12 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                 obj['orgIDs'] = new_org_ids(obj)
                 yield obj
 
-    if recipients:
-        result = elasticsearch.helpers.bulk(es, org_generator(recipients, 'recipient'), raise_on_error=False, max_retries=10, initial_backoff=5)
-        print(result)
-    if funders:
-        result = elasticsearch.helpers.bulk(es, org_generator(funders, 'funder'), raise_on_error=False, max_retries=10, initial_backoff=5)
-        print(result)
+    print("Loading recipients org data")
+    result = elasticsearch.helpers.bulk(es, org_generator(recipients, 'recipient'), raise_on_error=False, max_retries=10, initial_backoff=5)
+    print(result)
+    print("Loading funders org data")
+    result = elasticsearch.helpers.bulk(es, org_generator(funders, 'funder'), raise_on_error=False, max_retries=10, initial_backoff=5)
+    print(result)
 
     with open(os.path.join(current_dir, 'charity_names.json')) as fd:
         charity_names = json.load(fd)
@@ -337,6 +337,8 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
     with open(os.path.join(current_dir, 'primary_funding_org_name.json')) as fd:
         funding_org_name = json.load(fd)
     id_name_org_mappings["fundingOrganization"].update(funding_org_name)
+
+    print("Loading grant data")
 
     for grants_file_path in files:
         tmp_dir = tempfile.mkdtemp()
