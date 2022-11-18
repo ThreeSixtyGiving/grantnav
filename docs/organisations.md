@@ -17,10 +17,14 @@ In 360Giving data there are two parts to an Org ID:
 - **A list code**: a prefix that describes the list the identifier is taken from.
 - **An identifier** taken from that list.
 
-### For example
+```eval_rst
+.. admonition:: For example
+    :class: hint
 
-A charity registered in England and Wales with the Charity Commission of England and Wales, with the charity number ‘1164883’ will use a list code prefix of GB-CHC.
-This gives an unique Org ID of GB-CHC-1164883.
+    .. markdown::
+
+        A charity registered in England and Wales with the Charity Commission of England and Wales, with the charity number '1164883' will use a list code prefix of ``GB-CHC``. This gives an unique organisation identifier of ``GB-CHC-1164883``
+```
 
 Many organisations in the UK have some sort of official registration number that can be used as an identifier, for example registered charity or company numbers. When funders include Org IDs using official registration numbers in their 360Giving data, it makes it possible to see when a recipient has been awarded grants by multiple funders. It also allows grant data to be linked or combined with information taken from official registers.
 
