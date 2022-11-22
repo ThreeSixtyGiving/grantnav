@@ -46,6 +46,10 @@ def test_home(provenance_dataload, client, expected_text):
     assert "grant-making" not in str(response.content)
 
 
+def test_prometheus(provenance_dataload, client):
+    assert "total_grants 1254.0" in str(client.get("/prometheus/metrics").content)
+
+
 def test_search(provenance_dataload, client):
     initial_response = client.get('/search?text_query=gardens+AND+fundingOrganization.id:GB-CHC-1156077')
     assert initial_response.status_code == 302

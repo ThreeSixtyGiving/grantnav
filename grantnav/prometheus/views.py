@@ -43,7 +43,7 @@ class ServiceMetrics(View):
     def _total_grants(self):
         results = totals_query()
 
-        TOTAL_GRANTS.set(results['hits']['total']['value'])
+        TOTAL_GRANTS.set(results['grants']['value'])
 
     def get(self, *args, **kwargs):
         # Update gauges
