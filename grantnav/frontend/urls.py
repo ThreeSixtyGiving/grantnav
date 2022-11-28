@@ -36,7 +36,6 @@ urlpatterns = [
     url(r'^district/(.*)\.csv$', views.district, name='district.csv'),
     url(r'^district/(.*)\.json$', views.district, name='district.json'),
     url(r'^datasets/$', views.datasets, name='datasets'),
-    url(r'^take_down_policy', TemplateView.as_view(template_name='take_down_policy.html'), name='take_down_policy'),
     url(r'^terms', TemplateView.as_view(template_name='terms.html'), name='terms'),
     url(r'^about', TemplateView.as_view(template_name='about.html'), name='about'),
     url(r'^api/grants.json', views.api_grants, name='api.grants.json'),
@@ -46,6 +45,7 @@ urlpatterns = [
     url(r'^recipient/(.*)$', views.recipient, name='recipient'),
     url(r'^funder/(.*)$', views.funder, name='funder'),
     url(r'^help', RedirectView.as_view(url="https://help.grantnav.threesixtygiving.org/"), name="help"),
+    url(r'^take_down_policy', RedirectView.as_view(url="https://www.threesixtygiving.org/take-down-policy/"), name='take_down_policy'),
     # Developers content used to live on this website but it was then moved to an external help site.
     # Redirect people to make sure any old links continue to work.
     url(r'^developers', RedirectView.as_view(url="https://help.grantnav.threesixtygiving.org/en/latest/developers.html"), name='developers'),
