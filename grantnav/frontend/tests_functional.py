@@ -351,7 +351,7 @@ def test_terms(server_url, browser):
 
 def test_take_down(server_url, browser):
     browser.get(server_url + '/take_down_policy')
-    assert 'Take Down Policy' in browser.find_element_by_tag_name('h1').text
+    assert browser.current_url.startswith('https://www.threesixtygiving.org/take-down-policy/')
 
 
 def test_help_page(server_url, browser):
