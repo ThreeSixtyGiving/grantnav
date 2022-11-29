@@ -201,8 +201,8 @@ function updateFrames() {
   var selectElement = document.getElementById('select-views')
   if (selectElement) {
     var selectedView = selectElement.value;
-    document.getElementById('sample-frame').src = "/" + selectedView + window.location.search;
-    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + "/" + selectedView + window.location.search + "' style='height: 700px; width: 100%;' frameBorder='0'&gt;&lt;/iframe&gt;";
+    document.getElementById('sample-frame').src = "/widget-render/" + selectedView + window.location.search;
+    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + "/widget-render/" + selectedView + window.location.search + "' style='height: 700px; width: 100%;' frameBorder='0'&gt;&lt;/iframe&gt;";
   }
 }
 
