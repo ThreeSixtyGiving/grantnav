@@ -86,7 +86,7 @@
                     <option value="date_graph">Date awarded graph</option>
                   </select>
                 </div>
-                {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
+                {% include 'components/dropdown-filter.html' with title="Default Sort Order:" required=True options=dropdownFilterOptions %}
                 <div class="dropdown-filter flex-centre">
                   <label class="dropdown-filter__label" for="select-views">Recency:</label>
                   <select class="dropdown-filter__select" name="views" id="select-recency" onchange="updateRecency()">

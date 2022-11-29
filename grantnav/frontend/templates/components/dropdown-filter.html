@@ -1,7 +1,11 @@
 {% load get_current_sort from frontend %}
 <form id="sort-form" class="form-inline">
   <div class="dropdown-filter">
+    {% if title %}
+    <label class="dropdown-filter__label" for="results-sort-dropdown">{{ title }}</label>
+    {% else %}
     <label class="dropdown-filter__label" for="results-sort-dropdown">Sort By:</label>
+    {% endif %}
       <select id="sort_options" name="sort" class="form-control" onchange="sort_changed(this.value)">
       {% with current_sort=query|get_current_sort %}
         {% for option in options %}
