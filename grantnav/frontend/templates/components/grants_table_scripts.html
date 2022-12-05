@@ -21,7 +21,7 @@
       $('#search_grants_datatable').DataTable().responsive.recalc();
       $('#search_grants_datatable').DataTable().columns.adjust();
     });
-    
+
     function truncate(string, len) {
         if (string.length > len)
           return string.substring(0,len)+'...';
@@ -71,7 +71,7 @@
         columns: [
           {data: "title",
           render: function (data, type, row) {
-              return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>'
+              return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>';
           }, orderable: false},
           {data: "amountAwarded", className: "amount", orderable: false},
           {data: "awardDate", orderable: false},
@@ -81,21 +81,21 @@
         ]
     });
 
-    const table = $('#search_grants_datatable').DataTable()
+    const table = $('#search_grants_datatable').DataTable();
     table.on('responsive-display', function ( e, datatable, row, showHide, update ) {
     });
     table.on('draw', function() {
         if (document.getElementById('search_grants_datatable_paginate')) {
-            const previousButton = document.getElementById('search_grants_datatable_previous')
+            const previousButton = document.getElementById('search_grants_datatable_previous');
             if (previousButton !== null) {
-                previousButton.innerHTML = '<svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="#2B666A" xmlns="http://www.w3.org/2000/svg">  <path d="M1.60577 6.6709L7.19434 12.5037" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path><path d="M1.60594 6.67081L7.18164 0.932251" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path></svg>'
+                previousButton.innerHTML = '<svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="#2B666A" xmlns="http://www.w3.org/2000/svg">  <path d="M1.60577 6.6709L7.19434 12.5037" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path><path d="M1.60594 6.67081L7.18164 0.932251" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path></svg>';
             }
             const nextButton = document.getElementById('search_grants_datatable_next')
             if (nextButton !== null) {
-                nextButton.innerHTML = '<svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#2B666A" xmlns="http://www.w3.org/2000/svg"><path d="M6.54437 6.76514L0.95581 0.93229" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path><path d="M6.54421 6.76522L0.968506 12.5038" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path></svg>'
+                nextButton.innerHTML = '<svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#2B666A" xmlns="http://www.w3.org/2000/svg"><path d="M6.54437 6.76514L0.95581 0.93229" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path><path d="M6.54421 6.76522L0.968506 12.5038" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path></svg>';
             }
         }
-    })
-})
+    });
+});
 
     </script>
