@@ -5551,7 +5551,7 @@ a.base-card:hover:before {
   margin: 8px; }
 
 .dataTables_info {
-  margin: 8px; }
+  margin: 8px 0 8px 0; }
 
 .input-sm {
   margin-left: 8px; }
@@ -5997,3 +5997,31 @@ select.front_search {
   background-color: #ecf0f1;
   border-color: #ecf0f1;
   color: #000; }
+
+.dt-pager-container {
+  display: flex;
+  justify-content: center; }
+  .dt-pager-container .pager {
+    margin: 64px auto 0 auto;
+    padding: 12px 18px; }
+  .dt-pager-container .dataTables_paginate .ellipsis {
+    padding: 0 12px; }
+  .dt-pager-container .paginate_button {
+    margin: 0 4px;
+    padding: 6px; }
+    .dt-pager-container .paginate_button.current {
+      font-weight: bold; }
+    .dt-pager-container .paginate_button.previous {
+      margin-right: 20px;
+      padding: 0 6px;
+      text-decoration: none; }
+      .dt-pager-container .paginate_button.previous:hover svg {
+        stroke: #DE6E26; }
+    .dt-pager-container .paginate_button.next {
+      margin-left: 20px;
+      padding: 0 6px;
+      text-decoration: none; }
+      .dt-pager-container .paginate_button.next:hover svg {
+        stroke: #DE6E26; }
+    .dt-pager-container .paginate_button.disabled {
+      display: none; }
