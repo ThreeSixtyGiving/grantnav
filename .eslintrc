@@ -1,0 +1,24 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jquery": true
+  },
+  "plugins": [
+    "html"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "extends": [
+    "eslint-config-semistandard"
+  ],
+  "globals": {
+    "URI": "readonly"
+  },
+  "rules": {
+    "comma-dangle": "error",
+    "camelcase": "off"
+  }
+}
