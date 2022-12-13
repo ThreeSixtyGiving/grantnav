@@ -50,29 +50,29 @@
           <div class="export-label">Export Grant data:</div>
 
           <div class="export-button">
-              {% include 'components/export-data-button--csv.html' with data_function='district.csv' arg=district %}
+            {% include 'components/export-data-button--csv.html' with data_function='district.csv' arg=district %}
           </div>
 
           <div class="export-button">
-             {% include 'components/export-data-button--json.html' with data_function='district.json' arg=district %}
+            {% include 'components/export-data-button--json.html' with data_function='district.json' arg=district %}
           </div>
 
         </div>
       </div>
       <div class="table table--zebra">
         <table class="table--primary table--zebra dt-responsive" id="grants_datatable" width="100%">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Amount</th>
-                <th>Funder</th>
-                <th>Recipient</th>
-                <th>Date</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Amount</th>
+              <th>Funder</th>
+              <th>Recipient</th>
+              <th>Date</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
 
   </div>
@@ -80,63 +80,65 @@
 {% endblock %}
 
 {% block extra_style %}
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css">
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css">
 {% endblock %}
 
 {% block extra_scripts %}
-   <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
-   <script type="text/javascript" src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+  src="https://cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
 
-   <script>
-    function truncate(string, len){
-       if (string.length > len)
-          return string.substring(0,len)+'...';
-       else
-          return string;
-    };
+<script>
+  function truncate (string, len) {
+    if (string.length > len) { return string.substring(0, len) + '...'; } else { return string; }
+  }
 
-   jQuery(function($) {
-     $('#grants_datatable').dataTable({
-       "serverSide": true,
-       "responsive": true,
-       "searching": true,
-       "autoWidth": false,
-       "scrollY": 400,
-       "scroller": true,
-       "dom": "fit",
-       "scroller": {"displayBuffer": 20,
-                    "loadingIndicator": true},
-       "order": [[0, "desc"]],
-       "language": {
-           "info": "_START_ to _END_ of _TOTAL_",
-           "search": "Search All Fields"
-       },
-       "ajax": {
-         "url": "{% url 'grants_datatables' %}",
-         "data": function ( d ) {
-           d.recipientDistrictName = "{{district|escapejs}}";
-         }
-       },
-       "columns": [
-         {"data": "title",
-          "orderable": false,
-          "render": function (data, type, row) {
-             return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>'
-         }},
-         {"data": "amountAwarded", "className": "amount"},
-         {"data": "fundingOrganization.0.name", "render": function (data, type, row) {return '<a href="/org/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'}},
-         {"data": "recipientOrganization.0.name", "render": function (data, type, row) {return '<a href="/org/' + row.recipientOrganization[0].id + '">' + truncate(data?data:row.recipientOrganization[0].id, 30) + '</a>'}},
-         {"data": "awardDate"},
-         {"data": "description"},
-       ]
-     });
-   })
-   </script>
+  jQuery(function ($) {
+    $('#grants_datatable').dataTable({
+      serverSide: true,
+      responsive: true,
+      searching: true,
+      autoWidth: false,
+      scrollY: 400,
+      dom: 'fit',
+      scroller: {
+        displayBuffer: 20,
+        loadingIndicator: true
+      },
+      order: [[0, 'desc']],
+      language: {
+        info: '_START_ to _END_ of _TOTAL_',
+        search: 'Search All Fields'
+      },
+      ajax: {
+        url: "{% url 'grants_datatables' %}",
+        data: function (d) {
+          d.recipientDistrictName = '{{district|escapejs}}';
+        }
+      },
+      columns: [
+        {
+          data: 'title',
+          orderable: false,
+          render: function (data, type, row) {
+            return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>';
+          }
+        },
+        { data: 'amountAwarded', className: 'amount' },
+        { data: 'fundingOrganization.0.name', render: function (data, type, row) { return '<a href="/org/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'; } },
+        { data: 'recipientOrganization.0.name', render: function (data, type, row) { return '<a href="/org/' + row.recipientOrganization[0].id + '">' + truncate(data || row.recipientOrganization[0].id, 30) + '</a>'; } },
+        { data: 'awardDate' },
+        { data: 'description' }
+      ]
+    });
+  });
+</script>
 {% endblock %}
 
 {% block models %}
-  {% include 'currency_stats_modal.html' %}
+{% include 'currency_stats_modal.html' %}
 {% endblock %}

@@ -8,32 +8,32 @@
     <div class="grid__1">
       <div class="base-card base-card--yellow">
         <div class="base-card__content">
-            <h2 class="base-card__title">1</h2>
-            <p class="base-card__text">Enter search terms</p>
+          <h2 class="base-card__title">1</h2>
+          <p class="base-card__text">Enter search terms</p>
         </div>
       </div>
     </div>
     <div class="grid__1">
       <div class="base-card base-card--orange">
         <div class="base-card__content">
-            <h2 class="base-card__title">2</h2>
-            <p class="base-card__text">Select optional filters</p>
+          <h2 class="base-card__title">2</h2>
+          <p class="base-card__text">Select optional filters</p>
         </div>
       </div>
     </div>
     <div class="grid__1">
       <div class="base-card base-card--teal">
         <div class="base-card__content">
-            <h2 class="base-card__title">3</h2>
-            <p class="base-card__text">Select a widget view</p>
+          <h2 class="base-card__title">3</h2>
+          <p class="base-card__text">Select a widget view</p>
         </div>
       </div>
     </div>
     <div class="grid__1">
       <div class="base-card base-card--red">
         <div class="base-card__content">
-            <h2 class="base-card__title">4</h2>
-            <p class="base-card__text">Copy the code</p>
+          <h2 class="base-card__title">4</h2>
+          <p class="base-card__text">Copy the code</p>
         </div>
       </div>
     </div>
@@ -44,309 +44,330 @@
 
 {% block main_content %}
 
-  <main class="layout__content">
+<main class="layout__content">
 
-    <div class="grantnav-search__wrapper">
-      <div class="grantnav-search__sidebar">
-        {% if results and results.hits.hits %}
-          <h2 class="grantnav-search__sidebar--heading">Filter your search</h2>
-
-          <div class="inline-block">
-            {% include 'components/alert-tag--anchor.html' %}
-          </div>
-
-          <div class="grantnav-search__sidebar--filters">
-            {% include 'components/filter-wrapper.html' %}
-          </div>
-        {% endif %}
-      </div>
+  <div class="grantnav-search__wrapper">
+    <div class="grantnav-search__sidebar">
       {% if results and results.hits.hits %}
-        <div class="grantnav-search__content">
-          {% include 'components/search-summary-description.html' %}
+      <h2 class="grantnav-search__sidebar--heading">Filter your search</h2>
 
-          <h2 class="results-title">
-            <span>Widgets Builder</span>
-          </h2>
-
-          {% if selected_facets %}
-            {% include 'components/filter-summary.html' %}
-          {% endif %}
-
-          <div class="cards-section">
-            <section class="grid grid--seven-columns max-width__100 margin-left:2">
-              <div class="grid__2 box box--teal flex-centre">
-                <h2>Settings:</h2>
-              </div>
-              <div class="grid__5 box box--teal">
-                <div class="dropdown-filter flex-centre">
-                  <label class="dropdown-filter__label" for="select-views">View:</label>
-                  <select class="dropdown-filter__select" name="views" id="select-views" onchange="updateFrames()">
-                    <option value="tabular">Grants table</option>
-                    <option value="amount_graph">Award amount graph</option>
-                    <option value="date_graph">Date awarded graph</option>
-                  </select>
-                </div>
-                {% include 'components/dropdown-filter.html' with title="Default Sort Order:" required=True options=dropdownFilterOptions %}
-                <div class="dropdown-filter flex-centre">
-                  <label class="dropdown-filter__label" for="select-views">Recency:</label>
-                  <select class="dropdown-filter__select" name="views" id="select-recency" onchange="updateRecency()">
-                    <option value="0">Full History</option>
-                    <option value="3">3 months</option>
-                    <option value="6">6 months</option>
-                    <option value="12">12 months</option>
-                  </select>
-                  <div class="alert-tag margin-left:1">
-                    <span class="alert-tag__icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7 5.83333C6.70833 5.83333 6.41667 6.06667 6.41667 6.41667V9.91667C6.41667 10.2667 6.65 10.5 7 10.5C7.29167 10.5 7.58333 10.2667 7.58333 9.91667V6.41667C7.58333 6.125 7.29167 5.83333 7 5.83333ZM7 3.5C6.70833 3.5 6.41667 3.73333 6.41667 4.08333C6.41667 4.375 6.65 4.66667 7 4.66667C7.29167 4.66667 7.58333 4.43333 7.58333 4.08333C7.58333 3.79167 7.29167 3.5 7 3.5ZM7 0C3.15 0 0 3.15 0 7C0 10.85 3.15 14 7 14C10.85 14 14 10.85 14 7C14 3.15 10.85 0 7 0ZM7 12.8333C3.79167 12.8333 1.16667 10.2083 1.16667 7C1.16667 3.79167 3.79167 1.16667 7 1.16667C10.2083 1.16667 12.8333 3.79167 12.8333 7C12.8333 10.2083 10.2083 12.8333 7 12.8333Z" fill="#1D1536" />
-                        </svg>
-                    </span>
-                    <span class="alert-tag__content">This will override any date filters.</span>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-          <div class="cards-section">
-            <section class="grid grid--seven-columns max-width__100 margin-left:2">
-              <div class="grid__2 box box--red flex-centre">
-                <h2>Code:</h2>
-              </div>
-              <div class="grid__5 box box--red">
-                <div class="code-block">
-                  <pre>
-                    <code id="generated-code"></code>
-                  </pre>
-              </div>
-            </section>
-          </div>
-          <div class="cards-section">
-            <section class="grid grid--seven-columns max-width__100 margin-left:2">
-              <div class="grid__2 box box--black">
-                <h2>Preview:</h2>
-              </div>
-              <div class="grid__5 box box--black">
-                <iframe id="sample-frame" src="about:blank" style="width: 100%; height: 700px;" frameBorder="0"></iframe>
-              </div>
-            </section>
-          </div>
-        </div>
-
-
-        </div>
-      </div>
-      {% elif results %}
-
-      <div class="spacer-4">
-          <div id="no-results">
-            <h1>No Results</h1>
-
-            {% if selected_facets %}
-              {% include 'components/filter-summary.html' %}
-              <div class="spacer-4"></div>
-            {% endif %}
-
-            <p>Your search - <strong>"{{text_query}}"</strong> - did not match any grant records.<br>Try something like</p>
-            <ul>
-              <li>Using more general terms</li>
-              <li>Checking your spelling</li>
-              <li>Removing some filters</li>
-            </ul>
-            <p>Or <a href="{% url 'search' %}">clear your search</a>.</p>
-          </div>
+      <div class="inline-block">
+        {% include 'components/alert-tag--anchor.html' %}
       </div>
 
-    {% elif search_error %}
-
-      <div class="spacer-4">
-          <div id="not_valid">
-            <h1>Search input is not valid</h1>
-            <p>We can't find what you tried to search for.<br>Try something like:</p>
-            <ul>
-            <li>Using more general terms</li>
-            <li>Checking your spelling</li>
-          </div>
+      <div class="grantnav-search__sidebar--filters">
+        {% include 'components/filter-wrapper.html' %}
       </div>
-    {% endif %}
-  </main>
+      {% endif %}
+    </div>
+    {% if results and results.hits.hits %}
+    <div class="grantnav-search__content">
+      {% include 'components/search-summary-description.html' %}
+
+      <h2 class="results-title">
+        <span>Widgets Builder</span>
+      </h2>
+
+      {% if selected_facets %}
+      {% include 'components/filter-summary.html' %}
+      {% endif %}
+
+      <div class="cards-section">
+        <section class="grid grid--seven-columns max-width__100 margin-left:2">
+          <div class="grid__2 box box--teal flex-centre">
+            <h2>Settings:</h2>
+          </div>
+          <div class="grid__5 box box--teal">
+            <div class="dropdown-filter flex-centre">
+              <label class="dropdown-filter__label" for="select-views">View:</label>
+              <select class="dropdown-filter__select" name="views" id="select-views" onchange="updateFrames()">
+                <option value="tabular">Grants table</option>
+                <option value="amount_graph">Award amount graph</option>
+                <option value="date_graph">Date awarded graph</option>
+              </select>
+            </div>
+            {% include 'components/dropdown-filter.html' with title="Default Sort Order:" options=dropdownFilterOptions %}
+            <div class="dropdown-filter flex-centre">
+              <label class="dropdown-filter__label" for="select-views">Recency:</label>
+              <select class="dropdown-filter__select" name="views" id="select-recency" onchange="updateRecency()">
+                <option value="0">Full History</option>
+                <option value="3">3 months</option>
+                <option value="6">6 months</option>
+                <option value="12">12 months</option>
+              </select>
+              <div class="alert-tag margin-left:1">
+                <span class="alert-tag__icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M7 5.83333C6.70833 5.83333 6.41667 6.06667 6.41667 6.41667V9.91667C6.41667 10.2667 6.65 10.5 7 10.5C7.29167 10.5 7.58333 10.2667 7.58333 9.91667V6.41667C7.58333 6.125 7.29167 5.83333 7 5.83333ZM7 3.5C6.70833 3.5 6.41667 3.73333 6.41667 4.08333C6.41667 4.375 6.65 4.66667 7 4.66667C7.29167 4.66667 7.58333 4.43333 7.58333 4.08333C7.58333 3.79167 7.29167 3.5 7 3.5ZM7 0C3.15 0 0 3.15 0 7C0 10.85 3.15 14 7 14C10.85 14 14 10.85 14 7C14 3.15 10.85 0 7 0ZM7 12.8333C3.79167 12.8333 1.16667 10.2083 1.16667 7C1.16667 3.79167 3.79167 1.16667 7 1.16667C10.2083 1.16667 12.8333 3.79167 12.8333 7C12.8333 10.2083 10.2083 12.8333 7 12.8333Z"
+                      fill="#1D1536" />
+                  </svg>
+                </span>
+                <span class="alert-tag__content">This will override any date filters.</span>
+              </div>
+            </div>
+            <div class="dropdown-filter flex-centre">
+              <label class="dropdown-filter__label" for="select-width">Widget width:</label>
+              <form>
+                <div class="filter-list__contents--form-item">
+                <input class="form-control input-xs" type="number" name="width" id="input-width" value="100" onchange="updateFrames()" />
+              </div>
+                <select class="dropdown-filter__select" name="width-type" id="select-width" onchange="updateFrames()">
+                  <option value="%">Percent</option>
+                  <option value="px">Pixels</option>
+                </select>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="cards-section">
+        <section class="grid grid--seven-columns max-width__100 margin-left:2">
+          <div class="grid__2 box box--red flex-centre">
+            <h2>Code:</h2>
+          </div>
+          <div class="grid__5 box box--red">
+            <div class="code-block">
+              <pre><code id="generated-code"></code></pre>
+            </div>
+        </section>
+      </div>
+      <div class="cards-section">
+        <section class="grid grid--seven-columns max-width__100 margin-left:2">
+          <div class="grid__2 box box--black">
+            <h2>Preview:</h2>
+          </div>
+          <div class="grid__5 box box--black">
+            <iframe id="sample-frame" src="about:blank" style="width: 100%; height: 700px;" frameBorder="0"></iframe>
+          </div>
+        </section>
+      </div>
+    </div>
+
+
+  </div>
+  </div>
+  {% elif results %}
+
+  <div class="spacer-4">
+    <div id="no-results">
+      <h1>No Results</h1>
+
+      {% if selected_facets %}
+      {% include 'components/filter-summary.html' %}
+      <div class="spacer-4"></div>
+      {% endif %}
+
+      <p>Your search - <strong>"{{text_query}}"</strong> - did not match any grant records.<br>Try something like</p>
+      <ul>
+        <li>Using more general terms</li>
+        <li>Checking your spelling</li>
+        <li>Removing some filters</li>
+      </ul>
+      <p>Or <a href="{% url 'search' %}">clear your search</a>.</p>
+    </div>
+  </div>
+
+  {% elif search_error %}
+
+  <div class="spacer-4">
+    <div id="not_valid">
+      <h1>Search input is not valid</h1>
+      <p>We can't find what you tried to search for.<br>Try something like:</p>
+      <ul>
+        <li>Using more general terms</li>
+        <li>Checking your spelling</li>
+    </div>
+  </div>
+  {% endif %}
+</main>
 
 {% endblock %}
 
 
 {% block extra_style %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css"
+  rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block extra_scripts %}
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.min.js"></script>
 
 
 <script>
+  $(document).ready(function () {
+    const query = window.location.search;
+    const urlParams = new URLSearchParams(query);
+    const recency = urlParams.get('recency_period');
+    const recencySelect = document.getElementById('select-recency');
+    if (recency && recencySelect) {
+      recencySelect.value = recency;
+    }
+    updateFrames();
+  });
 
-$( document ).ready(function() {
-  var query = window.location.search;
-  var urlParams = new URLSearchParams(query);
-  var recency = urlParams.get('recency_period');
-  var recencySelect = document.getElementById("select-recency")
-  if (recency && recencySelect) {
-    recencySelect.value = recency; 
+  function updateFrames () {
+    const selectViewElement = document.getElementById('select-views');
+    const selectWidthElement = document.getElementById('select-width');
+    const inputWidthElement = document.getElementById('input-width');
+
+    if (selectViewElement && selectWidthElement) {
+      const selectedView = selectViewElement.value;
+      const widthType = selectWidthElement.value;
+      const width = inputWidthElement.value;
+
+      const preview = document.getElementById('sample-frame');
+      const code = document.getElementById('generated-code');
+
+      code.innerHTML = `&lt;iframe src="${window.location.origin}/widget-render/${selectedView}${window.location.search}" style="height: 700px; width: ${width}${widthType};" frameBorder="0"&gt;&lt;/iframe&gt;`;
+
+      preview.src = `/widget-render/${selectedView}${window.location.search}`;
+      preview.style = `height: 700px; width: ${width}${widthType};`;
+    }
   }
-  updateFrames();
-});
-
-function updateFrames() {
-  var selectElement = document.getElementById('select-views')
-  if (selectElement) {
-    var selectedView = selectElement.value;
-    document.getElementById('sample-frame').src = "/widget-render/" + selectedView + window.location.search;
-    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + "/widget-render/" + selectedView + window.location.search + "' style='height: 700px; width: 100%;' frameBorder='0'&gt;&lt;/iframe&gt;";
-  }
-}
-
-function updateRecency() {
-  var query = window.location.search;
-  var urlParams = new URLSearchParams(query);
-  var recency_period = document.getElementById('select-recency').value;
-  if (recency_period == 0) {
-    urlParams.delete('recency_period')
-  } else {
-    urlParams.set('recency_period', recency_period);
-  }
-  window.location.search = urlParams;
-}
-
-// This returns the html for select2 to render each item in the dropdown.
-function formatDropdownItem (item) {
-  if (item.loading) {
-    return
-  }
-
-  html = '<div class="filter-list__form--checkbox-item">'
-  html += '<input class="screen-reader-only" value="" type="checkbox">'
-  html += '<label></label>'
-  html += '</div>'
-  var $dropdownItem = $(html);
-
-  var small = $('<small> (' + item.count + ')</small>');
-
-  $dropdownItem.find('input').val(item.id).attr("id", item.id);
-
-  if (item.selected) {
-    $dropdownItem.find('input').attr("checked", "checked");
+  
+  // eslint-disable-next-line no-unused-vars
+  function updateRecency () {
+    const query = window.location.search;
+    const urlParams = new URLSearchParams(query);
+    const recency_period = document.getElementById('select-recency').value;
+    if (recency_period === 0) {
+      urlParams.delete('recency_period');
+    } else {
+      urlParams.set('recency_period', recency_period);
+    }
+    window.location.search = urlParams;
   }
 
-  $dropdownItem.find('label').attr("for", item.id).text(item.text).append(small);
+  // This returns the html for select2 to render each item in the dropdown.
+  function formatDropdownItem (item) {
+    if (item.loading) {
+      return;
+    }
 
-  return $dropdownItem;
-};
+    let html = '<div class="filter-list__form--checkbox-item">';
+    html += '<input class="screen-reader-only" value="" type="checkbox">';
+    html += '<label></label>';
+    html += '</div>';
+    const $dropdownItem = $(html);
 
+    const small = $('<small> (' + item.count + ')</small>');
 
-// This returns the html for select2 to render each tag in the select box.
-function formatSelection (item) {
+    $dropdownItem.find('input').val(item.id).attr('id', item.id);
 
-  html = '<a class="remove-select2-option" href="">'
-  html += '<span class="filter-summary__filters-item--label"></span>'
-  // This is ugly bet needed for the select2 to display the same cross as in the theme.
-  html += '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">'
-  html += '<path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"></path>'
-  html += '</svg>'
-  html += '</a>'
+    if (item.selected) {
+      $dropdownItem.find('input').attr('checked', 'checked');
+    }
 
-  var $selection = $(html);
-  $selection.attr('href', item.id);
-  if (item.text.length > 28) {
-    item.text = item.text.substring(0,25) + '...'
-  }
-  $selection.find('span').text(item.text);
-  return $selection;
-};
+    $dropdownItem.find('label').attr('for', item.id).text(item.text).append(small);
 
-// Runs the ajax call for select2 adding parent_field and filter query to the existing url params
-function get_filter_search_ajax(parent_field, child_field) {
-  return {
-    url: '/filter_search_ajax',
-    delay: 100,
-    traditional: true, // this makes sure that multiparams are repeated when the value is a list.
-    data: function (params) {
-      // true here just returns an object. For multiparams this will give you a list as the values.
-      var query_obj = URI(window.location.href).search(true);
-      query_obj["parent_field"] = parent_field;
-      query_obj["child_field"] = child_field;
-      query_obj["filter_search"] = params.term;
-      return query_obj;
-
-     }
-  }
-}
-
-// when a new item is selected then refresh the page
-function redirect_on_selection(param, data) {
-  var uri = URI(data.url);
-  uri.removeSearch('exclude_' + param);
-  if ($('#' + param + '-exclude').prop("checked")) {
-     uri.addSearch('exclude_' + param, 'true');
-  }
-  var query = uri.query()
-  window.location.href = window.location.href.split('?')[0] + "?" + query
-};
-
-
-// refresh the page when moving from exclude to include selection.
-// BUT do not do this if there is no curent selection
-function maybe_redirect_on_exclude(param) {
-
-  if ($('.' + param + '-search-box').select2('data').length == 0) {
-    return
+    return $dropdownItem;
   }
 
-  var uri = URI(window.location.href);
+  // This returns the html for select2 to render each tag in the select box.
+  function formatSelection (item) {
+    let html = '<a class="remove-select2-option" href="">';
+    html += '<span class="filter-summary__filters-item--label"></span>';
+    // This is ugly bet needed for the select2 to display the same cross as in the theme.
+    html += '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">';
+    html += '<path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"></path>';
+    html += '</svg>';
+    html += '</a>';
 
-  uri.removeSearch('exclude_' + param);
-  if ($('#' + param + '-exclude').prop("checked")) {
-     uri.addSearch('exclude_' + param, 'true');
+    const $selection = $(html);
+    $selection.attr('href', item.id);
+    if (item.text.length > 28) {
+      item.text = item.text.substring(0, 25) + '...';
+    }
+    $selection.find('span').text(item.text);
+    return $selection;
   }
-  window.location.href = uri.toString();
-};
 
+  // Runs the ajax call for select2 adding parent_field and filter query to the existing url params
+  function get_filter_search_ajax (parent_field, child_field) {
+    return {
+      url: '/filter_search_ajax',
+      delay: 100,
+      traditional: true, // this makes sure that multiparams are repeated when the value is a list.
+      data: function (params) {
+        // true here just returns an object. For multiparams this will give you a list as the values.
+        const query_obj = URI(window.location.href).search(true);
+        query_obj.parent_field = parent_field;
+        query_obj.child_field = child_field;
+        query_obj.filter_search = params.term;
+        return query_obj;
+      }
+    };
+  }
 
-$(function() {
-  $.fn.select2.amd.require(['select2/selection/search'], function (Search) {
+  // when a new item is selected then refresh the page
+  function redirect_on_selection (param, data) {
+    const uri = URI(data.url);
+    uri.removeSearch('exclude_' + param);
+    if ($('#' + param + '-exclude').prop('checked')) {
+      uri.addSearch('exclude_' + param, 'true');
+    }
+    const query = uri.query();
+    window.location.href = window.location.href.split('?')[0] + '?' + query;
+  }
 
+  // refresh the page when moving from exclude to include selection.
+  // BUT do not do this if there is no curent selection
+  function maybe_redirect_on_exclude (param) {
+    if ($('.' + param + '-search-box').select2('data').length === 0) {
+      return;
+    }
+
+    const uri = URI(window.location.href);
+
+    uri.removeSearch('exclude_' + param);
+    if ($('#' + param + '-exclude').prop('checked')) {
+      uri.addSearch('exclude_' + param, 'true');
+    }
+    window.location.href = uri.toString();
+  }
+
+  $(function () {
+    $.fn.select2.amd.require(['select2/selection/search'], function (Search) {
       // this is to prevent backspace from removing selections
       Search.prototype.searchRemoveChoice = function () {
       };
 
       /* Note we use funder_options as the template options for the rest of the
       select2 inputs */
-      funder_options = {"width": "100%",
-           templateResult: formatDropdownItem,
-           templateSelection: formatSelection,
-           dropdownCssClass: "filter-list filter-list--with-checkboxes",
-           placeholder: "Search for funding organizations",
-           ajax: get_filter_search_ajax('fundingOrganization', 'id_and_name')
-           }
+      const funder_options = {
+        width: '100%',
+        templateResult: formatDropdownItem,
+        templateSelection: formatSelection,
+        dropdownCssClass: 'filter-list filter-list--with-checkboxes',
+        placeholder: 'Search for funding organizations',
+        ajax: get_filter_search_ajax('fundingOrganization', 'id_and_name')
+      };
 
-      recipient_options = $.extend({}, funder_options);
+      let recipient_options = $.extend({}, funder_options);
 
       recipient_options = $.extend(recipient_options, {
-          placeholder: "Search for recipient organizations",
-          ajax: get_filter_search_ajax('recipientOrganization', 'id_and_name')
+        placeholder: 'Search for recipient organizations',
+        ajax: get_filter_search_ajax('recipientOrganization', 'id_and_name')
       });
 
-      programme_options = $.extend({}, funder_options);
+      let programme_options = $.extend({}, funder_options);
 
       programme_options = $.extend(programme_options, {
-          placeholder: "Search for grant programme titles",
-          ajax: get_filter_search_ajax('grantProgramme', 'title_keyword')
+        placeholder: 'Search for grant programme titles',
+        ajax: get_filter_search_ajax('grantProgramme', 'title_keyword')
       });
 
       let district_options = $.extend({}, funder_options);
       district_options = $.extend(district_options, {
-        placeholder: "Search for a district",
-        ajax: get_filter_search_ajax('additional_data', 'recipientDistrictName'),
+        placeholder: 'Search for a district',
+        ajax: get_filter_search_ajax('additional_data', 'recipientDistrictName')
       });
 
       $('.fundingOrganization-search-box').select2(funder_options);
@@ -355,60 +376,57 @@ $(function() {
       $('.recipientDistrictName-search-box').select2(district_options);
 
       $('.fundingOrganization-search-box').on('select2:select', function (e) {
-          var data = e.params.data;
-          redirect_on_selection('fundingOrganization', data)
+        const data = e.params.data;
+        redirect_on_selection('fundingOrganization', data);
       });
 
       $('.recipientOrganization-search-box').on('select2:select', function (e) {
-          var data = e.params.data;
-          redirect_on_selection('recipientOrganization', data)
+        const data = e.params.data;
+        redirect_on_selection('recipientOrganization', data);
       });
 
       $('.grantProgramme-search-box').on('select2:select', function (e) {
-          var data = e.params.data;
-          redirect_on_selection('grantProgramme', data)
+        const data = e.params.data;
+        redirect_on_selection('grantProgramme', data);
       });
 
       $('.recipientDistrictName-search-box').on('select2:select', function (e) {
-          var data = e.params.data;
-          redirect_on_selection('recipientDistrictName', data)
+        const data = e.params.data;
+        redirect_on_selection('recipientDistrictName', data);
       });
 
       $('#fundingOrganization-select input[type=radio]').on('change', function (e) {
-          maybe_redirect_on_exclude('fundingOrganization')
+        maybe_redirect_on_exclude('fundingOrganization');
       });
 
       $('#recipientOrganization-select input[type=radio]').on('change', function (e) {
-          maybe_redirect_on_exclude('recipientOrganization')
+        maybe_redirect_on_exclude('recipientOrganization');
       });
 
       $('#grantProgramme-select input[type=radio]').on('change', function (e) {
-          maybe_redirect_on_exclude('grantProgramme')
+        maybe_redirect_on_exclude('grantProgramme');
       });
 
       $('#recipientDistrictName-select input[type=radio]').on('change', function (e) {
-          maybe_redirect_on_exclude('recipientDistrictName');
+        maybe_redirect_on_exclude('recipientDistrictName');
       });
+    });
 
-  });
-
-  $('body').on('click', '.remove-select2-option', function(e) {
+    $('body').on('click', '.remove-select2-option', function (e) {
       // keep select box closed when removing a selection
       $('.filter-search-box').select2('close');
+    });
 
-  })
-
-  $('#datepicker').datepicker({
-    format: "mm/yyyy",
-    startDate: "01/1990",
-    endDate: "{% now "12/Y" %}",
-    startView: 2,
-    minViewMode: 1,
-    maxViewMode: 2,
-    autoclose: true,
-    defaultViewDate: '01/2010'
+    $('#datepicker').datepicker({
+      format: 'mm/yyyy',
+      startDate: '01/1990',
+      endDate: '{% now "12/Y" %}',
+      startView: 2,
+      minViewMode: 1,
+      maxViewMode: 2,
+      autoclose: true,
+      defaultViewDate: '01/2010'
+    });
   });
-});
-
 </script>
 {% endblock %}
