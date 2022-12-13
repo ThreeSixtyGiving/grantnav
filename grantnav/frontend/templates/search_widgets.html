@@ -103,6 +103,18 @@
                     <span class="alert-tag__content">This will override any date filters.</span>
                   </div>
                 </div>
+                <div class="dropdown-filter flex-centre">
+                  <label class="dropdown-filter__label" for="select-width">Widget width:</label>
+                  <form>
+                    <div class="filter-list__contents--form-item">
+                    <input class="form-control input-xs" type="number" name="width" id="input-width" min="1" value="100" onchange="updateFrames()" />
+                  </div>
+                    <select class="dropdown-filter__select" name="width-type" id="select-width" onchange="updateFrames()">
+                      <option value="%">Percent</option>
+                      <option value="px">Pixels</option>
+                    </select>
+                  </form>
+                </div>
               </div>
             </section>
           </div>
@@ -113,9 +125,7 @@
               </div>
               <div class="grid__5 box box--red">
                 <div class="code-block">
-                  <pre>
-                    <code id="generated-code"></code>
-                  </pre>
+                  <pre><code id="generated-code"></code></pre>
               </div>
             </section>
           </div>
@@ -198,11 +208,22 @@ $(document).ready(function () {
 });
 
 function updateFrames () {
-  const selectElement = document.getElementById('select-views');
-  if (selectElement) {
-    const selectedView = selectElement.value;
-    document.getElementById('sample-frame').src = '/widget-render/' + selectedView + window.location.search;
-    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + '/widget-render/' + selectedView + window.location.search + "' style='height: 700px; width: 100%;' frameBorder='0'&gt;&lt;/iframe&gt;";
+  const selectViewElement = document.getElementById('select-views');
+  const selectWidthElement = document.getElementById('select-width');
+  const inputWidthElement = document.getElementById('input-width');
+
+  if (selectViewElement && selectWidthElement) {
+    const selectedView = selectViewElement.value;
+    const widthType = selectWidthElement.value;
+    const width = inputWidthElement.value;
+
+    const preview = document.getElementById('sample-frame');
+    const code = document.getElementById('generated-code');
+
+    code.innerHTML = `&lt;iframe src="${window.location.origin}/widget-render/${selectedView}${window.location.search}" style="height: 700px; width: ${width}${widthType};" frameBorder="0"&gt;&lt;/iframe&gt;`;
+
+    preview.src = `/widget-render/${selectedView}${window.location.search}`;
+    preview.style = `height: 700px; width: ${width}${widthType};`;
   }
 }
 
