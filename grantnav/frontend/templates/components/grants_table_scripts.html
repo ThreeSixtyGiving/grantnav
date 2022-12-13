@@ -16,84 +16,76 @@
   {% include 'widgets/grantnav_link_script.html' %}
 
   <script>
-
-    $( window ).resize(function() {
+    $(window).resize(function () {
       $('#search_grants_datatable').DataTable().responsive.recalc();
       $('#search_grants_datatable').DataTable().columns.adjust();
     });
 
-    function truncate(string, len) {
-        if (string.length > len)
-          return string.substring(0,len)+'...';
-        else
-          return string;
-    };
+    function truncate (string, len) {
+      if (string.length > len) { return string.substring(0, len) + '...'; } else { return string; }
+    }
 
-    function getSortValue() {
-      switch ("{{ query|get_current_sort }}") {
-        case "_score desc":
-          return [[0, "desc"]]
-          break
-        case "amountAwarded desc":
-          return [[1, "desc"]]
-          break
-        case "amountAwarded asc":
-          return [[1, "asc"]]
-          break
-        case "awardDate desc":
-          return [[2, "desc"]]
-          break
-        case "awardDate asc":
-          return [[2, "asc"]]
-          break
+function getSortValue () {
+      switch ('{{ query|get_current_sort }}') {
+        case '_score desc':
+          return [[0, 'desc']];
+        case 'amountAwarded desc':
+          return [[1, 'desc']];
+        case 'amountAwarded asc':
+          return [[1, 'asc']];
+        case 'awardDate desc':
+          return [[2, 'desc']];
+        case 'awardDate asc':
+          return [[2, 'asc']];
         default:
-          return [[0, "desc"]]
-          break
+          return [[0, 'desc']];
       }
-    };
+    }
 
-    jQuery(function($) {
+jQuery(function ($) {
       $('#search_grants_datatable').dataTable({
         serverSide: true,
-        responsive:true,
+        responsive: true,
         searching: false,
         autoWidth: true,
-        pagingType: "full_numbers",
-        lengthMenu: [ 25, 50, 75, 100 ],
+        pagingType: 'full_numbers',
+        lengthMenu: [25, 50, 75, 100],
         order: getSortValue(),
         dom: 'filt<"dt-pager-container"<"pager"p>>',
         language: {
-            info: "_START_ to _END_ of _TOTAL_"
+          info: '_START_ to _END_ of _TOTAL_'
         },
         ajax: {
           url: "{% url 'widgets.api' %}" + window.location.search
         },
         columns: [
-          {data: "title",
-          render: function (data, type, row) {
+          {
+            data: 'title',
+            render: function (data, type, row) {
               return '<a href="/grant/' + encodeURIComponent(row.id) + '">' + truncate(data, 40) + '</a>';
-          }, orderable: false},
-          {data: "amountAwarded", className: "amount", orderable: false},
-          {data: "awardDate", orderable: false},
-          {data: "fundingOrganization.0.name", render: function (data, type, row) {return '<a href="/org/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'}, orderable: false},
-          {data: "recipientOrganization.0.name", render: function (data, type, row) {return '<a href="/org/' + row.recipientOrganization[0].id + '">' + truncate(data?data:row.recipientOrganization[0].id, 30) + '</a>'}, orderable: false},
-          {data: "description", orderable: false, responsivePriority: -1},
+            },
+            orderable: false
+          },
+          { data: 'amountAwarded', className: 'amount', orderable: false },
+          { data: 'awardDate', orderable: false },
+          { data: 'fundingOrganization.0.name', render: function (data, type, row) { return '<a href="/org/' + row.fundingOrganization[0].id + '">' + truncate(data, 30) + '</a>'; }, orderable: false },
+          { data: 'recipientOrganization.0.name', render: function (data, type, row) { return '<a href="/org/' + row.recipientOrganization[0].id + '">' + truncate(data || row.recipientOrganization[0].id, 30) + '</a>'; }, orderable: false },
+          { data: 'description', orderable: false, responsivePriority: -1 }
         ]
-    });
+      });
 
-    const table = $('#search_grants_datatable').DataTable();
-    table.on('draw', function() {
+      const table = $('#search_grants_datatable').DataTable();
+      table.on('draw', function () {
         if (document.getElementById('search_grants_datatable_paginate')) {
-            const previousButton = document.getElementById('search_grants_datatable_previous');
-            if (previousButton !== null) {
-                previousButton.innerHTML = '<svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="#2B666A" xmlns="http://www.w3.org/2000/svg">  <path d="M1.60577 6.6709L7.19434 12.5037" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path><path d="M1.60594 6.67081L7.18164 0.932251" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path></svg>';
-            }
-            const nextButton = document.getElementById('search_grants_datatable_next')
-            if (nextButton !== null) {
-                nextButton.innerHTML = '<svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#2B666A" xmlns="http://www.w3.org/2000/svg"><path d="M6.54437 6.76514L0.95581 0.93229" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path><path d="M6.54421 6.76522L0.968506 12.5038" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path></svg>';
-            }
+          const previousButton = document.getElementById('search_grants_datatable_previous');
+          if (previousButton !== null) {
+            previousButton.innerHTML = '<svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="#2B666A" xmlns="http://www.w3.org/2000/svg">  <path d="M1.60577 6.6709L7.19434 12.5037" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path><path d="M1.60594 6.67081L7.18164 0.932251" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path></svg>';
+          }
+          const nextButton = document.getElementById('search_grants_datatable_next');
+          if (nextButton !== null) {
+            nextButton.innerHTML = '<svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#2B666A" xmlns="http://www.w3.org/2000/svg"><path d="M6.54437 6.76514L0.95581 0.93229" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path><path d="M6.54421 6.76522L0.968506 12.5038" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round"></path></svg>';
+          }
         }
-    });
+      });
 });
-
-    </script>
+</script>

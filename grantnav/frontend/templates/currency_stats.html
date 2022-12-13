@@ -52,24 +52,21 @@
 </div>
 
 <script>
-document.querySelectorAll('.modal__trigger').forEach(function(el) {
-el.onclick = function(){
-  const target = el.getAttribute('data-id');
-  const modal = document.getElementById(target);
-  const body = document.getElementsByTagName('body');
+document.querySelectorAll('.modal__trigger').forEach(function (el) {
+  el.onclick = function () {
+    const target = el.getAttribute('data-id');
+    const modal = document.getElementById(target);
+    const body = document.getElementsByTagName('body');
 
-
-  if (modal.hasAttribute('aria-hidden')) {
-    
-    modal.removeAttribute('aria-hidden')
-    modal.classList.add('modal--shown');
-    body[0].classList.add('modal--shown');
-
-  } else {
-    modal.setAttribute('aria-hidden', '')
-    modal.classList.remove('modal--shown');
-    body[0].classList.remove('modal--shown');
-  }
-};
+    if (modal.hasAttribute('aria-hidden')) {
+      modal.removeAttribute('aria-hidden');
+      modal.classList.add('modal--shown');
+      body[0].classList.add('modal--shown');
+    } else {
+      modal.setAttribute('aria-hidden', '');
+      modal.classList.remove('modal--shown');
+      body[0].classList.remove('modal--shown');
+    }
+  };
 });
 </script>

@@ -186,32 +186,33 @@
 
 <script>
 
-$( document ).ready(function() {
-  var query = window.location.search;
-  var urlParams = new URLSearchParams(query);
-  var recency = urlParams.get('recency_period');
-  var recencySelect = document.getElementById("select-recency")
+$(document).ready(function () {
+  const query = window.location.search;
+  const urlParams = new URLSearchParams(query);
+  const recency = urlParams.get('recency_period');
+  const recencySelect = document.getElementById('select-recency');
   if (recency && recencySelect) {
-    recencySelect.value = recency; 
+    recencySelect.value = recency;
   }
   updateFrames();
 });
 
-function updateFrames() {
-  var selectElement = document.getElementById('select-views')
+function updateFrames () {
+  const selectElement = document.getElementById('select-views');
   if (selectElement) {
-    var selectedView = selectElement.value;
-    document.getElementById('sample-frame').src = "/widget-render/" + selectedView + window.location.search;
-    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + "/widget-render/" + selectedView + window.location.search + "' style='height: 700px; width: 100%;' frameBorder='0'&gt;&lt;/iframe&gt;";
+    const selectedView = selectElement.value;
+    document.getElementById('sample-frame').src = '/widget-render/' + selectedView + window.location.search;
+    document.getElementById('generated-code').innerHTML = "&lt;iframe src='" + window.location.origin + '/widget-render/' + selectedView + window.location.search + "' style='height: 700px; width: 100%;' frameBorder='0'&gt;&lt;/iframe&gt;";
   }
 }
 
-function updateRecency() {
-  var query = window.location.search;
-  var urlParams = new URLSearchParams(query);
-  var recency_period = document.getElementById('select-recency').value;
-  if (recency_period == 0) {
-    urlParams.delete('recency_period')
+// eslint-disable-next-line no-unused-vars
+function updateRecency () {
+  const query = window.location.search;
+  const urlParams = new URLSearchParams(query);
+  const recency_period = document.getElementById('select-recency').value;
+  if (recency_period === 0) {
+    urlParams.delete('recency_period');
   } else {
     urlParams.set('recency_period', recency_period);
   }
@@ -221,187 +222,179 @@ function updateRecency() {
 // This returns the html for select2 to render each item in the dropdown.
 function formatDropdownItem (item) {
   if (item.loading) {
-    return
+    return;
   }
 
-  html = '<div class="filter-list__form--checkbox-item">'
-  html += '<input class="screen-reader-only" value="" type="checkbox">'
-  html += '<label></label>'
-  html += '</div>'
-  var $dropdownItem = $(html);
+  let html = '<div class="filter-list__form--checkbox-item">';
+  html += '<input class="screen-reader-only" value="" type="checkbox">';
+  html += '<label></label>';
+  html += '</div>';
+  const $dropdownItem = $(html);
 
-  var small = $('<small> (' + item.count + ')</small>');
+  const small = $('<small> (' + item.count + ')</small>');
 
-  $dropdownItem.find('input').val(item.id).attr("id", item.id);
+  $dropdownItem.find('input').val(item.id).attr('id', item.id);
 
   if (item.selected) {
-    $dropdownItem.find('input').attr("checked", "checked");
+    $dropdownItem.find('input').attr('checked', 'checked');
   }
 
-  $dropdownItem.find('label').attr("for", item.id).text(item.text).append(small);
+  $dropdownItem.find('label').attr('for', item.id).text(item.text).append(small);
 
   return $dropdownItem;
-};
-
+}
 
 // This returns the html for select2 to render each tag in the select box.
 function formatSelection (item) {
-
-  html = '<a class="remove-select2-option" href="">'
-  html += '<span class="filter-summary__filters-item--label"></span>'
+  let html = '<a class="remove-select2-option" href="">';
+  html += '<span class="filter-summary__filters-item--label"></span>';
   // This is ugly bet needed for the select2 to display the same cross as in the theme.
-  html += '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">'
-  html += '<path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"></path>'
-  html += '</svg>'
-  html += '</a>'
+  html += '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">';
+  html += '<path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"></path>';
+  html += '</svg>';
+  html += '</a>';
 
-  var $selection = $(html);
+  const $selection = $(html);
   $selection.attr('href', item.id);
   if (item.text.length > 28) {
-    item.text = item.text.substring(0,25) + '...'
+    item.text = item.text.substring(0, 25) + '...';
   }
   $selection.find('span').text(item.text);
   return $selection;
-};
+}
 
 // Runs the ajax call for select2 adding parent_field and filter query to the existing url params
-function get_filter_search_ajax(parent_field, child_field) {
+function get_filter_search_ajax (parent_field, child_field) {
   return {
     url: '/filter_search_ajax',
     delay: 100,
     traditional: true, // this makes sure that multiparams are repeated when the value is a list.
     data: function (params) {
       // true here just returns an object. For multiparams this will give you a list as the values.
-      var query_obj = URI(window.location.href).search(true);
-      query_obj["parent_field"] = parent_field;
-      query_obj["child_field"] = child_field;
-      query_obj["filter_search"] = params.term;
+      const query_obj = URI(window.location.href).search(true);
+      query_obj.parent_field = parent_field;
+      query_obj.child_field = child_field;
+      query_obj.filter_search = params.term;
       return query_obj;
-
-     }
-  }
+    }
+  };
 }
 
 // when a new item is selected then refresh the page
-function redirect_on_selection(param, data) {
-  var uri = URI(data.url);
+function redirect_on_selection (param, data) {
+  const uri = URI(data.url);
   uri.removeSearch('exclude_' + param);
-  if ($('#' + param + '-exclude').prop("checked")) {
-     uri.addSearch('exclude_' + param, 'true');
+  if ($('#' + param + '-exclude').prop('checked')) {
+    uri.addSearch('exclude_' + param, 'true');
   }
-  var query = uri.query()
-  window.location.href = window.location.href.split('?')[0] + "?" + query
-};
-
+  const query = uri.query();
+  window.location.href = window.location.href.split('?')[0] + '?' + query;
+}
 
 // refresh the page when moving from exclude to include selection.
 // BUT do not do this if there is no curent selection
-function maybe_redirect_on_exclude(param) {
-
-  if ($('.' + param + '-search-box').select2('data').length == 0) {
-    return
+function maybe_redirect_on_exclude (param) {
+  if ($('.' + param + '-search-box').select2('data').length === 0) {
+    return;
   }
 
-  var uri = URI(window.location.href);
+  const uri = URI(window.location.href);
 
   uri.removeSearch('exclude_' + param);
-  if ($('#' + param + '-exclude').prop("checked")) {
-     uri.addSearch('exclude_' + param, 'true');
+  if ($('#' + param + '-exclude').prop('checked')) {
+    uri.addSearch('exclude_' + param, 'true');
   }
   window.location.href = uri.toString();
-};
+}
 
-
-$(function() {
+$(function () {
   $.fn.select2.amd.require(['select2/selection/search'], function (Search) {
+    // this is to prevent backspace from removing selections
+    Search.prototype.searchRemoveChoice = function () {
+    };
 
-      // this is to prevent backspace from removing selections
-      Search.prototype.searchRemoveChoice = function () {
-      };
-
-      /* Note we use funder_options as the template options for the rest of the
+    /* Note we use funder_options as the template options for the rest of the
       select2 inputs */
-      funder_options = {"width": "100%",
-           templateResult: formatDropdownItem,
-           templateSelection: formatSelection,
-           dropdownCssClass: "filter-list filter-list--with-checkboxes",
-           placeholder: "Search for funding organizations",
-           ajax: get_filter_search_ajax('fundingOrganization', 'id_and_name')
-           }
+    const funder_options = {
+      width: '100%',
+      templateResult: formatDropdownItem,
+      templateSelection: formatSelection,
+      dropdownCssClass: 'filter-list filter-list--with-checkboxes',
+      placeholder: 'Search for funding organizations',
+      ajax: get_filter_search_ajax('fundingOrganization', 'id_and_name')
+    };
 
-      recipient_options = $.extend({}, funder_options);
+    let recipient_options = $.extend({}, funder_options);
 
-      recipient_options = $.extend(recipient_options, {
-          placeholder: "Search for recipient organizations",
-          ajax: get_filter_search_ajax('recipientOrganization', 'id_and_name')
-      });
+    recipient_options = $.extend(recipient_options, {
+      placeholder: 'Search for recipient organizations',
+      ajax: get_filter_search_ajax('recipientOrganization', 'id_and_name')
+    });
 
-      programme_options = $.extend({}, funder_options);
+    let programme_options = $.extend({}, funder_options);
 
-      programme_options = $.extend(programme_options, {
-          placeholder: "Search for grant programme titles",
-          ajax: get_filter_search_ajax('grantProgramme', 'title_keyword')
-      });
+    programme_options = $.extend(programme_options, {
+      placeholder: 'Search for grant programme titles',
+      ajax: get_filter_search_ajax('grantProgramme', 'title_keyword')
+    });
 
-      let district_options = $.extend({}, funder_options);
-      district_options = $.extend(district_options, {
-        placeholder: "Search for a district",
-        ajax: get_filter_search_ajax('additional_data', 'recipientDistrictName'),
-      });
+    let district_options = $.extend({}, funder_options);
+    district_options = $.extend(district_options, {
+      placeholder: 'Search for a district',
+      ajax: get_filter_search_ajax('additional_data', 'recipientDistrictName')
+    });
 
-      $('.fundingOrganization-search-box').select2(funder_options);
-      $('.recipientOrganization-search-box').select2(recipient_options);
-      $('.grantProgramme-search-box').select2(programme_options);
-      $('.recipientDistrictName-search-box').select2(district_options);
+    $('.fundingOrganization-search-box').select2(funder_options);
+    $('.recipientOrganization-search-box').select2(recipient_options);
+    $('.grantProgramme-search-box').select2(programme_options);
+    $('.recipientDistrictName-search-box').select2(district_options);
 
-      $('.fundingOrganization-search-box').on('select2:select', function (e) {
-          var data = e.params.data;
-          redirect_on_selection('fundingOrganization', data)
-      });
+    $('.fundingOrganization-search-box').on('select2:select', function (e) {
+      const data = e.params.data;
+      redirect_on_selection('fundingOrganization', data);
+    });
 
-      $('.recipientOrganization-search-box').on('select2:select', function (e) {
-          var data = e.params.data;
-          redirect_on_selection('recipientOrganization', data)
-      });
+    $('.recipientOrganization-search-box').on('select2:select', function (e) {
+      const data = e.params.data;
+      redirect_on_selection('recipientOrganization', data);
+    });
 
-      $('.grantProgramme-search-box').on('select2:select', function (e) {
-          var data = e.params.data;
-          redirect_on_selection('grantProgramme', data)
-      });
+    $('.grantProgramme-search-box').on('select2:select', function (e) {
+      const data = e.params.data;
+      redirect_on_selection('grantProgramme', data);
+    });
 
-      $('.recipientDistrictName-search-box').on('select2:select', function (e) {
-          var data = e.params.data;
-          redirect_on_selection('recipientDistrictName', data)
-      });
+    $('.recipientDistrictName-search-box').on('select2:select', function (e) {
+      const data = e.params.data;
+      redirect_on_selection('recipientDistrictName', data);
+    });
 
-      $('#fundingOrganization-select input[type=radio]').on('change', function (e) {
-          maybe_redirect_on_exclude('fundingOrganization')
-      });
+    $('#fundingOrganization-select input[type=radio]').on('change', function (e) {
+      maybe_redirect_on_exclude('fundingOrganization');
+    });
 
-      $('#recipientOrganization-select input[type=radio]').on('change', function (e) {
-          maybe_redirect_on_exclude('recipientOrganization')
-      });
+    $('#recipientOrganization-select input[type=radio]').on('change', function (e) {
+      maybe_redirect_on_exclude('recipientOrganization');
+    });
 
-      $('#grantProgramme-select input[type=radio]').on('change', function (e) {
-          maybe_redirect_on_exclude('grantProgramme')
-      });
+    $('#grantProgramme-select input[type=radio]').on('change', function (e) {
+      maybe_redirect_on_exclude('grantProgramme');
+    });
 
-      $('#recipientDistrictName-select input[type=radio]').on('change', function (e) {
-          maybe_redirect_on_exclude('recipientDistrictName');
-      });
-
+    $('#recipientDistrictName-select input[type=radio]').on('change', function (e) {
+      maybe_redirect_on_exclude('recipientDistrictName');
+    });
   });
 
-  $('body').on('click', '.remove-select2-option', function(e) {
-      // keep select box closed when removing a selection
-      $('.filter-search-box').select2('close');
-
-  })
+  $('body').on('click', '.remove-select2-option', function (e) {
+    // keep select box closed when removing a selection
+    $('.filter-search-box').select2('close');
+  });
 
   $('#datepicker').datepicker({
-    format: "mm/yyyy",
-    startDate: "01/1990",
-    endDate: "{% now "12/Y" %}",
+    format: 'mm/yyyy',
+    startDate: '01/1990',
+    endDate: '{% now "12/Y" %}',
     startView: 2,
     minViewMode: 1,
     maxViewMode: 2,
@@ -409,6 +402,5 @@ $(function() {
     defaultViewDate: '01/2010'
   });
 });
-
 </script>
 {% endblock %}
