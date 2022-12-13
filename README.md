@@ -134,6 +134,10 @@ The tests delete an elastic search index and repopulate it.  The default index n
 
 We also use flake8 to test code quality, see https://github.com/OpenDataServices/developer-docs/blob/master/tests.md#flake8
 
+We use ESLint to statically analyse JavaScript code.
++ Install with `npm install`
++ Run `npx eslint --ext .js --ext .html grantnav/frontend/templates/**`
+
 
 Adding and updating requirements
 --------------------------------
