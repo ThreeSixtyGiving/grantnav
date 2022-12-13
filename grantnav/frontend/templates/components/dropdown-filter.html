@@ -17,10 +17,10 @@
 </form>
 
 <script>
-
-  function sort_changed(value){
-    let search = new URLSearchParams(window.location.search);
-    search.set("sort", value);
+  // eslint-disable-next-line no-unused-vars
+  function sort_changed (value) {
+    const search = new URLSearchParams(window.location.search);
+    search.set('sort', value);
     window.location.href = `${window.location.pathname}?${search.toString()}`;
   }
 </script>
