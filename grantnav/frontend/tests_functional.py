@@ -44,20 +44,25 @@ def browser(request):
 
 @pytest.fixture(scope="module")
 def server_url(request, live_server):
-    if 'CUSTOM_SERVER_URL' in os.environ:
-        return os.environ['CUSTOM_SERVER_URL']
+    if "CUSTOM_SERVER_URL" in os.environ:
+        return os.environ["CUSTOM_SERVER_URL"]
     else:
         return live_server.url
 
 
 @pytest.fixture(scope="module")
 def dataload():
-    import_to_elasticsearch([prefix + 'a002400000KeYdsAAF-currency.json',
-                            prefix + 'a002400000OiDBQAA3.json'],
-                            clean=True,
-                            funders=os.path.join(prefix, "funders.jl"),
-                            recipients=os.path.join(prefix, "recipients.jl"))
-    #elastic search needs some time to commit its data
+    import_to_elasticsearch(
+        [
+            prefix + "a002400000KeYdsAAF-currency.json",
+            prefix + "a002400000OiDBQAA3.json",
+            prefix + "awefw001p00000zgyHZAAY.json",
+        ],
+        clean=True,
+        funders=os.path.join(prefix, "funders.jl"),
+        recipients=os.path.join(prefix, "recipients.jl"),
+    )
+    # elastic search needs some time to commit its data
     time.sleep(2)
 
 
@@ -111,8 +116,8 @@ def test_footer_links(provenance_dataload, server_url, browser, link_text):
 def test_search(provenance_dataload, server_url, browser):
     browser.get(server_url)
     browser.find_element_by_class_name("large-search-button").click()
-    # Total number of expected grants 4,495
-    assert "4,495" in \
+    # Total number of expected grants
+    assert "4,649" in \
         browser.find_element_by_class_name('search-summary-description').text
 
     # open show highlighted grants section
@@ -425,7 +430,7 @@ def test_amount_awarded_facet(provenance_dataload, server_url, browser):
     browser.find_element_by_xpath(
         "//div[contains(@class, 'filter-list')][2]/details/div/ul[@class='filter-list__listing']/li[3]/a").click()
     total_grants = browser.find_elements_by_css_selector(".summary-content--item span")[0].text
-    assert "16" in total_grants, "Expected number of grants not found"
+    assert "49" in total_grants, "Expected number of grants not found"
 
 
 @pytest.mark.parametrize(('path'), ['/grant/360G-wolfson-19916'])
