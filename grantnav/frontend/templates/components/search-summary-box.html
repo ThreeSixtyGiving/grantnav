@@ -37,7 +37,7 @@
           </div>
         </div>
       </div>
-      
+
 
       <div class="search-summary--main__right-column">
         <div class="summary-content--item">
@@ -62,6 +62,9 @@
       </div>
     </main>
 
+    {# Only show details about the recipient orgs of grants if we have recipient orgs in the search #}
+    {% if results.aggregations.recipient_orgs.value > 0 %}
+
     <footer class="search-summary--footer">
       <details class="search-summary--footer__details">
         <summary>
@@ -81,7 +84,14 @@
               <a href="grant/{{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"id"}}">
                 {{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
-                {{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization"|first|get:"name"}}</a>
+              {% with recipientOrganization_to as buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization" %}
+                {% if recipientOrganization_to  %}
+                  {{recipientOrganization_to|first|get:"name"}}
+                {% else %}
+                  Individual
+                {% endif %}
+              {% endwith %}
+              </a>
               ({{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"awardDate"|get_year}})
             </span>
           </div>
@@ -94,12 +104,18 @@
                 <a href="grant/{{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"id"}}">
                   {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
                 to
-                  {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization"|first|get:"name"}}</a>
+                {% with recipientOrganization_to as buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization" %}
+                 {% if recipientOrganization_to %}
+                    {{recipientOrganization_to|first|get:"name"}}
+                  {% else %}
+                    Individual
+                  {% endif %}
+                {% endwith %}
+                  </a>
                 ({{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"awardDate"|get_year}})
               </span>
             </div>
           {% endif %}
-
 
           <div class="summary-footer--item">
             <span class="summary-footer--item__label">Most recent grant:</span>
@@ -109,7 +125,14 @@
               <a href="grant/{{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"id"}}">
                 {{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
-                {{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization"|first|get:"name"}}</a>
+              {% with recipientOrganization_to as results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization" %}
+                {% if recipientOrganization_to %}
+                  {{recipientOrganization_to|first|get:"name"}}
+                {% else %}
+                  Individual
+                {% endif %}
+              {% endwith %}
+              </a>
               ({{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"awardDate"|get_year}})
               </span>
             </div>
@@ -121,7 +144,14 @@
               <a href="grant/{{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"id"}}">
                 {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
-                {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization"|first|get:"name"}}</a>
+              {% with recipientOrganization_to as results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization" %}
+                {% if recipientOrganization_to %}
+                  {{recipientOrganization_to|first|get:"name"}}
+                {% else %}
+                  Individual
+                {% endif %}
+              {% endwith %}
+               </a>
               ({{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"awardDate"|get_year}})
               </span>
           </div>
@@ -144,6 +174,8 @@
         </div>
       </details>
     </footer>
+  {% endif %}
+
   {% endwith %}
 </section>
 
