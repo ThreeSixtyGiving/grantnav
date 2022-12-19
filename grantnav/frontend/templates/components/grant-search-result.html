@@ -36,8 +36,13 @@
 
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">Recipient:</span>
+    {% if result.source.recipientOrganization %}
       <span><a href="{% url 'org' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:40 }}</a></span>
+    {% else %}
+      <span>Individual</span>
+    {% endif %}
     </div>
+
     {% if result.source.additional_data.recipientRegionName %}
       <div class="grant-search-result__data-item">
         <span class="grant-search-result__data-item--label">Region:</span>
