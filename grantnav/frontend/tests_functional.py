@@ -16,6 +16,11 @@ chromedriver_autoinstaller.install()
 BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
 
 
+def check_js_errors(browser):
+    for log in browser.get_log("browser"):
+        assert "SEVERE" not in log['level'], f"found {log}"
+
+
 @pytest.fixture(scope="module")
 def browser(request):
     if BROWSER == 'ChromeHeadless':
@@ -82,6 +87,7 @@ def test_home(provenance_dataload, server_url, browser):
     # assert 'Cookies disclaimer' not in browser.find_element_by_tag_name('body').text
     assert '360Giving Data Standard' in browser.find_element_by_tag_name('body').text
     assert '360Giving data standard' not in browser.find_element_by_tag_name('body').text
+    check_js_errors(browser)
 
 
 @pytest.mark.parametrize(('link_text'), [
@@ -98,6 +104,8 @@ def test_nav_menu_help_link(provenance_dataload, server_url, browser):
     browser.find_element_by_id("help_link").click()
 
     assert browser.current_url.startswith("https://help.grantnav.threesixtygiving.org")
+    # Clear browser log for external site
+    browser.get_log("browser")
 
 
 @pytest.mark.parametrize(('link_text'), [
@@ -132,6 +140,7 @@ def test_search(provenance_dataload, server_url, browser):
 
     # browser.get_screenshot_as_file("screenshot-test_search.png")
     assert "$153,934" in browser.find_element_by_id('summary-info-model').text
+    check_js_errors(browser)
 
 
 def test_search_by_titles_and_descriptions_radio_button_in_search(provenance_dataload, server_url, browser):
@@ -329,6 +338,8 @@ def test_search_advanced_search_correct_link(provenance_dataload, server_url, br
     browser.find_element_by_link_text("targeting your search").click()
 
     assert browser.current_url.startswith('https://help.grantnav.threesixtygiving.org/en/latest/search_bar.html')
+    # Clear browser log for external site
+    browser.get_log("browser")
 
 
 def test_search_do_not_display_advance_search_link(provenance_dataload, server_url, browser):
@@ -357,16 +368,22 @@ def test_terms(server_url, browser):
 def test_take_down(server_url, browser):
     browser.get(server_url + '/take_down_policy')
     assert browser.current_url.startswith('https://www.threesixtygiving.org/take-down-policy/')
+    # Clear browser log for external site
+    browser.get_log("browser")
 
 
 def test_help_page(server_url, browser):
     browser.get(server_url + '/help')
     assert browser.current_url.startswith('https://help.grantnav.threesixtygiving.org/')
+    # Clear browser log for external site
+    browser.get_log("browser")
 
 
 def test_developers(server_url, browser):
     browser.get(server_url + '/developers')
     assert browser.current_url.startswith('https://help.grantnav.threesixtygiving.org/')
+    # Clear browser log for external site
+    browser.get_log("browser")
 
 
 def test_title(server_url, browser):
@@ -388,6 +405,7 @@ def test_no_results_page(server_url, browser):
 def test_datasets_page(server_url, browser):
     browser.get(server_url + '/datasets')
     assert 'Data used in GrantNav' in browser.find_element_by_tag_name('h1').text
+    check_js_errors(browser)
 
 
 @pytest.mark.parametrize(('path', 'text'), [
@@ -397,6 +415,7 @@ def test_datasets_page(server_url, browser):
 def test_disclaimers(server_url, browser, path, text):
     browser.get(server_url + path)
     assert text in browser.find_element_by_tag_name('body').text
+    check_js_errors(browser)
 
 
 def test_currency_facet(provenance_dataload, server_url, browser):
@@ -438,6 +457,8 @@ def test_zero_grant_info_link_present(provenance_dataload, server_url, browser, 
     browser.get(server_url + path)
     browser.find_element_by_id("zero_value_grant_help_link").click()
     assert browser.current_url == "https://help.grantnav.threesixtygiving.org/en/latest/search_results.html?#some-grantmakers-publish-grants-with-0-or-negative-values"
+    # Clear browser log for external site
+    browser.get_log("browser")
 
 
 @pytest.mark.parametrize(('path'), ['/grant/360G-LBFEW-99233'])
@@ -454,6 +475,7 @@ def test_search_recipients(provenance_dataload, server_url, browser):
     #browser.get_screenshot_as_file("recipients-search.png")
 
     assert len(browser.find_elements_by_class_name("grant-search-result__recipients")) == 9
+    check_js_errors(browser)
 
 
 def test_search_funders(provenance_dataload, server_url, browser):
@@ -464,6 +486,7 @@ def test_search_funders(provenance_dataload, server_url, browser):
     #browser.get_screenshot_as_file("recipients-search.png")
 
     assert len(browser.find_elements_by_class_name("grant-search-result__funders")) == 4
+    check_js_errors(browser)
 
 
 def test_org_page(provenance_dataload, server_url, browser):
@@ -471,3 +494,4 @@ def test_org_page(provenance_dataload, server_url, browser):
     #browser.get_screenshot_as_file("org-page.png")
 
     assert "EQUALITEACH C.I.C." in browser.find_element_by_tag_name('h1').text
+    check_js_errors(browser)
