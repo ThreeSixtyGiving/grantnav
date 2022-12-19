@@ -1,8 +1,9 @@
 {% if not debug %}
 <!-- Matomo -->
 <script type="text/javascript">
-  const _paq = window._paq = window._paq || [];
-  const siteID = 9;
+  /* eslint-disable no-var */
+  var _paq = window._paq = window._paq || [];
+  var siteID = 9;
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
   _paq.push(['requireCookieConsent']); // Don't use cookies unless we have consent
   _paq.push(['setCookieDomain', '*.threesixtygiving.org']);
@@ -10,11 +11,11 @@
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
   (function () {
-    const u = 'https://analytics.threesixtygiving.org/';
+    var u = 'https://analytics.threesixtygiving.org/';
     _paq.push(['setTrackerUrl', u + 'matomo.php']);
     if (!siteID) throw new Error('siteID not set');
     _paq.push(['setSiteId', siteID]);
-    const d = document; const g = d.createElement('script'); const s = d.getElementsByTagName('script')[0];
+    var d = document; var g = d.createElement('script'); var s = d.getElementsByTagName('script')[0];
     g.type = 'text/javascript'; g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
   })();
 </script>
