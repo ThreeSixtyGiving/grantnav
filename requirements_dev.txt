@@ -69,10 +69,6 @@ elasticsearch==7.0.5
     # via -r requirements.in
 et-xmlfile==1.1.0
     # via openpyxl
-exceptiongroup==1.1.0
-    # via
-    #   pytest
-    #   trio
 flake8==6.0.0
     # via -r requirements_dev.in
 flattentool==0.17.1
@@ -185,12 +181,6 @@ tenacity==8.1.0
     # via plotly
 titlecase==2.4
     # via -r requirements.in
-tomli==2.0.1
-    # via
-    #   build
-    #   coverage
-    #   pep517
-    #   pytest
 transaction==3.0.1
     # via zodb
 trio==0.22.0
