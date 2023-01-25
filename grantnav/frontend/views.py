@@ -1448,7 +1448,7 @@ def datasets(request):
 
 def api_grants(request):
     [result_format, results_size] = get_request_type_and_size(request)
-    query = {"query": {"match_all": {}}}
+    query = {'query': {'bool': {'filter': []}}}
     if result_format == "csv":
         return grants_csv_paged(query)
     elif result_format == "json":
