@@ -254,13 +254,13 @@ function formatDropdownItem (item) {
 
   const small = $('<small> (' + item.count + ')</small>');
 
-  $dropdownItem.find('input').val(item.id).attr('id', item.id);
+  $dropdownItem.find('input').val(item.id).prop('id', item.id);
 
   if (item.selected) {
-    $dropdownItem.find('input').attr('checked', 'checked');
+    $dropdownItem.find('input').prop('checked', 'checked');
   }
 
-  $dropdownItem.find('label').attr('for', item.id).text(item.text).append(small);
+  $dropdownItem.find('label').prop('for', item.id).text(item.text).append(small);
 
   return $dropdownItem;
 }
@@ -276,7 +276,7 @@ function formatSelection (item) {
   html += '</a>';
 
   const $selection = $(html);
-  $selection.attr('href', item.id);
+  $selection.prop('href', item.id);
   if (item.text.length > 28) {
     item.text = item.text.substring(0, 25) + '...';
   }

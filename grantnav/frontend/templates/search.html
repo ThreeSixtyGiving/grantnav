@@ -142,13 +142,13 @@ function formatDropdownItem (item) {
 
   const small = $('<small> (' + item.count + ')</small>');
 
-  $dropdownItem.find('input').val(item.id).attr('id', item.id);
+  $dropdownItem.find('input').val(item.id).prop('id', item.id);
 
   if (item.selected) {
-    $dropdownItem.find('input').attr('checked', 'checked');
+    $dropdownItem.find('input').prop('checked', 'checked');
   }
 
-  $dropdownItem.find('label').attr('for', item.id).text(item.text).append(small);
+  $dropdownItem.find('label').prop('for', item.id).text(item.text).append(small);
 
   return $dropdownItem;
 }
@@ -156,7 +156,7 @@ function formatDropdownItem (item) {
 $(document).ready(function () {
   // eslint-disable-next-line no-constant-condition
   if ('{{ view_mode }}' === 'card') {
-    $('input[type=radio][name=results-switcher][value="card"]').attr('checked', true);
+    $('input[type=radio][name=results-switcher][value="card"]').prop('checked', true);
     $('.card-view').css('display', 'block');
     $('.table-view').css('display', 'none');
     $('.results-title__subtitle').css('display', 'inline');
@@ -164,14 +164,14 @@ $(document).ready(function () {
     $('#search_grants_datatable').DataTable().columns.adjust();
   // eslint-disable-next-line no-constant-condition
   } else if ('{{ view_mode }}' === 'table') {
-    $('input[type=radio][name=results-switcher][value="table"]').attr('checked', true);
+    $('input[type=radio][name=results-switcher][value="table"]').prop('checked', true);
     $('.card-view').css('display', 'none');
     $('.table-view').css('display', 'flex');
     $('.results-title__subtitle').css('display', 'none');
     $('#search_grants_datatable').DataTable().responsive.recalc();
     $('#search_grants_datatable').DataTable().columns.adjust();
   } else {
-    $('input[type=radio][name=results-switcher][value="card"]').attr('checked', true);
+    $('input[type=radio][name=results-switcher][value="card"]').prop('checked', true);
   }
 
   $('input[type=radio][name=results-switcher]').change(function () {
@@ -197,7 +197,7 @@ function formatSelection (item) {
   html += '</a>';
 
   const $selection = $(html);
-  $selection.attr('href', item.id);
+  $selection.prop('href', item.id);
   if (item.text.length > 28) {
     item.text = item.text.substring(0, 25) + '...';
   }
