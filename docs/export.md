@@ -16,11 +16,11 @@ The JSON files of grants contain all of the data supplied in the original data (
 
 The CSV files of grants contain all of the required fields from the 360Giving standard, the most commonly-used optional fields from the standard, plus some commonly-used fields from the data added by the 360Giving pipeline. Columns may be entirely blank if no grant in your download uses a particular field; individual rows may have blank fields if the source data doesn't contain that field. 
 
-Grants export files use the [360Giving Standard](https://standard.threesixtygiving.org/en/latest/); refer to the standard website to understand the meaning and contents of the fields. 
+Grants export files use the [360Giving Standard](https://standard.threesixtygiving.org/en/latest/); refer to the standard website to understand the meaning and contents of the fields.
 
 Note that export files can be very large - in particular the whole dataset is several hundred MB, and large search results can be a similar size. Refining your search or splitting up your export can help, but be aware of the constraints around [refining search results](refining-results)
 
-The entire data set can be exported as [JSON](http://grantnav.threesixtygiving.org/api/grants.json) or [CSV](http://grantnav.threesixtygiving.org/api/grants.csv)
+The entire data set can be exported as [JSON](http://grantnav.threesixtygiving.org/search.json) or [CSV](http://grantnav.threesixtygiving.org/search.csv)
 
 
 ```eval_rst

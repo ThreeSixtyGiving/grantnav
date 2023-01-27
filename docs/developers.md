@@ -7,7 +7,7 @@ GrantNav provides a rich source of grants data for developers; the JSON download
 
 GrantNav isn't designed to be incorporated into an application, and we don't guarantee API stability or performance, so developers should ensure that they don't rely on GrantNav for time-critical processes. The data's updated once a day, overnight (UK time), so it's not necessary to poll for updates more regularly than that. 
 
-The entire data set can be exported as [JSON](http://grantnav.threesixtygiving.org/api/grants.json) or [CSV](http://grantnav.threesixtygiving.org/api/grants.csv)
+The entire data set can be exported as [JSON](http://grantnav.threesixtygiving.org/search.json) or [CSV](http://grantnav.threesixtygiving.org/search.csv)
 
 The full JSON download is several hundred MB, and growing slowly as more organisations start to publish, and existing publishers add to their published data.
 

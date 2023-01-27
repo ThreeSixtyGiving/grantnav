@@ -1444,12 +1444,3 @@ def datasets(request):
         'publishers': provenance.by_publisher.values(),
         'datasets': provenance.datasets,
     })
-
-
-def api_grants(request):
-    [result_format, results_size] = get_request_type_and_size(request)
-    query = {"query": {"match_all": {}}}
-    if result_format == "csv":
-        return grants_csv_paged(query)
-    elif result_format == "json":
-        return grants_json_paged(query)

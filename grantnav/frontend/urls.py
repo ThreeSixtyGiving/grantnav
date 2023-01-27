@@ -38,8 +38,6 @@ urlpatterns = [
     url(r'^datasets/$', views.datasets, name='datasets'),
     url(r'^terms', TemplateView.as_view(template_name='terms.html'), name='terms'),
     url(r'^about', TemplateView.as_view(template_name='about.html'), name='about'),
-    url(r'^api/grants.json', views.api_grants, name='api.grants.json'),
-    url(r'^api/grants.csv', views.api_grants, name='api.grants.csv'),
     # Redirects
     url(r'^publisher/(.*)$', views.publisher, name='publisher'),
     url(r'^recipient/(.*)$', views.recipient, name='recipient'),
