@@ -235,9 +235,9 @@ function updateFrames () {
     const preview = document.getElementById('sample-frame');
     const code = document.getElementById('generated-code');
 
-    code.innerHTML = `&lt;iframe src="${window.location.origin}/widget-render/${selectedView}${window.location.search}?rows=${rows}" style="height: 700px; width: ${width}${widthType};" frameBorder="0"&gt;&lt;/iframe&gt;`;
+    code.innerHTML = `&lt;iframe src="${window.location.origin}/widget-render/${selectedView}${window.location.search}&rows=${rows}" style="height: 700px; width: ${width}${widthType};" frameBorder="0"&gt;&lt;/iframe&gt;`;
 
-    preview.src = `/widget-render/${selectedView}${window.location.search}?rows=${rows}`;
+    preview.src = `/widget-render/${selectedView}${window.location.search}&rows=${rows}`;
     preview.style = `height: 700px; width: ${width}${widthType};`;
   }
 }
