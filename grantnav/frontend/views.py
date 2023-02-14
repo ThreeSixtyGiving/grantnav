@@ -81,6 +81,7 @@ FIXED_AMOUNT_RANGES = [
 SEARCH_SUMMARY_AGGREGATES = {
     "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
     "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
+    "recipient_indi": {"cardinality": {"field": "recipientIndividual.id", "precision_threshold": 40000}},
     "currency_stats": {
         "terms": {"field": "currency"},
         "aggs": {
@@ -172,7 +173,7 @@ def grants_json(query, length, start):
         grant["description"] = grant.get("description", "")
         grant["title"] = grant.get("title", "")
         result_list.append(grant)
-    
+
     return {'data': result_list,
             'recordsTotal': results["hits"]["total"]['value'],
             'recordsFiltered': results["hits"]["total"]['value']}
@@ -389,9 +390,20 @@ def totals_query():
     counts = {
         'grants': get_results(query)['hits']['total'],
         'funders': get_results(query, data_type='funder')['hits']['total'],
-        'recipients': get_results(query, data_type='recipient')['hits']['total']
+        'recipient_orgs': get_results(query, data_type='recipient')['hits']['total'],
+        'recipient_indi': get_results(
+            {
+                "size": 0,  # Don't return the docs just the agg
+                "aggs": {
+                    "recipient_indi": {
+                        "cardinality": {
+                            "field": "recipientIndividual.id", "precision_threshold": 40000
+                        }
+                    }
+                }
+            }
+        )["aggregations"]["recipient_indi"]["value"]
     }
-
     return counts
 
 
@@ -688,7 +700,7 @@ def search(request, template_name="search.html"):
             if search_value:
                 current_query = json_query["query"]["bool"]["must"]["query_string"]['query']
                 json_query["query"]["bool"]["must"] = {"query_string": {"query": current_query + " " + search_value, "default_operator": "and"}}
-            
+
             json_response = grants_json(json_query, length, start)
             json_response['draw'] = request.GET['draw'],
             return JsonResponse(json_response)
