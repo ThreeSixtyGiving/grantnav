@@ -214,7 +214,7 @@ let urlParams;
 $(document).ready(function () {
   query = window.location.search;
   urlParams = new URLSearchParams(query);
-  
+
   const recency = urlParams.get('recency_period');
   const recencySelect = document.getElementById('select-recency');
   if (recency && recencySelect) {
@@ -234,7 +234,7 @@ function updateFrames () {
   const selectViewElement = document.getElementById('select-views');
   const selectWidthElement = document.getElementById('select-width');
   const inputWidthElement = document.getElementById('input-width');
-  
+
   if (selectViewElement && selectWidthElement && inputWidthElement) {
     const selectedView = selectViewElement.value;
     const widthType = selectWidthElement.value;
@@ -250,11 +250,12 @@ function updateFrames () {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 function updateRows () {
   query = window.location.search;
   urlParams = new URLSearchParams(query);
   const rows = document.getElementById('input-rows');
-  let numberOfRows = rows.value;
+  const numberOfRows = rows.value;
   if (numberOfRows === 0 || !numberOfRows) {
     urlParams.delete('rows');
   } else {
