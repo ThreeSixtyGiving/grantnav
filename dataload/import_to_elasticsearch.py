@@ -110,6 +110,13 @@ def maybe_create_index(index_name=ES_INDEX):
                     }
                 }
             },
+            "recipientIndividual": {
+                "properties": {
+                    "id": {
+                        "type": "keyword"
+                    },
+                }
+            },
             "fundingOrganization": {
                 "properties": {
                     "addressLocality": {
