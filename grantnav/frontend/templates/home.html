@@ -7,12 +7,14 @@
 {% endblock %}
 
 {% block main_content %}
-  <div class="grid grid--three-columns">
+  <div class="grid grid--two-columns">
+    {% include 'components/homepage-card.html' with title="Grants" button_text="Grants search" value=results.grants|get_amount link="search" %}
     {% include 'components/homepage-card.html' with title="Funders" button_text="Funder search" value=results.funders|get_amount link="funders" %}
 
-    {% include 'components/homepage-card.html' with title="Recipients" button_text="Recipient search" value=results.recipients|get_amount link="recipients" %}
+    {% include 'components/homepage-card.html' with title="Recipient Organisations" button_text="Recipient organisations search" value=results.recipient_orgs|get_amount link="recipients" %}
+    {% include 'components/homepage-card.html' with title="Recipient Individuals" button_text="Recipient individuals search" value=results.recipient_indi|get_amount link="search" %}
 
-    {% include 'components/homepage-card.html' with title="Grants" button_text="Grants search" value=results.grants|get_amount link="search" %}
+
   </div>
   <div class="grid margin-bottom:4">
     {% include 'components/covid-card.html' %}
