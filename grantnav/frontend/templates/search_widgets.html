@@ -118,7 +118,7 @@
                 <div class="dropdown-filter flex-centre">
                   <label class="dropdown-filter__label" for="input-rows">Number of rows:</label>
                     <div class="filter-list__contents--form-item">
-                    <input class="form-control input-xs" type="number" name="rows" id="input-rows" min="0" value="" placeholder="Show all results" onchange="updateFrames()" />
+                    <input class="form-control input-xs" type="number" name="rows" id="input-rows" min="0" value="" placeholder="Show all results" onchange="updateRows()" />
                   </div>
                   <div class="alert-tag margin-left:1">
                     <span class="alert-tag__icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -208,15 +208,25 @@
 
 
 <script>
+let query;
+let urlParams;
 
 $(document).ready(function () {
-  const query = window.location.search;
-  const urlParams = new URLSearchParams(query);
+  query = window.location.search;
+  urlParams = new URLSearchParams(query);
+  
   const recency = urlParams.get('recency_period');
   const recencySelect = document.getElementById('select-recency');
   if (recency && recencySelect) {
     recencySelect.value = recency;
   }
+
+  const rows = urlParams.get('rows');
+  const rowsInput = document.getElementById('input-rows');
+  if (rows && rowsInput) {
+    rowsInput.value = rows;
+  }
+
   updateFrames();
 });
 
@@ -224,28 +234,39 @@ function updateFrames () {
   const selectViewElement = document.getElementById('select-views');
   const selectWidthElement = document.getElementById('select-width');
   const inputWidthElement = document.getElementById('input-width');
-  const inputRowsElement = document.getElementById('input-rows');
-
-  if (selectViewElement && selectWidthElement && inputWidthElement && inputRowsElement) {
+  
+  if (selectViewElement && selectWidthElement && inputWidthElement) {
     const selectedView = selectViewElement.value;
     const widthType = selectWidthElement.value;
     const width = inputWidthElement.value;
-    const rows = inputRowsElement.value;
 
     const preview = document.getElementById('sample-frame');
     const code = document.getElementById('generated-code');
 
-    code.innerHTML = `&lt;iframe src="${window.location.origin}/widget-render/${selectedView}${window.location.search}&rows=${rows}" style="height: 700px; width: ${width}${widthType};" frameBorder="0"&gt;&lt;/iframe&gt;`;
+    code.innerHTML = `&lt;iframe src="${window.location.origin}/widget-render/${selectedView}${window.location.search}" style="height: 700px; width: ${width}${widthType};" frameBorder="0"&gt;&lt;/iframe&gt;`;
 
-    preview.src = `/widget-render/${selectedView}${window.location.search}&rows=${rows}`;
+    preview.src = `/widget-render/${selectedView}${window.location.search}`;
     preview.style = `height: 700px; width: ${width}${widthType};`;
   }
 }
 
+function updateRows () {
+  query = window.location.search;
+  urlParams = new URLSearchParams(query);
+  const rows = document.getElementById('input-rows');
+  let numberOfRows = rows.value;
+  if (numberOfRows === 0 || !numberOfRows) {
+    urlParams.delete('rows');
+  } else {
+    urlParams.set('rows', numberOfRows);
+  }
+  window.location.search = urlParams;
+}
+
 // eslint-disable-next-line no-unused-vars
 function updateRecency () {
-  const query = window.location.search;
-  const urlParams = new URLSearchParams(query);
+  query = window.location.search;
+  urlParams = new URLSearchParams(query);
   const recency_period = document.getElementById('select-recency').value;
   if (recency_period === 0) {
     urlParams.delete('recency_period');
