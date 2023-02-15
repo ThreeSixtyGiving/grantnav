@@ -1,16 +1,16 @@
 {% load get_facet_org_name get_amount from frontend %}
 <div class="filter-list">
-  <details class="filter-list__accordion" {% if results.aggregations.recipientOrganizationType.clear_url %} open{% endif %}>
-    <a class="anchor" id="recipientOrganizationType"></a>
+  <details class="filter-list__accordion" {% if results.aggregations.recipientType.clear_url %} open{% endif %}>
+    <a class="anchor" id="recipientTSGType"></a>
     <summary class="filter-list__label">
-      <div>Recipient Organizations {% if results.aggregations.recipientOrganizationType.clear_url %} <a href={{results.aggregations.recipientOrganizationType.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
+      <div>Recipient Types {% if results.aggregations.recipientTSGType.clear_url %} <a href={{results.aggregations.recipientTSGType.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-list__contents-wrapper">
       {% block filterOption %}
       {% endblock filterOption %}
       <ul class="filter-list__listing">
-          {% for bucket in results.aggregations.recipientOrganizationType.buckets %}
+          {% for bucket in results.aggregations.recipientTSGType.buckets %}
             <li>
             <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
               {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small>
@@ -20,10 +20,10 @@
             </a>
           </li>
         {% endfor %}
-          {% if results.aggregations.recipientOrganizationType.buckets|length > 2 %}
+         {% if results.aggregations.recipientTSGType.buckets|length > 2 %}
           <li>
-            <a class="filter-list__expand-button" href="{{see_more_url.recipientOrganizationType.url}}">
-              <span class="see-more">{% if see_more_url.recipientOrganizationType.more %}See More{% else %}See Less{% endif %}</span>
+            <a class="filter-list__expand-button" href="{{see_more_url.recipientTSGType.url}}">
+              <span class="see-more">{% if see_more_url.recipientTSGType.more %}See More{% else %}See Less{% endif %}</span>
             </a>
           </li>
         {% endif %}
