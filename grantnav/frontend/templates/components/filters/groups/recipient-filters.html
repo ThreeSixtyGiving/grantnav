@@ -4,6 +4,7 @@
       <div>Recipient</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
+        {% include 'components/filters/lists/filter-list-recipient-org-type.html' %}
     <div class="filter-group_contents-wrapper">
       {% if results.aggregations.recipientOrganization.buckets %}
         {% include 'components/filters/lists/filter-list-recipient-org.html' %}

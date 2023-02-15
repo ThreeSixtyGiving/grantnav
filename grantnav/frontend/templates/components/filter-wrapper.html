@@ -21,7 +21,7 @@
       {% if results.aggregations.fundingOrganization.buckets %}
         {% include 'components/filters/groups/funder-filters.html' %}
       {% endif %}
-      {% if results.aggregations.recipientOrganization.buckets %}
+      {% if results.aggregations.recipientOrganization.buckets or results.aggregations.recipientTSGType.buckets %}
         {% include 'components/filters/groups/recipient-filters.html' %}
       {% endif %}
 

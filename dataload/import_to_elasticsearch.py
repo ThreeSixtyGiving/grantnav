@@ -202,6 +202,9 @@ def maybe_create_index(index_name=ES_INDEX):
                     "TSGFundingOrgType": {
                         "type": "keyword"
                     },
+                    "TSGRecipientType": {
+                        "type": "keyword"
+                    },
                     "recipientLocation": {
                         "type": "text"
                     },

@@ -39,6 +39,7 @@ BASIC_FILTER = [
     {"bool": {"should": []}},   # additional_data.TSGFundingOrgType
     {"bool": {"should": {"range": {"awardDate": {}}}, "must": {}, "minimum_should_match": 1}},   # Date range
     {"bool": {"should": []}},  # Programme Title
+    {"bool": {"should": []}},  # additional_data.TSGRecipientType
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
@@ -50,7 +51,8 @@ TERM_FACETS = [
     TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False, 5000),
     TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False, 5000),
     TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False, 5000),
-    TermFacet("currency", "currency", 7, "Currency", False, 5000)
+    TermFacet("currency", "currency", 7, "Currency", False, 5000),
+    TermFacet("additional_data.TSGRecipientType", "recipientTSGType", 11, "Recipient Type", False, 5000),
 ]
 
 SIZE = 20
@@ -613,12 +615,13 @@ def search(request, template_name="search.html"):
             json_query_param = json_query_param.replace('"recipientDistrictName"', '"additional_data.recipientDistrictName"')
             json_query = json.loads(json_query_param)
             filter_ = json_query['query']['bool']['filter']
-            # There were originally 8 filters ES now expects all 11 so append
-            # the missing ones
+            # There were originally 8 filters with the old urls ES now expects all 12 so append
+            # the new ones
             if len(filter_) == 8:
                 filter_.append({"bool": {"should": []}})  # additional_data.TSGFundingOrgType
                 filter_.append({"bool": {"should": {"range": {"awardDate": {}}}, "must": {}, "minimum_should_match": 1}})   # Date range
                 filter_.append({"bool": {"should": []}})  # Programme Title
+                filter_.append({"bool": {"should": []}})  # additional_data.TSGRecipientType
             json_query['aggs'] = {}
             for term_facet in TERM_FACETS:
                 json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
