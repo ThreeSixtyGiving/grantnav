@@ -1459,3 +1459,8 @@ def datasets(request):
         'publishers': provenance.by_publisher.values(),
         'datasets': provenance.datasets,
     })
+
+
+def individuals(request):
+    search_page = reverse("search")
+    return redirect(f"{search_page}?recipientTSGType=Individual")

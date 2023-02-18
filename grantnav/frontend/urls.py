@@ -39,6 +39,7 @@ urlpatterns = [
     url(r'^terms', TemplateView.as_view(template_name='terms.html'), name='terms'),
     url(r'^about', TemplateView.as_view(template_name='about.html'), name='about'),
     # Redirects
+    url(r'^individuals', views.individuals, name="individuals"),
     url(r'^publisher/(.*)$', views.publisher, name='publisher'),
     url(r'^recipient/(.*)$', views.recipient, name='recipient'),
     url(r'^funder/(.*)$', views.funder, name='funder'),
