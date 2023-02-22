@@ -117,6 +117,19 @@ def maybe_create_index(index_name=ES_INDEX):
                     },
                 }
             },
+            "toIndividualsDetails": {
+                "properties": {
+                    "primaryGrantReason": {
+                        "type": "keyword"
+                    },
+                    "secondaryGrantReason": {
+                        "type": "keyword"
+                    },
+                    "grantPurpose": {
+                        "type": "keyword"
+                    },
+                }
+            },
             "fundingOrganization": {
                 "properties": {
                     "addressLocality": {
@@ -185,6 +198,8 @@ def maybe_create_index(index_name=ES_INDEX):
                     },
                 }
             },
+            "regrantType": {"type": "keyword"},
+
             "additional_data": {
                 "properties": {
                     "recipientDistrictGeoCode": {
@@ -205,6 +220,26 @@ def maybe_create_index(index_name=ES_INDEX):
                     "TSGRecipientType": {
                         "type": "keyword"
                     },
+                    "codeListLookup": {
+                        "properties": {
+                            "toIndividualsDetails": {
+                                "properties": {
+                                    "primaryGrantReason": {
+                                        "type": "keyword"
+                                    },
+                                    "secondaryGrantReason": {
+                                        "type": "keyword"
+                                    },
+                                    "grantPurpose": {
+                                        "type": "keyword"
+                                    },
+                                }
+                            },
+                            "regrantType": {
+                                "type": "keyword",
+                            }
+                        }
+                    },
                     "recipientLocation": {
                         "type": "text"
                     },
@@ -217,7 +252,8 @@ def maybe_create_index(index_name=ES_INDEX):
                                 "type": "keyword"
                             }
                         }
-                    }
+                    },
+
                 }
             },
             # Additional funding/recipient organisation mappings
