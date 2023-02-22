@@ -61,7 +61,7 @@
         <div class="box box--teal">
           <h3 class="box__heading">Where is this data from?</h3>
           {% with dataset=grant|get_dataset %}
-          <p>This data was originally published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>. If you need to report a problem in the data please contact {{ dataset.publisher.name }} directly, see their <a href="{% url 'publisher' dataset.publisher.prefix %}">GrantNav publisher page</a> for more information.</p>
+          <p>This data was originally published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>. You can hover over codes from <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/">standard codelists</a> to see the user-friendly name provided by 360Giving.  If you need to report a problem in the data please contact {{ dataset.publisher.name }} directly, see their <a href="{% url 'publisher' dataset.publisher.prefix %}">GrantNav publisher page</a> for more information.</p>
           {% endwith %}
         </div>
       </div>
@@ -73,16 +73,44 @@
         <div class="table table--zebra">
           <table class="table table--zebra table--primary dt-responsive full-width">
             <tbody>
-              {% for key, grant in grant.source|flatten %}
-              {% if "additional_data" not in key %}
+              {% for key, value in grant.source|flatten %}
+              {% if "additional_data" not in key and "dataType" not in key %}
               <tr>
                 <td>
                   <b>{{ key }}</b>
                 </td>
                 <td>
-                  {{grant}}
-                  {% if key == "Amount Awarded" and grant == 0 %}
+
+                  {% if key == "Amount Awarded" and value < 1 %}
+                    {{value}}
                     <a href="https://help.grantnav.threesixtygiving.org/en/latest/search_results.html?#some-grantmakers-publish-grants-with-0-or-negative-values"><img src="/static/images/icon-help-50.png" width="15" height="15" id="zero_value_grant_help_link"></a>
+
+                  {% elif "grantPurpose" in key %}
+                    <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/#grant-to-individuals-purpose"
+                      title="{{grant.source.additional_data.codeListLookup.toIndividualsDetails.grantPurpose|join:","}}"
+                     >{{value}}
+                    </a>
+
+                  {% elif "primaryGrantReason" in key %}
+                    <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/#grant-to-individuals-reason"
+                      title="{{grant.source.additional_data.codeListLookup.toIndividualsDetails.primaryGrantReason}}"
+                    >{{value}}
+                    </a>
+
+                  {% elif "secondaryGrantReason" in key %}
+                    <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/#grant-to-individuals-reason"
+                      title="{{grant.source.additional_data.codeListLookup.toIndividualsDetails.secondaryGrantReason}}"
+                    >{{value}}
+                    </a>
+
+                  {% elif "Regrant" in key %}
+                    <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/#regrant-type"
+                      title="{{grant.source.additional_data.codeListLookup.regrantType}}"
+                    >{{value}}
+                    </a>
+
+                  {% else %}
+                    {{value}}
                   {% endif %}
                 </td>
                 {% endif %}
