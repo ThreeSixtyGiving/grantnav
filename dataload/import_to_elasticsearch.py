@@ -199,6 +199,7 @@ def maybe_create_index(index_name=ES_INDEX):
                 }
             },
             "regrantType": {"type": "keyword"},
+            "simple_grant_type": {"type": "keyword"},
 
             "additional_data": {
                 "properties": {
@@ -417,6 +418,8 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     update_doc_with_dateonly_fields(grant)
                     # grant.currency
                     update_doc_with_currency_upper_case(grant)
+                    # grant.simple_grant_type
+                    update_doc_with_simple_grant_type(grant)
 
                     yield grant
 
@@ -425,6 +428,10 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
         pprint(result)
 
         shutil.rmtree(tmp_dir)
+
+
+def update_doc_with_simple_grant_type(grant):
+    grant["simple_grant_type"] = "Regrant" if grant.get("regrantType") else "Direct grant"
 
 
 def update_doc_with_currency_upper_case(grant):

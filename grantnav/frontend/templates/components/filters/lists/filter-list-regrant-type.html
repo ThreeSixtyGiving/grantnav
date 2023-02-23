@@ -1,0 +1,26 @@
+{% load get_facet_org_name get_amount from frontend %}
+<div class="filter-list">
+  <details class="filter-list__accordion" open>
+    <summary class="filter-list__label">
+      <div>Grant type {% if results.aggregations.simple_grant_type.clear_url %} <a href={{results.aggregations.simple_grant_type.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      {% block filterOption %}
+      {% endblock filterOption %}
+      <ul class="filter-list__listing">
+      {% for bucket in results.aggregations.simple_grant_type.buckets %}
+      <li>
+          <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
+            {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small>
+            {% if bucket.selected %}
+              <span class="screen-reader-only">(active filter)</span>
+            {% endif%}
+          </a>
+        </li>
+        <li>
+      {% endfor %}
+      </ul>
+    </div>
+  </details>
+</div>
