@@ -18,10 +18,27 @@ Note you will get an "index_not_found_exception" until you load some data.
 
 While you do this, the Elasticsearch server must be running - use the general up command.
 
-To load some basic data, assuming your data is saved in `/datastoredata/data/json_all/`:
+To load some basic data, assuming your data is saved in `/datastoredata/data/`:
 
 ```
 $ docker-compose -f docker-compose.dev.yml run grantnav-web su -c "python dataload/import_to_elasticsearch.py /code/datastoredata/data/json_all/* --clean"
+```
+
+## Loading Receipient or Funder Data
+
+As above, the ElasticSearch server must be running. To load recipient or funder data, add the following options to the basic load command, assuming your data is saved in `/datastoredata/data/`:
+
+```
+--funders /code/datastoredata/data/funders.jl
+```
+or
+```
+--recipients /code/datastoredata/data/recipients.jl
+```
+
+So the full command would be, for example,
+```
+$ docker-compose -f docker-compose.dev.yml run grantnav-web su -c "python dataload/import_to_elasticsearch.py /code/datastoredata/data/json_all/* --funders /code/datastoredata/data/funders.jl --recipients /code/datastoredata/data/recipients.jl --clean"
 ```
 
 ## When making changes
