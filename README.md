@@ -86,7 +86,7 @@ In order to load some data use the dataload/import_to_elasticsearch.py command l
 The clean command is optional; it will delete the index and start again, so leave it off if you want to add just another file to an existing index.
 You can specify as many file or patterns as you like at the end of the command.
 
-The funders and recipients search requires the datastore generated `funders.jl` and `recipients.jl` files to be passed in as arguments to import_to_elasticsearch.
+The funders and recipients search requires the datastore generated `funders.jl` and `recipients.jl` files to be passed in as arguments to import_to_elasticsearch via the commands `--funders path/to/funders.jl` and `--recipients path/to/recipients.jl`.
 
 ### Getting data for loading
 
