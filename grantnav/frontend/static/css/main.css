@@ -1554,7 +1554,6 @@ p {
   --scale: 127;
   --bar-bg-color: hsla(var(--yellow-hsl), 1); }
   .bar-chart__item {
-    --value: 0;
     display: flex;
     padding-bottom: 8px; }
   .bar-chart__bar {
@@ -1570,8 +1569,7 @@ p {
       background-color: var(--bar-bg-color);
       width: var(--width); }
     .bar-chart__bar > span:after {
-      counter-reset: value var(--value);
-      content: counter(value);
+      content: attr(data-val);
       position: absolute;
       left: calc(100% + 8px); }
   .bar-chart__label {
@@ -3989,7 +3987,7 @@ a.base-card:hover:before {
   .media-card__content_no_image {
     justify-content: center;
     padding: 20px;
-    width: 100%; }
+    width: 100vw; }
   .media-card__image-wrapper {
     width: 30%;
     max-width: 320px;
