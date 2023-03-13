@@ -47,23 +47,25 @@
 
     <p>{{org_names.0}} makes grants in {{funder.stats_by_currency|length}} currencies.</p>
 
-    <table class="table table--zebra" style="width: 100%">
+    <table class="table table--zebra dt-responsive generic_datatables" style="width: 100%">
         <thead>
-            <th>Currency</th>
-            <th>Grants</th>
-            <th>Total Amount</th>
-            <th>Greatest Amount</th>
-            <th>Smallest Amount</th>
+          <tr>
+            <th class="all">Currency</th>
+            <th class="min-tablet-p">Grants</th>
+            <th class="amount min-tablet-p">Total Amount</th>
+            <th class="amount min-tablet-l">Greatest Amount</th>
+            <th class="amount min-tablet-l">Smallest Amount</th>
+          </tr>
         </thead>
         <tbody>
         {% for stat in funder.stats_by_currency %}
-        <tr>
+          <tr>
             <td class="table__lead-cell">{{stat.currency}}</td>
             <td>{{stat.grants | get_amount }}</td>
             <td>{{stat.currency | currency_symbol}}{{stat.total | get_amount}}</td>
             <td>{{stat.currency | currency_symbol}}{{stat.max | get_amount}}</td>
             <td>{{stat.currency | currency_symbol}}{{stat.min | get_amount}}</td>
-        </tr>
+          </tr>
         {% endfor %}
         </tbody>
     </table>
@@ -101,14 +103,14 @@
         </div>
         </div>
         <div class="table table--zebra">
-        <table class="table table--zebra table--small dt-responsive full-width" id="recipients_datatable">
+        <table class="table table--zebra table--small dt-responsive" id="recipients_datatable" style="width: 100%">
             <thead>
             <tr>
-                <th>Recipient</th>
-                <th>Grants</th>
-                <th class="amount">Total</th>
-                <th class="amount">Largest</th>
-                <th class="amount">Smallest</th>
+                <th class="all">Recipient</th>
+                <th class="min-tablet-p">Grants</th>
+                <th class="amount min-tablet-p">Total</th>
+                <th class="amount min-tablet-l">Largest</th>
+                <th class="amount min-tablet-l">Smallest</th>
             </tr>
             </thead>
         </table>

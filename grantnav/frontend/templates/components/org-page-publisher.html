@@ -22,19 +22,19 @@
 
         <h4>Datasets</h4>
         <p>Here is an overview of grants published by {{publisher.name}}.</p>
-        <table class="table table--primary table--small dt-responsive">
+        <table class="table table--zebra table--small dt-responsive generic_datatables" style="width: 100%">
         <thead>
             <tr>
-            <th>Dataset (download link)</th>
-            <th>Retrieved for use in GrantNav</th>
-            <th>License</th>
-            <th>Funders covered</th>
+            <th class="all">Dataset (download link)</th>
+            <th class="min-tablet-p">Retrieved for use in GrantNav</th>
+            <th class="min-tablet-l">License</th>
+            <th class="min-tablet-l">Funders covered</th>
             </tr>
         </thead>
         <tbody>
             {% for dataset in publisher.datasets %}
             <tr>
-            <td><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
+            <td class="table__lead-cell"><a href="{{ dataset.distribution.0.downloadURL }}">{{ dataset.title }}</a></td>
             <td>{{ dataset.datagetter_metadata.datetime_downloaded }}</td>
             <td><a href="{{ dataset.license }}">{{ dataset.license }}</a></td>
             <td>
