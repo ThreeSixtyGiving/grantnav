@@ -127,18 +127,17 @@
 {{ funder.org_ids|json_script:"orgIDs" }}
 
 <script>
-
-  function truncate (string, len) {
-    if (string.length > len) { return string.substring(0, len) + '...'; } else { return string; }
-  }
+function truncate (string, len) {
+  if (string.length > len) { return string.substring(0, len) + '...'; } else { return string; }
+}
 
 jQuery(function ($) {
   $('.generic_datatables').dataTable({
     responsive: {
       breakpoints: [
-        { name: 'mobile-l',   width: 575 },
+        { name: 'mobile-l', width: 575 }
       ]
-    },
+    }
   });
 });
 
@@ -147,7 +146,7 @@ jQuery(function ($) {
     serverSide: true,
     responsive: {
       breakpoints: [
-        { name: 'mobile-l',   width: 575 },
+        { name: 'mobile-l', width: 575 }
       ]
     },
     searching: true,
@@ -178,7 +177,7 @@ jQuery(function ($) {
           return '<a href="/org/' + encodeURIComponent(row.org_id) + '">' + truncate(data, 20) + '</a>';
         }
       },
-      { data: 'count'},
+      { data: 'count' },
       { data: 'sum' },
       { data: 'max' },
       { data: 'min' }
