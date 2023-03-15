@@ -85,7 +85,7 @@ FIXED_AMOUNT_RANGES = [
 SEARCH_SUMMARY_AGGREGATES = {
     "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
     "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
-    "recipient_indi": {"cardinality": {"field": "recipientIndividual.id", "precision_threshold": 40000}},
+    "recipient_indi": { "terms": {"field": "additional_data.TSGRecipientType"}},
     "currency_stats": {
         "terms": {"field": "currency"},
         "aggs": {
@@ -389,24 +389,20 @@ def get_date_facets(request, context, json_query):
 
 
 def totals_query():
-    query = {"query": {"match_all": {}}}
+    query = {
+        "size": 0,
+        "aggs": {
+            "recipient_types": { "terms" : { "field": "additional_data.TSGRecipientType" }},
+        }
+    }
+
+    res = get_results(query)
 
     counts = {
-        'grants': get_results(query)['hits']['total'],
+        'grants': res["hits"]["total"],
         'funders': get_results(query, data_type='funder')['hits']['total'],
         'recipient_orgs': get_results(query, data_type='recipient')['hits']['total'],
-        'recipient_indi': get_results(
-            {
-                "size": 0,  # Don't return the docs just the agg
-                "aggs": {
-                    "recipient_indi": {
-                        "cardinality": {
-                            "field": "recipientIndividual.id", "precision_threshold": 40000
-                        }
-                    }
-                }
-            }
-        )["aggregations"]["recipient_indi"]["value"]
+        'recipient_indi': res["aggregations"]["recipient_types"]["buckets"][1]["doc_count"]
     }
     return counts
 

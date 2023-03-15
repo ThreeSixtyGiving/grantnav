@@ -53,7 +53,7 @@
           <span>Recipient organisations: {{results.aggregations.recipient_orgs.value|get_amount}}</span>
         </div>
         <div class="summary-content--item">
-          <span>Recipient individuals: {{results.aggregations.recipient_indi.value|get_amount}}</span>
+          <span>Recipient individuals: {% for bucket in results.aggregations.recipient_indi.buckets %} {% if bucket.key == "Individual" %}{{bucket.doc_count}} {% endif %} {% endfor %}</span>
         </div>
         <div class="summary-content--item">
           <span>Earliest grant: {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"awardDate"|get_date}}</span>
