@@ -431,7 +431,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
 
 
 def update_doc_with_simple_grant_type(grant):
-    grant["simple_grant_type"] = "Regrant" if grant.get("regrantType") else "Direct grant"
+    grant["simple_grant_type"] = "For regrant" if grant.get("regrantType") else "Direct grant"
 
 
 def update_doc_with_currency_upper_case(grant):
