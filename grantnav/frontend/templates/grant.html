@@ -22,7 +22,7 @@
       </h1>
     </div>
 
-    {% if grant.source.fundingOrganization.0.id and grant.source.recipientOrganization.0.id %}
+    {% if grant.source.fundingOrganization.0.id %}
     <div class="spacer-4">
       <div class="grant-info-highlight grid grid--three-columns">
         <div class="grant-info-highlight__funder">
@@ -41,13 +41,24 @@
 
           <div class="grant-info-highlight__data--date"><time datetime="{{ grant.source.awardDate }}">{{grant.source.awardDate|get_date}}</time></div>
         </div>
-
+       {% if grant.source.recipientOrganization.0.id %}
         <div class="grant-info-highlight__recipient">
           <div class="grant-info-highlight__label">Recipient Organization</div>
           <div>
             <p><a href="{% url 'org' grant.source.recipientOrganization.0.id %}"> {{ grant.source.recipientOrganization.0|get_name|truncatechars:50 }} <small>({{ grant.source.recipientOrganization.0.id|truncatechars:20}}) </small> </a>
           </div>
         </div>
+        {% endif %}
+
+       {% if grant.source.recipientIndividual.id %}
+        <div class="grant-info-highlight__recipient">
+          <div class="grant-info-highlight__label">Recipient Individual</div>
+          <div>
+            <p><a href="{% url 'search' %}?query=recipientIndividual.id:{{grant.source.recipientIndividual.id}}" > {{grant.source.recipientIndividual.name}} <small>({{grant.source.recipientIndividual.id}})</small> </a>
+          </div>
+        </div>
+        {% endif %}
+
       </div>
     </div>
     {% endif %}
