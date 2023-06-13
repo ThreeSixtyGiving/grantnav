@@ -44,3 +44,61 @@ def new_org_ids(org_result):
                 org_ids.append(org_id)
 
     return org_ids
+
+
+class OrgNotFoundError(Exception):
+    pass
+
+
+orgs_cache = {"funder": {}, "recipient": {}}
+
+
+def get_org(org_id, org_type):
+    """ org_type: recipient, funder
+    returns an organisation match
+    """
+    # Don't allow the memory cache to grow infinitely
+    if len(orgs_cache[org_type].keys()) > 300000:
+        orgs_cache[org_type] = {}
+
+    try:
+        org = orgs_cache[org_type][org_id]
+        return org
+    except KeyError:
+        pass
+
+    query = {
+        "query": {
+            "bool": {
+                "filter": [
+                    {"term": {"orgIDs": org_id}}
+                ]
+            }
+        }
+    }
+
+    try:
+        org = get_results(query, data_type=org_type)["hits"]["hits"][0]["_source"]
+        # Save the org to the cache
+        orgs_cache[org_type][org_id] = org
+        return org
+    except (IndexError, KeyError):
+        # Failed to find org
+        raise OrgNotFoundError
+
+
+def get_recipient_individuals(org_id):
+    query = {"query": {
+        "bool": {
+            "filter": [
+                {"term": {"fundingOrganization.id": org_id}},
+                {"term": {"additional_data.TSGRecipientType": "Individual"}},
+            ]
+        },
+    },
+       "aggs": {
+            "recipient_count": {"cardinality": {"field": "recipientIndividual.id", "precision_threshold": 40000}},
+    }
+    }
+
+    return get_results(query)

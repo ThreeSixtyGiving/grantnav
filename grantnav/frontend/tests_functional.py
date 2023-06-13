@@ -29,7 +29,7 @@ def browser(request):
         # no-sandbox prevents an error when running as the root user
         chrome_options.add_argument("--no-sandbox")
         # uncomment this if "DevToolsActivePort" error
-        # chrome_options.add_argument("--remote-debugging-port=9222")
+        chrome_options.add_argument("--remote-debugging-port=9222")
 
         browser = webdriver.Chrome(options=chrome_options)
     elif BROWSER == "Firefox":

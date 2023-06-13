@@ -24,7 +24,7 @@ from grantnav.search import get_es
 from grantnav.index import get_index
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, get_data_from_path
 import grantnav.frontend.search_helpers as helpers
-from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency, get_recipient_individuals
 
 
 BASIC_FILTER = [
@@ -1040,6 +1040,9 @@ def org(request, org_id):
 
     funder_results = get_results(org_query, data_type="funder")
     recipient_results = get_results(org_query, data_type="recipient")
+    recipient_ind_results = get_recipient_individuals(org_id)
+
+    # TODO recipient_ind_results
 
     org_types = []
     org_names = []
@@ -1064,6 +1067,8 @@ def org(request, org_id):
         parameters = [("recipientOrganization", org_id) for org_id in org_ids]
         recipient["grant_search_parameters"] = urlencode(parameters)
         recipient_funders = get_recipient_funders(org_ids)
+
+
 
     ftc_data = None
     publisher_prefix = None
