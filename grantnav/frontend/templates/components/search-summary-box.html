@@ -65,9 +65,6 @@
       </div>
     </main>
 
-    {# Only show details about the recipient orgs of grants if we have recipient orgs in the search #}
-    {% if results.aggregations.recipient_orgs.value > 0 %}
-
     <footer class="search-summary--footer">
       <details class="search-summary--footer__details">
         <summary>
@@ -87,7 +84,7 @@
               <a href="grant/{{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"id"}}">
                 {{buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
-              {% with recipientOrganization_to as buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization" %}
+              {% with recipientOrganization_to=buckets|first|get:"largest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization" %}
                 {% if recipientOrganization_to  %}
                   {{recipientOrganization_to|first|get:"name"}}
                 {% else %}
@@ -107,7 +104,7 @@
                 <a href="grant/{{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"id"}}">
                   {{buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
                 to
-                {% with recipientOrganization_to as buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization" %}
+                {% with recipientOrganization_to=buckets|first|get:"smallest_grant"|get:"hits"|get:"hits"|first|get:"_source"|get:"recipientOrganization" %}
                  {% if recipientOrganization_to %}
                     {{recipientOrganization_to|first|get:"name"}}
                   {% else %}
@@ -128,7 +125,7 @@
               <a href="grant/{{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"id"}}">
                 {{results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
-              {% with recipientOrganization_to as results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization" %}
+              {% with recipientOrganization_to=results.aggregations.latest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization" %}
                 {% if recipientOrganization_to %}
                   {{recipientOrganization_to|first|get:"name"}}
                 {% else %}
@@ -147,7 +144,7 @@
               <a href="grant/{{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"id"}}">
                 {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
-              {% with recipientOrganization_to as results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization" %}
+              {% with recipientOrganization_to=results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization" %}
                 {% if recipientOrganization_to %}
                   {{recipientOrganization_to|first|get:"name"}}
                 {% else %}
@@ -177,7 +174,6 @@
         </div>
       </details>
     </footer>
-  {% endif %}
 
   {% endwith %}
 </section>
