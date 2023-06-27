@@ -416,8 +416,6 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     update_doc_with_currency_upper_case(grant)
                     # grant.simple_grant_type
                     update_doc_with_simple_grant_type(grant)
-
-
                     yield grant
 
         pprint(grants_file_path)
