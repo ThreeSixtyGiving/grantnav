@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-import json
 import argparse
+import json
 import shutil
 import uuid
 import tempfile
 import os
-import csv
 from pprint import pprint
+import warnings
 import elasticsearch.helpers
 import time
 import ijson
@@ -14,9 +14,11 @@ import dateutil.parser as date_parser
 
 import sys
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "grantnav.settings")
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-from grantnav.frontend.org_utils import new_ordered_names, new_org_ids # noqa
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, get_org, OrgNotFoundError # noqai
 
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
@@ -343,9 +345,10 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
         pprint(result)
 
     maybe_create_index()
-
+    # Allow the server to settle
     time.sleep(1)
 
+    # Load the organisations data
     def org_generator(filename, data_type):
         with open(filename) as f:
             for obj in ijson.items(f, '', multiple_values=True):
@@ -385,8 +388,23 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     grant['_index'] = ES_INDEX
                     grant['dataType'] = 'grant'
 
+                    # We use additional_data extensively in GN if it is missing things
+                    # might not work as expected
+                    try:
+                        if type(grant["additional_data"]) != dict:
+                            raise TypeError("additional_data not a dictionary")
+                    except (TypeError, KeyError):
+                        warnings.warn("No additional_data block for grant: %s" % grant["id"])
+                        # initialise the dictionary for our own additional data
+                        grant["additional_data"] = {}
+
+                    # Search helper fields:
+
                     # grant.fundingOrganization.id_and_name
                     # grant.recipientOrganization.id_and_name
+                    # grant.additional_data.GNCanonicalRecipientOrgName
+                    # grant.additional_data.GNCanonicalFundingOrgName
+                    update_doc_with_canonical_orgs(grant)
                     # grant.title_and_description
                     update_doc_with_title_and_description(grant)
                     # grant.grantProgramme.title_keyword
@@ -399,6 +417,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     # grant.simple_grant_type
                     update_doc_with_simple_grant_type(grant)
 
+
                     yield grant
 
         pprint(grants_file_path)
@@ -406,6 +425,39 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
         pprint(result)
 
         shutil.rmtree(tmp_dir)
+
+
+def update_doc_with_canonical_orgs(grant):
+    """ Uses our org data from the datastore to add canonical org data to additional_data"""
+    # RecipientOrganisation
+    if grant_recipient_org := grant.get("recipientOrganization", [""])[0]:
+        try:
+            recipient_org = get_org(grant_recipient_org["id"], "recipient")
+            grant["additional_data"]["GNCanonicalRecipientOrgName"] = new_ordered_names(recipient_org)[0]
+            grant["additional_data"]["GNCanonicalRecipientOrgId"] = new_org_ids(recipient_org)[0]
+        except OrgNotFoundError:
+            grant["additional_data"]["GNCanonicalRecipientOrgName"] = grant["recipientOrganization"][0]["name"]
+            grant["additional_data"]["GNCanonicalRecipientOrgId"] = grant["recipientOrganization"][0]["id"]
+
+        # Legacy search helper field used for *_datatables
+        grant["recipientOrganization"][0]["id_and_name"] = json.dumps(
+            [grant["additional_data"]["GNCanonicalRecipientOrgName"],
+            grant["additional_data"]["GNCanonicalRecipientOrgId"]]
+        )
+
+    # FundingOrganisation
+    try:
+        funding_org = get_org(grant["fundingOrganization"][0]["id"], "funder")
+        grant["additional_data"]["GNCanonicalFundingOrgName"] = new_ordered_names(funding_org)[0]
+        grant["additional_data"]["GNCanonicalFundingOrgId"] = new_org_ids(funding_org)[0]
+    except OrgNotFoundError:
+        grant["additional_data"]["GNCanonicalFundingOrgName"] = grant["fundingOrganization"][0]["name"]
+        grant["additional_data"]["GNCanonicalFundingOrgId"] = grant["fundingOrganization"][0]["id"]
+
+    # Legacy search helper field used for *_datatables
+    grant["fundingOrganization"][0]["id_and_name"] = json.dumps(
+        [grant["additional_data"]["GNCanonicalFundingOrgName"],
+        grant["additional_data"]["GNCanonicalFundingOrgId"]])
 
 
 def update_doc_with_simple_grant_type(grant):
