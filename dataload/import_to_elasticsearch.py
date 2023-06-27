@@ -456,18 +456,9 @@ def update_doc_with_dateonly_fields(grant):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Import 360 files in a directory to elasticsearch')
     parser.add_argument('--clean', help='Delete existing data before import', action='store_true')
-    parser.add_argument('--reports', help='Generate reports of differing names and bad organisation IDs.', action='store_true')
     parser.add_argument('--recipients', help='recipients file')
     parser.add_argument('--funders', help='funders file')
     parser.add_argument('files', help='files to import', nargs='*')
     args = parser.parse_args()
 
     import_to_elasticsearch(args.files, args.clean, args.recipients, args.funders)
-
-    if args.reports:
-        with open("differing_names.csv.report", "w+") as differing_names_file:
-            csv_writer = csv.writer(differing_names_file)
-            csv_writer.writerows(name_duplicates)
-        with open("bad_org_ids.csv.report", "w+") as bad_org_ids_file:
-            csv_writer = csv.writer(bad_org_ids_file)
-            csv_writer.writerows(bad_org_ids)
