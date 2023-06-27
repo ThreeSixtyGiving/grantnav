@@ -67,6 +67,7 @@ SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
              "additional_data_added", "title_and_description",
              # https://github.com/ThreeSixtyGiving/grantnav/issues/795
              "grantProgramme: title_keyword",
+             "simple_grant_type",
              ]
 
 
