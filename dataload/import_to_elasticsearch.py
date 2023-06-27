@@ -22,19 +22,6 @@ from grantnav.frontend.org_utils import new_ordered_names, new_org_ids # noqa
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 ELASTICSEARCH_HOST = os.environ.get("ELASTICSEARCH_HOST", "localhost")
 
-id_name_org_mappings = {"fundingOrganization": {}, "recipientOrganization": {}}
-name_duplicates = [["file_name", "org_type", "org_id", "first_name", "duplicate_name"]]
-bad_org_ids = []
-
-postcode_to_area = {}
-district_code_to_area = {}
-ward_code_to_area = {}
-district_name_to_code = {}
-
-current_dir = os.path.dirname(os.path.realpath(__file__))
-
-# curl http://test-360giving.pantheon.io/api/3/action/current_package_list_with_resources | grep -Eo '[^"]+\.json' | sed 's/\\\//\//g' | while read url; do wget "$url"; done
-
 
 def maybe_create_index(index_name=ES_INDEX):
     """ Creates a new ES index based on value of ES_INDEX
@@ -377,14 +364,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
         result = elasticsearch.helpers.bulk(es, org_generator(funders, 'funder'), raise_on_error=False, max_retries=10, initial_backoff=5)
         print(result)
 
-    with open(os.path.join(current_dir, 'charity_names.json')) as fd:
-        charity_names = json.load(fd)
-    id_name_org_mappings["recipientOrganization"].update(charity_names)
-
-    with open(os.path.join(current_dir, 'primary_funding_org_name.json')) as fd:
-        funding_org_name = json.load(fd)
-    id_name_org_mappings["fundingOrganization"].update(funding_org_name)
-
+    # Load the grants data
     for grants_file_path in files:
         tmp_dir = tempfile.mkdtemp()
 
@@ -406,9 +386,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     grant['dataType'] = 'grant'
 
                     # grant.fundingOrganization.id_and_name
-                    update_doc_with_org_mappings(grant, "fundingOrganization", grant['filename'])
                     # grant.recipientOrganization.id_and_name
-                    update_doc_with_org_mappings(grant, "recipientOrganization", grant['filename'])
                     # grant.title_and_description
                     update_doc_with_title_and_description(grant)
                     # grant.grantProgramme.title_keyword
@@ -449,50 +427,11 @@ def update_doc_with_title_and_description(grant):
     grant['title_and_description'] = title + ' ' + description
 
 
-def get_canonical_name(grant, org_key):
-    additional_data = grant.get('additional_data')
-    if additional_data:
-        canonical_org = additional_data.get('{}Canonical'.format(org_key))
-        if canonical_org:
-            return canonical_org.get('name')
-
-    return None
-
-
 def update_doc_with_grantprogramme_title_keyword(grant):
     if 'grantProgramme' in grant and isinstance(grant['grantProgramme'], list):
         for grant_programme in grant['grantProgramme']:
             if 'title' in grant_programme:
                 grant_programme['title_keyword'] = grant_programme['title']
-
-
-def update_doc_with_org_mappings(grant, org_key, file_name):
-    mapping = id_name_org_mappings[org_key]
-    orgs = grant.get(org_key, [])
-    for org in orgs:
-        org_id, org_name = org.get('id'), org.get('name')
-        name = get_canonical_name(grant, org_key)
-
-        if not name:
-            name = org_name
-        if not org_name:
-            name = org_id
-        if not org_id:
-            return
-
-        if '/' in org_id:
-            bad_org_ids.append([file_name, org_key, org_id])
-
-        found_name = mapping.get(org_id)
-        if found_name:
-            if found_name != name:
-                name_duplicates.append([file_name, org_key, org_id, found_name, name])
-            if found_name != org_name and name != org_name:
-                name_duplicates.append([file_name, org_key, org_id, found_name, org_name])
-        else:
-            mapping[org_id] = name
-            found_name = name
-        org["id_and_name"] = json.dumps([found_name, org_id])
 
 
 def update_doc_with_dateonly_fields(grant):
