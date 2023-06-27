@@ -986,6 +986,10 @@ def get_funder_info(funder_org_ids):
 
 
 def get_recipient_funders(recipient_org_ids):
+
+    # Dynamically limit the required size to the total number of possible funders
+    max_funders = get_results({"query": {"match_all": {}}}, data_type='funder')['hits']['total']["value"]
+
     query = {
         "query": {
             "bool": {
@@ -999,7 +1003,7 @@ def get_recipient_funders(recipient_org_ids):
                 "aggs": {
                     "funders": {
                         "terms": {
-                            "field": "fundingOrganization.id_and_name", "size": 10
+                            "field": "fundingOrganization.id_and_name", "size": max_funders
                         },
                         "aggs": {
                             "funder_stats": {
