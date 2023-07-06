@@ -82,21 +82,21 @@ function getColumns () {
       render: function (data, type, row) {
         return `<a href="/grant/${encodeURIComponent(row.id)}" ${settings.linkTarget}>${truncate(data, 40)}</a>`;
       },
-      className: `${inputColumns.length <= 2 && 'all'}`,
+      className: 'all',
       orderable: false
     },
     {
       id: 'amount',
       title: 'Amount',
       data: 'amountAwarded',
-      className: `${inputColumns.length <= 2 && 'amount min-tablet-l'}`,
+      className: `${inputColumns.includes('title') ? 'amount min-tablet-l' : 'min-tablet-l'}`,
       orderable: false
     },
     {
       id: 'date',
       title: 'Date',
       data: 'awardDate',
-      className: `${inputColumns.length <= 2 && 'min-tablet-l'}`,
+      className: `${inputColumns.length >= 2 && 'min-tablet-l'}`,
       orderable: false
     },
     {
@@ -106,7 +106,7 @@ function getColumns () {
       render: function (data, type, row) {
         return `<a href="/org/${row.fundingOrganization[0].id}" ${settings.linkTarget}>${truncate(data, 30)}</a>`;
       },
-      className: `${inputColumns.length <= 2 && 'min-desktop'}`,
+      className: `${inputColumns.length >= 3 ? 'min-desktop' : 'min-tablet-l'}`,
       orderable: false
     },
     {
@@ -118,14 +118,14 @@ function getColumns () {
           return `<a href="/org/${row.recipientOrganization[0].id}" ${settings.linkTarget}>${truncate(data || row.recipientOrganization[0].id, 30)}</a>`;
         } else { return 'Individual'; }
       },
-      className: `${inputColumns.length <= 2 && 'min-desktop'}`,
+      className: `${inputColumns.length >= 3 ? 'min-desktop' : 'min-tablet-l'}`,
       orderable: false
     },
     {
       id: 'description',
       title: 'Description',
       data: 'description',
-      className: `${inputColumns.length <= 2 && 'none'}`,
+      className: `${inputColumns.length >= 3 ? 'none' : 'min-desktop'}`,
       orderable: false,
       responsivePriority: -1
     }
