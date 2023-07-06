@@ -593,6 +593,25 @@ def search_wrapper_xframe_exempt(request, template_name="search.html"):
     return response
 
 
+def widget_search(request, json_query):
+    COLUMN_ORDER = ["_score", "amountAwarded", "awardDate", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "description"]
+    start = int(request.GET['start'])
+    length = int(request.GET['length'])
+    search_value = request.GET['search[value]']
+    if 'sort' in request.GET:
+        order_field = COLUMN_ORDER[int(request.GET['order[0][column]'])]
+        order_dir = request.GET['order[0][dir]']
+        json_query["sort"] = [{order_field: order_dir}]
+    if search_value:
+        current_query = json_query["query"]["bool"]["must"]["query_string"]['query']
+        json_query["query"]["bool"]["must"] = {"query_string": {"query": current_query + " " + search_value, "default_operator": "and"}}
+
+    json_response = grants_json(json_query, length, start)
+    json_response['draw'] = request.GET['draw'],
+
+    return JsonResponse(json_response)
+
+
 def search(request, template_name="search.html"):
     [result_format, results_size] = get_request_type_and_size(request)
 
@@ -694,22 +713,8 @@ def search(request, template_name="search.html"):
             return grants_csv_paged(json_query)
         elif result_format == "json":
             return grants_json_paged(json_query)
-        elif result_format == "api":
-            COLUMN_ORDER = ["_score", "amountAwarded", "awardDate", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "description"]
-            start = int(request.GET['start'])
-            length = int(request.GET['length'])
-            search_value = request.GET['search[value]']
-            if 'sort' in request.GET:
-                order_field = COLUMN_ORDER[int(request.GET['order[0][column]'])]
-                order_dir = request.GET['order[0][dir]']
-                json_query["sort"] = [{order_field: order_dir}]
-            if search_value:
-                current_query = json_query["query"]["bool"]["must"]["query_string"]['query']
-                json_query["query"]["bool"]["must"] = {"query_string": {"query": current_query + " " + search_value, "default_operator": "and"}}
-
-            json_response = grants_json(json_query, length, start)
-            json_response['draw'] = request.GET['draw'],
-            return JsonResponse(json_response)
+        elif result_format == "widgets_api":
+            return widget_search(request, json_query)
 
         if context['text_query'] == '*':
             context['text_query'] = ''
@@ -809,6 +814,9 @@ def search(request, template_name="search.html"):
         get_dropdown_filters(context)
 
         add_advanced_search_information_in_context(context)
+
+        if result_format == "insights_api":
+            return context
 
         return render(request, template_name, context=context)
 

@@ -162,7 +162,7 @@ jQuery(function ($) {
       info: '_START_ to _END_ of _TOTAL_'
     },
     ajax: {
-      url: "{% url 'widgets.api' %}" + window.location.search
+      url: "{% url 'widgets.widgets_api' %}" + window.location.search
     },
     columns: getColumns()
   });

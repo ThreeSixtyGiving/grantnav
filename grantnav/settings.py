@@ -80,6 +80,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'grantnav.frontend',
     'grantnav.prometheus',
+    'grantnav.api',
     'raven.contrib.django.raven_compat',
     'favicon',
 )

@@ -80,8 +80,9 @@ def get_results(json_query, size=10, from_=0, data_type="grant"):
 def get_request_type_and_size(request):
     results_size = SIZE
 
+    #  e.g. search.csv / search.json / search.widgets_api
     match = re.search(r"\.(\w+)$", request.path)
-    if match and match.group(1) in ["csv", "json", "ajax", "api"]:
+    if match and match.group(1) in ["csv", "json", "ajax", "widgets_api", "insights_api"]:
         result_format = match.group(1)
         results_size = settings.FLATTENED_DOWNLOAD_LIMIT
     else:
