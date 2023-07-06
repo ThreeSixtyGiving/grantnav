@@ -128,6 +128,21 @@
                     <span class="alert-tag__content">Leave blank to show all results.</span>
                   </div>
                 </div>
+                <div class="dropdown-filter flex-centre">
+                  <label class="dropdown-filter__label" for="input-columns">Selected columns:</label>
+                  <!-- Dropdown mutltiselect columns -->
+                  <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
+                  <select id="input-columns" class="filter-search-box widget-search-box" multiple="multiple">
+                  </select>
+                </div>
+                  <div class="alert-tag margin-left:1">
+                    <span class="alert-tag__icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7 5.83333C6.70833 5.83333 6.41667 6.06667 6.41667 6.41667V9.91667C6.41667 10.2667 6.65 10.5 7 10.5C7.29167 10.5 7.58333 10.2667 7.58333 9.91667V6.41667C7.58333 6.125 7.29167 5.83333 7 5.83333ZM7 3.5C6.70833 3.5 6.41667 3.73333 6.41667 4.08333C6.41667 4.375 6.65 4.66667 7 4.66667C7.29167 4.66667 7.58333 4.43333 7.58333 4.08333C7.58333 3.79167 7.29167 3.5 7 3.5ZM7 0C3.15 0 0 3.15 0 7C0 10.85 3.15 14 7 14C10.85 14 14 10.85 14 7C14 3.15 10.85 0 7 0ZM7 12.8333C3.79167 12.8333 1.16667 10.2083 1.16667 7C1.16667 3.79167 3.79167 1.16667 7 1.16667C10.2083 1.16667 12.8333 3.79167 12.8333 7C12.8333 10.2083 10.2083 12.8333 7 12.8333Z" fill="#1D1536" />
+                        </svg>
+                    </span>
+                    <span class="alert-tag__content">Leave blank to show all columns.</span>
+                  </div>
+                </div>
               </div>
             </section>
           </div>
@@ -289,7 +304,11 @@ function formatDropdownItem (item) {
   html += '</div>';
   const $dropdownItem = $(html);
 
-  const small = $('<small> (' + item.count + ')</small>');
+  let small;
+
+  if (item.count) {
+    small = $('<small> (' + item.count + ')</small>');
+  }
 
   $dropdownItem.find('input').val(item.id).prop('id', item.id);
 
@@ -306,7 +325,7 @@ function formatDropdownItem (item) {
 function formatSelection (item) {
   let html = '<a class="remove-select2-option" href="">';
   html += '<span class="filter-summary__filters-item--label"></span>';
-  // This is ugly bet needed for the select2 to display the same cross as in the theme.
+  // This is ugly but needed for the select2 to display the same cross as in the theme.
   html += '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">';
   html += '<path d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L3.58579 5L0.292893 8.29289C-0.0976311 8.68342 -0.0976311 9.31658 0.292893 9.70711C0.683417 10.0976 1.31658 10.0976 1.70711 9.70711L5 6.41421L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L6.41421 5L9.70711 1.70711C10.0976 1.31658 10.0976 0.683417 9.70711 0.292893C9.31658 -0.0976311 8.68342 -0.0976311 8.29289 0.292893L5 3.58579L1.70711 0.292893Z" fill="#DE6E24"></path>';
   html += '</svg>';
@@ -336,6 +355,18 @@ function get_filter_search_ajax (parent_field, child_field) {
       return query_obj;
     }
   };
+}
+
+// Returns all query parameters as a string except the current param
+function otherURLParams (current) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const params = Array.from(urlParams.entries());
+
+  const filteredParams = params.filter(([key, value]) => value !== current);
+
+  const paramString = filteredParams.map(([key, value]) => `${key}=${value}`).join('&');
+
+  return `widgets?${paramString}`;
 }
 
 // when a new item is selected then refresh the page
@@ -382,6 +413,41 @@ $(function () {
       ajax: get_filter_search_ajax('fundingOrganization', 'id_and_name')
     };
 
+    const widget_options = {
+      width: '100%',
+      templateResult: formatDropdownItem,
+      templateSelection: formatSelection,
+      dropdownCssClass: 'filter-list filter-list--with-checkboxes',
+      placeholder: 'Select widget columns',
+      data: [
+        // Amount and date aren't listed here as they are required columns and always selected
+        {
+          id: otherURLParams('title'),
+          text: 'Title',
+          widgetColumn: 'title',
+          selected: urlParams.getAll('widgetColumn').includes('title')
+        },
+        {
+          id: otherURLParams('funder'),
+          text: 'Funder',
+          widgetColumn: 'funder',
+          selected: urlParams.getAll('widgetColumn').includes('funder')
+        },
+        {
+          id: otherURLParams('recipient'),
+          text: 'Recipient',
+          widgetColumn: 'recipient',
+          selected: urlParams.getAll('widgetColumn').includes('recipient')
+        },
+        {
+          id: otherURLParams('description'),
+          text: 'Description',
+          widgetColumn: 'description',
+          selected: urlParams.getAll('widgetColumn').includes('description')
+        }
+      ]
+    };
+
     let recipient_options = $.extend({}, funder_options);
 
     recipient_options = $.extend(recipient_options, {
@@ -403,6 +469,7 @@ $(function () {
     });
 
     $('.fundingOrganization-search-box').select2(funder_options);
+    $('.widget-search-box').select2(widget_options);
     $('.recipientOrganization-search-box').select2(recipient_options);
     $('.grantProgramme-search-box').select2(programme_options);
     $('.recipientDistrictName-search-box').select2(district_options);
@@ -410,6 +477,38 @@ $(function () {
     $('.fundingOrganization-search-box').on('select2:select', function (e) {
       const data = e.params.data;
       redirect_on_selection('fundingOrganization', data);
+    });
+
+    $('.widget-search-box').on('select2:select', function (e) {
+      const columns = urlParams.getAll('widgetColumn');
+
+      if (columns.length) {
+        // Append to urlParams if urlParams don't contain selected widgetColumn
+        if (!columns.includes(e.params.data.widgetColumn)) {
+          urlParams.append('widgetColumn', e.params.data.widgetColumn);
+        }
+      } else {
+        urlParams.set('widgetColumn', e.params.data.widgetColumn);
+      }
+
+      window.location.search = urlParams;
+    });
+
+    $('.widget-search-box').on('select2:unselect', function (e) {
+      const columns = urlParams.getAll('widgetColumn');
+
+      if (columns.length) {
+        // Remove from urlParams if urlParams contain unselected widgetColumn
+        if (columns.includes(e.params.data.widgetColumn)) {
+          const index = columns.indexOf(e.params.data.widgetColumn);
+          columns.splice(index, 1);
+
+          urlParams.delete('widgetColumn');
+          columns.forEach(column => urlParams.append('widgetColumn', column));
+        }
+      }
+
+      window.location.search = urlParams;
     });
 
     $('.recipientOrganization-search-box').on('select2:select', function (e) {
