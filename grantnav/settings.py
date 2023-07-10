@@ -77,15 +77,17 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap3',
+    'bootstrap3', # FIXME Do we still need this?
     'grantnav.frontend',
     'grantnav.prometheus',
     'grantnav.api',
     'raven.contrib.django.raven_compat',
     'favicon',
+    'corsheaders',
 )
 
 MIDDLEWARE = (
+    "corsheaders.middleware.CorsMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -229,3 +231,7 @@ GRANTNAV_LOG_DIR = os.path.expanduser("~/logs/")
 # https://docs.djangoproject.com/en/4.0/releases/3.2/#customizing-type-of-auto-created-primary-keys
 # This project currently has no models, but in case it does later:
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+
+if DEBUG:
+    CORS_ORIGIN_ALLOW_ALL = True

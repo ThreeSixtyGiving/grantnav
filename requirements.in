@@ -15,3 +15,4 @@ prometheus_client==0.7
 retry
 plotly
 millify
+django-cors-headers

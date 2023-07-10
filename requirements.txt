@@ -28,7 +28,10 @@ django==3.2.14
     # via
     #   -r requirements.in
     #   django-bootstrap3
+    #   django-cors-headers
 django-bootstrap3==15.0.0
+    # via -r requirements.in
+django-cors-headers==4.2.0
     # via -r requirements.in
 django-environ==0.7.0
     # via -r requirements.in
