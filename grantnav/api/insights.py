@@ -6,8 +6,11 @@ from grantnav.frontend.views import search
 
 class Search(View):
     def get(self, *args, **kwargs):
-        return search(self.request)
-        #return JsonResponse(data)
+        # Append .insights_api as this is the value we currently switch on in the
+        # main search function
+        self.request.path = self.request.path + ".insights_api"
+        context = search(self.request)
+        return JsonResponse(context)
 
 
 
