@@ -10,7 +10,13 @@ class Search(View):
         # main search function
         self.request.path = self.request.path + ".insights_api"
         context = search(self.request)
-        return JsonResponse(context)
+
+        ret = {
+            "aggregations": context["results"]["aggregations"],
+            "hits" : context["results"]["hits"],
+        }
+
+        return JsonResponse(ret)
 
 
 
