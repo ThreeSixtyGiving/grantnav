@@ -821,11 +821,16 @@ def search(request, template_name="search.html"):
         return render(request, template_name, context=context)
 
 
-def filter_search_ajax(request):
+def filter_search_ajax(request, parent_field=None, child_field=None):
     ''' Ajax request returning the format that select2 libary wants '''
 
-    parent_field = request.GET.get('parent_field', 'fundingOrganization')
-    child_field = request.GET.get('child_field', 'id_and_name')
+    [result_format, results_size] = get_request_type_and_size(request)
+
+    # We can get these values from the function call or from the GET params
+    if not parent_field:
+        parent_field = request.GET.get('parent_field', 'fundingOrganization')
+    if not child_field:
+        child_field = request.GET.get('child_field', 'id_and_name')
 
     json_query = create_json_query_from_parameters(request)
 
@@ -879,6 +884,9 @@ def filter_search_ajax(request):
 
     context['selected_facets'] = dict(context['selected_facets'])
 
+    if result_format == "insights_api":
+        return results
+
     output = []
 
     for bucket in results['aggregations'][parent_field]['buckets']:
@@ -896,6 +904,7 @@ def filter_search_ajax(request):
             "url": bucket['url'],
             "selected": bucket.get("selected", False)
         })
+
 
     return JsonResponse(
         {"results": output}

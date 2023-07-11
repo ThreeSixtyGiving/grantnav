@@ -77,7 +77,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap3', # FIXME Do we still need this?
+    'bootstrap3',
     'grantnav.frontend',
     'grantnav.prometheus',
     'grantnav.api',
