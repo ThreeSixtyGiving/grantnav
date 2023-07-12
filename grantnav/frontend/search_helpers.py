@@ -82,10 +82,10 @@ def get_request_type_and_size(request):
 
     #  e.g. search.csv / search.json / search.widgets_api
     match = re.search(r"\.(\w+)$", request.path)
-    if match and match.group(1) in ["csv", "json", "ajax", "widgets_api", "insights_api"]:
+    if match and match.group(1) in ["csv", "json", "ajax", "widgets_api", "aggregates_api"]:
         result_format = match.group(1)
         results_size = settings.FLATTENED_DOWNLOAD_LIMIT
-        if result_format == "insights_api":
+        if result_format == "aggregates_api":
             # We only want the aggregate data
             results_size = 0
     else:

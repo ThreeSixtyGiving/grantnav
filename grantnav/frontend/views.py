@@ -83,8 +83,8 @@ FIXED_AMOUNT_RANGES = [
 
 
 SEARCH_SUMMARY_AGGREGATES = {
-    "recipient_orgs": {"cardinality": {"field": "recipientOrganization.id", "precision_threshold": 40000}},
-    "funding_orgs": {"cardinality": {"field": "fundingOrganization.id", "precision_threshold": 40000}},
+    "recipient_orgs": {"cardinality": {"field": "additional_data.GNCanonicalRecipientOrgId", "precision_threshold": 40000}},
+    "funding_orgs": {"cardinality": {"field": "additional_data.GNCanonicalFundingOrgId", "precision_threshold": 40000}},
     "recipient_indi": {"cardinality": {"field": "recipientIndividual.id", "precision_threshold": 40000}},
     "currency_stats": {
         "terms": {"field": "currency"},
@@ -815,7 +815,7 @@ def search(request, template_name="search.html"):
 
         add_advanced_search_information_in_context(context)
 
-        if result_format == "insights_api":
+        if result_format == "aggregates_api":
             return context
 
         return render(request, template_name, context=context)
@@ -884,7 +884,7 @@ def filter_search_ajax(request, parent_field=None, child_field=None):
 
     context['selected_facets'] = dict(context['selected_facets'])
 
-    if result_format == "insights_api":
+    if result_format == "aggregates_api":
         return results
 
     output = []

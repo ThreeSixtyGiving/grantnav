@@ -1,4 +1,5 @@
 import json
+import warnings
 
 from django.views import View
 from django.http import JsonResponse
@@ -9,7 +10,7 @@ class Search(View):
     def get(self, *args, **kwargs):
         # Append .insights_api as this is the value we currently switch on in the
         # main search functions
-        self.request.path = self.request.path + ".insights_api"
+        self.request.path = self.request.path + ".aggregates_api"
         context = search(self.request)
 
         ret = {
@@ -40,8 +41,8 @@ class Search(View):
                 else:
                     ret["aggregations"][data_field[0]] = results
 
-            except  ValueError as e:
-                print(e)
-                pass
+            except KeyError as e:
+                warnings.warn(e)
+                continue
 
         return JsonResponse(ret)
