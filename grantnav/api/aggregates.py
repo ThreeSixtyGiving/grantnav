@@ -10,6 +10,8 @@ class Search(View):
     def get(self, *args, **kwargs):
         # Append .insights_api as this is the value we currently switch on in the
         # main search functions
+        print(self.request.path)
+        print(self.request.GET)
         self.request.path = self.request.path + ".aggregates_api"
         context = search(self.request)
 
@@ -21,7 +23,6 @@ class Search(View):
         # [ (parentField, childField), ]
         for data_field in [
             ("fundingOrganization", "id_and_name"),
-            ("recipientOrganization", "id_and_name"),
             ("grantProgramme", "title_keyword"),
             ("additional_data", "recipientDistrictName"),
         ]:
@@ -35,14 +36,14 @@ class Search(View):
                     new_results = []
                     for bucket in results['buckets']:
                         name_id = json.loads(bucket['key'])
-                        new_results.append({"key": name_id[1], "name": name_id[0]})
+                        new_results.append({"key": name_id[1], "name": name_id[0], "count": bucket["doc_count"], "url": bucket["url"], "selected": bucket.get("selected", False)})
                     ret["aggregations"][data_field[0]]["buckets"] = new_results
 
                 else:
                     ret["aggregations"][data_field[0]] = results
 
             except KeyError as e:
-                warnings.warn(e)
+                warnings.warn(str(e))
                 continue
 
         return JsonResponse(ret)

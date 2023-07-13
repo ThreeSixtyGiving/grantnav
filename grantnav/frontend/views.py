@@ -834,9 +834,14 @@ def filter_search_ajax(request, parent_field=None, child_field=None):
 
     json_query = create_json_query_from_parameters(request)
 
+    size_limit = 100
+
+    if result_format == "aggregates_api":
+        size_limit = 100000
+
     # Only need single aggregate to run for this query
     json_query['aggs'] = {}
-    json_query['aggs'][parent_field] = {"terms": {"field": f'{parent_field}.{child_field}', "size": 100}}
+    json_query['aggs'][parent_field] = {"terms": {"field": f'{parent_field}.{child_field}', "size": size_limit}}
 
     new_json_query = copy.deepcopy(json_query)
 

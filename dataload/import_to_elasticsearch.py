@@ -243,7 +243,12 @@ def maybe_create_index(index_name=ES_INDEX):
                             }
                         }
                     },
-
+                    "GNCanonicalRecipientOrgId": {
+                        "type": "keyword"
+                    },
+                    "GNCanonicalFundingOrgId": {
+                        "type": "keyword"
+                    }
                 }
             },
             # Additional funding/recipient organisation mappings
