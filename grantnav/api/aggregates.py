@@ -36,7 +36,7 @@ class Search(View):
                     new_results = []
                     for bucket in results['buckets']:
                         name_id = json.loads(bucket['key'])
-                        new_results.append({"key": name_id[1], "name": name_id[0], "count": bucket["doc_count"], "url": bucket["url"], "selected": bucket.get("selected", False)})
+                        new_results.append({"key": name_id[1], "name": name_id[0], "doc_count": bucket["doc_count"], "url": bucket["url"], "selected": bucket.get("selected", False)})
                     ret["aggregations"][data_field[0]]["buckets"] = new_results
 
                 else:
