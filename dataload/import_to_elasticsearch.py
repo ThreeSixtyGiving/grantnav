@@ -248,6 +248,13 @@ def maybe_create_index(index_name=ES_INDEX):
                     },
                     "GNCanonicalFundingOrgId": {
                         "type": "keyword"
+                    },
+                    "recipientOrgInfos": {
+                        "properties": {
+                            "organisationTypePrimary": {
+                                "type": "keyword"
+                            }
+                        }
                     }
                 }
             },
