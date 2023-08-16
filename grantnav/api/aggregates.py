@@ -28,15 +28,23 @@ class Search(View):
         ]:
             try:
                 results = filter_search_ajax(
-                        self.request, data_field[0], data_field[1]
-                    )["aggregations"][data_field[0]]
+                    self.request, data_field[0], data_field[1]
+                )["aggregations"][data_field[0]]
 
                 # This field is a json array field
                 if data_field[1] == "id_and_name":
                     new_results = []
-                    for bucket in results['buckets']:
-                        name_id = json.loads(bucket['key'])
-                        new_results.append({"key": name_id[1], "name": name_id[0], "doc_count": bucket["doc_count"], "url": bucket["url"], "selected": bucket.get("selected", False)})
+                    for bucket in results["buckets"]:
+                        name_id = json.loads(bucket["key"])
+                        new_results.append(
+                            {
+                                "key": name_id[1],
+                                "name": name_id[0],
+                                "doc_count": bucket["doc_count"],
+                                "url": bucket["url"],
+                                "selected": bucket.get("selected", False),
+                            }
+                        )
                     ret["aggregations"][data_field[0]]["buckets"] = new_results
 
                 else:

@@ -913,7 +913,6 @@ def filter_search_ajax(request, parent_field=None, child_field=None):
             "selected": bucket.get("selected", False)
         })
 
-
     return JsonResponse(
         {"results": output}
     )
