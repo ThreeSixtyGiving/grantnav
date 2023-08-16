@@ -41,6 +41,7 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # Programme Title
     {"bool": {"should": []}},  # additional_data.TSGRecipientType
     {"bool": {"should": []}},  # simple_grant_type
+    {"bool": {"should": []}},  # additional_data.recipientOrgInfos.organisationTypePrimary
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
@@ -55,6 +56,7 @@ TERM_FACETS = [
     TermFacet("currency", "currency", 7, "Currency", False, 5000),
     TermFacet("additional_data.TSGRecipientType", "recipientTSGType", 11, "Recipient Type", False, 5000),
     TermFacet("simple_grant_type", "simple_grant_type", 12, "Regrant Type", False, 5000),
+    TermFacet("additional_data.recipientOrgInfos.organisationTypePrimary", "recipientOrganizationType", 13, "Recipient Organisation Type", False, 5000),
 ]
 
 SIZE = 20
@@ -644,6 +646,7 @@ def search(request, template_name="search.html"):
                 filter_.append({"bool": {"should": []}})  # Programme Title
                 filter_.append({"bool": {"should": []}})  # additional_data.TSGRecipientType
                 filter_.append({"bool": {"should": []}})  # simple_grant_type
+                filter_.append({"bool": {"should": []}})  # additional_data.recipientOrgInfos.primaryOrganisationType
             json_query['aggs'] = {}
             for term_facet in TERM_FACETS:
                 json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
