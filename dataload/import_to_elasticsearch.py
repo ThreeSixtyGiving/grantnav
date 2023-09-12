@@ -14,12 +14,18 @@ import dateutil.parser as date_parser
 
 import sys
 
+from django.core.cache import cache
+import django
+
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "grantnav.settings")
+
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, get_org, OrgNotFoundError # noqai
 
+django.setup()
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 ELASTICSEARCH_HOST = os.environ.get("ELASTICSEARCH_HOST", "localhost")
@@ -350,6 +356,9 @@ def maybe_create_index(index_name=ES_INDEX):
 def import_to_elasticsearch(files, clean, recipients=None, funders=None):
 
     es = elasticsearch.Elasticsearch(hosts=[ELASTICSEARCH_HOST])
+    # Clear any query caches
+    print("clearing caches")
+    cache.clear()
 
     # Delete the index
     if clean:
@@ -435,6 +444,9 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
         pprint(result)
 
         shutil.rmtree(tmp_dir)
+
+    # Clear any query caches
+    cache.clear()
 
 
 def update_doc_with_canonical_orgs(grant):

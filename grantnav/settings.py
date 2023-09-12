@@ -235,3 +235,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 if DEBUG:
     CORS_ORIGIN_ALLOW_ALL = True
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "/var/tmp/django_grantnav_cache",
+        "TIMEOUT": 60,
+        "OPTIONS": {"MAX_ENTRIES": 1000},
+    }
+}
