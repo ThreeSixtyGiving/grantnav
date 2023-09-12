@@ -30,7 +30,7 @@ sphinx:
 # Optionally declare the Python requirements required to build your docs
 python:
   install:
-    - requirements: requirements.txt
+    - requirements: requirements_docs.txt
 
 # You can include or exclude git submodules from the Read the Docs
 # documentation build.
