@@ -34,6 +34,7 @@ with open(os.path.join(os.path.dirname(__file__), 'footer.json')) as a:
 html_context = {
     'now': datetime.datetime.now(),
     'settings360': settings360,
+    "theme_navigation_depth": -1,
 }
 
 
@@ -135,18 +136,6 @@ todo_include_todos = False
 
 
 # -- Options for HTML output ----------------------------------------------
-
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
-# on_rtd is whether we are on readthedocs.org, this line of code grabbed from docs.readthedocs.org
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
-if not on_rtd:  # only import and set the theme if we're building docs locally
-    import sphinx_rtd_theme  # noqa: E402
-    html_theme = 'sphinx_rtd_theme'
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-# otherwise, readthedocs.org uses their theme by default, so no need to specify it
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
