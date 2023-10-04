@@ -16,6 +16,7 @@ from django.shortcuts import render, redirect
 from django.utils.http import urlencode
 from django.urls import reverse
 from django.core.cache import cache
+from django.conf import settings
 
 from elasticsearch.helpers import scan
 import elasticsearch.exceptions
@@ -211,6 +212,10 @@ def create_amount_aggregate(json_query):
     json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": FIXED_AMOUNT_RANGES}}
 
 
+def create_latest_charity_income_aggregate(json_query):
+    json_query["aggs"]["latestCharityIncomeFixed"] = {"range": {"field": "additional_data.GNRecipientOrgInfo0.latestIncome", "ranges": FIXED_AMOUNT_RANGES}}
+
+
 def get_amount_facet_fixed(request, context, original_json_query):
     json_query = copy.deepcopy(original_json_query)
     json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": FIXED_AMOUNT_RANGES}}
@@ -299,6 +304,10 @@ def get_amount_facet_fixed(request, context, original_json_query):
 
 def create_date_aggregate(json_query):
     json_query["aggs"]["awardYear"] = {"date_histogram": {"field": "awardDate", "format": "yyyy", "interval": "year", "order": {"_key": "desc"}}}
+
+
+def create_charity_registered_date_aggregate(json_query):
+    json_query["aggs"]["charityRegisteredDate"] = {"date_histogram": {"field": "additional_data.GNRecipientOrgInfo0.dateRegistered", "format": "yyyy", "interval": "year", "order": {"_key": "desc"}}}
 
 
 def get_date_facets(request, context, json_query):
@@ -627,7 +636,8 @@ def search(request, template_name="search.html"):
         context['query_string'] = query
     else:
         context['query_string'] = ""
-        try_cache = True
+        if not settings.DEBUG:
+            try_cache = False
 
     json_query = {}
 
@@ -729,6 +739,9 @@ def search(request, template_name="search.html"):
         try:
             create_amount_aggregate(json_query)
             create_date_aggregate(json_query)
+            # These aggs are currently only used for display and are not filterable
+            create_latest_charity_income_aggregate(json_query)
+            create_charity_registered_date_aggregate(json_query)
 
             json_query['aggs'].update(SEARCH_SUMMARY_AGGREGATES)
             # Actually fetch the results from elasticsearch

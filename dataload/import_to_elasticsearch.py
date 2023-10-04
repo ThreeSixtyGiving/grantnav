@@ -255,6 +255,17 @@ def maybe_create_index(index_name=ES_INDEX):
                     "GNCanonicalFundingOrgId": {
                         "type": "keyword"
                     },
+                    "GNRecipientOrgInfo0": {
+                        "properties": {
+                            "latestIncome": {
+                                "type": "double"
+                            },
+                            "dateRegistered": {
+                                "type": "date",
+                                "ignore_malformed": True
+                            }
+                        }
+                    },
                     "recipientOrgInfos": {
                         "properties": {
                             "organisationTypePrimary": {
@@ -437,6 +448,8 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     update_doc_with_currency_upper_case(grant)
                     # grant.simple_grant_type
                     update_doc_with_simple_grant_type(grant)
+                    # grant.additional_data.GNRecipientOrgInfo0
+                    update_doc_with_first_recipient_org_info(grant)
                     yield grant
 
         pprint(grants_file_path)
@@ -447,6 +460,20 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
 
     # Clear any query caches
     cache.clear()
+
+
+def update_doc_with_first_recipient_org_info(grant):
+    grant["additional_data"]["GNRecipientOrgInfo0"] = {}
+
+    try:
+        grant["additional_data"]["GNRecipientOrgInfo0"]["latestIncome"] = grant["additional_data"]["recipientOrgInfos"][0]["latestIncome"]
+    except (KeyError, IndexError):
+        pass
+
+    try:
+        grant["additional_data"]["GNRecipientOrgInfo0"]["dateRegistered"] = grant["additional_data"]["recipientOrgInfos"][0]["dateRegistered"]
+    except (KeyError, IndexError):
+        pass
 
 
 def update_doc_with_canonical_orgs(grant):
