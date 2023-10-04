@@ -44,6 +44,7 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # additional_data.TSGRecipientType
     {"bool": {"should": []}},  # simple_grant_type
     {"bool": {"should": []}},  # additional_data.recipientOrgInfos.organisationTypePrimary
+    {"bool": {"should": []}},  # additional_data.GNRecipientOrgInfo0.ageWhenAwarded
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
@@ -304,10 +305,6 @@ def get_amount_facet_fixed(request, context, original_json_query):
 
 def create_date_aggregate(json_query):
     json_query["aggs"]["awardYear"] = {"date_histogram": {"field": "awardDate", "format": "yyyy", "interval": "year", "order": {"_key": "desc"}}}
-
-
-def create_charity_registered_date_aggregate(json_query):
-    json_query["aggs"]["charityRegisteredDate"] = {"date_histogram": {"field": "additional_data.GNRecipientOrgInfo0.dateRegistered", "format": "yyyy", "interval": "year", "order": {"_key": "desc"}}}
 
 
 def get_date_facets(request, context, json_query):

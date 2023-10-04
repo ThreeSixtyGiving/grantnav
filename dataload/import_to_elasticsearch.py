@@ -260,9 +260,8 @@ def maybe_create_index(index_name=ES_INDEX):
                             "latestIncome": {
                                 "type": "double"
                             },
-                            "dateRegistered": {
-                                "type": "date",
-                                "ignore_malformed": True
+                            "ageWhenAwarded": {
+                                "type": "integer",
                             }
                         }
                     },
@@ -471,8 +470,9 @@ def update_doc_with_first_recipient_org_info(grant):
         pass
 
     try:
-        grant["additional_data"]["GNRecipientOrgInfo0"]["dateRegistered"] = grant["additional_data"]["recipientOrgInfos"][0]["dateRegistered"]
-    except (KeyError, IndexError):
+        days_old = (date_parser.parse(grant["awardDate"], ignoretz=True) - date_parser.parse(grant["additional_data"]["recipientOrgInfos"][0]["dateRegistered"], ignoretz=True)).days
+        grant["additional_data"]["GNRecipientOrgInfo0"]["ageWhenAwarded"] = days_old
+    except (KeyError, IndexError, date_parser.ParserError):
         pass
 
 
