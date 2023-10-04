@@ -261,7 +261,7 @@ def maybe_create_index(index_name=ES_INDEX):
                                 "type": "double"
                             },
                             "ageWhenAwarded": {
-                                "type": "integer",
+                                "type": "keyword",
                             }
                         }
                     },
@@ -461,6 +461,30 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
     cache.clear()
 
 
+# From 360Insights v2
+# bins for organisation age (in days)
+AGE_BINS = [x * 365 for x in [-1, 1, 2, 5, 10, 25, 200]]
+AGE_BIN_LABELS = [
+    "Under 1 year",
+    "1-2 years",
+    "2-5 years",
+    "5-10 years",
+    "10-25 years",
+    "Over 25 years",
+]
+
+
+def to_band(value, bins, labels):
+    bins = bins.copy()
+    if value is None:
+        return None
+    previous_value = bins.pop(0)
+    for i, b in enumerate(bins):
+        if value > previous_value and value <= b:
+            return labels[i]
+        previous_value = b
+
+
 def update_doc_with_first_recipient_org_info(grant):
     grant["additional_data"]["GNRecipientOrgInfo0"] = {}
 
@@ -471,7 +495,9 @@ def update_doc_with_first_recipient_org_info(grant):
 
     try:
         days_old = (date_parser.parse(grant["awardDate"], ignoretz=True) - date_parser.parse(grant["additional_data"]["recipientOrgInfos"][0]["dateRegistered"], ignoretz=True)).days
-        grant["additional_data"]["GNRecipientOrgInfo0"]["ageWhenAwarded"] = days_old
+        # We encode the label values in the index e.g. "Under 1 year" because these are for view purposes only
+        # and pre-computing them into buckets is more efficient rather than when at the retrieving the results time.
+        grant["additional_data"]["GNRecipientOrgInfo0"]["ageWhenAwarded"] = to_band(days_old, AGE_BINS, AGE_BIN_LABELS)
     except (KeyError, IndexError, date_parser.ParserError):
         pass
 

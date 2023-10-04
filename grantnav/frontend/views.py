@@ -43,6 +43,7 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # Programme Title
     {"bool": {"should": []}},  # additional_data.TSGRecipientType
     {"bool": {"should": []}},  # simple_grant_type
+    # Aggregates
     {"bool": {"should": []}},  # additional_data.recipientOrgInfos.organisationTypePrimary
     {"bool": {"should": []}},  # additional_data.GNRecipientOrgInfo0.ageWhenAwarded
 ]
@@ -60,6 +61,7 @@ TERM_FACETS = [
     TermFacet("additional_data.TSGRecipientType", "recipientTSGType", 11, "Recipient Type", False, 5000),
     TermFacet("simple_grant_type", "simple_grant_type", 12, "Regrant Type", False, 5000),
     TermFacet("additional_data.recipientOrgInfos.organisationTypePrimary", "recipientOrganizationType", 13, "Recipient Organisation Type", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgInfo0.ageWhenAwarded", "orgAgeWhenAwarded", 14, "Age of Recipient Org", False, 5000),
 ]
 
 SIZE = 20
@@ -658,6 +660,7 @@ def search(request, template_name="search.html"):
                 filter_.append({"bool": {"should": []}})  # additional_data.TSGRecipientType
                 filter_.append({"bool": {"should": []}})  # simple_grant_type
                 filter_.append({"bool": {"should": []}})  # additional_data.recipientOrgInfos.primaryOrganisationType
+                filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientOrgInfo0.ageWhenAwarded
             json_query['aggs'] = {}
             for term_facet in TERM_FACETS:
                 json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
@@ -738,7 +741,6 @@ def search(request, template_name="search.html"):
             create_date_aggregate(json_query)
             # These aggs are currently only used for display and are not filterable
             create_latest_charity_income_aggregate(json_query)
-            create_charity_registered_date_aggregate(json_query)
 
             json_query['aggs'].update(SEARCH_SUMMARY_AGGREGATES)
             # Actually fetch the results from elasticsearch
