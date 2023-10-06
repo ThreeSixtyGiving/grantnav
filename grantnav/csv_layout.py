@@ -36,6 +36,7 @@ grants_csv = OrderedDict([
     ("Grant Programme:Code", "result.grantProgramme.0.code"),
     ("Grant Programme:Title", "result.grantProgramme.0.title"),
     ("Grant Programme:URL", "result.grantProgramme.0.url"),
+    ("Funding Type:Title", "result.fundingType.0.title"),
     ("Beneficiary Location:0:Name", "result.beneficiaryLocation.0.name"),
     ("Beneficiary Location:0:Country Code", "result.beneficiaryLocation.0.countryCode"),
     ("Beneficiary Location:0:Geographic Code", "result.beneficiaryLocation.0.geoCode"),
