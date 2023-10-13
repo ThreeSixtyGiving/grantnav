@@ -13,3 +13,4 @@ coveralls
 selenium<4.3 # find_element_by.. deprecated after this point
 libsass
 chromedriver-autoinstaller
+django-cors-headers

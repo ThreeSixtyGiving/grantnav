@@ -64,7 +64,7 @@ pillow==8.3.2
     # via django-super-favicon
 plotly==5.3.1
     # via -r requirements.in
-prometheus-client==0.7.0
+prometheus-client==0.7
     # via -r requirements.in
 py==1.10.0
     # via retry
