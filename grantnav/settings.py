@@ -80,9 +80,13 @@ INSTALLED_APPS = (
     'bootstrap3',
     'grantnav.frontend',
     'grantnav.prometheus',
+    'grantnav.api',
     'raven.contrib.django.raven_compat',
     'favicon',
 )
+
+if DEBUG:
+    INSTALLED_APPS = INSTALLED_APPS + ("corsheaders",)
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -95,6 +99,8 @@ MIDDLEWARE = (
     'dealer.contrib.django.Middleware',
 )
 
+if DEBUG:
+    MIDDLEWARE = ("corsheaders.middleware.CorsMiddleware",) + MIDDLEWARE
 
 ROOT_URLCONF = 'grantnav.urls'
 
@@ -228,3 +234,7 @@ GRANTNAV_LOG_DIR = os.path.expanduser("~/logs/")
 # https://docs.djangoproject.com/en/4.0/releases/3.2/#customizing-type-of-auto-created-primary-keys
 # This project currently has no models, but in case it does later:
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+
+if DEBUG:
+    CORS_ORIGIN_ALLOW_ALL = True

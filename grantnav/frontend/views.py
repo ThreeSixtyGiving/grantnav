@@ -41,6 +41,9 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # Programme Title
     {"bool": {"should": []}},  # additional_data.TSGRecipientType
     {"bool": {"should": []}},  # simple_grant_type
+    # Aggregates
+    {"bool": {"should": []}},  # additional_data.recipientOrgInfos.organisationTypePrimary
+    {"bool": {"should": []}},  # additional_data.GNRecipientOrgInfo0.ageWhenAwarded
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
@@ -55,6 +58,8 @@ TERM_FACETS = [
     TermFacet("currency", "currency", 7, "Currency", False, 5000),
     TermFacet("additional_data.TSGRecipientType", "recipientTSGType", 11, "Recipient Type", False, 5000),
     TermFacet("simple_grant_type", "simple_grant_type", 12, "Regrant Type", False, 5000),
+    TermFacet("additional_data.recipientOrgInfos.organisationTypePrimary", "recipientOrganizationType", 13, "Recipient Organisation Type", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgInfo0.ageWhenAwarded", "orgAgeWhenAwarded", 14, "Age of Recipient Org", False, 5000),
 ]
 
 SIZE = 20
@@ -206,6 +211,10 @@ def orgs_csv_paged(data, org_type):
 
 def create_amount_aggregate(json_query):
     json_query["aggs"]["amountAwardedFixed"] = {"range": {"field": "amountAwarded", "ranges": FIXED_AMOUNT_RANGES}}
+
+
+def create_latest_charity_income_aggregate(json_query):
+    json_query["aggs"]["latestCharityIncomeFixed"] = {"range": {"field": "additional_data.GNRecipientOrgInfo0.latestIncome", "ranges": FIXED_AMOUNT_RANGES}}
 
 
 def get_amount_facet_fixed(request, context, original_json_query):
@@ -593,6 +602,25 @@ def search_wrapper_xframe_exempt(request, template_name="search.html"):
     return response
 
 
+def widget_search(request, json_query):
+    COLUMN_ORDER = ["_score", "amountAwarded", "awardDate", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "description"]
+    start = int(request.GET['start'])
+    length = int(request.GET['length'])
+    search_value = request.GET['search[value]']
+    if 'sort' in request.GET:
+        order_field = COLUMN_ORDER[int(request.GET['order[0][column]'])]
+        order_dir = request.GET['order[0][dir]']
+        json_query["sort"] = [{order_field: order_dir}]
+    if search_value:
+        current_query = json_query["query"]["bool"]["must"]["query_string"]['query']
+        json_query["query"]["bool"]["must"] = {"query_string": {"query": current_query + " " + search_value, "default_operator": "and"}}
+
+    json_response = grants_json(json_query, length, start)
+    json_response['draw'] = request.GET['draw'],
+
+    return JsonResponse(json_response)
+
+
 def search(request, template_name="search.html"):
     [result_format, results_size] = get_request_type_and_size(request)
 
@@ -625,6 +653,8 @@ def search(request, template_name="search.html"):
                 filter_.append({"bool": {"should": []}})  # Programme Title
                 filter_.append({"bool": {"should": []}})  # additional_data.TSGRecipientType
                 filter_.append({"bool": {"should": []}})  # simple_grant_type
+                filter_.append({"bool": {"should": []}})  # additional_data.recipientOrgInfos.primaryOrganisationType
+                filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientOrgInfo0.ageWhenAwarded
             json_query['aggs'] = {}
             for term_facet in TERM_FACETS:
                 json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
@@ -694,22 +724,8 @@ def search(request, template_name="search.html"):
             return grants_csv_paged(json_query)
         elif result_format == "json":
             return grants_json_paged(json_query)
-        elif result_format == "api":
-            COLUMN_ORDER = ["_score", "amountAwarded", "awardDate", "fundingOrganization.id_and_name", "recipientOrganization.id_and_name", "description"]
-            start = int(request.GET['start'])
-            length = int(request.GET['length'])
-            search_value = request.GET['search[value]']
-            if 'sort' in request.GET:
-                order_field = COLUMN_ORDER[int(request.GET['order[0][column]'])]
-                order_dir = request.GET['order[0][dir]']
-                json_query["sort"] = [{order_field: order_dir}]
-            if search_value:
-                current_query = json_query["query"]["bool"]["must"]["query_string"]['query']
-                json_query["query"]["bool"]["must"] = {"query_string": {"query": current_query + " " + search_value, "default_operator": "and"}}
-
-            json_response = grants_json(json_query, length, start)
-            json_response['draw'] = request.GET['draw'],
-            return JsonResponse(json_response)
+        elif result_format == "widgets_api":
+            return widget_search(request, json_query)
 
         if context['text_query'] == '*':
             context['text_query'] = ''
@@ -717,6 +733,8 @@ def search(request, template_name="search.html"):
         try:
             create_amount_aggregate(json_query)
             create_date_aggregate(json_query)
+            # These aggs are currently only used for display and are not filterable
+            create_latest_charity_income_aggregate(json_query)
 
             json_query['aggs'].update(SEARCH_SUMMARY_AGGREGATES)
 
@@ -810,20 +828,33 @@ def search(request, template_name="search.html"):
 
         add_advanced_search_information_in_context(context)
 
+        if result_format == "aggregates_api":
+            return context
+
         return render(request, template_name, context=context)
 
 
-def filter_search_ajax(request):
+def filter_search_ajax(request, parent_field=None, child_field=None):
     ''' Ajax request returning the format that select2 libary wants '''
 
-    parent_field = request.GET.get('parent_field', 'fundingOrganization')
-    child_field = request.GET.get('child_field', 'id_and_name')
+    [result_format, results_size] = get_request_type_and_size(request)
+
+    # We can get these values from the function call or from the GET params
+    if not parent_field:
+        parent_field = request.GET.get('parent_field', 'fundingOrganization')
+    if not child_field:
+        child_field = request.GET.get('child_field', 'id_and_name')
 
     json_query = create_json_query_from_parameters(request)
 
+    size_limit = 100
+
+    if result_format == "aggregates_api":
+        size_limit = 100000
+
     # Only need single aggregate to run for this query
     json_query['aggs'] = {}
-    json_query['aggs'][parent_field] = {"terms": {"field": f'{parent_field}.{child_field}', "size": 100}}
+    json_query['aggs'][parent_field] = {"terms": {"field": f'{parent_field}.{child_field}', "size": size_limit}}
 
     new_json_query = copy.deepcopy(json_query)
 
@@ -870,6 +901,9 @@ def filter_search_ajax(request):
                      BASIC_FILTER, create_parameters_from_json_query, is_json=is_json, path='/search')
 
     context['selected_facets'] = dict(context['selected_facets'])
+
+    if result_format == "aggregates_api":
+        return results
 
     output = []
 

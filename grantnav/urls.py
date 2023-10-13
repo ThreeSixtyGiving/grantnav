@@ -18,4 +18,5 @@ from django.conf.urls import include, url
 urlpatterns = [
     url(r'^', include('grantnav.frontend.urls')),
     url(r'prometheus/', include('grantnav.prometheus.urls')),
+    url(r'api/', include('grantnav.api.urls')),
 ]
