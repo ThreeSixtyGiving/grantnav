@@ -15,6 +15,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import render, redirect
 from django.utils.http import urlencode
 from django.urls import reverse
+from django.core.cache import cache
 
 from elasticsearch.helpers import scan
 import elasticsearch.exceptions
@@ -626,11 +627,14 @@ def search(request, template_name="search.html"):
 
     context = {}
 
+    try_cache = False
+
     query = request.GET.urlencode()
     if query:
         context['query_string'] = query
     else:
         context['query_string'] = ""
+        try_cache = True
 
     json_query = {}
 
@@ -737,8 +741,20 @@ def search(request, template_name="search.html"):
             create_latest_charity_income_aggregate(json_query)
 
             json_query['aggs'].update(SEARCH_SUMMARY_AGGREGATES)
+            # Actually fetch the results from elasticsearch
+            results = None
 
-            results = get_results(json_query, results_size, (page - 1) * SIZE)
+            if try_cache:
+                results = cache.get("empty-query-cache")
+                if results:
+                    print("Cache hit")
+
+            if not results:
+                results = get_results(json_query, results_size, (page - 1) * SIZE)
+
+                if try_cache:
+                    cache.set("empty-query-cache", results)
+
             for key in SEARCH_SUMMARY_AGGREGATES:
                 json_query["aggs"].pop(key)
 
