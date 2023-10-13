@@ -11,12 +11,16 @@ import elasticsearch.helpers
 import time
 import ijson
 import dateutil.parser as date_parser
-
 import sys
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "grantnav.settings")
+from django.core.cache import cache
+import django
 
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "grantnav.settings")
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+django.setup()
 
 from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, get_org, OrgNotFoundError # noqai
 
@@ -360,6 +364,9 @@ def maybe_create_index(index_name=ES_INDEX):
 def import_to_elasticsearch(files, clean, recipients=None, funders=None):
 
     es = elasticsearch.Elasticsearch(hosts=[ELASTICSEARCH_HOST])
+    # Clear any query caches
+    print("clearing caches")
+    cache.clear()
 
     # Delete the index
     if clean:
@@ -448,6 +455,8 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
 
         shutil.rmtree(tmp_dir)
 
+    # Clear any query caches
+    cache.clear()
 
 
 # From 360Insights v2
