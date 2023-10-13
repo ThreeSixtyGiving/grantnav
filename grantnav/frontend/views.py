@@ -405,10 +405,18 @@ def totals_query():
     counts = {
         'grants': get_results(query)['hits']['total'],
         'funders': get_results(query, data_type='funder')['hits']['total'],
-        'recipient_orgs': get_results(query, data_type='recipient')['hits']['total'],
+        'recipient_orgs': get_results({
+            "aggs": {
+                "recipient_org": {
+                    "cardinality": {
+                        "field": "id"
+                    },
+                }
+            }
+        }, data_type='recipient', size=0)["aggregations"]["recipient_org"]["value"],
+
         'recipient_indi': get_results(
             {
-                "size": 0,  # Don't return the docs just the agg
                 "aggs": {
                     "recipient_indi": {
                         "cardinality": {
@@ -416,9 +424,38 @@ def totals_query():
                         }
                     }
                 }
-            }
-        )["aggregations"]["recipient_indi"]["value"]
+            },
+            size=0)["aggregations"]["recipient_indi"]["value"]
     }
+
+    def moo():
+        test = get_results(
+                {
+                "_source": "id",
+                #  "size": 0,  # Don't return the docs just the agg
+                    "aggs": {
+                        "total_uniq": {
+                            "cardinality": {
+                                "field": "id", "precision_threshold": 40000
+                            }
+                        }
+                    }
+                },
+        data_type="recipient", size="400")
+
+
+        print(test["aggregations"])
+
+        fp = open("/tmp/orgs_ids", "w+")
+
+        for a in test['hits']['hits']:
+            fp.write(a["_source"]["id"])
+            fp.write("\n")
+
+        fp.close()
+
+    moo()
+
     return counts
 
 
