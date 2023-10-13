@@ -13,6 +13,17 @@ class Search(View):
         self.request.path = self.request.path + ".aggregates_api"
         context = search(self.request)
 
+        # Don't send actual grant documents back. This is a quirk of re-using
+        # the GrantNav code path for the query. Remove these fields:
+        # - Ease of testing due to unique index specific document "_id" fields being exposed.
+        # - This makes the json response smaller
+        for currency in context["results"]["aggregations"]["currency_stats"]["buckets"]:
+            del currency["smallest_grant"]
+            del currency["largest_grant"]
+
+        del context["results"]["aggregations"]["earliest_grant"]
+        del context["results"]["aggregations"]["latest_grant"]
+
         ret = {
             "aggregations": context["results"]["aggregations"],
             "hits": context["results"]["hits"],
