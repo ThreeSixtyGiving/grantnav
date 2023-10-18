@@ -25,7 +25,7 @@ if 'SECRET_KEY' not in os.environ:
 
 env = environ.Env(  # set default values and casting
     SENTRY_DSN=(str, ''),
-    DEBUG=(bool, True),
+    DEBUG=(bool, False),
     PIWIK_URL=(str, ''),
     PIWIK_SITE_ID=(str, ''),
     ALLOWED_HOSTS=(list, []),
