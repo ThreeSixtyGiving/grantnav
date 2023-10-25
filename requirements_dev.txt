@@ -72,10 +72,6 @@ elasticsearch==7.0.5
     # via -r requirements.in
 et-xmlfile==1.1.0
     # via openpyxl
-exceptiongroup==1.1.0
-    # via
-    #   pytest
-    #   trio
 flake8==6.0.0
     # via -r requirements_dev.in
 flattentool==0.17.1
@@ -129,7 +125,7 @@ plotly==5.11.0
     # via -r requirements.in
 pluggy==1.0.0
     # via pytest
-prometheus-client==0.7
+prometheus-client==0.7.0
     # via -r requirements.in
 py==1.11.0
     # via retry
@@ -188,12 +184,6 @@ tenacity==8.1.0
     # via plotly
 titlecase==2.4
     # via -r requirements.in
-tomli==2.0.1
-    # via
-    #   build
-    #   coverage
-    #   pep517
-    #   pytest
 transaction==3.0.1
     # via zodb
 trio==0.22.0
@@ -209,7 +199,7 @@ urllib3[secure,socks]==1.26.13
     #   selenium
 urllib3-secure-extra==0.1.0
     # via urllib3
-werkzeug==2.2.2
+werkzeug==3.0.1
     # via pytest-localserver
 wheel==0.38.4
     # via pip-tools
