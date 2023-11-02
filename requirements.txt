@@ -24,7 +24,7 @@ decorator==5.1.0
     # via retry
 defusedxml==0.7.1
     # via odfpy
-django==3.2.14
+django==3.2.23
     # via
     #   -r requirements.in
     #   django-bootstrap3
@@ -64,7 +64,7 @@ pillow==8.3.2
     # via django-super-favicon
 plotly==5.3.1
     # via -r requirements.in
-prometheus-client==0.7
+prometheus-client==0.7.0
     # via -r requirements.in
 py==1.10.0
     # via retry

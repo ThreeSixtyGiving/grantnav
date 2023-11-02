@@ -39,6 +39,7 @@ contextlib2==21.6.0
     # via schema
 coverage[toml]==6.5.0
     # via
+    #   coverage
     #   coveralls
     #   pytest-cov
 coveralls==3.3.1
@@ -53,7 +54,7 @@ decorator==5.1.1
     # via retry
 defusedxml==0.7.1
     # via odfpy
-django==3.2.16
+django==3.2.23
     # via
     #   -r requirements.in
     #   django-bootstrap3
@@ -129,7 +130,7 @@ plotly==5.11.0
     # via -r requirements.in
 pluggy==1.0.0
     # via pytest
-prometheus-client==0.7
+prometheus-client==0.7.0
     # via -r requirements.in
 py==1.11.0
     # via retry
