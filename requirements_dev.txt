@@ -39,6 +39,7 @@ contextlib2==21.6.0
     # via schema
 coverage[toml]==6.5.0
     # via
+    #   coverage
     #   coveralls
     #   pytest-cov
 coveralls==3.3.1
@@ -121,7 +122,7 @@ persistent==5.0
     # via
     #   btrees
     #   zodb
-pillow==9.4.0
+pillow==10.0.1
     # via django-super-favicon
 pip-tools==6.12.1
     # via -r requirements_dev.in
@@ -129,7 +130,7 @@ plotly==5.11.0
     # via -r requirements.in
 pluggy==1.0.0
     # via pytest
-prometheus-client==0.7
+prometheus-client==0.7.0
     # via -r requirements.in
 py==1.11.0
     # via retry
