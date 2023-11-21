@@ -84,7 +84,9 @@ GrantNav uses the JSON field names rather than the "human-friendly" form that yo
 ```
 
 
-
+```eval_rst
+.. _search-ranges:
+```
 ## Searching Ranges
 
 The search bar allows you to search for a range of dates or values. Commonly, this is used to search by financial year rather than calendar year, or to look for specific ranges of funding values. 
