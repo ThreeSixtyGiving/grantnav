@@ -4,11 +4,9 @@
         <div class="grantnav-datatable__content--filters {% if widget %}margin-top:0{% endif %}">
             {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
             {% if not widget %}
-                {% if results.hits.total.value <= 10000 %}
-                <a class="grantnav-search__content--insights-large button button--large button--teal-dark bold margin-left:4 margin-right:2" href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}%3F{{ query_string|urlencode }}" title="Download search results into 360Insights data visualiser" target="_blank">
+                <a class="grantnav-search__content--insights-large button button--large button--teal-dark bold margin-left:4 margin-right:2" href="http://insights-test.360dokku1.vs.mythic-beasts.com/?{{ query_string }}" title="View search results in 360Insights data visualiser" target="_blank">
                     Visualise your search results in 360Insights
                 </a>
-                {% endif %}
                 <div class="export-wrapper">
                     <div class="export-label">Export table data:</div>
                     <div class="export-button">
