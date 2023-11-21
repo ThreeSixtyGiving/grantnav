@@ -27,21 +27,33 @@ The numbers in brackets next to the values show the number of grants in the sear
   * - Amount Awarded (GBP)
     - Amount Awarded
     - Using this filter will exclude all non-GBP grants from the search results
-  * - Award Year
-    - The year (YYYY) component of date from Award Date field
-    - This is calendar year, not fiscal/financial year. See <a href="#ranges">Ranges</a> for how to search between specific dates.
+  * - Award Date
+    - Award Date
+    - The year values are calendar year, not fiscal/financial year, or a range can be selected in the From/To months. See `Ranges <search_bar#searching-ranges>` for how to search between specific dates.
   * - Recipient Region
     - This filter is derived from 360Giving data by GrantNav
-    - See also: [GrantNav and location data](locations)
+    - See also: `GrantNav and location data <locations>`
   * - Recipient District
     - This filter is derived from 360Giving data by GrantNav
-    - See also: [GrantNav and location data](locations)
+    - See also: `GrantNav and location data <locations>`
   * - Funding Organisations
     - Funding Org:Name
     - Values are taken from the data and will change if the funder name changes.
   * - Recipient Organisations
     - Recipient Org:Name
-    - See also: [Organisations in GrantNav](organisations)
+    - See also: `Organisations in GrantNav <organisations>`
+  * - Funding Organisation Type
+    - tbc
+    - Values are taken from tbc 
+  * - Grant Programme Title
+    - Grant Programme Title
+    - Values are taken from the data
+  * - Type of Recipient
+    - Recipient Org:Name or Recipient Ind:Name
+    - Derived from whether the Recipient Organisation or Individual fields are used in the data
+  * - Grant Type
+    - For Regrant
+    - Derived from whether the For Regrant field was used or not in the data
 ```
 
   
