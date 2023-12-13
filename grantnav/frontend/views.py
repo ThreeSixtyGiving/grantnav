@@ -26,6 +26,7 @@ from grantnav.index import get_index
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, get_data_from_path
 import grantnav.frontend.search_helpers as helpers
 from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency
+from dataload.import_to_elasticsearch import AGE_BIN_LABELS
 
 
 BASIC_FILTER = [
@@ -622,6 +623,26 @@ def widget_search(request, json_query):
     return JsonResponse(json_response)
 
 
+def reorder_recipient_org_age_when_awarded(context):
+    """ Put the ES results into a fixed order determined by AGE_BIN_LABELS
+        Note this is not a sort - it's a specific ordering.
+    """
+    org_age_when_awarded_buckets = context["results"]["aggregations"]["orgAgeWhenAwarded"]["buckets"]
+    ordered = []
+
+    def find_in_buckets(key):
+        for bucket in org_age_when_awarded_buckets:
+            if bucket["key"] == key:
+                return bucket
+
+    for age in AGE_BIN_LABELS:
+        age_found = find_in_buckets(age)
+        if age_found:
+            ordered.append(age_found)
+
+    context["results"]["aggregations"]["orgAgeWhenAwarded"]["buckets"] = ordered
+
+
 def search(request, template_name="search.html"):
     [result_format, results_size] = get_request_type_and_size(request)
 
@@ -737,7 +758,7 @@ def search(request, template_name="search.html"):
         try:
             create_amount_aggregate(json_query)
             create_date_aggregate(json_query)
-            # These aggs are currently only used for display and are not filterable
+            # These aggs are currently only used for display and are not filterable in GN frontend
             create_latest_charity_income_aggregate(json_query)
 
             json_query['aggs'].update(SEARCH_SUMMARY_AGGREGATES)
@@ -843,6 +864,7 @@ def search(request, template_name="search.html"):
         get_dropdown_filters(context)
 
         add_advanced_search_information_in_context(context)
+        reorder_recipient_org_age_when_awarded(context)
 
         if result_format == "aggregates_api":
             return context
