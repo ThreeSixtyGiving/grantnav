@@ -28,9 +28,9 @@ def browser(request):
         chrome_options.add_argument("--headless")
         # no-sandbox prevents an error when running as the root user
         chrome_options.add_argument("--no-sandbox")
-        # uncomment this if "DevToolsActivePort" error
-        # chrome_options.add_argument("--remote-debugging-port=9222")
-
+        # uncomment this if "DevToolsActivePort" error / ubuntu snap workaround
+        chrome_options.add_argument("--remote-debugging-port=9222")
+        # chrome_options.add_argument('ignore-unexpected-deprecations')
         browser = webdriver.Chrome(options=chrome_options)
     elif BROWSER == "Firefox":
         # Make downloads work
@@ -71,7 +71,7 @@ def dataload():
     time.sleep(2)
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="function")  # FIXME autouse=True
 def provenance_dataload(dataload, settings, tmpdir):
     settings.PROVENANCE_JSON = os.path.join(prefix, "data.json")
 
@@ -469,6 +469,12 @@ def test_zero_grant_info_link_absent(provenance_dataload, server_url, browser, p
 
 def test_search_recipients(provenance_dataload, server_url, browser):
     browser.get(server_url + "/recipients")
+
+    try:
+        browser.find_element_by_class_name("cookie-consent-no").click()
+    except selenium_exceptions.NoSuchElementException:
+        pass
+
     browser.find_element_by_name("text_query").send_keys("Social Justice")
     browser.find_element_by_class_name("large-search-button").click()
 
@@ -480,6 +486,12 @@ def test_search_recipients(provenance_dataload, server_url, browser):
 
 def test_search_funders(provenance_dataload, server_url, browser):
     browser.get(server_url + "/funders")
+
+    try:
+        browser.find_element_by_class_name("cookie-consent-no").click()
+    except selenium_exceptions.NoSuchElementException:
+        pass
+
     browser.find_element_by_name("text_query").send_keys("foundation")
     browser.find_element_by_class_name("large-search-button").click()
 
