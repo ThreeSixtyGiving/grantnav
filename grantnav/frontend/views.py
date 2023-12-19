@@ -25,7 +25,7 @@ from grantnav.search import get_es
 from grantnav.index import get_index
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, get_data_from_path
 import grantnav.frontend.search_helpers as helpers
-from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency, get_org, OrgNotFoundError
 from dataload.import_to_elasticsearch import AGE_BIN_LABELS
 
 
@@ -643,6 +643,30 @@ def reorder_recipient_org_age_when_awarded(context):
     context["results"]["aggregations"]["orgAgeWhenAwarded"]["buckets"] = ordered
 
 
+def redirect_request_to_include_all_org_ids(request):
+    """ If someone provides an org-id append all other known org-ids to the query
+    This is done so that it doesn't matter which org-id of many for a certain org
+    is provided we can still return the results.
+    """
+    do_redirect = False
+    request_get_copy = request.GET.copy()
+
+    for entity_type in [("fundingOrganization", "funder"), ("recipientOrganization", "recipient")]:
+        # Match the supplied org-id to any other org-ids in use
+        if org_ids := request.GET.getlist(entity_type[0]):
+            for org_id in org_ids:
+                try:
+                    for additional_org_id in get_org(org_id, entity_type[1])["orgIDs"]:
+                        if additional_org_id not in org_ids:
+                            request_get_copy.appendlist(entity_type[0], additional_org_id)
+                            do_redirect = True
+                except OrgNotFoundError:
+                    pass
+
+    if do_redirect:
+        return request.path + '?' + request_get_copy.urlencode()
+
+
 def search(request, template_name="search.html"):
     [result_format, results_size] = get_request_type_and_size(request)
 
@@ -725,6 +749,9 @@ def search(request, template_name="search.html"):
             json_query["sort"] = new_sort
             return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
+    if new_org_ids_included := redirect_request_to_include_all_org_ids(request):
+        return redirect(new_org_ids_included)
+
     results = None
     if json_query:
         try:
@@ -792,6 +819,7 @@ def search(request, template_name="search.html"):
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
         context['query'] = json_query
+
         if (view_mode := request.GET.get('view_mode')):
             request.session['view_mode'] = view_mode
             context['view_mode'] = view_mode
