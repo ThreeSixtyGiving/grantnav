@@ -2,7 +2,7 @@ import json
 import warnings
 
 from django.views import View
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from grantnav.frontend.views import search, filter_search_ajax
 
 
@@ -11,7 +11,13 @@ class Search(View):
         # Append .aggregates_api as this is the flag we currently switch on in the
         # main search functions to know what format we will return results as.
         self.request.path = self.request.path + ".aggregates_api"
-        context = search(self.request)
+        ret = search(self.request)
+
+        # If we get a 302, 500 or other kind of return from the search view honour it
+        if issubclass(type(ret), HttpResponse):
+            return ret
+
+        context = ret
 
         # Don't send actual grant documents back. This is a quirk of re-using
         # the GrantNav code path for the query. Remove these fields:
