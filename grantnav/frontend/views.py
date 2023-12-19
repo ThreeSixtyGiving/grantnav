@@ -88,6 +88,15 @@ FIXED_AMOUNT_RANGES = [
     {"from": 10000000}
 ]
 
+CHARITY_INCOME_FIXED_AMOUNT_RANGES = [
+    {"from": 0, "to": 10000},
+    {"from": 10000, "to": 100000},
+    {"from": 100000, "to": 250000},
+    {"from": 250000, "to": 500000},
+    {"from": 500000, "to": 1000000},
+    {"from": 1000000, "to": 10000000},
+    {"from": 10000000}
+]
 
 SEARCH_SUMMARY_AGGREGATES = {
     "recipient_orgs": {"cardinality": {"field": "additional_data.GNCanonicalRecipientOrgId", "precision_threshold": 40000}},
@@ -216,7 +225,7 @@ def create_amount_aggregate(json_query):
 
 
 def create_latest_charity_income_aggregate(json_query):
-    json_query["aggs"]["latestCharityIncomeFixed"] = {"range": {"field": "additional_data.GNRecipientOrgInfo0.latestIncome", "ranges": FIXED_AMOUNT_RANGES}}
+    json_query["aggs"]["latestCharityIncomeFixed"] = {"range": {"field": "additional_data.GNRecipientOrgInfo0.latestIncome", "ranges": CHARITY_INCOME_FIXED_AMOUNT_RANGES}}
 
 
 def get_amount_facet_fixed(request, context, original_json_query):
