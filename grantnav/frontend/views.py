@@ -884,7 +884,7 @@ def filter_search_ajax(request, parent_field=None, child_field=None):
         # for each word in the split add wildcard (*) before and after
         # allow both the original search term and a capitalized version of the word using OR
         # AND all the individual word queries together.
-        and_terms = " AND ".join([f"(*{part}* OR *{part.capitalize()}*)" for part in filter_search.split()])
+        and_terms = " AND ".join([f"(*{part}* OR *{part.capitalize()}* OR *{part.upper()}* OR *{part.lower()}*)" for part in filter_search.split()])
 
         new_must.append(
             {"query_string":
