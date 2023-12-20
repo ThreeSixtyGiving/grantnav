@@ -31,6 +31,10 @@ def test_aggregates(client):
 
     res = json.loads(response.content)
 
+    # For updating test data changes and easier comparison
+    # with open("/tmp/new_test_data.json", "w") as f:
+    #    f.write(json.dumps(res))
+
     expected_data = json.load(open(os.path.join(
         os.path.dirname(__file__),
         "test_data",
