@@ -43,8 +43,8 @@ The numbers in brackets next to the values show the number of grants in the sear
     - Recipient Org:Name
     - See also: :doc:`./organisations`
   * - Funding Organisation Type
-    - tbc
-    - Values are taken from tbc 
+    - This filter is derived from 360Giving data by GrantNav
+    - Derived from organisation identifiers
   * - Grant Programme Title
     - Grant Programme Title
     - Values are taken from the data
