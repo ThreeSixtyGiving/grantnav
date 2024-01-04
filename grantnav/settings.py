@@ -33,7 +33,8 @@ env = environ.Env(  # set default values and casting
     GRANT_SCHEMA=(str, 'https://raw.githubusercontent.com/ThreeSixtyGiving/standard/master/schema/360-giving-schema.json'),
     DB_NAME=(str, os.path.join(BASE_DIR, 'db.sqlite3')),
     PROVENANCE_JSON=(str, None),
-    ELASTICSEARCH_HOST=(str, 'localhost')
+    ELASTICSEARCH_HOST=(str, 'localhost'),
+    INSIGHTS_BASE_URL=(str, "https://insights.threesixtygiving.org")
 )
 
 PIWIK = {
@@ -119,6 +120,7 @@ TEMPLATES = [
                 'grantnav.frontend.context_processors.navigation',
                 'grantnav.frontend.context_processors.main_css_cache_key',
                 'grantnav.frontend.context_processors.debug_mode',
+                'grantnav.frontend.context_processors.insights_url',
             ],
         },
     },
@@ -248,3 +250,5 @@ CACHES = {
         "OPTIONS": {"MAX_ENTRIES": 1000},
     }
 }
+
+INSIGHTS_BASE_URL = env("INSIGHTS_BASE_URL")

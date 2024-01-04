@@ -10,7 +10,7 @@
     <div class="search-summary--description">
       {% if results.hits.total.value <= 10000 %}
         <span>To explore this dataset in more detail, open in
-          <a href="https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}%3F{{ query_string|urlencode }}" title="Download search results into 360Insights data visualiser" target="_blank">
+          <a href="{{insights_base_url}}/?url=https://grantnav.threesixtygiving.org{% url 'search.json' %}%3F{{ query_string|urlencode }}" title="Download search results into 360Insights data visualiser" target="_blank" data-testid="insights-integration-btn">
             360Insights
           </a>
         </span>
