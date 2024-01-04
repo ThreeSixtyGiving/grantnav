@@ -29,3 +29,7 @@ def main_css_cache_key(request):
 
 def debug_mode(request):
     return {"debug": settings.DEBUG}
+
+
+def insights_url(request):
+    return {"insights_base_url": settings.INSIGHTS_BASE_URL}
