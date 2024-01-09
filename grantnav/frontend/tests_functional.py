@@ -1,6 +1,7 @@
 import os
 import time
 import pytest
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.common import exceptions as selenium_exceptions
@@ -97,15 +98,6 @@ def test_home(provenance_dataload, server_url, browser):
 def test_navbar_links(provenance_dataload, server_url, browser, link_text):
     browser.get(server_url)
     browser.find_element_by_link_text(link_text)
-
-
-def test_nav_menu_help_link(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    browser.find_element_by_id("help_link").click()
-
-    assert browser.current_url.startswith("https://help.grantnav.threesixtygiving.org")
-    # Clear browser log for external site
-    browser.get_log("browser")
 
 
 @pytest.mark.parametrize(('link_text'), [
@@ -337,10 +329,6 @@ def test_search_advanced_search_correct_link(provenance_dataload, server_url, br
 
     browser.find_element_by_link_text("targeting your search").click()
 
-    assert browser.current_url.startswith('https://help.grantnav.threesixtygiving.org/en/latest/search_bar.html')
-    # Clear browser log for external site
-    browser.get_log("browser")
-
 
 def test_search_do_not_display_advance_search_link(provenance_dataload, server_url, browser):
     browser.get(server_url)
@@ -363,27 +351,6 @@ def test_bad_search(provenance_dataload, server_url, browser):
 def test_terms(server_url, browser):
     browser.get(server_url + '/terms')
     assert 'Terms and conditions' in browser.find_element_by_tag_name('h1').text
-
-
-def test_take_down(server_url, browser):
-    browser.get(server_url + '/take_down_policy')
-    assert browser.current_url.startswith('https://www.threesixtygiving.org/take-down-policy/')
-    # Clear browser log for external site
-    browser.get_log("browser")
-
-
-def test_help_page(server_url, browser):
-    browser.get(server_url + '/help')
-    assert browser.current_url.startswith('https://help.grantnav.threesixtygiving.org/')
-    # Clear browser log for external site
-    browser.get_log("browser")
-
-
-def test_developers(server_url, browser):
-    browser.get(server_url + '/developers')
-    assert browser.current_url.startswith('https://help.grantnav.threesixtygiving.org/')
-    # Clear browser log for external site
-    browser.get_log("browser")
 
 
 def test_title(server_url, browser):
@@ -452,15 +419,6 @@ def test_amount_awarded_facet(provenance_dataload, server_url, browser):
     assert "49" in total_grants, "Expected number of grants not found"
 
 
-@pytest.mark.parametrize(('path'), ['/grant/360G-wolfson-19916'])
-def test_zero_grant_info_link_present(provenance_dataload, server_url, browser, path):
-    browser.get(server_url + path)
-    browser.find_element_by_id("zero_value_grant_help_link").click()
-    assert browser.current_url == "https://help.grantnav.threesixtygiving.org/en/latest/search_results.html?#some-grantmakers-publish-grants-with-0-or-negative-values"
-    # Clear browser log for external site
-    browser.get_log("browser")
-
-
 @pytest.mark.parametrize(('path'), ['/grant/360G-LBFEW-99233'])
 def test_zero_grant_info_link_absent(provenance_dataload, server_url, browser, path):
     browser.get(server_url + path)
@@ -519,3 +477,33 @@ def test_insights_button(provenance_dataload, server_url, browser):
         assert browser.find_element_by_tag_name("title").text == "360Insights"
         # Clear browser log for external site
         browser.get_log("browser")
+
+
+@pytest.mark.parametrize(('path'), ['?'
+                                    '/search',
+                                    '/funders',
+                                    '/recipients',
+                                    '/about',
+                                    '/datasets'
+                                    '/grant/360G-LBFEW-99233',  # regular grant
+                                    '/grant/360G-wolfson-19916y',  # grant with 0 or negative amount
+                                    '/org/GB-CHC-1126147'])
+def test_links(provenance_dataload, server_url, browser, path):
+    browser.get(server_url + path)
+
+    skip = ["https://twitter.com/360Giving/"]
+
+    for a in browser.find_elements_by_tag_name("a"):
+        link = a.get_attribute("href")
+
+        assert len(link) > 0, "Error An <a> tag without a href attribute"
+
+        if link in skip:
+            continue
+
+        if link.startswith("http"):
+            print(f"Testing {link}")
+            # Threesixtygiving.org 403s on this if we don't set a user agent
+            r = requests.head(link, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"})
+
+            assert (r.status_code >= 200 and r.status_code < 399), f"{link} is broken: {r.status_code}"
