@@ -495,3 +495,15 @@ def test_org_page(provenance_dataload, server_url, browser):
 
     assert "EQUALITEACH C.I.C." in browser.find_element_by_tag_name('h1').text
     check_js_errors(browser)
+
+
+def test_insights_button(provenance_dataload, server_url, browser):
+    """ Tests that the insights button takes us to an Insights site """
+
+    for button in browser.find_elements_by_css_selector("a[data='insights-integration-btn']"):
+        # Narrow search results to fewer than 10k
+        browser.get(server_url + "/search?currency=AUD")
+        button.click()
+        assert browser.find_element_by_tag_name("title").text == "360Insights"
+        # Clear browser log for external site
+        browser.get_log("browser")
