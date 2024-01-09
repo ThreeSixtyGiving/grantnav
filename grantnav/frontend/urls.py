@@ -47,5 +47,5 @@ urlpatterns = [
     url(r'^take_down_policy', RedirectView.as_view(url="https://www.threesixtygiving.org/take-down-policy/"), name='take_down_policy'),
     # Developers content used to live on this website but it was then moved to an external help site.
     # Redirect people to make sure any old links continue to work.
-    url(r'^developers', RedirectView.as_view(url="https://help.grantnav.threesixtygiving.org/en/latest/developers.html"), name='developers'),
+    url(r'^developers', RedirectView.as_view(url="https://help.grantnav.threesixtygiving.org/en/latest/developers/"), name='developers'),
 ]
