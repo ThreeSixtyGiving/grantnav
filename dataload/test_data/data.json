@@ -4,7 +4,7 @@
         "license_name": "CCO",
         "distribution": [
             {
-                "downloadURL": "http://ods.sfct.org.uk/OpenDataService/sfct360givingfeed.aspx?trust=360G-indigotrust",
+                "downloadURL": "#",
                 "accessURL": "http://indigotrust.org.uk/grants-awarded/",
                 "title": "Indigo Trust"
             }
@@ -30,7 +30,7 @@
         "license_name": "Creative Commons Attribution 4.0",
         "distribution": [
             {
-                "downloadURL": "http://www.lloydsbankfoundation.org.uk/assets/uploads/360_giving_LBFEW_2010_2015.xlsx",
+                "downloadURL": "#",
                 "accessURL": "http://www.lloydsbankfoundation.org.uk/about-us/key-facts-and-figures/",
                 "title": "Grant Making Data 2010 - 2015"
             }
@@ -56,7 +56,7 @@
         "license_name": "Creative Commons Attribution 4.0",
         "distribution": [
             {
-                "downloadURL": "http://www.wolfson.org.uk/media/2780/wolfson-foundation-grants-2014.xlsx",
+                "downloadURL": "#",
                 "accessURL": "http://www.wolfson.org.uk/about-us/grant-data/",
                 "title": "The Wolfson Foundation Grants 2014 Excel"
             }
@@ -77,30 +77,5 @@
             "datetime_downloaded": "2000-01-01T11:43:27+01:00"
         },
         "description": ""
-    },
-    {
-      "license_name":"Creative Commons Attribution 4.0 International (CC BY 4.0)",
-      "distribution":[
-        {
-          "downloadURL":"https://esmeefairbairn.org.uk/userfiles/Documents/Grants%20list/Esmee_Grants_Since_2008.json",
-          "accessURL":"https://esmeefairbairn.org.uk/open-data",
-          "title":"Esmée Fairbairn Foundation grants and social investments made since 2008"
-        }
-      ],
-      "publisher": {
-          "name":"Esmee Fairbairn Foundation",
-          "website":"http://esmeefairbairn.org.uk/",
-          "logo":"http://www.threesixtygiving.org/wp-content/uploads/esmee-fairbairn-foundation.png",
-          "prefix":"360G-esmeefairbairn"
-       },
-      "identifier":"a002400000G4KGjAAN",
-      "title":"Esmée Fairbairn Foundation grants and social investments made since 2008",
-      "datagetter_metadata": {
-            "valid": true,
-            "acceptable_license": true,
-            "file_type": "json",
-            "datetime_downloaded": "2000-01-01T11:43:27+01:00"
-      },
-      "description":"All grants and social investments awarded from January 2008 to June 2017."
     }
 ]
