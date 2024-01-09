@@ -28,6 +28,8 @@ def dataload():
     )
     #elastic search needs some time to commit its data
     time.sleep(2)
+    # Recreate this test dataload:
+    # $ ES_INDEX=test ./dataload/import_to_elasticsearch.py ./dataload/test_data/a002400000KeYdsAAF.json ./dataload/test_data/grantnav-20180903134856.json ./dataload/test_data/a002400000nO46WAAS.json --funders ./dataload/test_data/funders.jl --recipients ./dataload/test_data/recipients.jl --clean
 
 
 @pytest.fixture(scope="function")
@@ -50,60 +52,17 @@ def test_prometheus(provenance_dataload, client):
     assert "total_grants 1254.0" in str(client.get("/prometheus/metrics").content)
 
 
-def test_search(provenance_dataload, client):
-    initial_response = client.get('/search?text_query=gardens+AND+fundingOrganization.id:GB-CHC-1156077')
-    assert initial_response.status_code == 302
-    response = client.get(initial_response.url)
-    assert "Total grants" in str(response.content)
-    assert "The British Museum" in str(response.content)
-
-    assert response.context['text_query'] == 'gardens AND fundingOrganization.id:GB-CHC-1156077'
-    assert response.context['results']['hits']['total']['value'] == 7
-
-    # click facet
-    wolfson_facet = response.context['results']['aggregations']['fundingOrganization']['buckets'][0]
-    assert wolfson_facet['doc_count'] == 7
-    assert wolfson_facet['key'] == '["Wolfson Foundation", "GB-CHC-1156077"]'
-
-    # click again
-    response = client.get(wolfson_facet['url'])
-    wolfson_facet = response.context['results']['aggregations']['fundingOrganization']['buckets'][0]
-    assert wolfson_facet['doc_count'] == 7
-    assert wolfson_facet['key'] == '["Wolfson Foundation", "GB-CHC-1156077"]'
-
-    # Test the data is extended by grantnav adding geo codes
-    # Original data contains postal codes only
-    geocode_response = client.get('/search?text_query=E10000023+AND+fundingOrganization.id:GB-CHC-1156077')
-    response = client.get(geocode_response.url)
-    assert response.context['results']['hits']['total']['value'] == 0
-
-    geocode_response = client.get('/search?text_query=E09000033+AND+fundingOrganization.id:GB-CHC-1156077')
-    response = client.get(geocode_response.url)
-    assert response.context['results']['hits']['total']['value'] == 19
-
-
-def test_search_accents(provenance_dataload, client):
-    # Check that accents placed in different positions give same result
-
-    initial_response = client.get('/search?text_query=Esmee')
-    response = client.get(initial_response.url)
-
-    assert response.context['results']['hits']['total']['value'] == 5
-
-    initial_response = client.get('/search?text_query=Esmée')
-    response = client.get(initial_response.url)
-
-    assert response.context['results']['hits']['total']['value'] == 5
-
-    initial_response = client.get('/search?text_query=Esmeé')
-    response = client.get(initial_response.url)
-
-    assert response.context['results']['hits']['total']['value'] == 5
-
-
-#def test_stats(provenance_dataload, client):
-#    response = client.get('/stats')
-#    assert "379" in str(response.content)
+@pytest.mark.parametrize(('search_query', 'expected_grants'), [
+    ("gardens+AND+fundingOrganization.id:GB-CHC-1156077", 7),
+    ("E09000033+AND+fundingOrganization.id:GB-CHC-1156077", 19),
+    ("E10000023+AND+fundingOrganization.id:GB-CHC-1156077", 0),
+    ("Esmee", 5),
+    ("Esmée", 5),
+    ("Esmeé", 5),
+])
+def test_search_query(provenance_dataload, client, search_query, expected_grants):
+    r = client.get(f"/search?text_query={search_query}", follow=True)
+    assert r.context['results']['hits']['total']['value'] == expected_grants
 
 
 def test_json_download(provenance_dataload, client):

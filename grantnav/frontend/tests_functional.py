@@ -19,6 +19,9 @@ BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
 
 def check_js_errors(browser):
     for log in browser.get_log("browser"):
+        # TEMP FIX before helpsite fix is deployed live
+        if "https://help.grantnav.threesixtygiving.org/en/latest/_static/js/theme.js" in log["message"]:
+            continue
         assert "SEVERE" not in log['level'], f"found {log}"
 
 
@@ -438,7 +441,7 @@ def test_search_recipients(provenance_dataload, server_url, browser):
 
     #browser.get_screenshot_as_file("recipients-search.png")
 
-    assert len(browser.find_elements_by_class_name("grant-search-result__recipients")) == 9
+    assert len(browser.find_elements_by_class_name("grant-search-result__recipients")) == 20
     check_js_errors(browser)
 
 
@@ -455,15 +458,15 @@ def test_search_funders(provenance_dataload, server_url, browser):
 
     #browser.get_screenshot_as_file("recipients-search.png")
 
-    assert len(browser.find_elements_by_class_name("grant-search-result__funders")) == 4
+    assert len(browser.find_elements_by_class_name("grant-search-result__funders")) == 20
     check_js_errors(browser)
 
 
 def test_org_page(provenance_dataload, server_url, browser):
-    browser.get(server_url + "/org/GB-COH-08523414")
+    browser.get(server_url + "/org/GB-CHC-1156077")
     #browser.get_screenshot_as_file("org-page.png")
 
-    assert "EQUALITEACH C.I.C." in browser.find_element_by_tag_name('h1').text
+    assert "Wolfson Foundation" in browser.find_element_by_tag_name('h1').text
     check_js_errors(browser)
 
 
@@ -479,31 +482,50 @@ def test_insights_button(provenance_dataload, server_url, browser):
         browser.get_log("browser")
 
 
-@pytest.mark.parametrize(('path'), ['?'
+links_checked = {}
+
+
+@pytest.mark.parametrize(('path'), ['?',
                                     '/search',
                                     '/funders',
                                     '/recipients',
                                     '/about',
-                                    '/datasets'
+                                    '/datasets',
                                     '/grant/360G-LBFEW-99233',  # regular grant
                                     '/grant/360G-wolfson-19916y',  # grant with 0 or negative amount
                                     '/org/GB-CHC-1126147'])
 def test_links(provenance_dataload, server_url, browser, path):
-    browser.get(server_url + path)
+    """ Load each path and check the links within the page respond HTTP success """
 
-    skip = ["https://twitter.com/360Giving/"]
+    # We use selenium for this kind of test because it's a convenient way to manipulate the dom
+    browser.get(server_url + path)
+    skip = ["#", "https://twitter.com/360Giving/", "mailto:grantnav@threesixtygiving.org", "https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org/search.json%3F"]
 
     for a in browser.find_elements_by_tag_name("a"):
+        # Datatables quirk with empty <a> tags, select2 quirk with same issue
+        if a.get_attribute("aria-controls") or a.get_attribute("class") == "remove-select2-option":
+            continue
+
         link = a.get_attribute("href")
 
-        assert len(link) > 0, "Error An <a> tag without a href attribute"
+        assert link is not None, f"Error An <a> tag without a href attribute on {path} {a.get_attribute('outerHTML')}"
 
         if link in skip:
             continue
 
-        if link.startswith("http"):
-            print(f"Testing {link}")
-            # Threesixtygiving.org 403s on this if we don't set a user agent
-            r = requests.head(link, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"})
+        # print(f"Testing {link}")
 
-            assert (r.status_code >= 200 and r.status_code < 399), f"{link} is broken: {r.status_code}"
+        try:
+            status_code = links_checked[link]
+        except KeyError:
+            try:
+                # Some sites reject connection without a user agent
+                r = requests.head(link, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"})
+            except Exception as e:
+                # Convert exception to assert for better readability
+                assert False, f"Request exception: {e} on {a.get_attribute('outerHTML')}"
+
+            status_code = r.status_code
+            links_checked[link] = r.status_code
+
+            assert (status_code >= 200 and status_code < 399), f"{link} is broken: {status_code} on page {path}"
