@@ -1,7 +1,6 @@
 {% load get_facet_org_name get_facet_org_id get_amount from frontend %}
 <div class="filter-list filter-list--with-checkboxes">
   <details class="filter-list__accordion" {% if results.aggregations.recipientOrganization.clear_url %} open{% endif %}>
-    <a class="anchor" id="recipientOrganization"></a>
     <summary class="filter-list__label">
       <div>Recipient Organizations {% if results.aggregations.recipientOrganization.clear_url %} <a href={{results.aggregations.recipientOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
@@ -22,7 +21,7 @@
         {% endblock filterRadios %}
 
 
-        <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05"> 
+        <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
           <select class="filter-search-box recipientOrganization-search-box" multiple="multiple">
             {% for key, selected in selected_facets.items %}
               {% if key == 'Recipients' or key == 'Excluded Recipients' %}
@@ -32,7 +31,7 @@
               {% endif %}
             {% endfor %}
           </select>
-        </div> 
+        </div>
 
       </form>
     </div>

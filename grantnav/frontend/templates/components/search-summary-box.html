@@ -141,7 +141,7 @@
             <span class="summary-footer--item__value">
               {{currency|currency_symbol}}{{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"amountAwarded"|human_format}}
               from
-              <a href="grant/{{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"id"}}">
+              <a href="grant/{{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"id"}}">
                 {{results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"fundingOrganization"|first|get:"name"}}
               to
               {% with recipientOrganization_to=results.aggregations.earliest_grant.hits.hits.0|get:"_source"|get:"recipientOrganization" %}
@@ -159,7 +159,7 @@
               {% with total_other=buckets|first|get:"amount_stats"|get:"count"|reverse_minus:results.hits.total.value %}
                 <span class="summary-footer--item__label">Total non-{{currency}} grants:</span>
                 {% if total_other %}
-                  <a class="javascript-enabled modal__trigger" id="other-currencies-modal" data-id="summary-info-model">
+                  <a href="#other-currencies-modal" class="javascript-enabled modal__trigger" id="other-currencies-modal" data-id="summary-info-model">
                     <span class="summary-footer--item__value">{{total_other|get_amount}}</span>
                   </a>
                 {% else %}
