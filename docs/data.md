@@ -20,7 +20,7 @@ Other tools that work with grants data will often incorporate multiple data sour
 
 ## Errors in the data in GrantNav
 
-The data in GrantNav is open data published by a range of grantmakers as well as data taken from official sources, such as Charity Commission and location data. For details on what data appears and where it has come from, see our [Data in GrantNav](https://help.grantnav.threesixtygiving.org/en/latest/data/) section above.
+The data in GrantNav is open data published by a range of grantmakers as well as data taken from official sources, such as Charity Commission and location data. For details on what data appears and where it has come from, see our [Data in GrantNav](#what-data-is-in-grantnav) section above.
 
 ### If you find an error in data about your organisation
 
