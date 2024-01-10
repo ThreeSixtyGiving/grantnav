@@ -26,7 +26,6 @@ Example:
 Example:
 ```html
       <div class="panel panel-default">
-        <a class="anchor" id="TSGOrganizationType"></a>
         <div class="panel-heading list-group-compact">
           Funding Organisation Type {% if results.aggregations.fundingOrganizationTSGType.clear_url %} <a href="{{results.aggregations.currency.clear_url}}"> <small>(clear)</small></a> {% endif%}
         </div>
