@@ -19,9 +19,6 @@ BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
 
 def check_js_errors(browser):
     for log in browser.get_log("browser"):
-        # TEMP FIX before helpsite fix is deployed live
-        if "https://help.grantnav.threesixtygiving.org/en/latest/_static/js/theme.js" in log["message"]:
-            continue
         assert "SEVERE" not in log['level'], f"found {log}"
 
 
