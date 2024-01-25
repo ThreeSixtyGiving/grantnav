@@ -809,8 +809,9 @@ def search(request, template_name="search.html"):
             if not results:
                 results = get_results(json_query, results_size, (page - 1) * SIZE)
 
-                if try_cache:
-                    cache.set("empty-query-cache", results)
+                # This needs further logic to control cache set
+                # if try_cache:
+                #    cache.set("empty-query-cache", results)
 
             for key in SEARCH_SUMMARY_AGGREGATES:
                 json_query["aggs"].pop(key)
