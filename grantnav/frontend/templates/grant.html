@@ -72,7 +72,16 @@
         <div class="box box--teal">
           <h3 class="box__heading">Where is this data from?</h3>
           {% with dataset=grant|get_dataset %}
-          <p>This data was originally published by <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>. You can hover over codes from <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/">standard codelists</a> to see the user-friendly name provided by 360Giving.  If you need to report a problem in the data please contact {{ dataset.publisher.name }} directly, see their <a href="{% url 'publisher' dataset.publisher.prefix %}">GrantNav publisher page</a> for more information.</p>
+          <p>
+            This data was originally published by
+            <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>.
+            If you see something about your organisation or the funding it has received on this page that doesn&#2019;t look right you can submit a
+            {% url 'grant' grant.source.id as grant_url %}
+            <a href="https://www.threesixtygiving.org/grantee-amendment-requests/?grantnav_url={{ request.scheme }}://{{ request.get_host }}{{ grant_url | urlencode }}">grantee amendment request to them</a>.
+            You can hover over codes from
+            <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/">standard codelists</a>
+            to see the user-friendly name provided by 360Giving.
+          </p>
           {% endwith %}
         </div>
       </div>
