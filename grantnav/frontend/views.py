@@ -1227,6 +1227,7 @@ def org(request, org_id):
                "main_name": main_name,
                "other_names": other_names,
                "ftc_data": ftc_data,
+               "requested_org_id": org_id,
                }
 
     return render(request, "org.html", context=context)
