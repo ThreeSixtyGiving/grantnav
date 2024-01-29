@@ -21,8 +21,7 @@
           <p>
             This data was published in the 360Giving Data Standard by one or more Funders.
             If you see something about your organisation on this page that doesn't look right you can submit a
-            {% url 'org' requested_org_id as org_url_path %}
-            <a href="https://www.threesixtygiving.org/grantee-amendment-requests/?grantnav_url={{ request.scheme|add:"://"|add:request.get_host|add:org_url_path|urlencode }}">grantee amendment request</a>.
+            <a href="https://www.threesixtygiving.org/grantee-amendment-requests/?grantnav_url={{ request.build_absolute_uri|urlencode }}">grantee amendment request</a>.
           </p>
         </div>
 
