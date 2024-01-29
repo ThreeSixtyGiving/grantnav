@@ -10,7 +10,7 @@ Introduction
 
 This is a search tool for data in the 360 giving data format.
 
-Live deploy at http://grantnav.threesixtygiving.org/
+Live deploy at https://grantnav.threesixtygiving.org/
 
 Requirements
 ------------
