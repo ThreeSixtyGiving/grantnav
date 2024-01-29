@@ -10,7 +10,7 @@ Introduction
 
 This is a search tool for data in the 360 giving data format.
 
-Live deploy at http://grantnav.threesixtygiving.org/
+Live deploy at https://grantnav.threesixtygiving.org/
 
 Requirements
 ------------
@@ -90,14 +90,14 @@ The funders and recipients search requires the datastore generated `funders.jl` 
 
 ### Getting data for loading
 
-There is a list of 360Giving datasets at http://data.threesixtygiving.org/. There's an API for this list http://data.threesixtygiving.org/data.json and a datagetter tool to download and convert it -  https://github.com/ThreeSixtyGiving/datagetter
+There is a list of 360Giving datasets at https://data.threesixtygiving.org/. There's an API for this list https://data.threesixtygiving.org/data.json and a datagetter tool to download and convert it -  https://github.com/ThreeSixtyGiving/datagetter
 
-If your data is in a flat format (eg Excel spreadsheet, CSV), or needs validating, you can use [CoVE](http://cove.opendataservices.coop/360/) to convert and validate your data.
+If your data is in a flat format (eg Excel spreadsheet, CSV), or needs validating, you can use [CoVE](https://cove.opendataservices.coop/360/) to convert and validate your data.
 
 Alternatively contact 360Giving for the latest data dump from the datastore.
 ### Provenance JSON
 
-Most parts of GrantNav work fine without provenance information. However, in order for the publisher/datasets pages to work correctly you must point the `PROVENANCE_JSON` environment variable at a local copy of [data.json](http://data.threesixtygiving.org/data.json). You must also load the data into GrantNav using filenames that correspond to the identifiers in this JSON. The [datagetter](https://github.com/ThreeSixtyGiving/datagetter) saves files with the correct name, and also makes a copy of data.json for you.
+Most parts of GrantNav work fine without provenance information. However, in order for the publisher/datasets pages to work correctly you must point the `PROVENANCE_JSON` environment variable at a local copy of [data.json](https://data.threesixtygiving.org/data.json). You must also load the data into GrantNav using filenames that correspond to the identifiers in this JSON. The [datagetter](https://github.com/ThreeSixtyGiving/datagetter) saves files with the correct name, and also makes a copy of data.json for you.
 
 e.g.
 
@@ -127,7 +127,7 @@ Make sure elastic search is running.
 The tests include functional tests (actually interacting with the website in selenium). These can also be run against a deployed copy of the website:
 
 ```
-CUSTOM_SERVER_URL=http://dev.grantnav.opendataservices.coop py.test
+CUSTOM_SERVER_URL=https://dev.grantnav.opendataservices.coop py.test
 ```
 
 The tests delete an elastic search index and repopulate it.  The default index name is threesixtygiving
