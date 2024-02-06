@@ -15,7 +15,7 @@ When a grant does include location information, in the form of a postcode or [ON
 
 The **Geography filters** in the left hand side use the location data to allow filtering by UK Country and English Region or by District.
 
-The **Locations search mode** of the Search Bar allows searches by UK Country and English Region and District names or geocodes.
+The **Locations search mode** of the Search Bar allows searches by UK Country and English Region, and District and Ward names or geocodes.
 
 The UK Country and English Region name and District and Ward names and geocode data is also included in GrantNav search result downloads in fields labelled “Additional data”.
 
