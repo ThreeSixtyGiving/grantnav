@@ -61,7 +61,7 @@ def get_results(json_query, size=10, from_=0, data_type="grant"):
     # takes query which only has a dict e.g.
     # query["bool"]["filter"]["term"]["additional_data.recipient..": "value"]
     # and turns it into a list of filters so that we can always append data_type
-    if type(query["bool"]["filter"]) == dict:
+    if isinstance(query["bool"]["filter"], dict):
         single_term_query = query["bool"]["filter"]
         query["bool"]["filter"] = [single_term_query]
 
