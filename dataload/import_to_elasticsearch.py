@@ -420,7 +420,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     # We use additional_data extensively in GN if it is missing things
                     # might not work as expected
                     try:
-                        if type(grant["additional_data"]) != dict:
+                        if not isinstance(grant["additional_data"], dict):
                             raise TypeError("additional_data not a dictionary")
                     except (TypeError, KeyError):
                         warnings.warn("No additional_data block for grant: %s" % grant["id"])
