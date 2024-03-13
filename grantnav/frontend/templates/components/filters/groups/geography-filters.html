@@ -4,6 +4,7 @@
       <div>Geography</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
+    <!-- JS switcher radio button -->
     <div class="filter-group_contents-wrapper">
       {% if results.aggregations.recipientRegionName.buckets %}
         {% include 'components/filters/lists/filter-list-region.html' %}
