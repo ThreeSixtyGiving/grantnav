@@ -14,12 +14,14 @@
       {% endif %}
     </div>
 
-    <div class="filter-group_contents-wrapper" style="border: 2px solid rgb(255, 0, 225)">
-      {% include 'components/filters/lists/filter-lists-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.beneficiaryDistrictName filter_title="Beneficiary District" %}
+    <div class="filter-group_contents-wrapper" style="border: 3px solid rgb(255, 0, 225)">
+      <p>Recipient Organisation location</p>
       {% include 'components/filters/lists/filter-lists-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientOrgDistrictName filter_title="Recipient District" %}
-
-      {% include 'components/filters/lists/filter-lists-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.beneficiaryRegionName filter_title="Beneficiary Region" %}
       {% include 'components/filters/lists/filter-lists-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientOrgRegionName filter_title="Recipient Region" %}
+
+      <p>Beneficiary location</p>
+      {% include 'components/filters/lists/filter-lists-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.beneficiaryRegionName filter_title="Beneficiary Region" %}
+      {% include 'components/filters/lists/filter-lists-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.beneficiaryDistrictName filter_title="Beneficiary District" %}
     </div>
   </details>
 </div>
