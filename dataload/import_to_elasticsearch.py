@@ -509,7 +509,6 @@ def update_doc_with_other_locations(grant):
     """ This flattens out some embedded data for easier indexing """
 
     for location in grant["additional_data"]["locationLookup"]:
-#TODO we can save some cycles by doing a return once we have filled in these fields
         try:
             # beneficiaryLocation
             if location["source"] == "beneficiaryLocation":
@@ -518,7 +517,11 @@ def update_doc_with_other_locations(grant):
                     grant["additional_data"]["GNBeneficiaryDistrictName"] = location["ladnm"]
 
                 if not grant["additional_data"].get("GNBeneficiaryRegionName"):
-                    grant["additional_data"]["GNBeneficiaryRegionName"] = location["rgnnm"]
+                    try:
+                        grant["additional_data"]["GNBeneficiaryRegionName"] = location["rgnnm"]
+                    except KeyError:
+                        # Wales, Scotland, Northern Ireland don't have rgnm so we set them as country
+                        grant["additional_data"]["GNBeneficiaryRegionName"] = location["ctrynm"]
 
             # recipientOrganisationLocation
             if location["source"] == "recipientOrganizationLocation":
@@ -527,10 +530,16 @@ def update_doc_with_other_locations(grant):
                     grant["additional_data"]["GNRecipientOrgDistrictName"] = location["ladnm"]
 
                 if not grant["additional_data"].get("GNRecipientOrgRegionName"):
-                    grant["additional_data"]["GNRecipientOrgRegionName"] = location["rgnnm"]
+                    try:
+                        grant["additional_data"]["GNRecipientOrgRegionName"] = location["rgnnm"]
+                    except KeyError:
+                        # Wales, Scotland, Northern Ireland don't have rgnm so we set them as country
+                        grant["additional_data"]["GNRecipientOrgRegionName"] = location["ctrynm"]
+
         except KeyError as e:
-            print(e)
+            # We don't have location information for this grant
             pass
+
 
 
 def update_doc_with_first_recipient_org_info(grant):
