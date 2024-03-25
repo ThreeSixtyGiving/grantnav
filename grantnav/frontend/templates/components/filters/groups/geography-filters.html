@@ -1,4 +1,4 @@
-<div class="filter-group">
+<div class="filter-group margin-bottom:2">
   <details class="filter-group__accordion" open>
     <summary class="filter-group__label">
       <div>Geography</div>
@@ -7,21 +7,17 @@
     <!-- JS switcher radio button -->
     <div class="filter-group_contents-wrapper">
       {% if results.aggregations.recipientRegionName.buckets %}
-        {% include 'components/filters/lists/filter-list-region.html' %}
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.recipientRegionName filter_title="Best Available Country and Region" %}
       {% endif %}
       {% if results.aggregations.recipientDistrictName.buckets %}
         {% include 'components/filters/lists/filter-list-district.html' %}
       {% endif %}
-    </div>
 
-    <div class="filter-group_contents-wrapper" style="border: 3px solid rgb(255, 0, 225)">
-      <p>Recipient Organisation location</p>
-      {% include 'components/filters/lists/filter-lists-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientOrgDistrictName filter_title="Recipient District" %}
-      {% include 'components/filters/lists/filter-lists-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientOrgRegionName filter_title="Recipient Country and Region" %}
+      {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with aggregate_data=results.aggregations.recipientOrgDistrictName filter_title="Recipient District" filter_id="recipientOrgDistrictName" %}
+      {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.recipientOrgRegionName filter_title="Recipient Country and Region" %}
 
-      <p>Beneficiary location</p>
-      {% include 'components/filters/lists/filter-lists-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.beneficiaryRegionName filter_title="Beneficiary Country and Region" %}
-      {% include 'components/filters/lists/filter-lists-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.beneficiaryDistrictName filter_title="Beneficiary District" %}
+      {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with aggregate_data=results.aggregations.beneficiaryDistrictName filter_title="Beneficiary District" filter_id="beneficiaryDistrictName" %}
+      {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.beneficiaryRegionName filter_title="Beneficiary Country and Region" %}
     </div>
   </details>
 </div>

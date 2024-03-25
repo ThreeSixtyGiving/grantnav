@@ -7,7 +7,9 @@
     {% block filters %}
 
       {% if results.aggregations.currency.buckets %}
-        {% include 'components/filters/lists/filter-list-currency.html' %}
+        <div class="filter-group margin-bottom:2">
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.currency filter_title="Currency" %}
+        </div>
       {% endif %}
       {% if results.aggregations.amountAwardedFixed.buckets %}
         {% include 'components/filters/lists/filter-list-amount-awarded.html' %}
@@ -25,7 +27,7 @@
         {% include 'components/filters/groups/recipient-filters.html' %}
       {% endif %}
 
-      {% include 'components/filters/lists/filter-list-regrant-type.html' %}
+      {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.simple_grant_type filter_title="Grant Type" %}
 
     {% endblock filters %}
   </div>
