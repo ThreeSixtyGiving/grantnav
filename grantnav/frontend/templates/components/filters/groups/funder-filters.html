@@ -5,7 +5,7 @@
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-group_contents-wrapper">
-        {% include 'components/filters/lists/filter-list-funding-org-type.html' %}
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.fundingOrganizationTSGType filter_title="Funding Organization Type" %}
         {% include 'components/filters/lists/filter-list-funding-org.html' %}
         {% include 'components/filters/lists/filter-list-programme-title.html' %}
     </div>

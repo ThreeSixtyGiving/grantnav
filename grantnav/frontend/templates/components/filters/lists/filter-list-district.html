@@ -1,7 +1,7 @@
-<div class="filter-list filter-list--with-checkboxes margin-bottom:2">
+<div class="filter-list filter-list--with-checkboxes">
   <details class="filter-list__accordion" {% if results.aggregations.recipientDistrictName.clear_url %} open{% endif %}>
     <summary class="filter-list__label">
-      <div>District {% if results.aggregations.recipientDistrictName.clear_url %} <a href={{results.aggregations.recipientDistrictName.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
+      <div>Best Available District {% if results.aggregations.recipientDistrictName.clear_url %} <a href={{results.aggregations.recipientDistrictName.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-list__contents-wrapper facet-multiselect">

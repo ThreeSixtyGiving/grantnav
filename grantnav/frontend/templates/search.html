@@ -150,6 +150,17 @@ function formatDropdownItem (item) {
   return $dropdownItem;
 }
 
+function dropdownItemFromBucket(item){
+
+  let newItem = {
+    text: item.key,
+    count: item.doc_count,
+    // TODO how to get id?
+  };
+
+  return formatDropdownItem(newItem);
+}
+
 $(document).ready(function () {
   // eslint-disable-next-line no-constant-condition
   if ('{{ view_mode }}' === 'card') {
@@ -282,10 +293,22 @@ $(function () {
       ajax: get_filter_search_ajax('additional_data', 'recipientDistrictName')
     });
 
+    let recipient_org_district_options = $.extend({}, funder_options);
+    recipient_org_district_options = $.extend(recipient_org_district_options, {
+      templateResult: dropdownItemFromBucket,
+      placeholder: 'Search for a recipient organisation district',
+      ajax: null,
+      data: JSON.parse($("#recipientOrgDistrictNameData").text()),
+      debug: true,
+    });
+
     $('.fundingOrganization-search-box').select2(funder_options);
     $('.recipientOrganization-search-box').select2(recipient_options);
     $('.grantProgramme-search-box').select2(programme_options);
     $('.recipientDistrictName-search-box').select2(district_options);
+    $('.recipientOrgDistrictName-search-box').select2(recipient_org_district_options)
+
+    /* Selecting */
 
     $('.fundingOrganization-search-box').on('select2:select', function (e) {
       const data = e.params.data;
@@ -307,6 +330,16 @@ $(function () {
       redirect_on_selection('recipientDistrictName', data);
     });
 
+    $('.recipientOrgDistrictName-search-box').on('select2:select', function (e) {
+      console.log("wefwfwefwef");
+      const data = e.params.data;
+      redirect_on_selection('recipientOrgDistrictName', data);
+    });
+
+    /* End selecting */
+
+    /* Excluding */
+
     $('#fundingOrganization-select input[type=radio]').on('change', function (e) {
       maybe_redirect_on_exclude('fundingOrganization');
     });
@@ -322,6 +355,12 @@ $(function () {
     $('#recipientDistrictName-select input[type=radio]').on('change', function (e) {
       maybe_redirect_on_exclude('recipientDistrictName');
     });
+
+    $('#recipientOrgDistrictName-select input[type=radio]').on('change', function (e) {
+      maybe_redirect_on_exclude('recipientOrgDistrictName');
+    });
+
+    /* End excluding */
   });
 
   $('body').on('click', '.remove-select2-option', function (e) {
