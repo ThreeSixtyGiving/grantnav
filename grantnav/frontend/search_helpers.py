@@ -219,7 +219,7 @@ def get_terms_facets(
     context,
     json_query,
     field,
-    aggregate,
+    param_name,
     bool_index,
     display_name,
     basic_filter,
@@ -264,10 +264,11 @@ def get_terms_facets(
             {
                 "url": path + "?" + create_parameters_from_json_query(json_query),
                 "display_value": display_value,
+                "param_name": param_name,
             }
         )
 
-    for bucket in results["aggregations"][aggregate]["buckets"]:
+    for bucket in results["aggregations"][param_name]["buckets"]:
         facet_value = bucket["key"]
         filter_values = [filter["term"][field] for filter in current_filter]
         if facet_value in filter_values:
@@ -281,10 +282,10 @@ def get_terms_facets(
         bucket["url"] = path + "?" + create_parameters_from_json_query(json_query)
     if current_filter:
         json_query["query"]["bool"]["filter"][bool_index]["bool"][bool_condition] = []
-        results["aggregations"][aggregate]["clear_url"] = path + "?" + create_parameters_from_json_query(json_query)
-        results["aggregations"][aggregate]["exclude"] = True if bool_condition == "must_not" else False
+        results["aggregations"][param_name]["clear_url"] = path + "?" + create_parameters_from_json_query(json_query)
+        results["aggregations"][param_name]["exclude"] = True if bool_condition == "must_not" else False
 
-    main_results["aggregations"][aggregate] = results["aggregations"][aggregate]
+    main_results["aggregations"][param_name] = results["aggregations"][param_name]
 
 
 def term_facet_from_parameters(request, json_query, field_name, param_name, bool_index, field, is_json=False, data_type="grant"):

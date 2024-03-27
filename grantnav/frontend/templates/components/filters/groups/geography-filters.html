@@ -13,8 +13,8 @@
         {% include 'components/filters/lists/filter-list-district.html' %}
       {% endif %}
 
-      {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with aggregate_data=results.aggregations.recipientOrgDistrictName filter_title="Recipient District" filter_id="recipientOrgDistrictName" %}
-      {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.recipientOrgRegionName filter_title="Recipient Country and Region" %}
+      {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with aggregate_data=results.aggregations.recipientOrgDistrictName filter_title="Recipient Organisation District" filter_id="recipientOrgDistrictName" %}
+      {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.recipientOrgRegionName filter_title="Recipient Organisation Country and Region" %}
 
       {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with aggregate_data=results.aggregations.beneficiaryDistrictName filter_title="Beneficiary District" filter_id="beneficiaryDistrictName" %}
       {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.beneficiaryRegionName filter_title="Beneficiary Country and Region" %}

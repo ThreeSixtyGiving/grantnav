@@ -17,7 +17,7 @@
           <div class="filter-list__form--radios radio">
             <div class="filter-list__form--radio-item">
               <input class="screen-reader-only" type="radio" id="{{filter_id}}-include" data-target="#{{filter_id}}-select" name="{{filter_id}}-exclude" value="false" {% if not aggregate_data.exclude %}checked{%endif%}>
-              <label for="re-include">Include selected</label>
+              <label for="{{filter_id}}-include">Include selected</label>
             </div>
             <div class="filter-list__form--radio-item">
               <input class="screen-reader-only" type="radio" id="{{filter_id}}-exclude" data-target="#{{filter_id}}-select" name="{{filter_id}}-exclude" value="true" {% if aggregate_data.exclude %}checked{%endif%}>
@@ -27,13 +27,21 @@
         {% endblock filterRadios %}
 
         <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
+          <pre>
+            {{aggregate_data.buckets}}
+          </pre>
           <select class="filter-search-box {{filter_id}}-search-box" multiple="multiple">
-            {% for key, selected in selected_facets.items %} {# TODO FIXME  #}
-              {% if key == 'Districts' or key == 'Excluded Districts' %}
+            {% for item in aggregate_data.buckets %}
+
+              <option value="{{item.key}}" data-url="{{item.url}}">{{item.key}} <small>({{item.doc_count}})</small></option>
+            {% endfor %}
+
+            {% for key, selected in selected_facets.items %} {# TODO FIXME  We only support including them all or excluding them all #}
                 {% for item in selected %}
+                  {% if item.param_name == filter_id %}
                    <option value="{{item.url}}" selected="selected">{{item.display_value}}</option>
+                  {% endif %}
                 {% endfor %}
-              {% endif %}
             {% endfor %}
           </select>
         </div>
