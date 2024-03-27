@@ -137,28 +137,21 @@ function formatDropdownItem (item) {
   html += '</div>';
   const $dropdownItem = $(html);
 
-  const small = $('<small> (' + item.count + ')</small>');
-
+  console.log(item);
   $dropdownItem.find('input').val(item.id).prop('id', item.id);
 
   if (item.selected) {
     $dropdownItem.find('input').prop('checked', 'checked');
   }
 
-  $dropdownItem.find('label').prop('for', item.id).text(item.text).append(small);
+  let dropText = $dropdownItem.find('label').prop('for', item.id).text(item.text);
+
+  if (item.count){
+    const small = $('<small> (' + item.count + ')</small>');
+    dropText.append(small);
+  }
 
   return $dropdownItem;
-}
-
-function dropdownItemFromBucket(item){
-
-  let newItem = {
-    text: item.key,
-    count: item.doc_count,
-    // TODO how to get id?
-  };
-
-  return formatDropdownItem(newItem);
 }
 
 $(document).ready(function () {
@@ -225,6 +218,7 @@ function get_filter_search_ajax (parent_field, child_field) {
       query_obj.parent_field = parent_field;
       query_obj.child_field = child_field;
       query_obj.filter_search = params.term;
+      console.log(query_obj);
       return query_obj;
     }
   };
@@ -232,7 +226,11 @@ function get_filter_search_ajax (parent_field, child_field) {
 
 // when a new item is selected then refresh the page
 function redirect_on_selection (param, data) {
-  const uri = URI(data.url);
+  /* Ajax route OR template route */
+  let url = data.url || data.element.dataset.url;
+
+  const uri = URI(url);
+
   uri.removeSearch('exclude_' + param);
   if ($('#' + param + '-exclude').prop('checked')) {
     uri.addSearch('exclude_' + param, 'true');
@@ -293,23 +291,29 @@ $(function () {
       ajax: get_filter_search_ajax('additional_data', 'recipientDistrictName')
     });
 
-    let recipient_org_district_options = $.extend({}, funder_options);
-    recipient_org_district_options = $.extend(recipient_org_district_options, {
-      templateResult: dropdownItemFromBucket,
-      placeholder: 'Search for a recipient organisation district',
-      ajax: null,
-      data: JSON.parse($("#recipientOrgDistrictNameData").text()),
-      debug: true,
-    });
-
+    /* Organisations */
     $('.fundingOrganization-search-box').select2(funder_options);
     $('.recipientOrganization-search-box').select2(recipient_options);
+    /* Grant Programmes */
     $('.grantProgramme-search-box').select2(programme_options);
+    /* Geography */
     $('.recipientDistrictName-search-box').select2(district_options);
-    $('.recipientOrgDistrictName-search-box').select2(recipient_org_district_options)
+    $('.recipientOrgDistrictName-search-box').select2({
+      width: '100%',
+      templateResult: formatDropdownItem,
+      templateSelection: formatSelection,
+      dropdownCssClass: 'filter-list filter-list--with-checkboxes',
+      placeholder: 'Search for Recipient Organisation District',
+    });
+    $('.beneficiaryDistrictName-search-box').select2({
+      width: '100%',
+      templateResult: formatDropdownItem,
+      templateSelection: formatSelection,
+      dropdownCssClass: 'filter-list filter-list--with-checkboxes',
+      placeholder: 'Search for Beneficiary District',
+     });
 
     /* Selecting */
-
     $('.fundingOrganization-search-box').on('select2:select', function (e) {
       const data = e.params.data;
       redirect_on_selection('fundingOrganization', data);
@@ -331,10 +335,15 @@ $(function () {
     });
 
     $('.recipientOrgDistrictName-search-box').on('select2:select', function (e) {
-      console.log("wefwfwefwef");
-      const data = e.params.data;
+      let data = e.params.data;
       redirect_on_selection('recipientOrgDistrictName', data);
     });
+
+    $('.beneficiaryDistrictName-search-box').on('select2:select', function (e) {
+      let data = e.params.data;
+      redirect_on_selection('beneficiaryDistrictName', data);
+    });
+
 
     /* End selecting */
 
@@ -358,6 +367,10 @@ $(function () {
 
     $('#recipientOrgDistrictName-select input[type=radio]').on('change', function (e) {
       maybe_redirect_on_exclude('recipientOrgDistrictName');
+    });
+
+    $('#beneficiaryDistrictName-select input[type=radio]').on('change', function (e) {
+      maybe_redirect_on_exclude('beneficiaryDistrictName');
     });
 
     /* End excluding */
