@@ -6,23 +6,28 @@
   <div class="filter-wrapper__filters" aria-hidden="false">
     {% block filters %}
 
+      {% if results.aggregations.fundingOrganization.buckets %}
+        {% include 'components/filters/groups/funder-filters.html' %}
+      {% endif %}
+
+      {% if results.aggregations.recipientRegionName.buckets or results.aggregations.recipientDistrictName.buckets or results.aggregations.recipientOrgDistrictName.buckets or results.aggregations.recipientOrgRegionName.buckets or results.aggregations.beneficiaryDistrictName.buckets or results.aggregations.beneficiaryRegionName.buckets %}
+        {% include 'components/filters/groups/geography-filters.html' %}
+      {% endif %}
+
       {% if results.aggregations.currency.buckets %}
         <div class="filter-group margin-bottom:2">
         {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.currency filter_title="Currency" %}
         </div>
       {% endif %}
+
       {% if results.aggregations.amountAwardedFixed.buckets %}
         {% include 'components/filters/lists/filter-list-amount-awarded.html' %}
       {% endif %}
+
       {% if results.aggregations.awardYear.buckets %}
         {% include 'components/filters/lists/filter-list-year.html' %}
       {% endif %}
-      {% if results.aggregations.recipientRegionName.buckets or results.aggregations.recipientDistrictName.buckets %}
-        {% include 'components/filters/groups/geography-filters.html' %}
-      {% endif %}
-      {% if results.aggregations.fundingOrganization.buckets %}
-        {% include 'components/filters/groups/funder-filters.html' %}
-      {% endif %}
+
       {% if results.aggregations.recipientOrganization.buckets or results.aggregations.recipientTSGType.buckets %}
         {% include 'components/filters/groups/recipient-filters.html' %}
       {% endif %}
