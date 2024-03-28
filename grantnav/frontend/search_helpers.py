@@ -252,6 +252,7 @@ def get_terms_facets(
         results = context["results"]
 
     if bool_condition == "must_not":
+        # This string is used in the django filter template for ajax based select2 in "search-box"
         display_name = "Excluded " + display_name
 
     for filter in current_filter:
@@ -260,11 +261,13 @@ def get_terms_facets(
         display_value = filter["term"][field]
         if is_json:
             display_value = json.loads(display_value)[0]
+
         context["selected_facets"][display_name].append(
             {
                 "url": path + "?" + create_parameters_from_json_query(json_query),
                 "display_value": display_value,
                 "param_name": param_name,
+                "display_name": display_name,
             }
         )
 

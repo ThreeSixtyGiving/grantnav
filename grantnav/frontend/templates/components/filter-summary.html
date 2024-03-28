@@ -8,7 +8,7 @@
       {% for item in selected_list %}
         <li class="filter-summary__filters-item">
           <a href="{{item.url}}">
-            <span class="filter-summary__filters-item--label">{{item.display_value}}</span>
+            <span class="filter-summary__filters-item--label">{{item.display_name}}: {{item.display_value}}</span>
             {% include 'tokens/checkmark-icon.html' %}
           </a>
         </li>
