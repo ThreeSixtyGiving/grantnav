@@ -27,17 +27,15 @@
         {% endblock filterRadios %}
 
         <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
-          <pre>
-            {{aggregate_data.buckets}}
-          </pre>
           <select class="filter-search-box {{filter_id}}-search-box" multiple="multiple">
             {% for item in aggregate_data.buckets %}
-
               <option value="{{item.key}}" data-url="{{item.url}}">{{item.key}} <small>({{item.doc_count}})</small></option>
             {% endfor %}
 
-            {% for key, selected in selected_facets.items %} {# TODO FIXME  We only support including them all or excluding them all #}
-                {% for item in selected %}
+            {# We only support including them all or excluding them all not a mixture. Below shows the current selected #}
+
+            {% for key, selected in selected_facets.items %}
+             {% for item in selected %}
                   {% if item.param_name == filter_id %}
                    <option value="{{item.url}}" selected="selected">{{item.display_value}}</option>
                   {% endif %}
