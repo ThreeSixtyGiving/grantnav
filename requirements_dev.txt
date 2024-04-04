@@ -129,7 +129,7 @@ plotly==5.19.0
     # via -r requirements.in
 pluggy==1.4.0
     # via pytest
-prometheus-client==0.7
+prometheus-client==0.7.0
     # via -r requirements.in
 py==1.11.0
     # via retry
