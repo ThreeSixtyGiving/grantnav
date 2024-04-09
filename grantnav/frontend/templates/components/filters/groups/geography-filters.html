@@ -1,10 +1,9 @@
 <div class="filter-group margin-bottom:2">
   <details class="filter-group__accordion" open>
     <summary class="filter-group__label">
-      <div>Geography</div>
+      <div>Geography <small>UX option 1</small></div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
-    <!-- JS switcher radio button -->
     <div class="filter-group_contents-wrapper">
       {% if results.aggregations.recipientRegionName.buckets %}
         {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.recipientRegionName filter_title="Best Available Country and Region" %}
@@ -20,4 +19,113 @@
       {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.beneficiaryRegionName filter_title="Beneficiary Country and Region" %}
     </div>
   </details>
-</div>
+
+
+  <!-- options -->
+  <div class="margin-top:3"></div>
+
+  <details class="filter-group__accordion" open>
+    <summary class="filter-group__label">
+      <div>Geography <small>UX option 2</small></div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-group_contents-wrapper">
+      {% if results.aggregations.recipientRegionName.buckets %}
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.recipientRegionName filter_title="Best Available Country and Region" %}
+      {% endif %}
+      {% if results.aggregations.recipientDistrictName.buckets %}
+        {% include 'components/filters/lists/filter-list-district.html' %}
+      {% endif %}
+    </div>
+      <details class="filter-group__accordion">
+        <summary class="filter-group__label">
+          <div>Advanced</div>
+        {% include 'tokens/accordion-toggle-icon.html' %}
+        </summary>
+
+        <div class="filter-group_contents-wrapper">
+          {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with aggregate_data=results.aggregations.recipientOrgDistrictName filter_title="Recipient Organisation District" filter_id="recipientOrgDistrictName" %}
+          {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.recipientOrgRegionName filter_title="Recipient Organisation Country and Region" %}
+
+          {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with aggregate_data=results.aggregations.beneficiaryDistrictName filter_title="Beneficiary District" filter_id="beneficiaryDistrictName" %}
+          {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.beneficiaryRegionName filter_title="Beneficiary Country and Region" %}
+        </div>
+      </details>
+  </details>
+
+  <!-- options -->
+  <div class="margin-top:3"></div>
+
+  <details class="filter-group__accordion" open>
+    <summary class="filter-group__label">
+      <div>Geography <small>UX option 3</small></div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-group_contents-wrapper">
+      <div class="filter-list">
+        <summary class="filter-list__label">
+
+        <label for="geo-field-type">Type</label>
+        <select id="geo-field-type" class="dropdown-fiter__select margin-left:1" style="width:100%">
+          <option value="geo-type-best">Best Available</option>
+          <option value="geo-type-recipient">Recipient Organisation</option>
+          <option value="geo-type-beneficiary">Beneficiary</option>
+        </select>
+        <span class="alert-tag__icon">{% include 'tokens/info-icon.html' %}</span>
+        </summary>
+     </div>
+    </div>
+        <div class="filter-group_contents-wrapper">
+          <div id="geo-type-best" class="moo">
+
+          {% if results.aggregations.recipientRegionName.buckets %}
+            {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientRegionName filter_title="Country and Region" %}
+          {% endif %}
+          {% if results.aggregations.recipientDistrictName.buckets %}
+            {% include 'components/filters/lists/filter-list-district.html' with open=True %}
+          {% endif %}
+
+          </div>
+
+          <div id="geo-type-recipient" class="hidden moo">
+          {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientOrgRegionName filter_title="Country and Region" %}
+          {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with open=True aggregate_data=results.aggregations.recipientOrgDistrictName filter_title="District" filter_id="recipientOrgDistrictName" %}
+          </div>
+
+          <div id="geo-type-beneficiary" class="hidden moo">
+
+          {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.beneficiaryRegionName filter_title="Country and Region" %}
+          {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with open=True aggregate_data=results.aggregations.beneficiaryDistrictName filter_title="District" filter_id="beneficiaryDistrictName" %}
+          </div>
+
+        </div>
+
+  </details>
+
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    const selectElement = document.getElementById('geo-field-type');
+    const contentElements = document.querySelectorAll('.moo');
+
+    function showHideContent(event) {
+      const selectedValue = event.target.value;
+
+      contentElements.forEach(element => {
+        if (element.id === selectedValue) {
+          element.classList.remove('hidden');
+        } else {
+          element.classList.add('hidden');
+        }
+      });
+    }
+
+    selectElement.addEventListener('change', showHideContent);
+    </script>
+
+
+
+</div> <!-- / filter-group -->
