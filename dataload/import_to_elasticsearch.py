@@ -462,13 +462,16 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     update_doc_with_simple_grant_type(grant)
                     # grant.additional_data.GNRecipientOrgInfo0
                     update_doc_with_first_recipient_org_info(grant)
-                    # Convenience geo fields
+                    # Convenience geo fields:
+                    #
                     # grant.additional_data.GNBeneficiaryRegionName (rgnnm)
                     # grant.additional_data.GNRecipientOrgRegionName (rgnnm)
                     #
                     # grant.additional_data.GNRecipientOrgDistrictName (ladnm)
                     # grant.additional_data.GNBeneficiaryDistrictName (ladnm)
                     update_doc_with_other_locations(grant)
+                    # update_doc_with_undetermined needs to go last
+                    update_doc_with_undetermined(grant)
                     yield grant
 
         pprint(grants_file_path)
@@ -536,10 +539,27 @@ def update_doc_with_other_locations(grant):
                         # Wales, Scotland, Northern Ireland don't have rgnm so we set them as country
                         grant["additional_data"]["GNRecipientOrgRegionName"] = location["ctrynm"]
 
-        except KeyError as e:
+        except KeyError:
             # We don't have location information for this grant
             pass
 
+
+def update_doc_with_undetermined(grant):
+    """ Checks certain fields and assigns them to the value of "Undetermined" if no value
+        so that they can be aggregated/filtered on.
+    """
+
+    for key in ["GNBeneficiaryDistrictName",
+                "GNRecipientOrgDistrictName",
+                "GNRecipientOrgRegionName",
+                "GNBeneficiaryRegionName",
+                "recipientDistrictGeoCode",
+                "recipientDistrictName",
+                "recipientRegionName",
+                "recipientWardName"
+                ]:
+        if not grant["additional_data"].get(key):
+            grant["additional_data"][key] = "Undetermined"
 
 
 def update_doc_with_first_recipient_org_info(grant):
