@@ -14,14 +14,8 @@
         {% include 'components/filters/groups/geography-filters.html' %}
       {% endif %}
 
-      {% if results.aggregations.currency.buckets %}
-        <div class="filter-group margin-bottom:2">
-        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.currency filter_title="Currency" %}
-        </div>
-      {% endif %}
-
-      {% if results.aggregations.amountAwardedFixed.buckets %}
-        {% include 'components/filters/lists/filter-list-amount-awarded.html' %}
+      {% if results.aggregations.amountAwardedFixed.buckets or results.aggregations.currency.buckets %}
+        {% include 'components/filters/groups/amount.html' %}
       {% endif %}
 
       {% if results.aggregations.awardYear.buckets %}
