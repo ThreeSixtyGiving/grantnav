@@ -74,15 +74,25 @@ grants_csv = OrderedDict([
     # Additional data
     ("Data Source", "dataset.distribution.0.downloadURL"),
     ("Publisher:Name", "dataset.publisher.name"),
+
     ("Best Recipient Region", "result.additional_data.recipientRegionName"),
     ("Best Recipient District", "result.additional_data.recipientDistrictName"),
     ("Best Recipient District Geographic Code", "result.additional_data.recipientDistrictGeoCode"),
     ("Best Recipient Ward", "result.additional_data.recipientWardName"),
     ("Best Recipient Ward Geographic Code", "result.additional_data.recipientWardNameGeoCode"),
+
     ("Recipient Region", "result.additional_data.GNRecipientOrgRegionName"),
+    ("Recipient Region Geographic code", "result.additional_data.GNRecipientOrgRegionGeoCode"),
+
     ("Recipient District", "result.additional_data.GNRecipientOrgDistrictName"),
+    ("Recipient District Geographic code", "result.additional_data.GNRecipientOrgDistrictGeoCode"),
+
     ("Beneficiary Region", "result.additional_data.GNBeneficiaryRegionName"),
+    ("Beneficiary Region Geographic code", "result.additional_data.GNBeneficiaryRegionGeoCode"),
+
     ("Beneficiary District", "result.additional_data.GNBeneficiaryDistrictName"),
+    ("Beneficiary District Geographic code", "result.additional_data.GNBeneficiaryDistrictGeoCode"),
+
     ("Retrieved for use in GrantNav", "dataset.additional_data.datagetter_metadata.datetime_downloaded"),
     ("Funding Org: Org Type", "result.additional_data.TSGFundingOrgType"),
     ("Funding Org: Canonical Org ID", "result.additional_data.GNCanonicalFundingOrgId"),
