@@ -518,26 +518,32 @@ def update_doc_with_other_locations(grant):
 
                 if not grant["additional_data"].get("GNBeneficiaryDistrictName"):
                     grant["additional_data"]["GNBeneficiaryDistrictName"] = location["ladnm"]
+                    grant["additional_data"]["GNBeneficiaryDistrictGeoCode"] = location["ladcd"]
 
                 if not grant["additional_data"].get("GNBeneficiaryRegionName"):
                     try:
                         grant["additional_data"]["GNBeneficiaryRegionName"] = location["rgnnm"]
+                        grant["additional_data"]["GNBeneficiaryRegionGeoCode"] = location["rgncd"]
                     except KeyError:
                         # Wales, Scotland, Northern Ireland don't have rgnm so we set them as country
                         grant["additional_data"]["GNBeneficiaryRegionName"] = location["ctrynm"]
+                        grant["additional_data"]["GNBeneficiaryRegionGeoCode"] = location["ctrycd"]
 
             # recipientOrganisationLocation
             if location["source"] == "recipientOrganizationLocation":
 
                 if not grant["additional_data"].get("GNRecipientOrgDistrictName"):
                     grant["additional_data"]["GNRecipientOrgDistrictName"] = location["ladnm"]
+                    grant["additional_data"]["GNRecipientOrgDistrictGeoCode"] = location["ladnm"]
 
                 if not grant["additional_data"].get("GNRecipientOrgRegionName"):
                     try:
                         grant["additional_data"]["GNRecipientOrgRegionName"] = location["rgnnm"]
+                        grant["additional_data"]["GNRecipientOrgRegionGeoCode"] = location["rgncd"]
                     except KeyError:
                         # Wales, Scotland, Northern Ireland don't have rgnm so we set them as country
                         grant["additional_data"]["GNRecipientOrgRegionName"] = location["ctrynm"]
+                        grant["additional_data"]["GNRecipientOrgRegionGeoCode"] = location["ctrycd"]
 
         except KeyError:
             # We don't have location information for this grant
