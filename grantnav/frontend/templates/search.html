@@ -144,9 +144,9 @@ function formatDropdownItem (item) {
     $dropdownItem.find('input').prop('checked', 'checked');
   }
 
-  let dropText = $dropdownItem.find('label').prop('for', item.id).text(item.text);
+  const dropText = $dropdownItem.find('label').prop('for', item.id).text(item.text);
 
-  if (item.count){
+  if (item.count) {
     const small = $('<small> (' + item.count + ')</small>');
     dropText.append(small);
   }
@@ -227,7 +227,7 @@ function get_filter_search_ajax (parent_field, child_field) {
 // when a new item is selected then refresh the page
 function redirect_on_selection (param, data) {
   /* Ajax route OR template route */
-  let url = data.url || data.element.dataset.url;
+  const url = data.url || data.element.dataset.url;
 
   const uri = URI(url);
 
@@ -303,15 +303,15 @@ $(function () {
       templateResult: formatDropdownItem,
       templateSelection: formatSelection,
       dropdownCssClass: 'filter-list filter-list--with-checkboxes',
-      placeholder: 'Search for Recipient Organisation District',
+      placeholder: 'Search for Recipient Organisation District'
     });
     $('.beneficiaryDistrictName-search-box').select2({
       width: '100%',
       templateResult: formatDropdownItem,
       templateSelection: formatSelection,
       dropdownCssClass: 'filter-list filter-list--with-checkboxes',
-      placeholder: 'Search for Beneficiary District',
-     });
+      placeholder: 'Search for Beneficiary District'
+    });
 
     /* Selecting */
     $('.fundingOrganization-search-box').on('select2:select', function (e) {
@@ -335,15 +335,14 @@ $(function () {
     });
 
     $('.recipientOrgDistrictName-search-box').on('select2:select', function (e) {
-      let data = e.params.data;
+      const data = e.params.data;
       redirect_on_selection('recipientOrgDistrictName', data);
     });
 
     $('.beneficiaryDistrictName-search-box').on('select2:select', function (e) {
-      let data = e.params.data;
+      const data = e.params.data;
       redirect_on_selection('beneficiaryDistrictName', data);
     });
-
 
     /* End selecting */
 
