@@ -931,6 +931,8 @@ def search(request, template_name="search.html"):
         if result_format == "aggregates_api":
             return context
 
+        context["export_default_fields"] = csv_layout.grant_csv_titles
+
         return render(request, template_name, context=context)
 
 
