@@ -24,16 +24,19 @@
    <div class="filter-group_contents-wrapper">
       <div id="geo-type-best" class="geo-type-switcher">
         {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientRegionName filter_title="Country and Region" %}
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.bestCountyName filter_title="County" %}
         {% include 'components/filters/lists/filter-list-district.html' with open=True %}
       </div>
 
       <div id="geo-type-recipient" class="hidden geo-type-switcher">
         {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientOrgRegionName filter_title="Country and Region" %}
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientOrgCountyName filter_title="County" %}
         {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with open=True aggregate_data=results.aggregations.recipientOrgDistrictName filter_title="District" filter_id="recipientOrgDistrictName" %}
       </div>
 
       <div id="geo-type-beneficiary" class="hidden geo-type-switcher">
         {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.beneficiaryRegionName filter_title="Country and Region" %}
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.beneficiaryCountyName filter_title="County" %}
         {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with open=True aggregate_data=results.aggregations.beneficiaryDistrictName filter_title="District" filter_id="beneficiaryDistrictName" %}
       </div>
 
