@@ -129,7 +129,7 @@ plotly==5.19.0
     # via -r requirements.in
 pluggy==1.4.0
     # via pytest
-prometheus-client==0.7
+prometheus-client==0.7.0
     # via -r requirements.in
 py==1.11.0
     # via retry
@@ -216,7 +216,7 @@ urllib3[secure,socks]==1.26.18
     #   selenium
 urllib3-secure-extra==0.1.0
     # via urllib3
-werkzeug==3.0.1
+werkzeug==3.0.3
     # via pytest-localserver
 wheel==0.42.0
     # via pip-tools
