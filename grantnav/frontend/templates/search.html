@@ -391,5 +391,19 @@ $(function () {
     defaultViewDate: '01/2010'
   });
 });
+
+
+function filterElements(event, selector) {
+  const inputText = event.srcElement.value
+  const elements = document.querySelectorAll(selector);
+
+
+  for (const element of elements) {
+    const elementText = element.textContent.trim().toLowerCase();
+    const isVisible = elementText.startsWith(inputText.toLowerCase());
+
+    element.style.display = isVisible ? "block" : "none";
+  }
+}
 </script>
 {% endblock %}

@@ -1,4 +1,5 @@
 {% load get_facet_org_name get_facet_org_id get_amount from frontend %}
+{# inputs aggregate, finder, finder_class #}
 <div class="filter-list">
   <details class="filter-list__accordion" {% if aggregate_data.clear_url or open %} open{% endif %}>
     <summary class="filter-list__label">
@@ -8,10 +9,10 @@
     <div class="filter-list__contents-wrapper">
       {% block filterOption %}
       {% endblock filterOption %}
-      <ul class="filter-list__listing">
+      <ul class="filter-list__listing" {% if finder %}style="height: 250px" {% endif %}>
           {% for bucket in aggregate_data.buckets %}
           <li>
-            <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
+            <a class="filter-list__filter-item {% if finder %}filter-list-{{finder_class}}{% endif %} {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}" >
               {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small>
 
               {% if bucket.selected %}
@@ -21,6 +22,10 @@
           </li>
         {% endfor %}
       </ul>
+      {% if finder %}
+      {# This requires the filterElements call back defined in search.html #}
+      <input type="text" style="width: 312px" onkeyup="filterElements(event, '.filter-list-{{finder_class}}')" placeholder="Find in list..." />
+     {% endif %}
     </div>
   </details>
 </div>
