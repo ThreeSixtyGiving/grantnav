@@ -23,8 +23,11 @@
         {% endfor %}
       </ul>
       {% if finder %}
-      {# This requires the filterElements call back defined in search.html #}
-      <input type="text" style="width: 312px" onkeyup="filterElements(event, '.filter-list-{{finder_class}}')" placeholder="Find in list..." />
+      {# This requires the filterElements callback defined in search.html #}
+      {# margin-right style is for pixel alignment with include/exclude select2 input boxes #}
+      <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05" style="margin-right: 7px" >
+        <input type="text" style="width: 100%" class="form-control" onkeyup="filterElements(event, '.filter-list-{{finder_class}}')" placeholder="Search for a county" />
+      </div>
      {% endif %}
     </div>
   </details>
