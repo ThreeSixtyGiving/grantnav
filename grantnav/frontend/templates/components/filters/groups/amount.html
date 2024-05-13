@@ -7,7 +7,7 @@
     <div class="filter-group_contents-wrapper">
 
     {% if results.aggregations.currency.buckets %}
-      {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.currency filter_title="Currency" %}
+      {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.currency filter_title="Currency" %}
     {% endif %}
 
     {% if results.aggregations.amountAwardedFixed.buckets %}
