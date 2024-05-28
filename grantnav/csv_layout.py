@@ -134,3 +134,32 @@ org_csv_paths = [
     "max",
     "min"
 ]
+
+
+def grants_csv_to_dictionary():
+    """ takes grants_csv and turns it into a dictionary of parent/child
+    fields e.g.
+
+    res["Planned Dates"][
+     {'title': 'Start Date', 'path': 'result.plannedDates.0.startDateDateOnly'},
+     {'title': 'End Date', 'path': 'result.plannedDates.0.endDateDateOnly'},
+     {'title': 'Duration (months)', 'path': 'result.plannedDates.0.duration'}
+    ]
+    """
+    res = {}
+
+    for title, path in grants_csv.items():
+        parsed = title.split(":")
+        # initialise array if needed
+        if not res.get(parsed[0]):
+            res[parsed[0]] = []
+
+        if len(parsed) > 1:
+            title_remainder = ": ".join(parsed[1:])
+        else:
+            title_remainder = title
+
+        res[parsed[0]].append({"title": title_remainder, "path":
+                               path})
+
+    return res

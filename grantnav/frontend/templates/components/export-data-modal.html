@@ -1,0 +1,113 @@
+<div id="export-data-modal" class="modal" aria-hidden>
+	<div class="modal__overlay modal__trigger" data-id="export-data-modal"></div>
+	<div class="modal__window" style="min-width: 960px; overflow-y: auto">
+		<button class="modal__close modal__trigger" data-id="export-data-modal"></button>
+    <div class="modal__content download-options">
+			<h4>GrantNav Data Export</h4>
+
+      <div>
+        <form>
+          <div class="fields-container">
+            {% for title, fields in export_default_fields.items %}
+
+            {% if fields|length == 1 %}
+            <div>
+              <input type="checkbox" value="{{fields.0.path}}" id="field-select-{{fields.0.path}}" data-title="{{fields.0.title}}" class="field-select" checked><label for="field-select-{{fields.0.path}}" class="margin-right:1">&nbsp;{{fields.0.title}}</label>
+            </div>
+            {% else %}
+
+            <div class="margin-bottom:1">
+              <a href="#" title="Expand to show fields in this category" onclick="toggleElement('dl-group-{{title|cut:" "}}')" >{{title}} ({{fields|length}}) +</a>
+              <div class="dl-group" id="dl-group-{{title|cut:" "}}" {% if fields|length > 1 %}style="display:none" {% endif %}>
+                {% for field in fields %}
+                <div><input type="checkbox" value="{{field.path}}" id="field-select-{{field.path}}" data-title="{{field.title}}" class="field-select" checked><label for="field-select-{{field.path}}" class="margin-right:1">&nbsp;{{field.title}}</label></div>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+
+            {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <a href="#" onClick="toggleFieldSelect(true)">Select all</a>
+        <a href="#" onClick="toggleFieldSelect(false)" class="margin-bottom:1">Clear all</a>
+      </div>
+
+      <input type="text" onkeyup="filterCheckboxes(this)" id="field-search" placeholder="Search for a field name"  style="width: 100%" />
+
+      <h5>Data format</h5>
+      <div>
+        <label for="csv_option"><input type="radio" name="download-format" value="csv" id="csv_option" checked> csv</label>
+        <label for="json_option"><input type="radio" name="download-format" value="json" id="json_option"> json</label>
+      </div>
+      <input type="submit" class="button button--teal-dark button--solid" value="Download" />
+       </form>
+		</div>
+	</div>
+</div>
+<style>
+.download-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.fields-container {
+  height:400px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+/*
+.download-options label {
+  display: grid;
+}*/
+</style>
+
+<script>
+
+function toggleElement(groupId) {
+  const el = document.getElementById(groupId);
+  if (el.style.display === 'none') {
+    el.style.display = 'block';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function filterCheckboxes(element) {
+  const inputText = element.value;
+  const checkboxes = document.querySelectorAll('.field-select');
+
+  /* Open up all the dl-groups */
+  for (const dlGroup of document.querySelectorAll('.dl-group')) {
+    dlGroup.style.display = inputText ? 'block' : 'none';
+  }
+
+  if (!inputText) {
+    /* Reset */
+    for (const checkbox of checkboxes) {
+      checkbox.parentElement.style.display = 'block';
+    }
+    return;
+  }
+
+  for (const checkbox of checkboxes) {
+    const checkboxValue = checkbox.dataset.title.toLowerCase();
+    const isVisible = checkboxValue.includes(inputText.toLowerCase());
+    checkbox.parentElement.style.display = isVisible ? 'block' : 'none';
+  }
+}
+
+function toggleFieldSelect(checked) {
+  const checkboxes = document.querySelectorAll('.field-select');
+
+  for (const checkbox of checkboxes) {
+    if (checkbox.parentElement.style.display === 'none') {
+      continue;
+    }
+    checkbox.checked = checked;
+  }
+}
+</script>
