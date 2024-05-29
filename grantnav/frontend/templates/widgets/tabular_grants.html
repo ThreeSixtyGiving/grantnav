@@ -1,5 +1,15 @@
 {% extends 'widgets/widgets_base.html' %}
 
+{% block title %}
+  360Giving Grants Data from
+  {% if selected_facets.Funders %}
+    {% for funder in selected_facets.Funders %}
+      {% if forloop.counter0 > 0 and forloop.counter0 is not selected_facets.Funders|length %} and {% endif %}
+      {{funder.display_value}}
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+
 {% block extra_style %}
   {% include 'components/grants_table_styles.html' %}
 {% endblock %}
