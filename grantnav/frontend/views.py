@@ -1077,6 +1077,11 @@ def grant(request, grant_id):
     for hit in results['hits']['hits']:
         hit['source'] = hit['_source']
     context['grants'] = results['hits']['hits']
+
+    # dev feature
+    if request.GET.get("json"):
+        return JsonResponse({"grants": context["grants"]})
+
     return render(request, "grant.html", context=context)
 
 
