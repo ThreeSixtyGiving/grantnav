@@ -4,7 +4,7 @@
         <div class="grantnav-datatable__content--filters {% if widget %}margin-top:0{% endif %}">
             {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
             {% if not widget %}
-                <a class="grantnav-search__content--insights-large button button--large button--teal-dark bold margin-left:4 margin-right:2" href="{{insights_base_url}}/?{{ query_string }}" title="View search results in 360Insights data visualiser" target="_blank" data-testid="insights-integration-btn">
+                <a class="grantnav-search__content--insights-large button button--large button--teal-dark bold margin-left:4 margin-right:2" href="{{insights_base_url}}/?{{ query_string }}" title="View search results in 360Insights data visualiser" data-testid="insights-integration-btn">
                     Visualise your search results in 360Insights
                 </a>
                 <div class="export-wrapper">
