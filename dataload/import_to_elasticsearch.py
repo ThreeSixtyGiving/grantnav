@@ -545,7 +545,7 @@ def update_doc_with_other_locations(grant):
                         grant["additional_data"]["GNBeneficiaryRegionGeoCode"] = location["ctrycd"]
 
             # recipientOrganisationLocation
-            if location["source"] == "recipientOrganizationLocation":
+            if location["source"] == "recipientOrganizationLocation" or location["source"] == "recipientOrganizationPostcode":
 
                 if not grant["additional_data"].get("GNRecipientOrgCountyName"):
                     grant["additional_data"]["GNRecipientOrgCountyName"] = location["utlanm"]
