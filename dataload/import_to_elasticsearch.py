@@ -524,54 +524,73 @@ def update_doc_with_other_locations(grant):
     """ This flattens out some embedded data for easier indexing """
 
     for location in grant["additional_data"]["locationLookup"]:
-        try:
-            # beneficiaryLocation
-            if location["source"] == "beneficiaryLocation":
+        # beneficiaryLocation
+        if location["source"] == "beneficiaryLocation":
 
-                if not grant["additional_data"].get("GNBeneficiaryDistrictName"):
+            if not grant["additional_data"].get("GNBeneficiaryDistrictName"):
+                try:
                     grant["additional_data"]["GNBeneficiaryDistrictName"] = location["ladnm"]
                     grant["additional_data"]["GNBeneficiaryDistrictGeoCode"] = location["ladcd"]
+                except KeyError:
+                    pass
 
-                if not grant["additional_data"].get("GNBeneficiaryCountyName"):
+            if not grant["additional_data"].get("GNBeneficiaryCountyName"):
+                try:
                     grant["additional_data"]["GNBeneficiaryCountyName"] = location["utlanm"]
+                except KeyError:
+                    pass
 
-                if not grant["additional_data"].get("GNBeneficiaryRegionName"):
+            if not grant["additional_data"].get("GNBeneficiaryRegionName"):
+                try:
+                    grant["additional_data"]["GNBeneficiaryRegionName"] = location["rgnnm"]
+                    grant["additional_data"]["GNBeneficiaryRegionGeoCode"] = location["rgncd"]
+                except KeyError:
                     try:
-                        grant["additional_data"]["GNBeneficiaryRegionName"] = location["rgnnm"]
-                        grant["additional_data"]["GNBeneficiaryRegionGeoCode"] = location["rgncd"]
-                    except KeyError:
                         # Wales, Scotland, Northern Ireland don't have rgnm so we set them as country
                         grant["additional_data"]["GNBeneficiaryRegionName"] = location["ctrynm"]
                         grant["additional_data"]["GNBeneficiaryRegionGeoCode"] = location["ctrycd"]
+                    except KeyError:
+                        pass
 
-            # recipientOrganisationLocation
-            if location["source"] == "recipientOrganizationLocation" or location["source"] == "recipientOrganizationPostcode":
+        # recipientOrganisationLocation
+        if location["source"] == "recipientOrganizationLocation" or location["source"] == "recipientOrganizationPostcode":
 
-                if not grant["additional_data"].get("GNRecipientOrgCountyName"):
+            if not grant["additional_data"].get("GNRecipientOrgCountyName"):
+                try:
                     grant["additional_data"]["GNRecipientOrgCountyName"] = location["utlanm"]
+                except KeyError:
+                    pass
 
-                if not grant["additional_data"].get("GNRecipientOrgDistrictName"):
+            if not grant["additional_data"].get("GNRecipientOrgDistrictName"):
+                try:
                     grant["additional_data"]["GNRecipientOrgDistrictName"] = location["ladnm"]
                     grant["additional_data"]["GNRecipientOrgDistrictGeoCode"] = location["ladnm"]
+                except KeyError:
+                    pass
 
-                if not grant["additional_data"].get("GNRecipientOrgRegionName"):
+            if not grant["additional_data"].get("GNRecipientOrgRegionName"):
+                try:
+                    grant["additional_data"]["GNRecipientOrgRegionName"] = location["rgnnm"]
+                    grant["additional_data"]["GNRecipientOrgRegionGeoCode"] = location["rgncd"]
+                except KeyError:
                     try:
-                        grant["additional_data"]["GNRecipientOrgRegionName"] = location["rgnnm"]
-                        grant["additional_data"]["GNRecipientOrgRegionGeoCode"] = location["rgncd"]
-                    except KeyError:
                         # Wales, Scotland, Northern Ireland don't have rgnm so we set them as country
                         grant["additional_data"]["GNRecipientOrgRegionName"] = location["ctrynm"]
                         grant["additional_data"]["GNRecipientOrgRegionGeoCode"] = location["ctrycd"]
-        except KeyError:
-            # We don't have location information for this grant
-            pass
+                    except KeyError:
+                        pass
 
         # Best County name - Prefer beneficiary then recipient org
         if not grant["additional_data"].get("GNBestCountyName"):
-            grant["additional_data"]["GNBestCountyName"] = grant["additional_data"].get(
-                "GNBeneficiaryCountyName",
-                grant["additional_data"].get("GNRecipientOrgCountyName", "Undetermined")
-            )
+            try:
+                grant["additional_data"]["GNBestCountyName"] = grant["additional_data"]["GNBeneficiaryCountyName"]
+            except KeyError:
+                try:
+                    grant["additional_data"]["GNBestCountyName"] = grant["additional_data"]["GNRecipientOrgCountyName"]
+                except KeyError:
+                    pass
+
+    # End looping over locations
 
 
 def update_doc_with_undetermined(grant):
