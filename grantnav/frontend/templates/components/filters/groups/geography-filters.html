@@ -1,16 +1,85 @@
-<div class="filter-group">
+<div class="filter-group margin-bottom:2">
   <details class="filter-group__accordion" open>
-    <summary class="filter-group__label">
-      <div>Geography</div>
-      {% include 'tokens/accordion-toggle-icon.html' %}
+    <summary class="filter-group__label" style="display: block">
+      <div style="display: flex; justify-content: space-between;">
+        <span>Location</span>
+        {% include 'tokens/accordion-toggle-icon.html' %}
+      </div>
+      <div style="display: flex; justify-content: space-between;" class="margin-top:1">
+        <label for="geo-field-type">Type
+        </label>
+        <select id="geo-field-type" class="dropdown-fiter__select margin-left:1" style="width:100%">
+          <option value="geo-type-best">Best Available</option>
+          <option value="geo-type-recipient">Recipient Organisation</option>
+          <option value="geo-type-beneficiary">Beneficiary</option>
+        </select>
+      </div>
+
+      <a class="alert-tag alert-tag--anchor margin-top:1" href="https://help.grantnav.threesixtygiving.org/en/latest/locations/">
+        {% include 'tokens/info-icon.html' %}
+        <span class="alert-tag__content">Learn more about types of Locations</span>
+      </a>
     </summary>
-    <div class="filter-group_contents-wrapper">
-      {% if results.aggregations.recipientRegionName.buckets %}
-        {% include 'components/filters/lists/filter-list-region.html' %}
-      {% endif %}
-      {% if results.aggregations.recipientDistrictName.buckets %}
-        {% include 'components/filters/lists/filter-list-district.html' %}
-      {% endif %}
+
+   <div class="filter-group_contents-wrapper">
+      <div id="geo-type-best" class="geo-type-switcher">
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientRegionName filter_title="Country and Region" %}
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=False finder=True finder_class="best_county" aggregate_data=results.aggregations.bestCountyName filter_title="County" %}
+        {% include 'components/filters/lists/filter-list-district.html' with open=True %}
+      </div>
+
+      <div id="geo-type-recipient" class="hidden geo-type-switcher">
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.recipientOrgRegionName filter_title="Country and Region" %}
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=False finder=True finder_class="recipient_county" aggregate_data=results.aggregations.recipientOrgCountyName filter_title="County" %}
+        {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with open=True aggregate_data=results.aggregations.recipientOrgDistrictName filter_title="District" filter_id="recipientOrgDistrictName" %}
+      </div>
+
+      <div id="geo-type-beneficiary" class="hidden geo-type-switcher">
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=True aggregate_data=results.aggregations.beneficiaryRegionName filter_title="Country and Region" %}
+        {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with open=False finder=True finder_class="beneficiary_county" aggregate_data=results.aggregations.beneficiaryCountyName filter_title="County" %}
+        {% include 'components/filters/lists/filter-list-generic-include-exclude.html' with open=True aggregate_data=results.aggregations.beneficiaryDistrictName filter_title="District" filter_id="beneficiaryDistrictName" %}
+      </div>
+
     </div>
+
   </details>
-</div>
+</div> <!-- / filter-group -->
+
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
+<script>
+  const selectElement = document.getElementById('geo-field-type');
+  const contentElements = document.querySelectorAll('.geo-type-switcher');
+
+  function geoFieldChanged(event) {
+    const selectedValue = event.target.value;
+
+    /* Store selected geo field type for future page reload */
+    sessionStorage.setItem('geoFieldSelectedOption', selectedValue);
+
+    contentElements.forEach(element => {
+      if (element.id === selectedValue) {
+        element.classList.remove('hidden');
+      } else {
+        element.classList.add('hidden');
+      }
+    });
+  }
+
+  selectElement.addEventListener('change', geoFieldChanged);
+
+  /* Restore selected geo field type selected after page reload*/
+  window.addEventListener("load", () => {
+    const storedValue = sessionStorage.getItem('geoFieldSelectedOption');
+    if (storedValue) {
+      selectElement.value = storedValue;
+      /* Setting the value doesn't trigger change so do this manually to make sure
+       * geoFieldChanged is called
+       */
+      selectElement.dispatchEvent(new Event('change'));
+    }
+  });
+</script>

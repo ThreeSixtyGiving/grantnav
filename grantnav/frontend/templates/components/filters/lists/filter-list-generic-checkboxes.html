@@ -1,0 +1,35 @@
+{% load get_facet_org_name get_facet_org_id get_amount from frontend %}
+{# inputs aggregate, finder, finder_class #}
+<div class="filter-list">
+  <details class="filter-list__accordion" {% if aggregate_data.clear_url or open %} open{% endif %}>
+    <summary class="filter-list__label">
+      <div>{{filter_title}} {% if aggregate_data.clear_url %} <a href="{{aggregate_data.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-list__contents-wrapper">
+      {% block filterOption %}
+      {% endblock filterOption %}
+      <ul class="filter-list__listing" {% if finder %}style="height: 250px" {% endif %}>
+          {% for bucket in aggregate_data.buckets %}
+          <li>
+            <a class="filter-list__filter-item {% if finder %}filter-list-{{finder_class}}{% endif %} {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}" >
+              {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small>
+
+              {% if bucket.selected %}
+                <span class="screen-reader-only">(active filter)</span>
+              {% endif%}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+      {% if finder %}
+      {# This requires the filterElements callback defined in search.html #}
+      {# margin-right style is for pixel alignment with include/exclude select2 input boxes #}
+      <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05" style="margin-right: 7px" >
+        <input type="text" style="width: 100%" class="form-control" onkeyup="filterElements(event, '.filter-list-{{finder_class}}')" placeholder="Search for a county" />
+      </div>
+     {% endif %}
+    </div>
+  </details>
+</div>
+

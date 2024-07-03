@@ -1,0 +1,19 @@
+<div class="filter-group">
+  <details class="filter-group__accordion" open>
+    <summary class="filter-group__label">
+      <div>Amount</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-group_contents-wrapper">
+
+    {% if results.aggregations.currency.buckets %}
+      {% include 'components/filters/lists/filter-list-generic-checkboxes.html' with aggregate_data=results.aggregations.currency filter_title="Currency" %}
+    {% endif %}
+
+    {% if results.aggregations.amountAwardedFixed.buckets %}
+      {% include 'components/filters/lists/filter-list-amount-awarded.html' %}
+    {% endif %}
+
+    </div>
+  </details>
+</div>
