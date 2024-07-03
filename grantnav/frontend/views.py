@@ -43,9 +43,15 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # Programme Title
     {"bool": {"should": []}},  # additional_data.TSGRecipientType
     {"bool": {"should": []}},  # simple_grant_type
-    # Aggregates
+    # Used for Aggregates API
     {"bool": {"should": []}},  # additional_data.recipientOrgInfos.organisationTypePrimary
     {"bool": {"should": []}},  # additional_data.GNRecipientOrgInfo0.ageWhenAwarded
+    # End used for Aggregates
+
+    {"bool": {"should": []}},  # additional_data.GNRecipientOrgRegionName
+    {"bool": {"should": []}},  # additional_data.GNRecipientOrgDistrictName
+    {"bool": {"should": []}},  # additional_data.GNBeneficiaryRegionName
+    {"bool": {"should": []}},  # additional_data.GNBeneficiaryDistrictName
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
@@ -62,6 +68,10 @@ TERM_FACETS = [
     TermFacet("simple_grant_type", "simple_grant_type", 12, "Regrant Type", False, 5000),
     TermFacet("additional_data.recipientOrgInfos.organisationTypePrimary", "recipientOrganizationType", 13, "Recipient Organisation Type", False, 5000),
     TermFacet("additional_data.GNRecipientOrgInfo0.ageWhenAwarded", "orgAgeWhenAwarded", 14, "Age of Recipient Org", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgRegionName", "recipientOrgRegionName", 15, "Recipient Organisation Country and Region", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgDistrictName", "recipientOrgDistrictName", 16, "Recipient Organisation District", False, 5000),
+    TermFacet("additional_data.GNBeneficiaryRegionName", "beneficiaryRegionName", 17, "Beneficiary Region and Country", False, 5000),
+    TermFacet("additional_data.GNBeneficiaryDistrictName", "beneficiaryDistrictName", 18, "Beneficiary District", False, 5000),
 ]
 
 SIZE = 20
@@ -713,6 +723,10 @@ def search(request, template_name="search.html"):
                 filter_.append({"bool": {"should": []}})  # simple_grant_type
                 filter_.append({"bool": {"should": []}})  # additional_data.recipientOrgInfos.primaryOrganisationType
                 filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientOrgInfo0.ageWhenAwarded
+                filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientOrgRegionName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientOrgDistrictName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNBeneficiaryRegionName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNBeneficiaryDistrictName
             json_query['aggs'] = {}
             for term_facet in TERM_FACETS:
                 json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
