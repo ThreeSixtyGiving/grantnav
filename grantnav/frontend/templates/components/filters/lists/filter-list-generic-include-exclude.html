@@ -1,0 +1,54 @@
+{% comment %}
+ Parameters:
+  aggregate_data : Bucket of data
+  filter_title: Title of filter
+  filter_id: Id of html elements in filter. e.g. recipientDistrictName
+{% endcomment %}
+{% load concat from frontend %}
+<div class="filter-list filter-list--with-checkboxes">
+  <details class="filter-list__accordion" {% if aggregate_data.clear_url or open %} open{% endif %}>
+    <summary class="filter-list__label">
+      <div>{{filter_title}} {% if aggregate_data.clear_url %} <a href={{aggregate_data.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
+      {% include 'tokens/accordion-toggle-icon.html' %}
+    </summary>
+    <div class="filter-list__contents-wrapper facet-multiselect">
+      <form class="filter-list__form" id="{{filter_id}}-select" data-param="{{filter_id}}" action="#">
+        {% block filterRadios %}
+          <div class="filter-list__form--radios radio">
+            <div class="filter-list__form--radio-item">
+              <input class="screen-reader-only" type="radio" id="{{filter_id}}-include" data-target="#{{filter_id}}-select" name="{{filter_id}}-exclude" value="false" {% if not aggregate_data.exclude %}checked{%endif%}>
+              <label for="{{filter_id}}-include">Include selected</label>
+            </div>
+            <div class="filter-list__form--radio-item">
+              <input class="screen-reader-only" type="radio" id="{{filter_id}}-exclude" data-target="#{{filter_id}}-select" name="{{filter_id}}-exclude" value="true" {% if aggregate_data.exclude %}checked{%endif%}>
+              <label for="{{filter_id}}-exclude">Exclude selected</label>
+            </div>
+          </div>
+        {% endblock filterRadios %}
+
+        <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
+          <select class="filter-search-box {{filter_id}}-search-box" multiple="multiple">
+            {% for item in aggregate_data.buckets %}
+              <option value="{{item.key}}" data-url="{{item.url}}">{{item.key}} <small>({{item.doc_count}})</small></option>
+            {% endfor %}
+
+            {# We only support including them all or excluding them all not a mixture. Below shows the current selected #}
+
+            {% for key, selected in selected_facets.items %}
+             {% for item in selected %}
+                  {% if item.param_name == filter_id %}
+                   <option value="{{item.url}}" selected="selected">{{item.display_value}}</option>
+                  {% endif %}
+                {% endfor %}
+            {% endfor %}
+          </select>
+        </div>
+
+      </form>
+    </div>
+  </details>
+</div>
+
+{% with filter_id|concat:"Data" as data_id %}
+{{aggregate_data.buckets|json_script:data_id}}
+{% endwith %}
