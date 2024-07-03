@@ -220,3 +220,9 @@ def human_format(num):
         magnitude += 1
         num /= 1000.0
     return '%.0f%s' % (num, ['', 'k', 'm', 'b'][magnitude])
+
+
+@register.filter(name='concat')
+def concat(str_a, str_b):
+    """concat two strings"""
+    return f"{str_a}{str_b}"

@@ -137,15 +137,18 @@ function formatDropdownItem (item) {
   html += '</div>';
   const $dropdownItem = $(html);
 
-  const small = $('<small> (' + item.count + ')</small>');
-
   $dropdownItem.find('input').val(item.id).prop('id', item.id);
 
   if (item.selected) {
     $dropdownItem.find('input').prop('checked', 'checked');
   }
 
-  $dropdownItem.find('label').prop('for', item.id).text(item.text).append(small);
+  const dropText = $dropdownItem.find('label').prop('for', item.id).text(item.text);
+
+  if (item.count) {
+    const small = $('<small> (' + item.count + ')</small>');
+    dropText.append(small);
+  }
 
   return $dropdownItem;
 }
@@ -221,7 +224,11 @@ function get_filter_search_ajax (parent_field, child_field) {
 
 // when a new item is selected then refresh the page
 function redirect_on_selection (param, data) {
-  const uri = URI(data.url);
+  /* Ajax route OR template route */
+  const url = data.url || data.element.dataset.url;
+
+  const uri = URI(url);
+
   uri.removeSearch('exclude_' + param);
   if ($('#' + param + '-exclude').prop('checked')) {
     uri.addSearch('exclude_' + param, 'true');
@@ -282,11 +289,29 @@ $(function () {
       ajax: get_filter_search_ajax('additional_data', 'recipientDistrictName')
     });
 
+    /* Organisations */
     $('.fundingOrganization-search-box').select2(funder_options);
     $('.recipientOrganization-search-box').select2(recipient_options);
+    /* Grant Programmes */
     $('.grantProgramme-search-box').select2(programme_options);
+    /* Geography */
     $('.recipientDistrictName-search-box').select2(district_options);
+    $('.recipientOrgDistrictName-search-box').select2({
+      width: '100%',
+      templateResult: formatDropdownItem,
+      templateSelection: formatSelection,
+      dropdownCssClass: 'filter-list filter-list--with-checkboxes',
+      placeholder: 'Search for Recipient Organisation District'
+    });
+    $('.beneficiaryDistrictName-search-box').select2({
+      width: '100%',
+      templateResult: formatDropdownItem,
+      templateSelection: formatSelection,
+      dropdownCssClass: 'filter-list filter-list--with-checkboxes',
+      placeholder: 'Search for Beneficiary District'
+    });
 
+    /* Selecting */
     $('.fundingOrganization-search-box').on('select2:select', function (e) {
       const data = e.params.data;
       redirect_on_selection('fundingOrganization', data);
@@ -307,6 +332,20 @@ $(function () {
       redirect_on_selection('recipientDistrictName', data);
     });
 
+    $('.recipientOrgDistrictName-search-box').on('select2:select', function (e) {
+      const data = e.params.data;
+      redirect_on_selection('recipientOrgDistrictName', data);
+    });
+
+    $('.beneficiaryDistrictName-search-box').on('select2:select', function (e) {
+      const data = e.params.data;
+      redirect_on_selection('beneficiaryDistrictName', data);
+    });
+
+    /* End selecting */
+
+    /* Excluding */
+
     $('#fundingOrganization-select input[type=radio]').on('change', function (e) {
       maybe_redirect_on_exclude('fundingOrganization');
     });
@@ -322,6 +361,16 @@ $(function () {
     $('#recipientDistrictName-select input[type=radio]').on('change', function (e) {
       maybe_redirect_on_exclude('recipientDistrictName');
     });
+
+    $('#recipientOrgDistrictName-select input[type=radio]').on('change', function (e) {
+      maybe_redirect_on_exclude('recipientOrgDistrictName');
+    });
+
+    $('#beneficiaryDistrictName-select input[type=radio]').on('change', function (e) {
+      maybe_redirect_on_exclude('beneficiaryDistrictName');
+    });
+
+    /* End excluding */
   });
 
   $('body').on('click', '.remove-select2-option', function (e) {
@@ -340,5 +389,19 @@ $(function () {
     defaultViewDate: '01/2010'
   });
 });
+
+
+function filterElements(event, selector) {
+  const inputText = event.srcElement.value
+  const elements = document.querySelectorAll(selector);
+
+
+  for (const element of elements) {
+    const elementText = element.textContent.trim().toLowerCase();
+    const isVisible = elementText.startsWith(inputText.toLowerCase());
+
+    element.style.display = isVisible ? "block" : "none";
+  }
+}
 </script>
 {% endblock %}
