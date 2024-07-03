@@ -52,6 +52,10 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # additional_data.GNRecipientOrgDistrictName
     {"bool": {"should": []}},  # additional_data.GNBeneficiaryRegionName
     {"bool": {"should": []}},  # additional_data.GNBeneficiaryDistrictName
+    # County
+    {"bool": {"should": []}},  # additional_data.GNBeneficiaryCountyName
+    {"bool": {"should": []}},  # additional_data.GNRecipientCountyName
+    {"bool": {"should": []}},  # additional_data.GNBestCountyName
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
@@ -72,6 +76,9 @@ TERM_FACETS = [
     TermFacet("additional_data.GNRecipientOrgDistrictName", "recipientOrgDistrictName", 16, "Recipient Organisation District", False, 5000),
     TermFacet("additional_data.GNBeneficiaryRegionName", "beneficiaryRegionName", 17, "Beneficiary Region and Country", False, 5000),
     TermFacet("additional_data.GNBeneficiaryDistrictName", "beneficiaryDistrictName", 18, "Beneficiary District", False, 5000),
+    TermFacet("additional_data.GNBeneficiaryCountyName", "beneficiaryCountyName", 19, "Beneficiary County", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgCountyName", "recipientOrgCountyName", 20, "Recipient County", False, 5000),
+    TermFacet("additional_data.GNBestCountyName", "bestCountyName", 21, "Best County", False, 5000),
 ]
 
 SIZE = 20

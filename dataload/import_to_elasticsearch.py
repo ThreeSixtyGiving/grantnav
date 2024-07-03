@@ -285,6 +285,15 @@ def maybe_create_index(index_name=ES_INDEX):
                     "GNBeneficiaryRegionName": {
                         "type": "keyword",
                     },
+                    "GNBestCountyName": {
+                        "type": "keyword",
+                    },
+                    "GNBeneficiaryCountyName": {
+                        "type": "keyword",
+                    },
+                    "GNRecipientOrgCountyName": {
+                        "type": "keyword",
+                    },
                 }
             },
             # Additional funding/recipient organisation mappings
@@ -469,6 +478,9 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     #
                     # grant.additional_data.GNRecipientOrgDistrictName (ladnm)
                     # grant.additional_data.GNBeneficiaryDistrictName (ladnm)
+                    # grant.additional_data.GNBestCountyName (utlanm)
+                    # grant.additional_data.GNBeneficiaryCountyName (utlanm)
+                    # grant.additional_data.GNRecipientOrgCountyName (utlanm)
                     update_doc_with_other_locations(grant)
                     # update_doc_with_undetermined needs to go last
                     update_doc_with_undetermined(grant)
@@ -520,6 +532,9 @@ def update_doc_with_other_locations(grant):
                     grant["additional_data"]["GNBeneficiaryDistrictName"] = location["ladnm"]
                     grant["additional_data"]["GNBeneficiaryDistrictGeoCode"] = location["ladcd"]
 
+                if not grant["additional_data"].get("GNBeneficiaryCountyName"):
+                    grant["additional_data"]["GNBeneficiaryCountyName"] = location["utlanm"]
+
                 if not grant["additional_data"].get("GNBeneficiaryRegionName"):
                     try:
                         grant["additional_data"]["GNBeneficiaryRegionName"] = location["rgnnm"]
@@ -531,6 +546,9 @@ def update_doc_with_other_locations(grant):
 
             # recipientOrganisationLocation
             if location["source"] == "recipientOrganizationLocation":
+
+                if not grant["additional_data"].get("GNRecipientOrgCountyName"):
+                    grant["additional_data"]["GNRecipientOrgCountyName"] = location["utlanm"]
 
                 if not grant["additional_data"].get("GNRecipientOrgDistrictName"):
                     grant["additional_data"]["GNRecipientOrgDistrictName"] = location["ladnm"]
@@ -544,21 +562,31 @@ def update_doc_with_other_locations(grant):
                         # Wales, Scotland, Northern Ireland don't have rgnm so we set them as country
                         grant["additional_data"]["GNRecipientOrgRegionName"] = location["ctrynm"]
                         grant["additional_data"]["GNRecipientOrgRegionGeoCode"] = location["ctrycd"]
-
         except KeyError:
             # We don't have location information for this grant
             pass
 
+        # Best County name - Prefer beneficiary then recipient org
+        if not grant["additional_data"].get("GNBestCountyName"):
+            grant["additional_data"]["GNBestCountyName"] = grant["additional_data"].get(
+                "GNBeneficiaryCountyName",
+                grant["additional_data"].get("GNRecipientOrgCountyName", "Undetermined")
+            )
+
 
 def update_doc_with_undetermined(grant):
-    """ Checks certain fields and assigns them to the value of "Undetermined" if no value
-        so that they can be aggregated/filtered on.
+    """ Checks certain additional data fields and assigns them to the value of "Undetermined"
+        if no value so that they can be aggregated/filtered on. Note the recipient* fields come in
+        via the datastore due to legacy reasons.
     """
 
     for key in ["GNBeneficiaryDistrictName",
                 "GNRecipientOrgDistrictName",
                 "GNRecipientOrgRegionName",
                 "GNBeneficiaryRegionName",
+                "GNBestCountyName",
+                "GNRecipientOrgCountyName",
+                "GNBeneficiaryCountyName",
                 "recipientDistrictGeoCode",
                 "recipientDistrictName",
                 "recipientRegionName",
