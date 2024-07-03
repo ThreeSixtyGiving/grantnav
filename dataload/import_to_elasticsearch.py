@@ -196,6 +196,7 @@ def maybe_create_index(index_name=ES_INDEX):
 
             "additional_data": {
                 "properties": {
+                    # Best available grant location
                     "recipientDistrictGeoCode": {
                         "type": "keyword"
                     },
@@ -208,6 +209,7 @@ def maybe_create_index(index_name=ES_INDEX):
                     "recipientWardName": {
                         "type": "keyword"
                     },
+                    # End best available grant location
                     "TSGFundingOrgType": {
                         "type": "keyword"
                     },
@@ -237,6 +239,7 @@ def maybe_create_index(index_name=ES_INDEX):
                     "recipientLocation": {
                         "type": "text"
                     },
+                    # Is this in use?
                     "recipientOrganizationLocation": {
                         "properties": {
                             "rgn": {
@@ -269,7 +272,19 @@ def maybe_create_index(index_name=ES_INDEX):
                                 "type": "keyword"
                             }
                         }
-                    }
+                    },
+                    "GNRecipientOrgDistrictName": {
+                        "type": "keyword",
+                    },
+                    "GNBeneficiaryDistrictName": {
+                        "type": "keyword",
+                    },
+                    "GNRecipientOrgRegionName": {
+                        "type": "keyword",
+                    },
+                    "GNBeneficiaryRegionName": {
+                        "type": "keyword",
+                    },
                 }
             },
             # Additional funding/recipient organisation mappings
@@ -447,6 +462,13 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     update_doc_with_simple_grant_type(grant)
                     # grant.additional_data.GNRecipientOrgInfo0
                     update_doc_with_first_recipient_org_info(grant)
+                    # Convenience geo fields
+                    # grant.additional_data.GNBeneficiaryRegionName (rgnnm)
+                    # grant.additional_data.GNRecipientOrgRegionName (rgnnm)
+                    #
+                    # grant.additional_data.GNRecipientOrgDistrictName (ladnm)
+                    # grant.additional_data.GNBeneficiaryDistrictName (ladnm)
+                    update_doc_with_other_locations(grant)
                     yield grant
 
         pprint(grants_file_path)
@@ -481,6 +503,43 @@ def to_band(value, bins, labels):
         if value > previous_value and value <= b:
             return labels[i]
         previous_value = b
+
+
+def update_doc_with_other_locations(grant):
+    """ This flattens out some embedded data for easier indexing """
+
+    for location in grant["additional_data"]["locationLookup"]:
+        try:
+            # beneficiaryLocation
+            if location["source"] == "beneficiaryLocation":
+
+                if not grant["additional_data"].get("GNBeneficiaryDistrictName"):
+                    grant["additional_data"]["GNBeneficiaryDistrictName"] = location["ladnm"]
+
+                if not grant["additional_data"].get("GNBeneficiaryRegionName"):
+                    try:
+                        grant["additional_data"]["GNBeneficiaryRegionName"] = location["rgnnm"]
+                    except KeyError:
+                        # Wales, Scotland, Northern Ireland don't have rgnm so we set them as country
+                        grant["additional_data"]["GNBeneficiaryRegionName"] = location["ctrynm"]
+
+            # recipientOrganisationLocation
+            if location["source"] == "recipientOrganizationLocation":
+
+                if not grant["additional_data"].get("GNRecipientOrgDistrictName"):
+                    grant["additional_data"]["GNRecipientOrgDistrictName"] = location["ladnm"]
+
+                if not grant["additional_data"].get("GNRecipientOrgRegionName"):
+                    try:
+                        grant["additional_data"]["GNRecipientOrgRegionName"] = location["rgnnm"]
+                    except KeyError:
+                        # Wales, Scotland, Northern Ireland don't have rgnm so we set them as country
+                        grant["additional_data"]["GNRecipientOrgRegionName"] = location["ctrynm"]
+
+        except KeyError as e:
+            # We don't have location information for this grant
+            pass
+
 
 
 def update_doc_with_first_recipient_org_info(grant):
