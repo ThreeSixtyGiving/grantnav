@@ -390,17 +390,17 @@ $(function () {
   });
 });
 
-
-function filterElements(event, selector) {
-  const inputText = event.srcElement.value
+/* filterElements is used by filter-list-generic-checkboxes template which gets included in this template */
+// eslint-disable-next-line no-unused-vars
+function filterElements (event, selector) {
+  const inputText = event.srcElement.value;
   const elements = document.querySelectorAll(selector);
-
 
   for (const element of elements) {
     const elementText = element.textContent.trim().toLowerCase();
     const isVisible = elementText.startsWith(inputText.toLowerCase());
 
-    element.style.display = isVisible ? "block" : "none";
+    element.style.display = isVisible ? 'block' : 'none';
   }
 }
 </script>
