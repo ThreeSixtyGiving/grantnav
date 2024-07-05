@@ -54,7 +54,7 @@
   const selectElement = document.getElementById('geo-field-type');
   const contentElements = document.querySelectorAll('.geo-type-switcher');
 
-  function geoFieldChanged(event) {
+  function geoFieldChanged (event) {
     const selectedValue = event.target.value;
 
     /* Store selected geo field type for future page reload */
@@ -71,8 +71,8 @@
 
   selectElement.addEventListener('change', geoFieldChanged);
 
-  /* Restore selected geo field type selected after page reload*/
-  window.addEventListener("load", () => {
+  /* Restore selected geo field type selected after page reload */
+  window.addEventListener('load', () => {
     const storedValue = sessionStorage.getItem('geoFieldSelectedOption');
     if (storedValue) {
       selectElement.value = storedValue;
