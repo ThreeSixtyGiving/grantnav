@@ -523,6 +523,11 @@ def to_band(value, bins, labels):
 def update_doc_with_other_locations(grant):
     """ This flattens out some embedded data for easier indexing """
 
+    # Prior versions of additional_data may not have this field
+    # or if locationLookup failed entirely for this grant
+    if not grant["additional_data"].get("locationLookup"):
+        return
+
     for location in grant["additional_data"]["locationLookup"]:
         # beneficiaryLocation
         if location["source"] == "beneficiaryLocation":
