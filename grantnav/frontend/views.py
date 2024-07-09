@@ -720,7 +720,7 @@ def search(request, template_name="search.html"):
             json_query_param = json_query_param.replace('"recipientDistrictName"', '"additional_data.recipientDistrictName"')
             json_query = json.loads(json_query_param)
             filter_ = json_query['query']['bool']['filter']
-            # There were originally 8 filters with the old urls ES now expects all 13 so append
+            # There were originally 8 filters with the old urls ES now expects all so append
             # the new ones
             if len(filter_) == 8:
                 filter_.append({"bool": {"should": []}})  # additional_data.TSGFundingOrgType
@@ -734,6 +734,9 @@ def search(request, template_name="search.html"):
                 filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientOrgDistrictName
                 filter_.append({"bool": {"should": []}})  # additional_data.GNBeneficiaryRegionName
                 filter_.append({"bool": {"should": []}})  # additional_data.GNBeneficiaryDistrictName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNBeneficiaryCountyName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientCountyName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNBestCountyName
             json_query['aggs'] = {}
             for term_facet in TERM_FACETS:
                 json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
