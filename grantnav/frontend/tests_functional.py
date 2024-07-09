@@ -5,7 +5,6 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.common import exceptions as selenium_exceptions
-#from selenium.webdriver.support.ui import Select
 import chromedriver_autoinstaller
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
@@ -395,9 +394,11 @@ def test_currency_facet(provenance_dataload, server_url, browser):
         pass
 
     # Select USD
-    #browser.get_screenshot_as_file("test2.png")
-    browser.find_element_by_xpath(
-        "//div[contains(@class, 'filter-list')][1]/details/div/form/ul[@class='filter-list__listing']/li[2]/a").click()
+    # browser.get_screenshot_as_file("test2.png")
+    # Open the filter group expander
+    browser.find_element_by_id("filter-accordion-currency").click()
+    browser.find_element_by_id("filter-option-currency-usd").click()
+
     # Check USD options appear
     assert 'USD 0 - USD 500' in browser.find_element_by_tag_name('body').text
 
@@ -411,10 +412,9 @@ def test_amount_awarded_facet(provenance_dataload, server_url, browser):
     except selenium_exceptions.NoSuchElementException:
         pass
 
-    # Select an option
-    browser.get_screenshot_as_file("test3.png")
-    browser.find_element_by_xpath(
-        "//div[contains(@class, 'filter-list')][2]/details/div/ul[@class='filter-list__listing']/li[3]/a").click()
+    #  browser.get_screenshot_as_file("test3.png")
+    # Select an amount option
+    browser.find_element_by_id("amount-1000.0-5000.0").click()
     total_grants = browser.find_elements_by_css_selector(".summary-content--item span")[0].text
     assert "49" in total_grants, "Expected number of grants not found"
 

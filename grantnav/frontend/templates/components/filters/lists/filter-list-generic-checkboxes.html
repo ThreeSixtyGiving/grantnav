@@ -1,7 +1,7 @@
 {% load get_facet_org_name get_facet_org_id get_amount from frontend %}
 {# inputs aggregate, finder, finder_class #}
 <div class="filter-list">
-  <details class="filter-list__accordion" {% if aggregate_data.clear_url or open %} open{% endif %}>
+  <details class="filter-list__accordion" {% if aggregate_data.clear_url or open %} open{% endif %} id="filter-accordion-{{filter_title|lower|cut:' '}}">
     <summary class="filter-list__label">
       <div>{{filter_title}} {% if aggregate_data.clear_url %} <a href="{{aggregate_data.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
@@ -12,7 +12,7 @@
       <ul class="filter-list__listing" {% if finder %}style="height: 250px" {% endif %}>
           {% for bucket in aggregate_data.buckets %}
           <li>
-            <a class="filter-list__filter-item {% if finder %}filter-list-{{finder_class}}{% endif %} {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}" >
+            <a class="filter-list__filter-item {% if finder %}filter-list-{{finder_class}}{% endif %} {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}" id="filter-option-{{filter_title|lower|cut:' '}}-{{bucket.key|lower}}" >
               {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small>
 
               {% if bucket.selected %}

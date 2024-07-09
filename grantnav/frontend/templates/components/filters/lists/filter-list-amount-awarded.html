@@ -24,8 +24,8 @@
         {% if not query.query.bool.filter.3.bool.should.range.amountAwarded %}
           {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
             <li>
-              <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
-                {{bucket|get_amount_range:current_currency}} <small>({{bucket.doc_count|get_amount}})</small> 
+              <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}" id="amount-{{bucket.key|lower}}">
+                {{bucket|get_amount_range:current_currency}} <small>({{bucket.doc_count|get_amount}})</small>
 
                 {% if bucket.selected %}
                   <span class="screen-reader-only">(active filter)</span>
