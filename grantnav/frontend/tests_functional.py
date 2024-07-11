@@ -419,6 +419,22 @@ def test_amount_awarded_facet(provenance_dataload, server_url, browser):
     assert "49" in total_grants, "Expected number of grants not found"
 
 
+def test_county_location_facet(provenance_dataload, server_url, browser):
+    browser.get(server_url + '/search')
+
+    try:
+        browser.find_element_by_class_name("cookie-consent-no").click()
+    except selenium_exceptions.NoSuchElementException:
+        pass
+
+    # Open county
+    browser.find_element_by_id("filter-accordion-county").click()
+    browser.find_element_by_id("filter-option-county-liverpool").click()
+
+    total_grants = browser.find_elements_by_css_selector(".summary-content--item span")[0].text
+    assert "11" in total_grants, f"Expected total grants not found for county liverpool, got {total_grants} instead of 9"
+
+
 @pytest.mark.parametrize(('path'), ['/grant/360G-LBFEW-99233'])
 def test_zero_grant_info_link_absent(provenance_dataload, server_url, browser, path):
     browser.get(server_url + path)
