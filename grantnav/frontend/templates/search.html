@@ -44,9 +44,18 @@
                 <div class="export-label">Export search data:</div>
               </a>
               <div class="export-button">
-                <a href="#" class="modal__trigger" data-id="export-data-modal"><img src="{% static 'images/export-icon.svg' %}" alt="Export data" /></a>
+                <a href="#" class="modal__trigger" data-id="export-data-modal">
+                  {% include 'tokens/export-csv-icon.html' %}
+                </a>
               </div>
               {% include 'components/export-data-modal.html' %}
+
+              <div class="export-button">
+                <a class="export-data-button export-data-button--json" href="/search.json?" aria-label="Export results data as JSON">
+                  {% include 'tokens/export-json-icon.html' %}
+                </a>
+              </div>
+
 
             </div>
 
@@ -411,7 +420,7 @@ document.querySelectorAll('.modal__trigger').forEach(function(el) {
 
 
     if (modal.hasAttribute('aria-hidden')) {
-      
+
       modal.removeAttribute('aria-hidden')
       modal.classList.add('modal--shown');
       body[0].classList.add('modal--shown');

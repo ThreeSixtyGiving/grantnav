@@ -3,24 +3,28 @@
 	<div class="modal__window" style="min-width: 960px; overflow-y: auto">
 		<button class="modal__close modal__trigger" data-id="export-data-modal"></button>
     <div class="modal__content download-options">
-			<h4>GrantNav Data Export</h4>
+			<h4>GrantNav CSV Data Export</h4>
+
+      <p>Select the fields to include in the CSV download</p>
 
       <div>
         <form>
           <div class="fields-container">
             {% for title, fields in export_default_fields.items %}
 
+            {# These are top-level fields #}
             {% if fields|length == 1 %}
             <div>
-              <input type="checkbox" value="{{fields.0.path}}" id="field-select-{{fields.0.path}}" data-title="{{fields.0.title}}" class="field-select" checked><label for="field-select-{{fields.0.path}}" class="margin-right:1">&nbsp;{{fields.0.title}}</label>
+              <input type="checkbox" value="{{fields.0.path}}" id="field-select-{{fields.0.path}}" data-title="{{fields.0.title}}" class="field-select" checked><label for="field-select-{{fields.0.path}}" class="margin-right:1" title="[DEBUG {{fields.0.path}}]">&nbsp;{{fields.0.title}} {% if "additional_data" in field.path %}(additional data){% endif %} </label>
             </div>
             {% else %}
 
+            {# These are nested fields #}
             <div class="margin-bottom:1">
               <a href="#" title="Expand to show fields in this category" onclick="toggleElement('dl-group-{{title|cut:" "}}')" >{{title}} ({{fields|length}}) +</a>
               <div class="dl-group" id="dl-group-{{title|cut:" "}}" {% if fields|length > 1 %}style="display:none" {% endif %}>
                 {% for field in fields %}
-                <div><input type="checkbox" value="{{field.path}}" id="field-select-{{field.path}}" data-title="{{field.title}}" class="field-select" checked><label for="field-select-{{field.path}}" class="margin-right:1">&nbsp;{{field.title}}</label></div>
+                <div><input type="checkbox" value="{{field.path}}" id="field-select-{{field.path}}" data-title="{{field.title}}" class="field-select" checked><label for="field-select-{{field.path}}" class="margin-right:1" title="[DEBUG {{field.path}}]">&nbsp;{{field.title}} {% if "additional_data" in field.path %}(additional data){% endif %} </label></div>
                 {% endfor %}
               </div>
             </div>
@@ -33,16 +37,20 @@
       <div>
         <a href="#" onClick="toggleFieldSelect(true)">Select all</a>
         <a href="#" onClick="toggleFieldSelect(false)" class="margin-bottom:1">Clear all</a>
+        <a href="#" onClick="alert('TODO')">Select defaults</a>
       </div>
 
       <input type="text" onkeyup="filterCheckboxes(this)" id="field-search" placeholder="Search for a field name"  style="width: 100%" />
 
-      <h5>Data format</h5>
+    {% comment %}
+     think we're not going to do this <h5>Data format</h5>
       <div>
         <label for="csv_option"><input type="radio" name="download-format" value="csv" id="csv_option" checked> csv</label>
         <label for="json_option"><input type="radio" name="download-format" value="json" id="json_option"> json</label>
       </div>
+    {% endcomment %}
       <input type="submit" class="button button--teal-dark button--solid" value="Download" />
+
        </form>
 		</div>
 	</div>
@@ -109,5 +117,9 @@ function toggleFieldSelect(checked) {
     }
     checkbox.checked = checked;
   }
+}
+
+function toggleDefaultFields() {
+  alert('TODO');
 }
 </script>
