@@ -569,7 +569,7 @@ def update_doc_with_other_locations(grant):
             if not grant["additional_data"].get("GNRecipientOrgDistrictName"):
                 try:
                     grant["additional_data"]["GNRecipientOrgDistrictName"] = location["ladnm"]
-                    grant["additional_data"]["GNRecipientOrgDistrictGeoCode"] = location["ladnm"]
+                    grant["additional_data"]["GNRecipientOrgDistrictGeoCode"] = location["ladcd"]
                 except KeyError:
                     pass
 
