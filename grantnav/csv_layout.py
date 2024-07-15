@@ -75,11 +75,11 @@ grants_csv = OrderedDict([
     ("Data Source", "dataset.distribution.0.downloadURL"),
     ("Publisher:Name", "dataset.publisher.name"),
 
-    ("Best Recipient Region", "result.additional_data.recipientRegionName"),
-    ("Best Recipient District", "result.additional_data.recipientDistrictName"),
-    ("Best Recipient District Geographic Code", "result.additional_data.recipientDistrictGeoCode"),
-    ("Best Recipient Ward", "result.additional_data.recipientWardName"),
-    ("Best Recipient Ward Geographic Code", "result.additional_data.recipientWardNameGeoCode"),
+    ("Best Available Recipient Region", "result.additional_data.recipientRegionName"),
+    ("Best Available Recipient District", "result.additional_data.recipientDistrictName"),
+    ("Best Available Recipient District Geographic Code", "result.additional_data.recipientDistrictGeoCode"),
+    ("Best Available Recipient Ward", "result.additional_data.recipientWardName"),
+    ("Best Available Recipient Ward Geographic Code", "result.additional_data.recipientWardNameGeoCode"),
 
     ("Recipient Region", "result.additional_data.GNRecipientOrgRegionName"),
     ("Recipient Region Geographic code", "result.additional_data.GNRecipientOrgRegionGeoCode"),
