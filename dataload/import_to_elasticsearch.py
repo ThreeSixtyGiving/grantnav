@@ -557,7 +557,7 @@ def update_doc_with_other_locations(grant):
                     except KeyError:
                         pass
 
-        # recipientOrganisationLocation
+        # recipientOrganizationLocation
         if location["source"] == "recipientOrganizationLocation" or location["source"] == "recipientOrganizationPostcode":
 
             if not grant["additional_data"].get("GNRecipientOrgCountyName"):
