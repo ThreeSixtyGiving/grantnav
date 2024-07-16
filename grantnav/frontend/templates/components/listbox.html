@@ -204,9 +204,9 @@ button[aria-disabled="true"] {
 /**
  * @namespace lbw (list box widget)
  * @description
- * The lbw namespace is used to avoid conflicting global definitions 
+ * The lbw namespace is used to avoid conflicting global definitions
  */
-const lbw =  || {};
+const lbw = {};
 
 /**
  * @class
@@ -217,7 +217,7 @@ const lbw =  || {};
  */
 
 lbw.Listbox = class Listbox {
-  constructor(listboxNode) {
+  constructor (listboxNode) {
     this.listboxNode = listboxNode;
     this.activeDescendant = this.listboxNode.getAttribute(
       'aria-activedescendant'
@@ -237,7 +237,7 @@ lbw.Listbox = class Listbox {
     this.registerEvents();
   }
 
-  registerEvents() {
+  registerEvents () {
     this.listboxNode.addEventListener('focus', this.setupFocus.bind(this));
     this.listboxNode.addEventListener('keydown', this.checkKeyPress.bind(this));
     this.listboxNode.addEventListener('click', this.checkClickItem.bind(this));
@@ -250,14 +250,14 @@ lbw.Listbox = class Listbox {
     }
   }
 
-  setupFocus() {
+  setupFocus () {
     if (this.activeDescendant) {
       const listitem = document.getElementById(this.activeDescendant);
       listitem.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     }
   }
 
-  focusFirstItem() {
+  focusFirstItem () {
     const firstItem = this.listboxNode.querySelector('[role="option"]');
 
     if (firstItem) {
@@ -265,7 +265,7 @@ lbw.Listbox = class Listbox {
     }
   }
 
-  focusLastItem() {
+  focusLastItem () {
     const itemList = this.listboxNode.querySelectorAll('[role="option"]');
 
     if (itemList.length) {
@@ -273,7 +273,7 @@ lbw.Listbox = class Listbox {
     }
   }
 
-  checkKeyPress(evt) {
+  checkKeyPress (evt) {
     const lastActiveId = this.activeDescendant;
     const allOptions = this.listboxNode.querySelectorAll('[role="option"]');
     const currentItem =
@@ -362,7 +362,7 @@ lbw.Listbox = class Listbox {
 
       case 'Backspace':
       case 'Delete':
-      case 'Enter':
+      case 'Enter': {
         if (!this.moveButton) {
           return;
         }
@@ -382,7 +382,7 @@ lbw.Listbox = class Listbox {
 
         let nextUnselected = nextItem.nextElementSibling;
         while (nextUnselected) {
-          if (nextUnselected.getAttribute('aria-selected') != 'true') {
+          if (nextUnselected.getAttribute('aria-selected') !== 'true') {
             break;
           }
           nextUnselected = nextUnselected.nextElementSibling;
@@ -390,7 +390,7 @@ lbw.Listbox = class Listbox {
         if (!nextUnselected) {
           nextUnselected = nextItem.previousElementSibling;
           while (nextUnselected) {
-            if (nextUnselected.getAttribute('aria-selected') != 'true') {
+            if (nextUnselected.getAttribute('aria-selected') !== 'true') {
               break;
             }
             nextUnselected = nextUnselected.previousElementSibling;
@@ -403,7 +403,7 @@ lbw.Listbox = class Listbox {
           this.focusItem(nextUnselected);
         }
         break;
-
+      }
       case 'A':
       case 'a':
         // handle control + A
@@ -430,13 +430,13 @@ lbw.Listbox = class Listbox {
     }
   }
 
-  findItemToFocus(character) {
+  findItemToFocus (character) {
     const itemList = this.listboxNode.querySelectorAll('[role="option"]');
     let searchIndex = 0;
 
     if (!this.keysSoFar) {
       for (let i = 0; i < itemList.length; i++) {
-        if (itemList[i].getAttribute('id') == this.activeDescendant) {
+        if (itemList[i].getAttribute('id') === this.activeDescendant) {
           searchIndex = i;
         }
       }
@@ -458,7 +458,7 @@ lbw.Listbox = class Listbox {
   }
 
   /* Return the index of the passed element within the passed array, or null if not found */
-  getElementIndex(option, options) {
+  getElementIndex (option, options) {
     const allOptions = Array.prototype.slice.call(options); // convert to array
     const optionIndex = allOptions.indexOf(option);
 
@@ -466,7 +466,7 @@ lbw.Listbox = class Listbox {
   }
 
   /* Return the next listbox option, if it exists; otherwise, returns null */
-  findNextOption(currentOption) {
+  findNextOption (currentOption) {
     const allOptions = Array.prototype.slice.call(
       this.listboxNode.querySelectorAll('[role="option"]')
     ); // get options array
@@ -481,7 +481,7 @@ lbw.Listbox = class Listbox {
   }
 
   /* Return the previous listbox option, if it exists; otherwise, returns null */
-  findPreviousOption(currentOption) {
+  findPreviousOption (currentOption) {
     const allOptions = Array.prototype.slice.call(
       this.listboxNode.querySelectorAll('[role="option"]')
     ); // get options array
@@ -495,7 +495,7 @@ lbw.Listbox = class Listbox {
     return previousOption;
   }
 
-  clearKeysSoFarAfterDelay() {
+  clearKeysSoFarAfterDelay () {
     if (this.keyClear) {
       clearTimeout(this.keyClear);
       this.keyClear = null;
@@ -509,7 +509,7 @@ lbw.Listbox = class Listbox {
     );
   }
 
-  findMatchInRange(list, startIndex, endIndex) {
+  findMatchInRange (list, startIndex, endIndex) {
     // Find the first item starting with the keysSoFar substring, searching in
     // the specified range of items
     for (let n = startIndex; n < endIndex; n++) {
@@ -521,7 +521,7 @@ lbw.Listbox = class Listbox {
     return null;
   }
 
-  checkClickItem(evt) {
+  checkClickItem (evt) {
     if (evt.target.getAttribute('role') !== 'option') {
       return;
     }
@@ -540,7 +540,7 @@ lbw.Listbox = class Listbox {
    *
    * @param evt
    */
-  checkMouseDown(evt) {
+  checkMouseDown (evt) {
     if (
       this.multiselectable &&
       evt.shiftKey &&
@@ -556,7 +556,7 @@ lbw.Listbox = class Listbox {
    * @param element
    *  The element to select
    */
-  toggleSelectItem(element) {
+  toggleSelectItem (element) {
     if (this.multiselectable) {
       element.setAttribute(
         'aria-selected',
@@ -573,7 +573,7 @@ lbw.Listbox = class Listbox {
    * @param element
    *  The element to defocus
    */
-  defocusItem(element) {
+  defocusItem (element) {
     if (!element) {
       return;
     }
@@ -589,7 +589,7 @@ lbw.Listbox = class Listbox {
    * @param element
    *  The element to focus
    */
-  focusItem(element) {
+  focusItem (element) {
     this.defocusItem(document.getElementById(this.activeDescendant));
     if (!this.multiselectable) {
       element.setAttribute('aria-selected', 'true');
@@ -614,7 +614,7 @@ lbw.Listbox = class Listbox {
    * @param end
    * @returns {boolean}
    */
-  checkInRange(index, start, end) {
+  checkInRange (index, start, end) {
     const rangeStart = start < end ? start : end;
     const rangeEnd = start < end ? end : start;
 
@@ -627,7 +627,7 @@ lbw.Listbox = class Listbox {
    * @param start
    * @param end
    */
-  selectRange(start, end) {
+  selectRange (start, end) {
     // get start/end indices
     const allOptions = this.listboxNode.querySelectorAll('[role="option"]');
     const startIndex =
@@ -648,7 +648,7 @@ lbw.Listbox = class Listbox {
   /**
    * Check for selected options and update moveButton, if applicable
    */
-  updateMoveButton() {
+  updateMoveButton () {
     if (!this.moveButton) {
       return;
     }
@@ -663,7 +663,7 @@ lbw.Listbox = class Listbox {
   /**
    * Check if the selected option is in view, and scroll if not
    */
-  updateScroll() {
+  updateScroll () {
     const selectedOption = document.getElementById(this.activeDescendant);
     if (selectedOption) {
       const scrollBottom =
@@ -684,7 +684,7 @@ lbw.Listbox = class Listbox {
    * @description
    *  Enable/disable the up/down arrows based on the activeDescendant.
    */
-  checkUpDownButtons() {
+  checkUpDownButtons () {
     const activeElement = document.getElementById(this.activeDescendant);
 
     if (!this.moveUpDownEnabled) {
@@ -720,7 +720,7 @@ lbw.Listbox = class Listbox {
    * @param items
    *  An array of items to add to the listbox
    */
-  addItems(items) {
+  addItems (items) {
     if (!items || !items.length) {
       return;
     }
@@ -748,7 +748,7 @@ lbw.Listbox = class Listbox {
    * @returns {Array}
    *  An array of items that were removed from the listbox
    */
-  deleteItems() {
+  deleteItems () {
     let itemsToDelete;
 
     if (this.multiselectable) {
@@ -778,7 +778,7 @@ lbw.Listbox = class Listbox {
     return itemsToDelete;
   }
 
-  clearActiveDescendant() {
+  clearActiveDescendant () {
     this.activeDescendant = null;
     this.listboxNode.setAttribute('aria-activedescendant', null);
 
@@ -791,7 +791,7 @@ lbw.Listbox = class Listbox {
    *  Shifts the currently focused item up on the list. No shifting occurs if the
    *  item is already at the top of the list.
    */
-  moveUpItems() {
+  moveUpItems () {
     if (!this.activeDescendant) {
       return;
     }
@@ -812,7 +812,7 @@ lbw.Listbox = class Listbox {
    *  Shifts the currently focused item down on the list. No shifting occurs if
    *  the item is already at the end of the list.
    */
-  moveDownItems() {
+  moveDownItems () {
     if (!this.activeDescendant) {
       return;
     }
@@ -832,7 +832,7 @@ lbw.Listbox = class Listbox {
    * @description
    *  Delete the currently selected items and add them to the sibling list.
    */
-  moveItems() {
+  moveItems () {
     if (!this.siblingList) {
       return;
     }
@@ -849,7 +849,7 @@ lbw.Listbox = class Listbox {
    * @param downButton
    *   Down button to trigger down shift
    */
-  enableMoveUpDown(upButton, downButton) {
+  enableMoveUpDown (upButton, downButton) {
     this.moveUpDownEnabled = true;
     this.upButton = upButton;
     this.downButton = downButton;
@@ -866,26 +866,20 @@ lbw.Listbox = class Listbox {
    * @param siblingList
    *   Listbox to move items to
    */
-  setupMove(button, siblingList) {
+  setupMove (button, siblingList) {
     this.siblingList = siblingList;
     this.moveButton = button;
     button.addEventListener('click', this.moveItems.bind(this));
   }
 
-  setHandleItemChange(handlerFn) {
+  setHandleItemChange (handlerFn) {
     this.handleItemChange = handlerFn;
   }
 
-  setHandleFocusChange(focusChangeHandler) {
+  setHandleFocusChange (focusChangeHandler) {
     this.handleFocusChange = focusChangeHandler;
   }
 };
-/*
- *   This content is licensed according to the W3C Software License at
- *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
- */
-
-'use strict';
 
 /**
  * @class
@@ -896,7 +890,7 @@ lbw.Listbox = class Listbox {
  */
 
 lbw.Toolbar = class Toolbar {
-  constructor(toolbarNode) {
+  constructor (toolbarNode) {
     this.toolbarNode = toolbarNode;
     this.items = this.toolbarNode.querySelectorAll('.toolbar-item');
     this.selectedItem = this.toolbarNode.querySelector('.selected');
@@ -907,7 +901,7 @@ lbw.Toolbar = class Toolbar {
    * @description
    *  Register events for the toolbar interactions
    */
-  registerEvents() {
+  registerEvents () {
     this.toolbarNode.addEventListener(
       'keydown',
       this.checkFocusChange.bind(this)
@@ -925,7 +919,7 @@ lbw.Toolbar = class Toolbar {
    * @param evt
    *  The keydown event object
    */
-  checkFocusChange(evt) {
+  checkFocusChange (evt) {
     let nextIndex, nextItem;
 
     // Do not move focus if any modifier keys pressed
@@ -967,7 +961,7 @@ lbw.Toolbar = class Toolbar {
    * @param evt
    *  The click event object
    */
-  checkClickItem(evt) {
+  checkClickItem (evt) {
     if (evt.target.classList.contains('toolbar-item')) {
       this.selectItem(evt.target);
     }
@@ -979,7 +973,7 @@ lbw.Toolbar = class Toolbar {
    * @param element
    *  The item to deselect
    */
-  deselectItem(element) {
+  deselectItem (element) {
     element.classList.remove('selected');
     element.setAttribute('aria-selected', 'false');
     element.setAttribute('tabindex', '-1');
@@ -991,7 +985,7 @@ lbw.Toolbar = class Toolbar {
    * @param element
    *  The item to select
    */
-  selectItem(element) {
+  selectItem (element) {
     this.deselectItem(this.selectedItem);
     element.classList.add('selected');
     element.setAttribute('aria-selected', 'true');
@@ -1005,7 +999,7 @@ lbw.Toolbar = class Toolbar {
    * @param element
    *  The item to focus on
    */
-  focusItem(element) {
+  focusItem (element) {
     element.focus();
   }
 };
@@ -1029,6 +1023,7 @@ window.addEventListener('load', function () {
     const ex1UnimportantListbox = new lbw.Listbox(
       document.getElementById('ss_unimp_list')
     );
+    // eslint-disable-next-line no-new
     new lbw.Toolbar(document.querySelector('[role="toolbar"]'));
 
     ex1ImportantListbox.enableMoveUpDown(
@@ -1040,7 +1035,7 @@ window.addEventListener('load', function () {
       ex1UnimportantListbox
     );
     ex1ImportantListbox.setHandleItemChange(function (event, items) {
-      const updateText = '';
+      let updateText = '';
 
       switch (event) {
         case 'added':
@@ -1052,7 +1047,7 @@ window.addEventListener('load', function () {
             'Moved ' + items[0].innerText + ' to unimportant features.';
           break;
         case 'moved_up':
-        case 'moved_down':
+        case 'moved_down': {
           let pos = Array.prototype.indexOf.call(
             this.listboxNode.children,
             items[0]
@@ -1060,6 +1055,7 @@ window.addEventListener('load', function () {
           pos++;
           updateText = 'Moved to position ' + pos;
           break;
+        }
       }
 
       if (updateText) {
@@ -1092,16 +1088,18 @@ window.addEventListener('load', function () {
       ex2ImportantListbox
     );
     ex2UnimportantListbox.setHandleItemChange(function (event, items) {
-      const updateText = '';
+      let updateText = '';
       const itemText = items.length === 1 ? '1 item' : items.length + ' items';
 
       switch (event) {
-        case 'added':
+        case 'added': {
           updateText = 'Added ' + itemText + ' to chosen features.';
           break;
-        case 'removed':
+        }
+        case 'removed': {
           updateText = 'Removed ' + itemText + ' from chosen features.';
           break;
+        }
       }
 
       if (updateText) {
@@ -1111,6 +1109,4 @@ window.addEventListener('load', function () {
     });
   }
 });
-
-
 </script>
