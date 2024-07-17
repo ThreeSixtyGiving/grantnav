@@ -226,3 +226,11 @@ def human_format(num):
 def concat(str_a, str_b):
     """concat two strings"""
     return f"{str_a}{str_b}"
+
+
+@register.filter(name="to_json")
+def to_json(data):
+    if type(data) != dict and type(data) != list:
+        return
+
+    return json.dumps(data)

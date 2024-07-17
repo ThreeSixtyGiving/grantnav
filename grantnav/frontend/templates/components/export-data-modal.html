@@ -7,6 +7,7 @@
 
       <p>Select the fields to include in the CSV download</p>
 
+      {% comment %}
       <div>
         <form>
           <div class="fields-container">
@@ -34,13 +35,17 @@
         </div>
       </div>
 
+
       <div>
         <a href="#" onClick="toggleFieldSelect(true)">Select all</a>
         <a href="#" onClick="toggleFieldSelect(false)" class="margin-bottom:1">Clear all</a>
         <a href="#" onClick="alert('TODO')">Select defaults</a>
       </div>
 
-      <input type="text" onkeyup="filterCheckboxes(this)" id="field-search" placeholder="Search for a field name"  style="width: 100%" />
+    {% endcomment %}
+
+      {% include 'components/listbox.html' with data=export_default_fields %}
+
 
     {% comment %}
      think we're not going to do this <h5>Data format</h5>
@@ -84,29 +89,6 @@ function toggleElement(groupId) {
   }
 }
 
-function filterCheckboxes(element) {
-  const inputText = element.value;
-  const checkboxes = document.querySelectorAll('.field-select');
-
-  /* Open up all the dl-groups */
-  for (const dlGroup of document.querySelectorAll('.dl-group')) {
-    dlGroup.style.display = inputText ? 'block' : 'none';
-  }
-
-  if (!inputText) {
-    /* Reset */
-    for (const checkbox of checkboxes) {
-      checkbox.parentElement.style.display = 'block';
-    }
-    return;
-  }
-
-  for (const checkbox of checkboxes) {
-    const checkboxValue = checkbox.dataset.title.toLowerCase();
-    const isVisible = checkboxValue.includes(inputText.toLowerCase());
-    checkbox.parentElement.style.display = isVisible ? 'block' : 'none';
-  }
-}
 
 function toggleFieldSelect(checked) {
   const checkboxes = document.querySelectorAll('.field-select');

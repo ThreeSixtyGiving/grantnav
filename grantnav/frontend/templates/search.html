@@ -40,18 +40,16 @@
             {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
 
             <div class="export-wrapper">
-              <a href="#" class="modal__trigger" data-id="export-data-modal">
                 <div class="export-label">Export search data:</div>
-              </a>
               <div class="export-button">
-                <a href="#" class="modal__trigger" data-id="export-data-modal">
+                <a href="#" class="modal__trigger" data-id="export-data-modal" title="Export search results as CSV data" id="export-results-csv-btn">
                   {% include 'tokens/export-csv-icon.html' %}
                 </a>
               </div>
               {% include 'components/export-data-modal.html' %}
 
               <div class="export-button">
-                <a class="export-data-button export-data-button--json" href="/search.json?" aria-label="Export results data as JSON">
+                <a class="export-data-button export-data-button--json" href="/search.json?" title="Export search results as JSON data">
                   {% include 'tokens/export-json-icon.html' %}
                 </a>
               </div>
@@ -411,26 +409,25 @@ function filterElements (event, selector) {
 }
 
 /* modal toggle handlers */
-
-document.querySelectorAll('.modal__trigger').forEach(function(el) {
-  el.onclick = function(){
+document.querySelectorAll('.modal__trigger').forEach(function (el) {
+  el.onclick = function () {
     const target = el.getAttribute('data-id');
     const modal = document.getElementById(target);
     const body = document.getElementsByTagName('body');
 
-
     if (modal.hasAttribute('aria-hidden')) {
-
-      modal.removeAttribute('aria-hidden')
+      modal.removeAttribute('aria-hidden');
       modal.classList.add('modal--shown');
       body[0].classList.add('modal--shown');
-
     } else {
-      modal.setAttribute('aria-hidden', '')
+      modal.setAttribute('aria-hidden', '');
       modal.classList.remove('modal--shown');
       body[0].classList.remove('modal--shown');
     }
   };
 });
+
+// DEbUG DO NOT COMMIT
+document.getElementById('export-results-csv-btn').click();
 </script>
 {% endblock %}

@@ -86,8 +86,14 @@ INSTALLED_APPS = (
     'favicon',
 )
 
+
+DJANGO_LIVESYNC = {
+  "PORT": 9999, # this is optional and is default set to 9001.
+  "HOST": "localhost"
+}
+
 if DEBUG:
-    INSTALLED_APPS = INSTALLED_APPS + ("corsheaders",)
+    INSTALLED_APPS = INSTALLED_APPS + ("corsheaders", "livesync")
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -101,7 +107,7 @@ MIDDLEWARE = (
 )
 
 if DEBUG:
-    MIDDLEWARE = ("corsheaders.middleware.CorsMiddleware",) + MIDDLEWARE
+    MIDDLEWARE = ("corsheaders.middleware.CorsMiddleware", "livesync.core.middleware.DjangoLiveSyncMiddleware") + MIDDLEWARE
 
 ROOT_URLCONF = 'grantnav.urls'
 
