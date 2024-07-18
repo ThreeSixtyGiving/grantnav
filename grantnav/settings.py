@@ -34,7 +34,7 @@ env = environ.Env(  # set default values and casting
     DB_NAME=(str, os.path.join(BASE_DIR, 'db.sqlite3')),
     PROVENANCE_JSON=(str, None),
     ELASTICSEARCH_HOST=(str, 'localhost'),
-    INSIGHTS_BASE_URL=(str, "https://insights.threesixtygiving.org")
+    INSIGHTS_BASE_URL=(str, "https://grantvis.threesixtygiving.org")
 )
 
 PIWIK = {
