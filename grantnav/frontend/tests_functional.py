@@ -505,21 +505,25 @@ def test_insights_button(provenance_dataload, server_url, browser):
 links_checked = {}
 
 
-@pytest.mark.parametrize(('path'), ['?',
-                                    '/search',
-                                    '/funders',
-                                    '/recipients',
-                                    '/about',
-                                    '/datasets',
-                                    '/grant/360G-LBFEW-99233',  # regular grant
-                                    '/grant/360G-wolfson-19916y',  # grant with 0 or negative amount
-                                    '/org/GB-CHC-1126147'])
+@pytest.mark.parametrize(('path'), [
+    '?',
+    '/search',
+    '/funders',
+    '/recipients',
+    '/about',
+    '/datasets',
+    '/grant/360G-LBFEW-99233',  # regular grant
+    '/grant/360G-wolfson-19916y',  # grant with 0 or negative amount
+    '/org/GB-CHC-1126147'
+])
 def test_links(provenance_dataload, server_url, browser, path):
     """ Load each path and check the links within the page respond HTTP success """
 
     # We use selenium for this kind of test because it's a convenient way to manipulate the dom
     browser.get(server_url + path)
-    skip = ["#", "https://twitter.com/360Giving/", "mailto:grantnav@threesixtygiving.org", "https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org/search.json%3F"]
+    links = []
+    # Skip some sites that are are behind cloudflare which blocks the script
+    skip = ["#", "https://twitter.com/360Giving/", "mailto:grantnav@threesixtygiving.org", "https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org/search.json%3F", "https://www.parliament.uk/site-information/copyright/open-parliament-licence", "https://www.ons.gov.uk/", "https://www.oscr.org.uk/", "https://www.hesa.ac.uk/", "https://digital.nhs.uk/"]
 
     for a in browser.find_elements_by_tag_name("a"):
         # Datatables quirk with empty <a> tags, select2 quirk with same issue
@@ -530,22 +534,27 @@ def test_links(provenance_dataload, server_url, browser, path):
 
         assert link is not None, f"Error An <a> tag without a href attribute on {path} {a.get_attribute('outerHTML')}"
 
-        if link in skip:
-            continue
+        if link not in skip:
+            links.append(link)
 
-        # print(f"Testing {link}")
+    broken = False
+    for link in links:
 
-        try:
-            status_code = links_checked[link]
-        except KeyError:
+        if link not in links_checked.keys():
             try:
                 # Some sites reject connection without a user agent
-                r = requests.head(link, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"})
+                r = requests.head(link, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"}, verify=False)
+                status_code = r.status_code
             except Exception as e:
-                # Convert exception to assert for better readability
-                assert False, f"Request exception: {e} on {a.get_attribute('outerHTML')}"
+                # Set status code to 0 (not a HTTP response code) so it gets displayed along with the other errors at the end.
+                # This is usually triggered by the request timing out.
+                print(e)
+                status_code = 0
 
-            status_code = r.status_code
-            links_checked[link] = r.status_code
+            links_checked[link] = status_code
+            if status_code < 200 or status_code > 399:
+                broken = True
 
-            assert (status_code >= 200 and status_code < 399), f"{link} is broken: {status_code} on page {path}"
+    errors = ', '.join([f'{link} ({status})' for link, status in links_checked.items() if status < 200 or status > 399])
+    print(errors)
+    assert not broken, f"Links broken on page {path}: {errors}"
