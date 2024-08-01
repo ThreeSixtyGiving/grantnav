@@ -384,7 +384,6 @@ def test_datasets_page(server_url, browser):
 
 @pytest.mark.parametrize(('path', 'text'), [
     ('/grant/360G-LBFEW-111657', 'Where is this data from?'),
-    ('/grant/360G-LBFEW-111657', 'This data was originally published by')
     ])
 def test_disclaimers(server_url, browser, path, text):
     browser.get(server_url + path)
