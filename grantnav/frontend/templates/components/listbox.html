@@ -217,7 +217,12 @@
       Remove
     </button>
   </div>
-  <div class="offscreen">Last change: <span aria-live="polite" id="ms_live_region"></span></div>
+  <form method="get" action="{{action_url}}">
+    <input type="hidden" id="form-data" value="" name="selection" />
+    <input type="hidden" name="json_query" value="{{json_query}}" />
+    <input type="submit" class="button button--teal-dark button--solid" style="width: 100%" value="{{action_label}}" />
+  </form>
+
 </div>
 
 <script>
@@ -307,6 +312,7 @@ class GNListBox {
 
     console.log(this.fieldsChosen);
     document.getElementById('chosen-fields-count').innerText = this.fieldsChosen.length;
+    document.getElementById('form-data').value = JSON.stringify(this.fieldsChosen);
   }
 
   setupEvents () {

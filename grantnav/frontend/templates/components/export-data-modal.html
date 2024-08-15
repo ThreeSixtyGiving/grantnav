@@ -7,56 +7,8 @@
 
       <p>Select the fields to include in the CSV download</p>
 
-      {% comment %}
-      <div>
-        <form>
-          <div class="fields-container">
-            {% for title, fields in export_default_fields.items %}
+      {% include 'components/listbox.html' with data=export_default_fields action_label="Download" action_url="/search_custom.csv" %}
 
-            {# These are top-level fields #}
-            {% if fields|length == 1 %}
-            <div>
-              <input type="checkbox" value="{{fields.0.path}}" id="field-select-{{fields.0.path}}" data-title="{{fields.0.title}}" class="field-select" checked><label for="field-select-{{fields.0.path}}" class="margin-right:1" title="[DEBUG {{fields.0.path}}]">&nbsp;{{fields.0.title}} {% if "additional_data" in field.path %}(additional data){% endif %} </label>
-            </div>
-            {% else %}
-
-            {# These are nested fields #}
-            <div class="margin-bottom:1">
-              <a href="#" title="Expand to show fields in this category" onclick="toggleElement('dl-group-{{title|cut:" "}}')" >{{title}} ({{fields|length}}) +</a>
-              <div class="dl-group" id="dl-group-{{title|cut:" "}}" {% if fields|length > 1 %}style="display:none" {% endif %}>
-                {% for field in fields %}
-                <div><input type="checkbox" value="{{field.path}}" id="field-select-{{field.path}}" data-title="{{field.title}}" class="field-select" checked><label for="field-select-{{field.path}}" class="margin-right:1" title="[DEBUG {{field.path}}]">&nbsp;{{field.title}} {% if "additional_data" in field.path %}(additional data){% endif %} </label></div>
-                {% endfor %}
-              </div>
-            </div>
-            {% endif %}
-
-            {% endfor %}
-        </div>
-      </div>
-
-
-      <div>
-        <a href="#" onClick="toggleFieldSelect(true)">Select all</a>
-        <a href="#" onClick="toggleFieldSelect(false)" class="margin-bottom:1">Clear all</a>
-        <a href="#" onClick="alert('TODO')">Select defaults</a>
-      </div>
-
-    {% endcomment %}
-
-      {% include 'components/listbox.html' with data=export_default_fields %}
-
-
-    {% comment %}
-     think we're not going to do this <h5>Data format</h5>
-      <div>
-        <label for="csv_option"><input type="radio" name="download-format" value="csv" id="csv_option" checked> csv</label>
-        <label for="json_option"><input type="radio" name="download-format" value="json" id="json_option"> json</label>
-      </div>
-    {% endcomment %}
-      <input type="submit" class="button button--teal-dark button--solid" value="Download" />
-
-       </form>
 		</div>
 	</div>
 </div>
