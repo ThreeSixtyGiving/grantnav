@@ -185,7 +185,7 @@
         </li>
         <div class="dl-group" id="dl-group-{{title|cut:" "}}" {% if fields|length > 1 %}style="display:none" {% endif %}>
           {% for field in fields %}
-          <li data-option="{{field|to_json}}" id="field-select-{{field.path}}"
+          <li data-option="{{field|to_json}}" data-option-parent-title="{{title}}" id="field-select-{{field.path}}"
             class="margin-left:2 field-select" role="option" aria-selected="false" title="[DEBUG {{field.path}}]">
             <span class="checkmark" aria-hidden="true"></span>
             {{field.title}} {% if "additional_data" in field.path %}(additional data){% endif %}
@@ -230,13 +230,15 @@ class GNListBox {
   constructor () {
     this.addBtn = document.getElementById('dl-add-fields-btn');
     this.removeBtn = document.getElementById('dl-remove-fields-btn');
+    this.chosenFieldList = document.getElementById('chosen-fields-list');
+    /* toAdd and toRemove are the staging arrays pending pressing the add/remove button */
     this.toAdd = [];
     this.toRemove = [];
+    /* fieldsChosen contains the final list of paths of fields that will be submitted to the backend */
     this.fieldsChosen = [];
-
-    this.setupEvents();
   }
 
+  /* Filters the list of available fields */
   filterCheckboxes (event) {
     const inputText = event.srcElement.value;
     const checkboxes = document.querySelectorAll('.field-select');
@@ -335,8 +337,16 @@ class GNListBox {
         itemClone.setAttribute('id', `${itemClone.id}-selected`);
         itemClone.addEventListener('click', this.select.bind(this));
 
-        document.getElementById('chosen-fields-list').appendChild(itemClone);
-        /* TODO how to Handle the parent group item ? */
+        /* Check to see if this is a child item if it is append the parent title  */
+        if (itemClone.dataset.optionParentTitle) {
+          /* Remove the indent for the child item */
+          itemClone.classList.remove('margin-left:2');
+          /* We use innerHTML here to also remove any existing elements
+           * <li>parent title: child field title</li> */
+          itemClone.innerHTML = `${itemClone.dataset.optionParentTitle}: ${itemClone.innerText}`;
+        }
+
+        this.chosenFieldList.appendChild(itemClone);
       }
       this.toAdd = [];
       for (const el of document.getElementsByClassName('field-select')) {
@@ -358,4 +368,5 @@ class GNListBox {
 }
 
 const gnl = new GNListBox();
+gnl.setupEvents();
 </script>

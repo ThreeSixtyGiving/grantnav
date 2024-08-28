@@ -163,3 +163,6 @@ def grants_csv_to_dictionary():
                                path})
 
     return res
+
+
+grants_csv_dict = grants_csv_to_dictionary()

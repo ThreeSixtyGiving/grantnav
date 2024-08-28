@@ -230,7 +230,7 @@ def concat(str_a, str_b):
 
 @register.filter(name="to_json")
 def to_json(data):
-    if type(data) != dict and type(data) != list:
+    if type(data) is not dict or type(data) is not list:
         return
 
     return json.dumps(data)

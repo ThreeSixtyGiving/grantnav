@@ -87,13 +87,8 @@ INSTALLED_APPS = (
 )
 
 
-DJANGO_LIVESYNC = {
-  "PORT": 9999, # this is optional and is default set to 9001.
-  "HOST": "localhost"
-}
-
 if DEBUG:
-    INSTALLED_APPS = INSTALLED_APPS + ("corsheaders", "livesync")
+    INSTALLED_APPS = INSTALLED_APPS + ("corsheaders",)
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
