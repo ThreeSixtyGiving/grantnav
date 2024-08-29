@@ -155,12 +155,12 @@ def grants_csv_to_dictionary():
             res[parsed[0]] = []
 
         if len(parsed) > 1:
-            title_remainder = ": ".join(parsed[1:])
+            display_title = ": ".join(parsed[1:])
         else:
-            title_remainder = title
+            display_title = title
 
-        res[parsed[0]].append({"title": title_remainder, "path":
-                               path})
+        res[parsed[0]].append({"title": display_title, "path":
+                               path, "column_title": title})
 
     return res
 
