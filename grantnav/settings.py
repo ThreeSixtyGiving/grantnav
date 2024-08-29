@@ -102,7 +102,7 @@ MIDDLEWARE = (
 )
 
 if DEBUG:
-    MIDDLEWARE = ("corsheaders.middleware.CorsMiddleware", "livesync.core.middleware.DjangoLiveSyncMiddleware") + MIDDLEWARE
+    MIDDLEWARE = ("corsheaders.middleware.CorsMiddleware",) + MIDDLEWARE
 
 ROOT_URLCONF = 'grantnav.urls'
 
