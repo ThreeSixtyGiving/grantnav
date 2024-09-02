@@ -9,7 +9,7 @@
 <style scoped>
   .listbox-area {
     display: grid;
-    grid-gap: 2em;
+    grid-gap: 1.5em;
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -61,14 +61,6 @@
   [role="listbox"]:focus [role="option"].focused,
   [role="option"]:hover {
     outline: 2px solid currentcolor;
-  }
-
-  .move-right-btn span.checkmark::after {
-    content: " →";
-  }
-
-  .move-left-btn span.checkmark::before {
-    content: "← ";
   }
 
   [role="option"][aria-selected="true"] span.checkmark::before {
@@ -162,9 +154,9 @@
 
 <div class="listbox-area">
   <div class="left-area">
-    <span id="ms_av_l" class="listbox-label">Available fields:</span>
-    <ul id="ms_imp_list" tabindex="0" role="listbox" aria-labelledby="ms_av_l" aria-multiselectable="true"
-      style="min-height: 400px; max-height: 400px; overflow: scroll;">
+    <span id="dl-available-fields-label" class="listbox-label">Available fields:</span>
+    <ul id="dl-available-fields" tabindex="0" role="listbox" aria-labelledby="dl-available-fields-label" aria-multiselectable="true"
+      style="min-height: 300px; max-height: 300px; overflow: scroll;">
       {% for title, fields in export_default_fields.items %}
 
       {# These are top-level fields #}
@@ -181,7 +173,7 @@
         <li role="option" aria-selected="false" onclick="toggleElement('dl-group-{{title|cut:" "}}')"
           data-option="{{fields|to_json}}"
           title="[DEBUG {{fields.path}}] Expand to show child fields in the {{title}} field">
-          {{title}} ({{fields|length}})
+          &gt; {{title}} ({{fields|length}})
         </li>
         <div class="dl-group" id="dl-group-{{title|cut:" "}}" {% if fields|length > 1 %}style="display:none" {% endif %}>
           {% for field in fields %}
@@ -198,44 +190,97 @@
       {% endfor %}
     </ul>
 
-    <input type="text" id="field-search" placeholder="Search for a field name"  style="width: 100%" />
+    <input type="text" id="field-search" placeholder="Search for a field name"  style="width: 100%; margin-top:0" />
 
-    <button type="button" id="dl-add-fields-btn" class="move-right-btn" aria-keyshortcuts="Alt+ArrowRight Enter"
-      aria-disabled="true">
-      <span class="checkmark" aria-hidden="true"></span>
-      Add
-    </button>
   </div>
   <div class="right-area">
     <span id="ms_ch_l" class="listbox-label">Fields chosen (<span id="chosen-fields-count">0</span>):</span>
     <ul tabindex="0" role="listbox" aria-labelledby="ms_ch_l" aria-activedescendant="" id="chosen-fields-list"
-      aria-multiselectable="true"  style="min-height: 400px; max-height: 400px; overflow: scroll;">
+      aria-multiselectable="true"  style="min-height: 333px; max-height: 333px; overflow: scroll;">
     </ul>
-    <button type="button" id="dl-remove-fields-btn" class="move-left-btn" aria-keyshortcuts="Alt+ArrowLeft Delete"
+
+  </div>
+
+  <div>
+    <button type="button" id="dl-add-fields-btn" class="button button--teal-dark move-right-btn" aria-keyshortcuts="Alt+ArrowRight Enter"
       aria-disabled="true">
+      Add
+    </button>
+    <button type="button" id="dl-add-recommended-fields-btn" class="button button--teal-dark" >
       <span class="checkmark" aria-hidden="true"></span>
-      Remove
+      Add all recommended fields
     </button>
   </div>
-  <form method="get" action="{{action_url}}">
-    <input type="hidden" id="form-data" value="" name="selection" />
-    <input type="hidden" name="json_query" value="{{json_query}}" />
-    <input type="submit" class="button button--teal-dark button--solid" style="width: 100%" value="{{action_label}}" />
-  </form>
 
-</div>
+  <div>
+    <button type="button" id="dl-remove-fields-btn" class="button button--teal-dark move-left-btn" aria-disabled="true">
+      Remove
+    </button>
+    <button type="button" id="dl-remove-all-fields-btn" class="button button--teal-dark move-left-btn" aria-disabled="true">
+      Remove all fields
+    </button>
+  </div>
+</div> <!-- / grid -->
+<form method="get" action="{{action_url}}">
+  <input type="hidden" id="form-data" value="" name="selection" />
+  <input type="hidden" name="json_query" value="{{json_query}}" />
+  <input type="submit" class="button button--teal-dark button--solid margin-top:2" style="width: 100%" value="{{action_label}}" />
+</form>
+
+<script id="recommended-fields-list" type="application/json">
+[
+ "result.id",
+ "result.title",
+ "result.description",
+ "result.currency",
+ "result.amountAppliedFor",
+ "result.amountAwarded",
+ "result.amountDisbursed",
+ "result.awardDateDateOnly",
+ "result.recipientOrganization.0.url",
+ "result.plannedDates.0.startDateDateOnly",
+ "result.plannedDates.0.endDateDateOnly",
+ "result.plannedDates.0.duration",
+ "result.actualDates.0.startDate",
+ "result.actualDates.0.endDateDateOnly",
+ "result.actualDates.0.duration",
+ "result.recipientOrganization.0.id",
+ "result.recipientOrganization.0.name",
+ "result.recipientOrganization.0.charityNumber",
+ "result.recipientOrganization.0.companyNumber",
+ "result.recipientOrganization.0.postalCode",
+ "result.recipientOrganization.0.location.0.geoCodeType",
+ "result.recipientOrganization.0.location.0.geoCode",
+ "result.recipientOrganization.0.location.0.name",
+ "result.fundingOrganization.0.id",
+ "result.fundingOrganization.0.name",
+ "result.fundingOrganization.0.postalCode",
+ "result.grantProgramme.0.code",
+ "result.grantProgramme.0.title",
+ "result.grantProgramme.0.url",
+ "result.fundingType.0.title",
+ "result.beneficiaryLocation.0.name",
+ "result.beneficiaryLocation.0.countryCode",
+ "result.beneficiaryLocation.0.geoCode",
+ "result.beneficiaryLocation.0.geoCodeType",
+ "result.fromOpenCall"
+]
+</script>
 
 <script>
 class GNListBox {
   constructor () {
     this.addBtn = document.getElementById('dl-add-fields-btn');
     this.removeBtn = document.getElementById('dl-remove-fields-btn');
+    this.removeAllBtn = document.getElementById('dl-remove-all-fields-btn');
+    this.addRecommendedBtn = document.getElementById('dl-add-recommended-fields-btn');
     this.chosenFieldList = document.getElementById('chosen-fields-list');
     /* toAdd and toRemove are the staging arrays pending pressing the add/remove button */
     this.toAdd = [];
     this.toRemove = [];
     /* fieldsChosen contains the final list of paths of fields that will be submitted to the backend */
     this.fieldsChosen = [];
+    this.recommendedFields = JSON.parse(document.getElementById('recommended-fields-list').textContent);
   }
 
   /* Filters the list of available fields */
@@ -308,16 +353,18 @@ class GNListBox {
   }
 
   updateFieldsList () {
-    this.fieldsChosen = Array.from(document.getElementById('chosen-fields-list').children).map((item) => {
+    this.fieldsChosen = Array.from(this.chosenFieldList.children).map((item) => {
       return JSON.parse(item.dataset.option);
     });
 
-    console.log(this.fieldsChosen);
     document.getElementById('chosen-fields-count').innerText = this.fieldsChosen.length;
     document.getElementById('form-data').value = JSON.stringify(this.fieldsChosen);
+
+    this.removeAllBtn.setAttribute('aria-disabled', this.fieldsChosen.length === 0);
   }
 
   setupEvents () {
+    /* Field options events */
     for (const el of document.getElementsByClassName('field-select')) {
       el.addEventListener('click', this.select.bind(this));
     }
@@ -341,9 +388,8 @@ class GNListBox {
         if (itemClone.dataset.optionParentTitle) {
           /* Remove the indent for the child item */
           itemClone.classList.remove('margin-left:2');
-          /* We use innerHTML here to also remove any existing elements
-           * <li>parent title: child field title</li> */
-          itemClone.innerHTML = `${itemClone.dataset.optionParentTitle}: ${itemClone.innerText}`;
+          /* We use innerHTML here to also remove any existing elements such as new line breaks */
+          itemClone.innerHTML = `<span class="checkmark" aria-hidden="true"></span>${itemClone.dataset.optionParentTitle}: ${itemClone.innerText}`;
         }
 
         this.chosenFieldList.appendChild(itemClone);
@@ -361,6 +407,23 @@ class GNListBox {
       }
       this.toRemove = [];
       this.updateFieldsList();
+    });
+
+    this.removeAllBtn.addEventListener('click', () => {
+      this.chosenFieldList.innerHTML = '';
+      this.toRemove = [];
+      this.updateFieldsList();
+    });
+
+    this.addRecommendedBtn.addEventListener('click', () => {
+      for (const item of document.getElementById('dl-available-fields').getElementsByTagName('li')) {
+        const option = JSON.parse(item.dataset.option);
+        if (this.recommendedFields.includes(option.path)) {
+          item.click();
+        }
+      }
+
+      this.addBtn.click();
     });
 
     document.getElementById('field-search').addEventListener('keyup', this.filterCheckboxes.bind(this));

@@ -5,9 +5,8 @@
     <div class="modal__content download-options">
 			<h4>GrantNav CSV Data Export</h4>
 
-      <p>Select the fields to include in the CSV download</p>
-
-      {% include 'components/listbox.html' with data=export_default_fields action_label="Download" action_url="/search_custom.csv" %}
+      <p>Select the fields to include in the CSV download.</p>
+      {% include 'components/field-chooser-listbox.html' with data=export_default_fields action_label="Download" action_url="/search_custom.csv" %}
 
 		</div>
 	</div>
