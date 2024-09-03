@@ -17,10 +17,15 @@
 
   </div>
   <div class="grid margin-bottom:4">
-    {% include 'components/covid-card.html' %}
-  </div>
-  <div class="grid margin-bottom:4">
-    {% include 'components/frame.html' with url="https://www.youtube.com/watch?v=t6nzLXuntno" %}
+    <div class="base-card base-card--new">
+      <div class="base-card__content">
+        <h2 class="base-card__title">Want to get the most out of GrantNav search?</h2>
+        <p class="base-card__text">
+          <a href="https://www.threesixtygiving.org/workshops/#free-tools-workshops" class="button">Join a free GrantNav workshop</a>
+        </p>
+      </div>
+    </div>
+      {% include 'components/frame.html' with url="https://www.youtube.com/watch?v=t6nzLXuntno" %}
   </div>
 
 {% endblock %}
