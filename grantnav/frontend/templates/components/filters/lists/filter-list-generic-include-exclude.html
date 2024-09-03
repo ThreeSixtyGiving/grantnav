@@ -29,7 +29,7 @@
         <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
           <select class="filter-search-box {{filter_id}}-search-box" multiple="multiple">
             {% for item in aggregate_data.buckets %}
-              <option value="{{item.key}}" data-url="{{item.url}}">{{item.key}} <small>({{item.doc_count}})</small></option>
+              <option value="{{item.key}}" data-url="{{item.url}}">{{item.key}} ({{item.doc_count}})</option>
             {% endfor %}
 
             {# We only support including them all or excluding them all not a mixture. Below shows the current selected #}
