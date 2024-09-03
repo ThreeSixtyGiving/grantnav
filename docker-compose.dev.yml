@@ -9,14 +9,15 @@ services:
     environment:
       DEBUG: 'True'
       ELASTICSEARCH_HOST: 'elasticsearch'
-      PROVENANCE_JSON: "/code/datastoredata/data/data_all.json"
       PYTHONUNBUFFERED: 1
     volumes:
-      - "./:/code"
+      - "./:/grantnav"
     command: "sh -c 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000'"
+    depends_on:
+      - elasticsearch
 
   elasticsearch:
-    image: elasticsearch:7.12.1
+    image: elasticsearch:7.17.23
     environment:
       "discovery.type": 'single-node'
       "TAKE_FILE_OWNERSHIP": "True"
@@ -24,5 +25,7 @@ services:
       - "9200:9200"
       - "9300:9300"
     volumes:
-      - "./elasticsearch_dev_data:/usr/share/elasticsearch/data/"
-
+      - "elasticsearch_data:/usr/share/elasticsearch/data/"
+ 
+volumes:
+   elasticsearch_data: {}
