@@ -18,7 +18,7 @@ BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
 
 def check_js_errors(browser):
     for log in browser.get_log("browser"):
-        assert "SEVERE" not in log['level'], f"found {log}"
+        assert "SEVERE" not in log['level'], f"{browser.current_url} found {log} "
 
 
 @pytest.fixture(scope="module")
