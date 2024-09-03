@@ -3,22 +3,20 @@ version: "3.5"
 services:
 
   grantnav-test:
-    build: .
-    ports:
-      - "8000:8000"
-    environment:
-      ALLOWED_HOSTS: 'localhost'
-      DEBUG: 'True'
-      ELASTICSEARCH_HOST: 'elasticsearch-test'
-      PROVENANCE_JSON: "/code/datastoredata/data/data_all.json"
-    volumes:
-      - "./:/code"
-    command: "su -c 'chmod a+x docker-compose.test.sh && ./docker-compose.test.sh'"
-    depends_on:
-      - elasticsearch-test
+      build: .
+      tty: true
+      environment:
+        ALLOWED_HOSTS: 'localhost'
+        DEBUG: 'True'
+        PYTHONUNBUFFERED: 1
+        ELASTICSEARCH_HOST: 'elasticsearch'
+      volumes:
+        - "./:/grantnav"
+      depends_on:
+        - elasticsearch
 
-  elasticsearch-test:
-    image: elasticsearch:7.12.1
+  elasticsearch:
+    image: elasticsearch:7.17.23
     environment:
       "discovery.type": 'single-node'
       "TAKE_FILE_OWNERSHIP": "True"
@@ -26,5 +24,7 @@ services:
       - "9200:9200"
       - "9300:9300"
     volumes:
-      - "./elasticsearch_test_data:/usr/share/elasticsearch/data/"
-
+      - "elasticsearch_data:/usr/share/elasticsearch/data/"
+ 
+volumes:
+   elasticsearch_data: {}

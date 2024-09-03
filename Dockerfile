@@ -1,12 +1,12 @@
-FROM python:3.8.16-bullseye
+FROM python:3.8
 
-RUN mkdir /code
-COPY . /code/
-WORKDIR /code/
-RUN pip install -r /code/requirements.txt
+RUN apt-get -qq -y update && apt-get -qq -y upgrade
+RUN apt-get install -y chromium netcat-traditional
 
-# This CMD never actually used; currently Docker Compose replaces it.
-# Should be command for production web server later.
-CMD sh -c ' ls'
+COPY requirements_dev.txt /grantnav/
+WORKDIR /grantnav/
+RUN pip install -r requirements_dev.txt
 
 EXPOSE 8000
+
+CMD ["/bin/bash"]
