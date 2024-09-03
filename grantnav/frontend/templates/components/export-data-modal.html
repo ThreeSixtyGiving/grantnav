@@ -24,34 +24,12 @@
   display: flex;
   flex-direction: column;
 }
-/*
-.download-options label {
-  display: grid;
-}*/
+
 </style>
 
 <script>
 
-function toggleElement(groupId) {
-  const el = document.getElementById(groupId);
-  if (el.style.display === 'none') {
-    el.style.display = 'block';
-  } else {
-    el.style.display = 'none';
-  }
-}
 
-
-function toggleFieldSelect(checked) {
-  const checkboxes = document.querySelectorAll('.field-select');
-
-  for (const checkbox of checkboxes) {
-    if (checkbox.parentElement.style.display === 'none') {
-      continue;
-    }
-    checkbox.checked = checked;
-  }
-}
 
 function toggleDefaultFields() {
   alert('TODO');

@@ -170,7 +170,7 @@
 
       {# These are nested fields #}
       <div class="dl-group-container">
-        <li role="option" aria-selected="false" onclick="toggleElement('dl-group-{{title|cut:" "}}')"
+        <li role="option" aria-selected="false" class="parent-field-toggle" data-toggle-target="dl-group-{{title|cut:" "}}"
           data-option="{{fields|to_json}}"
           title="[DEBUG {{fields.path}}] Expand to show child fields in the {{title}} field">
           &gt; {{title}} ({{fields|length}})
@@ -268,6 +268,9 @@
 </script>
 
 <script>
+
+
+
 class GNListBox {
   constructor () {
     this.addBtn = document.getElementById('dl-add-fields-btn');
@@ -367,6 +370,22 @@ class GNListBox {
     /* Field options events */
     for (const el of document.getElementsByClassName('field-select')) {
       el.addEventListener('click', this.select.bind(this));
+    }
+
+    /* child items toggle */
+    for (const el of document.getElementsByClassName("parent-field-toggle")) {
+        const childElements = document.getElementById(groupId);
+  if (childElements.style.display === 'none') {
+    childElements.style.display = 'block';
+  } else {
+    childElements.style.display = 'none';
+  }
+
+
+      el.dataset.toggleTarget.
+      el.addEventListener('click', () => {
+
+      });
     }
 
     this.addBtn.addEventListener('click', () => {
