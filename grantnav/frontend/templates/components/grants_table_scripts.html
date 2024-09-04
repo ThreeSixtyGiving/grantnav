@@ -142,6 +142,9 @@ function getColumns () {
   }
 }
 
+/* override default which is to show an alert() dialog */
+$.fn.dataTable.ext.errMode = 'throw';
+
 jQuery(function ($) {
   $('#search_grants_datatable').dataTable({
     serverSide: true,
@@ -167,7 +170,6 @@ jQuery(function ($) {
     columns: getColumns()
   });
 
-  const table = $('#search_grants_datatable').DataTable();
   table.on('draw', function () {
     if (document.getElementById('search_grants_datatable_paginate')) {
       const previousButton = document.getElementById('search_grants_datatable_previous');
