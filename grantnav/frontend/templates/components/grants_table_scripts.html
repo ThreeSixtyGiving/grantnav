@@ -170,6 +170,8 @@ jQuery(function ($) {
     columns: getColumns()
   });
 
+  const table = $('search_grants_datatable');
+
   table.on('draw', function () {
     if (document.getElementById('search_grants_datatable_paginate')) {
       const previousButton = document.getElementById('search_grants_datatable_previous');
