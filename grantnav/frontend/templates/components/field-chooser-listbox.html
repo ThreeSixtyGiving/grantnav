@@ -13,6 +13,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+
   [role="listbox"] {
     margin: 1em 0 0;
     padding: 0;
@@ -69,88 +70,12 @@
     content: "✓";
   }
 
-  button[aria-haspopup="listbox"] {
-    position: relative;
-    padding: 5px 10px;
-    width: 150px;
-    border-radius: 0;
-    text-align: left;
-  }
-
-  button[aria-haspopup="listbox"]::after {
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    width: 0;
-    height: 0;
-    border: 8px solid transparent;
-    border-top-color: currentcolor;
-    border-bottom: 0;
-    content: "";
-  }
-
-  button[aria-haspopup="listbox"][aria-expanded="true"]::after {
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    width: 0;
-    height: 0;
-    border: 8px solid transparent;
-    border-top: 0;
-    border-bottom-color: currentcolor;
-    content: "";
-  }
-
-  button[aria-haspopup="listbox"]+[role="listbox"] {
-    position: absolute;
-    margin: 0;
-    width: 9.5em;
-    max-height: 10em;
-    border-top: 0;
-    overflow-y: auto;
-  }
-
-  [role="toolbar"] {
-    display: flex;
-  }
-
-  [role="toolbar"]>* {
-    border: 1px solid #aaa;
-    background: #ccc;
-  }
-
-  [role="toolbar"]>[aria-disabled="false"]:focus {
-    background-color: #eee;
-  }
-
-  button {
-    font-size: inherit;
-  }
 
   button[aria-disabled="true"] {
     opacity: 0.5;
   }
 
-  .annotate {
-    color: #366ed4;
-    font-style: italic;
-  }
-
-  .hidden {
-    display: none;
-  }
-
-  .offscreen {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(1px 1px 1px 1px);
-    clip: rect(1px, 1px, 1px, 1px);
-    font-size: 14px;
-    white-space: nowrap;
-  }
-</style>
+  </style>
 
 <div class="listbox-area">
   <div class="left-area">
@@ -269,8 +194,6 @@
 
 <script>
 
-
-
 class GNListBox {
   constructor () {
     this.addBtn = document.getElementById('dl-add-fields-btn');
@@ -372,19 +295,16 @@ class GNListBox {
       el.addEventListener('click', this.select.bind(this));
     }
 
-    /* child items toggle */
-    for (const el of document.getElementsByClassName("parent-field-toggle")) {
-        const childElements = document.getElementById(groupId);
-  if (childElements.style.display === 'none') {
-    childElements.style.display = 'block';
-  } else {
-    childElements.style.display = 'none';
-  }
-
-
-      el.dataset.toggleTarget.
+    /* child fields items toggle */
+    for (const el of document.getElementsByClassName('parent-field-toggle')) {
       el.addEventListener('click', () => {
+        const childFields = document.getElementById(el.dataset.toggleTarget);
 
+        if (childFields.style.display === 'none') {
+          childFields.style.display = 'block';
+        } else {
+          childFields.style.display = 'none';
+        }
       });
     }
 
