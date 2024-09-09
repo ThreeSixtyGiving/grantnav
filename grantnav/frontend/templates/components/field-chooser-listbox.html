@@ -129,7 +129,7 @@
   <div>
     <button type="button" id="dl-add-fields-btn" class="button button--teal-dark move-right-btn" aria-keyshortcuts="Alt+ArrowRight Enter"
       aria-disabled="true">
-      Add
+      Add <span class="dl-selected-counter"></span>
     </button>
     <button type="button" id="dl-add-recommended-fields-btn" class="button button--teal-dark" >
       <span class="checkmark" aria-hidden="true"></span>
@@ -193,6 +193,36 @@
 </script>
 
 <script>
+class GNSelected extends Array {
+  constructor (btn) {
+    super();
+    this.btn = btn;
+  }
+
+  clear () {
+    this.length = 0;
+    this._updateDom();
+  }
+
+  add (item) {
+    this.push(item);
+    this._updateDom();
+  }
+
+  remove (item) {
+    this.pop(item);
+    this._updateDom();
+  }
+
+  _updateDom () {
+    this.btn.setAttribute('aria-disabled', this.length === 0);
+    if (this.length > 0) {
+      this.btn.getElementsByClassName('dl-selected-counter')[0].innerText = `(${this.length})`;
+    } else {
+      this.btn.getElementsByClassName('dl-selected-counter')[0].innerText = '';
+    }
+  }
+}
 
 class GNListBox {
   constructor () {
@@ -202,7 +232,7 @@ class GNListBox {
     this.addRecommendedBtn = document.getElementById('dl-add-recommended-fields-btn');
     this.chosenFieldList = document.getElementById('chosen-fields-list');
     /* toAdd and toRemove are the staging arrays pending pressing the add/remove button */
-    this.toAdd = [];
+    this.toAdd = new GNSelected(this.addBtn);
     this.toRemove = [];
     /* fieldsChosen contains the final list of paths of fields that will be submitted to the backend */
     this.fieldsChosen = [];
@@ -246,11 +276,18 @@ class GNListBox {
       }
     }
   }
-
+  /*
   addItemToAdd (item) {
     this.toAdd.push(item);
     this.addBtn.setAttribute('aria-disabled', this.toAdd.length === 0);
+    this.updateSelectedCounter();
   }
+
+  removeItemToAdd (item) {
+    this.toAdd.pop(item);
+    this.addBtn.setAttribute('aria-disabled', this.toAdd.length === 0);
+    this.updateSelectedCounter();
+  } */
 
   removeItemToRemove (item) {
     this.toRemove.push(item);
@@ -264,7 +301,7 @@ class GNListBox {
     if (item.ariaSelected === 'true') {
       item.setAttribute('aria-selected', 'false');
       this.toRemove.pop(item);
-      this.toAdd.pop(item);
+      this.toAdd.remove(item);
       return;
     }
 
@@ -274,7 +311,7 @@ class GNListBox {
     if (item.id.endsWith('-selected')) {
       this.removeItemToRemove(item);
     } else {
-      this.addItemToAdd(item);
+      this.toAdd.add(item);
     }
   }
 
@@ -300,6 +337,15 @@ class GNListBox {
       el.addEventListener('click', () => {
         const childFields = document.getElementById(el.dataset.toggleTarget);
 
+        /* Select/deselect all the fields in this group */
+        for (const childField of childFields.children) {
+          const mockSelectEvent = {};
+          mockSelectEvent.srcElement = childField;
+
+          this.select(mockSelectEvent);
+        }
+
+        /* Open / Close the child field container  */
         if (childFields.style.display === 'none') {
           childFields.style.display = 'block';
         } else {
@@ -333,7 +379,7 @@ class GNListBox {
 
         this.chosenFieldList.appendChild(itemClone);
       }
-      this.toAdd = [];
+      this.toAdd.clear();
       for (const el of document.getElementsByClassName('field-select')) {
         el.setAttribute('aria-selected', false);
       }
