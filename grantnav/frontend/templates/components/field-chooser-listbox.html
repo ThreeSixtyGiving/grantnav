@@ -147,7 +147,8 @@
   </div>
 </div> <!-- / grid -->
 <h4 class="margin-top:1 margin-bottom:1">2. Download the results</h4>
-<form method="get" action="{{action_url}}">
+<form method="post" action="{{action_url}}">
+  {% csrf_token %}
   <input type="hidden" id="form-data" value="" name="selection" />
   <input type="hidden" name="json_query" value="{{json_query}}" />
   <input type="submit" class="button button--teal-dark button--solid" style="width: 100%" value="{{action_label}}" />

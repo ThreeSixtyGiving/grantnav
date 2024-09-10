@@ -6,7 +6,7 @@ from grantnav.csv_layout import grant_csv_paths, grant_csv_titles
 
 # Process the custom download request
 def process(request):
-    fields = json.loads(request.GET.get("selection"))
+    fields = json.loads(request.POST.get("selection", {}))
 
     # Check the incoming data is known to us
     for field in fields:
@@ -18,7 +18,7 @@ def process(request):
             raise Http404("The field(s) requested are not available.")
 
     return views.grants_csv_paged(
-        json.loads(request.GET.get("json_query")),
+        json.loads(request.POST.get("json_query", {})),
         grant_csv_titles=[item["column_title"] for item in fields],
         grant_csv_paths=[item["path"] for item in fields],
     )
