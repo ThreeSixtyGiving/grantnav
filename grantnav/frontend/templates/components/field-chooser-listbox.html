@@ -1,49 +1,10 @@
 {% load to_json from frontend %}
-<!--
-   listbox widget
-   This software includes material copied from or derived from https://www.w3.org/WAI/ARIA/apg/patterns/listbox/examples/listbox-rearrangeable/.
-   Copyright © 2024 W3C® (MIT, ERCIM, Keio, Beihang).
-   Licenced https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
--->
-
 <style scoped>
-  .listbox-area {
-    display: grid;
-    grid-gap: 1.5em;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-
   [role="listbox"] {
     margin: 1em 0 0;
     padding: 0;
     min-height: 18em;
     border: 1px solid #aaa;
-  }
-
-  [role="listbox"]#ss_elem_list {
-    position: relative;
-    max-height: 18em;
-    overflow-y: auto;
-  }
-
-  [role="listbox"]+*,
-  .listbox-label+* {
-    margin-top: 1em;
-  }
-
-  [role="group"] {
-    margin: 0;
-    padding: 0;
-  }
-
-  [role="group"]>[role="presentation"] {
-    display: block;
-    margin: 0;
-    padding: 0 0.5em;
-    font-weight: bold;
-    line-height: 2;
-    background-color: #ccc;
   }
 
   [role="option"] {
@@ -53,10 +14,6 @@
     padding: 2px 1em 2px 1.5em;
     line-height: 1.8em;
     cursor: pointer;
-  }
-
-  [role="listbox"]:focus [role="option"].focused {
-    background: #bde4ff;
   }
 
   [role="listbox"]:focus [role="option"].focused,
@@ -70,15 +27,19 @@
     content: "✓";
   }
 
-
-  button[aria-disabled="true"] {
+  button[aria-disabled="true"], input[type="submit"][disabled] {
     opacity: 0.5;
   }
 </style>
-
-<div class="listbox-area">
-  <div class="left-area">
-    <span id="dl-available-fields-label" class="listbox-label">Available fields:</span>
+<div class="grid grid--two-columns">
+  <button type="button" id="dl-add-recommended-fields-btn" class="button button--teal-dark margin-bottom:1">
+    Add recommended
+  </button>
+  <p id="dl-select-below">Or select from available fields below.</p>
+</div>
+<div class="grid grid--two-columns">
+  <div class="left-area" aria-labelledby="dl-select-below">
+    <span id="dl-available-fields-label" class="margin-top:1">Available fields:</span>
     <ul id="dl-available-fields" tabindex="0" role="listbox" aria-labelledby="dl-available-fields-label"
       aria-multiselectable="true" style="min-height: 300px; max-height: 300px; overflow: scroll;">
       {% for title, fields in export_default_fields.items %}
@@ -119,28 +80,33 @@
 
   </div>
   <div class="right-area">
-    <span id="ms_ch_l" class="listbox-label">Fields chosen (<span id="chosen-fields-count">0</span>):</span>
-    <ul tabindex="0" role="listbox" aria-labelledby="ms_ch_l" aria-activedescendant="" id="chosen-fields-list"
+    <span id="ms_ch_l" class="margin-top:1">Fields chosen (<span id="dl-chosen-fields-count">0</span>):</span>
+    <ul tabindex="0" role="listbox" aria-labelledby="ms_ch_l" aria-activedescendant="" id="dl-chosen-fields-list"
       aria-multiselectable="true" style="min-height: 333px; max-height: 333px; overflow: scroll;">
     </ul>
 
   </div>
 
-  <div>
-    <button type="button" id="dl-add-fields-btn" class="button button--teal-dark move-right-btn"
-      aria-keyshortcuts="Alt+ArrowRight Enter" aria-disabled="true">
-      Add <span class="dl-selected-counter"></span>
-    </button>
-    <button type="button" id="dl-add-recommended-fields-btn" class="button button--teal-dark">
-      Add recommended
+  <div class="grid grid--two-columns" style="justify-items: end;">
+    <div style="justify-self: start; min-width: 300px">
+      <button type="button" id="dl-add-fields-btn" class="button button--teal-dark" title="Add selected fields"
+        aria-keyshortcuts="Alt+ArrowRight Enter" aria-disabled="true">
+        Add <span class="dl-selected-counter"></span>
+      </button>
+      <button type="button" id="dl-add-all-fields-btn" class="button button--teal-dark" title="Add all fields">
+        Add all
+      </button>
+    </div>
+    <button type="button" id="dl-clear-fields-btn" class="button button--teal-dark" title="Clear the current selection">
+      Clear
     </button>
   </div>
 
-  <div>
-    <button type="button" id="dl-remove-fields-btn" class="button button--teal-dark move-left-btn" aria-disabled="true">
+  <div class="grid grid--two-columns" style="justify-items: end;">
+    <button type="button" id="dl-remove-fields-btn" class="button button--teal-dark" aria-disabled="true" title="Remove selected field from chosen fields" style="justify-self: start;">
       Remove <span class="dl-selected-counter"></span>
     </button>
-    <button type="button" id="dl-remove-all-fields-btn" class="button button--teal-dark move-left-btn"
+    <button type="button" id="dl-remove-all-fields-btn" class="button button--teal-dark" title="Remove all fields from chosen fields"
       aria-disabled="true">
       Remove all
     </button>
@@ -151,7 +117,7 @@
   {% csrf_token %}
   <input type="hidden" id="form-data" value="" name="selection" />
   <input type="hidden" name="json_query" value="{{json_query}}" />
-  <input type="submit" class="button button--teal-dark button--solid" style="width: 100%" value="{{action_label}}" />
+  <input type="submit" id="dl-download-btn" class="button button--teal-dark button--solid" style="width: 100%" value="{{action_label}}" aria-disabled="true" disabled="disabled" title="Start CSV download" />
 </form>
 
 <script id="recommended-fields-list" type="application/json">
@@ -196,27 +162,27 @@
 
 <script>
   class GNSelected extends Array {
-    constructor(btn) {
+    constructor (btn) {
       super();
       this.btn = btn;
     }
 
-    clear() {
+    clear () {
       this.length = 0;
       this._updateDom();
     }
 
-    add(item) {
+    add (item) {
       this.push(item);
       this._updateDom();
     }
 
-    remove(item) {
+    remove (item) {
       this.pop(item);
       this._updateDom();
     }
 
-    _updateDom() {
+    _updateDom () {
       this.btn.setAttribute('aria-disabled', this.length === 0);
       if (this.length > 0) {
         this.btn.getElementsByClassName('dl-selected-counter')[0].innerText = `(${this.length})`;
@@ -227,12 +193,15 @@
   }
 
   class GNListBox {
-    constructor() {
+    constructor () {
       this.addBtn = document.getElementById('dl-add-fields-btn');
+      this.addAllBtn = document.getElementById('dl-add-all-fields-btn');
+      this.clearBtn = document.getElementById('dl-clear-fields-btn');
       this.removeBtn = document.getElementById('dl-remove-fields-btn');
       this.removeAllBtn = document.getElementById('dl-remove-all-fields-btn');
       this.addRecommendedBtn = document.getElementById('dl-add-recommended-fields-btn');
-      this.chosenFieldList = document.getElementById('chosen-fields-list');
+      this.chosenFieldList = document.getElementById('dl-chosen-fields-list');
+      this.downloadBtn = document.getElementById('dl-download-btn');
       /* toAdd and toRemove are the staging arrays pending pressing the add/remove button */
       this.toAdd = new GNSelected(this.addBtn);
       this.toRemove = new GNSelected(this.removeBtn);
@@ -243,7 +212,7 @@
     }
 
     /* Filters the list of available fields */
-    filterCheckboxes(event) {
+    filterCheckboxes (event) {
       const inputText = event.srcElement.value;
       const checkboxes = document.querySelectorAll('.field-select');
 
@@ -279,25 +248,13 @@
         }
       }
     }
-    /*
-    addItemToAdd (item) {
-      this.toAdd.push(item);
-      this.addBtn.setAttribute('aria-disabled', this.toAdd.length === 0);
-      this.updateSelectedCounter();
-    }
 
-    removeItemToAdd (item) {
-      this.toAdd.pop(item);
-      this.addBtn.setAttribute('aria-disabled', this.toAdd.length === 0);
-      this.updateSelectedCounter();
-    } */
-
-    removeItemToRemove(item) {
+    removeItemToRemove (item) {
       this.toRemove.add(item);
       this.removeBtn.setAttribute('aria-disabled', this.toRemove.length === 0);
     }
 
-    select(event) {
+    select (event) {
       const item = event.srcElement;
 
       /* if already selected then toggle this off / remove from selection */
@@ -318,18 +275,44 @@
       }
     }
 
-    updateFieldsList() {
+    updateFieldsList () {
       this.fieldsChosen = Array.from(this.chosenFieldList.children).map((item) => {
         return JSON.parse(item.dataset.option);
       });
 
-      document.getElementById('chosen-fields-count').innerText = this.fieldsChosen.length;
+      document.getElementById('dl-chosen-fields-count').innerText = this.fieldsChosen.length;
       document.getElementById('form-data').value = JSON.stringify(this.fieldsChosen);
 
       this.removeAllBtn.setAttribute('aria-disabled', this.fieldsChosen.length === 0);
+      this.downloadBtn.setAttribute('aria-disabled', this.fieldsChosen.length === 0);
+
+      if (this.fieldsChosen.length) {
+        this.downloadBtn.removeAttribute('disabled');
+      } else {
+        this.downloadBtn.setAttribute('disabled', 'disabled');
+      }
     }
 
-    setupEvents() {
+    setupEvents () {
+      this.clearBtn.addEventListener('click', () => {
+        this.toAdd.clear();
+        /* Clear the selection ticks */
+        for (const el of document.getElementsByClassName('field-select')) {
+          el.setAttribute(this.ariaSelected, false);
+        }
+
+        for (const el of document.getElementsByClassName('parent-field-toggle')) {
+          el.setAttribute(this.ariaSelected, false);
+        }
+      });
+
+      this.addAllBtn.addEventListener('click', () => {
+        for (const item of document.querySelectorAll('#dl-available-fields .field-select[aria-selected=false]')) {
+          item.click();
+        }
+
+        this.addBtn.click();
+      });
 
       /* Field options events */
       for (const el of document.getElementsByClassName('field-select')) {
@@ -340,6 +323,26 @@
       for (const el of document.getElementsByClassName('parent-field-toggle')) {
         el.addEventListener('click', () => {
           const childFields = document.getElementById(el.dataset.toggleTarget);
+
+          /* Open / Close the child field container  */
+          if (childFields.style.display === 'none') {
+            childFields.style.display = 'block';
+          } else {
+            childFields.style.display = 'none';
+          }
+
+          /* if the current selection has been made and contains our child items
+           * don't do anything further
+           */
+          for (const itemToAdd of this.toAdd) {
+            /* If this element being toggled open/close is the parent of an item in the selection
+            * this means it's now live selection and we don't want to toggle any of the child items
+            * on/off ourselves.
+            */
+            if (el.dataset.toggleTarget === itemToAdd.parentElement.id) {
+              return;
+            }
+          }
 
           /* Select/deselect all the fields in this group */
           for (const childField of childFields.children) {
@@ -357,17 +360,14 @@
           } else {
             el.setAttribute(this.ariaSelected, 'true');
           }
-
-          /* Open / Close the child field container  */
-          if (childFields.style.display === 'none') {
-            childFields.style.display = 'block';
-          } else {
-            childFields.style.display = 'none';
-          }
         });
       }
 
       this.addBtn.addEventListener('click', () => {
+        if (this.addBtn.getAttribute('aria-disabled') === 'true') {
+          return;
+        }
+
         const existingFieldPaths = this.fieldsChosen.map((item) => { return item.path; });
 
         for (const item of this.toAdd) {
@@ -408,6 +408,10 @@
       });
 
       this.removeBtn.addEventListener('click', () => {
+        if (this.removeBtn.getAttribute('aria-disabled') === 'true') {
+          return;
+        }
+
         /* Remove the html elements */
         for (const item of this.toRemove) {
           item.remove();
@@ -417,6 +421,10 @@
       });
 
       this.removeAllBtn.addEventListener('click', () => {
+        if (this.removeAllBtn.getAttribute('aria-disabled') === 'true') {
+          return;
+        }
+
         this.chosenFieldList.innerHTML = '';
         this.toRemove.clear();
         this.updateFieldsList();
