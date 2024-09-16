@@ -282,7 +282,7 @@
       }
     }
 
-    updateFieldsList() {
+    updateFieldsList () {
       this.fieldsChosen = Array.from(this.chosenFieldList.children).map((item) => {
         return JSON.parse(item.dataset.option);
       });
@@ -300,7 +300,7 @@
       }
     }
 
-    setupEvents() {
+    setupEvents () {
       this.clearBtn.addEventListener('click', () => {
         this.toAdd.clear();
         /* Clear the selection ticks */
@@ -331,6 +331,7 @@
         /* select all N * for a parent field */
         el.getElementsByClassName('dl-select-all-child-fields')[0].addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
 
           const childFields = document.getElementById(el.dataset.toggleTarget);
           /* Select/deselect all the fields in this group */
