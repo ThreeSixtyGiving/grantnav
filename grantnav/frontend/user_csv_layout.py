@@ -11,10 +11,6 @@ def process(request):
     # Check the incoming data is known to us
     for field in fields:
         if field["column_title"] not in grant_csv_titles or field["path"] not in grant_csv_paths:
-            print(field["title"])
-            print(field["path"])
-            print(field["column_title"])
-
             raise Http404("The field(s) requested are not available.")
 
     return views.grants_csv_paged(
