@@ -113,6 +113,7 @@ grants_csv = OrderedDict([
     ("Funding Org: Org Type (additional data)", "result.additional_data.TSGFundingOrgType"),
     ("Funding Org: Canonical Org ID (additional data)", "result.additional_data.GNCanonicalFundingOrgId"),
     ("Funding Org: Canonical Name (additional data)", "result.additional_data.GNCanonicalFundingOrgName"),
+    ("Type of Recipient", "result.additional_data.TSGRecipientType"),
     ("Recipient Org: Date Registered (additional data)", "result.additional_data.recipientOrgInfos.0.dateRegistered"),
     ("Recipient Org: Date Removed (additional data)", "result.additional_data.recipientOrgInfos.0.dateRemoved"),
     ("Recipient Org: Org ID(s) (additional data)", "result.additional_data.recipientOrgInfos.0.orgIDs"),
@@ -126,7 +127,7 @@ grants_csv = OrderedDict([
 
     # These two always need to be on the end
     ("#comment License (see note)", "dataset.license"),
-    ("#comment See http://grantnav.threesixtygiving.org/datasets/ for license information.", ""),
+    ("#comment See http://grantnav.threesixtygiving.org/datasets/ for further license information.", ""),
 ])
 
 grant_csv_titles = list(grants_csv.keys())
