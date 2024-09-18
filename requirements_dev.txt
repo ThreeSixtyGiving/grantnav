@@ -4,25 +4,25 @@
 #
 #    pip-compile requirements_dev.in
 #
-asgiref==3.7.2
+asgiref==3.8.1
     # via
     #   django
     #   django-cors-headers
-attrs==23.2.0
+attrs==24.2.0
     # via
     #   outcome
     #   trio
-backports-datetime-fromisoformat==2.0.1
+backports-datetime-fromisoformat==2.0.2
     # via flattentool
-btrees==5.2
+btrees==6.1
     # via zodb
-build==1.0.3
+build==1.2.2
     # via pip-tools
-certifi==2024.2.2
+certifi==2024.8.30
     # via
     #   requests
     #   urllib3
-cffi==1.16.0
+cffi==1.17.1
     # via
     #   cryptography
     #   persistent
@@ -32,15 +32,13 @@ chromedriver-autoinstaller==0.6.4
     # via -r requirements_dev.in
 click==8.1.7
     # via pip-tools
-contextlib2==21.6.0
-    # via schema
-coverage[toml]==6.5.0
+coverage[toml]==7.6.1
     # via
     #   coveralls
     #   pytest-cov
-coveralls==3.3.1
+coveralls==4.0.1
     # via -r requirements_dev.in
-cryptography==42.0.3
+cryptography==43.0.1
     # via
     #   pyopenssl
     #   urllib3
@@ -50,14 +48,14 @@ decorator==5.1.1
     # via retry
 defusedxml==0.7.1
     # via odfpy
-django==3.2.24
+django==3.2.25
     # via
     #   -r requirements.in
     #   django-bootstrap3
     #   django-cors-headers
 django-bootstrap3==23.6
     # via -r requirements.in
-django-cors-headers==4.3.1
+django-cors-headers==4.4.0
     # via -r requirements_dev.in
 django-environ==0.11.2
     # via -r requirements.in
@@ -69,18 +67,18 @@ elasticsearch==7.0.5
     # via -r requirements.in
 et-xmlfile==1.1.0
     # via openpyxl
-exceptiongroup==1.2.0
+exceptiongroup==1.2.2
     # via
     #   pytest
     #   trio
     #   trio-websocket
-flake8==7.0.0
+flake8==7.1.1
     # via -r requirements_dev.in
 flattentool==0.17.1
     # via -r requirements.in
 h11==0.14.0
     # via wsproto
-idna==3.6
+idna==3.10
     # via
     #   requests
     #   trio
@@ -89,7 +87,7 @@ ijson==2.5.1
     # via
     #   -r requirements.in
     #   flattentool
-importlib-metadata==7.0.1
+importlib-metadata==8.5.0
     # via build
 iniconfig==2.0.0
     # via pytest
@@ -97,7 +95,7 @@ jsonref==1.1.0
     # via flattentool
 libsass==0.23.0
     # via -r requirements_dev.in
-lxml==5.1.0
+lxml==5.3.0
     # via flattentool
 markupsafe==2.1.5
     # via werkzeug
@@ -107,88 +105,86 @@ millify==0.1.1
     # via -r requirements.in
 odfpy==1.4.1
     # via flattentool
-openpyxl==3.1.2
+openpyxl==3.1.5
     # via flattentool
 outcome==1.3.0.post0
     # via trio
-packaging==23.2
+packaging==24.1
     # via
     #   build
     #   chromedriver-autoinstaller
     #   plotly
     #   pytest
-persistent==5.2
+persistent==6.1
     # via
     #   btrees
     #   zodb
-pillow==10.2.0
+pillow==10.4.0
     # via django-super-favicon
-pip-tools==7.4.0
+pip-tools==7.4.1
     # via -r requirements_dev.in
-plotly==5.19.0
+plotly==5.24.1
     # via -r requirements.in
-pluggy==1.4.0
+pluggy==1.5.0
     # via pytest
-prometheus-client==0.7
+prometheus-client==0.7.0
     # via -r requirements.in
 py==1.11.0
     # via retry
-pycodestyle==2.11.1
+pycodestyle==2.12.1
     # via flake8
-pycparser==2.21
+pycparser==2.22
     # via cffi
 pyflakes==3.2.0
     # via flake8
-pyopenssl==24.0.0
+pyopenssl==24.2.1
     # via urllib3
-pyproject-hooks==1.0.0
+pyproject-hooks==1.1.0
     # via
     #   build
     #   pip-tools
 pysocks==1.7.1
     # via urllib3
-pytest==8.0.1
+pytest==8.3.3
     # via
     #   -r requirements_dev.in
     #   pytest-cov
     #   pytest-django
-pytest-cov==4.1.0
+pytest-cov==5.0.0
     # via -r requirements_dev.in
-pytest-django==4.8.0
+pytest-django==4.9.0
     # via -r requirements_dev.in
-pytest-localserver==0.8.1
+pytest-localserver==0.9.0
     # via -r requirements_dev.in
-python-dateutil==2.8.2
+python-dateutil==2.9.0.post0
     # via -r requirements.in
-pytz==2024.1
+pytz==2024.2
     # via
     #   django
     #   flattentool
 raven==6.10.0
     # via -r requirements.in
-requests==2.31.0
+requests==2.32.3
     # via
     #   -r requirements.in
     #   coveralls
 retry==0.9.2
     # via -r requirements.in
-schema==0.7.5
+schema==0.7.7
     # via flattentool
 selenium==4.2.0
     # via -r requirements_dev.in
 six==1.16.0
-    # via
-    #   python-dateutil
-    #   zodb
-sniffio==1.3.0
+    # via python-dateutil
+sniffio==1.3.1
     # via trio
 sortedcontainers==2.4.0
     # via trio
-sqlparse==0.4.4
+sqlparse==0.5.1
     # via django
 strict-rfc3339==0.7
     # via -r requirements.in
-tenacity==8.2.3
+tenacity==9.0.0
     # via plotly
 titlecase==2.4.1
     # via -r requirements.in
@@ -197,28 +193,27 @@ tomli==2.0.1
     #   build
     #   coverage
     #   pip-tools
-    #   pyproject-hooks
     #   pytest
-transaction==4.0
+transaction==5.0
     # via zodb
-trio==0.24.0
+trio==0.26.2
     # via
     #   selenium
     #   trio-websocket
 trio-websocket==0.11.1
     # via selenium
-typing-extensions==4.9.0
+typing-extensions==4.12.2
     # via asgiref
-urllib3[secure,socks]==1.26.18
+urllib3[secure,socks]==1.26.20
     # via
     #   elasticsearch
     #   requests
     #   selenium
 urllib3-secure-extra==0.1.0
     # via urllib3
-werkzeug==3.0.1
+werkzeug==3.0.4
     # via pytest-localserver
-wheel==0.42.0
+wheel==0.44.0
     # via pip-tools
 wsproto==1.2.0
     # via trio-websocket
@@ -228,23 +223,28 @@ zc-lockfile==3.0.post1
     # via zodb
 zc-zlibstorage==1.2.0
     # via flattentool
-zconfig==4.0
+zconfig==4.1
     # via zodb
-zipp==3.17.0
+zipp==3.20.2
     # via importlib-metadata
-zodb==5.8.1
+zodb==6.0
     # via
     #   flattentool
     #   zc-zlibstorage
-zodbpickle==3.2
+zodbpickle==4.1
     # via zodb
-zope-interface==6.2
+zope-deferredimport==5.0
+    # via persistent
+zope-interface==7.0.3
     # via
     #   btrees
     #   persistent
     #   transaction
     #   zc-zlibstorage
     #   zodb
+    #   zope-proxy
+zope-proxy==6.0
+    # via zope-deferredimport
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
