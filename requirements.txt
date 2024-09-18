@@ -4,27 +4,25 @@
 #
 #    pip-compile requirements.in
 #
-asgiref==3.7.2
+asgiref==3.8.1
     # via django
-backports-datetime-fromisoformat==2.0.1
+backports-datetime-fromisoformat==2.0.2
     # via flattentool
-btrees==5.2
+btrees==6.1
     # via zodb
-certifi==2024.2.2
+certifi==2024.8.30
     # via requests
-cffi==1.16.0
+cffi==1.17.1
     # via persistent
 charset-normalizer==3.3.2
     # via requests
-contextlib2==21.6.0
-    # via schema
 dealer==2.1.0
     # via -r requirements.in
 decorator==5.1.1
     # via retry
 defusedxml==0.7.1
     # via odfpy
-django==3.2.24
+django==3.2.25
     # via
     #   -r requirements.in
     #   django-bootstrap3
@@ -40,7 +38,7 @@ et-xmlfile==1.1.0
     # via openpyxl
 flattentool==0.17.1
     # via -r requirements.in
-idna==3.6
+idna==3.10
     # via requests
 ijson==2.5.1
     # via
@@ -48,61 +46,59 @@ ijson==2.5.1
     #   flattentool
 jsonref==1.1.0
     # via flattentool
-lxml==5.1.0
+lxml==5.3.0
     # via flattentool
 millify==0.1.1
     # via -r requirements.in
 odfpy==1.4.1
     # via flattentool
-openpyxl==3.1.2
+openpyxl==3.1.5
     # via flattentool
-packaging==23.2
+packaging==24.1
     # via plotly
-persistent==5.2
+persistent==6.1
     # via
     #   btrees
     #   zodb
-pillow==10.2.0
+pillow==10.4.0
     # via django-super-favicon
-plotly==5.19.0
+plotly==5.24.1
     # via -r requirements.in
-prometheus-client==0.7
+prometheus-client==0.7.0
     # via -r requirements.in
 py==1.11.0
     # via retry
-pycparser==2.21
+pycparser==2.22
     # via cffi
-python-dateutil==2.8.2
+python-dateutil==2.9.0.post0
     # via -r requirements.in
-pytz==2024.1
+pytz==2024.2
     # via
     #   django
     #   flattentool
 raven==6.10.0
     # via -r requirements.in
-requests==2.31.0
+requests==2.32.3
     # via -r requirements.in
 retry==0.9.2
     # via -r requirements.in
-schema==0.7.5
+schema==0.7.7
     # via flattentool
 six==1.16.0
-    # via
-    #   python-dateutil
-    #   zodb
-sqlparse==0.4.4
+    # via python-dateutil
+sqlparse==0.5.1
     # via django
 strict-rfc3339==0.7
     # via -r requirements.in
-tenacity==8.2.3
+tenacity==9.0.0
     # via plotly
 titlecase==2.4.1
     # via -r requirements.in
-transaction==4.0
+transaction==5.0
     # via zodb
-typing-extensions==4.9.0
+typing-extensions==4.12.2
     # via asgiref
-urllib3==2.2.1
+urllib3==2.2.3
     # via
     #   elasticsearch
     #   requests
@@ -112,21 +108,26 @@ zc-lockfile==3.0.post1
     # via zodb
 zc-zlibstorage==1.2.0
     # via flattentool
-zconfig==4.0
+zconfig==4.1
     # via zodb
-zodb==5.8.1
+zodb==6.0
     # via
     #   flattentool
     #   zc-zlibstorage
-zodbpickle==3.2
+zodbpickle==4.1
     # via zodb
-zope-interface==6.2
+zope-deferredimport==5.0
+    # via persistent
+zope-interface==7.0.3
     # via
     #   btrees
     #   persistent
     #   transaction
     #   zc-zlibstorage
     #   zodb
+    #   zope-proxy
+zope-proxy==6.0
+    # via zope-deferredimport
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
