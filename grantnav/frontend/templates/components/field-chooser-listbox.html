@@ -51,7 +51,7 @@
 
       {# These are top-level fields #}
       {% if fields|length == 1 %}
-      <li data-option="{{fields.0|to_json}}" id="field-select-{{fields.0.path}}" class="field-select" role="option"
+      <li data-option="{{fields.0|to_json}}" id="dl-field-select-{{fields.0.path}}" class="dl-field-select" role="option"
         aria-selected="false" title="[DEBUG {{fields.0.path}}]">
         <span class="checkmark" aria-hidden="true"></span>
         {{fields.0.title}}
@@ -68,8 +68,8 @@
         </li>
         <div class="dl-group" id="dl-group-{{title|cut:" "}}" {% if fields|length > 1 %}style="display:none" {% endif %}>
           {% for field in fields %}
-          <li data-option="{{field|to_json}}" data-option-parent-title="{{title}}" id="field-select-{{field.path}}"
-            class="margin-left:2 field-select" role="option" aria-selected="false" title="[DEBUG {{field.path}}]">
+          <li data-option="{{field|to_json}}" data-option-parent-title="{{title}}" id="dl-field-select-{{field.path}}"
+            class="margin-left:2 dl-field-select" role="option" aria-selected="false" title="[DEBUG {{field.path}}]">
             <span class="checkmark" aria-hidden="true"></span>
             {{field.title}} {% if "additional_data" in field.path %}(additional data){% endif %}
           </li>
@@ -184,6 +184,9 @@
 </script>
 
 <script>
+  const SELECT_ATTR = 'aria-selected';
+  const DISABLE_ATTR = 'aria-disabled';
+
   class GNSelected extends Array {
     constructor (btn) {
       super();
@@ -206,7 +209,7 @@
     }
 
     _updateDom () {
-      this.btn.setAttribute('aria-disabled', this.length === 0);
+      this.btn.setAttribute(DISABLE_ATTR, this.length === 0);
       if (this.length > 0) {
         this.btn.getElementsByClassName('dl-selected-counter')[0].innerText = `(${this.length})`;
       } else {
@@ -226,18 +229,17 @@
       this.chosenFieldList = document.getElementById('dl-chosen-fields-list');
       this.downloadBtn = document.getElementById('dl-download-btn');
       /* toAdd and toRemove are the staging arrays pending pressing the add/remove button */
-      this.pendingToAdd = new GNSelected(this.addBtn);
-      this.pendingToRemove = new GNSelected(this.removeBtn);
+      this.stagedToAdd = new GNSelected(this.addBtn);
+      this.stagedToRemove = new GNSelected(this.removeBtn);
       /* fieldsChosen contains the final list of paths of fields that will be submitted to the backend */
       this.fieldsChosen = [];
       this.recommendedFields = JSON.parse(document.getElementById('recommended-fields-list').textContent);
-      this.ariaSelected = 'aria-selected';
     }
 
     /* Filters the list of available fields */
     filterCheckboxes (event) {
       const inputText = event.srcElement.value;
-      const checkboxes = document.querySelectorAll('.field-select');
+      const checkboxes = document.querySelectorAll('.dl-field-select');
 
       /* Open up all the dl-groups */
       for (const dlGroup of document.querySelectorAll('.dl-group')) {
@@ -264,7 +266,7 @@
 
       /* Hide the field group if it has no child items */
       for (const fieldGroupContainer of document.getElementsByClassName('dl-group-container')) {
-        if (Array.from(fieldGroupContainer.getElementsByClassName('field-select')).filter(el => el.style.display !== 'none').length === 0) {
+        if (Array.from(fieldGroupContainer.getElementsByClassName('dl-field-select')).filter(el => el.style.display !== 'none').length === 0) {
           fieldGroupContainer.style.display = 'none';
         } else {
           fieldGroupContainer.style.display = 'block';
@@ -273,22 +275,22 @@
     }
 
     removeItemToRemove (item) {
-      this.pendingToRemove.add(item);
-      this.removeBtn.setAttribute('aria-disabled', this.pendingToRemove.length === 0);
+      this.stagedToRemove.add(item);
+      this.removeBtn.setAttribute(DISABLE_ATTR, this.stagedToRemove.length === 0);
     }
 
     select (event) {
       const item = event.srcElement;
 
-      if (item.getAttribute('aria-disabled') === 'true') {
+      if (item.getAttribute(DISABLE_ATTR) === 'true') {
         return;
       }
 
       /* if already selected then toggle this off / remove from selection */
       if (item.ariaSelected === 'true') {
         item.setAttribute('aria-selected', 'false');
-        this.pendingToRemove.remove(item);
-        this.pendingToAdd.remove(item);
+        this.stagedToRemove.remove(item);
+        this.stagedToAdd.remove(item);
         return;
       }
 
@@ -298,7 +300,7 @@
       if (item.id.endsWith('-selected')) {
         this.removeItemToRemove(item);
       } else {
-        this.pendingToAdd.add(item);
+        this.stagedToAdd.add(item);
       }
     }
 
@@ -312,8 +314,8 @@
       document.getElementById('dl-chosen-fields-count').innerText = this.fieldsChosen.length;
       document.getElementById('form-data').value = JSON.stringify(this.fieldsChosen);
 
-      this.removeAllBtn.setAttribute('aria-disabled', this.fieldsChosen.length === 0);
-      this.downloadBtn.setAttribute('aria-disabled', this.fieldsChosen.length === 0);
+      this.removeAllBtn.setAttribute(DISABLE_ATTR, this.fieldsChosen.length === 0);
+      this.downloadBtn.setAttribute(DISABLE_ATTR, this.fieldsChosen.length === 0);
 
       if (this.fieldsChosen.length) {
         this.downloadBtn.removeAttribute('disabled');
@@ -324,19 +326,19 @@
 
     setupEvents () {
       this.clearBtn.addEventListener('click', () => {
-        this.pendingToAdd.clear();
+        this.stagedToAdd.clear();
         /* Clear the selection ticks */
-        for (const el of document.getElementsByClassName('field-select')) {
-          el.setAttribute(this.ariaSelected, false);
+        for (const el of document.getElementsByClassName('dl-field-select')) {
+          el.setAttribute(SELECT_ATTR, false);
         }
 
         for (const el of document.getElementsByClassName('parent-field-toggle')) {
-          el.setAttribute(this.ariaSelected, false);
+          el.setAttribute(SELECT_ATTR, false);
         }
       });
 
       this.addAllBtn.addEventListener('click', async () => {
-        for (const item of document.querySelectorAll('#dl-available-fields .field-select[aria-selected=false]')) {
+        for (const item of document.querySelectorAll('#dl-available-fields .dl-field-select[aria-selected=false]')) {
           item.click();
         }
 
@@ -344,7 +346,7 @@
       });
 
       /* Field options events */
-      for (const el of document.getElementsByClassName('field-select')) {
+      for (const el of document.getElementsByClassName('dl-field-select')) {
         el.addEventListener('click', this.select.bind(this));
       }
 
@@ -358,7 +360,7 @@
           const childFields = document.getElementById(el.dataset.toggleTarget);
           /* Select/deselect all the fields in this group */
           for (const childField of childFields.children) {
-            if (childField.getAttribute(this.ariaSelected) === 'true') {
+            if (childField.getAttribute(SELECT_ATTR) === 'true') {
               continue;
             }
 
@@ -368,7 +370,7 @@
             this.select(mockSelectEvent);
           }
 
-          el.setAttribute(this.ariaSelected, 'true');
+          el.setAttribute(SELECT_ATTR, 'true');
         });
 
         /* hide show child fields and tick handler */
@@ -385,13 +387,13 @@
       }
 
       this.addBtn.addEventListener('click', () => {
-        if (this.addBtn.getAttribute('aria-disabled') === 'true') {
+        if (this.addBtn.getAttribute(DISABLE_ATTR) === 'true') {
           return;
         }
 
         const existingFieldPaths = this.fieldsChosen.map((item) => { return item.path; });
 
-        for (const item of this.pendingToAdd) {
+        for (const item of this.stagedToAdd) {
           /* Check the item isn't already in the right hand list */
           if (existingFieldPaths.includes(JSON.parse(item.dataset.option).path)) {
             continue;
@@ -401,9 +403,9 @@
           const itemClone = item.cloneNode(true);
 
           /* Now that we've cloned it make the original item 'greyed out' */
-          item.setAttribute('aria-disabled', true);
+          item.setAttribute(DISABLE_ATTR, true);
 
-          itemClone.setAttribute(this.ariaSelected, false);
+          itemClone.setAttribute(SELECT_ATTR, false);
           itemClone.setAttribute('id', `${itemClone.id}-selected`);
           itemClone.addEventListener('click', this.select.bind(this));
 
@@ -418,49 +420,49 @@
           this.chosenFieldList.appendChild(itemClone);
         }
 
-        this.pendingToAdd.clear();
+        this.stagedToAdd.clear();
 
         /* Clear the selection ticks */
-        for (const el of document.getElementsByClassName('field-select')) {
-          el.setAttribute(this.ariaSelected, false);
+        for (const el of document.getElementsByClassName('dl-field-select')) {
+          el.setAttribute(SELECT_ATTR, false);
         }
 
         for (const el of document.getElementsByClassName('parent-field-toggle')) {
-          el.setAttribute(this.ariaSelected, false);
+          el.setAttribute(SELECT_ATTR, false);
         }
 
         this.updateChosenFieldsList();
       });
 
       this.removeBtn.addEventListener('click', () => {
-        if (this.removeBtn.getAttribute('aria-disabled') === 'true') {
+        if (this.removeBtn.getAttribute(DISABLE_ATTR) === 'true') {
           return;
         }
 
         /* Remove the html elements */
-        for (const item of this.pendingToRemove) {
+        for (const item of this.stagedToRemove) {
           item.remove();
           /* Get the other clone from the add side and remove the greyed out */
-          document.getElementById(item.id.slice(0, -'-selected'.length)).setAttribute('aria-disabled', false);
+          document.getElementById(item.id.slice(0, -'-selected'.length)).setAttribute(DISABLE_ATTR, false);
         }
-        this.pendingToRemove.clear();
+        this.stagedToRemove.clear();
         this.updateChosenFieldsList();
       });
 
       this.removeAllBtn.addEventListener('click', () => {
-        if (this.removeAllBtn.getAttribute('aria-disabled') === 'true') {
+        if (this.removeAllBtn.getAttribute(DISABLE_ATTR) === 'true') {
           return;
         }
 
         /* If removed all fields un-grey-out all the options in available fields
         *  (this doesn't bother checking if they're greyed out already or not)
         */
-        for (const item of document.getElementsByClassName('field-select')) {
-          item.setAttribute('aria-disabled', false);
+        for (const item of document.getElementsByClassName('dl-field-select')) {
+          item.setAttribute(DISABLE_ATTR, false);
         }
 
         this.chosenFieldList.innerHTML = '';
-        this.pendingToRemove.clear();
+        this.stagedToRemove.clear();
         this.updateChosenFieldsList();
       });
 
