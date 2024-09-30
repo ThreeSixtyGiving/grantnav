@@ -28,9 +28,11 @@
   }
 
   button[aria-disabled="true"],
-  input[type="submit"][disabled] {
+  input[type="submit"][disabled],
+  [role="option"][aria-disabled="true"] {
     opacity: 0.5;
   }
+
 </style>
 <div style="display: flex; align-items:baseline;" class="margin-bottom:1">
   <button type="button" id="dl-add-recommended-fields-btn" class="button button--teal-dark margin-right:1">
@@ -153,6 +155,13 @@
 "result.recipientOrganization.0.location.0.geoCodeType",
 "result.recipientOrganization.0.location.0.geoCode",
 
+"result.beneficiaryLocation.0.name",
+"result.beneficiaryLocation.0.geoCode",
+"result.beneficiaryLocation.0.geoCodeType",
+
+"result.recipientIndividual.id",
+"result.recipientIndividual.name",
+
 "result.fundingOrganization.0.id",
 "result.fundingOrganization.0.name",
 
@@ -217,8 +226,8 @@
       this.chosenFieldList = document.getElementById('dl-chosen-fields-list');
       this.downloadBtn = document.getElementById('dl-download-btn');
       /* toAdd and toRemove are the staging arrays pending pressing the add/remove button */
-      this.toAdd = new GNSelected(this.addBtn);
-      this.toRemove = new GNSelected(this.removeBtn);
+      this.pendingToAdd = new GNSelected(this.addBtn);
+      this.pendingToRemove = new GNSelected(this.removeBtn);
       /* fieldsChosen contains the final list of paths of fields that will be submitted to the backend */
       this.fieldsChosen = [];
       this.recommendedFields = JSON.parse(document.getElementById('recommended-fields-list').textContent);
@@ -264,18 +273,22 @@
     }
 
     removeItemToRemove (item) {
-      this.toRemove.add(item);
-      this.removeBtn.setAttribute('aria-disabled', this.toRemove.length === 0);
+      this.pendingToRemove.add(item);
+      this.removeBtn.setAttribute('aria-disabled', this.pendingToRemove.length === 0);
     }
 
     select (event) {
       const item = event.srcElement;
 
+      if (item.getAttribute('aria-disabled') === 'true') {
+        return;
+      }
+
       /* if already selected then toggle this off / remove from selection */
       if (item.ariaSelected === 'true') {
         item.setAttribute('aria-selected', 'false');
-        this.toRemove.remove(item);
-        this.toAdd.remove(item);
+        this.pendingToRemove.remove(item);
+        this.pendingToAdd.remove(item);
         return;
       }
 
@@ -285,14 +298,16 @@
       if (item.id.endsWith('-selected')) {
         this.removeItemToRemove(item);
       } else {
-        this.toAdd.add(item);
+        this.pendingToAdd.add(item);
       }
     }
 
-    updateFieldsList () {
+    updateChosenFieldsList () {
       this.fieldsChosen = Array.from(this.chosenFieldList.children).map((item) => {
         return JSON.parse(item.dataset.option);
       });
+
+      /* Update UI states */
 
       document.getElementById('dl-chosen-fields-count').innerText = this.fieldsChosen.length;
       document.getElementById('form-data').value = JSON.stringify(this.fieldsChosen);
@@ -309,7 +324,7 @@
 
     setupEvents () {
       this.clearBtn.addEventListener('click', () => {
-        this.toAdd.clear();
+        this.pendingToAdd.clear();
         /* Clear the selection ticks */
         for (const el of document.getElementsByClassName('field-select')) {
           el.setAttribute(this.ariaSelected, false);
@@ -376,7 +391,7 @@
 
         const existingFieldPaths = this.fieldsChosen.map((item) => { return item.path; });
 
-        for (const item of this.toAdd) {
+        for (const item of this.pendingToAdd) {
           /* Check the item isn't already in the right hand list */
           if (existingFieldPaths.includes(JSON.parse(item.dataset.option).path)) {
             continue;
@@ -384,6 +399,10 @@
 
           /* Setup the new item in the right hand selected list */
           const itemClone = item.cloneNode(true);
+
+          /* Now that we've cloned it make the original item 'greyed out' */
+          item.setAttribute('aria-disabled', true);
+
           itemClone.setAttribute(this.ariaSelected, false);
           itemClone.setAttribute('id', `${itemClone.id}-selected`);
           itemClone.addEventListener('click', this.select.bind(this));
@@ -399,7 +418,7 @@
           this.chosenFieldList.appendChild(itemClone);
         }
 
-        this.toAdd.clear();
+        this.pendingToAdd.clear();
 
         /* Clear the selection ticks */
         for (const el of document.getElementsByClassName('field-select')) {
@@ -410,7 +429,7 @@
           el.setAttribute(this.ariaSelected, false);
         }
 
-        this.updateFieldsList();
+        this.updateChosenFieldsList();
       });
 
       this.removeBtn.addEventListener('click', () => {
@@ -419,11 +438,13 @@
         }
 
         /* Remove the html elements */
-        for (const item of this.toRemove) {
+        for (const item of this.pendingToRemove) {
           item.remove();
+          /* Get the other clone from the add side and remove the greyed out */
+          document.getElementById(item.id.slice(0, -'-selected'.length)).setAttribute('aria-disabled', false);
         }
-        this.toRemove.clear();
-        this.updateFieldsList();
+        this.pendingToRemove.clear();
+        this.updateChosenFieldsList();
       });
 
       this.removeAllBtn.addEventListener('click', () => {
@@ -431,9 +452,16 @@
           return;
         }
 
+        /* If removed all fields un-grey-out all the options in available fields
+        *  (this doesn't bother checking if they're greyed out already or not)
+        */
+        for (const item of document.getElementsByClassName('field-select')) {
+          item.setAttribute('aria-disabled', false);
+        }
+
         this.chosenFieldList.innerHTML = '';
-        this.toRemove.clear();
-        this.updateFieldsList();
+        this.pendingToRemove.clear();
+        this.updateChosenFieldsList();
       });
 
       /* Go through all the recommended fields and "click them" when clicking the
