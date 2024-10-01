@@ -36,26 +36,9 @@
           {% endif %}
 
         <div class="card-view">
-          <section class="grantnav-search__content--filters">
+            <section class="grantnav-search__content--filters margin-bottom:0 margin-top:0">
             {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
-
-            <div class="export-wrapper">
-                <div class="export-label">Export search data:</div>
-              <div class="export-button">
-                <a href="#" class="modal__trigger" data-id="export-data-modal" title="Export search results as CSV data" id="export-results-csv-btn">
-                  {% include 'tokens/export-csv-icon.html' %}
-                </a>
-              </div>
-              {% include 'components/export-data-modal.html' %}
-
-              <div class="export-button">
-                <a class="export-data-button export-data-button--json" href="/search.json?" title="Export search results as JSON data">
-                  {% include 'tokens/export-json-icon.html' %}
-                </a>
-              </div>
-
-
-            </div>
+            {% include 'components/download-data.html' %}
 
             </section>
 
