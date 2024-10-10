@@ -31,6 +31,9 @@
 
           {% include 'components/results-title.html' %}
 
+
+          {% include 'components/download-data.html' %}
+
           {% if selected_facets %}
             {% include 'components/filter-summary.html' %}
           {% endif %}
@@ -38,7 +41,6 @@
         <div class="card-view">
             <section class="grantnav-search__content--filters margin-bottom:0 margin-top:0">
             {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
-            {% include 'components/download-data.html' %}
 
             </section>
 

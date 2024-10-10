@@ -3,9 +3,9 @@
     <div class="section">
         <div class="grantnav-datatable__content--filters margin-top:0 margin-bottom:0">
             {% include 'components/dropdown-filter.html' with required=True options=dropdownFilterOptions %}
-            {% if not widget %}
+            {% comment            {% if not widget %}
                 {% include 'components/download-data.html' %}
-            {% endif %}
+                {% endif %} %} {% endcomment %}
         </div>
 
         <div class="table--zebra">
