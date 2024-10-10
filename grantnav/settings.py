@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'favicon',
 )
 
+
 if DEBUG:
     INSTALLED_APPS = INSTALLED_APPS + ("corsheaders",)
 
