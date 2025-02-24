@@ -88,8 +88,8 @@
                 </div>
                 {% include 'components/dropdown-filter.html' with title="Default Sort Order:" required=True options=dropdownFilterOptions %}
                 <div class="dropdown-filter flex-centre">
-                  <label class="dropdown-filter__label" for="select-views">Recency:</label>
-                  <select class="dropdown-filter__select" name="views" id="select-recency" onchange="updateRecency()">
+                  <label class="dropdown-filter__label" for="select-recency">Recency:</label>
+                  <select class="dropdown-filter__select" name="recency" id="select-recency" onchange="updateRecency()">
                     <option value="0">Full History</option>
                     <option value="3">3 months</option>
                     <option value="6">6 months</option>

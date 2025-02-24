@@ -21,7 +21,7 @@
         {% endblock filterRadios %}
 
         <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
-          <select class="filter-search-box fundingOrganization-search-box" multiple="multiple">
+          <select aria-label="Search for funding organisations" class="filter-search-box fundingOrganization-search-box" multiple="multiple">
             {% for key, selected in selected_facets.items %}
               {% if key == 'Funders' or key == 'Excluded Funders' %}
                 {% for item in selected %}
