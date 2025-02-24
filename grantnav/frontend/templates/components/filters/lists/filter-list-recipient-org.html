@@ -22,7 +22,7 @@
 
 
         <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
-          <select class="filter-search-box recipientOrganization-search-box" multiple="multiple">
+          <select aria-label="Search for recipient organizations" class="filter-search-box recipientOrganization-search-box" multiple="multiple">
             {% for key, selected in selected_facets.items %}
               {% if key == 'Recipients' or key == 'Excluded Recipients' %}
                 {% for item in selected %}

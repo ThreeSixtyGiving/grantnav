@@ -27,7 +27,7 @@
         {% endblock filterRadios %}
 
         <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05">
-          <select class="filter-search-box {{filter_id}}-search-box" multiple="multiple">
+          <select aria-label="Search for {{filter_title}}" class="filter-search-box {{filter_id}}-search-box" multiple="multiple">
             {% for item in aggregate_data.buckets %}
               <option value="{{item.key}}" data-url="{{item.url}}">{{item.key}} ({{item.doc_count}})</option>
             {% endfor %}
