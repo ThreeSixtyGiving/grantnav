@@ -40,7 +40,7 @@ def provenance_dataload(dataload, settings, tmpdir):
 @pytest.mark.parametrize(('expected_text'), [
     ('GrantNav'),
     ('Search'),
-    ('Help'),
+    ('GrantNav user guide'),
     ])
 def test_home(provenance_dataload, client, expected_text):
     response = client.get('/')
