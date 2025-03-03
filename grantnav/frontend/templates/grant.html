@@ -77,7 +77,7 @@
             <a href="{% url 'publisher' dataset.publisher.prefix %}">{{dataset.publisher.name}}</a>.
             {% endif %}
             If you see something about your organisation or the funding it has received on this page that doesn't look right you can submit a
-            <a href="https://www.threesixtygiving.org/grantee-amendment-requests/?grantnav_url={{ request.build_absolute_uri|urlencode }}">grantee amendment request</a>.
+            <a href="https://www.360giving.org/contact/amendments/?grantnav_url={{ request.build_absolute_uri|urlencode }}">grantee amendment request</a>.
             You can hover over codes from
             <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/">standard codelists</a>
             to see the user-friendly name provided by 360Giving.
@@ -103,7 +103,7 @@
 
                   {% if key == "Amount Awarded" and value < 1 %}
                     {{value}}
-                    <a href="https://help.grantnav.threesixtygiving.org/en/latest/search_results/#some-grantmakers-publish-grants-with-0-or-negative-values"><img src="/static/images/icon-help-50.png" width="15" height="15" id="zero_value_grant_help_link"></a>
+                    <a href="https://www.360giving.org/explore/before-you-start/what-to-look-for/#some-grantmakers-publish-grants-with-0-or-negative-values"><img src="/static/images/icon-help-50.png" width="15" height="15" id="zero_value_grant_help_link"></a>
                   {# Insert the human readable values for these codelist codes #}
 
                   {% elif "grantPurpose" in key %}
