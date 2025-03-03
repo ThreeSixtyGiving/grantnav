@@ -45,9 +45,9 @@ urlpatterns = [
     url(r'^publisher/(.*)$', views.publisher, name='publisher'),
     url(r'^recipient/(.*)$', views.recipient, name='recipient'),
     url(r'^funder/(.*)$', views.funder, name='funder'),
-    url(r'^help', RedirectView.as_view(url="https://help.grantnav.threesixtygiving.org/"), name="help"),
-    url(r'^take_down_policy', RedirectView.as_view(url="https://www.threesixtygiving.org/take-down-policy/"), name='take_down_policy'),
+    url(r'^help', RedirectView.as_view(url="https://www.360giving.org/explore/user-guide/"), name="help"),
+    url(r'^take_down_policy', RedirectView.as_view(url="https://www.360giving.org/legal-policies/take-down-policy/"), name='take_down_policy'),
     # Developers content used to live on this website but it was then moved to an external help site.
     # Redirect people to make sure any old links continue to work.
-    url(r'^developers', RedirectView.as_view(url="https://help.grantnav.threesixtygiving.org/en/latest/developers/"), name='developers'),
+    url(r'^developers', RedirectView.as_view(url="https://www.360giving.org/explore/technical/"), name='developers'),
 ]

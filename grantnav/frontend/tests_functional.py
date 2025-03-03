@@ -523,7 +523,7 @@ def test_links(provenance_dataload, server_url, browser, path):
     browser.get(server_url + path)
     links = []
     # Skip some sites that are are behind cloudflare which blocks the script
-    skip = ["#", "https://twitter.com/360Giving/", "mailto:grantnav@threesixtygiving.org", "https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org/search.json%3F", "https://www.parliament.uk/site-information/copyright/open-parliament-licence", "https://www.ons.gov.uk/", "https://www.oscr.org.uk/", "https://www.hesa.ac.uk/", "https://digital.nhs.uk/"]
+    skip = ["#", "https://twitter.com/360Giving/", "https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org/search.json%3F", "https://www.parliament.uk/site-information/copyright/open-parliament-licence", "https://www.ons.gov.uk/", "https://www.oscr.org.uk/", "https://www.hesa.ac.uk/", "https://digital.nhs.uk/"]
 
     for a in browser.find_elements_by_tag_name("a"):
         # Datatables quirk with empty <a> tags, select2 quirk with same issue
