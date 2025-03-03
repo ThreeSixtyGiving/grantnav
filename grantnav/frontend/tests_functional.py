@@ -100,7 +100,7 @@ def test_home(provenance_dataload, server_url, browser):
 
 @pytest.mark.parametrize(('link_text'), [
     ('About the data'),
-    ('Get Help'),
+    ('GrantNav user guide'),
     ])
 def test_navbar_links(provenance_dataload, server_url, browser, link_text):
     browser.get(server_url)
