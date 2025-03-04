@@ -409,7 +409,7 @@ $(function () {
       templateResult: formatDropdownItem,
       templateSelection: formatSelection,
       dropdownCssClass: 'filter-list filter-list--with-checkboxes',
-      placeholder: 'Search for funding organizations',
+      placeholder: 'Search for funding organisations',
       ajax: get_filter_search_ajax('fundingOrganization', 'id_and_name')
     };
 
@@ -451,7 +451,7 @@ $(function () {
     let recipient_options = $.extend({}, funder_options);
 
     recipient_options = $.extend(recipient_options, {
-      placeholder: 'Search for recipient organizations',
+      placeholder: 'Search for recipient organisations',
       ajax: get_filter_search_ajax('recipientOrganization', 'id_and_name')
     });
 
