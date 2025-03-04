@@ -1,5 +1,15 @@
 {% load currency_symbol get_currency get_amount get_title get_name get_date from frontend %}
 
+<style scoped>
+  details summary {
+    cursor: pointer;
+  }
+
+  details[open] summary .temporarily-visible {
+    display: none;
+  }
+</style>
+
 <div class="grant-search-result grant-search-result__funders">
   <div class="grant-search-result__left-side">
       <a class="grant-search-result__title" href="{% url 'org' result.source.id %}">
@@ -35,8 +45,21 @@
 
     {% if result.names|length > 1 %}
     <div class="grant-search-result__data-item">
-      <span class="grant-search-result__data-item--label">Other Names used in the data: </span>
-      <span>{{result.other_names | join:"; "}}</span>
+      {% if result.other_names|join:"; "|length > 400 %}
+        <details>
+          <summary>
+            <span class="grant-search-result__data-item--label">Other Names used in the data: </span>
+            <span class="temporarily-visible">
+              <br/>
+              {{result.other_names|join:"; "|slice:":400"}}&hellip;
+            </span>
+          </summary>
+          <span>{{result.other_names|join:"; "}}</span>
+        </details>
+        {% else %}
+        <span class="grant-search-result__data-item--label">Other Names used in the data: </span>
+        <span>{{result.other_names|join:"; "}}</span>
+      {% endif %}
     </div>
     {% endif %}
 
