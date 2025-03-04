@@ -3,6 +3,17 @@
 {% load static %}
 {% block subtitle %} - {{main_name}}{% endblock %}
 {% block main_content %}
+
+<style scoped>
+  details summary {
+    cursor: pointer;
+  }
+
+  details[open] summary .temporarily-visible {
+    display: none;
+  }
+</style>
+
 <div class="layout layout--single-column">
   <main class="layout__content">
     <div class="spacer-1">
@@ -43,8 +54,21 @@
 
           {% if other_names %}
           <div class="media-card__box">
+            {% if other_names|join:"; "|length > 400 %}
+            <details>
+              <summary>
+                <strong>Other Names used in the data</strong>
+                <span class="temporarily-visible">
+                  <br/>
+                  {{other_names|join:"; "|slice:":400"}}&hellip;
+                </span>
+              </summary>
+              {{other_names|join:"; "}}
+            </details>
+            {% else %}
             <strong>Other Names used in the data</strong> <br/>
-            {{other_names|join:"; "}}
+              {{other_names|join:"; "}}
+            {% endif %}
           </div>
           {% endif %}
         </div>
