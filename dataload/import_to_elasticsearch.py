@@ -6,7 +6,6 @@ import uuid
 import tempfile
 import os
 from pprint import pprint
-import warnings
 import elasticsearch.helpers
 import time
 import ijson
@@ -447,7 +446,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                         if not isinstance(grant["additional_data"], dict):
                             raise TypeError("additional_data not a dictionary")
                     except (TypeError, KeyError):
-                        warnings.warn("No additional_data block for grant: %s" % grant["id"])
+                        # warning.info("No additional_data block for grant: %s" % grant["id"])
                         # initialise the dictionary for our own additional data
                         grant["additional_data"] = {}
 
