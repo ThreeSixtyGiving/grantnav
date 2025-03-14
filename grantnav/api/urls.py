@@ -1,9 +1,8 @@
-from django.conf.urls import url
-
+from django.urls import path
 import grantnav.api.aggregates
 
 app_name = "api"
 
 urlpatterns = [
-    url("aggregates/search", grantnav.api.aggregates.Search.as_view(), name="aggregates"),
+    path("aggregates/search", grantnav.api.aggregates.Search.as_view(), name="aggregates"),
 ]
