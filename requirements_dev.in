@@ -2,15 +2,9 @@
 
 flake8
 pip-tools
-
-# pytest and plugins
-pytest
-pytest-django
-pytest-cov
-pytest-localserver
-
 coveralls
-selenium<4.3 # find_element_by.. deprecated after this point
+selenium
 libsass
 chromedriver-autoinstaller
 django-cors-headers
+black
