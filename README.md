@@ -143,3 +143,6 @@ Adding and updating requirements
 
 Add new requirements to ``requirements.in`` or ``requirements_dev.in`` depending on whether it is just a development requirement or not. Run `pip-compile` (from the package `pip-tools`) on the ".in" file.
 
+## New Code
+
+New code should by python-black formatted
