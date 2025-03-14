@@ -33,3 +33,7 @@ def debug_mode(request):
 
 def insights_url(request):
     return {"insights_base_url": settings.INSIGHTS_BASE_URL}
+
+
+def disable_cookie_popup(request):
+    return {"disable_cookie_popup": settings.DISABLE_COOKIE_POPUP}
