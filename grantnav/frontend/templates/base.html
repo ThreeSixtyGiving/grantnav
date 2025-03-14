@@ -46,7 +46,9 @@
     <main>
     {% block main_content %}{% endblock %}
     </main>
+    {% if not disable_cookie_popup %}
     {% include "components/cookie-consent.html" %}
+    {% endif %}
     {% include "components/subscribe.html"%}
     {% include "components/footer.html" %}
 
