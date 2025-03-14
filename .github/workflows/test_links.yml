@@ -1,4 +1,4 @@
-name: Test
+name: Links check
 on: [push, pull_request]
 
 jobs:
@@ -25,4 +25,4 @@ jobs:
     - run: sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
     - run: "sudo service elasticsearch start"
     - run: pip install -r requirements_dev.txt
-    - run: ./manage.py test -v 2 tests --exclude-tag=link-runner
+    - run: ./manage.py test -v 2 tests.tests_links
