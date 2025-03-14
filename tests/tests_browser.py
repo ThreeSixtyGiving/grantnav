@@ -1,560 +1,489 @@
 import os
 import time
-import pytest
-import requests
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.common import exceptions as selenium_exceptions
+
+from django.test import override_settings
+from django.urls import reverse_lazy
+
+from selenium.webdriver.common.by import By
 import chromedriver_autoinstaller
 
-from dataload.import_to_elasticsearch import import_to_elasticsearch
+from tests.browser_test_case import BrowserTestCase
 
 # Test data directory
-prefix = f"{os.path.dirname(__file__)}/../../dataload/test_data/"
+prefix = os.path.join(os.path.dirname(__file__), "data")
 
 chromedriver_autoinstaller.install()
-BROWSER = os.environ.get('BROWSER', 'ChromeHeadless')
-
-
-def check_js_errors(browser):
-    for log in browser.get_log("browser"):
-        # Datatables is sending warnings that we can't currently fix
-        # https://github.com/...
-        if "datatables" in str(log).lower():
-            print(f"Skipping datatables warning {browser.current_url} : f{log}")
-            continue
-        assert "SEVERE" not in log['level'], f"{browser.current_url} : {log} "
-    # Clear log so that we know which test was the first to come across this issue
-    # otherwise the browser log is persistent.
-    browser.get_log("browser")
-
-
-@pytest.fixture(scope="module")
-def browser(request):
-    if BROWSER == 'ChromeHeadless':
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        # no-sandbox prevents an error when running as the root user
-        chrome_options.add_argument("--no-sandbox")
-        # uncomment this if "DevToolsActivePort" error / ubuntu snap workaround
-        chrome_options.add_argument("--remote-debugging-port=9222")
-        # chrome_options.add_argument('ignore-unexpected-deprecations')
-        browser = webdriver.Chrome(options=chrome_options)
-    elif BROWSER == "Firefox":
-        # Make downloads work
-        profile = webdriver.FirefoxProfile()
-        profile.set_preference("browser.download.folderList", 2)
-        profile.set_preference("browser.download.manager.showWhenStarting", False)
-        profile.set_preference("browser.download.dir", os.getcwd())
-        profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/json")
-        browser = getattr(webdriver, BROWSER)(firefox_profile=profile)
-    else:
-        browser = getattr(webdriver, BROWSER)()
-    browser.implicitly_wait(3)
-    request.addfinalizer(lambda: browser.quit())
-    return browser
-
-
-@pytest.fixture(scope="module")
-def server_url(request, live_server):
-    if "CUSTOM_SERVER_URL" in os.environ:
-        return os.environ["CUSTOM_SERVER_URL"]
-    else:
-        return live_server.url
-
-
-@pytest.fixture(scope="module")
-def dataload():
-    import_to_elasticsearch(
-        [
-            prefix + "a002400000KeYdsAAF-currency.json",
-            prefix + "a002400000OiDBQAA3.json",
-            prefix + "awefw001p00000zgyHZAAY.json",
-        ],
-        clean=True,
-        funders=os.path.join(prefix, "funders.jl"),
-        recipients=os.path.join(prefix, "recipients.jl"),
-    )
-    # elastic search needs some time to commit its data
-    time.sleep(2)
-
-
-@pytest.fixture(scope="function")  # FIXME autouse=True
-def provenance_dataload(dataload, settings, tmpdir):
-    settings.PROVENANCE_JSON = os.path.join(prefix, "data.json")
-
-
-def test_home(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    assert 'GrantNav' in browser.find_element_by_tag_name('body').text
-
-    # Cookie banner is currently disabled until analytics issues are resolved
-    # assert 'Cookies disclaimer' in browser.find_element_by_id('CookielawBanner').text
-    # browser.find_element_by_class_name("btn").click()
-    browser.get(server_url)
-    # assert 'Cookies disclaimer' not in browser.find_element_by_tag_name('body').text
-    assert '360Giving Data Standard' in browser.find_element_by_tag_name('body').text
-    assert '360Giving data standard' not in browser.find_element_by_tag_name('body').text
-    check_js_errors(browser)
-
-
-@pytest.mark.parametrize(('link_text'), [
-    ('About the data'),
-    ('GrantNav user guide'),
-    ])
-def test_navbar_links(provenance_dataload, server_url, browser, link_text):
-    browser.get(server_url)
-    browser.find_element_by_link_text(link_text)
-
-
-@pytest.mark.parametrize(('link_text'), [
-    ('About'),
-    ('Funders'),
-    ('Recipients'),
-    ('Data sources used in GrantNav'),
-    ('Reusing GrantNav Data'),
-    ('Developers')
-    ])
-def test_footer_links(provenance_dataload, server_url, browser, link_text):
-    browser.get(server_url)
-    browser.find_element_by_link_text(link_text)
-
-
-def test_search(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    browser.find_element_by_class_name("large-search-button").click()
-    # Total number of expected grants
-    assert "4,649" in \
-        browser.find_element_by_class_name('search-summary-description').text
 
-    # open show highlighted grants section
-    browser.find_element_by_class_name("summary-icon").click()
 
-    # other_currencies_modal = browser.find_element_by_id("other-currencies-modal")
-    # search "laboratory"
-    other_currencies_modal = browser.find_element_by_xpath("//a[@id='other-currencies-modal']/span")
-    assert other_currencies_modal.text == '4'
-    other_currencies_modal.click()
-    time.sleep(0.5)
-
-    # browser.get_screenshot_as_file("screenshot-test_search.png")
-    assert "$153,934" in browser.find_element_by_id('summary-info-model').text
-    check_js_errors(browser)
-
-
-def test_search_by_titles_and_descriptions_radio_button_in_search(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert "Titles & Descriptions" in browser.find_element_by_tag_name('body').text
-
-
-def test_search_by_titles_and_descriptions(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    # search "laboratory"
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('laboratory')
-    browser.find_element_by_class_name("large-search-button").click()
-    try:
-        browser.find_element_by_class_name("cookie-consent-no").click()
-    except selenium_exceptions.NoSuchElementException:
-        pass
-    # select title_and_description
-    browser.find_element_by_xpath("//label[@for='title_and_description']").click()
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert "New science laboratory" in browser.find_element_by_tag_name('body').text
-    assert "laboratories" in browser.find_element_by_tag_name('body').text
-
-    assert "Your search ‘laboratory’ returned 22 results in ‘Titles & Descriptions’" \
-        in browser.find_element_by_class_name('search-summary-description').text
-
-    browser.get(server_url)
-    # search "laboratory" in "Search All"
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('laboratory')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert "New science laboratory" in browser.find_element_by_tag_name('body').text
-    assert "laboratories" in browser.find_element_by_tag_name('body').text
-
-    assert "Your search ‘laboratory’ returned 23 results in ‘All grant fields’" \
-        in browser.find_element_by_class_name('search-summary-description').text
-
-
-def test_search_current_url(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    browser.find_element_by_class_name("large-search-button").click()
-
-    current_url_split_by_json_query = browser.current_url.split('?')
-    assert current_url_split_by_json_query[0][-6:] == 'search'
-
-
-# def test_search_two_words_without_quotes(provenance_dataload, server_url, browser):
-#     """
-#     When a user's search query is 2+ words without quotes,
-#     we want to inform the user that with quotes will have a better search result.
-#     """
-#     browser.get(server_url)
-#     search_box = browser.find_element_by_class_name("large-search")
-#     search_box.send_keys('social change')
-#     browser.find_element_by_class_name("large-search-button").click()
-
-#     assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
-#            in browser.find_element_by_tag_name('body').text
-
-
-def test_search_two_words_with_single_quotes(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys("'social change'")
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
-           not in browser.find_element_by_tag_name('body').text
-
-
-def test_search_two_words_with_double_quotes(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('"social change"')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
-           not in browser.find_element_by_tag_name('body').text
-
-
-def test_search_two_words_with_hyphen(provenance_dataload, server_url, browser):
-    """
-    When a user's search query is 2 words with a hyphen,
-    we want to inform the user that with quotes will have a better search result.
-    """
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('covid-19')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
-           in browser.find_element_by_tag_name('body').text
-
-
-def test_search_includes_and(provenance_dataload, server_url, browser):
-    """
-    When a user's search query includes 'and', we want to inform the user of what it means.
-    """
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('mental and health')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'The AND keyword (not case-sensitive) means that results must have both words present. ' \
-           'If you\'re looking for a phrase that has the word "and" in it, put quotes around the phrase ' \
-           '(e.g. "fees and costs").' in browser.find_element_by_tag_name('body').text
-
-
-def test_search_does_not_include_and(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('secondhand clothes')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'The AND keyword (not case-sensitive) means that results must have both words present. ' \
-           'If you\'re looking for a phrase that has the word "and" in it, put quotes around the phrase ' \
-           '(e.g. "fees and costs").' not in browser.find_element_by_tag_name('body').text
-
-
-def test_search_includes_or(provenance_dataload, server_url, browser):
-    """
-    When a user's search query includes 'or', we want to inform the user of what it means.
-    """
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('mental or health')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'The OR keyword (not case-sensitive) means that results must have one of the words present. ' \
-           'This is the default. If you\'re looking for a phrase that has the word "or" in ' \
-           '(e.g. "children or adults"), put quotes around it.' in browser.find_element_by_tag_name('body').text
-
-
-def test_search_does_not_include_or(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('meteor clothes')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'The OR keyword (not case-sensitive) means that results must have one of the words present. ' \
-           'This is the default. If you\'re looking for a phrase that has the word "or" in ' \
-           '(e.g. "children or adults"), put quotes around it.' not in browser.find_element_by_tag_name('body').text
-
-
-def test_search_display_tip(provenance_dataload, server_url, browser):
-    """
-    When an advance search message is displayed in the search results,
-    'Tip: ' will appear in front of the message.
-    """
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('social change')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'Tip: ' in browser.find_element_by_tag_name('body').text
-
-
-def test_search_do_not_display_tip(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('grant')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'Tip: ' not in browser.find_element_by_tag_name('body').text
-
-
-def test_search_display_advanced_search_link(provenance_dataload, server_url, browser):
-    """
-    When an advance search message is displayed in the search results,
-    a link to the 'advance search' information page is also included.
-    """
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('social change')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'For more tips, see Advanced Search' in browser.find_element_by_tag_name('body').text
-
-
-def test_search_advanced_search_correct_link(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('social change')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    try:
-        browser.find_element_by_class_name("cookie-consent-no").click()
-    except selenium_exceptions.NoSuchElementException:
-        pass
-
-    browser.find_element_by_link_text("targeting your search").click()
-
-
-def test_search_do_not_display_advance_search_link(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('grant')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    assert 'For more tips, see Advanced Search' not in browser.find_element_by_tag_name('body').text
-
-
-def test_bad_search(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    browser.find_element_by_name("text_query").send_keys(" £s:::::afdsfas")
-    browser.find_element_by_class_name("large-search-button").click()
-    not_valid = browser.find_element_by_id('not_valid').text
-    assert 'Search input is not valid' in not_valid
-    assert "We can't find what you tried to search for." in not_valid
-
-
-def test_terms(server_url, browser):
-    browser.get(server_url + '/terms')
-    assert 'Terms and conditions' in browser.find_element_by_tag_name('h1').text
-
-
-def test_title(server_url, browser):
-    browser.get(server_url)
-    assert '360Giving GrantNav' in browser.title
-
-
-def test_no_results_page(server_url, browser):
-    browser.get(server_url)
-    search_box = browser.find_element_by_class_name("large-search")
-    search_box.send_keys('dfsergegrdtytdrthgrtyh')
-    browser.find_element_by_class_name("large-search-button").click()
-
-    no_results = browser.find_element_by_id('no-results').text
-    assert 'No Results' in no_results
-    assert 'Your search - "dfsergegrdtytdrthgrtyh" - did not match any grant records.' in no_results
-
-
-def test_datasets_page(server_url, browser):
-    browser.get(server_url + '/datasets')
-    assert 'Data used in GrantNav' in browser.find_element_by_tag_name('h1').text
-    check_js_errors(browser)
-
-
-@pytest.mark.parametrize(('path', 'text'), [
-    ('/grant/360G-LBFEW-111657', 'Where is this data from?'),
-    ])
-def test_disclaimers(server_url, browser, path, text):
-    browser.get(server_url + path)
-    assert text in browser.find_element_by_tag_name('body').text
-    check_js_errors(browser)
-
-
-def test_currency_facet(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    browser.find_element_by_class_name("large-search-button").click()
-
-    try:
-        browser.find_element_by_class_name("cookie-consent-no").click()
-    except selenium_exceptions.NoSuchElementException:
-        pass
-
-    # Select USD
-    # browser.get_screenshot_as_file("test2.png")
-    # Open the filter group expander
-    browser.find_element_by_id("filter-accordion-currency").click()
-    browser.find_element_by_id("filter-option-currency-usd").click()
-
-    # Check USD options appear
-    assert 'USD 0 - USD 500' in browser.find_element_by_tag_name('body').text
-
-
-def test_amount_awarded_facet(provenance_dataload, server_url, browser):
-    browser.get(server_url)
-    browser.find_element_by_class_name("large-search-button").click()
-
-    try:
-        browser.find_element_by_class_name("cookie-consent-no").click()
-    except selenium_exceptions.NoSuchElementException:
-        pass
-
-    #  browser.get_screenshot_as_file("test3.png")
-    # Select an amount option
-    browser.find_element_by_id("amount-1000.0-5000.0").click()
-    total_grants = browser.find_elements_by_css_selector(".summary-content--item span")[0].text
-    assert "49" in total_grants, "Expected number of grants not found"
-
-
-def test_county_location_facet(provenance_dataload, server_url, browser):
-    browser.get(server_url + '/search')
-
-    try:
-        browser.find_element_by_class_name("cookie-consent-no").click()
-    except selenium_exceptions.NoSuchElementException:
-        pass
-
-    # Open county
-    browser.find_element_by_id("filter-accordion-county").click()
-    browser.find_element_by_id("filter-option-county-liverpool").click()
-
-    total_grants = browser.find_elements_by_css_selector(".summary-content--item span")[0].text
-    assert "11" in total_grants, f"Expected total grants not found for county liverpool, got {total_grants} instead of 9"
-
-
-@pytest.mark.parametrize(('path'), ['/grant/360G-LBFEW-99233'])
-def test_zero_grant_info_link_absent(provenance_dataload, server_url, browser, path):
-    browser.get(server_url + path)
-    assert len(browser.find_elements_by_id('zero_value_grant_help_link')) == 0
-
-
-def test_search_recipients(provenance_dataload, server_url, browser):
-    browser.get(server_url + "/recipients")
-
-    try:
-        browser.find_element_by_class_name("cookie-consent-no").click()
-    except selenium_exceptions.NoSuchElementException:
-        pass
-
-    browser.find_element_by_name("text_query").send_keys("Social Justice")
-    browser.find_element_by_class_name("large-search-button").click()
-
-    #browser.get_screenshot_as_file("recipients-search.png")
-
-    assert len(browser.find_elements_by_class_name("grant-search-result__recipients")) == 20
-    check_js_errors(browser)
-
-
-def test_search_funders(provenance_dataload, server_url, browser):
-    browser.get(server_url + "/funders")
-
-    try:
-        browser.find_element_by_class_name("cookie-consent-no").click()
-    except selenium_exceptions.NoSuchElementException:
-        pass
-
-    browser.find_element_by_name("text_query").send_keys("foundation")
-    browser.find_element_by_class_name("large-search-button").click()
-
-    #browser.get_screenshot_as_file("recipients-search.png")
-
-    assert len(browser.find_elements_by_class_name("grant-search-result__funders")) == 20
-    check_js_errors(browser)
-
-
-def test_org_page(provenance_dataload, server_url, browser):
-    browser.get(server_url + "/org/GB-CHC-1156077")
-    #browser.get_screenshot_as_file("org-page.png")
-
-    assert "Wolfson Foundation" in browser.find_element_by_tag_name('h1').text
-    check_js_errors(browser)
-
-
-def test_insights_button(provenance_dataload, server_url, browser):
-    """ Tests that the insights button takes us to an Insights site """
-
-    for button in browser.find_elements_by_css_selector("a[data='insights-integration-btn']"):
-        # Narrow search results to fewer than 10k
-        browser.get(server_url + "/search?currency=AUD")
-        button.click()
-        assert browser.find_element_by_tag_name("title").text == "360Insights"
-        # Clear browser log for external site
-        browser.get_log("browser")
-
-
-links_checked = {}
-
-
-@pytest.mark.parametrize(('path'), [
-    '?',
-    '/search',
-    '/funders',
-    '/recipients',
-    '/about',
-    '/datasets',
-    '/grant/360G-LBFEW-99233',  # regular grant
-    '/grant/360G-wolfson-19916y',  # grant with 0 or negative amount
-    '/org/GB-CHC-1126147'
-])
-def test_links(provenance_dataload, server_url, browser, path):
-    """ Load each path and check the links within the page respond HTTP success """
-
-    # We use selenium for this kind of test because it's a convenient way to manipulate the dom
-    browser.get(server_url + path)
-    links = []
-    # Skip some sites that are are behind cloudflare which blocks the script
-    skip = ["#", "https://twitter.com/360Giving/", "https://insights.threesixtygiving.org/?url=https://grantnav.threesixtygiving.org/search.json%3F", "https://www.parliament.uk/site-information/copyright/open-parliament-licence", "https://www.ons.gov.uk/", "https://www.oscr.org.uk/", "https://www.hesa.ac.uk/", "https://digital.nhs.uk/", "https://www.gnu.org/licenses/"]
-
-    for a in browser.find_elements_by_tag_name("a"):
-        # Datatables quirk with empty <a> tags, select2 quirk with same issue
-        if a.get_attribute("aria-controls") or a.get_attribute("class") == "remove-select2-option":
-            continue
-
-        link = a.get_attribute("href")
-
-        assert link is not None, f"Error An <a> tag without a href attribute on {path} {a.get_attribute('outerHTML')}"
-
-        if link not in skip:
-            links.append(link)
-
-    broken = False
-    for link in links:
-
-        if link not in links_checked.keys():
-            try:
-                # Some sites reject connection without a user agent
-                r = requests.head(link, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"}, verify=False)
-                status_code = r.status_code
-            except Exception as e:
-                # Set status code to 0 (not a HTTP response code) so it gets displayed along with the other errors at the end.
-                # This is usually triggered by the request timing out.
-                print(e)
-                status_code = 0
-
-            links_checked[link] = status_code
-            if status_code < 200 or status_code > 399:
-                broken = True
-
-    errors = ', '.join([f'{link} ({status})' for link, status in links_checked.items() if status < 200 or status > 399])
-    print(errors)
-    assert not broken, f"Links broken on page {path}: {errors}"
+@override_settings(
+    PROVENANCE_JSON=os.path.join(prefix, "data.json"), DISABLE_COOKIE_POPUP=True
+)
+class InteractionsTests(BrowserTestCase):
+    def wait_for_results_page(self):
+        # Wait for the various redirects and rendering after click
+        time.sleep(0.5)
+        for i in range(0, 300):
+            if "&sort" not in self.browser.current_url:
+                time.sleep(0.5)
+
+    def test_home(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        assert "GrantNav" in self.browser.find_element(By.TAG_NAME, "body").text
+
+        # Cookie banner is currently disabled until analytics issues are resolved
+        # assert 'Cookies disclaimer' in browser.find_element(By.ID, 'CookielawBanner').text
+        # browser.find_element(By.CLASS_NAME, "btn").click()
+        self.get(server_url)
+        # assert 'Cookies disclaimer' not in browser.find_element(By.TAG_NAME, 'body').text
+        assert (
+            "360Giving Data Standard"
+            in self.browser.find_element(By.TAG_NAME, "body").text
+        )
+        assert (
+            "360Giving data standard"
+            not in self.browser.find_element(By.TAG_NAME, "body").text
+        )
+        self.check_js_errors()
+
+    def test_search(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+
+        # Total number of expected grants
+        assert (
+            "4,649"
+            in self.browser.find_element(
+                By.CLASS_NAME, "search-summary-description"
+            ).text
+        )
+
+        # open show highlighted grants section
+        self.browser.find_element(By.CLASS_NAME, "summary-icon").click()
+
+        # other_currencies_modal = browser.find_element(By.ID, "other-currencies-modal")
+        # search "laboratory"
+        other_currencies_modal = self.browser.find_element(
+            By.XPATH, "//a[@id='other-currencies-modal']/span"
+        )
+        assert other_currencies_modal.text == "4"
+        other_currencies_modal.click()
+        time.sleep(0.5)
+
+        # browser.get_screenshot_as_file("screenshot-test_search.png")
+        assert "$153,934" in self.browser.find_element(By.ID, "summary-info-model").text
+        self.check_js_errors()
+
+    def test_search_by_titles_and_descriptions_radio_button_in_search(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        assert (
+            "Titles & Descriptions"
+            in self.browser.find_element(
+                By.CLASS_NAME, "search-block__form-radio-group"
+            ).text
+        )
+
+    def test_search_by_titles_and_descriptions(self):
+        server_url = reverse_lazy("search")
+        self.get(server_url)
+        # search "laboratory"
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("laboratory")
+
+        # select title_and_description
+        self.browser.find_element(By.ID, "title_and_description-label").click()
+        # execute search
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+
+        self.wait_for_results_page()
+
+        self.assertIn(
+            "New science laboratory",
+            self.browser.find_element(
+                By.CLASS_NAME, "grantnav-search__content--results"
+            ).text,
+        )
+
+        self.assertIn(
+            "laboratories",
+            self.browser.find_element(
+                By.CLASS_NAME, "grantnav-search__content--results"
+            ).text,
+        )
+
+        self.assertIn(
+            "Your search ‘laboratory’ returned 22 results in ‘Titles & Descriptions’",
+            self.browser.find_element(By.CLASS_NAME, "search-summary-description").text,
+        )
+
+        self.get(server_url)
+        # search "laboratory" in "Search All"
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("laboratory")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+
+        self.wait_for_results_page()
+
+        self.assertIn(
+            "New science laboratory",
+            self.browser.find_element(By.CLASS_NAME, "grantnav-search__content--results").text
+        )
+        self.assertIn("laboratories", self.browser.find_element(By.CLASS_NAME, "grantnav-search__content--results").text)
+
+        self.assertIn(
+            "Your search ‘laboratory’ returned 23 results in ‘All grant fields’",
+            self.browser.find_element(
+                By.CLASS_NAME, "search-summary-description"
+            ).text
+        )
+
+    def test_search_current_url(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+        self.assertIn("search?query=%2A&default_field=%2A&sort=_score+desc", self.browser.current_url)
+
+    # This was commented out in the original tests. TODO investigate this test
+    # def test_search_two_words_without_quotes(self):
+    #     """
+    #     When a user's search query is 2+ words without quotes,
+    #     we want to inform the user that with quotes will have a better search result.
+    #     """
+    #     self.get(server_url)
+    #     search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+    #     search_box.send_keys('social change')
+    #     self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+
+    #     assert 'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".' \
+    #            in self.browser.find_element(By.TAG_NAME, 'body').text
+
+    def test_search_two_words_with_single_quotes(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("'core project'")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        self.assertNotIn(
+            'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".',
+            self.browser.find_element(By.CLASS_NAME, "search-summary-description").text,
+        )
+
+    def test_search_two_words_with_double_quotes(self):
+        server_url = reverse_lazy("search")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys('"core project"')
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        self.assertNotIn(
+            'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".',
+            self.browser.find_element(By.CLASS_NAME, "search-summary-description").text,
+        )
+
+    def test_search_two_words_with_hyphen(self):
+        """
+        When a user's search query is 2 words with a hyphen,
+        we want to inform the user that with quotes will have a better search result.
+        """
+        server_url = reverse_lazy("search")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("covid-19")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        self.assertIn(
+            'If you\'re looking for a specific phrase, put quotes around it to refine your search. e.g. "youth clubs".',
+            self.browser.find_element(By.ID, "search-tips").text,
+        )
+
+    def test_search_includes_and(self):
+        """
+        When a user's search query includes 'and', we want to inform the user of what it means.
+        """
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("mental and health")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        self.assertIn(
+            "The AND keyword (not case-sensitive) means that results must have both words present. ",
+            self.browser.find_element(By.ID, "search-tips").text,
+        )
+
+    def test_search_does_not_include_and(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("secondhand clothes")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        self.assertIn(
+            "If you're looking for a specific phrase, put quotes around it to refine your search.",
+            self.browser.find_element(By.ID, "search-tips").text,
+        )
+
+    def test_search_includes_or(self):
+        """
+        When a user's search query includes 'or', we want to inform the user of what it means.
+        """
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("mental or health")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        self.assertIn(
+            "The OR keyword (not case-sensitive) means that results must have one of the words present. "
+            'This is the default. If you\'re looking for a phrase that has the word "or" in '
+            '(e.g. "children or adults"), put quotes around it.',
+            self.browser.find_element(By.ID, "search-tips").text,
+        )
+
+    def test_search_does_not_include_or(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("meteor clothes")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        self.assertNotIn(
+            "The OR keyword (not case-sensitive) means that results must have one of the words present. "
+            'This is the default. If you\'re looking for a phrase that has the word "or" in '
+            '(e.g. "children or adults"), put quotes around it.',
+            self.browser.find_element(By.ID, "search-tips").text,
+        )
+
+    def test_search_display_tip(self):
+        """
+        When an advance search message is displayed in the search results,
+        'Tip: ' will appear in front of the message.
+        """
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("core project")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        self.assertIn("Tip: ", self.browser.find_element(By.ID, "search-tips").text)
+
+    def test_search_do_not_display_tip(self):
+        server_url = reverse_lazy("search")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("grant")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+        self.assertNotIn(
+            "Tip: ",
+            self.browser.find_element(By.CLASS_NAME, "search-summary-description").text,
+        )
+
+    def test_search_display_advanced_search_link(self):
+        """
+        When an advance search message is displayed in the search results,
+        a link to the 'advance search' information page is also included.
+        """
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("core project")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        self.assertIn(
+            "For more tips, see Advanced Search",
+            self.browser.find_element(By.ID, "search-tips").text,
+        )
+
+    def test_search_do_not_display_advance_search_link(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("grant")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        self.assertNotIn(
+            "For more tips, see Advanced Search",
+            self.browser.find_element(By.CLASS_NAME, "search-summary-description").text
+        )
+
+    def test_bad_search(self):
+        server_url = reverse_lazy("search")
+        self.get(server_url)
+        self.browser.find_element(By.NAME, "text_query").send_keys(" £s:::::afdsfas")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+        not_valid = self.browser.find_element(By.ID, "not_valid").text
+        assert "Search input is not valid" in not_valid
+        assert "We can't find what you tried to search for." in not_valid
+
+    def test_terms(self):
+        server_url = reverse_lazy("terms")
+        self.get(server_url)
+        assert (
+            "Terms and conditions" in self.browser.find_element(By.TAG_NAME, "h1").text
+        )
+
+    def test_title(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        assert "360Giving GrantNav" in self.browser.title
+
+    def test_no_results_page(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        search_box = self.browser.find_element(By.CLASS_NAME, "large-search")
+        search_box.send_keys("dfsergegrdtytdrthgrtyh")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        no_results = self.browser.find_element(By.ID, "no-results").text
+        assert "No Results" in no_results
+        assert (
+            'Your search - "dfsergegrdtytdrthgrtyh" - did not match any grant records.'
+            in no_results
+        )
+
+    def test_datasets_page(self):
+        server_url = reverse_lazy("datasets")
+        self.get(server_url)
+        assert (
+            "Data used in GrantNav" in self.browser.find_element(By.TAG_NAME, "h1").text
+        )
+        self.check_js_errors()
+
+    def test_disclaimers(self):
+        server_url = reverse_lazy("grant", args=["360G-LBFEW-111657"])
+        self.get(server_url)
+        assert (
+            "Where is this data from"
+            in self.browser.find_element(By.TAG_NAME, "body").text
+        )
+        self.check_js_errors()
+
+    def test_currency_facet(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        # Select USD
+        # self.browser.get_screenshot_as_file("test2.png")
+        # Open the filter group expander
+        self.browser.find_element(By.ID, "filter-accordion-currency").click()
+        self.browser.find_element(By.ID, "filter-option-currency-usd").click()
+
+        # Check USD options appear
+        assert "USD 0 - USD 500" in self.browser.find_element(By.TAG_NAME, "body").text
+
+    def test_amount_awarded_facet(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+        # Select an amount option
+        self.browser.find_element(By.ID, "amount-1000.0-5000.0").click()
+        self.wait_for_results_page()
+        total_grants = self.browser.find_elements(
+            By.CSS_SELECTOR, ".summary-content--item span"
+        )[0].text
+        assert "49" in total_grants, "Expected number of grants not found"
+
+    def test_county_location_facet(self):
+        server_url = reverse_lazy("search")
+        self.get(server_url)
+
+        # Open county
+        self.browser.find_element(By.ID, "filter-accordion-county").click()
+        self.browser.find_element(By.ID, "filter-option-county-liverpool").click()
+
+        total_grants = self.browser.find_elements(
+            By.CSS_SELECTOR, ".summary-content--item span"
+        )[0].text
+        assert (
+            "11" in total_grants
+        ), f"Expected total grants not found for county liverpool, got {total_grants} instead of 9"
+
+    def test_zero_grant_info_link_absent(self):
+        server_url = reverse_lazy("grant", args=["360G-LBFEW-99233"])
+        self.get(server_url)
+        assert len(self.browser.find_elements(By.ID, "zero_value_grant_help_link")) == 0
+
+    def test_search_recipients(self):
+        server_url = reverse_lazy("recipients")
+        self.get(server_url)
+
+        self.browser.find_element(By.NAME, "text_query").send_keys("Social Justice")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        # self.browser.get_screenshot_as_file("recipients-search.png")
+
+        self.assertEqual(
+            len(
+                self.browser.find_elements(
+                    By.CLASS_NAME, "grant-search-result__recipients"
+                )
+            ),
+            20,
+        )
+        self.check_js_errors()
+
+    def test_search_funders(self):
+        server_url = reverse_lazy("funders")
+        self.get(server_url)
+
+        self.browser.find_element(By.NAME, "text_query").send_keys("foundation")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        # self.browser.get_screenshot_as_file("recipients-search.png")
+
+        self.assertEqual(
+            len(
+                self.browser.find_elements(
+                    By.CLASS_NAME, "grant-search-result__funders"
+                )
+            ),
+            20,
+        )
+        self.check_js_errors()
+
+    def test_org_page(self):
+        server_url = reverse_lazy("org", args=["GB-CHC-1156077"])
+        self.get(server_url)
+        # self.browser.get_screenshot_as_file("org-page.png")
+
+        assert "Wolfson Foundation" in self.browser.find_element(By.TAG_NAME, "h1").text
+        self.check_js_errors()
+
+    def test_insights_button(self):
+        """Tests that the insights button takes us to an Insights site"""
+
+        for button in self.browser.find_elements(
+            By.CSS_SELECTOR, "a[data='insights-integration-btn']"
+        ):
+            # Narrow search results to fewer than 10k
+            server_url = reverse_lazy("search")
+            self.get(f"{server_url}?currency=AUD")
+            button.click()
+            assert self.browser.find_element(By.TAG_NAME, "title").text == "360Insights"
+            # Clear self.browser log for external site
+            self.browser.get_log("self.browser")
