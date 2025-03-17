@@ -9,7 +9,7 @@
 
 {% block main_content %}
   <main class="layout__content">
-
+    {% include 'components/loading-overlay.html' %}
     <div class="grantnav-search__wrapper">
       <div class="grantnav-search__sidebar">
         {% if results and results.hits.hits %}
@@ -164,6 +164,21 @@ $(document).ready(function () {
     $('input[type=radio][name=results-switcher][value="card"]').prop('checked', true);
   }
 
+  // Show overlay when any of the filter links are selected
+  const filters = document.querySelectorAll('a.filter-list__filter-item');
+  filters.forEach(function (filter) {
+    // Add event listeners for click and touch events
+    filter.addEventListener('click', show_overlay);
+    filter.addEventListener('touchstart', show_overlay);
+
+    // Add event listener for keyboard events
+    filter.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        show_overlay();
+      }
+    });
+  });
+
   $('input[type=radio][name=results-switcher]').change(function () {
     const query = window.location.search;
     const urlParams = new URLSearchParams(query);
@@ -214,6 +229,7 @@ function get_filter_search_ajax (parent_field, child_field) {
 
 // when a new item is selected then refresh the page
 function redirect_on_selection (param, data) {
+  show_overlay();
   /* Ajax route OR template route */
   const url = data.url || data.element.dataset.url;
 
@@ -233,6 +249,9 @@ function maybe_redirect_on_exclude (param) {
     return;
   }
 
+  // Only show overlay after check for current selection
+  show_overlay();
+
   const uri = URI(window.location.href);
 
   uri.removeSearch('exclude_' + param);
@@ -240,6 +259,11 @@ function maybe_redirect_on_exclude (param) {
     uri.addSearch('exclude_' + param, 'true');
   }
   window.location.href = uri.toString();
+}
+
+function show_overlay () {
+  const overlay = document.querySelector('#loading-overlay');
+  overlay.style.display = 'block';
 }
 
 $(function () {
