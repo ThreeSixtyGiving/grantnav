@@ -46,7 +46,7 @@
 {% block main_content %}
 
   <main class="layout__content">
-
+    {% include 'components/loading-overlay.html' %}
     <div class="grantnav-search__wrapper">
       <div class="grantnav-search__sidebar">
         {% if results and results.hits.hits %}
@@ -243,8 +243,28 @@ $(document).ready(function () {
     rowsInput.value = rows;
   }
 
+  // Show overlay when any of the filter links are selected
+  const filters = document.querySelectorAll('a.filter-list__filter-item');
+  filters.forEach(function (filter) {
+    // Add event listeners for click and touch events
+    filter.addEventListener('click', show_overlay);
+    filter.addEventListener('touchstart', show_overlay);
+
+    // Add event listener for keyboard events
+    filter.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        show_overlay();
+      }
+    });
+  });
+
   updateFrames();
 });
+
+function show_overlay () {
+  const overlay = document.querySelector('#loading-overlay');
+  overlay.style.display = 'block';
+}
 
 function updateFrames () {
   const selectViewElement = document.getElementById('select-views');
@@ -372,6 +392,7 @@ function otherURLParams (current) {
 
 // when a new item is selected then refresh the page
 function redirect_on_selection (param, data) {
+  show_overlay();
   const uri = URI(data.url);
   uri.removeSearch('exclude_' + param);
   if ($('#' + param + '-exclude').prop('checked')) {
@@ -387,6 +408,9 @@ function maybe_redirect_on_exclude (param) {
   if ($('.' + param + '-search-box').select2('data').length === 0) {
     return;
   }
+
+  // Only show overlay after check for current selection
+  show_overlay();
 
   const uri = URI(window.location.href);
 
