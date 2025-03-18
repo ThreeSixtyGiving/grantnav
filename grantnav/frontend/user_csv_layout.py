@@ -1,7 +1,9 @@
-from django.http import Http404
-from . import views
 import json
+
+from django.http import Http404
+
 from grantnav.csv_layout import grant_csv_paths, grant_csv_titles
+from . import views
 
 
 # Process the custom download request
@@ -13,7 +15,7 @@ def process(request):
       ...
     ]
     """
-    fields = json.loads(request.POST.get("selection", []))
+    fields = json.loads(request.POST.get("selection", "[]"))
 
     # Check the incoming data is known to us
     for field in fields:
