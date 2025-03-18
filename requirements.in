@@ -1,4 +1,4 @@
-Django<6
+Django<5
 django-bootstrap3
 requests
 django-environ
