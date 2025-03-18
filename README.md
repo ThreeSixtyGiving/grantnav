@@ -145,4 +145,4 @@ Add new requirements to ``requirements.in`` or ``requirements_dev.in`` depending
 
 ## New Code
 
-New code should by python-black formatted
+New code should be python-black formatted
