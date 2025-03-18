@@ -42,16 +42,22 @@ class BrowserTestCase(StaticLiveServerTestCase):
             chrome_options.add_argument("--remote-debugging-port=9222")
             # chrome_options.add_argument('ignore-unexpected-deprecations')
             self.browser = webdriver.Chrome(options=chrome_options)
-        elif BROWSER == "Firefox":
+        elif BROWSER == "Firefox" or BROWSER == "FirefoxHeadless":
+            # While we can technically run the tests in Firefox, they won't pass
+            # because the self.browser.get_log() method used here to get browser console logs
+            # is non-standard and only implement by ChromeDriver.
+            # See: https://github.com/mozilla/geckodriver/issues/330
+            ff_options = webdriver.FirefoxOptions()
+            if BROWSER == "FirefoxHeadless":
+                ff_options.add_argument("-headless")
             # Make downloads work
-            profile = webdriver.FirefoxProfile()
-            profile.set_preference("browser.download.folderList", 2)
-            profile.set_preference("browser.download.manager.showWhenStarting", False)
-            profile.set_preference("browser.download.dir", os.getcwd())
-            profile.set_preference(
+            ff_options.set_preference("browser.download.folderList", 2)
+            ff_options.set_preference("browser.download.manager.showWhenStarting", False)
+            ff_options.set_preference("browser.download.dir", os.getcwd())
+            ff_options.set_preference(
                 "browser.helperApps.neverAsk.saveToDisk", "application/json"
             )
-            self.browser = getattr(webdriver, BROWSER)(firefox_profile=profile)
+            self.browser = webdriver.Firefox(options=ff_options)
         else:
             self.browser = getattr(webdriver, BROWSER)()
         # Make sure we wait 5 seconds at least before slenium delcares the element no existent
