@@ -66,8 +66,7 @@ class BrowserTestCase(StaticLiveServerTestCase):
 
     def check_js_errors(self):
         for log in self.browser.get_log("browser"):
-            # Datatables is sending warnings that we can't currently fix
-            # https://github.com/...
+            # TODO Datatables is sending warnings that we can't currently fix
             if "datatables" in str(log).lower():
                 print(
                     f"Skipping datatables warning {self.browser.current_url} : f{log}"
