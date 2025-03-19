@@ -1,3 +1,6 @@
+import subprocess
+
+
 CURRENCY_SYMBOLS = {
     'GBP': '£',
     'USD': '$',
@@ -50,3 +53,13 @@ def date_to_yearmonth(date, max=False):
             month -= 1
 
     return f'{month:02}/{year}'
+
+
+def get_git_revision():
+    try:
+        return subprocess.check_output(
+            ["git show --format=format:%h  --no-patch"], shell=True
+        ).decode()
+
+    except subprocess.CalledProcessError:
+        return 'Unknown'
