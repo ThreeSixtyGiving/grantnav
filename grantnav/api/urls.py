@@ -1,8 +1,8 @@
-from django.urls import path
+from django.urls import re_path
 import grantnav.api.aggregates
 
 app_name = "api"
 
 urlpatterns = [
-    path("aggregates/search", grantnav.api.aggregates.Search.as_view(), name="aggregates"),
+    re_path(r"^aggregates/search", grantnav.api.aggregates.Search.as_view(), name="aggregates"),
 ]
