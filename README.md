@@ -32,12 +32,17 @@ source .ve/bin/activate
 
 3. Install dependencies
 
-This installs Elasticsearch 7 see https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html for further information.
-If you are not on Debian based system you will need to follow https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html#setup-installation to install elasticsearch.
+Install Python dependencies:
 
 ```
 pip install -r requirements.txt # Use 'requirements_dev.txt' if you're installing for development and testing.
+```
 
+Install Elasticsearch 7:
+
+Via Debian packages. See https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html for further information.
+
+```
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
 sudo apt-get install apt-transport-https
@@ -45,6 +50,16 @@ sudo apt-get update
 sudo apt-get install elasticsearch
 sudo service elasticsearch start
 ```
+
+You can also install Elasticseach via Docker.
+
+```
+docker run -d --name grantnavelasticsearch  -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.2.0 # Will set it up and start it
+docker start grantnavelasticsearch # If already set up, will start it
+docker stop grantnavelasticsearch # Stop it running
+```
+
+Otherwise you will need to follow https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html#setup-installation to install elasticsearch.
 
 4. Run migrate to install the default django database for sessions etc (sqlite)
 
