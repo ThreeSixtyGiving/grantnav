@@ -3,6 +3,7 @@ from . import views
 from . import recipients_search_view
 from . import funders_search_view
 from . import user_csv_layout
+from ..utils import get_git_revision
 from django.views.generic import TemplateView
 from django.views.generic import RedirectView
 
@@ -38,7 +39,9 @@ urlpatterns = [
     re_path(r'^district/(.*)\.json$', views.district, name='district.json'),
     path('datasets/', views.datasets, name='datasets'),
     path('terms', TemplateView.as_view(template_name='terms.html'), name='terms'),
-    path('about', TemplateView.as_view(template_name='about.html'), name='about'),
+    path('about', TemplateView.as_view(
+        template_name='about.html', extra_context={'git_revision': get_git_revision()}
+    ), name='about'),
     path('search_custom.csv', user_csv_layout.process, name="custom_download"),
     # Redirects
     path('individuals', views.individuals, name="individuals"),
