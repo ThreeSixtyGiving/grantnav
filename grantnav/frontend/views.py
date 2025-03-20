@@ -442,9 +442,9 @@ def totals_query():
     query = {"query": {"match_all": {}}}
 
     counts = {
-        'grants': get_results(query)['hits']['total'],
-        'funders': get_results(query, data_type='funder')['hits']['total'],
-        'recipient_orgs': get_results(query, data_type='recipient')['hits']['total'],
+        'grants': get_results(query, size=0)['hits']['total'],
+        'funders': get_results(query, data_type='funder', size=0)['hits']['total'],
+        'recipient_orgs': get_results(query, data_type='recipient', size=0)['hits']['total'],
         'grants_individuals': get_results(
             {
                 "query": {
@@ -454,7 +454,8 @@ def totals_query():
                         ]
                     }
                 }
-            }
+            },
+            size=0
         )["hits"]["total"],
     }
     return counts
