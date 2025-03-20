@@ -306,6 +306,7 @@ def maybe_create_index(index_name=ES_INDEX):
             "aggregate": {
                 "properties": {
                     "grants": {"type": "double"},
+                    "funders": {"type": "double"},
                     "maxAwardDate": {
                         "type": "date",
                         "ignore_malformed": True
@@ -321,6 +322,7 @@ def maybe_create_index(index_name=ES_INDEX):
                                 "properties": {
                                     "avg": {"type": "double"},
                                     "total": {"type": "double"},
+                                    "funders": {"type": "double"},
                                 }
                             }
 
