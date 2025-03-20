@@ -445,18 +445,17 @@ def totals_query():
         'grants': get_results(query)['hits']['total'],
         'funders': get_results(query, data_type='funder')['hits']['total'],
         'recipient_orgs': get_results(query, data_type='recipient')['hits']['total'],
-        'recipient_indi': get_results(
+        'grants_individuals': get_results(
             {
-                "size": 0,  # Don't return the docs just the agg
-                "aggs": {
-                    "recipient_indi": {
-                        "cardinality": {
-                            "field": "recipientIndividual.id", "precision_threshold": 40000
-                        }
+                "query": {
+                    "bool": {
+                        "filter": [
+                            {'term': {'additional_data.TSGRecipientType': 'Individual'}}
+                        ]
                     }
                 }
             }
-        )["aggregations"]["recipient_indi"]["value"]
+        )["hits"]["total"],
     }
     return counts
 
