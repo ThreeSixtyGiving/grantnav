@@ -13,7 +13,7 @@
     {% include 'components/homepage-card.html' with title="Funders" button_text="Funder search" value=results.funders|get_amount link="funders" %}
 
     {% include 'components/homepage-card.html' with title="Recipient Organisations" button_text="Recipient organisations search" value=results.recipient_orgs|get_amount link="recipients" %}
-    {% include 'components/homepage-card.html' with title="Recipient Individuals" button_text="Recipient individuals search" value=results.recipient_indi|get_amount link="individuals" %}
+    {% include 'components/homepage-card.html' with title="Grants to Individuals" button_text="Grants to individuals search" value=results.grants_individuals|get_amount link="individuals" %}
 
 
   </div>
