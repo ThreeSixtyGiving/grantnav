@@ -12,7 +12,7 @@
       <ul class="filter-list__listing" {% if finder %}style="height: 250px" {% endif %}>
           {% for bucket in aggregate_data.buckets %}
           <li>
-            <a class="filter-list__filter-item {% if finder %}filter-list-{{finder_class}}{% endif %} {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}" id="filter-option-{{filter_title|lower|cut:' '}}-{{bucket.key|lower}}" >
+            <a class="filter-list__filter-item {% if finder %}filter-list-{{finder_class}}{% endif %} {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}#filter-accordion-{{filter_title|lower|cut:' '}}" id="filter-option-{{filter_title|lower|cut:' '}}-{{bucket.key|lower}}" >
               {{bucket.key}} <small>({{bucket.doc_count|get_amount}})</small>
 
               {% if bucket.selected %}

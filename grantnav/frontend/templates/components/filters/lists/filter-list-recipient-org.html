@@ -1,6 +1,6 @@
 {% load get_facet_org_name get_facet_org_id get_amount from frontend %}
 <div class="filter-list filter-list--with-checkboxes">
-  <details class="filter-list__accordion" {% if results.aggregations.recipientOrganization.clear_url %} open{% endif %}>
+  <details id="filter-accordion-recipient-org" class="filter-list__accordion" {% if results.aggregations.recipientOrganization.clear_url %} open{% endif %}>
     <summary class="filter-list__label">
       <div>Recipient Organisations {% if results.aggregations.recipientOrganization.clear_url %} <a href={{results.aggregations.recipientOrganization.clear_url}}> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}

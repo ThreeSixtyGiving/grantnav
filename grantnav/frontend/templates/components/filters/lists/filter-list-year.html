@@ -1,14 +1,14 @@
 {% load frontend %}
 
 <div class="filter-list margin-bottom:2">
-  <details class="filter-list__accordion" open>
+  <details id="filter-accordion-year" class="filter-list__accordion" open>
     <summary class="filter-list__label">
       <div>Award Date {% if results.aggregations.awardYear.clear_url %} <a href="{{results.aggregations.awardYear.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-list__contents-wrapper">
       {% block filterForm %}
-        <form class="filter-list__contents--form">
+        <form id="filter-form-year" class="filter-list__contents--form">
 
           <span class="input-daterange input-group" id="datepicker">
             <div class="filter-list__contents--form-item">
@@ -35,7 +35,7 @@
          {% if not query.query.bool.filter.9.bool.should.range.awardDate %}
          {% for bucket in results.aggregations.awardYear.buckets %}
           <li>
-            <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}">
+            <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}#filter-accordion-year">
               {% if bucket.from_as_string %} {{bucket.from_as_string}} {% else %} {{bucket.key_as_string}} {% endif %} <small>({{bucket.doc_count|get_amount}})</small>
               {% if bucket.selected %}
                 <span class="screen-reader-only">(active filter)</span>
@@ -48,3 +48,14 @@
     </div>
   </details>
 </div>
+
+<script>
+  document.querySelector('#filter-form-year').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const url = e.target.action;
+    const hash = '#filter-accordion-year';
+
+    e.target.action = url + hash;
+    e.target.submit();
+  });
+</script>
