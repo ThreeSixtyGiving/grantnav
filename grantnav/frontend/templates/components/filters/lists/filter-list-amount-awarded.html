@@ -1,13 +1,13 @@
 {% load get_amount_range get_amount from frontend %}
 <div class="filter-list margin-bottom:2">
-  <details class="filter-list__accordion" open>
+  <details id="filter-accordion-amount-awarded" class="filter-list__accordion" open>
     <summary class="filter-list__label">
       <div>Amount Awarded ({{current_currency}}) {% if results.aggregations.amountAwardedFixed.clear_url %} <a href="{{results.aggregations.amountAwardedFixed.clear_url}}"> <small>(clear)</small></a> {% endif%}</div>
       {% include 'tokens/accordion-toggle-icon.html' %}
     </summary>
     <div class="filter-list__contents-wrapper">
       {% block filterForm %}
-        <form class="filter-list__contents--form">
+        <form id="filter-form-amount-awarded" class="filter-list__contents--form">
           <div class="filter-list__contents--form-item">
             <label for="min-amount">Smallest (£)</label>
             <input id="min-amount" name="new_min_amount" class="form-control" value="{{query.query.bool.filter.3.bool.should.range.amountAwarded.gte}}"/>
@@ -24,7 +24,7 @@
         {% if not query.query.bool.filter.3.bool.should.range.amountAwarded %}
           {% for bucket in results.aggregations.amountAwardedFixed.buckets %}
             <li>
-              <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}" id="amount-{{bucket.key|lower}}">
+              <a class="filter-list__filter-item {% if bucket.selected %} active{% endif %}" href="{{bucket.url}}#filter-accordion-amount-awarded" id="amount-{{bucket.key|lower}}">
                 {{bucket|get_amount_range:current_currency}} <small>({{bucket.doc_count|get_amount}})</small>
 
                 {% if bucket.selected %}
@@ -38,3 +38,14 @@
     </div>
   </details>
 </div>
+
+<script>
+  document.querySelector('#filter-form-amount-awarded').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const url = e.target.action;
+    const hash = '#filter-accordion-amount-awarded';
+
+    e.target.action = url + hash;
+    e.target.submit();
+  });
+</script>

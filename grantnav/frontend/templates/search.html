@@ -228,7 +228,7 @@ function get_filter_search_ajax (parent_field, child_field) {
 }
 
 // when a new item is selected then refresh the page
-function redirect_on_selection (param, data) {
+function redirect_on_selection (id, param, data) {
   show_overlay();
   /* Ajax route OR template route */
   const url = data.url || data.element.dataset.url;
@@ -239,12 +239,13 @@ function redirect_on_selection (param, data) {
   if ($('#' + param + '-exclude').prop('checked')) {
     uri.addSearch('exclude_' + param, 'true');
   }
+  uri.fragment(id);
   window.location.href = uri.toString();
 }
 
 // refresh the page when moving from exclude to include selection.
 // BUT do not do this if there is no curent selection
-function maybe_redirect_on_exclude (param) {
+function maybe_redirect_on_exclude (id, param) {
   if ($('.' + param + '-search-box').select2('data').length === 0) {
     return;
   }
@@ -258,6 +259,7 @@ function maybe_redirect_on_exclude (param) {
   if ($('#' + param + '-exclude').prop('checked')) {
     uri.addSearch('exclude_' + param, 'true');
   }
+  uri.fragment(id);
   window.location.href = uri.toString();
 }
 
@@ -328,32 +330,38 @@ $(function () {
     /* Selecting */
     $('.fundingOrganization-search-box').on('select2:select', function (e) {
       const data = e.params.data;
-      redirect_on_selection('fundingOrganization', data);
+      const parentFilterId = e.target.closest('details').id || '';
+      redirect_on_selection(parentFilterId, 'fundingOrganization', data);
     });
 
     $('.recipientOrganization-search-box').on('select2:select', function (e) {
       const data = e.params.data;
-      redirect_on_selection('recipientOrganization', data);
+      const parentFilterId = e.target.closest('details').id || '';
+      redirect_on_selection(parentFilterId, 'recipientOrganization', data);
     });
 
     $('.grantProgramme-search-box').on('select2:select', function (e) {
       const data = e.params.data;
-      redirect_on_selection('grantProgramme', data);
+      const parentFilterId = e.target.closest('details').id || '';
+      redirect_on_selection(parentFilterId, 'grantProgramme', data);
     });
 
     $('.recipientDistrictName-search-box').on('select2:select', function (e) {
       const data = e.params.data;
-      redirect_on_selection('recipientDistrictName', data);
+      const parentFilterId = e.target.closest('details').id || '';
+      redirect_on_selection(parentFilterId, 'recipientDistrictName', data);
     });
 
     $('.recipientOrgDistrictName-search-box').on('select2:select', function (e) {
       const data = e.params.data;
-      redirect_on_selection('recipientOrgDistrictName', data);
+      const parentFilterId = e.target.closest('details').id || '';
+      redirect_on_selection(parentFilterId, 'recipientOrgDistrictName', data);
     });
 
     $('.beneficiaryDistrictName-search-box').on('select2:select', function (e) {
       const data = e.params.data;
-      redirect_on_selection('beneficiaryDistrictName', data);
+      const parentFilterId = e.target.closest('details').id || '';
+      redirect_on_selection(parentFilterId, 'beneficiaryDistrictName', data);
     });
 
     /* End selecting */
@@ -361,27 +369,33 @@ $(function () {
     /* Excluding */
 
     $('#fundingOrganization-select input[type=radio]').on('change', function (e) {
-      maybe_redirect_on_exclude('fundingOrganization');
+      const parentFilterId = e.target.closest('details').id || '';
+      maybe_redirect_on_exclude(parentFilterId, 'fundingOrganization');
     });
 
     $('#recipientOrganization-select input[type=radio]').on('change', function (e) {
-      maybe_redirect_on_exclude('recipientOrganization');
+      const parentFilterId = e.target.closest('details').id || '';
+      maybe_redirect_on_exclude(parentFilterId, 'recipientOrganization');
     });
 
     $('#grantProgramme-select input[type=radio]').on('change', function (e) {
-      maybe_redirect_on_exclude('grantProgramme');
+      const parentFilterId = e.target.closest('details').id || '';
+      maybe_redirect_on_exclude(parentFilterId, 'grantProgramme');
     });
 
     $('#recipientDistrictName-select input[type=radio]').on('change', function (e) {
-      maybe_redirect_on_exclude('recipientDistrictName');
+      const parentFilterId = e.target.closest('details').id || '';
+      maybe_redirect_on_exclude(parentFilterId, 'recipientDistrictName');
     });
 
     $('#recipientOrgDistrictName-select input[type=radio]').on('change', function (e) {
-      maybe_redirect_on_exclude('recipientOrgDistrictName');
+      const parentFilterId = e.target.closest('details').id || '';
+      maybe_redirect_on_exclude(parentFilterId, 'recipientOrgDistrictName');
     });
 
     $('#beneficiaryDistrictName-select input[type=radio]').on('change', function (e) {
-      maybe_redirect_on_exclude('beneficiaryDistrictName');
+      const parentFilterId = e.target.closest('details').id || '';
+      maybe_redirect_on_exclude(parentFilterId, 'beneficiaryDistrictName');
     });
 
     /* End excluding */
