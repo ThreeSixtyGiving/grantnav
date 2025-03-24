@@ -5,7 +5,9 @@
 #    pip-compile requirements.in
 #
 asgiref==3.8.1
-    # via django
+    # via
+    #   django
+    #   django-cors-headers
 backports-datetime-fromisoformat==2.0.3
     # via flattentool
 backports-zoneinfo==0.2.1
@@ -26,7 +28,10 @@ django==4.2.20
     # via
     #   -r requirements.in
     #   django-bootstrap3
+    #   django-cors-headers
 django-bootstrap3==24.3
+    # via -r requirements.in
+django-cors-headers==4.4.0
     # via -r requirements.in
 django-environ==0.11.2
     # via -r requirements.in

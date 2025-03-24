@@ -6,5 +6,4 @@ coveralls
 selenium
 libsass
 chromedriver-autoinstaller
-django-cors-headers
 black

@@ -80,16 +80,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'corsheaders',
     'grantnav.frontend',
     'grantnav.prometheus',
     'grantnav.api',
     'raven.contrib.django.raven_compat',
 )
 
-if DEBUG:
-    INSTALLED_APPS = INSTALLED_APPS + ("corsheaders",)
-
 MIDDLEWARE = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,9 +97,6 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-
-if DEBUG:
-    MIDDLEWARE = ("corsheaders.middleware.CorsMiddleware",) + MIDDLEWARE
 
 ROOT_URLCONF = 'grantnav.urls'
 

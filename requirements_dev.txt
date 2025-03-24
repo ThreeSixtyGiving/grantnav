@@ -52,7 +52,7 @@ django==4.2.20
 django-bootstrap3==24.3
     # via -r requirements.in
 django-cors-headers==4.4.0
-    # via -r requirements_dev.in
+    # via -r requirements.in
 django-environ==0.11.2
     # via -r requirements.in
 docopt==0.6.2
