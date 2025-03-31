@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 import argparse
 import json
-import shutil
 import uuid
-import tempfile
 import os
 from pprint import pprint
+import warnings
 import elasticsearch.helpers
 import time
 import ijson
 import dateutil.parser as date_parser
 import sys
+import multiprocessing
 
 from django.core.cache import cache
 import django
@@ -21,11 +21,28 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 django.setup()
 
-from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, get_org, OrgNotFoundError # noqai
+from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, OrgNotFoundError # noqai
 
 
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 ELASTICSEARCH_HOST = os.environ.get("ELASTICSEARCH_HOST", "localhost")
+
+
+def initialise_org_cache():
+    # Initialise organisation cache
+    org_cache = {"funder": {}, "recipient": {}}
+
+    def get_org(org_id, org_type):
+        return org_cache[org_type][org_id]
+
+    def cache_org_data(org_id, org_type, org):
+        org_cache[org_type][org_id] = (new_ordered_names(org)[0], new_org_ids(org)[0])
+
+    return get_org, cache_org_data
+
+
+# Organisation cache access functions
+get_org, cache_org_data = initialise_org_cache()
 
 
 def maybe_create_index(index_name=ES_INDEX):
@@ -384,6 +401,85 @@ def maybe_create_index(index_name=ES_INDEX):
     }})
 
 
+def process_grant(grant, grants_file_path):
+    grant['filename'] = os.path.basename(grants_file_path)
+    grant['_id'] = str(uuid.uuid4())
+    grant['_index'] = ES_INDEX
+    grant['dataType'] = 'grant'
+
+    # We use additional_data extensively in GN if it is missing things
+    # might not work as expected
+    try:
+        if not isinstance(grant["additional_data"], dict):
+            raise TypeError("additional_data not a dictionary")
+    except (TypeError, KeyError):
+        warnings.warn("No additional_data block for grant: %s" % grant["id"])
+        # initialise the dictionary for our own additional data
+        grant["additional_data"] = {}
+
+    # Search helper fields:
+
+    # grant.fundingOrganization.id_and_name
+    # grant.recipientOrganization.id_and_name
+    # grant.additional_data.GNCanonicalRecipientOrgName
+    # grant.additional_data.GNCanonicalFundingOrgName
+    update_doc_with_canonical_orgs(grant)
+    # grant.title_and_description
+    update_doc_with_title_and_description(grant)
+    # grant.grantProgramme.title_keyword
+    update_doc_with_grantprogramme_title_keyword(grant)
+    # grant.actualDates.N.[start,end]DateDateOnly
+    # grant.plannedDates.N.[start,end]DateDateOnly
+    update_doc_with_dateonly_fields(grant)
+    # grant.currency
+    update_doc_with_currency_upper_case(grant)
+    # grant.simple_grant_type
+    update_doc_with_simple_grant_type(grant)
+    # grant.additional_data.GNRecipientOrgInfo0
+    update_doc_with_first_recipient_org_info(grant)
+    # Convenience geo fields:
+    #
+    # grant.additional_data.GNBeneficiaryRegionName (rgnnm)
+    # grant.additional_data.GNRecipientOrgRegionName (rgnnm)
+    #
+    # grant.additional_data.GNRecipientOrgDistrictName (ladnm)
+    # grant.additional_data.GNBeneficiaryDistrictName (ladnm)
+    # grant.additional_data.GNBestCountyName (utlanm)
+    # grant.additional_data.GNBeneficiaryCountyName (utlanm)
+    # grant.additional_data.GNRecipientOrgCountyName (utlanm)
+    update_doc_with_other_locations(grant)
+    # update_doc_with_undetermined needs to go last
+    update_doc_with_undetermined(grant)
+
+
+def process_grant_file_process(process_queue,
+                               grants_file_path):
+    # Accumulate list of processed grants
+    batch = []
+
+    # Open grants file and parse json
+    with open(grants_file_path) as fp:
+        stream = ijson.items(fp, 'grants.item')
+        for grant in stream:
+            # Process grant
+            process_grant(grant, grants_file_path)
+
+            # Add grant to batch
+            batch.append(grant)
+
+            if len(batch) > 499:
+                # Return batch
+                process_queue.put(batch)
+                batch = []
+
+        # Send remaining grants
+        if len(batch) > 0:
+            process_queue.put(batch)
+
+        # Send filename to signal done
+        process_queue.put(grants_file_path)
+
+
 def import_to_elasticsearch(files, clean, recipients=None, funders=None):
 
     es = elasticsearch.Elasticsearch(hosts=[ELASTICSEARCH_HOST])
@@ -400,6 +496,9 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
     # Allow the server to settle
     time.sleep(1)
 
+    # Disable refreshing index while loading data
+    es.indices.put_settings(index=ES_INDEX, body={"refresh_interval": "-1"})
+
     # Load the organisations data
     def org_generator(filename, data_type):
         with open(filename) as f:
@@ -410,86 +509,73 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                 obj['currency'] = list(obj["aggregate"]["currencies"].keys())
                 obj['organizationName'] = " ".join(new_ordered_names(obj))
                 obj['orgIDs'] = new_org_ids(obj)
+                # Cache org so no ES lookups needed during indexing
+                cache_org_data(obj['id'], data_type, obj)
                 yield obj
 
     if recipients:
+        pprint("Loading recipients:")
         result = elasticsearch.helpers.bulk(es, org_generator(recipients, 'recipient'), raise_on_error=False, max_retries=10, initial_backoff=5)
         print(result)
     if funders:
+        pprint("Loading funders:")
         result = elasticsearch.helpers.bulk(es, org_generator(funders, 'funder'), raise_on_error=False, max_retries=10, initial_backoff=5)
         print(result)
 
     # Load the grants data
-    for grants_file_path in files:
-        tmp_dir = tempfile.mkdtemp()
+    def grant_generator():
+        # Create manager
+        with multiprocessing.Manager() as manager:
 
-        file_type = grants_file_path.split('.')[-1]
+            # Create a queue that receives processed grants in batches
+            process_queue = manager.Queue()
 
-        if file_type != 'json':
-            print('unimportable file {} (bad) file type'.format(grants_file_path))
-            continue
+            # Create process pool
+            with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
 
-        def grant_generator():
-            """ Add / Update GrantNav specific optimisation fields """
+                # Create worker processes to process each file
+                processes = {}
+                for grants_file_path in files:
+                    file_type = grants_file_path.split('.')[-1]
 
-            with open(grants_file_path) as fp:
-                stream = ijson.items(fp, 'grants.item')
-                for grant in stream:
-                    grant['filename'] = os.path.basename(grants_file_path)
-                    grant['_id'] = str(uuid.uuid4())
-                    grant['_index'] = ES_INDEX
-                    grant['dataType'] = 'grant'
+                    if file_type != 'json':
+                        print('unimportable file {} (bad) file type'.format(grants_file_path))
+                        continue
 
-                    # We use additional_data extensively in GN if it is missing things
-                    # might not work as expected
-                    try:
-                        if not isinstance(grant["additional_data"], dict):
-                            raise TypeError("additional_data not a dictionary")
-                    except (TypeError, KeyError):
-                        # warning.info("No additional_data block for grant: %s" % grant["id"])
-                        # initialise the dictionary for our own additional data
-                        grant["additional_data"] = {}
+                    # Start worker process for file
+                    process = pool.apply_async(process_grant_file_process, args=(process_queue, grants_file_path))
 
-                    # Search helper fields:
+                    # Save in process dictionary
+                    processes[grants_file_path] = process
 
-                    # grant.fundingOrganization.id_and_name
-                    # grant.recipientOrganization.id_and_name
-                    # grant.additional_data.GNCanonicalRecipientOrgName
-                    # grant.additional_data.GNCanonicalFundingOrgName
-                    update_doc_with_canonical_orgs(grant)
-                    # grant.title_and_description
-                    update_doc_with_title_and_description(grant)
-                    # grant.grantProgramme.title_keyword
-                    update_doc_with_grantprogramme_title_keyword(grant)
-                    # grant.actualDates.N.[start,end]DateDateOnly
-                    # grant.plannedDates.N.[start,end]DateDateOnly
-                    update_doc_with_dateonly_fields(grant)
-                    # grant.currency
-                    update_doc_with_currency_upper_case(grant)
-                    # grant.simple_grant_type
-                    update_doc_with_simple_grant_type(grant)
-                    # grant.additional_data.GNRecipientOrgInfo0
-                    update_doc_with_first_recipient_org_info(grant)
-                    # Convenience geo fields:
-                    #
-                    # grant.additional_data.GNBeneficiaryRegionName (rgnnm)
-                    # grant.additional_data.GNRecipientOrgRegionName (rgnnm)
-                    #
-                    # grant.additional_data.GNRecipientOrgDistrictName (ladnm)
-                    # grant.additional_data.GNBeneficiaryDistrictName (ladnm)
-                    # grant.additional_data.GNBestCountyName (utlanm)
-                    # grant.additional_data.GNBeneficiaryCountyName (utlanm)
-                    # grant.additional_data.GNRecipientOrgCountyName (utlanm)
-                    update_doc_with_other_locations(grant)
-                    # update_doc_with_undetermined needs to go last
-                    update_doc_with_undetermined(grant)
-                    yield grant
+                # Initialise processes done count
+                done = 0
 
-        pprint(grants_file_path)
-        result = elasticsearch.helpers.bulk(es, grant_generator(), raise_on_error=False, max_retries=10, initial_backoff=5)
-        pprint(result)
+                # Loop until done
+                while True:
+                    # Get a batch of grants from queue
+                    batch = process_queue.get()
 
-        shutil.rmtree(tmp_dir)
+                    # Check for batch of grants (list)
+                    if isinstance(batch, list):
+                        # Yield batch for grants individually
+                        for item in batch:
+                            yield item
+                    # Stop signal (not list)
+                    else:
+                        # Increment done count
+                        done += 1
+
+                    # End loop if all processes done
+                    if done == len(processes):
+                        break
+
+    pprint("Loading grants:")
+    result = elasticsearch.helpers.bulk(es, grant_generator(), raise_on_error=False, max_retries=10, initial_backoff=5)
+    pprint(result)
+
+    # Enable refreshing index
+    es.indices.put_settings(index=ES_INDEX, body={"refresh_interval": "1s"})
 
     # Clear any query caches
     cache.clear()
@@ -642,9 +728,9 @@ def update_doc_with_canonical_orgs(grant):
     if grant_recipient_org := grant.get("recipientOrganization", [""])[0]:
         try:
             recipient_org = get_org(grant_recipient_org["id"], "recipient")
-            grant["additional_data"]["GNCanonicalRecipientOrgName"] = new_ordered_names(recipient_org)[0]
-            grant["additional_data"]["GNCanonicalRecipientOrgId"] = new_org_ids(recipient_org)[0]
-        except OrgNotFoundError:
+            grant["additional_data"]["GNCanonicalRecipientOrgName"] = recipient_org[0]
+            grant["additional_data"]["GNCanonicalRecipientOrgId"] = recipient_org[1]
+        except KeyError:
             grant["additional_data"]["GNCanonicalRecipientOrgName"] = grant["recipientOrganization"][0]["name"]
             grant["additional_data"]["GNCanonicalRecipientOrgId"] = grant["recipientOrganization"][0]["id"]
 
@@ -657,9 +743,9 @@ def update_doc_with_canonical_orgs(grant):
     # FundingOrganisation
     try:
         funding_org = get_org(grant["fundingOrganization"][0]["id"], "funder")
-        grant["additional_data"]["GNCanonicalFundingOrgName"] = new_ordered_names(funding_org)[0]
-        grant["additional_data"]["GNCanonicalFundingOrgId"] = new_org_ids(funding_org)[0]
-    except OrgNotFoundError:
+        grant["additional_data"]["GNCanonicalFundingOrgName"] = funding_org[0]
+        grant["additional_data"]["GNCanonicalFundingOrgId"] = funding_org[1]
+    except KeyError:
         grant["additional_data"]["GNCanonicalFundingOrgName"] = grant["fundingOrganization"][0]["name"]
         grant["additional_data"]["GNCanonicalFundingOrgId"] = grant["fundingOrganization"][0]["id"]
 
