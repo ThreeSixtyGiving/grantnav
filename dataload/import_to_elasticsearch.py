@@ -497,7 +497,8 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
     time.sleep(1)
 
     # Disable refreshing index while loading data
-    es.indices.put_settings(index=ES_INDEX, body={"refresh_interval": "-1"})
+    # (marginal performance gains and causing problems for tests)
+    #es.indices.put_settings(index=ES_INDEX, body={"refresh_interval": "-1"})
 
     # Load the organisations data
     def org_generator(filename, data_type):
@@ -575,10 +576,14 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
     pprint(result)
 
     # Enable refreshing index
-    es.indices.put_settings(index=ES_INDEX, body={"refresh_interval": "1s"})
+    # (marginal performance gains and causing problems for tests)
+    #es.indices.put_settings(index=ES_INDEX, body={"refresh_interval": "1s"})
 
     # Clear any query caches
     cache.clear()
+
+    # Needed for tests
+    time.sleep(15)
 
 
 # From 360Insights v2
