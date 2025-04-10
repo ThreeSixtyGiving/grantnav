@@ -234,8 +234,10 @@ GRANTNAV_LOG_DIR = os.path.expanduser("~/logs/")
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 
-if DEBUG:
-    CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://\w+\.threesixtygiving\.org$",
+]
 
 
 CACHES = {
