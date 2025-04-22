@@ -78,7 +78,7 @@ def award_date_graph(context):
         y.insert(0, early_total)
 
         x_labels = deepcopy(x)
-        x_labels[0] = f'{context["results"]["aggregations"]["earliest_grant"]["hits"]["hits"][0]["_source"]["awardDate"][:4]} - {datetime.datetime.utcfromtimestamp(YEAR_CUT_OFF/1000).strftime("%Y")}'
+        x_labels[0] = f'{context["results"]["aggregations"]["earliest_grant"]["hits"]["hits"][0]["_source"]["awardDate"][:4]} - {datetime.datetime.utcfromtimestamp(YEAR_CUT_OFF / 1000).strftime("%Y")}'
 
         layout = go.Layout(
             margin=go.layout.Margin(l=50, r=0, b=20, t=0),
@@ -173,7 +173,7 @@ def award_date_widget(context):
         y.insert(0, early_total)
 
         x_labels = deepcopy(x)
-        x_labels[0] = f'{context["results"]["aggregations"]["earliest_grant"]["hits"]["hits"][0]["_source"]["awardDate"][:4]} - {datetime.datetime.utcfromtimestamp(YEAR_CUT_OFF/1000).strftime("%Y")}'
+        x_labels[0] = f'{context["results"]["aggregations"]["earliest_grant"]["hits"]["hits"][0]["_source"]["awardDate"][:4]} - {datetime.datetime.utcfromtimestamp(YEAR_CUT_OFF / 1000).strftime("%Y")}'
 
         layout = go.Layout(
             margin=go.layout.Margin(l=50, r=0, b=20, t=0),
