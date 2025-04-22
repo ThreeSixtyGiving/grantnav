@@ -13,7 +13,9 @@ backports-datetime-fromisoformat==2.0.3
 btrees==6.1
     # via zodb
 certifi==2025.1.31
-    # via requests
+    # via
+    #   elasticsearch
+    #   requests
 cffi==1.17.1
     # via persistent
 charset-normalizer==3.4.1
@@ -33,11 +35,11 @@ django-cors-headers==4.7.0
     # via -r requirements.in
 django-environ==0.12.0
     # via -r requirements.in
-elasticsearch==7.0.5
+elasticsearch==7.17.12
     # via -r requirements.in
 et-xmlfile==2.0.0
     # via openpyxl
-flattentool==0.17.1
+flattentool==0.27.0
     # via -r requirements.in
 idna==3.10
     # via requests
@@ -93,7 +95,7 @@ titlecase==2.4.1
     # via -r requirements.in
 transaction==5.0
     # via zodb
-urllib3==2.4.0
+urllib3==1.26.20
     # via
     #   elasticsearch
     #   requests

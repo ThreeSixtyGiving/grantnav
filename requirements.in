@@ -3,8 +3,8 @@ django-bootstrap3
 requests
 django-environ
 raven
-elasticsearch==7.0.5
-flattentool==0.17.1
+elasticsearch==7.17.12
+flattentool==0.27.0
 python-dateutil
 strict-rfc3339
 titlecase
