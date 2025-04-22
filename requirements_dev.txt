@@ -22,6 +22,7 @@ build==1.2.2.post1
     # via pip-tools
 certifi==2025.1.31
     # via
+    #   elasticsearch
     #   requests
     #   selenium
 cffi==1.17.1
@@ -55,13 +56,13 @@ django-environ==0.12.0
     # via -r /home/rikki/Projects/grantnav/requirements.in
 docopt==0.6.2
     # via coveralls
-elasticsearch==7.0.5
+elasticsearch==7.17.12
     # via -r /home/rikki/Projects/grantnav/requirements.in
 et-xmlfile==2.0.0
     # via openpyxl
 flake8==7.2.0
     # via -r requirements_dev.in
-flattentool==0.17.1
+flattentool==0.27.0
     # via -r /home/rikki/Projects/grantnav/requirements.in
 h11==0.14.0
     # via wsproto
@@ -167,7 +168,7 @@ trio-websocket==0.12.2
     # via selenium
 typing-extensions==4.13.2
     # via selenium
-urllib3[socks]==2.4.0
+urllib3[socks]==1.26.20
     # via
     #   elasticsearch
     #   requests
