@@ -60,6 +60,8 @@ idna==3.10
     #   trio
 ijson==2.5.1
     # via -r /home/rikki/Projects/grantnav/requirements.in
+jsonref==1.1.0
+    # via -r /home/rikki/Projects/grantnav/requirements.in
 libsass==0.23.0
     # via -r requirements_dev.in
 mccabe==0.7.0

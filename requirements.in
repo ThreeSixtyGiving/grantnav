@@ -13,3 +13,4 @@ retry
 plotly
 millify
 django-cors-headers
+jsonref
