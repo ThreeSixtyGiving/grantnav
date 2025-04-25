@@ -4,7 +4,6 @@ requests
 django-environ
 raven
 elasticsearch==7.17.12
-flattentool==0.27.0
 python-dateutil
 strict-rfc3339
 titlecase
