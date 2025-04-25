@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import warnings
+
 from django.utils.crypto import get_random_string
 import environ
 
@@ -36,6 +37,8 @@ env = environ.Env(  # set default values and casting
     ELASTICSEARCH_HOST=(str, 'localhost'),
     INSIGHTS_BASE_URL=(str, "https://grantvis.threesixtygiving.org"),
     DISABLE_COOKIE_POPUP=(bool, False),
+    STATIC_URL=(str, '/grantnav_static/'),
+    STATIC_ROOT=(str, os.path.join(BASE_DIR, 'static')),
 )
 
 PIWIK = {
@@ -172,8 +175,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/grantnav_static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = env('STATIC_URL')
+STATIC_ROOT = env('STATIC_ROOT')
 
 # Logging
 
