@@ -28,7 +28,7 @@ class BrowserTestCase(StaticLiveServerTestCase):
             recipients=os.path.join(prefix, "recipients.jsonl"),
         )
         # elastic search needs some time to commit its data
-        time.sleep(2)
+        time.sleep(5)
 
     def setUp(self, *args, **kwargs):
         BROWSER = os.environ.get("BROWSER", "ChromeHeadless")
