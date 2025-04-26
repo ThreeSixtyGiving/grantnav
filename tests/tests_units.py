@@ -33,7 +33,7 @@ class UnitTest(TestCase):
             funders=os.path.join(prefix, "funders.jsonl"),
             recipients=os.path.join(prefix, "recipients.jsonl"),
         )
-        time.sleep(30)  # Elasticsearch needs some time to commit its data
+        time.sleep(5)  # Elasticsearch needs some time to commit its data
 
     def setUp(self):
         """

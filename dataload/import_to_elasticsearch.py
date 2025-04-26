@@ -582,9 +582,6 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
     # Clear any query caches
     cache.clear()
 
-    # Needed for tests
-    time.sleep(15)
-
 
 # From 360Insights v2
 # bins for organisation age (in days)
