@@ -90,7 +90,7 @@ class LinkCheckTests(BrowserTestCase):
 
         pages_to_find_links = [
             reverse_lazy("home"),
-            reverse_lazy("search"),
+            reverse_lazy("search") + "?sort=amountAwarded+desc",
             reverse_lazy("funders"),
             reverse_lazy("recipients"),
             reverse_lazy("about"),
