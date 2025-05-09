@@ -21,9 +21,10 @@ class LinkCheckTests(BrowserTestCase):
 
         links_checked = {}
 
-        def check_page_for_broken_links(path):
+        def check_page_for_broken_links(page):
             # We use selenium for this kind of test because it's a convenient way to manipulate the dom
             self.get(page)
+
             links = []
             # Skip some sites that are are behind cloudflare or other services which blocks the script
             skip = [
@@ -41,7 +42,8 @@ class LinkCheckTests(BrowserTestCase):
             for a in self.browser.find_elements(By.TAG_NAME, "a"):
                 # Datatables quirk with empty <a> tags, select2 quirk with same issue
                 if (
-                    a.get_attribute("aria-controls") or a.get_attribute("class") == "remove-select2-option"
+                    a.get_attribute("aria-controls")
+                    or a.get_attribute("class") == "remove-select2-option"
                 ):
                     continue
 
@@ -49,7 +51,7 @@ class LinkCheckTests(BrowserTestCase):
 
                 assert (
                     link is not None
-                ), f"Error An <a> tag without a href attribute on {path} {a.get_attribute('outerHTML')}"
+                ), f"Error An <a> tag without a href attribute on {page} {a.get_attribute('outerHTML')}"
 
                 if link not in skip:
                     links.append(link)
@@ -86,7 +88,7 @@ class LinkCheckTests(BrowserTestCase):
                 ]
             )
             print(errors)
-            assert not broken, f"Links broken on page {path}: {errors}"
+            assert not broken, f"Links broken on page {page}: {errors}"
 
         pages_to_find_links = [
             reverse_lazy("home"),
@@ -100,5 +102,12 @@ class LinkCheckTests(BrowserTestCase):
             reverse_lazy("org", args=["GB-CHC-1126147"]),
         ]
 
+        # Test the pages that has the links on to be tested
+        for page in pages_to_find_links:
+            r = requests.head(f"{self.live_server_url}{page}")
+            status_code = r.status_code
+            self.assertFalse((status_code < 200 or status_code > 399), f"{self.live_server_url}{page} error {status_code}")
+
+        # Test the links on the pages
         for page in pages_to_find_links:
             check_page_for_broken_links(page)
