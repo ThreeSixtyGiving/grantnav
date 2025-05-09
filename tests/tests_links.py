@@ -42,8 +42,7 @@ class LinkCheckTests(BrowserTestCase):
             for a in self.browser.find_elements(By.TAG_NAME, "a"):
                 # Datatables quirk with empty <a> tags, select2 quirk with same issue
                 if (
-                    a.get_attribute("aria-controls")
-                    or a.get_attribute("class") == "remove-select2-option"
+                    a.get_attribute("aria-controls") or a.get_attribute("class") == "remove-select2-option"
                 ):
                     continue
 
