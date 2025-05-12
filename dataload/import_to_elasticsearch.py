@@ -492,7 +492,7 @@ def process_grant_file_process(process_queue,
         process_queue.put(grants_file_path)
 
 
-def import_to_elasticsearch(files, clean, recipients=None, funders=None):
+def import_to_elasticsearch(files, clean, recipients=None, funders=None, limit=0):
 
     es = elasticsearch.Elasticsearch(hosts=[ELASTICSEARCH_HOST])
     # Clear any query caches
@@ -536,7 +536,8 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
         print(result)
 
     # Load the grants data
-    def grant_generator():
+    def grant_generator(limit):
+        grants_loaded = 0
         # Create manager
         with multiprocessing.Manager() as manager:
 
@@ -573,6 +574,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     if isinstance(batch, list):
                         # Yield batch for grants individually
                         for item in batch:
+                            grants_loaded += 1
                             yield item
                     # Stop signal (not list)
                     else:
@@ -583,8 +585,11 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None):
                     if done == len(processes):
                         break
 
+                    if limit and (grants_loaded >= limit):
+                        break
+
     pprint("Loading grants:")
-    result = elasticsearch.helpers.bulk(es, grant_generator(), raise_on_error=False, max_retries=10, initial_backoff=5)
+    result = elasticsearch.helpers.bulk(es, grant_generator(limit), raise_on_error=False, max_retries=10, initial_backoff=5)
     pprint(result)
 
     # Enable refreshing index
@@ -845,6 +850,7 @@ if __name__ == '__main__':
     parser.add_argument('--recipients', help='recipients file')
     parser.add_argument('--funders', help='funders file')
     parser.add_argument('files', help='files to import', nargs='*')
+    parser.add_argument('--limit', type=int, default=0, nargs="?", help="Limit the total number of grants to import to the nearest batch size")
     args = parser.parse_args()
 
-    import_to_elasticsearch(args.files, args.clean, args.recipients, args.funders)
+    import_to_elasticsearch(args.files, args.clean, args.recipients, args.funders, args.limit)
