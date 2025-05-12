@@ -56,6 +56,10 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # additional_data.GNBeneficiaryCountyName
     {"bool": {"should": []}},  # additional_data.GNRecipientCountyName
     {"bool": {"should": []}},  # additional_data.GNBestCountyName
+    # Country
+    {"bool": {"should": []}},  # additional_data.GNBestCountryName
+    {"bool": {"should": []}},  # additional_data.GNRecipientOrgCountryName
+    {"bool": {"should": []}},  # additional_data.GNBeneficiaryCountryName
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
@@ -79,6 +83,9 @@ TERM_FACETS = [
     TermFacet("additional_data.GNBeneficiaryCountyName", "beneficiaryCountyName", 19, "Beneficiary County", False, 5000),
     TermFacet("additional_data.GNRecipientOrgCountyName", "recipientOrgCountyName", 20, "Recipient County", False, 5000),
     TermFacet("additional_data.GNBestCountyName", "bestCountyName", 21, "Best County", False, 5000),
+    TermFacet("additional_data.GNBestCountryName", "bestCountryName", 22, "Best Country", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgCountryName", "recipientOrgCountryName", 23, "Recipieint Country", False, 5000),
+    TermFacet("additional_data.GNBeneficiaryCountryName", "beneficiaryCountryName", 24, "Beneficiary Country", False, 5000),
 ]
 
 SIZE = 20
@@ -750,6 +757,9 @@ def search(request, template_name="search.html"):
                 filter_.append({"bool": {"should": []}})  # additional_data.GNBeneficiaryCountyName
                 filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientCountyName
                 filter_.append({"bool": {"should": []}})  # additional_data.GNBestCountyName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNBestCountryName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientOrgCountryName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNBeneficiaryCountryName
             json_query['aggs'] = {}
             for term_facet in TERM_FACETS:
                 json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
