@@ -310,6 +310,15 @@ def maybe_create_index(index_name=ES_INDEX):
                     "GNRecipientOrgCountyName": {
                         "type": "keyword",
                     },
+                    "GNBestCountryName": {
+                        "type": "keyword",
+                    },
+                    "GNBeneficiaryCountryName": {
+                        "type": "keyword",
+                    },
+                    "GNRecipientOrgCountryName": {
+                        "type": "keyword",
+                    }
                 }
             },
             # Additional funding/recipient organisation mappings
@@ -447,6 +456,9 @@ def process_grant(grant, grants_file_path):
     # grant.additional_data.GNBestCountyName (utlanm)
     # grant.additional_data.GNBeneficiaryCountyName (utlanm)
     # grant.additional_data.GNRecipientOrgCountyName (utlanm)
+    # grant.additional_data.GNBestCountryName (ctrynm)
+    # grant.additional_data.GNRecipientCountryName (ctrynm)
+    # grant.additional_data.GNBeneficiaryCountryName (ctrynm)
     update_doc_with_other_locations(grant)
     # update_doc_with_undetermined needs to go last
     update_doc_with_undetermined(grant)
@@ -637,6 +649,12 @@ def update_doc_with_other_locations(grant):
                 except KeyError:
                     pass
 
+            if not grant["additional_data"].get("GNBeneficiaryCountryName"):
+                try:
+                    grant["additional_data"]["GNBeneficiaryCountryName"] = location["ctrynm"]
+                except KeyError:
+                    pass
+
             if not grant["additional_data"].get("GNBeneficiaryRegionName"):
                 try:
                     grant["additional_data"]["GNBeneficiaryRegionName"] = location["rgnnm"]
@@ -651,6 +669,12 @@ def update_doc_with_other_locations(grant):
 
         # recipientOrganizationLocation
         if location["source"] == "recipientOrganizationLocation" or location["source"] == "recipientOrganizationPostcode":
+
+            if not grant["additional_data"].get("GNRecipientOrgCountryName"):
+                try:
+                    grant["additional_data"]["GNRecipientOrgCountryName"] = location["ctrynm"]
+                except KeyError:
+                    pass
 
             if not grant["additional_data"].get("GNRecipientOrgCountyName"):
                 try:
@@ -687,6 +711,16 @@ def update_doc_with_other_locations(grant):
                 except KeyError:
                     pass
 
+        # Best Country name - Prefer beneficiary then recipient org
+        if not grant["additional_data"].get("GNBestCountryName"):
+            try:
+                grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNBeneficiaryCountryName"]
+            except KeyError:
+                try:
+                    grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNRecipientOrgCountryName"]
+                except KeyError:
+                    pass
+
     # End looping over locations
 
 
@@ -703,6 +737,9 @@ def update_doc_with_undetermined(grant):
                 "GNBestCountyName",
                 "GNRecipientOrgCountyName",
                 "GNBeneficiaryCountyName",
+                "GNBeneficiaryCountryName",
+                "GNBestCountryName",
+                "GNRecipientOrgCountryName",
                 "recipientDistrictGeoCode",
                 "recipientDistrictName",
                 "recipientRegionName",
