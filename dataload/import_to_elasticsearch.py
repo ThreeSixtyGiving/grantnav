@@ -627,6 +627,19 @@ def to_band(value, bins, labels):
 def update_doc_with_other_locations(grant):
     """ This flattens out some embedded data for easier indexing """
 
+    try:
+        grant["additional_data"]["GNRecipientOrgCountryName"] = grant["recipientOrganization"][0]["addressCountry"]
+    except KeyError:
+        pass
+
+    try:
+        # additional data codelist lookup of contryCode neede
+        grant["additional_data"]["GNBeneficiaryCountryName"] = grant["beneficiaryLocation"][0]["countryCode"]
+    except KeyError:
+        pass
+
+
+
     # Prior versions of additional_data may not have this field
     # or if locationLookup failed entirely for this grant
     if not grant["additional_data"].get("locationLookup"):
