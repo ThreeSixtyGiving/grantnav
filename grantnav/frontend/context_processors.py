@@ -1,7 +1,7 @@
 import os.path
+import datetime
 
 from django.conf import settings
-from os.path import getmtime
 
 
 def piwik(request):
@@ -20,7 +20,7 @@ def navigation(request):
 
 # This is calculated here and not in the main_css_cache_key() function so that it is only checked once per process.
 # Checking once per request is an unnecessary performance hit.
-MAIN_CSS_CACHE_KEY = getmtime(os.path.join(settings.BASE_DIR, 'grantnav', 'frontend', 'static', 'css', 'main.css'))
+MAIN_CSS_CACHE_KEY = os.path.getmtime(os.path.join(settings.BASE_DIR, 'grantnav', 'frontend', 'static', 'css', 'main.css'))
 
 
 def main_css_cache_key(request):
@@ -37,3 +37,7 @@ def insights_url(request):
 
 def disable_cookie_popup(request):
     return {"disable_cookie_popup": settings.DISABLE_COOKIE_POPUP}
+
+
+def current_year(request):
+    return {"current_year": datetime.datetime.now().year}

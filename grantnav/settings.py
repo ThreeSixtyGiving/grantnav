@@ -120,6 +120,7 @@ TEMPLATES = [
                 'grantnav.frontend.context_processors.debug_mode',
                 'grantnav.frontend.context_processors.insights_url',
                 'grantnav.frontend.context_processors.disable_cookie_popup',
+                'grantnav.frontend.context_processors.current_year',
             ],
         },
     },
