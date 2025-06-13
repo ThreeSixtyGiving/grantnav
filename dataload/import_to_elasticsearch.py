@@ -480,7 +480,7 @@ def process_grant_file_process(process_queue,
         process_queue.put(grants_file_path)
 
 
-def import_to_elasticsearch(files, clean, recipients=None, funders=None, limit=0):
+def import_to_elasticsearch(files, clean, recipients=None, funders=None, limit=0, threads=multiprocessing.cpu_count()):
 
     es = elasticsearch.Elasticsearch(hosts=[ELASTICSEARCH_HOST])
     # Clear any query caches
@@ -524,7 +524,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None, limit=0
         print(result)
 
     # Load the grants data
-    def grant_generator(limit):
+    def grant_generator(limit, threads):
         grants_loaded = 0
         # Create manager
         with multiprocessing.Manager() as manager:
@@ -533,7 +533,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None, limit=0
             process_queue = manager.Queue()
 
             # Create process pool
-            with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
+            with multiprocessing.Pool(processes=threads) as pool:
 
                 # Create worker processes to process each file
                 processes = {}
@@ -577,7 +577,7 @@ def import_to_elasticsearch(files, clean, recipients=None, funders=None, limit=0
                         break
 
     pprint("Loading grants:")
-    result = elasticsearch.helpers.bulk(es, grant_generator(limit), raise_on_error=False, max_retries=10, initial_backoff=5)
+    result = elasticsearch.helpers.bulk(es, grant_generator(limit, threads), raise_on_error=False, max_retries=10, initial_backoff=5)
     pprint(result)
 
     # Enable refreshing index
@@ -814,6 +814,7 @@ if __name__ == '__main__':
     parser.add_argument('--funders', help='funders file')
     parser.add_argument('files', help='files to import', nargs='*')
     parser.add_argument('--limit', type=int, default=0, nargs="?", help="Limit the total number of grants to import to the nearest batch size")
+    parser.add_argument('--threads', type=int, default=None, nargs="?", help="Override default of threadss = cpu count")
     args = parser.parse_args()
 
-    import_to_elasticsearch(args.files, args.clean, args.recipients, args.funders, args.limit)
+    import_to_elasticsearch(args.files, args.clean, args.recipients, args.funders, args.limit, args.threads)
