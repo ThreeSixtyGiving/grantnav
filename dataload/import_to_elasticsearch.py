@@ -628,17 +628,25 @@ def update_doc_with_other_locations(grant):
     """ This flattens out some embedded data for easier indexing """
 
     try:
-        grant["additional_data"]["GNRecipientOrgCountryName"] = grant["recipientOrganization"][0]["addressCountry"]
+        grant["additional_data"]["GNRecipientOrgCountryName"] = grant["additional_data"]["codeListLookup"]["recipientOrg_location_countryCode"]
     except KeyError:
         pass
 
     try:
         # additional data codelist lookup of contryCode neede
-        grant["additional_data"]["GNBeneficiaryCountryName"] = grant["beneficiaryLocation"][0]["countryCode"]
+        grant["additional_data"]["GNBeneficiaryCountryName"] = grant["additional_data"]["codeListLookup"]["beneficiaryLocation_countryCode"]
     except KeyError:
         pass
 
-
+    # Best Country name - Prefer beneficiary then recipient org
+    if not grant["additional_data"].get("GNBestCountryName"):
+        try:
+            grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNBeneficiaryCountryName"]
+        except KeyError:
+            try:
+                grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNRecipientOrgCountryName"]
+            except KeyError:
+                pass
 
     # Prior versions of additional_data may not have this field
     # or if locationLookup failed entirely for this grant
@@ -662,11 +670,6 @@ def update_doc_with_other_locations(grant):
                 except KeyError:
                     pass
 
-            if not grant["additional_data"].get("GNBeneficiaryCountryName"):
-                try:
-                    grant["additional_data"]["GNBeneficiaryCountryName"] = location["ctrynm"]
-                except KeyError:
-                    pass
 
             if not grant["additional_data"].get("GNBeneficiaryRegionName"):
                 try:
@@ -682,12 +685,6 @@ def update_doc_with_other_locations(grant):
 
         # recipientOrganizationLocation
         if location["source"] == "recipientOrganizationLocation" or location["source"] == "recipientOrganizationPostcode":
-
-            if not grant["additional_data"].get("GNRecipientOrgCountryName"):
-                try:
-                    grant["additional_data"]["GNRecipientOrgCountryName"] = location["ctrynm"]
-                except KeyError:
-                    pass
 
             if not grant["additional_data"].get("GNRecipientOrgCountyName"):
                 try:
@@ -723,17 +720,6 @@ def update_doc_with_other_locations(grant):
                     grant["additional_data"]["GNBestCountyName"] = grant["additional_data"]["GNRecipientOrgCountyName"]
                 except KeyError:
                     pass
-
-        # Best Country name - Prefer beneficiary then recipient org
-        if not grant["additional_data"].get("GNBestCountryName"):
-            try:
-                grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNBeneficiaryCountryName"]
-            except KeyError:
-                try:
-                    grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNRecipientOrgCountryName"]
-                except KeyError:
-                    pass
-
     # End looping over locations
 
 
