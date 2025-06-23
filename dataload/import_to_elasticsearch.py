@@ -456,9 +456,9 @@ def process_grant(grant, grants_file_path):
     # grant.additional_data.GNBestCountyName (utlanm)
     # grant.additional_data.GNBeneficiaryCountyName (utlanm)
     # grant.additional_data.GNRecipientOrgCountyName (utlanm)
-    # grant.additional_data.GNBestCountryName (ctrynm)
-    # grant.additional_data.GNRecipientCountryName (ctrynm)
-    # grant.additional_data.GNBeneficiaryCountryName (ctrynm)
+    # grant.additional_data.GNBestCountryName (iso country name)
+    # grant.additional_data.GNRecipientCountryName (iso country name)
+    # grant.additional_data.GNBeneficiaryCountryName (iso country name)
     update_doc_with_other_locations(grant)
     # update_doc_with_undetermined needs to go last
     update_doc_with_undetermined(grant)
