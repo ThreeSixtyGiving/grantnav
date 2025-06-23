@@ -31,6 +31,22 @@
 
     {% include "components/favicons.html" %}
 
+
+    {# temp workaround for hardcoded background-url values in 360-ds which don't pick up dynamic static location #}
+    <style>
+    .filter-list__filter-item::after {
+      background: url("{% static 'images/checkmark-icon.svg' %}") no-repeat !important;
+    }
+
+    .filter-list--with-checkboxes .filter-list__form--checkbox-item label::after {
+      background: url("{% static 'images/checkmark-icon.svg' %}") no-repeat !important;
+    }
+
+    select.front_search {
+      background: #d66f05 url("{% static 'images/arrow.png' %}") no-repeat scroll 98% center/15% auto !important;
+    }
+    </style>
+
     </head>
     <body>
         <!--[if lt IE 8]>
