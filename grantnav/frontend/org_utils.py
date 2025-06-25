@@ -2,15 +2,22 @@ from grantnav.frontend.search_helpers import get_results
 
 
 def new_stats_by_currency(org_result):
-    """ Takes a org dict and creates a sorted and ease of use in templates list"""
+    """ Takes a org dict and creates a sorted list of currencies for ease of use in templates"""
     stats_by_currency = []
 
-    for currency, stat in org_result["aggregate"]["currencies"].items():
-        stat["currency"] = currency
-        stats_by_currency.append(stat)
+    for recipient_type in ["recipient_org", "recipient_ind"]:
+        try:
+            for currency, stat in org_result["aggregate"]["currencies"].items():
+                stat["currency"] = currency
+                # Copy the currency name for convenience in the list
+                stat[recipient_type]["currency"] = currency
+                stat[recipient_type]["recipient_type"] = recipient_type
+                stats_by_currency.append(stat[recipient_type])
+        except KeyError:
+            continue
 
-    # sort the list with the largest total amount currency first
-    stats_by_currency.sort(key=lambda i: i["total"], reverse=True)
+        # sort the list with the largest total amount currency first
+        stats_by_currency.sort(key=lambda i: i["total"], reverse=True)
 
     return stats_by_currency
 
