@@ -83,12 +83,39 @@
     Please refer to the funder website for details of current grant programmes,
     application guidelines and eligibility criteria.</p>
 
+    {% if funder.aggregate.individual_recipients.grants > 0 %}
+    <div class="section">
+      <h4>Recipient Individuals</h4>
+      <p>{{org_names.0}} funds the following grants to individuals.</p>
+      <div class="media-card__box_container">
+        <div class="media-card__box">
+            <strong>Grants</strong> <br />
+            {{funder.aggregate.individual_recipients.grants | get_amount }} <br/>
+        </div>
+
+        <div class="media-card__box">
+            <strong>Total</strong> <br />
+            £{{funder.aggregate.individual_recipients.total | get_amount }} <br/>
+        </div>
+
+        <div class="media-card__box">
+            <strong>Largets</strong> <br />
+            £{{funder.aggregate.individual_recipients.max | get_amount }} <br/>
+        </div>
+
+        <div class="media-card__box">
+            <strong>Smallest</strong> <br />
+            £{{funder.aggregate.individual_recipients.min | get_amount }} <br/>
+        </div>
+
+      </div>
+    </div>
+    {% endif %}
 
     <p>This table shows the recipients who have received grants made by {{org_names.0}}.</p>
-
     <div class="section">
         <div class="grantnav-datatable__content--filters margin-top:05">
-        <h4>Recipients</h4>
+        <h4>Recipient Organisations</h4>
         <div class="export-wrapper">
             <div class="export-label">Export search data:</div>
 
