@@ -80,3 +80,27 @@ def get_org(org_id, org_type):
     except (IndexError, KeyError):
         # Failed to find org
         raise OrgNotFoundError
+
+
+def update_request_to_include_all_org_ids(request):
+    """ If someone provides an org-id append all other known org-ids to the query
+    This is done so that it doesn't matter which org-id of many for a certain org
+    is provided we can still return the results.
+    """
+    do_redirect = False
+    request_get_copy = request.GET.copy()
+
+    for entity_type in [("fundingOrganization", "funder"), ("recipientOrganization", "recipient")]:
+        # Match the supplied org-id to any other org-ids in use
+        if org_ids := request.GET.getlist(entity_type[0]):
+            for org_id in org_ids:
+                try:
+                    for additional_org_id in get_org(org_id, entity_type[1])["orgIDs"]:
+                        if additional_org_id not in org_ids:
+                            request_get_copy.appendlist(entity_type[0], additional_org_id)
+                            do_redirect = True
+                except OrgNotFoundError:
+                    pass
+
+    if do_redirect:
+        return request.path + '?' + request_get_copy.urlencode()

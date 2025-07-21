@@ -25,7 +25,8 @@ from grantnav.search import get_es
 from grantnav.index import get_index
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, get_data_from_path
 import grantnav.frontend.search_helpers as helpers
-from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency, get_org, OrgNotFoundError
+import grantnav.frontend.org_utils as org_utils
+
 from dataload.import_to_elasticsearch import AGE_BIN_LABELS
 
 
@@ -682,30 +683,6 @@ def reorder_recipient_org_age_when_awarded(context):
     context["results"]["aggregations"]["orgAgeWhenAwarded"]["buckets"] = ordered
 
 
-def redirect_request_to_include_all_org_ids(request):
-    """ If someone provides an org-id append all other known org-ids to the query
-    This is done so that it doesn't matter which org-id of many for a certain org
-    is provided we can still return the results.
-    """
-    do_redirect = False
-    request_get_copy = request.GET.copy()
-
-    for entity_type in [("fundingOrganization", "funder"), ("recipientOrganization", "recipient")]:
-        # Match the supplied org-id to any other org-ids in use
-        if org_ids := request.GET.getlist(entity_type[0]):
-            for org_id in org_ids:
-                try:
-                    for additional_org_id in get_org(org_id, entity_type[1])["orgIDs"]:
-                        if additional_org_id not in org_ids:
-                            request_get_copy.appendlist(entity_type[0], additional_org_id)
-                            do_redirect = True
-                except OrgNotFoundError:
-                    pass
-
-    if do_redirect:
-        return request.path + '?' + request_get_copy.urlencode()
-
-
 def search(request, template_name="search.html"):
     [result_format, results_size] = get_request_type_and_size(request)
 
@@ -1106,9 +1083,9 @@ def grant(request, grant_id):
 def augment_org(org):
     if not org:
         return
-    org["stats_by_currency"] = new_stats_by_currency(org)
-    org["org_ids"] = new_org_ids(org)
-    org["names"] = new_ordered_names(org)
+    org["stats_by_currency"] = org_utils.new_stats_by_currency(org)
+    org["org_ids"] = org_utils.new_org_ids(org)
+    org["names"] = org_utils.new_ordered_names(org)
     org["main_currency"] = org["stats_by_currency"][0]['currency']
     return org
 
@@ -1209,7 +1186,7 @@ def org(request, org_id):
     if funder_results['hits']['hits']:
         org_types.append('Funder')
         funder = funder_results['hits']['hits'][0]['_source']
-        org_ids = new_org_ids(funder)
+        org_ids = org_utils.new_org_ids(funder)
         parameters = [("fundingOrganization", org_id) for org_id in org_ids]
         funder["grant_search_parameters"] = urlencode(parameters)
         funder_info = get_funder_info(org_ids)
@@ -1218,7 +1195,7 @@ def org(request, org_id):
     if recipient_results['hits']['hits']:
         org_types.append('Recipient')
         recipient = recipient_results['hits']['hits'][0]['_source']
-        org_ids = new_org_ids(recipient)
+        org_ids = org_utils.new_org_ids(recipient)
         parameters = [("recipientOrganization", org_id) for org_id in org_ids]
         recipient["grant_search_parameters"] = urlencode(parameters)
         recipient_funders = get_recipient_funders(org_ids)
@@ -1237,8 +1214,8 @@ def org(request, org_id):
 
     for org in (funder, recipient):
         if org:
-            org_ids = new_org_ids(org)
-            org_names = new_ordered_names(org)
+            org_ids = org_utils.new_org_ids(org)
+            org_names = org_utils.new_ordered_names(org)
             break
 
     # see if we've been supplied a publisher prefix instead of an org-id

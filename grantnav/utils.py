@@ -76,7 +76,7 @@ def internal_redirect(to):
 
     parsed_url = urlparse(to)
     query_params = parse_qs(parsed_url.query)
-    query_params["_int_redirect"] = [True]
+    query_params["_redirect_src"] = ["int"]
 
     # Reconstruct the query string
     new_query_string = urlencode(query_params, doseq=True)
