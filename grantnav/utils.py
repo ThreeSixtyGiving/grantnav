@@ -1,4 +1,6 @@
 import subprocess
+from django.shortcuts import redirect
+from urllib.parse import urlencode, urlparse, parse_qs
 
 
 CURRENCY_SYMBOLS = {
@@ -63,3 +65,25 @@ def get_git_revision():
 
     except subprocess.CalledProcessError:
         return 'Unknown'
+
+
+def internal_redirect(to):
+    """ Adds a flag to allow the webserver to know that an "internal"
+        redirect has taken place.
+
+        Returns: HttpResponseRedirect
+    """
+
+    parsed_url = urlparse(to)
+    query_params = parse_qs(parsed_url.query)
+    query_params["_int_redirect"] = [True]
+
+    # Reconstruct the query string
+    new_query_string = urlencode(query_params, doseq=True)
+
+    # Reconstruct the URL
+    new_url = parsed_url._replace(query=new_query_string).geturl()
+
+    print("doing int redirect")
+
+    return redirect(new_url)

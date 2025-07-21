@@ -12,7 +12,7 @@ from dateutil.relativedelta import relativedelta
 from django.http import Http404, JsonResponse
 from django.http import HttpResponse, StreamingHttpResponse
 from django.views.decorators.clickjacking import xframe_options_exempt
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.utils.http import urlencode
 from django.urls import reverse
 from django.core.cache import cache
@@ -768,7 +768,7 @@ def search(request, template_name="search.html"):
     try:
         if "_all" in json_query["query"]["bool"]["must"]["query_string"]["default_field"]:
             json_query["query"]["bool"]["must"]["query_string"]["default_field"] = "*"
-            return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
+            return utils.internal_redirect(request.path + '?' + create_parameters_from_json_query(json_query))
     except KeyError:
         pass
     # End URL query backwards compatibility
@@ -785,7 +785,7 @@ def search(request, template_name="search.html"):
 
         if default_field:
             json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
-        return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
+        return utils.internal_redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
     sort_order = request.GET.get('sort', '').split()
     if sort_order and len(sort_order) == 2:
@@ -793,10 +793,10 @@ def search(request, template_name="search.html"):
         old_sort = json_query["sort"]
         if new_sort != old_sort:
             json_query["sort"] = new_sort
-            return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
+            return utils.internal_redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
-    if new_org_ids_included := redirect_request_to_include_all_org_ids(request):
-        return redirect(new_org_ids_included)
+    if new_org_ids_included := org_utils.update_request_to_include_all_org_ids(request):
+        return utils.internal_redirect(new_org_ids_included)
 
     results = None
     if json_query:
@@ -902,7 +902,7 @@ def search(request, template_name="search.html"):
                     pass
             json_query["query"]["bool"]["filter"][3]["bool"]["should"]["range"]["amountAwarded"] = new_filter
             json_query["query"]["bool"]["filter"][3]["bool"]["must"] = {"term": {"currency": current_currency}}
-            return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
+            return utils.internal_redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
         min_date = utils.yearmonth_to_date(request.GET.get('new_min_date', ''))
         max_date = utils.yearmonth_to_date(request.GET.get('new_max_date', ''), True)
@@ -919,7 +919,7 @@ def search(request, template_name="search.html"):
                 except ValueError:
                     pass
             json_query["query"]["bool"]["filter"][9]["bool"]["should"]["range"]["awardDate"] = new_filter
-            return redirect(request.path + '?' + create_parameters_from_json_query(json_query))
+            return utils.internal_redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
         context['selected_facets'] = collections.defaultdict(list)
         helpers.get_clear_all(request, context, json_query, BASIC_FILTER, create_parameters_from_json_query)
@@ -1604,15 +1604,15 @@ def get_funders_for_datasets(datasets):
 
 # Backwards compatibility
 def publisher(request, publisher_id):
-    return redirect(reverse("org", args=[publisher_id]))
+    return utils.internal_redirect(reverse("org", args=[publisher_id]))
 
 
 def recipient(request, recipient_id):
-    return redirect(reverse("org", args=[recipient_id]))
+    return utils.internal_redirect(reverse("org", args=[recipient_id]))
 
 
 def funder(request, funder_id):
-    return redirect(reverse("org", args=[funder_id]))
+    return utils.internal_redirect(reverse("org", args=[funder_id]))
 
 
 def datasets(request):
@@ -1625,4 +1625,4 @@ def datasets(request):
 
 def individuals(request):
     search_page = reverse("search")
-    return redirect(f"{search_page}?recipientTSGType=Individual")
+    return utils.internal_redirect(f"{search_page}?recipientTSGType=Individual")
