@@ -13,8 +13,8 @@
             <span style="word-break: break-all">{{funder.aggregate.grants | get_amount }}</span>
         </div>
         <div class="media-card__box">
-            <strong>Recipients</strong> <br />
-            {{funder.recipients | get_amount }}
+            <strong>Recipient Organisations</strong> <br />
+            {{funder.recipient_orgs | get_amount }}
         </div>
         <div class="media-card__box">
             <strong>Earliest Award</strong> <br />
@@ -27,7 +27,7 @@
         {% if funder.stats_by_currency|length == 1 %}
         {% for stat in funder.stats_by_currency %}
         <div class="media-card__box">
-            <strong> Total Grants {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
+            <strong> Total Amount{%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
             {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
         </div>
         <div class="media-card__box">
@@ -94,17 +94,17 @@
         </div>
 
         <div class="media-card__box">
-            <strong>Total</strong> <br />
+            <strong>Total Amount</strong> <br />
             £{{funder.aggregate.individual_recipients.total | get_amount }} <br/>
         </div>
 
         <div class="media-card__box">
-            <strong>Largets</strong> <br />
+            <strong>Greatest Amount</strong> <br />
             £{{funder.aggregate.individual_recipients.max | get_amount }} <br/>
         </div>
 
         <div class="media-card__box">
-            <strong>Smallest</strong> <br />
+            <strong>Smallest Amount</strong> <br />
             £{{funder.aggregate.individual_recipients.min | get_amount }} <br/>
         </div>
 
@@ -112,10 +112,12 @@
     </div>
     {% endif %}
 
-    <p>This table shows the recipients who have received grants made by {{org_names.0}}.</p>
+    {% if funder.aggregate.grants != funder.aggregate.individual_recipients.grants %}
     <div class="section">
+      <h4>Recipient Organisations</h4>
+        <p>This table shows the recipients who have received grants made by {{org_names.0}}.</p>
         <div class="grantnav-datatable__content--filters margin-top:05">
-        <h4>Recipient Organisations</h4>
+        <div><!-- grid item --></div>
         <div class="export-wrapper">
             <div class="export-label">Export search data:</div>
 
@@ -128,7 +130,7 @@
             </div>
         </div>
         </div>
-        <div class="table table--zebra">
+        <div class="table table--zebra margin-top:1">
         <table class="table table--zebra table--small dt-responsive" id="recipients_datatable" style="width: 100%">
             <thead>
             <tr>
@@ -142,6 +144,7 @@
         </table>
         </div>
     </div>
+    {% endif %}
 
     <div class="spacer-1"></div>
 </div>

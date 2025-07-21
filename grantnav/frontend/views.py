@@ -1140,7 +1140,7 @@ def get_funder_info(funder_org_ids):
     results = get_results(query, 0)
 
     output = {'funder_publisher': {},
-              'recipients': results['aggregations']['recipient_orgs']['value']}
+              'recipient_orgs': results['aggregations']['recipient_orgs']['value']}
     try:
         output['funder_publisher'] = provenance.by_identifier[provenance.identifier_from_filename(results['aggregations']['filenames']['buckets'][0]['key'])]['publisher']
     except (KeyError, IndexError):
