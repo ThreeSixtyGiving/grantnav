@@ -4,12 +4,13 @@ import json
 
 import elasticsearch.exceptions
 from django.utils.http import urlencode
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, new_stats_by_currency
 
 from grantnav.frontend.search_helpers import get_results, get_request_type_and_size, get_terms_facets, SIZE
 from grantnav.frontend.funders_search_view import get_dropdown_filters
 import grantnav.frontend.search_helpers as helpers
+from grantnav import utils
 
 BASIC_FILTER = [
     {"bool": {"should": []}},  # currency
@@ -122,7 +123,7 @@ def search(request):
 
         if default_field:
             json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
-        return redirect(request.path + "?" + create_parameters_from_json_query(json_query))
+        return utils.internal_redirect(request.path + "?" + create_parameters_from_json_query(json_query))
 
     sort_order = request.GET.get("sort", "").split()
     if sort_order and len(sort_order) == 2:
@@ -130,7 +131,7 @@ def search(request):
         old_sort = json_query["sort"]
         if new_sort != old_sort:
             json_query["sort"] = new_sort
-            return redirect(request.path + "?" + create_parameters_from_json_query(json_query))
+            return utils.internal_redirect(request.path + "?" + create_parameters_from_json_query(json_query))
 
     results = None
     if json_query:
