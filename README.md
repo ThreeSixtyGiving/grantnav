@@ -1,6 +1,6 @@
 GrantNav - Explore Grants in the 360 data standard
 ==================================================
-
+[![Coverage Status](https://coveralls.io/repos/github/ThreeSixtyGiving/grantnav/badge.svg)](https://coveralls.io/github/ThreeSixtyGiving/grantnav)
 
 Introduction
 ------------
@@ -11,7 +11,7 @@ You can find the tool running at [https://grantnav.threesixtygiving.org/](https:
 
 Requirements
 ------------
-This application is built using Django, Elasticsearch and Python 3.8
+This application is built using Django, Elasticsearch and Python 3.12
 
 Installation
 ------------
@@ -133,18 +133,12 @@ Run tests
 ------------
 
 ```
-ALLOWED_HOSTS=localhost py.test
+./manage.py test -v 2 tests
 ```
 
 Make sure elastic search is running.
 
-The tests include functional tests (actually interacting with the website in selenium). These can also be run against a deployed copy of the website:
-
-```
-CUSTOM_SERVER_URL=https://dev.grantnav.opendataservices.coop py.test
-```
-
-The tests delete an elastic search index and repopulate it.  The default index name is threesixtygiving
+The tests delete an elastic search index and repopulate it.  The default index name is threesixtygiving.
 
 We also use flake8 to test code quality, see https://github.com/OpenDataServices/developer-docs/blob/master/tests.md#flake8
 
