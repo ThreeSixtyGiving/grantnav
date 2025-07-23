@@ -84,6 +84,4 @@ def internal_redirect(to):
     # Reconstruct the URL
     new_url = parsed_url._replace(query=new_query_string).geturl()
 
-    print("doing int redirect")
-
     return redirect(new_url)
