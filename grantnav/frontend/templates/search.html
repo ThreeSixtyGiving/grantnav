@@ -8,6 +8,26 @@
 {% endblock %}
 
 {% block main_content %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    const links = document.querySelectorAll('.filter-wrapper a');
+
+    links.forEach(link => {
+      try {
+        if (link.href === '#' || link.href.trim().length === 0) {
+          return;
+        }
+        const url = new URL(link.href);
+        url.searchParams.set('a', '1');
+        link.href = url.toString();
+      } catch (e) {
+        console.error('Error processing link href:', link.href, e);
+      }
+    });
+  }, 500); // 500 milliseconds delay
+});
+</script>
   <main class="layout__content">
     {% include 'components/loading-overlay.html' %}
     <div class="grantnav-search__wrapper">
