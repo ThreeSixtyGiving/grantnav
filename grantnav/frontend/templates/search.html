@@ -206,6 +206,7 @@ $(document).ready(function () {
     } else if (this.value === 'table') {
       urlParams.set('view_mode', 'table');
     }
+    urlParams.set('a', '1');
     window.location.search = urlParams;
   });
 });
