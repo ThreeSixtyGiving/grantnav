@@ -21,6 +21,7 @@
   function sort_changed (value) {
     const search = new URLSearchParams(window.location.search);
     search.set('sort', value);
+    search.set('a', 1);
     window.location.href = `${window.location.pathname}?${search.toString()}`;
   }
 </script>
