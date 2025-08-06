@@ -68,6 +68,26 @@
     {% endif %}
     {% include "components/subscribe.html"%}
     {% include "components/footer.html" %}
+    <script>
+      const searchPath = '{% url "search" %}';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          const links = document.getElementsByTagName('a');
+          for (const link of links) {
+            if (link.href.startsWith(window.location.origin + searchPath)) {
+              try {
+                const url = new URL(link.href);
+                url.searchParams.set('a', '1');
+                link.href = url.toString();
+              } catch (e) {
+                console.error('Error processing link href:', link.href, e);
+              }
+            }
+          }
+        }, 500); // 500 milliseconds delay
+      });
+    </script>
 
     <script
       src="https://code.jquery.com/jquery-3.6.3.min.js"
