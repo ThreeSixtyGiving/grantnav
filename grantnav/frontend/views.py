@@ -1602,4 +1602,4 @@ def datasets(request):
 
 def individuals(request):
     search_page = reverse("search")
-    return utils.internal_redirect(f"{search_page}?recipientTSGType=Individual")
+    return utils.internal_redirect(f"{search_page}?recipientTSGType=Individual&a=1")
