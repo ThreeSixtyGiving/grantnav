@@ -1086,7 +1086,6 @@ def augment_org(org):
     org["stats_by_currency"] = org_utils.new_stats_by_currency(org)
     org["org_ids"] = org_utils.new_org_ids(org)
     org["names"] = org_utils.new_ordered_names(org)
-    org["main_currency"] = org["stats_by_currency"][0]['currency']
     return org
 
 
