@@ -8,10 +8,12 @@
     <p>{{org_names.0}} appears in the 360Giving data as a funder of grants.
     Here is an overview of the grants they have funded.</p>
     <div class="media-card__box_container">
+        {% if funder.aggregate.grants_org and funder.aggregate.grants_ind %}
         <div class="media-card__box">
-            <strong>Total Grants</strong> <br />
+            <strong>All Grants</strong> <br />
             <span style="word-break: break-all">{{funder.aggregate.grants | get_amount }}</span>
         </div>
+        {% endif %}
         {# Only funds grants to org #}
         {% if funder.aggregate.grants_org and not funder.aggregate.grants_ind %}
         <div class="media-card__box">
@@ -44,7 +46,7 @@
                 {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
             </div>
             <div class="media-card__box">
-                <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
+                <strong> Largest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
                 {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
             </div>
             <div class="media-card__box">
@@ -64,11 +66,15 @@
       {% if stat.recipient_type == 'recipient_ind' %}
         <div class="media-card__box_container">
              <div class="media-card__box">
+                <strong> Grants</strong> <br />
+                {{funder.aggregate.grants_ind | get_amount}}
+             </div>
+             <div class="media-card__box">
                 <strong> Total Amount{%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
                 {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
             </div>
             <div class="media-card__box">
-                <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
+                <strong> Largest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
                 {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
             </div>
             <div class="media-card__box">
@@ -78,16 +84,20 @@
         </div>
       {% endif %}
     {% endfor %}
-    <h5>Grants to Organisations</h5>
+    <h5>Recipient Organisations</h5>
     {% for stat in funder.stats_by_currency %}
       {% if stat.recipient_type == 'recipient_org' %}
         <div class="media-card__box_container">
+             <div class="media-card__box">
+                <strong> Grants</strong> <br />
+                {{funder.aggregate.grants_org | get_amount}}
+            </div>
              <div class="media-card__box">
                 <strong> Total Amount{%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
                 {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
             </div>
             <div class="media-card__box">
-                <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
+                <strong> Largest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
                 {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
             </div>
             <div class="media-card__box">
@@ -110,7 +120,7 @@
             <th class="all">Currency</th>
             <th class="min-tablet-p">Grants</th>
             <th class="amount min-tablet-p">Total Amount</th>
-            <th class="amount min-tablet-l">Greatest Amount</th>
+            <th class="amount min-tablet-l">Largest Amount</th>
             <th class="amount min-tablet-l">Smallest Amount</th>
             {% if funder.grants_org and funder.grants_ind %}
             <th class="amount min-tablet-l">Recipient Type</th>
@@ -163,7 +173,7 @@
         </div>
 
         <div class="media-card__box">
-            <strong>Greatest Amount</strong> <br />
+            <strong>Largest Amount</strong> <br />
             £{{funder.aggregate.individual_recipients.max | get_amount }} <br/>
         </div>
 
