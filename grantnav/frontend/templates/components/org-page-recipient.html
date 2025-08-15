@@ -28,7 +28,7 @@
             {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
         </div>
         <div class="media-card__box">
-            <strong> Greatest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
+            <strong> Largest Amount {%if stat.currency != 'GBP'%} ({{stat.currency}}) {% endif %}</strong> <br />
             {{stat.currency | currency_symbol}}{{stat.max | get_amount}}
         </div>
         <div class="media-card__box">
@@ -49,7 +49,7 @@
             <th class="all">Currency</th>
             <th class="min-tablet-p">Grants</th>
             <th class="amount min-tablet-p">Total Amount</th>
-            <th class="amount min-tablet-l">Greatest Amount</th>
+            <th class="amount min-tablet-l">Largest Amount</th>
             <th class="amount min-tablet-l">Smallest Amount</th>
           </tr>
         </thead>
