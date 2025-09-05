@@ -27,6 +27,9 @@ from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, OrgNotFo
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 ELASTICSEARCH_HOST = os.environ.get("ELASTICSEARCH_HOST", "localhost")
 
+UNITED_KINGDOM_COUNTRIES = ["Wales", "Scotland", "Northern Ireland"]
+UNITED_KINGDOM_ISO_NM = "Unitied Kingdom of Great Britian and Northern Ireland"
+
 
 def initialise_org_cache():
     # Initialise organisation cache
@@ -627,6 +630,7 @@ def to_band(value, bins, labels):
 def update_doc_with_other_locations(grant):
     """ This flattens out some embedded data for easier indexing """
 
+    # Check the country code list look up for the country name
     try:
         grant["additional_data"]["GNRecipientOrgCountryName"] = grant["additional_data"]["codeListLookup"]["recipientOrg_location_countryCode"]
     except KeyError:
@@ -637,16 +641,6 @@ def update_doc_with_other_locations(grant):
         grant["additional_data"]["GNBeneficiaryCountryName"] = grant["additional_data"]["codeListLookup"]["beneficiaryLocation_countryCode"]
     except KeyError:
         pass
-
-    # Best Country name - Prefer beneficiary then recipient org
-    if not grant["additional_data"].get("GNBestCountryName"):
-        try:
-            grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNBeneficiaryCountryName"]
-        except KeyError:
-            try:
-                grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNRecipientOrgCountryName"]
-            except KeyError:
-                pass
 
     # Prior versions of additional_data may not have this field
     # or if locationLookup failed entirely for this grant
@@ -670,7 +664,6 @@ def update_doc_with_other_locations(grant):
                 except KeyError:
                     pass
 
-
             if not grant["additional_data"].get("GNBeneficiaryRegionName"):
                 try:
                     grant["additional_data"]["GNBeneficiaryRegionName"] = location["rgnnm"]
@@ -682,6 +675,12 @@ def update_doc_with_other_locations(grant):
                         grant["additional_data"]["GNBeneficiaryRegionGeoCode"] = location["ctrycd"]
                     except KeyError:
                         pass
+
+            # If we couldn't get country code from codelist look up check if it's UK&NI
+            if not grant["additional_data"].get("GNBeneficiaryCountryName"):
+                if location["ctrynm"] in UNITED_KINGDOM_COUNTRIES:
+                    grant["additional_data"]["GNBeneficiaryCountryName"] = UNITED_KINGDOM_ISO_NM
+
 
         # recipientOrganizationLocation
         if location["source"] == "recipientOrganizationLocation" or location["source"] == "recipientOrganizationPostcode":
@@ -711,6 +710,11 @@ def update_doc_with_other_locations(grant):
                     except KeyError:
                         pass
 
+            # If we couldn't get country code from codelist above look up check if it's UK&NI
+            if not grant["additional_data"].get("GNRecipientOrgCountryName"):
+                if location["ctrynm"] in UNITED_KINGDOM_COUNTRIES:
+                    grant["additional_data"]["GNRecipientOrgCountryName"] = UNITED_KINGDOM_ISO_NM
+
         # Best County name - Prefer beneficiary then recipient org
         if not grant["additional_data"].get("GNBestCountyName"):
             try:
@@ -720,6 +724,17 @@ def update_doc_with_other_locations(grant):
                     grant["additional_data"]["GNBestCountyName"] = grant["additional_data"]["GNRecipientOrgCountyName"]
                 except KeyError:
                     pass
+
+        # Best Country name - Prefer beneficiary then recipient org
+        if not grant["additional_data"].get("GNBestCountryName"):
+            try:
+                grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNBeneficiaryCountryName"]
+            except KeyError:
+                try:
+                    grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNRecipientOrgCountryName"]
+                except KeyError:
+                    pass
+
     # End looping over locations
 
 
