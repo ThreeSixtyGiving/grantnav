@@ -28,7 +28,7 @@ ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 ELASTICSEARCH_HOST = os.environ.get("ELASTICSEARCH_HOST", "localhost")
 
 UNITED_KINGDOM_COUNTRIES = ["Wales", "Scotland", "Northern Ireland"]
-UNITED_KINGDOM_ISO_NM = "Unitied Kingdom of Great Britian and Northern Ireland"
+UNITED_KINGDOM_ISO_NM = "United Kingdom of Great Britain and Northern Ireland"
 
 
 def initialise_org_cache():
