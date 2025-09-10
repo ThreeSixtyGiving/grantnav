@@ -16,7 +16,7 @@ charset-normalizer==3.4.1
     # via requests
 decorator==5.2.1
     # via retry
-django==4.2.20
+django==4.2.24
     # via
     #   -r requirements.in
     #   django-bootstrap3
