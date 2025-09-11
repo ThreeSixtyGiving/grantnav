@@ -720,7 +720,6 @@ def update_doc_with_other_locations(grant):
                 except KeyError:
                     pass
 
-        print(grant["additional_data"].get("GNBestCountryName"))
         # Best Country name - Prefer beneficiary then recipient org
         if not grant["additional_data"].get("GNBestCountryName"):
             if country := grant["additional_data"].get("GNBeneficiaryCountryName"):
