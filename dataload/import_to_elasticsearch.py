@@ -710,26 +710,23 @@ def update_doc_with_other_locations(grant):
                 if location["ctrynm"] in UNITED_KINGDOM_COUNTRIES:
                     grant["additional_data"]["GNRecipientOrgCountryName"] = UNITED_KINGDOM_ISO_NM
 
-    # Best County name - Prefer beneficiary then recipient org
-    if not grant["additional_data"].get("GNBestCountyName"):
-        try:
-            grant["additional_data"]["GNBestCountyName"] = grant["additional_data"]["GNBeneficiaryCountyName"]
-        except KeyError:
+        # Best County name - Prefer beneficiary then recipient org
+        if not grant["additional_data"].get("GNBestCountyName"):
             try:
-                grant["additional_data"]["GNBestCountyName"] = grant["additional_data"]["GNRecipientOrgCountyName"]
+                grant["additional_data"]["GNBestCountyName"] = grant["additional_data"]["GNBeneficiaryCountyName"]
             except KeyError:
-                pass
+                try:
+                    grant["additional_data"]["GNBestCountyName"] = grant["additional_data"]["GNRecipientOrgCountyName"]
+                except KeyError:
+                    pass
 
-    print(grant["additional_data"].get("GNBestCountryName"))
-    # Best Country name - Prefer beneficiary then recipient org
-    if not grant["additional_data"].get("GNBestCountryName"):
-        try:
-            grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNBeneficiaryCountryName"]
-        except KeyError:
-            try:
-                grant["additional_data"]["GNBestCountryName"] = grant["additional_data"]["GNRecipientOrgCountryName"]
-            except KeyError:
-                pass
+        print(grant["additional_data"].get("GNBestCountryName"))
+        # Best Country name - Prefer beneficiary then recipient org
+        if not grant["additional_data"].get("GNBestCountryName"):
+            if country := grant["additional_data"].get("GNBeneficiaryCountryName"):
+                grant["additional_data"]["GNBestCountryName"] = country
+            elif country := grant["additional_data"].get("GNRecipientOrgCountryName"):
+                grant["additional_data"]["GNBestCountryName"] = country
 
     # End looping over locations
 
