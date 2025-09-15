@@ -676,7 +676,6 @@ def update_doc_with_other_locations(grant):
                 if location["ctrynm"] in UNITED_KINGDOM_COUNTRIES:
                     grant["additional_data"]["GNBeneficiaryCountryName"] = UNITED_KINGDOM_ISO_NM
 
-
         # recipientOrganizationLocation
         if location["source"] == "recipientOrganizationLocation" or location["source"] == "recipientOrganizationPostcode":
 
