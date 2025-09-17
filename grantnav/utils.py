@@ -99,6 +99,6 @@ def check_if_tnlcommunityfund_legacy_json_query(json_query_str):
     tnl_query = '{"query": {"bool": {"filter": [{"bool": {"should": [{"term": {"fundingOrganization.id_and_name": "[\\"The National Lottery Community Fund\\", \\"GB-GOR-PB188\\"]"}}]}}, {"bool": {"should": []}}, {"bool": {"should": [], "must": {}}}, {"bool": {"should": {"range": {"amountAwarded": {}}}, "must": {}}}, {"bool": {"should": []}}, {"bool": {"should": []}}, {"bool": {"should": []}}, {"bool": {"should": []}}], "must": {"query_string": {"default_field": "*", "query": "*"}}}}, "sort": {"_score": {"order": "desc"}}, "aggs": {"recipientDistrictName": {"terms": {"size": 3, "field": "recipientDistrictName"}}, "currency": {"terms": {"size": 3, "field": "currency"}}, "recipientOrganization": {"terms": {"size": 3, "field": "recipientOrganization.id_and_name"}}, "fundingOrganization": {"terms": {"size": 3, "field": "fundingOrganization.id_and_name"}}, "recipientRegionName": {"terms": {"size": 3, "field": "recipientRegionName"}}}, "extra_context": {"awardYear_facet_size": 3, "amountAwardedFixed_facet_size": 3}}'
 
     if tnl_query == json_query_str:
-        return internal_redirect("/search?fundingOrganization=GB-GOR-PB188&fundingOrganization=GB-GOVUK-big-lottery-fund")
+        return internal_redirect("/search?fundingOrganization=GB-GOR-PB188&fundingOrganization=GB-GOVUK-big-lottery-fund&a=1")
 
     return False
