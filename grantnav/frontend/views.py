@@ -701,6 +701,8 @@ def search(request, template_name="search.html"):
 
     json_query_param = request.GET.get('json_query')
     if json_query_param:
+        if tnl_redirect := utils.check_if_tnlcommunityfund_legacy_json_query(json_query_param):
+            return tnl_redirect
         try:
             # This allows GrantNav to be backward compatible with
             # pre-2020-sprint urls. This isn't ideal and json_query as a GET
