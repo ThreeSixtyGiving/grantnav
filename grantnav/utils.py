@@ -85,3 +85,20 @@ def internal_redirect(to):
     new_url = parsed_url._replace(query=new_query_string).geturl()
 
     return redirect(new_url)
+
+
+def check_if_tnlcommunityfund_legacy_json_query(json_query_str):
+    """ Determine if this is legacy mode link from tnlcommunityfund website
+        and redirect accordingly. This can be removed when the link from
+        https://www.tnlcommunityfund.org.uk/funding is updated.
+    """
+    # Test url:
+    # https://grantnav.threesixtygiving.org/search?json_query=%7B%22query%22%3A+%7B%22bool%22%3A+%7B%22filter%22%3A+%5B%7B%22bool%22%3A+%7B%22should%22%3A+%5B%7B%22term%22%3A+%7B%22fundingOrganization.id_and_name%22%3A+%22%5B%5C%22The+National+Lottery+Community+Fund%5C%22%2C+%5C%22GB-GOR-PB188%5C%22%5D%22%7D%7D%5D%7D%7D%2C+%7B%22bool%22%3A+%7B%22should%22%3A+%5B%5D%7D%7D%2C+%7B%22bool%22%3A+%7B%22should%22%3A+%5B%5D%2C+%22must%22%3A+%7B%7D%7D%7D%2C+%7B%22bool%22%3A+%7B%22should%22%3A+%7B%22range%22%3A+%7B%22amountAwarded%22%3A+%7B%7D%7D%7D%2C+%22must%22%3A+%7B%7D%7D%7D%2C+%7B%22bool%22%3A+%7B%22should%22%3A+%5B%5D%7D%7D%2C+%7B%22bool%22%3A+%7B%22should%22%3A+%5B%5D%7D%7D%2C+%7B%22bool%22%3A+%7B%22should%22%3A+%5B%5D%7D%7D%2C+%7B%22bool%22%3A+%7B%22should%22%3A+%5B%5D%7D%7D%5D%2C+%22must%22%3A+%7B%22query_string%22%3A+%7B%22default_field%22%3A+%22%2A%22%2C+%22query%22%3A+%22%2A%22%7D%7D%7D%7D%2C+%22sort%22%3A+%7B%22_score%22%3A+%7B%22order%22%3A+%22desc%22%7D%7D%2C+%22aggs%22%3A+%7B%22recipientDistrictName%22%3A+%7B%22terms%22%3A+%7B%22size%22%3A+3%2C+%22field%22%3A+%22recipientDistrictName%22%7D%7D%2C+%22currency%22%3A+%7B%22terms%22%3A+%7B%22size%22%3A+3%2C+%22field%22%3A+%22currency%22%7D%7D%2C+%22recipientOrganization%22%3A+%7B%22terms%22%3A+%7B%22size%22%3A+3%2C+%22field%22%3A+%22recipientOrganization.id_and_name%22%7D%7D%2C+%22fundingOrganization%22%3A+%7B%22terms%22%3A+%7B%22size%22%3A+3%2C+%22field%22%3A+%22fundingOrganization.id_and_name%22%7D%7D%2C+%22recipientRegionName%22%3A+%7B%22terms%22%3A+%7B%22size%22%3A+3%2C+%22field%22%3A+%22recipientRegionName%22%7D%7D%7D%2C+%22extra_context%22%3A+%7B%22awardYear_facet_size%22%3A+3%2C+%22amountAwardedFixed_facet_size%22%3A+3%7D%7D
+    #
+
+    tnl_query = '{"query": {"bool": {"filter": [{"bool": {"should": [{"term": {"fundingOrganization.id_and_name": "[\\"The National Lottery Community Fund\\", \\"GB-GOR-PB188\\"]"}}]}}, {"bool": {"should": []}}, {"bool": {"should": [], "must": {}}}, {"bool": {"should": {"range": {"amountAwarded": {}}}, "must": {}}}, {"bool": {"should": []}}, {"bool": {"should": []}}, {"bool": {"should": []}}, {"bool": {"should": []}}], "must": {"query_string": {"default_field": "*", "query": "*"}}}}, "sort": {"_score": {"order": "desc"}}, "aggs": {"recipientDistrictName": {"terms": {"size": 3, "field": "recipientDistrictName"}}, "currency": {"terms": {"size": 3, "field": "currency"}}, "recipientOrganization": {"terms": {"size": 3, "field": "recipientOrganization.id_and_name"}}, "fundingOrganization": {"terms": {"size": 3, "field": "fundingOrganization.id_and_name"}}, "recipientRegionName": {"terms": {"size": 3, "field": "recipientRegionName"}}}, "extra_context": {"awardYear_facet_size": 3, "amountAwardedFixed_facet_size": 3}}'
+
+    if tnl_query == json_query_str:
+        return internal_redirect("/search?fundingOrganization=GB-GOR-PB188&fundingOrganization=GB-GOVUK-big-lottery-fund")
+
+    return False
