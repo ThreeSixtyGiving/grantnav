@@ -54,10 +54,10 @@
       <!-- <span class="grant-search-result__data-item--label">UK Organisation Location:</span> -->
      {% endif %}
     <div class="grant-search-result__data-item">
-        Region: <a href="{% url 'region' result.source.additional_data.recipientRegionName %}">{{ result.source.additional_data.recipientRegionName }}</a>
+        UK Region: <a href="{% url 'region' result.source.additional_data.recipientRegionName %}">{{ result.source.additional_data.recipientRegionName }}</a>
     </div>
     <div class="grant-search-result__data-item">
-        District: <a href="{% url 'district' result.source.additional_data.recipientDistrictName %}">{{ result.source.additional_data.recipientDistrictName }}</a>
+        UK District: <a href="{% url 'district' result.source.additional_data.recipientDistrictName %}">{{ result.source.additional_data.recipientDistrictName }}</a>
     </div>
     </div>
   </div>
