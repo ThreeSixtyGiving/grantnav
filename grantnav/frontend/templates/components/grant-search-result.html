@@ -36,22 +36,22 @@
 
     <div class="grant-search-result__data-item">
       <span class="grant-search-result__data-item--label">
-        Recipient:
+        Recipient{% if result.source.recipientOrganization %} Organisation{% endif %}:
       </span>
       <span>
         {% if result.source.recipientOrganization %}
-          <a href="{% url 'org' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:50 }}</a>
+        <br />Name: <a href="{% url 'org' result.source.recipientOrganization.0.id %}">{{ result.source.recipientOrganization.0|get_name|truncatechars:60 }}</a>
         {% else %}
           Individual
         {% endif %}
       </span>
     </div>
 
-    <div class="grant-search-result__data-item margin-top:1">
+    <div class="grant-search-result__data-item">
      {% if result.source.additional_data.locationLookup.0.source == "beneficiaryLocation" %}
-      <span class="grant-search-result__data-item--label">UK Grant Location:</span>
+      <span class="grant-search-result__data-item--label">Grant Location:</span>
       {% elif "recipient" in result.source.additional_data.locationLookup.0.source  %}
-      <span class="grant-search-result__data-item--label">UK Organisation Location:</span>
+      <!-- <span class="grant-search-result__data-item--label">UK Organisation Location:</span> -->
      {% endif %}
     <div class="grant-search-result__data-item">
         Region: <a href="{% url 'region' result.source.additional_data.recipientRegionName %}">{{ result.source.additional_data.recipientRegionName }}</a>
