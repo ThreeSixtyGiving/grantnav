@@ -50,7 +50,7 @@
     <div class="grant-search-result__data-item margin-top:1">
      {% if result.source.additional_data.locationLookup.0.source == "beneficiaryLocation" %}
       <span class="grant-search-result__data-item--label">UK Grant Location:</span>
-      {% elif result.source.additional_data.locationLookup.0.source == "recipientOrganizationLocation" %}
+      {% elif "recipient" in result.source.additional_data.locationLookup.0.source  %}
       <span class="grant-search-result__data-item--label">UK Organisation Location:</span>
      {% endif %}
     <div class="grant-search-result__data-item">
