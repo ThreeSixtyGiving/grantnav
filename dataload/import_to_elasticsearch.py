@@ -719,14 +719,14 @@ def update_doc_with_other_locations(grant):
                 except KeyError:
                     pass
 
-        # Best Country name - Prefer beneficiary then recipient org
-        if not grant["additional_data"].get("GNBestCountryName"):
-            if country := grant["additional_data"].get("GNBeneficiaryCountryName"):
-                grant["additional_data"]["GNBestCountryName"] = country
-            elif country := grant["additional_data"].get("GNRecipientOrgCountryName"):
-                grant["additional_data"]["GNBestCountryName"] = country
-
     # End looping over locations
+
+    # Best Country name - Prefer beneficiary then recipient org
+    if not grant["additional_data"].get("GNBestCountryName"):
+        if country := grant["additional_data"].get("GNBeneficiaryCountryName"):
+            grant["additional_data"]["GNBestCountryName"] = country
+        elif country := grant["additional_data"].get("GNRecipientOrgCountryName"):
+            grant["additional_data"]["GNBestCountryName"] = country
 
 
 def update_doc_with_undetermined(grant):
