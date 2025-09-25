@@ -26,7 +26,7 @@
       {# This requires the filterElements callback defined in search.html #}
       {# margin-right style is for pixel alignment with include/exclude select2 input boxes #}
       <div class="search-box-wrapper padding-left:05 padding-right:05 padding-top:05 padding-bottom:05" style="margin-right: 7px" >
-        <input type="text" style="width: 100%" class="form-control" onkeyup="filterElements(event, '.filter-list-{{finder_class}}')" placeholder="Search for a county" />
+        <input type="text" style="width: 100%" class="form-control" onkeyup="filterElements(event, '.filter-list-{{finder_class}}')" placeholder="Search for a {{finder_placeholder}}" />
       </div>
      {% endif %}
     </div>
