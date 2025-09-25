@@ -639,10 +639,7 @@ def update_doc_with_other_locations(grant):
 
     # Prior versions of additional_data may not have this field
     # or if locationLookup failed entirely for this grant
-    if not grant["additional_data"].get("locationLookup"):
-        return
-
-    for location in grant["additional_data"]["locationLookup"]:
+    for location in grant["additional_data"].get("locationLookup", []):
         # beneficiaryLocation
         if location["source"] == "beneficiaryLocation":
 
