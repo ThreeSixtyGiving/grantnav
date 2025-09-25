@@ -27,6 +27,9 @@ from grantnav.frontend.org_utils import new_ordered_names, new_org_ids, OrgNotFo
 ES_INDEX = os.environ.get("ES_INDEX", "threesixtygiving")
 ELASTICSEARCH_HOST = os.environ.get("ELASTICSEARCH_HOST", "localhost")
 
+UNITED_KINGDOM_COUNTRIES = ["Wales", "Scotland", "Northern Ireland", "England"]
+UNITED_KINGDOM_ISO_NM = "United Kingdom of Great Britain and Northern Ireland"
+
 
 def initialise_org_cache():
     # Initialise organisation cache
@@ -310,6 +313,15 @@ def maybe_create_index(index_name=ES_INDEX):
                     "GNRecipientOrgCountyName": {
                         "type": "keyword",
                     },
+                    "GNBestCountryName": {
+                        "type": "keyword",
+                    },
+                    "GNBeneficiaryCountryName": {
+                        "type": "keyword",
+                    },
+                    "GNRecipientOrgCountryName": {
+                        "type": "keyword",
+                    }
                 }
             },
             # Additional funding/recipient organisation mappings
@@ -447,6 +459,9 @@ def process_grant(grant, grants_file_path):
     # grant.additional_data.GNBestCountyName (utlanm)
     # grant.additional_data.GNBeneficiaryCountyName (utlanm)
     # grant.additional_data.GNRecipientOrgCountyName (utlanm)
+    # grant.additional_data.GNBestCountryName (iso country name)
+    # grant.additional_data.GNRecipientCountryName (iso country name)
+    # grant.additional_data.GNBeneficiaryCountryName (iso country name)
     update_doc_with_other_locations(grant)
     # update_doc_with_undetermined needs to go last
     update_doc_with_undetermined(grant)
@@ -613,14 +628,18 @@ def to_band(value, bins, labels):
 
 
 def update_doc_with_other_locations(grant):
-    """ This flattens out some embedded data for easier indexing """
+    """ This flattens/maps out some embedded location data for easier indexing"""
+
+    # Check the country code list look up for the country name
+    if country := grant["additional_data"]["codeListLookup"].get("recipientOrg_location_countryCode"):
+        grant["additional_data"]["GNRecipientOrgCountryName"] = country
+
+    if country := grant["additional_data"]["codeListLookup"].get("beneficiaryLocation_countryCode"):
+        grant["additional_data"]["GNBeneficiaryCountryName"] = country
 
     # Prior versions of additional_data may not have this field
     # or if locationLookup failed entirely for this grant
-    if not grant["additional_data"].get("locationLookup"):
-        return
-
-    for location in grant["additional_data"]["locationLookup"]:
+    for location in grant["additional_data"].get("locationLookup", []):
         # beneficiaryLocation
         if location["source"] == "beneficiaryLocation":
 
@@ -648,6 +667,11 @@ def update_doc_with_other_locations(grant):
                         grant["additional_data"]["GNBeneficiaryRegionGeoCode"] = location["ctrycd"]
                     except KeyError:
                         pass
+
+            # If we couldn't get country code from codelist look up check if it's UK&NI
+            if not grant["additional_data"].get("GNBeneficiaryCountryName"):
+                if location["ctrynm"] in UNITED_KINGDOM_COUNTRIES:
+                    grant["additional_data"]["GNBeneficiaryCountryName"] = UNITED_KINGDOM_ISO_NM
 
         # recipientOrganizationLocation
         if location["source"] == "recipientOrganizationLocation" or location["source"] == "recipientOrganizationPostcode":
@@ -677,6 +701,11 @@ def update_doc_with_other_locations(grant):
                     except KeyError:
                         pass
 
+            # If we couldn't get country code from codelist above look up check if it's UK&NI
+            if not grant["additional_data"].get("GNRecipientOrgCountryName"):
+                if location["ctrynm"] in UNITED_KINGDOM_COUNTRIES:
+                    grant["additional_data"]["GNRecipientOrgCountryName"] = UNITED_KINGDOM_ISO_NM
+
         # Best County name - Prefer beneficiary then recipient org
         if not grant["additional_data"].get("GNBestCountyName"):
             try:
@@ -688,6 +717,13 @@ def update_doc_with_other_locations(grant):
                     pass
 
     # End looping over locations
+
+    # Best Country name - Prefer beneficiary then recipient org
+    if not grant["additional_data"].get("GNBestCountryName"):
+        if country := grant["additional_data"].get("GNBeneficiaryCountryName"):
+            grant["additional_data"]["GNBestCountryName"] = country
+        elif country := grant["additional_data"].get("GNRecipientOrgCountryName"):
+            grant["additional_data"]["GNBestCountryName"] = country
 
 
 def update_doc_with_undetermined(grant):
@@ -703,6 +739,9 @@ def update_doc_with_undetermined(grant):
                 "GNBestCountyName",
                 "GNRecipientOrgCountyName",
                 "GNBeneficiaryCountyName",
+                "GNBeneficiaryCountryName",
+                "GNBestCountryName",
+                "GNRecipientOrgCountryName",
                 "recipientDistrictGeoCode",
                 "recipientDistrictName",
                 "recipientRegionName",
