@@ -57,6 +57,10 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # additional_data.GNBeneficiaryCountyName
     {"bool": {"should": []}},  # additional_data.GNRecipientCountyName
     {"bool": {"should": []}},  # additional_data.GNBestCountyName
+    # Country
+    {"bool": {"should": []}},  # additional_data.GNBestCountryName
+    {"bool": {"should": []}},  # additional_data.GNRecipientOrgCountryName
+    {"bool": {"should": []}},  # additional_data.GNBeneficiaryCountryName
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
@@ -65,21 +69,24 @@ TERM_FACETS = [
     TermFacet("fundingOrganization.id_and_name", "fundingOrganization", 0, "Funders", True, 1),  # facet size 1 so template knows if there are results.
     TermFacet("recipientOrganization.id_and_name", "recipientOrganization", 1, "Recipients", True, 1),
     TermFacet("grantProgramme.title_keyword", "grantProgramme", 10, "Programme Titles", False, 1),
-    TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "Regions", False, 5000),
-    TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "Districts", False, 5000),
+    TermFacet("additional_data.recipientRegionName", "recipientRegionName", 5, "UK Regions", False, 5000),
+    TermFacet("additional_data.recipientDistrictName", "recipientDistrictName", 6, "UK Districts", False, 5000),
     TermFacet("additional_data.TSGFundingOrgType", "fundingOrganizationTSGType", 8, "Organisation Type", False, 5000),
     TermFacet("currency", "currency", 7, "Currency", False, 5000),
     TermFacet("additional_data.TSGRecipientType", "recipientTSGType", 11, "Recipient Type", False, 5000),
     TermFacet("simple_grant_type", "simple_grant_type", 12, "Regrant Type", False, 5000),
     TermFacet("additional_data.recipientOrgInfos.organisationTypePrimary", "recipientOrganizationType", 13, "Recipient Organisation Type", False, 5000),
     TermFacet("additional_data.GNRecipientOrgInfo0.ageWhenAwarded", "orgAgeWhenAwarded", 14, "Age of Recipient Org", False, 5000),
-    TermFacet("additional_data.GNRecipientOrgRegionName", "recipientOrgRegionName", 15, "Recipient Organisation Country and Region", False, 5000),
-    TermFacet("additional_data.GNRecipientOrgDistrictName", "recipientOrgDistrictName", 16, "Recipient Organisation District", False, 5000),
-    TermFacet("additional_data.GNBeneficiaryRegionName", "beneficiaryRegionName", 17, "Beneficiary Region and Country", False, 5000),
-    TermFacet("additional_data.GNBeneficiaryDistrictName", "beneficiaryDistrictName", 18, "Beneficiary District", False, 5000),
-    TermFacet("additional_data.GNBeneficiaryCountyName", "beneficiaryCountyName", 19, "Beneficiary County", False, 5000),
-    TermFacet("additional_data.GNRecipientOrgCountyName", "recipientOrgCountyName", 20, "Recipient County", False, 5000),
-    TermFacet("additional_data.GNBestCountyName", "bestCountyName", 21, "Best County", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgRegionName", "recipientOrgRegionName", 15, "Recipient Organisation UK Country and Region", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgDistrictName", "recipientOrgDistrictName", 16, "Recipient Organisation UK District", False, 5000),
+    TermFacet("additional_data.GNBeneficiaryRegionName", "beneficiaryRegionName", 17, "Beneficiary UK Region and Country", False, 5000),
+    TermFacet("additional_data.GNBeneficiaryDistrictName", "beneficiaryDistrictName", 18, "Beneficiary UK District", False, 5000),
+    TermFacet("additional_data.GNBeneficiaryCountyName", "beneficiaryCountyName", 19, "Beneficiary UK County", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgCountyName", "recipientOrgCountyName", 20, "Recipient UK County", False, 5000),
+    TermFacet("additional_data.GNBestCountyName", "bestCountyName", 21, "Best Available UK County", False, 5000),
+    TermFacet("additional_data.GNBestCountryName", "bestCountryName", 22, "Best Available Country", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgCountryName", "recipientOrgCountryName", 23, "Recipieint Country", False, 5000),
+    TermFacet("additional_data.GNBeneficiaryCountryName", "beneficiaryCountryName", 24, "Beneficiary Country", False, 5000),
 ]
 
 SIZE = 20
@@ -729,6 +736,9 @@ def search(request, template_name="search.html"):
                 filter_.append({"bool": {"should": []}})  # additional_data.GNBeneficiaryCountyName
                 filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientCountyName
                 filter_.append({"bool": {"should": []}})  # additional_data.GNBestCountyName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNBestCountryName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNRecipientOrgCountryName
+                filter_.append({"bool": {"should": []}})  # additional_data.GNBeneficiaryCountryName
             json_query['aggs'] = {}
             for term_facet in TERM_FACETS:
                 json_query['aggs'][term_facet.param_name] = {"terms": {"field": term_facet.field_name,
