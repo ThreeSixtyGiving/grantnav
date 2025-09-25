@@ -1,0 +1,276 @@
+{
+  "_COMMENT": "THIS IS TEST DATA",
+	"id": "360G-example-5",
+	"url": "http://www.restlessdevelopment.org/",
+	"title": "Uganda capacity building programme",
+	"currency": "GBP",
+	"awardDate": "2011-07-01",
+	"dataSource": "https://example.org.uk/",
+	"actualDates": [
+		{
+			"endDate": "2012-06-30",
+			"startDateDateOnly": null,
+			"endDateDateOnly": "2012-06-30"
+		}
+	],
+	"description": "Funds for a ground-breaking Capacity Building Programme which will be piloted initially in Uganda.",
+	"dateModified": "2025-06-06T17:08:25Z",
+	"fromOpenCall": "No",
+	"plannedDates": [
+		{
+			"endDate": "2012-07-01",
+			"duration": 12,
+			"startDate": "2011-07-01",
+			"startDateDateOnly": "2011-07-01",
+			"endDateDateOnly": "2012-07-01"
+		}
+	],
+	"amountAwarded": 50000,
+	"grantProgramme": [
+		{
+			"title": "ZING",
+			"title_keyword": "ZING"
+		}
+	],
+	"amountDisbursed": 50000,
+	"amountAppliedFor": 50000,
+	"beneficiaryLocation": [
+		{
+			"name": "Uganda",
+			"countryCode": "UG"
+		}
+	],
+	"fundingOrganization": [
+		{
+			"id": "GB-CHC-1133342",
+			"name": "ZING",
+			"id_and_name": "[\"Example\", \"GB-CHC-1133342\"]"
+		}
+	],
+	"recipientOrganization": [
+		{
+			"id": "GB-CHC-1127488",
+			"url": "http://restlessdevelopment.org/",
+			"name": "Restless Development",
+			"postalCode": "SE1 8TG",
+			"description": "Restless Development are the youth-led development agency. Their staff and volunteers are experts in youth-led development. The organisation is driven forward by young people and young professionals around the world.",
+			"charityNumber": "1127488",
+			"companyNumber": "06741123",
+			"streetAddress": "7 Wootton Street",
+			"addressLocality": "London",
+			"id_and_name": "[\"RESTLESS DEVELOPMENT\", \"GB-CHC-1127488\"]"
+		}
+	],
+	"additional_data": {
+		"metadata": {
+			"source_license": "https://creativecommons.org/publicdomain/zero/1.0/",
+			"source_license_name": "Creative Commons Public Domain Dedication 1.0 Universal"
+		},
+		"codeListLookup": {
+			"regrantType": "",
+			"locationScope": "",
+			"toIndividualsDetails": {
+				"grantPurpose": [],
+				"primaryGrantReason": "",
+				"secondaryGrantReason": ""
+			},
+			"beneficiaryLocation_countryCode": "Uganda",
+			"fundingOrg_location_countryCode": "",
+			"recipientOrg_location_countryCode": ""
+		},
+		"locationLookup": [
+			{
+				"ewcd": "K04000001",
+				"ewnm": "England and Wales",
+				"gbcd": "K03000001",
+				"gbnm": "Great Britain",
+				"ukcd": "K02000001",
+				"uknm": "United Kingdom",
+				"ladcd": "E09000022",
+				"ladnm": "Lambeth",
+				"rgncd": "E12000007",
+				"rgnnm": "London",
+				"ctrycd": "E92000001",
+				"ctrynm": "England",
+				"msoacd": "E02006801",
+				"msoanm": "Lambeth 036",
+				"source": "recipientOrganizationPostcode",
+				"utlacd": "E09000022",
+				"utlanm": "Lambeth",
+				"areacode": "E01003017",
+				"areaname": "Lambeth 036D",
+				"areatype": "lsoa",
+				"latitude": 51.504483206131894,
+				"lsoa11cd": "E01003017",
+				"lsoa11nm": "Lambeth 036D",
+				"lsoa21cd": "E01003017",
+				"msoa11cd": "E02006801",
+				"msoa11nm": "Lambeth 036",
+				"longitude": -0.10894049879591224,
+				"msoahclnm": "Lambeth North, Waterloo & South Bank",
+				"sourceCode": "E01003017",
+				"msoa11hclnm": "Lambeth North, Waterloo & South Bank",
+				"ladcd_active": "E09000022",
+				"ladnm_active": "Lambeth"
+			}
+		],
+		"TSGRecipientType": "Organisation",
+		"TSGFundingOrgType": "Grantmaking Organisation",
+		"recipientLocation": "Lambeth E09000022 Waterloo & South Bank E05014118 London England",
+		"recipientOrgInfos": [
+			{
+				"id": "GB-CHC-1127488",
+				"url": "www.restlessdevelopment.org",
+				"name": "RESTLESS DEVELOPMENT",
+				"active": "True",
+				"orgIDs": [
+					"GB-CHC-1127488",
+					"GB-COH-06741123"
+				],
+				"source": "ccew",
+				"postalCode": "WC2R 1LA",
+				"dateRemoved": "",
+				"linked_orgs": [
+					"GB-CHC-1127488",
+					"GB-COH-06741123",
+					"XI-ROR-00shmqe23",
+					"GB-CHC-292492",
+					"XI-GRID-grid.479492.5"
+				],
+				"dateModified": "2025-09-21 01:08:46.441747+00:00",
+				"latestIncome": "8056000",
+				"charityNumber": "1127488",
+				"companyNumber": "06741123",
+				"dateRegistered": "2009-01-13",
+				"latestIncomeDate": "2024-09-30",
+				"organisationType": [
+					"registered-charity",
+					"registered-charity-england-and-wales",
+					"registered-company",
+					"incorporated-charity"
+				],
+				"linked_orgs_verified": [
+					"GB-CHC-1127488",
+					"GB-COH-06741123"
+				],
+				"organisationTypePrimary": "Registered Charity"
+			},
+			{
+				"id": "GB-COH-06741123",
+				"url": "",
+				"name": "RESTLESS DEVELOPMENT",
+				"active": "True",
+				"orgIDs": [
+					"GB-COH-06741123",
+					"GB-COH-6741123"
+				],
+				"source": "companies",
+				"postalCode": "WC2R 1LA",
+				"dateRemoved": "",
+				"linked_orgs": [
+					"GB-CHC-1127488",
+					"GB-COH-06741123",
+					"XI-ROR-00shmqe23",
+					"GB-CHC-292492",
+					"XI-GRID-grid.479492.5"
+				],
+				"dateModified": "2025-09-20 02:41:37.072244+00:00",
+				"latestIncome": "",
+				"charityNumber": "",
+				"companyNumber": "06741123",
+				"dateRegistered": "2008-11-04",
+				"latestIncomeDate": "",
+				"organisationType": [
+					"company-limited-by-guarantee",
+					"registered-company"
+				],
+				"linked_orgs_verified": [
+					"GB-CHC-1127488",
+					"GB-COH-06741123"
+				],
+				"organisationTypePrimary": "Company Limited by Guarantee"
+			}
+		],
+		"recipientWardName": "Waterloo & South Bank",
+		"recipientRegionName": "London",
+		"recipientCountryName": "England",
+		"recipientDistrictName": "Lambeth",
+		"recipientDistrictGeoCode": "E09000022",
+		"recipientWardNameGeoCode": "E05014118",
+		"recipientOrganizationLocation": {
+			"ced": null,
+			"cty": "E13000001",
+			"icb": "E54000030",
+			"imd": 11736,
+			"itl": "E09000022",
+			"lat": 51.50398,
+			"pcd": "SE1 8TG",
+			"pfa": "E23000001",
+			"rgn": "E12000007",
+			"ctry": "E92000001",
+			"hash": "35e69c0c9039355e39ec367c82669687",
+			"laua": "E09000022",
+			"lep1": "E37000051",
+			"lep2": null,
+			"long": -0.108643,
+			"oa21": "E00015172",
+			"pcd2": "SE1  8TG",
+			"pcds": "SE1 8TG",
+			"pcon": "E14001008",
+			"ttwa": "E30000234",
+			"ward": "E05014118",
+			"wz11": "E33036888",
+			"bua22": "E63005063",
+			"nhser": "E40000003",
+			"npark": "E65000001",
+			"oac11": "3B3",
+			"sicbl": "E38000244",
+			"dointr": "2004-07-01 00:00:00",
+			"doterm": null,
+			"lsoa21": "E01003017",
+			"msoa21": "E02006801",
+			"ru11ind": "A1",
+			"cty_name": "Inner London",
+			"icb_name": "NHS South East London Integrated Care Board",
+			"itl_name": "Lambeth",
+			"location": {
+				"lat": 51.50398,
+				"lon": -0.108643
+			},
+			"oseast1m": 531368,
+			"osgrdind": 1,
+			"osnrth1m": 180034,
+			"pfa_name": "Metropolitan Police",
+			"rgn_name": "London",
+			"usertype": 0,
+			"ctry_name": "England",
+			"laua_name": "Lambeth",
+			"lep1_name": "The London Economic Action Partnership",
+			"oa21_name": "",
+			"pcon_name": "Vauxhall",
+			"ttwa_name": "London",
+			"ward_name": "Waterloo & South Bank",
+			"wz11_name": "",
+			"bua22_name": "Lambeth",
+			"nhser_name": "London",
+			"npark_name": "England Non-National Park Area",
+			"sicbl_name": "NHS South East London ICB - 72Q",
+			"lsoa21_name": "Lambeth 001E",
+			"msoa21_name": "Lambeth 036"
+		},
+		"GNCanonicalRecipientOrgName": "RESTLESS DEVELOPMENT",
+		"GNCanonicalRecipientOrgId": "GB-CHC-1127488",
+		"GNCanonicalFundingOrgName": "Example",
+		"GNCanonicalFundingOrgId": "GB-CHC-1133342",
+		"GNRecipientOrgInfo0": {
+			"latestIncome": "8056000",
+			"ageWhenAwarded": "2-5 years"
+		}
+	},
+	"filename": "a002400000G4KGYAA3.json",
+	"dataType": "grant",
+	"title_and_description": "Uganda capacity building programme Funds for a ground-breaking Capacity Building Programme which will be piloted initially in Uganda.",
+	"awardDateDateOnly": "2011-07-01",
+	"simple_grant_type": "Direct grant"
+}
+

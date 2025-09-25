@@ -1,0 +1,522 @@
+{
+    "_COMMENT": "THIS IS TEST DATA",
+	"id": "360G-12345678",
+	"title": "New Equipment for New Gymnastics Classes",
+	"currency": "GBP",
+	"awardDate": "2020-09-09T00:00:00+00:00",
+	"dataSource": "https://www.example.com/research-and-data/data",
+	"description": "Funding under Example's Small Grants funding programme for a Revenue project titled New Equipment for New Gymnastics Classes. This project lists its main activity as Gymnastics.",
+	"fundingType": [
+		{
+			"title": "Revenue",
+			"vocabulary": "Award Type"
+		}
+	],
+	"dateModified": "2025-05-28T13:56:43.190000+00:00",
+	"fromOpenCall": "Yes",
+	"plannedDates": [
+		{
+			"endDate": "2021-06-26T00:00:00+00:00",
+			"duration": 9,
+			"startDate": "2020-09-05T00:00:00+00:00",
+			"startDateDateOnly": "2020-09-05",
+			"endDateDateOnly": "2021-06-26"
+		}
+	],
+	"amountAwarded": 8802,
+	"locationScope": "GLS040",
+	"Funding Source": {
+		"Title": "Lottery",
+		"Vocabulary": "Funding Source"
+	},
+	"grantProgramme": [
+		{
+			"url": "http://www.example.org/funding",
+			"code": "SG",
+			"title": "Small Grants",
+			"title_keyword": "Small Grants"
+		}
+	],
+	"Grant Award URN": 2020004962,
+	"classifications": [
+		{
+			"title": "Gymnastics",
+			"vocabulary": "Main Sport"
+		}
+	],
+	"beneficiaryLocation": [
+		{
+			"Easting": 533196,
+			"Northing": 172317,
+			"latitude": 51.4342042276807,
+			"longitude": -0.0852262022603448,
+			"IMD Decile": 6,
+			"countryCode": "GB"
+		},
+		{
+			"name": "Southwark 033",
+			"geoCode": "E02000839",
+			"geoCodeType": "MSOA"
+		},
+		{
+			"name": "Dulwich and West Norwood",
+			"geoCode": "E14001205",
+			"geoCodeType": "WPC"
+		},
+		{
+			"name": "Southwark",
+			"geoCode": "E09000028",
+			"geoCodeType": "LONB"
+		},
+		{
+			"name": "London",
+			"geoCode": "E12000007",
+			"geoCodeType": "RGN/GOR"
+		},
+		{
+			"name": "Dulwich Wood",
+			"geoCode": "E05011101",
+			"geoCodeType": "WD"
+		},
+		{
+			"geoCode": "SE21 7AA",
+			"geoCodeType": "Postal Code"
+		}
+	],
+	"fundingOrganization": [
+		{
+			"id": "GB-COH-RC000766",
+			"name": "Example",
+			"id_and_name": "[\"Example\", \"GB-COH-RC000766\"]"
+		}
+	],
+	"Location Scope Detail": "LONDON",
+	"Multi Sport Breakdown": "Gymnastics",
+	"recipientOrganization": [
+		{
+			"id": "GB-CHC-1168669",
+			"name": "Charisma Gymnastics Foundation",
+			"location": [
+				{
+					"Easting": 539264,
+					"Northing": 164490,
+					"latitude": 51.3624120766763,
+					"longitude": -0.00105644155893694,
+					"IMD Decile": 8
+				},
+				{
+					"name": "London",
+					"geoCode": "E12000007",
+					"geoCodeType": "RGN/GOR"
+				},
+				{
+					"name": "Bromley and Biggin Hill",
+					"geoCode": "E14001137",
+					"geoCodeType": "WPC"
+				},
+				{
+					"name": "Bromley",
+					"geoCode": "E09000006",
+					"geoCodeType": "LONB"
+				},
+				{
+					"name": "Bromley 034",
+					"geoCode": "E02000160",
+					"geoCodeType": "MSOA"
+				},
+				{
+					"name": "Hayes & Coney Hall",
+					"geoCode": "E05013998",
+					"geoCodeType": "WD"
+				}
+			],
+			"postalCode": "BR4 9HD",
+			"charityNumber": "1168669",
+			"addressCountry": "GB",
+			"organisationType": "Registered Charity",
+			"id_and_name": "[\"CHARISMA GYMNASTICS FOUNDATION\", \"GB-CHC-1168669\"]"
+		}
+	],
+	"Funding Financial Year": "2020/2021",
+	"Active Partnership Name": "London Sport",
+	"additional_data": {
+		"metadata": {
+			"source_license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+			"source_license_name": "Open Government Licence 3.0 (United Kingdom)"
+		},
+		"codeListLookup": {
+			"regrantType": "",
+			"locationScope": "Subnational region",
+			"toIndividualsDetails": {
+				"grantPurpose": [
+				],
+				"primaryGrantReason": "",
+				"secondaryGrantReason": ""
+			},
+			"beneficiaryLocation_countryCode": "United Kingdom of Great Britain and Northern Ireland",
+			"fundingOrg_location_countryCode": "",
+			"recipientOrg_location_countryCode": ""
+		},
+		"locationLookup": [
+			{
+				"ewcd": "K04000001",
+				"ewnm": "England and Wales",
+				"gbcd": "K03000001",
+				"gbnm": "Great Britain",
+				"ukcd": "K02000001",
+				"uknm": "United Kingdom",
+				"ladcd": "E09000028",
+				"ladnm": "Southwark",
+				"rgncd": "E12000007",
+				"rgnnm": "London",
+				"ctrycd": "E92000001",
+				"ctrynm": "England",
+				"msoanm": "Southwark 033",
+				"source": "beneficiaryLocation",
+				"utlacd": "E09000028",
+				"utlanm": "Southwark",
+				"areacode": "E02000839",
+				"areaname": "Sydenham Hill",
+				"areatype": "msoa",
+				"latitude": 51.434425561838395,
+				"msoa11cd": "E02000839",
+				"msoa11nm": "Southwark 033",
+				"msoa21cd": "E02000839",
+				"longitude": -0.07870695443342238,
+				"sourceCode": "E02000839",
+				"msoa11hclnm": "Sydenham Hill",
+				"ladcd_active": "E09000028",
+				"ladnm_active": "Southwark"
+			},
+			{
+				"ewcd": "K04000001",
+				"ewnm": "England and Wales",
+				"gbcd": "K03000001",
+				"gbnm": "Great Britain",
+				"ukcd": "K02000001",
+				"uknm": "United Kingdom",
+				"ladcd": "E09000028",
+				"ladnm": "Southwark",
+				"rgncd": "E12000007",
+				"rgnnm": "London",
+				"ctrycd": "E92000001",
+				"ctrynm": "England",
+				"source": "beneficiaryLocation",
+				"utlacd": "E09000028",
+				"utlanm": "Southwark",
+				"areacode": "E09000028",
+				"areaname": "Southwark",
+				"areatype": "la",
+				"sourceCode": "E09000028",
+				"ladcd_active": "E09000028",
+				"ladnm_active": "Southwark"
+			},
+			{
+				"ewcd": "K04000001",
+				"ewnm": "England and Wales",
+				"gbcd": "K03000001",
+				"gbnm": "Great Britain",
+				"ukcd": "K02000001",
+				"uknm": "United Kingdom",
+				"rgncd": "E12000007",
+				"rgnnm": "London",
+				"ctrycd": "E92000001",
+				"ctrynm": "England",
+				"source": "beneficiaryLocation",
+				"areacode": "E12000007",
+				"areaname": "London",
+				"areatype": "rgn",
+				"sourceCode": "E12000007"
+			},
+			{
+				"ewcd": "K04000001",
+				"ewnm": "England and Wales",
+				"gbcd": "K03000001",
+				"gbnm": "Great Britain",
+				"ukcd": "K02000001",
+				"uknm": "United Kingdom",
+				"ladcd": "E09000028",
+				"ladnm": "Southwark",
+				"rgncd": "E12000007",
+				"rgnnm": "London",
+				"ctrycd": "E92000001",
+				"ctrynm": "England",
+				"source": "beneficiaryLocation",
+				"utlacd": "E09000028",
+				"utlanm": "Southwark",
+				"lad20cd": "E09000028",
+				"lad20nm": "Southwark",
+				"areacode": "E05011101",
+				"areaname": "Dulwich Wood",
+				"areatype": "ward",
+				"latitude": 51.431629,
+				"longitude": -0.07846,
+				"sourceCode": "E05011101",
+				"sourcefile": "2018",
+				"ladcd_active": "E09000028",
+				"ladnm_active": "Southwark"
+			},
+			{
+				"ewcd": "K04000001",
+				"ewnm": "England and Wales",
+				"gbcd": "K03000001",
+				"gbnm": "Great Britain",
+				"ukcd": "K02000001",
+				"uknm": "United Kingdom",
+				"rgncd": "E12000007",
+				"rgnnm": "London",
+				"ctrycd": "E92000001",
+				"ctrynm": "England",
+				"source": "recipientOrganizationLocation",
+				"areacode": "E12000007",
+				"areaname": "London",
+				"areatype": "rgn",
+				"sourceCode": "E12000007"
+			},
+			{
+				"ewcd": "K04000001",
+				"ewnm": "England and Wales",
+				"gbcd": "K03000001",
+				"gbnm": "Great Britain",
+				"ukcd": "K02000001",
+				"uknm": "United Kingdom",
+				"ladcd": "E09000006",
+				"ladnm": "Bromley",
+				"rgncd": "E12000007",
+				"rgnnm": "London",
+				"ctrycd": "E92000001",
+				"ctrynm": "England",
+				"source": "recipientOrganizationLocation",
+				"utlacd": "E09000006",
+				"utlanm": "Bromley",
+				"areacode": "E09000006",
+				"areaname": "Bromley",
+				"areatype": "la",
+				"sourceCode": "E09000006",
+				"ladcd_active": "E09000006",
+				"ladnm_active": "Bromley"
+			},
+			{
+				"ewcd": "K04000001",
+				"ewnm": "England and Wales",
+				"gbcd": "K03000001",
+				"gbnm": "Great Britain",
+				"ukcd": "K02000001",
+				"uknm": "United Kingdom",
+				"ladcd": "E09000006",
+				"ladnm": "Bromley",
+				"rgncd": "E12000007",
+				"rgnnm": "London",
+				"ctrycd": "E92000001",
+				"ctrynm": "England",
+				"msoanm": "Bromley 034",
+				"source": "recipientOrganizationLocation",
+				"utlacd": "E09000006",
+				"utlanm": "Bromley",
+				"areacode": "E02000160",
+				"areaname": "Hayes South & Coney Hall",
+				"areatype": "msoa",
+				"latitude": 51.3655968422569,
+				"msoa11cd": "E02000160",
+				"msoa11nm": "Bromley 034",
+				"msoa21cd": "E02000160",
+				"longitude": 0.011106854066418429,
+				"sourceCode": "E02000160",
+				"msoa11hclnm": "Hayes South & Coney Hall",
+				"ladcd_active": "E09000006",
+				"ladnm_active": "Bromley"
+			},
+			{
+				"ewcd": "K04000001",
+				"ewnm": "England and Wales",
+				"gbcd": "K03000001",
+				"gbnm": "Great Britain",
+				"ukcd": "K02000001",
+				"uknm": "United Kingdom",
+				"ladcd": "E09000006",
+				"ladnm": "Bromley",
+				"rgncd": "E12000007",
+				"rgnnm": "London",
+				"ctrycd": "E92000001",
+				"ctrynm": "England",
+				"source": "recipientOrganizationLocation",
+				"utlacd": "E09000006",
+				"utlanm": "Bromley",
+				"lad20cd": "E09000006",
+				"lad20nm": "Bromley",
+				"areacode": "E05013998",
+				"areaname": "Hayes & Coney Hall",
+				"areatype": "ward",
+				"sourceCode": "E05013998",
+				"sourcefile": "2022",
+				"ladcd_active": "E09000006",
+				"ladnm_active": "Bromley"
+			},
+			{
+				"ewcd": "K04000001",
+				"ewnm": "England and Wales",
+				"gbcd": "K03000001",
+				"gbnm": "Great Britain",
+				"ukcd": "K02000001",
+				"uknm": "United Kingdom",
+				"ladcd": "E09000006",
+				"ladnm": "Bromley",
+				"rgncd": "E12000007",
+				"rgnnm": "London",
+				"ctrycd": "E92000001",
+				"ctrynm": "England",
+				"msoacd": "E02000160",
+				"msoanm": "Bromley 034",
+				"source": "recipientOrganizationPostcode",
+				"utlacd": "E09000006",
+				"utlanm": "Bromley",
+				"areacode": "E01000760",
+				"areaname": "Bromley 034B",
+				"areatype": "lsoa",
+				"latitude": 51.3670084367126,
+				"lsoa11cd": "E01000760",
+				"lsoa11nm": "Bromley 034B",
+				"lsoa21cd": "E01000760",
+				"msoa11cd": "E02000160",
+				"msoa11nm": "Bromley 034",
+				"longitude": -0.0013032457822366133,
+				"msoahclnm": "Hayes South & Coney Hall",
+				"sourceCode": "E01000760",
+				"msoa11hclnm": "Hayes South & Coney Hall",
+				"ladcd_active": "E09000006",
+				"ladnm_active": "Bromley"
+			}
+		],
+		"TSGRecipientType": "Organisation",
+		"TSGFundingOrgType": "Lottery Distributor",
+		"recipientLocation": "Southwark E09000028   London England",
+		"recipientOrgInfos": [
+			{
+				"id": "GB-CHC-1168669",
+				"url": "",
+				"name": "CHARISMA GYMNASTICS FOUNDATION",
+				"active": "True",
+				"orgIDs": [
+					"GB-CHC-1168669"
+				],
+				"source": "ccew",
+				"postalCode": "BR3 3XJ",
+				"dateRemoved": "",
+				"linked_orgs": [
+					"GB-CHC-1168669",
+					"GB-COH-CE008486"
+				],
+				"dateModified": "2025-09-21 01:08:46.441747+00:00",
+				"latestIncome": "3695",
+				"charityNumber": "1168669",
+				"companyNumber": "",
+				"dateRegistered": "2016-08-08",
+				"latestIncomeDate": "2024-08-31",
+				"organisationType": [
+					"registered-charity",
+					"registered-charity-england-and-wales",
+					"charitable-incorporated-organisation",
+					"incorporated-charity",
+					"charitable-incorporated-organisation-foundation"
+				],
+				"linked_orgs_verified": [
+					"GB-CHC-1168669"
+				],
+				"organisationTypePrimary": "Registered Charity"
+			}
+		],
+		"recipientRegionName": "London",
+		"recipientCountryName": "England",
+		"recipientDistrictName": "Southwark",
+		"recipientDistrictGeoCode": "E09000028",
+		"recipientOrganizationLocation": {
+			"ced": null,
+			"cty": "E13000002",
+			"icb": "E54000030",
+			"imd": 25692,
+			"itl": "E09000006",
+			"lat": 51.362412,
+			"pcd": "BR4 9HD",
+			"pfa": "E23000001",
+			"rgn": "E12000007",
+			"ctry": "E92000001",
+			"hash": "0d6a140f3eed0a7f0befa2a0cc36c618",
+			"laua": "E09000006",
+			"lep1": "E37000051",
+			"lep2": null,
+			"long": -0.001056,
+			"oa21": "E00003733",
+			"pcd2": "BR4  9HD",
+			"pcds": "BR4 9HD",
+			"pcon": "E14000551",
+			"ttwa": "E30000234",
+			"ward": "E05013998",
+			"wz11": "E33032902",
+			"bua22": "E63005189",
+			"nhser": "E40000003",
+			"npark": "E65000001",
+			"oac11": "5B2",
+			"sicbl": "E38000244",
+			"dointr": "1980-01-01 00:00:00",
+			"doterm": null,
+			"lsoa21": "E01000760",
+			"msoa21": "E02000160",
+			"ru11ind": "A1",
+			"cty_name": "Outer London",
+			"icb_name": "NHS South East London Integrated Care Board",
+			"itl_name": "Bromley",
+			"location": {
+				"lat": 51.362412,
+				"lon": -0.001056
+			},
+			"oseast1m": 539264,
+			"osgrdind": 1,
+			"osnrth1m": 164490,
+			"pfa_name": "Metropolitan Police",
+			"rgn_name": "London",
+			"usertype": 0,
+			"ctry_name": "England",
+			"laua_name": "Bromley",
+			"lep1_name": "The London Economic Action Partnership",
+			"oa21_name": "",
+			"pcon_name": "Beckenham",
+			"ttwa_name": "London",
+			"ward_name": "Hayes & Coney Hall",
+			"wz11_name": "",
+			"bua22_name": "Bromley",
+			"nhser_name": "London",
+			"npark_name": "England Non-National Park Area",
+			"sicbl_name": "NHS South East London ICB - 72Q",
+			"lsoa21_name": "Bromley 034B",
+			"msoa21_name": "Bromley 034"
+		},
+		"GNCanonicalRecipientOrgName": "CHARISMA GYMNASTICS FOUNDATION",
+		"GNCanonicalRecipientOrgId": "GB-CHC-1168669",
+		"GNCanonicalFundingOrgName": "Example",
+		"GNCanonicalFundingOrgId": "GB-COH-RC000766",
+		"GNRecipientOrgInfo0": {
+			"latestIncome": "3695",
+			"ageWhenAwarded": "2-5 years"
+		},
+		"GNBeneficiaryCountryName": "United Kingdom of Great Britain and Northern Ireland",
+		"GNBeneficiaryDistrictName": "Southwark",
+		"GNBeneficiaryDistrictGeoCode": "E09000028",
+		"GNBeneficiaryCountyName": "Southwark",
+		"GNBeneficiaryRegionName": "London",
+		"GNBeneficiaryRegionGeoCode": "E12000007",
+		"GNBestCountyName": "Southwark",
+		"GNRecipientOrgRegionName": "London",
+		"GNRecipientOrgRegionGeoCode": "E12000007",
+		"GNRecipientOrgCountryName": "United Kingdom of Great Britain and Northern Ireland",
+		"GNRecipientOrgCountyName": "Bromley",
+		"GNRecipientOrgDistrictName": "Bromley",
+		"GNRecipientOrgDistrictGeoCode": "E09000006",
+		"GNBestCountryName": "United Kingdom of Great Britain and Northern Ireland",
+		"recipientWardName": "Undetermined"
+	},
+	"filename": "a001p00000tV2XpAAK.json",
+	"dataType": "grant",
+	"title_and_description": "New Equipment for New Gymnastics Classes Funding under Example's Small Grants funding programme for a Revenue project titled New Equipment for New Gymnastics Classes. This project lists its main activity as Gymnastics.",
+	"awardDateDateOnly": "2020-09-09",
+	"simple_grant_type": "Direct grant"
+}
