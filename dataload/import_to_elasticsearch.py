@@ -477,7 +477,12 @@ def process_grant_file_process(process_queue,
         stream = ijson.items(fp, 'grants.item')
         for grant in stream:
             # Process grant
-            process_grant(grant, grants_file_path)
+            # Warning: process_grant eats exceptions and hangs
+            try:
+                process_grant(grant, grants_file_path)
+            except Exception as e:
+                print(e)
+                continue
 
             # Add grant to batch
             batch.append(grant)
@@ -631,11 +636,15 @@ def update_doc_with_other_locations(grant):
     """ This flattens/maps out some embedded location data for easier indexing"""
 
     # Check the country code list look up for the country name
-    if country := grant["additional_data"]["codeListLookup"].get("recipientOrg_location_countryCode"):
-        grant["additional_data"]["GNRecipientOrgCountryName"] = country
+    try:
+        if country := grant["additional_data"]["codeListLookup"].get("recipientOrg_location_countryCode"):
+            grant["additional_data"]["GNRecipientOrgCountryName"] = country
 
-    if country := grant["additional_data"]["codeListLookup"].get("beneficiaryLocation_countryCode"):
-        grant["additional_data"]["GNBeneficiaryCountryName"] = country
+        if country := grant["additional_data"]["codeListLookup"].get("beneficiaryLocation_countryCode"):
+            grant["additional_data"]["GNBeneficiaryCountryName"] = country
+    except KeyError as e:
+        # Not all data has a codeListLookup
+        warnings.warn(f"Missing {e} for grant['id']")
 
     # Prior versions of additional_data may not have this field
     # or if locationLookup failed entirely for this grant
@@ -670,8 +679,11 @@ def update_doc_with_other_locations(grant):
 
             # If we couldn't get country code from codelist look up check if it's UK&NI
             if not grant["additional_data"].get("GNBeneficiaryCountryName"):
-                if location["ctrynm"] in UNITED_KINGDOM_COUNTRIES:
-                    grant["additional_data"]["GNBeneficiaryCountryName"] = UNITED_KINGDOM_ISO_NM
+                try:
+                    if location["ctrynm"] in UNITED_KINGDOM_COUNTRIES:
+                        grant["additional_data"]["GNBeneficiaryCountryName"] = UNITED_KINGDOM_ISO_NM
+                except KeyError:
+                    pass
 
         # recipientOrganizationLocation
         if location["source"] == "recipientOrganizationLocation" or location["source"] == "recipientOrganizationPostcode":
