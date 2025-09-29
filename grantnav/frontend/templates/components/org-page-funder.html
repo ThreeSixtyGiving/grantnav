@@ -17,7 +17,7 @@
         {# Only funds grants to org #}
         {% if funder.aggregate.grants_org and not funder.aggregate.grants_ind %}
         <div class="media-card__box">
-            <strong>Recipient Organisations</strong> <br />
+            <strong>Grants To Organisations</strong> <br />
             {{funder.aggregate.grants_org | get_amount }}
         </div>
         {% endif %}
@@ -61,7 +61,7 @@
     {% if funder.aggregate.currencies.keys|length == 1 %}
 
     {% if funder.aggregate.grants_org and funder.aggregate.grants_ind %}
-    <h5>Grants to Individuals</h5>
+    <h5>Grants To Individuals</h5>
     {% for stat in funder.stats_by_currency %}
       {% if stat.recipient_type == 'recipient_ind' %}
         <div class="media-card__box_container">
@@ -84,7 +84,7 @@
         </div>
       {% endif %}
     {% endfor %}
-    <h5>Recipient Organisations</h5>
+    <h5>Grants To Organisations</h5>
     {% for stat in funder.stats_by_currency %}
       {% if stat.recipient_type == 'recipient_org' %}
         <div class="media-card__box_container">

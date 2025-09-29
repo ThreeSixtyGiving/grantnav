@@ -18,13 +18,13 @@
     <div class="grant-search-result__box_container">
       <!--      <pre>{{result}}</pre> -->
         <div class="grant-search-result__box" style="padding-bottom:0">
-          <strong>All Grants Funded<br /></strong>
+          <strong>All Grants<br /></strong>
           {{result.source.aggregate.grants | get_amount }}
         </div>
 
         {% if result.source.aggregate.grants_org %}
         <div class="grant-search-result__box" style="padding-bottom:0">
-            <strong>Recipient Organisations</strong> <br />
+            <strong>Grants to Organisations</strong> <br />
             {{result.source.aggregate.grants_org | get_amount }}
         </div>
         {% endif %}
