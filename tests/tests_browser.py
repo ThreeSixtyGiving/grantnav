@@ -411,12 +411,13 @@ class InteractionsTests(BrowserTestCase):
         self.get(server_url)
 
         # Open county
-        self.browser.find_element(By.ID, "filter-accordion-county").click()
-        self.browser.find_element(By.ID, "filter-option-county-liverpool").click()
+        self.browser.find_element(By.ID, "filter-accordion-ukcounty").click()
+        self.browser.find_element(By.ID, "filter-option-ukcounty-liverpool").click()
 
         total_grants = self.browser.find_elements(
             By.CSS_SELECTOR, ".summary-content--item span"
         )[0].text
+
         assert (
             "11" in total_grants
         ), f"Expected total grants not found for county liverpool, got {total_grants} instead of 9"
