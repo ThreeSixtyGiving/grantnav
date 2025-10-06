@@ -345,15 +345,18 @@ def maybe_create_index(index_name=ES_INDEX):
                     },
                     "currencies": {
                         "properties": {
-                            # Currently we do things like order-by on GBP
+                            # For Order-by GBP
                             "GBP": {
                                 "properties": {
-                                    "avg": {"type": "double"},
-                                    "total": {"type": "double"},
+                                    "recipient_org": {
+                                        "properties": {
+                                            "total": {"type": "double"},
+                                        }
+                                    }
                                 }
                             }
-
                         }
+
                     }
                 }
             },

@@ -38,8 +38,8 @@ def get_dropdown_filters(context):
     context["dropdownFilterOptions"] = []
     context["dropdownFilterOptions"].append({"value": "_score desc", "label": "Best Match"})
     context["dropdownFilterOptions"].append({"value": "aggregate.grants desc", "label": "Grant Count - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.total desc", "label": "Total GBP Amount - Highest First"})
-    context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.total asc", "label": "Total GBP Amount - Lowest First"})
+    context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.recipient_org.total desc", "label": "Total GBP Amount to Organisations - Highest First"})
+    context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.recipient_org.total asc", "label": "Total GBP Amount to Organisations - Lowest First"})
     context["dropdownFilterOptions"].append({"value": "aggregate.maxAwardDate desc", "label": "Latest Award Date - Recent First"})
 
 
