@@ -35,7 +35,14 @@ def flatten_schema_titles(schema, path='', title_path=''):
 
 # Load/fetch the schema once on module loading instead of per run
 # of the function
-schema = jsonref.load_uri(settings.GRANT_SCHEMA)
+try:
+    schema = jsonref.load_uri(settings.GRANT_SCHEMA)
+except Exception as e:
+    if settings.DEBUG:
+        print(f"Warning: could not fetch schema, some features will not work {e}")
+        schema = {}
+    else:
+        raise e
 
 
 def flatten_dict(data, path=tuple()):
