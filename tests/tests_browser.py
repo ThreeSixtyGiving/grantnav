@@ -24,8 +24,8 @@ class InteractionsTests(BrowserTestCase):
     def wait_for_results_page(self):
         # Wait for the various redirects and rendering after click
         time.sleep(0.5)
-        for i in range(0, 300):
-            if "&sort" not in self.browser.current_url:
+        for i in range(0, 120):
+            if "sort" not in self.browser.current_url:
                 time.sleep(0.5)
 
     def test_home(self):
