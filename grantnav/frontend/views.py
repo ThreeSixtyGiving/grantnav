@@ -94,7 +94,7 @@ SIZE = 20
 BASIC_QUERY = {"query": {"bool": {"must":
                                   {"query_string": {"query": "", "default_field": "*"}},
                                   "filter": BASIC_FILTER}},
-               "sort": {"_score": {"order": "desc"}},
+               "sort": {"awardDate": {"order": "desc"}},
                "aggs": {}}
 
 for term_facet in TERM_FACETS:
@@ -706,6 +706,7 @@ def search(request, template_name="search.html"):
 
     json_query = {}
 
+    # Legacy
     json_query_param = request.GET.get('json_query')
     if json_query_param:
         try:
@@ -758,12 +759,24 @@ def search(request, template_name="search.html"):
             return utils.internal_redirect(request.path + '?' + create_parameters_from_json_query(json_query))
     except KeyError:
         pass
+
     # End URL query backwards compatibility
+
+    sort_order = request.GET.get('sort', '').split()
+
+    # Sort switcher
+    if sort_order and len(sort_order) == 2:
+        new_sort = {sort_order[0]: {"order": sort_order[1]}}
+        old_sort = json_query["sort"]
+        if new_sort != old_sort:
+            json_query["sort"] = new_sort
+            return utils.internal_redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
     text_query = request.GET.get('text_query')
     if text_query is not None:
         if not text_query:
             text_query = '*'
+
         try:
             json_query["query"]["bool"]["must"]["query_string"]["query"] = text_query
         except KeyError:
@@ -772,15 +785,12 @@ def search(request, template_name="search.html"):
 
         if default_field:
             json_query["query"]["bool"]["must"]["query_string"]["default_field"] = default_field
-        return utils.internal_redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
-    sort_order = request.GET.get('sort', '').split()
-    if sort_order and len(sort_order) == 2:
-        new_sort = {sort_order[0]: {"order": sort_order[1]}}
-        old_sort = json_query["sort"]
-        if new_sort != old_sort:
-            json_query["sort"] = new_sort
-            return utils.internal_redirect(request.path + '?' + create_parameters_from_json_query(json_query))
+        # Unless a sort has already been applied we override the default sort order
+        # to _score which gives us results by best match for text.
+        if not sort_order:
+            json_query["sort"] = {'_score': {'order': 'desc'}}
+        return utils.internal_redirect(request.path + '?' + create_parameters_from_json_query(json_query))
 
     if new_org_ids_included := org_utils.update_request_to_include_all_org_ids(request):
         return utils.internal_redirect(new_org_ids_included)
@@ -850,6 +860,7 @@ def search(request, template_name="search.html"):
 
         for hit in results['hits']['hits']:
             hit['source'] = hit['_source']
+
         context['results'] = results
         context['json_query'] = json.dumps(json_query)
         context['query'] = json_query
