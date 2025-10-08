@@ -35,7 +35,8 @@ class BrowserTestCase(StaticLiveServerTestCase):
 
         if BROWSER == "ChromeHeadless":
             chrome_options = Options()
-            chrome_options.add_argument("--headless")
+            if not os.environ.get("ATTACH_HEAD"):
+                chrome_options.add_argument("--headless")
             # no-sandbox prevents an error when running as the root user
             chrome_options.add_argument("--no-sandbox")
             # uncomment this if "DevToolsActivePort" error / ubuntu snap workaround
