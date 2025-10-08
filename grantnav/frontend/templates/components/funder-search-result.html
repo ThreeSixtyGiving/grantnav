@@ -44,7 +44,7 @@
         {% if stat.currency == 'GBP' %}
         <div class="grant-search-result__box" style="padding-bottom:0">
           <strong>Total {% if stat.recipient_type == "recipient_org"%} to Organisations {% elif stat.recipient_type == "recipient_ind" %}to Individuals{% endif %}</strong><br/>
-          {{stat.currency | currency_symbol}}{{stat.total | get_amount}}
+          <span data-testid="result-funder-total-amount-{{stat.recipient_type}}">{{stat.currency | currency_symbol}}{{stat.total | get_amount}}</span>
         </div>
         {% endif %}
       {% endfor %}

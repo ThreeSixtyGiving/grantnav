@@ -5,6 +5,8 @@ from django.test import override_settings
 from django.urls import reverse_lazy
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+
 import chromedriver_autoinstaller
 
 from tests.browser_test_case import BrowserTestCase
@@ -466,6 +468,54 @@ class InteractionsTests(BrowserTestCase):
             20,
         )
         self.check_js_errors()
+
+    def test_search_funders_amount_order(self):
+        """ Test to make sure that the funders results react to the ordering as set """
+
+        def _gbp_to_float(text):
+            """ returns float version of text e.g. "£12,233.00" -> 122333.00 """
+            return float(text.replace("£", "").replace(",", ""))
+
+        SORT_ID = "sort_options"
+        RESULT_EL_SELECTOR = "[data-testid='result-funder-total-amount-recipient_org']"
+
+        # £ High to Low #####
+        server_url = reverse_lazy("funders")
+        self.get(server_url)
+
+        select = Select(self.browser.find_element(By.ID, SORT_ID))
+        select.select_by_visible_text("Total GBP Amount to Organisations - Highest First")
+
+        self.wait_for_results_page()
+
+        amount_elements = self.browser.find_elements(By.CSS_SELECTOR, RESULT_EL_SELECTOR)
+
+        # Get the first result item
+        prev_amount = _gbp_to_float(amount_elements[0].text)
+        # Make sure the amounts in the results are in descending order
+        for amount_el in amount_elements[1:]:
+            amount = _gbp_to_float(amount_el.text)
+            self.assertTrue(amount < prev_amount, f"{amount} < {prev_amount}")
+            prev_amount = amount
+
+        # £ Low to high #####
+        server_url = reverse_lazy("funders")
+        self.get(server_url)
+
+        select = Select(self.browser.find_element(By.ID, SORT_ID))
+        select.select_by_visible_text("Total GBP Amount to Organisations - Lowest First")
+
+        self.wait_for_results_page()
+
+        amount_elements = self.browser.find_elements(By.CSS_SELECTOR, RESULT_EL_SELECTOR)
+
+        # Get the first result item
+        prev_amount = _gbp_to_float(amount_elements[0].text)
+        # Make sure the amounts in the results are in ascending order
+        for amount_el in amount_elements[1:]:
+            amount = _gbp_to_float(amount_el.text)
+            self.assertTrue(amount > prev_amount, f"{amount} > {prev_amount}")
+            prev_amount = amount
 
     def test_org_page(self):
         server_url = reverse_lazy("org", args=["GB-CHC-1156077"])
