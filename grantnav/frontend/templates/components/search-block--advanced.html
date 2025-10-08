@@ -9,9 +9,9 @@
       <label class="search-block__form-item-label" for="search-view">Enter a search term</label>
     </div>
 
-    <form role="search" action="{% url 'search' %}">
+    <form role="search" action="{% url 'search' %}" id="search-form">
       <div class="search-block__form-group">
-          <input name="text_query" class="form-control large-search" placeholder="Search grants, funders, recipients, locations" type="text" value="{{text_query}}">
+          <input name="text_query" id="text-query-input" class="form-control large-search" placeholder="Search grants, funders, recipients, locations" type="text" value="{{text_query}}">
           <input name="json_query" class="form-control" type="hidden" value="{{json_query}}">
          <input type="hidden" name="a" value="1">
       </div>
@@ -28,3 +28,20 @@
     </form>
   </div>
 </div>
+{{selected_facets|json_script:"applied-filters"}}
+<script>
+   document.getElementById('search-form').addEventListener('submit', function (e) {
+     /* If no search query and no filters treat this form submission
+     * like a link to avoid incorrectly setting the search ordering
+     * and avoid a full search cycle
+     */
+     const filtersApplied = JSON.parse(document.getElementById('applied-filters').text);
+
+     if (!document.getElementById('text-query-input').value &&
+        Object.keys(filtersApplied).length === 0) {
+       e.preventDefault();
+       // eslint-disable-next-line
+      window.location.href= '{% url "search" %}';
+     }
+});
+</script>
