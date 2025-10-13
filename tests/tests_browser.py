@@ -1,5 +1,6 @@
 import os
 import time
+from urllib.parse import urlparse
 
 from django.test import override_settings
 from django.urls import reverse_lazy
@@ -145,9 +146,26 @@ class InteractionsTests(BrowserTestCase):
     def test_search_current_url(self):
         server_url = reverse_lazy("home")
         self.get(server_url)
+        search_box = self.browser.find_element(By.ID, "text-query-input")
+        search_box.send_keys("test")
         self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
         self.wait_for_results_page()
-        self.assertIn("search?query=%2A&default_field=%2A&sort=_score+desc", self.browser.current_url)
+        # Correct sorting for a text input
+        url = urlparse(self.browser.current_url)
+        time.sleep(3)
+        path_query = f"{url.path}?{url.query}"
+        self.assertTrue(path_query.startswith("/search?query=test&default_field=%2A&sort=_score+desc"),
+                        f"Url was {path_query}")
+
+    def test_empty_search(self):
+        server_url = reverse_lazy("home")
+        self.get(server_url)
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+        # Check No additional params
+        url = urlparse(self.browser.current_url)
+        path_query = f"{url.path}?{url.query}"
+        self.assertEqual(path_query, "/search?", f"Url was {path_query}")
 
     # This was commented out in the original tests. TODO investigate this test
     # def test_search_two_words_without_quotes(self):
