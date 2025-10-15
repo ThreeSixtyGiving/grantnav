@@ -83,12 +83,41 @@ def maybe_create_index(index_name=ES_INDEX):
                 "type": "date",
                 "ignore_malformed": True
             },
-            "dateModified": {"type": "keyword"},
+            "url": {"type": "keyword"},
             "plannedDates": {
                 "properties": {
                     "startDate": {"type": "keyword"},
                     "endDate": {"type": "keyword"},
-                    "duration": {"type": "text"}
+                    "duration": {"type": "keyword"}
+                }
+            },
+            "actualDates": {
+                "properties": {
+                    "startDate": {"type": "keyword"},
+                    "endDate": {"type": "keyword"},
+                    "duration": {"type": "keyword"},
+                    "description": {"type": "text"},
+                }
+            },
+            "dateModified": {"type": "keyword"},
+            "recipientIndividual": {
+                "properties": {
+                    "id": {
+                        "type": "keyword"
+                    },
+                }
+            },
+            "toIndividualsDetails": {
+                "properties": {
+                    "primaryGrantReason": {
+                        "type": "keyword"
+                    },
+                    "secondaryGrantReason": {
+                        "type": "keyword"
+                    },
+                    "grantPurpose": {
+                        "type": "keyword"
+                    },
                 }
             },
             "recipientOrganization": {
@@ -117,34 +146,121 @@ def maybe_create_index(index_name=ES_INDEX):
                     "description": {
                         "type": "text", "analyzer": "english_with_folding"
                     },
+                    "addressRegion": {"type": "keyword"},
+                    "addressCountry": {"type": "keyword"},
+                    "postalCode": {"type": "keyword"},
+                    "telephone": {"type": "keyword"},
+                    "alternateName": {"type": "keyword"},
+                    "email": {"type": "keyword"},
+                    "organisationType": {"type": "keyword"},
+                    "contactName": {"type": "keyword"},
+                    "department": {"type": "keyword"},
+                    "location": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword",
+                            },
+                            "name": {
+                                "type": "keyword",
+                                "fields": {
+                                    "text": {
+                                        "type": "text"
+                                    }
+                                }
+                            },
+                            "countryCode": {
+                                "type": "keyword",
+                            },
+                            "latitude": {
+                                "type": "float"
+                            },
+                            "longitude": {
+                                "type": "float"
+                            },
+                            "description": {
+                                "type": "text",
+                            },
+                            "geoCode": {
+                                "type": "keyword",
+                            },
+                            "geoCodeType": {
+                                "type": "keyword",
+                            },
+                            "dateModified": {
+                                "type": "date",
+                                "ignore_malformed": True,
+                            }
+                        }
+                    },
                     "id_and_name": {
                         "type": "keyword"
+                    },
+                    "dateModified": {
+                        "type": "date",
+                        "ignore_malformed": True,
                     }
                 }
             },
-            "recipientIndividual": {
+            "beneficiaryLocation": {
                 "properties": {
+                    "geographic code (from GIFTS)": {"type": "text"},
                     "id": {
-                        "type": "keyword"
+                        "type": "keyword",
+                        "fields": {
+                            "text": {
+                                "type": "text"
+                            }
+                        }
                     },
-                }
-            },
-            "toIndividualsDetails": {
-                "properties": {
-                    "primaryGrantReason": {
-                        "type": "keyword"
+                    "name": {
+                        "type": "keyword",
+                        "fields": {
+                            "text": {
+                                "type": "text"
+                            }
+                        }
                     },
-                    "secondaryGrantReason": {
-                        "type": "keyword"
+                    "countryCode": {
+                        "type": "keyword",
                     },
-                    "grantPurpose": {
-                        "type": "keyword"
+                    "latitude": {
+                        "type": "float"
                     },
+                    "longitude": {
+                        "type": "float"
+                    },
+                    "description": {
+                        "type": "keyword",
+                        "fields": {
+                            "text": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "geoCode": {
+                        "type": "keyword",
+                    },
+                    "geoCodeType": {
+                        "type": "keyword",
+                    },
+                    "dateModified": {
+                        "type": "date",
+                        "ignore_malformed": True,
+                    }
                 }
             },
             "fundingOrganization": {
                 "properties": {
-                    "addressLocality": {
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "name": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "department": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "contactName": {
                         "type": "keyword"
                     },
                     "charityNumber": {
@@ -153,38 +269,86 @@ def maybe_create_index(index_name=ES_INDEX):
                     "companyNumber": {
                         "type": "keyword"
                     },
-                    "id": {
+                    "streetAddress": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "addressLocality": {
+                        "type": "keyword"
+                    },
+                    "addressRegion": {
+                        "type": "keyword"
+                    },
+                    "addressCountry": {
+                        "type": "keyword"
+                    },
+                    "postalCode": {
+                        "type": "keyword",
+                    },
+                    "telephone": {
+                        "type": "keyword",
+                    },
+                    "alternateName": {
+                        "type": "keyword",
+                    },
+                    "email": {
+                        "type": "keyword",
+                    },
+                    "description": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "organisationType": {
                         "type": "keyword"
                     },
                     "url": {
                         "type": "keyword"
                     },
-                    "name": {
-                        "type": "text", "analyzer": "english_with_folding"
-                    },
-                    "description": {
-                        "type": "text", "analyzer": "english_with_folding"
-                    },
-                    "streetAddress": {
-                        "type": "text", "analyzer": "english_with_folding"
-                    },
-                    "department": {
-                        "type": "text", "analyzer": "english_with_folding"
+                    "location": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword",
+                            },
+                            "name": {
+                                "type": "keyword",
+                                "fields": {
+                                    "text": {
+                                        "type": "text"
+                                    }
+                                }
+                            },
+                            "countryCode": {
+                                "type": "keyword",
+                            },
+                            "latitude": {
+                                "type": "float"
+                            },
+                            "longitude": {
+                                "type": "float"
+                            },
+                            "description": {
+                                "type": "text",
+                            },
+                            "geoCode": {
+                                "type": "keyword",
+                            },
+                            "geoCodeType": {
+                                "type": "keyword",
+                            },
+                            "dateModified": {
+                                "type": "date",
+                                "ignore_malformed": True,
+                            }
+                        }
                     },
                     "id_and_name": {
                         "type": "keyword"
                     }
                 }
             },
-            "beneficiaryLocation": {
-                "properties": {
-                    "geographic code (from GIFTS)": {"type": "text"}
-                }
-            },
             "grantProgramme": {
                 "properties": {
                     # Include title as keyword and text, so that both facets
-                    # and free text search work
+                    # and free text search work.
+                    # TODO this can now be achieved with multiple types
                     "title_keyword": {
                         "type": "keyword"
                     },
@@ -194,10 +358,32 @@ def maybe_create_index(index_name=ES_INDEX):
                     "description": {
                         "type": "text", "analyzer": "english_with_folding"
                     },
+                    "url": {
+                        "type": "keyword"
+                    },
+                    "dateModified": {
+                        "type": "date",
+                        "ignore_malformed": True,
+                    },
                 }
+            },
+            "fromOpenCall": {
+                "type": "keyword",
             },
             "fundingType": {
                 "properties": {
+                    "code": {"type": "keyword"},
+                    "vocabulary": {"type": "keyword"},
+                    "description": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "url": {
+                        "type": "keyword"
+                    },
+                    "dateModified": {
+                        "type": "date",
+                        "ignore_malformed": True,
+                    },
                     "title": {
                         "type": "text", "analyzer": "english_with_folding"
                     },
@@ -205,12 +391,80 @@ def maybe_create_index(index_name=ES_INDEX):
             },
             "classifications": {
                 "properties": {
+                    "code": {"type": "keyword"},
+                    "vocabulary": {"type": "keyword"},
+                    "description": {
+                        "type": "text", "analyzer": "english_with_folding"
+                    },
+                    "url": {
+                        "type": "keyword"
+                    },
+                    "dateModified": {
+                        "type": "date",
+                        "ignore_malformed": True,
+                    },
                     "title": {
                         "type": "text", "analyzer": "english_with_folding"
                     },
                 }
             },
+            "relatedDocument": {
+                "properties": {
+                    "id": {
+                        "type": "keyword",
+                        "fields": {
+                            "text": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "title": {
+                        "type": "keyword",
+                        "fields": {
+                            "text": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "url": {
+                        "type": "keyword",
+                        "fields": {
+                            "text": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "description": {
+                        "type": "keyword",
+                        "fields": {
+                            "text": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "documentType": {
+                        "type": "keyword",
+                        "fields": {
+                            "text": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "dateModified": {
+                        "type": "date",
+                        "ignore_malformed": True,
+                    }
+                }
+            },
+            # *Transaction has been left out deliberately
+            "relatedActivity": {
+                "type": "keyword"
+            },
+            "dataSource": {
+                "type": "keyword",
+            },
             "regrantType": {"type": "keyword"},
+            "locationScope": {"type": "keyword"},
             "simple_grant_type": {"type": "keyword"},
 
             "additional_data": {
