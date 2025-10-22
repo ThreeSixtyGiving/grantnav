@@ -39,7 +39,9 @@ def initialise_org_cache():
         return org_cache[org_type][org_id]
 
     def cache_org_data(org_id, org_type, org):
-        org_cache[org_type][org_id] = (new_ordered_names(org)[0], new_org_ids(org)[0])
+        known_org_ids = new_org_ids(org)
+        for known_org_id in known_org_ids:
+            org_cache[org_type][known_org_id] = (new_ordered_names(org)[0], new_org_ids(org)[0])
 
     return get_org, cache_org_data
 
