@@ -306,6 +306,29 @@ $(function () {
       ajax: get_filter_search_ajax('additional_data', 'recipientDistrictName')
     });
 
+    /* countries */
+    let countries_best_options = $.extend({}, funder_options);
+    countries_best_options = $.extend(countries_best_options, {
+      placeholder: 'Search for a country',
+      ajax: get_filter_search_ajax('additional_data', 'GNBestCountryName')
+    });
+
+    let countries_recipient_org_options = $.extend({}, funder_options);
+    countries_recipient_org_options = $.extend(countries_recipient_org_options, {
+      placeholder: 'Search for a country',
+      ajax: get_filter_search_ajax('additional_data', 'GNRecipientOrgCountryName')
+    });
+
+    let countries_beneficiary_options = $.extend({}, funder_options);
+    countries_beneficiary_options = $.extend(countries_beneficiary_options, {
+      placeholder: 'Search for a country',
+      ajax: get_filter_search_ajax('additional_data', 'GNBeneficiaryCountryName')
+    });
+
+    $('.bestCountryName-search-box').select2(countries_best_options);
+    $('.recipientOrgCountryName-search-box').select2(countries_recipient_org_options);
+    $('.beneficiaryCountryName-search-box').select2(countries_beneficiary_options);
+
     /* Organisations */
     $('.fundingOrganization-search-box').select2(funder_options);
     $('.recipientOrganization-search-box').select2(recipient_options);
@@ -329,77 +352,31 @@ $(function () {
     });
 
     /* Selecting */
-    $('.fundingOrganization-search-box').on('select2:select', function (e) {
-      const data = e.params.data;
-      const parentFilterId = e.target.closest('details').id || '';
-      redirect_on_selection(parentFilterId, 'fundingOrganization', data);
-    });
 
-    $('.recipientOrganization-search-box').on('select2:select', function (e) {
-      const data = e.params.data;
-      const parentFilterId = e.target.closest('details').id || '';
-      redirect_on_selection(parentFilterId, 'recipientOrganization', data);
-    });
+    for (const searchBoxClass of [
+      'fundingOrganization',
+      'recipientOrganization',
+      'grantProgramme',
+      'recipientDistrictName',
+      'recipientOrgDistrictName',
+      'beneficiaryDistrictName',
+      'bestCountryName',
+      'recipientOrgCountryName',
+      'beneficiaryCountryName'
+    ]) {
+      /* Setup the select handler */
+      $(`.${searchBoxClass}-search-box`).on('select2:select', function (e) {
+        const data = e.params.data;
+        const parentFilterId = e.target.closest('details').id || '';
+        redirect_on_selection(parentFilterId, searchBoxClass, data);
+      });
 
-    $('.grantProgramme-search-box').on('select2:select', function (e) {
-      const data = e.params.data;
-      const parentFilterId = e.target.closest('details').id || '';
-      redirect_on_selection(parentFilterId, 'grantProgramme', data);
-    });
-
-    $('.recipientDistrictName-search-box').on('select2:select', function (e) {
-      const data = e.params.data;
-      const parentFilterId = e.target.closest('details').id || '';
-      redirect_on_selection(parentFilterId, 'recipientDistrictName', data);
-    });
-
-    $('.recipientOrgDistrictName-search-box').on('select2:select', function (e) {
-      const data = e.params.data;
-      const parentFilterId = e.target.closest('details').id || '';
-      redirect_on_selection(parentFilterId, 'recipientOrgDistrictName', data);
-    });
-
-    $('.beneficiaryDistrictName-search-box').on('select2:select', function (e) {
-      const data = e.params.data;
-      const parentFilterId = e.target.closest('details').id || '';
-      redirect_on_selection(parentFilterId, 'beneficiaryDistrictName', data);
-    });
-
-    /* End selecting */
-
-    /* Excluding */
-
-    $('#fundingOrganization-select input[type=radio]').on('change', function (e) {
-      const parentFilterId = e.target.closest('details').id || '';
-      maybe_redirect_on_exclude(parentFilterId, 'fundingOrganization');
-    });
-
-    $('#recipientOrganization-select input[type=radio]').on('change', function (e) {
-      const parentFilterId = e.target.closest('details').id || '';
-      maybe_redirect_on_exclude(parentFilterId, 'recipientOrganization');
-    });
-
-    $('#grantProgramme-select input[type=radio]').on('change', function (e) {
-      const parentFilterId = e.target.closest('details').id || '';
-      maybe_redirect_on_exclude(parentFilterId, 'grantProgramme');
-    });
-
-    $('#recipientDistrictName-select input[type=radio]').on('change', function (e) {
-      const parentFilterId = e.target.closest('details').id || '';
-      maybe_redirect_on_exclude(parentFilterId, 'recipientDistrictName');
-    });
-
-    $('#recipientOrgDistrictName-select input[type=radio]').on('change', function (e) {
-      const parentFilterId = e.target.closest('details').id || '';
-      maybe_redirect_on_exclude(parentFilterId, 'recipientOrgDistrictName');
-    });
-
-    $('#beneficiaryDistrictName-select input[type=radio]').on('change', function (e) {
-      const parentFilterId = e.target.closest('details').id || '';
-      maybe_redirect_on_exclude(parentFilterId, 'beneficiaryDistrictName');
-    });
-
-    /* End excluding */
+      /* Setup the exclude handler */
+      $(`#${searchBoxClass}-select input[type=radio]`).on('change', function (e) {
+        const parentFilterId = e.target.closest('details').id || '';
+        maybe_redirect_on_exclude(parentFilterId, searchBoxClass);
+      });
+    }
   });
 
   $('body').on('click', '.remove-select2-option', function (e) {
