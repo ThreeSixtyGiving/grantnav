@@ -86,7 +86,7 @@ TERM_FACETS = [
     TermFacet("additional_data.GNBestCountyName", "bestCountyName", 21, "Best Available UK County", False, 5000),
     TermFacet("additional_data.GNBestCountryName", "bestCountryName", 22, "Best Available Country", False, 5000),
     TermFacet("additional_data.GNRecipientOrgCountryName", "recipientOrgCountryName", 23, "Recipieint Country", False, 5000),
-    TermFacet("additional_data.GNBeneficiaryCountryName", "beneficiaryCountryName", 24, "Beneficiary Country", False, 5000),
+    TermFacet("additional_data.GNBeneficiaryCountryName", "beneficiaryCountryName", 24, "Grant Location Country", False, 5000),
 ]
 
 SIZE = 20
@@ -948,7 +948,9 @@ def search(request, template_name="search.html"):
 
 
 def filter_search_ajax(request, parent_field=None, child_field=None):
-    ''' Ajax request returning the format that select2 libary wants '''
+    ''' Ajax request returning the format that select2 libary wants
+        Used for include/exclude filters.
+    '''
 
     [result_format, results_size] = get_request_type_and_size(request)
 
@@ -998,17 +1000,23 @@ def filter_search_ajax(request, parent_field=None, child_field=None):
     context['results'] = results
 
     # bool_index is the index # of the facet in BASIC_FILTER
-    is_json = True
+    is_json = False
     if parent_field == 'fundingOrganization':
+        is_json = True
         bool_index, display_name = 0, 'Funders'
     elif parent_field == 'recipientOrganization':
+        is_json = True
         bool_index, display_name = 1, 'Recipients'
     elif parent_field == 'grantProgramme':
         bool_index, display_name = 10, 'Grant Programme Titles'
-        is_json = False
-    elif parent_field == 'additional_data':
+    elif parent_field == 'additional_data' and child_field == 'recipientDistrictName':
         bool_index, display_name = 6, 'District'
-        is_json = False
+    elif parent_field == 'additional_data' and child_field == 'GNBestCountryName':
+        bool_index, display_name = 22, 'Best Country'
+    elif parent_field == 'additional_data' and child_field == 'GNRecipientOrgCountryName':
+        bool_index, display_name = 23, 'Recipient Country'
+    elif parent_field == 'additional_data' and child_field == 'GNBeneficiaryCountryName':
+        bool_index, display_name = 24, 'Grant Location Country'
 
     get_terms_facets(request, context, new_json_query, f'{parent_field}.{child_field}', parent_field, bool_index, display_name,
                      BASIC_FILTER, create_parameters_from_json_query, is_json=is_json, path='/search')
