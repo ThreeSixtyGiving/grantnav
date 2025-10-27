@@ -31,36 +31,36 @@ from dataload.import_to_elasticsearch import AGE_BIN_LABELS
 
 
 BASIC_FILTER = [
-    {"bool": {"should": []}},  # Funding Orgs
-    {"bool": {"should": []}},  # Recipient Orgs
-    {"bool": {"should": [], "must": {}, "minimum_should_match": 1}},  # Amount Awarded Fixed
-    {"bool": {"should": {"range": {"amountAwarded": {}}}, "must": {}, "minimum_should_match": 1}},  # Amount Awarded
-    {"bool": {"should": []}},  # Award Year
-    {"bool": {"should": []}},  # additional_data.recipientRegionName
-    {"bool": {"should": []}},  # additional_data.recipientDistrictName
-    {"bool": {"should": []}},  # currency
-    {"bool": {"should": []}},  # additional_data.TSGFundingOrgType
-    {"bool": {"should": {"range": {"awardDate": {}}}, "must": {}, "minimum_should_match": 1}},   # Date range
-    {"bool": {"should": []}},  # Programme Title
-    {"bool": {"should": []}},  # additional_data.TSGRecipientType
-    {"bool": {"should": []}},  # simple_grant_type
+    {"bool": {"should": []}},  # 0. Funding Orgs
+    {"bool": {"should": []}},  # 1. Recipient Orgs
+    {"bool": {"should": [], "must": {}, "minimum_should_match": 1}},  # 2. Amount Awarded Fixed
+    {"bool": {"should": {"range": {"amountAwarded": {}}}, "must": {}, "minimum_should_match": 1}},  # 3. Amount Awarded
+    {"bool": {"should": []}},  # 4. Award Year
+    {"bool": {"should": []}},  # 5. additional_data.recipientRegionName
+    {"bool": {"should": []}},  # 6. additional_data.recipientDistrictName
+    {"bool": {"should": []}},  # 7. currency
+    {"bool": {"should": []}},  # 8. additional_data.TSGFundingOrgType
+    {"bool": {"should": {"range": {"awardDate": {}}}, "must": {}, "minimum_should_match": 1}},   # 9. Date range
+    {"bool": {"should": []}},  # 10. Programme Title
+    {"bool": {"should": []}},  # 11. additional_data.TSGRecipientType
+    {"bool": {"should": []}},  # 12. simple_grant_type
     # Used for Aggregates API
-    {"bool": {"should": []}},  # additional_data.recipientOrgInfos.organisationTypePrimary
-    {"bool": {"should": []}},  # additional_data.GNRecipientOrgInfo0.ageWhenAwarded
+    {"bool": {"should": []}},  # 13. additional_data.recipientOrgInfos.organisationTypePrimary
+    {"bool": {"should": []}},  # 14. additional_data.GNRecipientOrgInfo0.ageWhenAwarded
     # End used for Aggregates
 
-    {"bool": {"should": []}},  # additional_data.GNRecipientOrgRegionName
-    {"bool": {"should": []}},  # additional_data.GNRecipientOrgDistrictName
-    {"bool": {"should": []}},  # additional_data.GNBeneficiaryRegionName
-    {"bool": {"should": []}},  # additional_data.GNBeneficiaryDistrictName
+    {"bool": {"should": []}},  # 15. additional_data.GNRecipientOrgRegionName
+    {"bool": {"should": []}},  # 16.  additional_data.GNRecipientOrgDistrictName
+    {"bool": {"should": []}},  # 17. additional_data.GNBeneficiaryRegionName
+    {"bool": {"should": []}},  # 18. additional_data.GNBeneficiaryDistrictName
     # County
-    {"bool": {"should": []}},  # additional_data.GNBeneficiaryCountyName
-    {"bool": {"should": []}},  # additional_data.GNRecipientCountyName
-    {"bool": {"should": []}},  # additional_data.GNBestCountyName
+    {"bool": {"should": []}},  # 19. additional_data.GNBeneficiaryCountyName
+    {"bool": {"should": []}},  # 20. additional_data.GNRecipientCountyName
+    {"bool": {"should": []}},  # 21. additional_data.GNBestCountyName
     # Country
-    {"bool": {"should": []}},  # additional_data.GNBestCountryName
-    {"bool": {"should": []}},  # additional_data.GNRecipientOrgCountryName
-    {"bool": {"should": []}},  # additional_data.GNBeneficiaryCountryName
+    {"bool": {"should": []}},  # 22. additional_data.GNBestCountryName
+    {"bool": {"should": []}},  # 23. additional_data.GNRecipientOrgCountryName
+    {"bool": {"should": []}},  # 24. additional_data.GNBeneficiaryCountryName
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
