@@ -85,7 +85,7 @@ TERM_FACETS = [
     TermFacet("additional_data.GNRecipientOrgCountyName", "recipientOrgCountyName", 20, "Recipient UK County", False, 5000),
     TermFacet("additional_data.GNBestCountyName", "bestCountyName", 21, "Best Available UK County", False, 5000),
     TermFacet("additional_data.GNBestCountryName", "bestCountryName", 22, "Best Available Country", False, 5000),
-    TermFacet("additional_data.GNRecipientOrgCountryName", "recipientOrgCountryName", 23, "Recipieint Country", False, 5000),
+    TermFacet("additional_data.GNRecipientOrgCountryName", "recipientOrgCountryName", 23, "Recipient Country", False, 5000),
     TermFacet("additional_data.GNBeneficiaryCountryName", "beneficiaryCountryName", 24, "Grant Location Country", False, 5000),
 ]
 
