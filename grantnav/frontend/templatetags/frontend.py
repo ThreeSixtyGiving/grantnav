@@ -84,8 +84,8 @@ SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
 
 @register.filter(name='flatten')
 def flatten(d):
-    return sorted([(key, value) for key, value in flatten_dict(d)
-                  if key not in SKIP_KEYS])
+    return [(key, value) for key, value in flatten_dict(d)
+            if key not in SKIP_KEYS]
 
 
 @register.filter(name='half_sorted_items')
