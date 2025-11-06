@@ -35,7 +35,7 @@ coveralls==4.0.1
     # via -r requirements_dev.in
 decorator==5.2.1
     # via retry
-django==4.2.20
+django==4.2.26
     # via
     #   -r requirements.in
     #   django-bootstrap3
