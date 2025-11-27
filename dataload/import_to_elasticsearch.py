@@ -629,11 +629,11 @@ def maybe_create_index(index_name=ES_INDEX):
                     "tokenizer": "standard",
                     "filter": [
                         # asciifolding not in the standard english analyzer.
-                        "asciifolding",
-                        "english_possessive_stemmer",
+#                       "asciifolding",
+ #                      "english_possessive_stemmer",
                         "lowercase",
                         "english_stop",
-                        "english_stemmer",
+  #                     "english_stemmer",
                     ]
                 }
             },
