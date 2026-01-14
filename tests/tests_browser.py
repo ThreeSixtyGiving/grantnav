@@ -62,9 +62,6 @@ class InteractionsTests(BrowserTestCase):
             ).text
         )
 
-        # open show highlighted grants section
-        self.browser.find_element(By.CLASS_NAME, "summary-icon").click()
-
         # other_currencies_modal = browser.find_element(By.ID, "other-currencies-modal")
         # search "laboratory"
         other_currencies_modal = self.browser.find_element(
