@@ -82,6 +82,7 @@ packaging==24.2
     #   build
     #   chromedriver-autoinstaller
     #   plotly
+    #   wheel
 pathspec==0.12.1
     # via black
 pip-tools==7.4.1
@@ -143,7 +144,7 @@ urllib3[socks]==1.26.20
     #   selenium
 websocket-client==1.8.0
     # via selenium
-wheel==0.45.1
+wheel==0.46.2
     # via pip-tools
 wsproto==1.2.0
     # via trio-websocket
