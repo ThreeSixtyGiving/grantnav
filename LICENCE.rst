@@ -17,7 +17,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with GrantNav.  If not, see <https://www.gnu.org/licenses/>.
 
-Copyright 2016-2020 `360Giving <https://threesixtygiving.org>`, a company limited by guarantee 09668396 and a registered charity 1164883.
+Copyright 2016-2020 `360Giving <https://threesixtygiving.org>`, a company limited by guarantee 09668396 and a registered charity 1116201.
 
 Logo, look and feel
 -------------------
