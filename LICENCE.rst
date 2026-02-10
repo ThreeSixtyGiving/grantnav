@@ -17,14 +17,15 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with GrantNav.  If not, see <https://www.gnu.org/licenses/>.
 
-Copyright 2016-2020 `360Giving <https://threesixtygiving.org>`, a company limited by guarantee 09668396 and a registered charity 1116201.
+Copyright 2016-2026 `360Giving <https://www.360giving.org>`. 360Giving is a trading name of Funders Together.
+Funders Together is a charitable company registered in England and Wales, Company number: 5596299 and Charity number: 1116201.
 
 Logo, look and feel
 -------------------
 
 The 360Giving logo </grantnav/frontend/static/images/360-giving-logo-white.svg> is excluded
 from the terms of this license. The 360Giving logo is copyright
-`360Giving <https://threesixtygiving.org>` and may not be used without express permission.
+`360Giving <https://www.360giving.org>` and may not be used without express permission.
 
 The look-and-feel of GrantNav is that of 360Giving, and care should be taken when running any public instance not to falsely give the impression, intentionally or otherwise, that the instance is operated by or related to 360Giving.
 
