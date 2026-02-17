@@ -10,6 +10,14 @@
     </header>
 
     <main class="search-summary--main">
+      <div class="search-summary--main__left-column">
+        <div class="graph-item">
+          <div class="graph-label">Date awarded</div>
+          <div class="graph-container" style="display: inline">
+            {% award_date_graph %}
+          </div>
+        </div>
+      </div>
 
       <div class="search-summary--main__right-column">
         <div class="summary-content--item">
@@ -45,7 +53,6 @@
             {% endif %}
           {% endwith %}
         </div>
-        <div class="summary-illustration">{% include './summary-illustration.html' %}</div>
       </div>
     </main>
 
