@@ -126,7 +126,14 @@ PROVENANCE_JSON=path/to/data_package/data_all.json python manage.py runserver
 Compile theme
 -------------
 
-In order to compile the sass theme please see the [360-ds](https://github.com/ThreeSixtyGiving/360-ds) submodule. All styles are built and imported from there.
+All styles are built and imported from [360-ds](https://github.com/ThreeSixtyGiving/360-ds) submodule.
+
+Updating the Design System:
+
+```
+git submodule update --init --recursive
+git submodule update --remote 360-ds
+```
 
 
 Run tests
