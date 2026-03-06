@@ -1,5 +1,5 @@
 {% load static %}
-<!doctype html lang="en">
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
@@ -20,6 +20,8 @@
 
         <link rel="stylesheet" href="{% static 'css/main.css'%}?v={{ main_css_cache_key }}">
         <link rel="stylesheet" href="{% static 'css/glyphicons-halflings.css'%}">
+
+        {% include "components/analytics-js.html.j2" %}
 
         <noscript>
           <style>

@@ -1,0 +1,19 @@
+# Runs a local Elasticsearch instance for developing/testing GrantNav
+# NOTE: Doesn't run GrantNav in a container, only elasticsearch
+#       You must seperately run GrantNav itsself
+
+services:
+  elasticsearch:
+    image: elasticsearch:7.17.23
+    environment:
+      "discovery.type": 'single-node'
+      "TAKE_FILE_OWNERSHIP": "True"
+      "ES_JAVA_OPTS": "-Xms2g -Xmx4g"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "elasticsearch_data:/usr/share/elasticsearch/data/"
+
+volumes:
+   elasticsearch_data: {}

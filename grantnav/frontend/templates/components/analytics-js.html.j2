@@ -1,0 +1,84 @@
+{% if matomo.url and matomo.site_id %}
+<!-- Matomo -->
+<script type="text/javascript">
+    /* eslint-disable no-var */
+    console.log("GrantNav: Matomo Analytics Configured");
+    var _paq = window._paq = window._paq || [];
+    var siteID = '{{ matomo.site_id }}';
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    // only one of requireCookieConsent OR requireConsent can be set
+    // see: https://matomo.org/faq/general/faq_156/
+    _paq.push(['requireCookieConsent']); // Don't use cookies unless we have consent
+
+    // Set tracking cookie domain if one is configured
+    {% if matomo.cookie_domain %}
+        {% if matomo.cookie_subdomains %}
+            _paq.push(['setCookieDomain', '*.{{ matomo.cookie_domain }}']);
+        {% else %}
+            _paq.push(['setCookieDomain', '{{ matomo.cookie_domain }}']);
+        {% endif %}
+    {% endif %}
+
+    _paq.push(['alwaysUseSendBeacon']); // https://matomo.org/faq/how-to/faq_33087/
+    _paq.push(['setVisitorCookieTimeout', 60*60*24*90]); // Tracking cookie timeout after 90 days
+    _paq.push(['setDownloadExtensions', 'json|csv|xlsx']);
+    _paq.push(['enableHeartBeatTimer']);
+
+    // Track GrantNav searches
+    {% if results and results.hits and not search_error %}
+        var gnIsSearch = true;
+        // It's a search!
+        var gnSearchQuery = '{{ text_query }}';
+        if(!gnSearchQuery) { gnSearchQuery = '*'; }
+
+        var _urlParams = new URLSearchParams(window.location.search);
+        var gnSearchFields = _urlParams.has("default_field") ? _urlParams.get("default_field") : "*";
+        var gnSearchResultsTotal = {{ results.hits.total.value }};
+
+        // The search category is what the user is searching for, and by what
+        var gnSearchCategory = "UNKNOWN";
+
+        if (window.location.pathname === "/search")  {
+            gnSearchCategory = "Grants";
+        } else if(window.location.pathname === "/funders") {
+            gnSearchCategory = "Funders";
+        } else if(window.location.pathname === "/recipients") {
+            gnSearchCategory = "Recipients";
+        }
+
+    {% else %}
+        var gnIsSearch = false;
+    {% endif %}
+
+    _paq.push([function() {
+        var tracker = this;
+
+        // Add event trackers for search download buttons
+        var csvCustomExportModalBtn = document.getElementById('custom-csv-download-modal-btn');
+        if (csvCustomExportModalBtn) {
+            csvCustomExportModalBtn.addEventListener('click', function(e) {
+                tracker.trackEvent('GrantNavUI', 'Clicked', 'CustomCSVModalOpened');
+            });
+        }
+    }]);
+
+    // Track the page view or search
+    if(gnIsSearch) {
+        _paq.push(['trackSiteSearch', gnSearchQuery, gnSearchCategory, gnSearchResultsTotal]);
+    } else {
+        _paq.push(['trackPageView']);
+    }
+
+    _paq.push(['enableLinkTracking']);
+
+    (function () {
+        var u = '{{ matomo.url }}';
+        _paq.push(['setTrackerUrl', u + 'matomo.php']);
+        if (!siteID) throw new Error('siteID not set');
+        _paq.push(['setSiteId', siteID]);
+        var d = document; var g = d.createElement('script'); var s = d.getElementsByTagName('script')[0];
+        g.type = 'text/javascript'; g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+<!-- End Matomo Code -->
+{% endif %}

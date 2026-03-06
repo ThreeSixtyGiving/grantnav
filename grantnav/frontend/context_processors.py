@@ -4,8 +4,8 @@ import datetime
 from django.conf import settings
 
 
-def piwik(request):
-    return {'piwik': settings.PIWIK}
+def matomo(request):
+    return {'matomo': settings.PIWIK}
 
 
 def navigation(request):
