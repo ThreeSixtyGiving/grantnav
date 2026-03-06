@@ -27,8 +27,10 @@ if 'SECRET_KEY' not in os.environ:
 env = environ.Env(  # set default values and casting
     SENTRY_DSN=(str, ''),
     DEBUG=(bool, False),
-    PIWIK_URL=(str, ''),
+    PIWIK_URL=(str, 'https://analytics.threesixtygiving.org/'),
     PIWIK_SITE_ID=(str, ''),
+    MATOMO_COOKIE_DOMAIN=(str, 'threesixtygiving.org'),
+    MATOMO_COOKIE_SUBDOMAINS=(bool, True),
     ALLOWED_HOSTS=(list, []),
     SECRET_KEY=(str, secret_key),
     GRANT_SCHEMA=(str, 'https://raw.githubusercontent.com/ThreeSixtyGiving/standard/main/schema/360-giving-schema.json'),
@@ -44,6 +46,8 @@ env = environ.Env(  # set default values and casting
 PIWIK = {
     'url': env('PIWIK_URL'),
     'site_id': env('PIWIK_SITE_ID'),
+    'cookie_domain': env('MATOMO_COOKIE_DOMAIN'),
+    'cookie_subdomains': env('MATOMO_COOKIE_SUBDOMAINS'),
 }
 
 # Plotly
@@ -114,7 +118,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'grantnav.frontend.context_processors.piwik',
+                'grantnav.frontend.context_processors.matomo',
                 'grantnav.frontend.context_processors.navigation',
                 'grantnav.frontend.context_processors.main_css_cache_key',
                 'grantnav.frontend.context_processors.debug_mode',

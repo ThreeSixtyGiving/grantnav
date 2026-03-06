@@ -1,26 +1,3 @@
-{% if not debug %}
-<!-- Matomo -->
-<script type="text/javascript">
-  /* eslint-disable no-var */
-  var _paq = window._paq = window._paq || [];
-  var siteID = 9;
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(['requireCookieConsent']); // Don't use cookies unless we have consent
-  _paq.push(['setCookieDomain', '*.threesixtygiving.org']);
-  _paq.push(['setDownloadExtensions', 'json|csv|xlsx']);
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function () {
-    var u = 'https://analytics.threesixtygiving.org/';
-    _paq.push(['setTrackerUrl', u + 'matomo.php']);
-    if (!siteID) throw new Error('siteID not set');
-    _paq.push(['setSiteId', siteID]);
-    var d = document; var g = d.createElement('script'); var s = d.getElementsByTagName('script')[0];
-    g.type = 'text/javascript'; g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
-  })();
-</script>
-<!-- End Matomo Code -->
-
 <script type="text/javascript">
   function hideCookieConsentDialog (hide) {
     if (hide) {
@@ -32,12 +9,14 @@
 
   // eslint-disable-next-line no-unused-vars
   function noCookieConsent () {
-    document.cookie = 'noEnhancedAnalytics=1; max-age=2592000; domain=threesixtygiving.org';
+    document.cookie = 'noEnhancedAnalytics=1; max-age=7776000; domain={{ matomo.cookie_domain }}';
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    // Has a consent preference cookie already been set?
     if (document.cookie.indexOf('mtm_cookie_consent') > -1 ||
       document.cookie.indexOf('mtm_consent_removed') > -1 ||
+      document.cookie.indexOf('mtm_consent') > -1 ||
       document.cookie.indexOf('noEnhancedAnalytics') > -1) {
       hideCookieConsentDialog(true);
     } else {
@@ -53,11 +32,9 @@
           Policy</a>
       </h2>
       <p class="base-card__text">
-        <a href="#" onclick="_paq.push(['rememberCookieConsentGiven']); hideCookieConsentDialog(true);"
-          class="button">Yes</a>
-        <a href="#" onclick="noCookieConsent(); hideCookieConsentDialog(true);" class="button cookie-consent-no">No</a>
-        <a href="#" onclick="_paq.push(['optUserOut']); hideCookieConsentDialog(true);" class="button">Disable
-          Analytics</a>
+        <a href="#" onclick="_paq.push(['rememberCookieConsentGiven']); hideCookieConsentDialog(true);" class="button">Yes</a>
+        <a href="#" onclick="_paq.push(['forgetCookieConsentGiven']); noCookieConsent(); hideCookieConsentDialog(true);" class="button cookie-consent-no">No</a>
+        <a href="#" onclick="_paq.push(['optUserOut']); hideCookieConsentDialog(true);" class="button">Disable Analytics</a>
       </p>
       <p id="cookie-dialog-desc" style="font-style: italic;">360Giving uses privacy-respecting analytics. If you don't
         accept cookies, we will track only basic information about your visit. Click "Disable Analytics" if you don't
@@ -65,4 +42,3 @@
     </div>
   </div>
 </div>
-{% endif %}
