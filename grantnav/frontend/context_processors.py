@@ -10,9 +10,9 @@ def piwik(request):
 
 def navigation(request):
     sections = [
-        {"name": "About 360Giving", "url": "https://www.360giving.org/",
-         "id": "about_threesixty_link"},
-        {"name": "About the data", "url": "https://www.360giving.org/explore/before-you-start/", "id": "about_link"},
+        {"name": "About 360Giving", "url": "https://www.360giving.org/", "id": "about_threesixty_link"},
+        {"name": "Before you start", "url": "https://www.360giving.org/explore/before-you-start/", "id": "about_link"},
+        {"name": "How to search", "url": "https://www.360giving.org/explore/how-to-search/", "id": "how_to_search_link"},
         {"name": "GrantNav user guide", "url": "https://www.360giving.org/explore/user-guide/", "id": "help_link"},
     ]
     return {'nav_menu': sections}
