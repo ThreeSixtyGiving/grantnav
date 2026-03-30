@@ -145,7 +145,7 @@ SEARCH_SUMMARY_AGGREGATES = {
 def grants_csv_generator(query, grant_csv_titles, grant_csv_paths):
     yield grant_csv_titles
     es = get_es()
-    for result in scan(es, query, index=get_index()):
+    for result in scan(es, query, index=get_index(), preserve_order=True):
         result_with_provenance = {
             "result": result["_source"],
             "dataset": provenance.by_identifier.get(provenance.identifier_from_filename(result['_source']['filename']), {})
