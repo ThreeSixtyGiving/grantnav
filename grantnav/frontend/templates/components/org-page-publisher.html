@@ -19,6 +19,10 @@
         <p><strong>Website:</strong> <a href="{{ publisher.website }}">{{ publisher.website }}</a></p>
         {% endif %}
 
+        {% if publisher.prefix %}
+        <p><strong>Quality Dashboard:</strong> <a href="https://qualitydashboard.threesixtygiving.org/publisher/{{ publisher.prefix }}">View Quality Dashboard</a></p>
+        {% endif %}
+
         <h4>Datasets</h4>
         <p>Here is an overview of grants published by {{publisher.name}}.</p>
         <table class="table table--zebra table--small" style="width: 100%">
