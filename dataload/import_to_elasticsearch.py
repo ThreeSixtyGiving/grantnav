@@ -577,7 +577,10 @@ def maybe_create_index(index_name=ES_INDEX):
                     },
                     "GNRecipientOrgCountryName": {
                         "type": "keyword",
-                    }
+                    },
+                    "GNGeoCategory": {
+                        "type": "keyword",
+                    },
                 }
             },
             # Additional funding/recipient organisation mappings
@@ -724,6 +727,8 @@ def process_grant(grant, grants_file_path):
     update_doc_with_other_locations(grant)
     # update_doc_with_undetermined needs to go last
     update_doc_with_undetermined(grant)
+    # Categorize geographic status
+    update_doc_with_geo_category(grant)
 
 
 def process_grant_file_process(process_queue,
@@ -1020,6 +1025,41 @@ def update_doc_with_undetermined(grant):
                 ]:
         if not grant["additional_data"].get(key):
             grant["additional_data"][key] = "Undetermined"
+
+
+def update_doc_with_geo_category(grant):
+    """Categorize grants by geographic determination status.
+        - "UK": Grants with location in the United Kingdom
+        - "International": Grants with location outside the UK (including when best country is undetermined but beneficiary/recipient has international data)
+        - "Undetermined": Grants with truly no geographic location data
+    """
+    best_country = grant["additional_data"].get("GNBestCountryName")
+    beneficiary_country = grant["additional_data"].get("GNBeneficiaryCountryName")
+    recipient_org_country = grant["additional_data"].get("GNRecipientOrgCountryName")
+    
+    # Check if any location data indicates international (outside UK)
+    is_international = False
+    
+    # Check beneficiary country
+    if beneficiary_country and beneficiary_country not in ["Undetermined", UNITED_KINGDOM_ISO_NM]:
+        is_international = True
+    
+    # Check recipient org country
+    if recipient_org_country and recipient_org_country not in ["Undetermined", UNITED_KINGDOM_ISO_NM]:
+        is_international = True
+    
+    # Check best country
+    if best_country and best_country not in ["Undetermined", UNITED_KINGDOM_ISO_NM]:
+        is_international = True
+    
+    # Categorize based on findings
+    if is_international:
+        grant["additional_data"]["GNGeoCategory"] = "International"
+    elif best_country == "Undetermined" and beneficiary_country == "Undetermined" and recipient_org_country == "Undetermined":
+        grant["additional_data"]["GNGeoCategory"] = "Undetermined"
+    else:
+        # Has some UK data or is clearly UK
+        grant["additional_data"]["GNGeoCategory"] = "UK"
 
 
 def update_doc_with_first_recipient_org_info(grant):
