@@ -4,6 +4,7 @@ import os
 from dataload.import_to_elasticsearch import (
     update_doc_with_other_locations,
     update_doc_with_undetermined,
+    update_doc_with_geo_category,
 )
 
 from django.test import TestCase
@@ -84,3 +85,39 @@ class DataLoaderTest(TestCase):
 
         for field, val in GN_location_fields:
             self.assertEqual(grant_data["additional_data"][field], val)
+
+    def test_geo_category_uk_grant(self):
+        """Check that UK grants are categorized correctly"""
+        grant_data = json.load(
+            open(os.path.join(prefix, "uk_grant_GN_location_fields.json"))
+        )
+
+        update_doc_with_other_locations(grant_data)
+        update_doc_with_undetermined(grant_data)
+        update_doc_with_geo_category(grant_data)
+
+        self.assertEqual(grant_data["additional_data"]["GNGeoCategory"], "UK")
+
+    def test_geo_category_international_grant(self):
+        """Check that international grants are categorized correctly"""
+        grant_data = json.load(
+            open(os.path.join(prefix, "international_grant_GN_location_fields.json"))
+        )
+
+        update_doc_with_other_locations(grant_data)
+        update_doc_with_undetermined(grant_data)
+        update_doc_with_geo_category(grant_data)
+
+        self.assertEqual(grant_data["additional_data"]["GNGeoCategory"], "International")
+
+    def test_geo_category_undetermined_grant(self):
+        """Check that grants with undetermined location are categorized correctly"""
+        grant_data = {
+            "id": "test-grant-123",
+            "additional_data": {},
+        }
+
+        update_doc_with_undetermined(grant_data)
+        update_doc_with_geo_category(grant_data)
+
+        self.assertEqual(grant_data["additional_data"]["GNGeoCategory"], "Undetermined")
