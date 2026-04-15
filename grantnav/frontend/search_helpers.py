@@ -213,10 +213,12 @@ def get_clear_all(request, context, json_query, basic_filter, create_parameters_
         json_query["query"]["bool"]["filter"] = copy.deepcopy(basic_filter)
         context["results"]["clear_all_facet_url"] = request.path + "?" + create_parameters_from_json_query(json_query)
 
+
 def ensure_filter_list_length(json_query, bool_index):
     filters = json_query["query"]["bool"]["filter"]
     while len(filters) <= bool_index:
         filters.append({"bool": {"should": []}})
+
 
 def get_terms_facets(
     request,
