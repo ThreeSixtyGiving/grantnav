@@ -213,6 +213,10 @@ def get_clear_all(request, context, json_query, basic_filter, create_parameters_
         json_query["query"]["bool"]["filter"] = copy.deepcopy(basic_filter)
         context["results"]["clear_all_facet_url"] = request.path + "?" + create_parameters_from_json_query(json_query)
 
+def ensure_filter_list_length(json_query, bool_index):
+    filters = json_query["query"]["bool"]["filter"]
+    while len(filters) <= bool_index:
+        filters.append({"bool": {"should": []}})
 
 def get_terms_facets(
     request,
@@ -233,6 +237,9 @@ def get_terms_facets(
         path = request.path
 
     json_query = copy.deepcopy(json_query)
+
+    ensure_filter_list_length(json_query, bool_index)
+
     try:
         if "must_not" in json_query["query"]["bool"]["filter"][bool_index]["bool"]:
             bool_condition = "must_not"
@@ -318,6 +325,8 @@ def term_facet_from_parameters(request, json_query, field_name, param_name, bool
         for value in request.GET.getlist(param_name):
             new_filter.append({"term": {field_name: value}})
 
+    ensure_filter_list_length(json_query, bool_index)
+
     if request.GET.get("exclude_" + param_name):
         json_query["query"]["bool"]["filter"][bool_index]["bool"].pop("should", None)
         json_query["query"]["bool"]["filter"][bool_index]["bool"]["must_not"] = new_filter
@@ -327,6 +336,9 @@ def term_facet_from_parameters(request, json_query, field_name, param_name, bool
 
 def term_parameters_from_json_query(parameters, json_query, field_name, param_name, bool_index, field, is_json=False):
     values = []
+
+    ensure_filter_list_length(json_query, bool_index)
+
     if "must_not" in json_query["query"]["bool"]["filter"][bool_index]["bool"]:
         filters = json_query["query"]["bool"]["filter"][bool_index]["bool"]["must_not"]
         must_not = True
