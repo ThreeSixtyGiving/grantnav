@@ -1,6 +1,7 @@
 import json
 import time
 import os
+import copy
 
 from django.test import TestCase, Client, RequestFactory, override_settings
 from django.urls import reverse_lazy
@@ -446,3 +447,27 @@ class UnitTest(TestCase):
             f"{uri}?parent_field=additional_data&child_field=recipientDistrictName&filter_search=a"
         )
         assert len(json.loads(response.content)["results"]) == 73
+
+    def test_exclude_fundingOrganization_parameter_encoding_bug_1232(self):
+        """
+        Test that exclude_fundingOrganization=true doesn't get split into characters
+        """
+
+        # Create a query with exclude filter (must_not)
+        json_query = copy.deepcopy(BASIC_QUERY)
+        json_query["query"]["bool"]["filter"][0]["bool"]["must_not"] = [
+            {"term": {"fundingOrganization.id_and_name": '["Test Funder", "org-123"]'}}
+        ]
+
+        # Convert to URL parameters
+        encoded_url = create_parameters_from_json_query(json_query)
+
+        self.assertIn("exclude_fundingOrganization=true", encoded_url,
+                    "URL should contain exclude_fundingOrganization=true as a single parameter")
+
+        # Verify the bug doesn't occur by checking individual character parameters don't exist
+        self.assertNotIn("exclude_fundingOrganization=t&", encoded_url,
+                        "URL should not split 'true' into individual character parameters")
+        self.assertNotIn("exclude_fundingOrganization=r", encoded_url)
+        self.assertNotIn("exclude_fundingOrganization=u", encoded_url)
+        self.assertNotIn("exclude_fundingOrganization=e", encoded_url)
