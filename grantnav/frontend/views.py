@@ -637,8 +637,12 @@ def create_parameters_from_json_query(json_query, **extra_parameters):
     parameter_list = []
 
     for parameter, list_value in parameters.items():
-        for value in list_value:
-            parameter_list.append((parameter, value))
+        if isinstance(list_value, list):
+            for value in list_value:
+                parameter_list.append((parameter, value))
+        else:
+            parameter_list.append((parameter, list_value))
+
     for parameter, value in extra_parameters.items():
         parameter_list.append((parameter, value))
 

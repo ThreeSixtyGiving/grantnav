@@ -341,4 +341,4 @@ def term_parameters_from_json_query(parameters, json_query, field_name, param_na
             values.append(filter['term'][field_name])
     parameters[param_name] = values
     if must_not:
-        parameters["exclude_" + param_name] = "true"
+        parameters["exclude_" + param_name] = ["true"]
