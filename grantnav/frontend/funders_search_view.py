@@ -41,6 +41,8 @@ def get_dropdown_filters(context):
     context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.recipient_org.total desc", "label": "Total GBP Amount to Organisations - Highest First"})
     context["dropdownFilterOptions"].append({"value": "aggregate.currencies.GBP.recipient_org.total asc", "label": "Total GBP Amount to Organisations - Lowest First"})
     context["dropdownFilterOptions"].append({"value": "aggregate.maxAwardDate desc", "label": "Latest Award Date - Recent First"})
+    context["dropdownFilterOptions"].append({"value": "organizationName.keyword asc", "label": "Name - Alphabetical (A-Z)"})
+    context["dropdownFilterOptions"].append({"value": "organizationName.keyword desc", "label": "Name - Alphabetical (Z-A)"})
 
 
 def create_json_query_from_parameters(request):

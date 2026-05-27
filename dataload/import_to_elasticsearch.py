@@ -583,7 +583,12 @@ def maybe_create_index(index_name=ES_INDEX):
             # Additional funding/recipient organisation mappings
             "organizationName": {
                 "type": "text",
-                "analyzer": "english_with_folding"
+                "analyzer": "english_with_folding",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
             },
             "orgIDs": {
                 "type": "keyword"
