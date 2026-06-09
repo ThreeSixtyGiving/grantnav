@@ -88,16 +88,16 @@ def maybe_create_index(index_name=ES_INDEX):
             "url": {"type": "keyword"},
             "plannedDates": {
                 "properties": {
-                    "startDate": {"type": "keyword"},
-                    "endDate": {"type": "keyword"},
-                    "duration": {"type": "keyword"}
+                    "startDate": {"type": "date"},
+                    "endDate": {"type": "date"},
+                    "duration": {"type": "long"}
                 }
             },
             "actualDates": {
                 "properties": {
-                    "startDate": {"type": "keyword"},
-                    "endDate": {"type": "keyword"},
-                    "duration": {"type": "keyword"},
+                    "startDate": {"type": "date"},
+                    "endDate": {"type": "date"},
+                    "duration": {"type": "long"},
                     "description": {"type": "text"},
                 }
             },
@@ -545,6 +545,9 @@ def maybe_create_index(index_name=ES_INDEX):
                         "properties": {
                             "organisationTypePrimary": {
                                 "type": "keyword"
+                            },
+                            "latestIncome": {
+                                "type": "double"
                             }
                         }
                     },
