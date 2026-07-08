@@ -26,6 +26,51 @@ class LinkCheckTests(BrowserTestCase):
 
         links_checked = {}
 
+        def is_blocked_by_cloudflare(response: requests.Response) -> bool:
+            # Check for characteristic headers.
+            if (
+                "cloudflare" in response.headers.get("Server", "").lower()
+                or "CF-RAY" in response.headers
+            ):
+                return True
+
+            return False
+
+        def check_single_link(link: str) -> int:
+            try:
+                # Some sites reject connection without a user agent.
+                DEFAULT_HEADERS = {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+                }
+
+                # First, just try a head request.  If this is anything but a 403 then return the status code.
+                r = requests.head(link, headers=DEFAULT_HEADERS, verify=False)
+                if r.status_code != 403:
+                    return r.status_code
+
+                # We have received 403 unauthorised and need to try again.  Delay by two seconds and try again
+                # with GET which might look less suspicious but using stream=True still has a low impact.
+                time.sleep(2)
+                r = requests.get(
+                    link, headers=DEFAULT_HEADERS, verify=False, stream=True
+                )
+                if r.status_code != 403:
+                    return r.status_code
+
+                # Skip the test if we are blocked by Cloudflare.
+                if is_blocked_by_cloudflare(r):
+                    print(f"{link} is blocked by Cloudflare - skipping")
+                    return 200
+
+                return r.status_code
+
+            except Exception:
+                # Set status code to 0 (not a HTTP response code) so it gets displayed along with the other errors at the end.
+                # This is usually triggered by the request timing out.
+                return 0
+
+            return 0
+
         def check_page_for_broken_links(page):
             # We use selenium for this kind of test because it's a convenient way to manipulate the dom
             self.get(page)
@@ -47,7 +92,8 @@ class LinkCheckTests(BrowserTestCase):
             for a in self.browser.find_elements(By.TAG_NAME, "a"):
                 # Datatables quirk with empty <a> tags, select2 quirk with same issue
                 if (
-                    a.get_attribute("aria-controls") or a.get_attribute("class") == "remove-select2-option"
+                    a.get_attribute("aria-controls")
+                    or a.get_attribute("class") == "remove-select2-option"
                 ):
                     continue
 
@@ -96,6 +142,7 @@ class LinkCheckTests(BrowserTestCase):
                         print(e)
                         status_code = 0
 
+                    status_code = check_single_link(link)
                     links_checked[link] = status_code
                     if status_code < 200 or status_code > 399:
                         broken = True

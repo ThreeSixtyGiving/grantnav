@@ -8,16 +8,28 @@
         <p>{{ publisher.name }} appears in the 360Giving data as a publisher of grants, identified with the 360Giving Publisher prefix {{publisher.prefix}}.
 
         <p><strong>GrantNav is not directly responsible for any of the data on this site.</strong> If you notice a problem with the data, please contact the relevant publisher directly.</p>
-        {% if publisher.datasets.0.distribution.0.accessURL %}
-        <p>
-            {{ publisher.name }} has provided the following link for information about their data:
-            <a href="{{ publisher.datasets.0.distribution.0.accessURL }}">{{ publisher.datasets.0.distribution.0.accessURL }}</a>
-        </p>
-        {% endif %}
 
-        {% if publisher.website %}
-        <p><strong>Website:</strong> <a href="{{ publisher.website }}">{{ publisher.website }}</a></p>
-        {% endif %}
+        <p>To learn more about {{ publisher.name }}'s data:</p>
+
+        <ul>
+            {% if publisher.datasets.0.distribution.0.accessURL %}
+            <li>
+                {{ publisher.name }} has provided this link for information about their data
+                <a href="{{ publisher.datasets.0.distribution.0.accessURL }}">{{ publisher.name }}</a>
+            </li>
+            {% endif %}
+
+            {% if publisher.website %}
+            <li><a href="{{ publisher.website }}">Visit their website</a></li>
+            {% endif %}
+
+            {% if publisher.prefix %}
+            <li>
+                Learn more about the features of their data in
+                <a href="https://qualitydashboard.threesixtygiving.org/publisher/{{ publisher.prefix }}">their entry on 360Giving's Data Quality Dashboard</a>
+            </li>
+            {% endif %}
+        </ul>
 
         <h4>Datasets</h4>
         <p>Here is an overview of grants published by {{publisher.name}}.</p>

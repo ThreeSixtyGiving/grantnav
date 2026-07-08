@@ -532,6 +532,138 @@ class InteractionsTests(BrowserTestCase):
             self.assertTrue(amount > prev_amount, f"{amount} > {prev_amount}")
             prev_amount = amount
 
+    def test_funders_alphabetical_sort_a_to_z(self):
+        """Test alphabetical sort A-Z on Funder search page"""
+        server_url = reverse_lazy("funders")
+        self.get(server_url)
+
+        # Perform initial search
+        self.browser.find_element(By.NAME, "text_query").send_keys("foundation")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        # Select alphabetical sort A-Z
+        select = Select(self.browser.find_element(By.ID, "sort_options"))
+        select.select_by_visible_text("Name - Alphabetical (A-Z)")
+        self.wait_for_results_page()
+
+        # Get the funder names from the results
+        funder_elements = self.browser.find_elements(
+            By.CLASS_NAME, "grant-search-result__title"
+        )
+        funder_names = [elem.text for elem in funder_elements]
+
+        # Verify that at least some results are present
+        self.assertGreater(len(funder_names), 0, "No funder results found")
+
+        # Verify sorting is alphabetical (A-Z)
+        sorted_names = sorted(funder_names)
+        self.assertEqual(
+            funder_names,
+            sorted_names,
+            f"Funder names not in alphabetical order. Got: {funder_names}, Expected: {sorted_names}",
+        )
+        self.check_js_errors()
+
+    def test_funders_alphabetical_sort_z_to_a(self):
+        """Test alphabetical sort Z-A on Funder search page"""
+        server_url = reverse_lazy("funders")
+        self.get(server_url)
+
+        # Perform initial search
+        self.browser.find_element(By.NAME, "text_query").send_keys("foundation")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        # Select alphabetical sort Z-A
+        select = Select(self.browser.find_element(By.ID, "sort_options"))
+        select.select_by_visible_text("Name - Alphabetical (Z-A)")
+        self.wait_for_results_page()
+
+        # Get the funder names from the results
+        funder_elements = self.browser.find_elements(
+            By.CLASS_NAME, "grant-search-result__title"
+        )
+        funder_names = [elem.text for elem in funder_elements]
+
+        # Verify that at least some results are present
+        self.assertGreater(len(funder_names), 0, "No funder results found")
+
+        # Verify sorting is reverse alphabetical (Z-A)
+        reverse_sorted_names = sorted(funder_names, reverse=True)
+        self.assertEqual(
+            funder_names,
+            reverse_sorted_names,
+            f"Funder names not in reverse alphabetical order. Got: {funder_names}, Expected: {reverse_sorted_names}",
+        )
+        self.check_js_errors()
+
+    def test_recipients_alphabetical_sort_a_to_z(self):
+        """Test alphabetical sort A-Z on Recipient search page"""
+        server_url = reverse_lazy("recipients")
+        self.get(server_url)
+
+        # Perform initial search
+        self.browser.find_element(By.NAME, "text_query").send_keys("Social Justice")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        # Select alphabetical sort A-Z
+        select = Select(self.browser.find_element(By.ID, "sort_options"))
+        select.select_by_visible_text("Name - Alphabetical (A-Z)")
+        self.wait_for_results_page()
+
+        # Get the recipient names from the results
+        recipient_elements = self.browser.find_elements(
+            By.CLASS_NAME, "grant-search-result__title"
+        )
+        recipient_names = [elem.text for elem in recipient_elements]
+
+        # Verify that at least some results are present
+        self.assertGreater(len(recipient_names), 0, "No recipient results found")
+
+        # Verify sorting is alphabetical (A-Z)
+        sorted_names = sorted(recipient_names)
+        self.assertEqual(
+            recipient_names,
+            sorted_names,
+            f"Recipient names not in alphabetical order. Got: {recipient_names}, Expected: {sorted_names}",
+        )
+        self.check_js_errors()
+
+    def test_recipients_alphabetical_sort_z_to_a(self):
+        """Test alphabetical sort Z-A on Recipient search page"""
+        server_url = reverse_lazy("recipients")
+        self.get(server_url)
+
+        # Perform initial search
+        self.browser.find_element(By.NAME, "text_query").send_keys("Social Justice")
+        self.browser.find_element(By.CLASS_NAME, "large-search-button").click()
+        self.wait_for_results_page()
+
+        # Select alphabetical sort Z-A
+        select = Select(self.browser.find_element(By.ID, "sort_options"))
+        select.select_by_visible_text("Name - Alphabetical (Z-A)")
+        self.wait_for_results_page()
+
+        # Get the recipient names from the results
+        recipient_elements = self.browser.find_elements(
+            By.CLASS_NAME, "grant-search-result__title"
+        )
+        recipient_names = [elem.text for elem in recipient_elements]
+
+        # Verify that at least some results are present
+        self.assertGreater(len(recipient_names), 0, "No recipient results found")
+
+        # Verify sorting is reverse alphabetical (Z-A)
+        reverse_sorted_names = sorted(recipient_names, reverse=True)
+        self.assertEqual(
+            recipient_names,
+            reverse_sorted_names,
+            f"Recipient names not in reverse alphabetical order. Got: {recipient_names}, Expected: {reverse_sorted_names}",
+        )
+        self.check_js_errors()
+
     def test_org_page(self):
         server_url = reverse_lazy("org", args=["GB-CHC-1156077"])
         self.get(server_url)
