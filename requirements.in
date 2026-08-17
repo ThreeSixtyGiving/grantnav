@@ -1,4 +1,5 @@
-Django<5
+# Last version of Django in 4.2 LTS
+Django==4.2.30
 django-bootstrap3
 requests
 django-environ
