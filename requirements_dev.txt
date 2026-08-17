@@ -12,7 +12,7 @@ attrs==25.3.0
     # via
     #   outcome
     #   trio
-black==25.1.0
+black==26.3.1
     # via -r requirements_dev.in
 build==1.2.2.post1
     # via pip-tools
@@ -83,7 +83,7 @@ packaging==24.2
     #   chromedriver-autoinstaller
     #   plotly
     #   wheel
-pathspec==0.12.1
+pathspec==1.1.1
     # via black
 pip-tools==7.4.1
     # via -r requirements_dev.in
@@ -107,6 +107,8 @@ pysocks==1.7.1
     # via urllib3
 python-dateutil==2.9.0.post0
     # via -r requirements.in
+pytokens==0.4.1
+    # via black
 raven==6.10.0
     # via -r requirements.in
 requests==2.32.3
