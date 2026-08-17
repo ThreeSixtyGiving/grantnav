@@ -51,7 +51,7 @@ python-dateutil==2.9.0.post0
     # via -r requirements.in
 raven==6.10.0
     # via -r requirements.in
-requests==2.32.5
+requests==2.33.0
     # via -r requirements.in
 retry==0.9.2
     # via -r requirements.in
