@@ -106,10 +106,41 @@ class LinkCheckTests(BrowserTestCase):
                 if link not in skip:
                     links.append(link)
 
+            # Some sites reject connection without a user agent.
+            HEADERS = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+            }
+
             broken = False
             for link in links:
 
                 if link not in links_checked.keys():
+                    try:
+                        r = requests.head(
+                            link,
+                            headers=HEADERS,
+                            verify=False,
+                        )
+
+                        # If the call gets blocked by a 403 (e.g., by cloudflare) then wait a little bit in
+                        # case we are being throttled then do a fresh request with GET (use stream=True to reduce
+                        # the load).  This is introduced because read-the-docs was blocking the standard website.
+                        if r.status_code == 403:
+                            time.sleep(2)
+                            r = requests.Session().get(
+                                link,
+                                headers=HEADERS,
+                                timeout=15,
+                                verify=False,
+                                stream=True,
+                            )
+
+                        status_code = r.status_code
+                    except Exception as e:
+                        # Set status code to 0 (not a HTTP response code) so it gets displayed along with the other errors at the end.
+                        # This is usually triggered by the request timing out.
+                        print(e)
+                        status_code = 0
 
                     status_code = check_single_link(link)
                     links_checked[link] = status_code

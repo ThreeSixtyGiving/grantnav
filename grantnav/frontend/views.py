@@ -61,6 +61,7 @@ BASIC_FILTER = [
     {"bool": {"should": []}},  # 22. additional_data.GNBestCountryName
     {"bool": {"should": []}},  # 23. additional_data.GNRecipientOrgCountryName
     {"bool": {"should": []}},  # 24. additional_data.GNBeneficiaryCountryName
+    {"bool": {"should": []}},  # 25. additional_data.GNGeoCategory
 ]
 
 TermFacet = collections.namedtuple('TermFacet', 'field_name param_name filter_index display_name is_json facet_size')
@@ -87,6 +88,7 @@ TERM_FACETS = [
     TermFacet("additional_data.GNBestCountryName", "bestCountryName", 22, "Best Available Country", False, 5000),
     TermFacet("additional_data.GNRecipientOrgCountryName", "recipientOrgCountryName", 23, "Recipient Country", False, 5000),
     TermFacet("additional_data.GNBeneficiaryCountryName", "beneficiaryCountryName", 24, "Grant Location Country", False, 5000),
+    TermFacet("additional_data.GNGeoCategory", "geoCategory", 25, "Geographic Category", False, 5000),
 ]
 
 SIZE = 20
