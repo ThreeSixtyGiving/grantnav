@@ -20,15 +20,15 @@ def get(d, k):
 
 
 def flatten_schema_titles(schema, path='', title_path=''):
-    for field, property in schema['properties'].items():
-        title = property.get('title') or field
+    for field, property in schema.get('properties', {}).items():
+        title = property.get('title') or getattr(property, '__reference__', {}).get('title') or field
         if property['type'] == 'array':
             if property['items']['type'] == 'object':
                 yield from flatten_schema_titles(property['items'], path + ': ' + field, title_path + ': ' + title)
             else:
                 yield ((path + ': ' + field).lstrip(': '), (title_path + ': ' + title).lstrip(': '))
         if property['type'] == 'object':
-            yield from flatten_schema_titles(property, path + '/' + field, title_path + ': ' + title)
+            yield from flatten_schema_titles(property, path + ': ' + field, title_path + ': ' + title)
         else:
             yield ((path + ': ' + field).lstrip(': '), (title_path + ': ' + title).lstrip(': '))
 
@@ -44,9 +44,19 @@ except Exception as e:
     else:
         raise e
 
+try:
+    additional_data_schema = jsonref.load_uri(settings.ADDITIONAL_DATA_SCHEMA)
+except Exception as e:
+    if settings.DEBUG:
+        print(f"Warning: could not fetch additional data schema, falling back to displaying raw keys: {e}")
+        additional_data_schema = {}
+    else:
+        raise e
 
-def flatten_dict(data, path=tuple()):
-    schema_titles = dict(flatten_schema_titles(schema))
+
+def flatten_dict(data, path=tuple(), schema_titles=None):
+    if schema_titles is None:
+        schema_titles = dict(flatten_schema_titles(schema))
 
     for key, value in data.items():
         field = ": ".join(path + (key,))
@@ -54,13 +64,13 @@ def flatten_dict(data, path=tuple()):
             string_list = []
             for item in value:
                 if isinstance(item, dict):
-                    yield from flatten_dict(item, path + (key,))
+                    yield from flatten_dict(item, path + (key,), schema_titles)
                 if isinstance(item, str):
                     string_list.append(item)
             if string_list:
                 yield schema_titles.get(field) or field, ", ".join(string_list)
         elif isinstance(value, dict):
-            yield from flatten_dict(value, path + (key,))
+            yield from flatten_dict(value, path + (key,), schema_titles)
         else:
             yield schema_titles.get(field) or field, value
 
@@ -86,6 +96,20 @@ SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
 def flatten(d):
     return [(key, value) for key, value in flatten_dict(d)
             if key not in SKIP_KEYS]
+
+
+@register.filter(name='flatten_additional_data')
+def flatten_additional_data(d):
+    additional_data = d.get('additional_data') or {}
+    schema_titles = dict(flatten_schema_titles(additional_data_schema))
+    return list(flatten_dict(additional_data, schema_titles=schema_titles))
+
+
+@register.filter(name='flatten_ftc_data')
+def flatten_ftc_data(d):
+    recipient_org_info_schema = additional_data_schema.get('properties', {}).get('recipientOrgInfos', {}).get('items', {})
+    schema_titles = dict(flatten_schema_titles(recipient_org_info_schema))
+    return list(flatten_dict(d or {}, schema_titles=schema_titles))
 
 
 @register.filter(name='half_sorted_items')

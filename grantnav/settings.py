@@ -34,6 +34,8 @@ env = environ.Env(  # set default values and casting
     ALLOWED_HOSTS=(list, []),
     SECRET_KEY=(str, secret_key),
     GRANT_SCHEMA=(str, 'https://raw.githubusercontent.com/ThreeSixtyGiving/standard/main/schema/360-giving-schema.json'),
+    # TODO: Repoint to live once additional data schema merged
+    ADDITIONAL_DATA_SCHEMA=(str, 'https://raw.githubusercontent.com/ThreeSixtyGiving/standard/jw/additional-data-schema/schema/additional-data-schema.json'),
     DB_NAME=(str, os.path.join(BASE_DIR, 'db.sqlite3')),
     PROVENANCE_JSON=(str, None),
     ELASTICSEARCH_HOST=(str, 'localhost'),
@@ -71,6 +73,7 @@ RAVEN_CONFIG = {
 }
 
 GRANT_SCHEMA = env('GRANT_SCHEMA')
+ADDITIONAL_DATA_SCHEMA = env('ADDITIONAL_DATA_SCHEMA')
 
 # Set these to sensible limits for your server
 FLATTENED_DOWNLOAD_LIMIT = 10000
