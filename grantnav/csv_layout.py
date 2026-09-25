@@ -128,6 +128,12 @@ grants_csv = OrderedDict([
     ("Recipient Org: Data Source (additional data)", "result.additional_data.recipientOrgInfos.0.source"),
     ("Recipient Org: Canonical Org ID (additional data)", "result.additional_data.GNCanonicalRecipientOrgId"),
     ("Recipient Org: Canonical Name (additional data)", "result.additional_data.GNCanonicalRecipientOrgName"),
+    ("Grant Licence Name (additional data)", "result.additional_data.metadata.source_license_name"),
+    ("Grant Licence URL (additional data)", "result.additional_data.metadata.source_license"),
+    ("Recipient Org: Data Source Licence (additional data)", "result.additional_data.metadata.sources_metadata.recipientOrgInfos.license"),
+    ("Location Lookup Licence (additional data)", "result.additional_data.metadata.sources_metadata.locationLookup.license"),
+    ("Recipient Org Location Licence (additional data)", "result.additional_data.metadata.sources_metadata.recipientOrganizationLocation.license"),
+    ("Code List Lookup Licence (additional data)", "result.additional_data.metadata.sources_metadata.codeListLookup.license"),
 
     ("Date Modified", "result.dateModified"),
 
