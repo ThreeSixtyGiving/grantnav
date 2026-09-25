@@ -7,7 +7,8 @@ from django.test import TestCase, Client, RequestFactory, override_settings
 from django.urls import reverse_lazy
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
-from grantnav.frontend.search_helpers import get_pagination
+from grantnav.frontend.search_helpers import get_data_from_path, get_pagination
+from grantnav.csv_layout import grant_csv_paths, grant_csv_titles
 from grantnav.frontend.views import BASIC_QUERY, create_parameters_from_json_query
 
 
@@ -471,3 +472,28 @@ class UnitTest(TestCase):
         self.assertNotIn("exclude_fundingOrganization=r", encoded_url)
         self.assertNotIn("exclude_fundingOrganization=u", encoded_url)
         self.assertNotIn("exclude_fundingOrganization=e", encoded_url)
+
+    def test_csv_includes_grant_licence_metadata(self):
+        expected_licence_paths = [
+            "result.additional_data.metadata.source_license_name",
+            "result.additional_data.metadata.source_license",
+            "result.additional_data.metadata.sources_metadata.recipientOrgInfos.license",
+            "result.additional_data.metadata.sources_metadata.locationLookup.license",
+            "result.additional_data.metadata.sources_metadata.recipientOrganizationLocation.license",
+            "result.additional_data.metadata.sources_metadata.codeListLookup.license",
+        ]
+
+        expected_licence_titles = [
+            "Grant Licence Name (additional data)",
+            "Grant Licence URL (additional data)",
+            "Recipient Org: Data Source Licence (additional data)",
+            "Location Lookup Licence (additional data)",
+            "Recipient Org Location Licence (additional data)",
+            "Code List Lookup Licence (additional data)",
+        ]
+
+        for path in expected_licence_paths:
+            self.assertIn(path, grant_csv_paths)
+
+        for title in expected_licence_titles:
+            self.assertIn(title, grant_csv_titles)
