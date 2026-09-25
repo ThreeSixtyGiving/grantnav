@@ -7,7 +7,7 @@ from django.test import TestCase, Client, RequestFactory, override_settings
 from django.urls import reverse_lazy
 
 from dataload.import_to_elasticsearch import import_to_elasticsearch
-from grantnav.frontend.search_helpers import get_data_from_path, get_pagination
+from grantnav.frontend.search_helpers import get_pagination
 from grantnav.csv_layout import grant_csv_paths, grant_csv_titles
 from grantnav.frontend.views import BASIC_QUERY, create_parameters_from_json_query
 
