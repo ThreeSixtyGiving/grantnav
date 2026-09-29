@@ -81,4 +81,15 @@
     })();
 </script>
 <!-- End Matomo Code -->
+
+{% else %}
+    <script type="text/javascript">
+        /* eslint-disable no-var */
+        console.log("GrantNav: Matomo Analytics Not Configured - Setting up stub");
+        var _paq = {
+            push: (x) => {
+                console.log(x)
+            }
+        }
+    </script>
 {% endif %}
