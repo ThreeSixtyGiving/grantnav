@@ -39,5 +39,9 @@ def disable_cookie_popup(request):
     return {"disable_cookie_popup": settings.DISABLE_COOKIE_POPUP}
 
 
+def disable_survey_popup(request):
+    return {"disable_survey_popup": settings.DISABLE_SURVEY_POPUP}
+
+
 def current_year(request):
     return {"current_year": datetime.datetime.now().year}
