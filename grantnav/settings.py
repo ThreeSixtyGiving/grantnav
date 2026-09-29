@@ -39,6 +39,7 @@ env = environ.Env(  # set default values and casting
     ELASTICSEARCH_HOST=(str, 'localhost'),
     INSIGHTS_BASE_URL=(str, "https://grantvis.threesixtygiving.org"),
     DISABLE_COOKIE_POPUP=(bool, False),
+    DISABLE_SURVEY_POPUP=(bool, False),
     STATIC_URL=(str, '/grantnav_static/'),
     STATIC_ROOT=(str, os.path.join(BASE_DIR, 'static')),
 )
@@ -124,6 +125,7 @@ TEMPLATES = [
                 'grantnav.frontend.context_processors.debug_mode',
                 'grantnav.frontend.context_processors.insights_url',
                 'grantnav.frontend.context_processors.disable_cookie_popup',
+                'grantnav.frontend.context_processors.disable_survey_popup',
                 'grantnav.frontend.context_processors.current_year',
             ],
         },
@@ -260,3 +262,4 @@ CACHES = {
 INSIGHTS_BASE_URL = env("INSIGHTS_BASE_URL")
 
 DISABLE_COOKIE_POPUP = env("DISABLE_COOKIE_POPUP")
+DISABLE_SURVEY_POPUP = env("DISABLE_SURVEY_POPUP")
