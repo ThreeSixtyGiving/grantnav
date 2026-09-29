@@ -27,7 +27,10 @@ jobs:
     - run: sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
     - run: "sudo service elasticsearch start"
     - run: pip install -r requirements_dev.txt
-    - run: coverage run --source='./grantnav' ./manage.py test -v 2 tests --exclude-tag=link-runner
+    - env:
+        DISABLE_SURVEY_POPUP: true
+      run: coverage run --source='./grantnav' ./manage.py test -v 2 tests --exclude-tag=link-runner
     - env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DISABLE_SURVEY_POPUP: true
       run: coveralls --service=github
