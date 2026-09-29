@@ -140,7 +140,7 @@ Run tests
 ------------
 
 ```
-./manage.py test -v 2 tests
+DISABLE_SURVEY_POPUP=True ./manage.py test -v 2 tests
 ```
 
 Make sure elastic search is running.
