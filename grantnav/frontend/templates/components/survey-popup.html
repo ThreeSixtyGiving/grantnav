@@ -1,0 +1,46 @@
+<script type="text/javascript">
+  function hideSurveyPopup (hide) {
+    if (hide) {
+      document.getElementsByClassName('survey-popup-overlay')[0].style.setProperty('display', 'none', 'important');
+    } else {
+      document.getElementsByClassName('survey-popup-overlay')[0].style.setProperty('display', 'block', 'important');
+    }
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  function setHideSurveyCookie () {
+    document.cookie = 'hideSurvey=1; max-age=86400; domain=grantnav.threesixtygiving.org';
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  function setCompletedSurveyCookie () {
+    document.cookie = 'completedSurvey=1; max-age=7776000; domain=grantnav.threesixtygiving.org';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Has the user already seen the survey popup?
+    if ((document.cookie.indexOf('hideSurvey') > -1) ||
+      (document.cookie.indexOf('completedSurvey') > -1)) {
+      hideSurveyPopup(true);
+    } else {
+      hideSurveyPopup(false);
+    }
+  });
+</script>
+
+<div class="survey-popup-overlay" id="survey-popup-container" aria-description="Background overlay">
+  <div role="dialog" aria-labelledby="survey-popup-title" aria-describedby="survey-popup-desc">
+    <div class="base-card base-card--survey survey-popup">
+      <div class="survey-popup-close">
+        <button class="button button--teal-dark button--solid button--small" onclick="setHideSurveyCookie(); hideSurveyPopup(true);" aria-roledescription="Dismiss this dialog and remind me later" aria-controls="survey-popup-container">&times;</button>
+      </div>
+      <div class="base-card__content">
+        <h2 class="base-card__title" id="survey-popup-title">Help shape the next 10 years of GrantNav!</h2>
+        <p id="survey-popup-desc">GrantNav is celebrating its 10th anniversary. Take our quick 3-minute survey to tell us how we can make the data work better for you.</p>
+        <p class="base-card__text">
+          <a href="https://www.360giving.org/grantnav-survey/?sourceurl=grantnav" onclick="setCompletedSurveyCookie(); hideSurveyPopup(true);" class="button button--yellow button--solid">Take the Survey</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
