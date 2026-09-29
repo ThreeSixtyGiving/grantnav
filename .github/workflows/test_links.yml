@@ -27,4 +27,6 @@ jobs:
     - run: sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
     - run: "sudo service elasticsearch start"
     - run: pip install -r requirements_dev.txt
-    - run: ./manage.py test -v 2 tests.tests_links
+    - env:
+        DISABLE_SURVEY_POPUP: true
+      run: ./manage.py test -v 2 tests.tests_links
