@@ -10,6 +10,7 @@ from django.conf import settings
 
 from grantnav import provenance
 from grantnav import utils
+from grantnav.additional_data import additional_data_schema, flatten_dict, flatten_schema_titles
 
 register = template.Library()
 
@@ -17,20 +18,6 @@ register = template.Library()
 @register.filter(name='get')
 def get(d, k):
     return d.get(k, None)
-
-
-def flatten_schema_titles(schema, path='', title_path=''):
-    for field, property in schema.get('properties', {}).items():
-        title = property.get('title') or getattr(property, '__reference__', {}).get('title') or field
-        if property['type'] == 'array':
-            if property['items']['type'] == 'object':
-                yield from flatten_schema_titles(property['items'], path + ': ' + field, title_path + ': ' + title)
-            else:
-                yield ((path + ': ' + field).lstrip(': '), (title_path + ': ' + title).lstrip(': '))
-        if property['type'] == 'object':
-            yield from flatten_schema_titles(property, path + ': ' + field, title_path + ': ' + title)
-        else:
-            yield ((path + ': ' + field).lstrip(': '), (title_path + ': ' + title).lstrip(': '))
 
 
 # Load/fetch the schema once on module loading instead of per run
@@ -43,36 +30,6 @@ except Exception as e:
         schema = {}
     else:
         raise e
-
-try:
-    additional_data_schema = jsonref.load_uri(settings.ADDITIONAL_DATA_SCHEMA)
-except Exception as e:
-    if settings.DEBUG:
-        print(f"Warning: could not fetch additional data schema, falling back to displaying raw keys: {e}")
-        additional_data_schema = {}
-    else:
-        raise e
-
-
-def flatten_dict(data, path=tuple(), schema_titles=None):
-    if schema_titles is None:
-        schema_titles = dict(flatten_schema_titles(schema))
-
-    for key, value in data.items():
-        field = ": ".join(path + (key,))
-        if isinstance(value, list):
-            string_list = []
-            for item in value:
-                if isinstance(item, dict):
-                    yield from flatten_dict(item, path + (key,), schema_titles)
-                if isinstance(item, str):
-                    string_list.append(item)
-            if string_list:
-                yield schema_titles.get(field) or field, ", ".join(string_list)
-        elif isinstance(value, dict):
-            yield from flatten_dict(value, path + (key,), schema_titles)
-        else:
-            yield schema_titles.get(field) or field, value
 
 
 SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
@@ -94,7 +51,8 @@ SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
 
 @register.filter(name='flatten')
 def flatten(d):
-    return [(key, value) for key, value in flatten_dict(d)
+    schema_titles = dict(flatten_schema_titles(schema))
+    return [(key, value) for key, value in flatten_dict(d, schema_titles=schema_titles)
             if key not in SKIP_KEYS]
 
 

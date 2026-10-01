@@ -1,5 +1,19 @@
 from collections import OrderedDict
 
+from grantnav.additional_data import additional_data_schema, flatten_schema_titles
+
+_ADDITIONAL_DATA_PATH_PREFIX = "result.additional_data."
+
+_additional_data_schema_titles = dict(flatten_schema_titles(additional_data_schema))
+
+
+def additional_data(path):
+    schema_path = path[len(_ADDITIONAL_DATA_PATH_PREFIX):]
+    field_parts = [part for part in schema_path.split(".") if not part.isdigit()]
+    title = _additional_data_schema_titles.get(": ".join(field_parts)) or field_parts[-1]
+    return (f"{title} (additional data)", path)
+
+
 grants_csv = OrderedDict([
     ("Identifier", "result.id"),
     ("Title", "result.title"),
@@ -93,47 +107,47 @@ grants_csv = OrderedDict([
     ("Data Source", "dataset.distribution.0.downloadURL"),
     ("Publisher Name", "dataset.publisher.name"),
 
-    ("Best Available Region (additional data)", "result.additional_data.recipientRegionName"),
-    ("Best Available District (additional data)", "result.additional_data.recipientDistrictName"),
-    ("Best Available District Geographic Code (additional data)", "result.additional_data.recipientDistrictGeoCode"),
-    ("Best Available Ward (additional data)", "result.additional_data.recipientWardName"),
-    ("Best Available Ward Geographic Code (additional data)", "result.additional_data.recipientWardNameGeoCode"),
-    ("Best Available County", "result.additional_data.GNBestCountyName"),
+    additional_data("result.additional_data.recipientRegionName"),
+    additional_data("result.additional_data.recipientDistrictName"),
+    additional_data("result.additional_data.recipientDistrictGeoCode"),
+    additional_data("result.additional_data.recipientWardName"),
+    additional_data("result.additional_data.recipientWardNameGeoCode"),
+    additional_data("result.additional_data.GNBestCountyName"),
 
-    ("Recipient Region (additional data)", "result.additional_data.GNRecipientOrgRegionName"),
-    ("Recipient Region Geographic code (additional data)", "result.additional_data.GNRecipientOrgRegionGeoCode"),
+    additional_data("result.additional_data.GNRecipientOrgRegionName"),
+    additional_data("result.additional_data.GNRecipientOrgRegionGeoCode"),
 
-    ("Recipient District (additional data)", "result.additional_data.GNRecipientOrgDistrictName"),
-    ("Recipient District Geographic code (additional data)", "result.additional_data.GNRecipientOrgDistrictGeoCode"),
-    ("Recipient County (additional data)", "result.additional_data.GNRecipientOrgCountyName"),
+    additional_data("result.additional_data.GNRecipientOrgDistrictName"),
+    additional_data("result.additional_data.GNRecipientOrgDistrictGeoCode"),
+    additional_data("result.additional_data.GNRecipientOrgCountyName"),
 
-    ("Beneficiary Region (additional data)", "result.additional_data.GNBeneficiaryRegionName"),
-    ("Beneficiary Region Geographic code (additional data)", "result.additional_data.GNBeneficiaryRegionGeoCode"),
-    ("Beneficiary County (additional data)", "result.additional_data.GNBeneficiaryCountyName"),
-    ("Beneficiary District (additional data)", "result.additional_data.GNBeneficiaryDistrictName"),
-    ("Beneficiary District Geographic code (additional data)", "result.additional_data.GNBeneficiaryDistrictGeoCode"),
+    additional_data("result.additional_data.GNBeneficiaryRegionName"),
+    additional_data("result.additional_data.GNBeneficiaryRegionGeoCode"),
+    additional_data("result.additional_data.GNBeneficiaryCountyName"),
+    additional_data("result.additional_data.GNBeneficiaryDistrictName"),
+    additional_data("result.additional_data.GNBeneficiaryDistrictGeoCode"),
 
     ("Retrieved for use in GrantNav (additional data)", "dataset.datagetter_metadata.datetime_downloaded"),
-    ("Funding Org: Org Type (additional data)", "result.additional_data.TSGFundingOrgType"),
-    ("Funding Org: Canonical Org ID (additional data)", "result.additional_data.GNCanonicalFundingOrgId"),
-    ("Funding Org: Canonical Name (additional data)", "result.additional_data.GNCanonicalFundingOrgName"),
-    ("Type of Recipient", "result.additional_data.TSGRecipientType"),
-    ("Recipient Org: Date Registered (additional data)", "result.additional_data.recipientOrgInfos.0.dateRegistered"),
-    ("Recipient Org: Date Removed (additional data)", "result.additional_data.recipientOrgInfos.0.dateRemoved"),
-    ("Recipient Org: Org ID(s) (additional data)", "result.additional_data.recipientOrgInfos.0.orgIDs"),
-    ("Recipient Org: Latest Income (additional data)", "result.additional_data.recipientOrgInfos.0.latestIncome"),
-    ("Recipient Org: Latest Income Date (additional data)", "result.additional_data.recipientOrgInfos.0.latestIncomeDate"),
-    ("Recipient Org: Org Type (additional data)", "result.additional_data.recipientOrgInfos.0.organisationTypePrimary"),
-    ("Recipient Org: Registered Postcode (additional data)", "result.additional_data.recipientOrgInfos.0.postalCode"),
-    ("Recipient Org: Data Source (additional data)", "result.additional_data.recipientOrgInfos.0.source"),
-    ("Recipient Org: Canonical Org ID (additional data)", "result.additional_data.GNCanonicalRecipientOrgId"),
-    ("Recipient Org: Canonical Name (additional data)", "result.additional_data.GNCanonicalRecipientOrgName"),
-    ("Grant Licence Name (additional data)", "result.additional_data.metadata.source_license_name"),
-    ("Grant Licence URL (additional data)", "result.additional_data.metadata.source_license"),
-    ("Recipient Org: Data Source Licence (additional data)", "result.additional_data.metadata.sources_metadata.recipientOrgInfos.license"),
-    ("Location Lookup Licence (additional data)", "result.additional_data.metadata.sources_metadata.locationLookup.license"),
-    ("Recipient Org Location Licence (additional data)", "result.additional_data.metadata.sources_metadata.recipientOrganizationLocation.license"),
-    ("Code List Lookup Licence (additional data)", "result.additional_data.metadata.sources_metadata.codeListLookup.license"),
+    additional_data("result.additional_data.TSGFundingOrgType"),
+    additional_data("result.additional_data.GNCanonicalFundingOrgId"),
+    additional_data("result.additional_data.GNCanonicalFundingOrgName"),
+    additional_data("result.additional_data.TSGRecipientType"),
+    additional_data("result.additional_data.recipientOrgInfos.0.dateRegistered"),
+    additional_data("result.additional_data.recipientOrgInfos.0.dateRemoved"),
+    additional_data("result.additional_data.recipientOrgInfos.0.orgIDs"),
+    additional_data("result.additional_data.recipientOrgInfos.0.latestIncome"),
+    additional_data("result.additional_data.recipientOrgInfos.0.latestIncomeDate"),
+    additional_data("result.additional_data.recipientOrgInfos.0.organisationTypePrimary"),
+    additional_data("result.additional_data.recipientOrgInfos.0.postalCode"),
+    additional_data("result.additional_data.recipientOrgInfos.0.source"),
+    additional_data("result.additional_data.GNCanonicalRecipientOrgId"),
+    additional_data("result.additional_data.GNCanonicalRecipientOrgName"),
+    additional_data("result.additional_data.metadata.source_license_name"),
+    additional_data("result.additional_data.metadata.source_license"),
+    additional_data("result.additional_data.metadata.sources_metadata.recipientOrgInfos.license"),
+    additional_data("result.additional_data.metadata.sources_metadata.locationLookup.license"),
+    additional_data("result.additional_data.metadata.sources_metadata.recipientOrganizationLocation.license"),
+    additional_data("result.additional_data.metadata.sources_metadata.codeListLookup.license"),
 
     ("Date Modified", "result.dateModified"),
 
