@@ -484,12 +484,12 @@ class UnitTest(TestCase):
         ]
 
         expected_licence_titles = [
-            "Grant Licence Name (additional data)",
-            "Grant Licence URL (additional data)",
-            "Recipient Org: Data Source Licence (additional data)",
-            "Location Lookup Licence (additional data)",
-            "Recipient Org Location Licence (additional data)",
-            "Code List Lookup Licence (additional data)",
+            "Metadata: Source License Name (additional data)",
+            "Metadata: Source License URL (additional data)",
+            "Metadata: Sources Metadata: Recipient Organisation Info: License (additional data)",
+            "Metadata: Sources Metadata: Location Lookup: License (additional data)",
+            "Metadata: Sources Metadata: Recipient Organisation Location: License (additional data)",
+            "Metadata: Sources Metadata: Codelist Lookup: License (additional data)",
         ]
 
         for path in expected_licence_paths:
