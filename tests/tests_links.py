@@ -40,7 +40,7 @@ class LinkCheckTests(BrowserTestCase):
             try:
                 # Some sites reject connection without a user agent.
                 DEFAULT_HEADERS = {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
                 }
 
                 # First, just try a head request.  If this is anything but a 403 then return the status code.
