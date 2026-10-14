@@ -107,19 +107,19 @@
                     <a href="https://www.360giving.org/explore/before-you-start/what-to-look-for/#Negative-zero-grants"><img src="{% static "/images/icon-help-50.png"%}" alt="info icon" width="15" height="15" id="zero_value_grant_help_link"></a>
                   {# Insert the human readable values for these codelist codes #}
 
-                  {% elif "grantPurpose" in key %}
+                  {% elif "Grant Purpose" in key %}
                     <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/#grant-to-individuals-purpose"
                       title="{{grant.source.additional_data.codeListLookup.toIndividualsDetails.grantPurpose|join:","}}"
                      >{{value}}
                     </a>
 
-                  {% elif "primaryGrantReason" in key %}
+                  {% elif "Primary Grant Reason" in key %}
                     <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/#grant-to-individuals-reason"
                       title="{{grant.source.additional_data.codeListLookup.toIndividualsDetails.primaryGrantReason}}"
                     >{{value}}
                     </a>
 
-                  {% elif "secondaryGrantReason" in key %}
+                  {% elif "Secondary Grant Reason" in key %}
                     <a href="https://standard.threesixtygiving.org/en/latest/technical/codelists/#grant-to-individuals-reason"
                       title="{{grant.source.additional_data.codeListLookup.toIndividualsDetails.secondaryGrantReason}}"
                     >{{value}}
@@ -150,7 +150,13 @@
     </div>
 
     <div class="spacer-2">
-      <button class="button" onClick='$("#additional-data-section").toggle()'>Show Additional Data</button>
+      <button class="button" onClick='
+        var section = $("#additional-data-section");
+        section.toggle();
+        $(this).text(section.is(":visible") ? "Hide Additional Data" : "Show Additional Data");
+      '>
+        Show Additional Data
+      </button>
     </div>
 
     <div class="spacer-4" style="display:none" id="additional-data-section">
@@ -169,10 +175,8 @@
         <div class="table table--zebra">
           <table class="table table--zebra table--secondary dt-responsive full-width">
             <tbody>
-              {% for key, grant in grant.source|flatten %}
-              {% if "additional_data" in key %}
-              <tr> <td style="width: 40%"> <b>{{ key }} </b> </td> <td> {{grant}} </td>
-              {% endif %}
+              {% for key, value in grant.source|flatten_additional_data %}
+              <tr> <td style="width: 40%"> <b>{{ key }} </b> </td> <td> {{value}} </td> </tr>
               {% endfor %}
             </tbody>
           </table>
