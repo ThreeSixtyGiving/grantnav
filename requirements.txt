@@ -8,8 +8,9 @@ asgiref==3.10.0
     # via
     #   django
     #   django-cors-headers
-certifi==2025.10.5
+certifi==2026.10.19
     # via
+    #   -r requirements.in
     #   elasticsearch
     #   requests
 charset-normalizer==3.4.3

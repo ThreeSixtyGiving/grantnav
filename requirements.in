@@ -14,3 +14,4 @@ plotly
 millify
 django-cors-headers
 jsonref
+certifi>=2026.10.19         # Response to eMudhra/emSign CA certificate security incident.
