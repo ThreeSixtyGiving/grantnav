@@ -535,8 +535,8 @@ def create_json_query_from_parameters(request):
     ''' Transforms the URL GET parameters of the request into an object (json_query) that is to be used by elasticsearch  '''
 
     json_query = copy.deepcopy(BASIC_QUERY)
-    json_query["query"]["bool"]["must"]["query_string"]["query"] = request.GET.get('query', '*')
-    json_query["query"]["bool"]["must"]["query_string"]["default_field"] = request.GET.get('default_field', '*')
+    json_query["query"]["bool"]["must"]["query_string"]["query"] = request.GET.get('query') or '*'
+    json_query["query"]["bool"]["must"]["query_string"]["default_field"] = request.GET.get('default_field') or '*'
 
     sort_order = request.GET.get('sort', '').split()
     if sort_order and len(sort_order) == 2:
