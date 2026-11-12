@@ -50,4 +50,21 @@ class UnitTest(TestCase):
             open(os.path.join(prefix, "aggregates_expected.json"), "r")
         )
 
+        if res != expected_data:
+            import difflib
+            res_str = json.dumps(res, indent=4, sort_keys=True)
+            exp_str = json.dumps(expected_data, indent=4, sort_keys=True)
+
+            diff = difflib.unified_diff(
+                exp_str.splitlines(),
+                res_str.splitlines(),
+                fromfile='expected.json',
+                tofile='actual.json',
+                lineterm=''
+            )
+
+            print("\n".join(diff))
+
+            self.assertEqual(res, expected_data, "Aggregates do not match. See the diff printed above.")
+
         self.assertEqual(res, expected_data)
