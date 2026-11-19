@@ -85,7 +85,11 @@
         <div class="spacer-2"></div>
 
         {% if ftc_data %}
-          <button class="button" onClick='$("#additional-data-section").toggle()' style="display: block">Show Additional Data</button>
+          <button class="button" onClick='
+            var section = $("#additional-data-section");
+            section.toggle();
+            $(this).text(section.is(":visible") ? "Hide Additional Data" : "Show Additional Data");
+          ' style="display: block">Show Additional Data</button>
           <div id="additional-data-section" style="display:none;">
             <h4>Additional data added by 360Giving</h4>
             <div class="box box--teal">

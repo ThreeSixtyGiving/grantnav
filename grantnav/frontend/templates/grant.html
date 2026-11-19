@@ -156,7 +156,13 @@
     </div>
 
     <div class="spacer-2">
-      <button class="button" onClick='$("#additional-data-section").toggle()'>Show Additional Data</button>
+      <button class="button" onClick='
+        var section = $("#additional-data-section");
+        section.toggle();
+        $(this).text(section.is(":visible") ? "Hide Additional Data" : "Show Additional Data");
+      '>
+        Show Additional Data
+      </button>
     </div>
 
     <div class="spacer-4" style="display:none" id="additional-data-section">
