@@ -10,6 +10,7 @@ from django.conf import settings
 
 from grantnav import provenance
 from grantnav import utils
+from grantnav.additional_data import additional_data_schema, flatten_dict, flatten_schema_titles
 
 register = template.Library()
 
@@ -17,20 +18,6 @@ register = template.Library()
 @register.filter(name='get')
 def get(d, k):
     return d.get(k, None)
-
-
-def flatten_schema_titles(schema, path='', title_path=''):
-    for field, property in schema['properties'].items():
-        title = property.get('title') or field
-        if property['type'] == 'array':
-            if property['items']['type'] == 'object':
-                yield from flatten_schema_titles(property['items'], path + ': ' + field, title_path + ': ' + title)
-            else:
-                yield ((path + ': ' + field).lstrip(': '), (title_path + ': ' + title).lstrip(': '))
-        if property['type'] == 'object':
-            yield from flatten_schema_titles(property, path + '/' + field, title_path + ': ' + title)
-        else:
-            yield ((path + ': ' + field).lstrip(': '), (title_path + ': ' + title).lstrip(': '))
 
 
 # Load/fetch the schema once on module loading instead of per run
@@ -44,25 +31,12 @@ except Exception as e:
     else:
         raise e
 
-
-def flatten_dict(data, path=tuple()):
-    schema_titles = dict(flatten_schema_titles(schema))
-
-    for key, value in data.items():
-        field = ": ".join(path + (key,))
-        if isinstance(value, list):
-            string_list = []
-            for item in value:
-                if isinstance(item, dict):
-                    yield from flatten_dict(item, path + (key,))
-                if isinstance(item, str):
-                    string_list.append(item)
-            if string_list:
-                yield schema_titles.get(field) or field, ", ".join(string_list)
-        elif isinstance(value, dict):
-            yield from flatten_dict(value, path + (key,))
-        else:
-            yield schema_titles.get(field) or field, value
+# Build the field -> title maps once at module load, rather than
+# re-walking the schema on every template render.
+schema_titles = dict(flatten_schema_titles(schema))
+additional_data_titles = dict(flatten_schema_titles(additional_data_schema))
+recipient_org_info_schema = additional_data_schema.get('properties', {}).get('recipientOrgInfos', {}).get('items', {})
+recipient_org_info_titles = dict(flatten_schema_titles(recipient_org_info_schema))
 
 
 SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
@@ -84,8 +58,19 @@ SKIP_KEYS = ["Identifier", "Title", "Description", "filename",
 
 @register.filter(name='flatten')
 def flatten(d):
-    return [(key, value) for key, value in flatten_dict(d)
-            if key not in SKIP_KEYS]
+    return [(field, title, value) for field, title, value in flatten_dict(d, schema_titles=schema_titles)
+            if title not in SKIP_KEYS]
+
+
+@register.filter(name='flatten_additional_data')
+def flatten_additional_data(d):
+    additional_data = d.get('additional_data') or {}
+    return list(flatten_dict(additional_data, schema_titles=additional_data_titles))
+
+
+@register.filter(name='flatten_ftc_data')
+def flatten_ftc_data(d):
+    return list(flatten_dict(d or {}, schema_titles=recipient_org_info_titles))
 
 
 @register.filter(name='half_sorted_items')
